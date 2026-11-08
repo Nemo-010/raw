@@ -7,10 +7,8 @@ name: backup
 # .github/r2-backup.sh is the same file as in f-shy/fshy.ajam.dev, whose docs/backup.md says how to restore.
 # Actions are pinned by commit; the tag is in the comment.
 
-# Manual only: no workflow runs on a pull request or a schedule. The checks run in
-# the public repository's Actions (scripts/research/settings.json ci_repo, ci_workflow; scripts/research/ci.py and
-# scripts/research/ci-checks.sh), which `scripts/rq land` starts and `scripts/rq merge` waits for. This file stays
-# for a manual run.
+# Manual only: the scheduled run is the job `backup` of `f-research-ci.yml` in `f-shy/fshy.ajam.dev`, which fetches
+# this repository and runs the same script. This file is a manual run in this repository.
 
 on:
   workflow_dispatch:
@@ -46,8 +44,10 @@ jobs:
 
       - name: upload, and check the budget
         env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          R2_BUCKET: ${{ vars.R2_BUCKET }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          # the prefix stays f-research/, the one the restore path and the 28-day delete protection name
+          GITHUB_REPOSITORY: f-shy/f-research
         run: sh .github/r2-backup.sh "$RUNNER_TEMP/repo.bundle"

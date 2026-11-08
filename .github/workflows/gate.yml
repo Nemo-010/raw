@@ -1,21 +1,25 @@
 name: gate
 
-# The gate on this tree against the gate on its base: green when no check fails that passed on the base and no
-# check is skipped. A research run's pull request (scripts/rq merge) waits for these jobs before it merges. This is
-# where the heavy checks run, once per pushed head: a research agent runs no gate, no store build of its own and no
-# gate comparison in the research checkout (AGENTS.md section 2 rule 14).
-# Actions are pinned by commit; the tag is in the comment. Python and Node are set, not the runner's default.
+# The heavy checks of one head: the gate comparison against its base, the render check, the selftests, the harness
+# selftest on Linux and on Windows, and the parity check. The log is public, so scripts/research/ci-checks.sh writes
+# each check's output to a file and prints only PASS, FAIL or SKIP and the check's name; no step prints, uploads or
+# caches a record, a quote or a path.
 #
-# The events are only the ones that change the head: an edit of the title or body (pr-text.yml) or a label
-# (baseline.yml) runs its own workflow, so it never cancels this one through the concurrency group.
-
-# Manual only: no workflow runs on a pull request or a schedule. The checks run in
-# the public repository's Actions (scripts/research/settings.json ci_repo, ci_workflow; scripts/research/ci.py and
-# scripts/research/ci-checks.sh), which `scripts/rq land` starts and `scripts/rq merge` waits for. This file stays
-# for a manual run.
+# The events are a push by a collaborator and a manual dispatch. There is no pull_request trigger: a pull request
+# opened by anyone outside the team starts nothing. A push checks the head it pushed against the commit before it, or
+# against the merge-base of main for a new branch. A dispatch names the branch (--ref) and, with the base input, the
+# commit it is compared with; scripts/rq land and scripts/rq merge dispatch it for a head that is not a push.
+#
+# Actions are pinned by commit; the comment names the tag. Python and Node are set, not the runner's default.
 
 on:
+  push:
   workflow_dispatch:
+    inputs:
+      base:
+        description: "the commit to compare with (40 hex); empty: the merge-base of main and the dispatched branch"
+        type: string
+        default: ""
 
 permissions:
   contents: read
@@ -27,7 +31,7 @@ concurrency:
 jobs:
   gate:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
@@ -39,86 +43,53 @@ jobs:
 
       - name: base
         id: base
+        env:
+          INPUT_BASE: ${{ inputs.base }}
+          BEFORE: ${{ github.event.before }}
+        run: echo "ref=$(sh .github/base-commit.sh)" >> "$GITHUB_OUTPUT"
+
+      - name: the gate comparison, the render check and the selftests
+        env:
+          BASE: ${{ steps.base.outputs.ref }}
+          # the pin check, when the head moves the pin, asks the public API; the token only raises its rate limit
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            base="origin/${{ github.base_ref }}"
-          else
-            base="${{ github.event.before }}"
-          fi
-          git cat-file -e "${base}^{commit}" 2>/dev/null || base="$(git rev-list --max-parents=0 HEAD)"
-          echo "ref=$base" >> "$GITHUB_OUTPUT"
-          if git diff --name-only "$base" HEAD | grep -qE '^scripts/research/|^scripts/fshy/(fr|build)\.py$|^scripts/report/render\.py$|^scripts/broker/broker\.sh$|^scripts/dossier/(validate\.py|schema\.json)$|^\.github/workflows/'; then
-            echo "harness=1" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: gate against the base
-        run: python scripts/research/rq.py gatecmp --base "${{ steps.base.outputs.ref }}"
-
-      - name: the generated tables agree with the records
-        # land renders only the topics a run touched, with the tree's own render.py; this full check catches a block
-        # that selection skipped
-        run: python scripts/report/render.py --check
-
-      - name: gate selftest
-        # the gate's own fixtures: a change to scripts/gate.sh, a check or a rule it reads is tested here
-        run: sh scripts/gate.sh --selftest
-
-      - name: projection selftest
-        run: python scripts/fshy/test_projection.py
-
-      - name: price selftest
-        # the price parser: usd_per_tb_month is a TB-month price and nothing else (scripts/fshy/README.md, Prices)
-        run: python scripts/fshy/test_prices.py
-
-      - name: derive selftest
-        # the identity flags and basis, and the free-allowance claim (scripts/fshy/derive.py)
-        run: python scripts/fshy/test_derive.py
-
-      - name: entity selftest
-        # the names of vendor entities: never cut at a separator or in a phrase (scripts/fshy/entity.py)
-        run: python scripts/fshy/test_entity.py
-
-      - name: harness selftest
-        if: steps.base.outputs.harness == '1'
-        run: |
-          sudo apt-get install -y -q strace >/dev/null 2>&1 || true
+          sudo apt-get install -y -q strace > /dev/null 2>&1 || true
           git config --global user.email "gate@localhost"
           git config --global user.name "gate"
-          python scripts/research/test_rq.py
+          sh scripts/research/ci-checks.sh linux "$BASE"
 
   harness-windows:
-    # The research machine is a Windows laptop, and the failures that matter most there (a rename with an open handle,
-    # LK_LOCK giving up, os.replace onto an open file, text-mode pipes, the cost of MSYS process starts) exist only on
-    # Windows. It runs only when the harness changes, and prints each timing next to its budget.
+    # The failures that matter most on Windows (a rename with an open handle, LK_LOCK giving up, os.replace onto an
+    # open file, text-mode pipes, the cost of MSYS process starts) exist only there. The script prints SKIP when the
+    # harness did not change against the base.
     runs-on: windows-latest
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           fetch-depth: 0
+
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
         with:
           python-version: "3.12"
+
       - name: base
         id: base
         shell: bash
-        run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            base="origin/${{ github.base_ref }}"
-          else
-            base="${{ github.event.before }}"
-          fi
-          git cat-file -e "${base}^{commit}" 2>/dev/null || base="$(git rev-list --max-parents=0 HEAD)"
-          if git diff --name-only "$base" HEAD | grep -qE '^scripts/research/|^scripts/fshy/(fr|build)\.py$|^scripts/report/render\.py$|^scripts/broker/broker\.sh$|^scripts/dossier/(validate\.py|schema\.json)$|^\.github/workflows/'; then
-            echo "harness=1" >> "$GITHUB_OUTPUT"
-          fi
-      - name: harness selftest, the Windows cases and the load test
-        if: steps.base.outputs.harness == '1'
+        env:
+          INPUT_BASE: ${{ inputs.base }}
+          BEFORE: ${{ github.event.before }}
+        run: echo "ref=$(sh .github/base-commit.sh)" >> "$GITHUB_OUTPUT"
+
+      - name: the harness's Windows cases and the load test
         shell: bash
+        env:
+          BASE: ${{ steps.base.outputs.ref }}
         run: |
           git config --global user.email "gate@localhost"
           git config --global user.name "gate"
-          python scripts/research/test_rq.py --only primitives_case,store_lock_case,lock_case,claim_case,wipe_case,no_cap_case,one_tree_load_case
+          sh scripts/research/ci-checks.sh windows "$BASE"
 
   parity:
     # fr.py re-implements the public Worker's ranking, text rules and SQL guard; this runs both on the same inputs,
@@ -151,5 +122,4 @@ jobs:
       - name: fr selftest with the Worker parity required
         env:
           FSHY_PUBLIC: .tmp/public
-          FSHY_REQUIRE_PARITY: "1"
-        run: python scripts/fshy/test_fr.py
+        run: sh scripts/research/ci-checks.sh parity

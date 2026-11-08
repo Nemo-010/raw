@@ -189,24 +189,25 @@ three runs in one checkout, starts 30 lanes at once, integrates, audits, lands a
 checkout's HEAD, index, configuration and tracked files did not change, that every git process was in the
 allowlist, and that the run stayed inside its budgets: 300 s for the whole phase, 60 s for each `land`, 90 s for
 each `integrate` of 10 units, 10 MB written under `.tmp/` and 10 MB of growth of `.git/`. The job
-`harness-windows` of the workflow `f-research-ci` in `f-shy/fshy.ajam.dev` (`sh scripts/research/ci-checks.sh
+`harness-windows` of the workflow `gate` in `f-shy/raw` (`sh scripts/research/ci-checks.sh
 windows BASE`) runs the Windows-specific cases and the load test on Windows when the harness changes (a change of
 `scripts/research/baseline.tsv` alone is data, not a harness change). Its log is public, so it prints one line per
 case, `PASS harness-windows.CASE` or `FAIL harness-windows.CASE`; the detail and the timings stay in the job's
 private log file.
 
-### CI: the public repository's Actions, and the light checks here
+### CI: this repository's Actions, and the light checks here
 
-`scripts/research/ci.py` asks the public repository named
-by `settings.json` (`ci_repo`, workflow `ci_workflow`, on branch `ci_ref`) for a run on one head against the main it
-holds, named `f-research <sha> <base>`; that workflow fetches this repository quietly at the head with a read-only
-deploy key, deletes the key, and runs
+`scripts/research/ci.py` reads the run of `f-shy/raw`'s workflow `gate` on one head (`settings.json` `ci_repo`,
+`ci_workflow`), found by its head commit. The workflow runs on a push by a collaborator and on a manual dispatch, and
+on nothing else: a pull request opened by anyone outside the team starts nothing. A push starts the run on the head
+it pushed; a dispatch names the branch (`--ref`) and the base (`-f base=...`), which `rq land` and `rq merge` use for
+a head that is not a push. The workflow runs
 `scripts/research/ci-checks.sh` (`linux`: the gate comparison, the render check, the selftests, the harness selftest
 when the harness changed; `windows`: the Windows cases; `parity`: fr's twin of the Worker). The script writes each
 check's output to a file on the runner and prints only `PASS NAME`, `FAIL NAME` or `SKIP NAME`, and for the gate
-`NAME base X head Y`: a public log carries no record, quote or path. `rq land` starts the run; `rq ci RUN` shows it;
-`rq merge` runs the light checks (`ci.light`: the commit hook on each commit and on the pull request's text, the
-baseline rows and the `rq:baseline` label) and waits for the run (`ci.wait`), and merges only a head whose run has
-every job of `ci_jobs` green (a skipped job is not green). `--no-ci` skips only that wait.
+`NAME base X head Y`: a public log carries no record, quote or path. `rq land` notes the run a push started; `rq ci
+RUN` shows it; `rq merge` runs the light checks (`ci.light`: the commit hook on each commit and on the pull request's
+text, the baseline rows and the `rq:baseline` label) and waits for the run (`ci.wait`), and merges only a head whose
+run has every job of `ci_jobs` green (a skipped job is not green). `--no-ci` skips only that wait.
 `rq ci --pr N --wait` does the same for a pull request that is not a run, once it holds main. A failed check is
 named, never shown: its detail comes from `scripts/rq gatecmp --base origin/main` in an own clone.
