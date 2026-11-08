@@ -55,14 +55,15 @@ def extract(path, dest):
 
 
 def find_run(stage):
-    """The directory that holds run.json: the stage itself, or its single top-level directory."""
-    if os.path.exists(os.path.join(stage, "run.json")):
-        return stage
-    subs = [os.path.join(stage, d) for d in sorted(os.listdir(stage)) if os.path.isdir(os.path.join(stage, d))]
-    if len(subs) == 1 and os.path.exists(os.path.join(subs[0], "run.json")):
-        return subs[0]
-    raise Fail("the bundle has no run.json at its root or under one top-level directory; a bundle is the folder "
-               ".tmp/<run>/ of a run, zipped", 1)
+    """The directory that holds run.json: the one directory of the staging tree that has it. A zip of .tmp/<run>/
+    keeps the .tmp/ prefix, so the search is recursive; exactly one run.json is required."""
+    found = sorted(root for root, _dirs, names in os.walk(stage) if "run.json" in names)
+    if len(found) == 1:
+        return found[0]
+    if not found:
+        raise Fail("the bundle has no run.json; a bundle is the folder .tmp/<run>/ of a run, zipped", 1)
+    raise Fail("the bundle carries %d run.json files (%s); one bundle is one run"
+               % (len(found), ", ".join(os.path.relpath(p, stage) for p in found[:4])), 1)
 
 
 def import_bundle(path, repo=REPO):

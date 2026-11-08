@@ -9,6 +9,17 @@ which document owns each question.
 
 ## Clone
 
+With a GitHub account, clone your fork, not the upstream: `gh` names your fork `origin` and the upstream
+`upstream`, and `rq` pushes the run branch to `origin`.
+
+```bash
+gh repo fork f-shy/raw --clone
+cd raw
+git fetch upstream && git merge --ff-only upstream/main && git push origin main
+```
+
+Without an account, clone the upstream read-only:
+
 ```bash
 git clone https://github.com/f-shy/raw
 cd raw
