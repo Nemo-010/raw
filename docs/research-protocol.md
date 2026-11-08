@@ -438,7 +438,7 @@ labelled `rq:review`, which closes the run's issue when it merges. After the pus
 and probe records in the unit folders that the pushed branch holds.
 
 ⚠ `land` takes under a minute. It runs no gate: it starts the heavy checks (the gate comparison, the render check,
-the selftests, the parity check) on the pushed head in the Actions of the public repository that
+the selftests, the parity check) on the pushed head in the Actions of the repository that
 `scripts/research/settings.json` names (`ci_repo`, workflow `ci_workflow`), and `scripts/rq merge` runs the light
 ones (the text of the commits and of the pull request, the baseline rows) and waits for the remote run. That log is
 public, so it prints only check names and PASS or FAIL; `scripts/rq ci RUN` names a failed check, and a merge
@@ -881,4 +881,4 @@ light checks and waits for the remote run on the head it merges (it starts one w
 that head (`gh pr merge --match-head-commit`), with the account's noreply address as the merge commit's author
 (`--author-email`, from `gh api user`; when gh cannot say it, `merge` stops before it merges); a remote run that fails, is cancelled, skips a required job, or does not finish within 60
 minutes stops the merge, and `scripts/rq merge RUN --no-ci` skips the remote CI (the light checks still run), only on purpose. The heavy checks run
-in the public repository's Actions and nowhere else; nothing on this machine runs the gate for a merge.
+in this repository's Actions and nowhere else; nothing on this machine runs the gate for a merge.

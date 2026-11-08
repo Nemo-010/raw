@@ -85,7 +85,7 @@ instance's price is not the thing that decides whether it can be used.
 
 ## Checking that the tree is coherent
 
-CI runs `sh scripts/gate.sh --root .` on every pushed head, in the public repository's Actions. A research session never runs it in the
+CI runs `sh scripts/gate.sh --root .` on every pushed head, in this repository's Actions. A research session never runs it in the
 research checkout ([`../AGENTS.md`](../AGENTS.md) section 2 rule 14); in an own clone, run it there.
 
 The gate fails when a document named here is missing, when a link is broken, or

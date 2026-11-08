@@ -161,7 +161,7 @@ reported as a defect, because a command that rejected its own arguments has veri
 nothing. It runs in CI or an own clone, never in the research checkout.
 
 ```bash
-# the gate runs in CI (the public repository's Actions) on every pushed head, or in an own clone; never in the research checkout
+# the gate runs in CI (this repository's Actions) on every pushed head, or in an own clone; never in the research checkout
 sh scripts/gate.sh --root .                          # 0, or 1 while staleness is red (BRIEF.md section 5); CI or an own clone
 sh scripts/gate.sh --selftest                        # 0: 15 cases; CI or an own clone
 sh scripts/gate.sh --root . --check units,links      # 0 when both pass; CI or an own clone

@@ -666,7 +666,7 @@ def cmd_ci(a):
     rq merge does for a run in git objects."""
     import ci
     if not ci.remote():
-        raise Fail("settings.json names no ci_repo and ci_workflow: the pull request's own checks are the CI (gh pr checks)", 2)
+        raise Fail("settings.json names no ci_repo and ci_workflow: no remote CI is configured for this clone", 2)
     if bool(a.run) == bool(a.pr):
         raise Fail("name a run, or a pull request with --pr N", 2)
     specs = ["+refs/heads/%s:%s" % (land.BASE, land.UPSTREAM_REF)]
@@ -679,10 +679,12 @@ def cmd_ci(a):
         head = rev(REPO, "refs/remotes/%s/rq/%s" % (land.REMOTE, a.run)) or rev(REPO, land.ref_of(a.run))
         if not head:
             raise Fail("branch rq/%s is neither in this clone nor on %s" % (a.run, land.REMOTE), 1)
-        pr = "rq/%s" % a.run
+        pr = branch = "rq/%s" % a.run
     else:
-        head = (track.gh(["pr", "view", str(a.pr), "--json", "headRefOid", "--jq", ".headRefOid"], REPO) or "").strip()
-        if not head:
+        meta = json.loads(track.gh(["pr", "view", str(a.pr), "--json", "headRefOid,headRefName"], REPO) or "{}")
+        head = (meta.get("headRefOid") or "").strip()
+        branch = (meta.get("headRefName") or "").strip()
+        if not head or not branch:
             raise Fail("gh could not read the head of pull request %s" % a.pr, 1)
         pr = str(a.pr)
     up = rev(REPO, upstream(REPO))
@@ -696,12 +698,12 @@ def cmd_ci(a):
     if a.wait:
         for ln in ci.light(pr, base, head, REPO):
             print(ln)
-        got = ci.wait(head, base, REPO)
-        print("remote CI green on %s against %s: %s" % (head, base, got.get("url")))
+        got = ci.wait(head, base, branch, REPO)
+        print("remote CI green on %s: %s" % (head, got.get("url")))
         return 0
-    if not ci.find(head, base, REPO):
-        ci.ensure(head, base, REPO)
-    print(ci.describe(head, base, REPO))
+    if not ci.find(head, REPO):
+        ci.ensure(head, base, branch, REPO)
+    print(ci.describe(head, REPO))
     return 0
 
 

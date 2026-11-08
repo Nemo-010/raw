@@ -7,7 +7,7 @@ usage:
   python scripts/fshy/build.py --check               # build the public store to .tmp, verify accounting and leaks
 
 The JSON in dossier/ is the truth; every output here is derived and never committed. The public wiki, its API
-and its Worker are built in the public repository Azathothas/fshy.ajam.dev from the export of the public
+and its Worker are built in the public repository f-shy/fshy.ajam.dev from the export of the public
 store (its publish/export.py reads a checkout of this repository); this repository keeps the projection,
 because its rules name what they remove.
 Exit codes: 0 ok, 1 a check failed, 2 usage.
@@ -87,7 +87,7 @@ CJK = re.compile(r"[぀-ヿ㐀-䶿一-鿿가-힯]+")
 
 def fts_text(s):
     """Index text: CJK runs also emitted as overlapping bigrams (the same rule as site/worker/text.js in the public
-    repository Azathothas/fshy.ajam.dev)."""
+    repository f-shy/fshy.ajam.dev)."""
     def rep(m):
         t = m.group(0)
         return t + " " + (" ".join(t[i:i + 2] for i in range(len(t) - 1)) if len(t) > 1 else t)

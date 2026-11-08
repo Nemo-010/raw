@@ -198,7 +198,7 @@ design makes that rot visible and cheap to repair.
       repository root and never `cd`s into its folder;
     - never copies the tree, never builds a store of its own and never runs the
       gate. One store is built for each commit of the checkout and shared. The
-      heavy checks run once per pushed head in the public repository's Actions
+      heavy checks run once per pushed head in this repository's Actions
       (section 0 step 8), never on this machine, and the light ones inside
       `scripts/rq merge`;
     - never runs `scripts/rq wipe` or `scripts/rq sync`: they belong to the merge
@@ -317,8 +317,9 @@ run with one unit (section 2 rule 14).
    or comments the lines left.
 8. **Land.** `scripts/rq land RUN --meets N,N` merges main into the run branch in
    git objects, renders the tables of the topics the run touched, checks the
-   records it touched and opens the pull request, in under a minute. It starts the
-   heavy checks on the pushed head in the public repository's Actions;
+   records it touched and opens the pull request, in under a minute. A push of
+   the run branch starts the heavy checks on that head in this repository's
+   Actions (a fork's push starts nothing, so `land` asks for a run);
    `scripts/rq ci RUN` shows them (section 0 step 8).
 
 ⛔ **A run ends at its pull request; the session does not.** After `scripts/rq land`,

@@ -644,7 +644,7 @@ PIN_FILE = os.path.join(HERE, "public.lock")
 
 
 def public_pin():
-    """The commit of Azathothas/fshy.ajam.dev that fr.py must match (scripts/fshy/public.lock)."""
+    """The commit of f-shy/fshy.ajam.dev that fr.py must match (scripts/fshy/public.lock)."""
     for ln in open(PIN_FILE, encoding="utf-8"):
         m = re.match(r"^commit ([0-9a-f]{40})\s*$", ln)
         if m:

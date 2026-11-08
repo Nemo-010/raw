@@ -364,8 +364,8 @@ ranking (`rank.js`) and the read-only SQL guard (`guard.js`). The twins must giv
   the public side already holds the rule. Never move the pin to a commit that is not on the public `main`
   except to test a public pull request that is not merged yet, and then say so in the pull request: the
   merge session moves the pin to the merge commit before it merges.
-- **The pin is checked for age.** The job `lock-fresh` of the workflow `f-research-ci` in
-  `f-shy/fshy.ajam.dev` runs `python scripts/fshy/check_lock_fresh.py` every day; a pull request that changes
+- **The pin is checked for age.** The job `lock-fresh` of this repository's workflow `gate` runs
+  `python scripts/fshy/check_lock_fresh.py` on every push and on a manual dispatch; a pull request that changes
   the pin runs `sh scripts/research/ci-checks.sh lock` in its own clone. It asks the GitHub
   API for the newest commit of the public default branch that changed `site/worker/guard.js`, `rank.js`, `text.js` or
   `test/parity.json`, and fails when the pin does not contain it. Ancestry decides, not the date. Exit 0 is fresh, 1 is

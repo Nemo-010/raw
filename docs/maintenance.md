@@ -8,7 +8,7 @@ rule 14).
 ## The weekly five minutes
 
 ```bash
-# in CI (the public repository's Actions, on every pushed head), or in an own clone; never in the research checkout
+# in CI (this repository's Actions, on every pushed head), or in an own clone; never in the research checkout
 sh scripts/gate.sh --root .                 # CI or an own clone: definition of done; exit 0 or a named defect
 python scripts/report/render.py --check     # do the documents still agree with the records
 python scripts/sources/manifest.py --verify sources/
@@ -24,7 +24,7 @@ others are green:
 
 | command | refuses |
 |---|---|
-| `gate.sh` (CI in the public repository's Actions, or an own clone) | a schema defect, a stale record, an uncited verified record, a missing document, an AI attribution, a decimal unit where a binary one belongs |
+| `gate.sh` (CI in this repository's Actions, or an own clone) | a schema defect, a stale record, an uncited verified record, a missing document, an AI attribution, a decimal unit where a binary one belongs |
 | `render.py --check` | a table in `docs/` that disagrees with the records it is a view of |
 | `manifest.py --verify` | a `sources/` capture whose hash or size no longer matches its manifest row, or a file with no row |
 | `hygiene.py` | scratch, a credential, build output, a vendored `.git` or an oversize capture heading for a commit |
@@ -150,8 +150,8 @@ The rulings are on issue #48.
 
 | what | who holds it | what stops without it | what still works | recovery |
 |---|---|---|---|---|
-| the GitHub account `Azathothas` | one holder, alone. It owns both repositories, opens and merges every pull request, and holds the only `gh` token (keyring, scopes `repo`, `workflow`, `gist`, `read:org`) | push, pull requests, merges, issues, CI, the public repository | everything local: `sh scripts/gate.sh` in a local clone, `scripts/fr`, a research run up to `land` with `RQ_NO_GITHUB=1` (it stops before the pull request; issue text goes to `.tmp/<run>/issue.md`, the pull request's body to `.tmp/<run>/pr.md`) | restore the account, or push both repositories to another host from any clone (`git push --mirror NEWREMOTE`); every clone holds the full history |
-| GitHub Actions of the public repository `f-shy/fshy.ajam.dev` | GitHub | CI: the workflow `f-research-ci` on each pushed head; `scripts/rq merge` stops when that run fails, skips a required job, or does not finish within 60 minutes | the same gate in a local clone: `sh scripts/gate.sh --root . --strict` and `scripts/rq gatecmp --base origin/main` | merge with `scripts/rq merge RUN --no-ci` (the light checks still run) only after the local gate is green, and say so in a pull request comment |
+| the maintainer's GitHub account | one holder, alone. It merges every pull request and holds the only `gh` token | push, pull requests, merges, issues, CI, the public repository | everything local: `sh scripts/gate.sh` in a local clone, `scripts/fr`, a research run up to `land` with `RQ_NO_GITHUB=1` (it stops before the pull request; issue text goes to `.tmp/<run>/issue.md`, the pull request's body to `.tmp/<run>/pr.md`) | restore the account, or push both repositories to another host from any clone (`git push --mirror NEWREMOTE`); every clone holds the full history |
+| GitHub Actions of `f-shy/raw` | GitHub | the gate on each pushed head; `scripts/rq merge` stops when that run fails, skips a required job, or does not finish within 60 minutes | the same gate in a local clone: `sh scripts/gate.sh --root . --strict` and `scripts/rq gatecmp --base origin/main` | merge with `scripts/rq merge RUN --no-ci` (the light checks still run) only after the local gate is green, and say so in a pull request comment |
 | the page broker, `*.web.pkgforge.dev` and `api.gh.pkgforge.dev` | one zone. There is no client-side cap. When it is saturated it answers 429 or 503 with `Retry-After`, and `scripts/rq capture` prints when to read again | `scripts/rq capture` and `scripts/broker/broker.sh` exit 4 | a fetch with another tool is registered: `scripts/rq capture --lane WS --from-file FILE URL`. The quote check is the same | `sh scripts/broker/broker.sh status --human`; point `BROKER_READ`, `BROKER_FETCH`, `BROKER_SEARCH`, `BROKER_ARCHIVE`, `BROKER_CRAWL`, `BROKER_RESEARCH` and `BROKER_GH` at another broker |
 | the research machine and its `.tmp/` | the research checkout | run folders `.tmp/<run>/`, leases, session folders, the shared store; `scripts/rq wipe` deletes them at the end of each merge pass | a landed run: a merge session in any clone reads its manifest. An integrated run: its branch is on `origin` | make a new research checkout (a clone, with `git config rq.researchCheckout true`); plan the lost work again. Evidence that records cited under `.tmp/` and that still existed on 2026-10-28 is in `sources/p/` by content hash (issue #48); the 33 paths that were already lost, and the records whose claims must be re-measured, are issue #51 |
 | Cloudflare, the public host | one Cloudflare account (public repository) | the public site, API and MCP | the published corpus is `data/` in git, and its build runs anywhere: `python publish/build.py --site site/dist` in a clone of the public repository, then `node site/worker/test/smoke.mjs` serves it on workerd | the deploy is not written yet (public issue #8 decided GitHub Actions, a `production` environment and an R2 bucket for the database files); until it is, there is nothing deployed to recover. When it is written, its recovery is the deploy workflow run against another account's token |
