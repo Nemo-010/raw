@@ -584,7 +584,8 @@ def claim_cases():
         return {"body": body, "createdAt": at}
     cl = [C("rq claim: run R1 topic compute started at 2026-10-29T10:00:00Z, in one clone.", "2026-10-29T10:00:00Z")]
     v = track.claim_verdict
-    ok(v(["rq:research"], cl, now, 24)[0], "an issue without rq:active is free")
+    ok(v(["rq:research"], [], now, 24)[0], "an issue with no claim comment is free")
+    ok(not v(["rq:research"], cl, now, 24)[0], "the claim comment alone holds, with or without the label")
     ok(not v(A, cl, now, 24, "compute")[0], "a claim younger than claim_hours holds its topic")
     ok(v(A, cl, now, 24, "storage")[0], "a claim holds only its own topic: another topic of the issue is free")
     legacy = [C("rq claim: run R0 started at 2026-10-29T10:00:00Z", "2026-10-29T10:00:00Z")]
@@ -4890,16 +4891,17 @@ def claim_case(repo, tmp):
            "rq:active" not in [x["name"] for x in gh.issues[53]["labels"]] and
            phase_of("claim test comment fails") == "closed" and not state.claims(repo, 53),
            "a failed claim comment is refused: no comment, no label, the run closed, no local claim (F-02; %s)" % err)
-        # the label rq:active that GitHub refuses: the claim is given back
+        # the label rq:active that GitHub refuses: the comment alone is the claim
         gh = FakeIssues(fail={"edit"})
         track.gh_run = gh
         gh.issue(54)
         r, err = open_(54, why="claim test label fails")
         b = gh.bodies(54)
-        ok(r is None and err and "rq:active could not be added" in err and len(b) == 2 and b[1].startswith("rq released:")
-           and track.claim_verdict(["rq:research", "rq:active"], gh.issues[54]["comments"], common.utc_now(), hours,
-                                   "ci-cd-runners")[0] and phase_of("claim test label fails") == "closed",
-           "a failed label write gives the claim back and is refused (F-02; %s)" % err)
+        ok(r is not None and not err and len(b) == 1 and b[0].startswith("rq claim:")
+           and not track.claim_verdict(["rq:research"], gh.issues[54]["comments"], common.utc_now(), hours,
+                                       "ci-cd-runners")[0]
+           and phase_of("claim test label fails") != "closed",
+           "a failed label write keeps the comment as the claim (H1; %s)" % err)
         # the read-back that fails: the claim cannot be checked against another machine, so it is given back
         gh = FakeIssues(fail={"view2"})
         track.gh_run = gh

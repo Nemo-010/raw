@@ -122,6 +122,18 @@ def noreply_email(repo=REPO):
     return out
 
 
+LOGIN = {}
+
+
+def login(repo=REPO):
+    """The login of the account gh is signed in as, asked once per process. None when gh cannot answer."""
+    if "login" in LOGIN:
+        return LOGIN["login"]
+    out = (gh(["api", "user", "--jq", ".login"], repo) or "").strip()
+    LOGIN["login"] = out or None
+    return LOGIN["login"]
+
+
 def with_repo(args):
     """gh issue, pr and label calls name this repository with --repo, unless they name one already."""
     if GITHUB_REPO and args[:1] and args[0] in ("issue", "pr", "label") and "--repo" not in args and "-R" not in args:
@@ -272,10 +284,8 @@ def describe(ev, hours):
 def claim_verdict(labels, comments, now, hours, topic=None, pr_states=None):
     """Is an rq:research issue free for a new run on `topic`? labels: names; comments: [{"body", "createdAt"}], oldest
     first; pr_states: see live_claims. -> (free, why). Only the claims of the same topic count, so an issue that is run
-    once for each topic takes one run per topic at a time; a claim that names no topic counts for every topic. An issue
-    without the label rq:active has no live claim (a merge, a release or a person removed it)."""
-    if "rq:active" not in labels:
-        return True, "no live claim"
+    once for each topic takes one run per topic at a time; a claim that names no topic counts for every topic. A claim
+    lives in its `rq claim:` comment; the label rq:active is a convenience a contributor without triage rights cannot add."""
     live, expired = live_claims(comments, now, hours, pr_states)
     mine = [e for e in live if same_topic(e, topic)]
     if mine:
@@ -308,8 +318,9 @@ def pr_states_of(comments, repo=REPO, known=None):
 
 
 def claim(n, run, hours, now, repo=REPO, topic=None, info=None):
-    """Claim rq:research issue N for a run on `topic`: a comment with the run id, the topic and the UTC time, and the
-    label rq:active, so another session, on the same GitHub account or not, sees that the issue is taken. -> (written,
+    """Claim rq:research issue N for a run on `topic`: a comment with the run id, the topic and the UTC time, and,
+    when the account may write it, the label rq:active. The comment is the claim, so another session, on the same
+    GitHub account or not, sees that the issue is taken. -> (written,
     message). Refuses a live claim of the same topic. info, a dict, gets "per_topic" when the issue was read: True for
     an issue that is run once for each topic, whose run plans only its own topic's bullets (W5-01).
 
@@ -407,11 +418,14 @@ def _claim(n, run, hours, now, repo, topic, info):
                    "network), so the issue is not claimed.%s %s" % (n, note, again), 1)
     from common import test_stop
     test_stop("claim")  # the selftest's kill after the claim comment: rq close of the run gives the claim back
+    unlabelled = False
     if gh(["issue", "edit", str(n), "--add-label", "rq:active"], repo) is None:
         forget_labels(repo)
-        raise Fail("issue #%d: the label rq:active could not be added, so another session would read the issue as free; "
-                   "the claim is %s. %s" % (n, give_back(n, run, topic, "the label rq:active could not be added", repo),
-                                            again), 1)
+        # The comment is the claim. A contributor without triage rights cannot add the label; the
+        # claim still names the run and the topic, and claim_verdict reads it.
+        unlabelled = True
+        if info is not None:
+            info["claim_unlabelled"] = True
     back = issue_state(n, repo)
     if back is None:
         raise Fail("issue #%d: the claim could not be read back to look for a claim written at the same moment; it is "
@@ -422,7 +436,8 @@ def _claim(n, run, hours, now, repo, topic, info):
                    "claim is %s. Take another free issue from scripts/rq issues"
                    % (n, first["run"], topic or "-", give_back(n, run, topic, "run %s claimed topic %s a moment earlier"
                                                                % (first["run"], topic or "-"), repo)), 1)
-    return True, "claimed issue #%d for topic %s (%s)" % (n, topic or "-", why)
+    note = "; the label rq:active could not be added, so the claim is the comment alone" if unlabelled else ""
+    return True, "claimed issue #%d for topic %s (%s)%s" % (n, topic or "-", why, note)
 
 
 def earlier_claim(comments, run, topic, now, hours, pr_states=None):
@@ -507,9 +522,8 @@ def list_issues(now, hours, repo=REPO):
         return None
     lines = []
     for it in sorted(json.loads(out), key=lambda x: x["number"]):
-        labels = [x["name"] for x in it.get("labels") or []]
         comments = [{"body": c.get("body") or "", "createdAt": c.get("createdAt") or ""} for c in it.get("comments") or []]
-        live, _ = live_claims(comments, now, hours, pr_states_of(comments, repo)) if "rq:active" in labels else ([], [])
+        live, _ = live_claims(comments, now, hours, pr_states_of(comments, repo))
         if per_topic(it.get("body") or ""):
             v = "per topic: every topic is free" if not live else "per topic: free except " + "; ".join(
                 "%s (%s)" % (e["topic"] or "every topic", describe(dict(e, topic=None), hours)) for e in live)

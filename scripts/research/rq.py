@@ -609,6 +609,13 @@ def cmd_policy(a):
     return 0
 
 
+def cmd_import_bundle(a):
+    import import_bundle
+    run, lines = import_bundle.import_bundle(a.file, REPO)
+    print("\n".join(lines))
+    return 0
+
+
 def cmd_gatecmp(a):
     if research_checkout(REPO):
         raise Fail("the gate comparison runs in CI (the public repository's Actions, scripts/rq ci RUN), or in an own "
@@ -929,6 +936,8 @@ def main(argv=None):
     p = sp.add_parser("gatecmp", help="CI and an own clone: the gate on the head against the gate on the base")
     p.add_argument("--base", help="default: origin/main when the clone has it, else main (G2-10)")
     p.add_argument("--head"); p.set_defaults(f=cmd_gatecmp)
+    p = sp.add_parser("import-bundle", help="apply a contributor's run folder, received as a zip, onto a fresh run branch")
+    p.add_argument("file"); p.set_defaults(f=cmd_import_bundle)
     p = sp.add_parser("baseline-diff", help="rows a pull request adds to the baseline, refused without the label (rq merge checks it too)")
     p.add_argument("--base", required=True); p.add_argument("--head", default="HEAD"); p.add_argument("--labels", default="[]",
                    help="the pull request's label names, as a JSON list"); p.set_defaults(f=cmd_baseline_diff)

@@ -933,20 +933,22 @@ def land(run, repo=REPO, meets=()):
                                   "run to in-review.%s" % (r["branch"], "pushed to origin" if pushed else "not on origin yet",
                                                            ", then ".join(ops), hand, again, last)]
         track.ensure_labels(repo)
-        url = (track.gh(["pr", "view", r["branch"], "--json", "url,state", "--jq", 'select(.state == "OPEN") | .url'], repo)
-               or "").strip()
+        head_ref = pr_head(r["branch"], repo)
+        url = (track.gh(["pr", "list", "--head", head_ref, "--state", "open", "--json", "url",
+                         "--jq", ".[0].url // empty"], repo) or "").strip()
         if url:
             # a second land (after a send-back) rewrites the body, so a line met since is ticked and the report is
             # current, and puts rq:review back in place of rq:changes: rq review lists only rq:review, and a fixed pull
             # request would otherwise never come back to the merge queue (G7-02)
-            track.gh(["pr", "edit", r["branch"], "--body-file", "-", "--remove-label", "rq:changes", "--add-label",
+            track.gh(["pr", "edit", url, "--body-file", "-", "--remove-label", "rq:changes", "--add-label",
                       "rq:review"], repo, body)
             notes.append("the pull request was open already; its body is rewritten and it is labelled rq:review again")
         else:
-            url = track.gh(["pr", "create", "--base", BASE, "--head", r["branch"], "--label", "rq:review", "--title",
+            url = track.gh(["pr", "create", "--base", BASE, "--head", head_ref, "--label", "rq:review", "--title",
                             pr_title(r["kind"], r["topic"], r["request"]), "--body-file", "-"], repo, body)
             if not url:
-                url = track.gh(["pr", "view", r["branch"], "--json", "url", "--jq", ".url"], repo)
+                url = (track.gh(["pr", "list", "--head", head_ref, "--state", "open", "--json", "url",
+                                 "--jq", ".[0].url // empty"], repo) or "").strip()
         if not (url or "").strip():
             # no pull request: the run keeps its phase, its leases (held, not review) and its claim, and says nothing on
             # the issue; the body waits in pr.md for the next land (G3-04)
@@ -1150,6 +1152,16 @@ def pr_state(r, repo=REPO):
     return (out or "").strip() or None
 
 
+def pr_head(branch, repo=REPO):
+    """The --head value for gh pr create: the branch when the push remote is the repository the pull request
+    names, else LOGIN:branch, which is how GitHub names a branch of a fork."""
+    url = git(repo, "remote", "get-url", REMOTE, check=False)
+    if not url or (track.GITHUB_REPO and track.GITHUB_REPO.lower() in url.lower()):
+        return branch
+    who = track.login(repo)
+    return "%s:%s" % (who, branch) if who else branch
+
+
 def pr_url(r, repo=REPO):
     return r.get("pr") or (track.gh(["pr", "view", r["branch"], "--json", "url", "--jq", ".url"], repo) or "").strip() or None
 
@@ -1201,6 +1213,12 @@ def merge(run, repo=REPO, wait_ci=True):
         if not rev(repo, ref_of(run)):
             fetch(repo, [run_refspec(run)])
             remote = rev(repo, "refs/remotes/%s/rq/%s" % (REMOTE, run))
+            if not remote and r.get("pr"):
+                m = re.search(r"/pull/(\d+)", r["pr"] or "")
+                if m:
+                    n = int(m.group(1))
+                    fetch(repo, ["+refs/pull/%d/head:refs/remotes/%s/pr/%d" % (n, REMOTE, n)])
+                    remote = rev(repo, "refs/remotes/%s/pr/%d" % (REMOTE, n))
             if not remote:
                 raise Fail("branch rq/%s is neither in this clone nor on %s" % (run, REMOTE), 1)
             git(repo, "update-ref", ref_of(run), remote, "")
