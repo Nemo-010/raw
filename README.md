@@ -196,7 +196,7 @@ scripts/rq check
 
 The heavy gate runs in CI on a pushed head, never in the research checkout, where a research session does not
 run it ([`AGENTS.md`](AGENTS.md) section 2 rule 14); an own clone can run it: `sh scripts/gate.sh --root .` and
-`scripts/rq gatecmp --base origin/main`.
+`scripts/rq gatecmp --base origin/main`. CI runs both on every pushed head.
 
 ## Licence
 
