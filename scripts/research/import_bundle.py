@@ -16,33 +16,41 @@ import units
 from common import Fail, REPO, run_dir, stamp
 
 DATA_SUFFIXES = (".json", ".jsonl", ".md", ".txt", ".tsv", ".csv", ".html", ".xml", ".yaml", ".yml")
+# the harness's own files in a run folder: a contributor's copy of .tmp/<run>/ carries them, they hold no work, and
+# a run that imports them would inherit a stale lock
+TRANSIENT = ("lock", "lock.holder")
 
 
 def _safe(member):
-    """A member path that stays inside the staging directory, or None."""
+    """-> ("data", name), ("skip", name) for a transient file of the run folder, or ("refuse", name)."""
     name = member.filename.replace("\\", "/")
     if not name or name.endswith("/"):
-        return None
+        return "refuse", name
     if name.startswith("/") or ":" in name.split("/")[0]:
-        return None
+        return "refuse", name
     parts = name.split("/")
     if any(p in ("", ".", "..") for p in parts):
-        return None
+        return "refuse", name
+    if parts[-1] in TRANSIENT:
+        return "skip", name
     if not name.lower().endswith(DATA_SUFFIXES):
-        return None
-    return name
+        return "refuse", name
+    return "data", name
 
 
 def extract(path, dest):
     """Extract the data members of the zip into dest, refusing a path that leaves it or a file that is not data.
+    The run folder's lock files are skipped: they are the harness's, not the contributor's work.
     -> the number of members written."""
     n = 0
     with zipfile.ZipFile(path) as zf:
         for m in zf.infolist():
             if m.is_dir() or m.filename.endswith("/"):
                 continue
-            name = _safe(m)
-            if name is None:
+            what, name = _safe(m)
+            if what == "skip":
+                continue
+            if what == "refuse":
                 raise Fail("the bundle carries %r, which is not a data file or does not stay inside the staging "
                            "directory. A bundle holds .json, .jsonl, .md, .txt, .tsv, .csv, .html, .xml or .yaml; "
                            "nothing in it is executed" % m.filename, 1)

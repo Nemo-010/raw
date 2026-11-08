@@ -1,5 +1,5 @@
 #!/bin/sh
-# The heavy checks of one commit of this repository, as the public repository's workflow runs them
+# The heavy checks of one commit of this repository, as this repository's workflow runs them
 # (settings.json ci_repo and ci_workflow; scripts/research/ci.py). Its log is public, so each check writes its
 # output to a file under $CI_LOGS and this prints one line per check: PASS NAME, FAIL NAME or SKIP NAME. The gate
 # comparison also prints each gate check as "NAME base X head Y", without the detail. Never print a check's output

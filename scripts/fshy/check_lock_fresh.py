@@ -7,8 +7,9 @@ pin move together (scripts/fshy/README.md, "Parity with the public Worker"). Thi
 newest commit on the default branch of the public repository that touched each of those files, and fails when
 the pin does not contain it. It decides by ancestry (the compare endpoint), never by date.
 
-It needs the network, so the offline gate (scripts/gate.sh) does not run it; the workflow gate of f-shy/raw runs
-it as scripts/research/ci-checks.sh lock, and its own job lock-fresh runs it on a manual dispatch.
+It needs the network, so the offline gate (scripts/gate.sh) does not run it; the gate job's linux script of f-shy/raw
+runs it when the head moves the pin (scripts/research/ci-checks.sh linux), and the daily run is
+f-research-ci.yml's lock-fresh job in f-shy/fshy.ajam.dev.
 
 usage:
   python scripts/fshy/check_lock_fresh.py              check the pin against the public repository

@@ -92,7 +92,7 @@ while [ $# -gt 0 ]; do
 done
 
 # AGENTS.md section 2 rule 14: research runs with 30 or more agents in one checkout, so the research checkout runs no
-# gate. The gate runs once, in CI on the pushed head ($CI is set there: the public repository's Actions), or in an own clone. --selftest builds only
+# gate. The gate runs once, in CI on the pushed head ($CI is set there: this repository's Actions), or in an own clone. --selftest builds only
 # scratch trees and is not refused.
 if [ "$SELFTEST" -eq 0 ] && [ -z "${CI:-}" ] && [ -n "$ROOT" ] && [ -e "$ROOT/.git" ]; then
   case "$(git -C "$ROOT" config --get rq.researchCheckout 2>/dev/null)" in
