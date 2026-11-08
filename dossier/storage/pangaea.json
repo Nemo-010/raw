@@ -1,0 +1,110 @@
+{
+  "topic": "storage",
+  "slug": "pangaea",
+  "provider": "PANGAEA (Data Publisher for Earth & Environmental Science)",
+  "url": "https://www.pangaea.de",
+  "category": "academic",
+  "free_tier": {
+    "stated": "Free to publish ('PANGAEA can be used free of charge'; a voluntary 500 EUR contribution is appreciated, not required). No total-volume cap found; the stated cap is per file.",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://wiki.pangaea.de/wiki/Binary_objects",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap: 'Individual files must be less than 15 GB",
+    "bytes": 15000000000,
+    "source_url": "https://wiki.pangaea.de/wiki/Binary_objects",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "per-object-cap: 'Individual files must be less than 15 GB in size.' Retention: permanent (WDS member, DOI per dataset)",
+    "source_url": "https://wiki.pangaea.de/wiki/Binary_objects",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free, anonymous, direct HTTPS with `Accept-Ranges: bytes` and `Access-Control-Allow-Origin: *`. Originals served from download.pangaea.de.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "No upload API — submission is a web form + editor-issued upload link. Read side is fully scriptable: `https://download.pangaea.de/dataset/<ID>/files/<FILENAME>`, allfiles.zip/tar, and `?format=textfile|metadata_jsonl|linkset_json` on the DOI resolver. Works with plain curl/wget (the documented 'download multiple files' page is a file list).",
+  "chaining": "Unlimited datasets per login; each DOI mints a fresh dataset directory with independent quota. Originals are addressable per-file, so a caller can pull exactly the bytes wanted rather than the whole bundle.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap: 'Individual files must be less than 15 GB",
+      "source": "https://wiki.pangaea.de/wiki/Binary_objects"
+    }
+  ],
+  "limits_note": "per-object-cap: 'Individual files must be less than 15 GB in size.' Retention: permanent (WDS member, DOI per dataset). Between per-file cap and total there is a human editorial gate — 'might take up to several weeks'. Read constraint: no rate limit observed; the per-dataset bundle zip (allfiles.zip) is 401-gated while individual originals are 200.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "inferred from the category 'academic'; the source record states no identity cost, so this is a class assumption, not evidence",
+    "country": null
+  },
+  "reliability_note": "Submission queue is weeks long and editor-mediated; data may be reformatted on ingest for tabular submissions (originals are kept as binary objects and served byte-for-byte).",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://wiki.pangaea.de/wiki/Binary_objects",
+      "date": "2026-10-21",
+      "proved": "'Individual files must be less than 15 GB in size'"
+    },
+    {
+      "url": "https://www.pangaea.de/submit/index.php",
+      "date": "2026-10-21",
+      "proved": "'PANGAEA can be used free of charge'; 'might take up to several weeks'"
+    },
+    {
+      "url": "https://download.pangaea.de/dataset/958362/files/PS122_1_6_16_20191105_1_ROV_still_image_20191105T025942_IMG_8059.JPG",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, Content-Length 1962969, downloaded 1962969 bytes, body starts ffd8ff (real JPEG, original retrievable)"
+    },
+    {
+      "url": "https://download.pangaea.de/dataset/958362/allfiles.zip",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 401 Unauthorized (bundle gated, individual files not)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Free to publish ('PANGAEA can be used free of charge'; a voluntary 500 EUR contribution is appreciated, not required). No total-volume cap found; the stated cap is per file.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D7-domain-science-repos.json",
+    "seed_area": "D/D7",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D7"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/academic.md",
+    "document_section": "Domain science repositories",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Free to publish ('PANGAEA can be used free of charge'; a voluntary 500 EUR contribution is appreciated, not required). No total-volume cap found; the stated cap is per file.",
+    "limits_verbatim": "per-object-cap: 'Individual files must be less than 15 GB in size.' Retention: permanent (WDS member, DOI per dataset). Between per-file cap and total there is a human editorial gate — 'might take up to several weeks'. Read constraint: no rate limit observed; the per-dataset bundle zip (allfiles.zip) is 401-gated while individual originals are 200.",
+    "egress_verbatim": "Free, anonymous, direct HTTPS with `Accept-Ranges: bytes` and `Access-Control-Allow-Origin: *`. Originals served from download.pangaea.de.",
+    "chaining_verbatim": "Unlimited datasets per login; each DOI mints a fresh dataset directory with independent quota. Originals are addressable per-file, so a caller can pull exactly the bytes wanted rather than the whole bundle.",
+    "tooling_verbatim": "No upload API — submission is a web form + editor-issued upload link. Read side is fully scriptable: `https://download.pangaea.de/dataset/<ID>/files/<FILENAME>`, allfiles.zip/tar, and `?format=textfile|metadata_jsonl|linkset_json` on the DOI resolver. Works with plain curl/wget (the documented 'download multiple files' page is a file list).",
+    "interface_verbatim": "rest",
+    "agent_focus": "domain-specific scientific data repositories with large free quotas (not generalist: Zenodo/OSF/Dataverse excluded as already done)"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

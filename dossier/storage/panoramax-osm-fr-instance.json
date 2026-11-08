@@ -1,0 +1,125 @@
+{
+  "topic": "storage",
+  "slug": "panoramax-osm-fr-instance",
+  "provider": "Panoramax — OSM-FR instance (panoramax.openstreetmap.fr) ⭐",
+  "url": "https://panoramax.openstreetmap.fr",
+  "category": "federated crowdsourced street-level imagery (open-source, self-hostable)",
+  "free_tier": {
+    "stated": "NO QUOTA ANYWHERE IN THE SERVER. There is no quota code, no quota column in the DB migrations, and no quota endpoint — because the feature does not exist. A contributor filed Feature Request #334 '(Feature Request) Disable uploads when less than X GB of storage is available', still Open 5 months later, precisely because an admin cannot cap anything. Storage is whatever the instance's disks hold: OSM-FR alone reports 22.7M pictures = 48.5 TB of originals + 22.5 TB of derivates.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://gitlab.com/panoramax/server/api/-/work_items/334",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://gitlab.com/panoramax/server/api/-/work_items/334",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://gitlab.com/panoramax/server/api/-/work_items/334",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Unmetered and CDN-friendly: no auth on any GET, plain nginx serving, Accept-Ranges honored. Verified 206 Partial Content with Content-Range: bytes 0-1023/3336348 on a live HD original.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "REST + OGC API Features + STAC 1.0 + STAC item-search. POST /api/upload_sets → POST /api/upload_sets/{id}/files → POST /api/upload_sets/{id}/complete. Bearer token from POST /api/auth/tokens/generate.",
+  "tooling": "panoramax_cli (v1.4.1, Windows/Linux binaries + Python lib) with `upload`, `download`, `transfer`, `migration` subcommands; Docker `panoramax/api`; JOSM/iD plugins; the CLI can also *transfer* sequences between instances, so one file can be replicated across the whole federation.",
+  "chaining": "Upload once → replicate to N instances with `panoramax_cli transfer` → each instance serves its own /images/<2/2/2/2>/<uuid>.jpg path → front the whole federation with Cloudflare. Since every picture is addressed by a stable UUID and every asset URL is in the STAC item's `assets.hd.href`, a proxy can rewrite to whichever instance is alive.",
+  "limits": [],
+  "limits_note": "two-object model, must be JP(E)G (HEIC unsupported — issue #186), EXIF GPS + timestamp mandatory, images deduplicated by distance/rotation within an upload set. Approx 18 MB per 96 MP photo. Nothing enforces a byte ceiling.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email — but indirectly. `/api/configuration` on OSM-FR literally returns `\"registration_is_open\": true` and `/api/auth/login` 302s to openstreetmap.org/oauth2/authorize; the OSM signup form (/user/new) accepts `user[email]` + `user[display_name]` + password, no affiliation, no .edu, no review, email-confirm only. IGN instance uses its own Keycloak (`panoramax.ign.fr/oauth/realms/geovisio`). Eithe…",
+    "country": null
+  },
+  "reliability_note": "Volunteer hardware with ZFS RAIDZ2 + daily remote snapshots; no SLA and no capacity guard, so an instance can silently fill and start 500ing on upload — that is the whole reason #334 exists.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://panoramax.openstreetmap.fr/api/configuration",
+      "date": "2026-10-21",
+      "proved": "literal: {\"auth\":{\"enabled\":true,\"registration_is_open\":true,...},\"geovisio_version\":\"2.15.1-22-gf754cc9\"}"
+    },
+    {
+      "url": "https://panoramax.openstreetmap.fr/api",
+      "date": "2026-10-21",
+      "proved": "live STAC catalog, 2.15.1, links to /api/upload_sets, /api/users/, CC-BY-SA-4.0"
+    },
+    {
+      "url": "https://panoramax.openstreetmap.fr/images/20/1f/c2/ac/ddad-4381-b3eb-111519d2c7bb.jpg",
+      "date": "2026-10-21",
+      "proved": "200, Content-Length: 3336348, image/jpeg, no auth"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "same URL with Range: bytes=0-1023 — HTTP/1.1 206 Partial Content, Content-Range: bytes 0-1023/3336348"
+    },
+    {
+      "url": "https://gitlab.com/panoramax/server/api/-/work_items/334",
+      "date": "2026-10-21",
+      "proved": "open feature request to *add* a storage floor; proves no quota mechanism exists"
+    },
+    {
+      "url": "https://forum.geocommuns.fr/t/storage-needs-for-a-panoramax-instance/3205",
+      "date": "2026-10-21",
+      "proved": "100M pictures across 10 instances, 1M 72MP pictures ≈ 9 TB originals, 360° tiling doubles it"
+    },
+    {
+      "url": "https://docs.panoramax.fr/backend/install/settings/",
+      "date": "2026-10-21",
+      "proved": "FS_PERMANENT_URL = 'definitive storage of original, high-definition ... pictures'; derivates are only thumb/sd/tiles, i.e. the hd asset IS the original"
+    },
+    {
+      "url": "https://docs.panoramax.fr/cli/COMMANDS/",
+      "date": "2026-10-21",
+      "proved": "`upload`, `download`, `transfer`, `migration` subcommands"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "NO QUOTA ANYWHERE IN THE SERVER. There is no quota code, no quota column in the DB migrations, and no quota endpoint — because the feature does not exist. A contributor filed Feature Request #334 '(Feature Request) Disable uploads when less than X GB of storage is available', still Open 5 months later, precisely because an admin cannot cap anything. Storage is whatever the instance's disks hold: OSM-FR alone reports 22.7M pictures = 48.5 TB of originals + 22.5 TB of derivates.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H16-citizen-science-and-heritage.json",
+    "seed_area": "H/H16",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "H/H16"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Citizen science and heritage",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 8,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "NO QUOTA ANYWHERE IN THE SERVER. There is no quota code, no quota column in the DB migrations, and no quota endpoint — because the feature does not exist. A contributor filed Feature Request #334 '(Feature Request) Disable uploads when less than X GB of storage is available', still Open 5 months later, precisely because an admin cannot cap anything. Storage is whatever the instance's disks hold: OSM-FR alone reports 22.7M pictures = 48.5 TB of originals + 22.5 TB of derivates.",
+    "limits_verbatim": "two-object model, must be JP(E)G (HEIC unsupported — issue #186), EXIF GPS + timestamp mandatory, images deduplicated by distance/rotation within an upload set. Approx 18 MB per 96 MP photo. Nothing enforces a byte ceiling.",
+    "egress_verbatim": "Unmetered and CDN-friendly: no auth on any GET, plain nginx serving, Accept-Ranges honored. Verified 206 Partial Content with Content-Range: bytes 0-1023/3336348 on a live HD original.",
+    "chaining_verbatim": "Upload once → replicate to N instances with `panoramax_cli transfer` → each instance serves its own /images/<2/2/2/2>/<uuid>.jpg path → front the whole federation with Cloudflare. Since every picture is addressed by a stable UUID and every asset URL is in the STAC item's `assets.hd.href`, a proxy can rewrite to whichever instance is alive.",
+    "identity_verbatim": "email — but indirectly. `/api/configuration` on OSM-FR literally returns `\"registration_is_open\": true` and `/api/auth/login` 302s to openstreetmap.org/oauth2/authorize; the OSM signup form (/user/new) accepts `user[email]` + `user[display_name]` + password, no affiliation, no .edu, no review, email-confirm only. IGN instance uses its own Keycloak (`panoramax.ign.fr/oauth/realms/geovisio`). Either way: a plain gmail address is sufficient.",
+    "tooling_verbatim": "panoramax_cli (v1.4.1, Windows/Linux binaries + Python lib) with `upload`, `download`, `transfer`, `migration` subcommands; Docker `panoramax/api`; JOSM/iD plugins; the CLI can also *transfer* sequences between instances, so one file can be replicated across the whole federation.",
+    "interface_verbatim": "REST + OGC API Features + STAC 1.0 + STAC item-search. POST /api/upload_sets → POST /api/upload_sets/{id}/files → POST /api/upload_sets/{id}/complete. Bearer token from POST /api/auth/tokens/generate.",
+    "agent_focus": "Citizen-science / heritage / crowdsourced-imagery platforms judged on three things: (a) does a quota even exist in the server code, (b) can the ORIGINAL bytes be pulled back out, (c) what identity does signup demand. Plus the relay/P2P half: signalling vs true relaying, and which free relays carry data."
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "self_hosted": false
+}

@@ -1,0 +1,116 @@
+{
+  "topic": "compute",
+  "slug": "cratedb-cloud",
+  "provider": "CrateDB Cloud",
+  "url": "https://cratedb.com/pricing",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "Free plan, quoted: 'Free Plan Available', 'Shared environment', 'Single node', 'Free plan with 2 vCPUs, 2 GB RAM, and 8 GB storage (no credit card required)', 'Backups (once per day)'.",
+    "unit": "GiB",
+    "metered_on": "wall-clock",
+    "source_url": "https://cratedb.com/pricing",
+    "read_on": "2026-10-22",
+    "notes": "perpetual-free"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://cratedb.com/pricing",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://cratedb.com/pricing",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "not published on the page read: no egress term was found, so nothing is asserted",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://cratedb.com/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "REST API, the croud command-line client, a SQL console in the cloud console, and standard database drivers",
+  "tooling": "croud, the CrateDB Cloud command-line client; the Cloud REST API; standard database client libraries and drivers; SQL console in the cloud console",
+  "chaining": "CrateDB is distributed SQL with a Postgres wire protocol, so it accepts ordinary Postgres clients; 8 GB with a daily backup is the only free tier in this lane that states a backup schedule at all.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "8 GB of storage fails first; 2 vCPU and 2 GB RAM are enough for a small ingest and query loop but not for a parallel scan over the full 8 GB.",
+      "source": "https://cratedb.com/pricing"
+    }
+  ],
+  "limits_note": "8 GB of storage fails first; 2 vCPU and 2 GB RAM are enough for a small ingest and query loop but not for a parallel scan over the full 8 GB.",
+  "binding": "per-object-cap",
+  "binding_note": "8 GB of storage fails first; 2 vCPU and 2 GB RAM are enough for a small ingest and query loop but not for a parallel scan over the full 8 GB.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no card: the pricing page states 'Free plan with 2 vCPUs, 2 GB RAM, and 8 GB storage (no credit card required)'. No hold exists because no payment method is taken on the free plan. The signup fields are not quoted, so the email requirement is inferred rather than read, and debit and prepaid acceptance are not stated.",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://cratedb.com/pricing",
+      "date": "2026-10-22",
+      "proved": "'Free plan with 2 vCPUs, 2 GB RAM, and 8 GB storage (no credit card required)' and 'Backups (once per day)', quoted"
+    },
+    {
+      "url": "https://cratedb.com/docs/cloud/en/latest/",
+      "date": "2026-11-03",
+      "proved": "a command-line client, croud, exists",
+      "capture": "sha256:cf62ef71004e06133c5ebfe870565b239f03765c690a5559f75701ccbf7982fb",
+      "quote": "Use services from the command-line."
+    },
+    {
+      "url": "https://cratedb.com/docs/cloud/en/latest/",
+      "date": "2026-11-03",
+      "proved": "an API exists",
+      "capture": "sha256:cf62ef71004e06133c5ebfe870565b239f03765c690a5559f75701ccbf7982fb",
+      "quote": "Programmatic access to services."
+    },
+    {
+      "url": "https://cratedb.com/docs/cloud/en/latest/",
+      "date": "2026-11-04",
+      "proved": "the Cloud docs index names croud as the API command-line client",
+      "capture": "sha256:cf62ef71004e06133c5ebfe870565b239f03765c690a5559f75701ccbf7982fb",
+      "quote": "API CLI (croud)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T06:40:18.802Z",
+  "notes": "The page lists the free plan inside the Shared card whose headline capacity is 'Up to 8 shared vCPUs and 12 GB RAM' and 'Up to 1 TB storage', which is the paid shared ceiling, not the free one; the parenthetical sentence is the free plan. Whether the free cluster suspends after inactivity is not stated. No probe was run.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "CrateDB Cloud",
+      "class": "sql-free-tier",
+      "category_as_written": "managed SQL",
+      "free_tier_kind": "perpetual-free",
+      "shape": {
+        "vcpu": 2,
+        "ram_gib": 2,
+        "disk_gib": 8
+      },
+      "seen_routes": [
+        "broker read 200 2026-10-22"
+      ],
+      "agents": [
+        "data-infra"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "superseded": {
+      "identity_cost": {
+        "kind": "email",
+        "detail": "as stated by the provider's signup page",
+        "country": null
+      }
+    }
+  }
+}

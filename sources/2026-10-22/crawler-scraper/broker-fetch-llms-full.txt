@@ -1,0 +1,377 @@
+# fetch: the origin's response, as-is
+
+> A transparent HTTP proxy: GET https://fetch.web.pkgforge.dev/<url> answers with the origin's status, headers and body, streamed, through Cloudflare's own transports first.
+
+Host: `fetch.web.pkgforge.dev`. State: built.
+
+Version: `891d53061c03`, openapi.json's `info.version`, the first 12 hex digits of the SHA-256 of the four root documents (llms.txt, llms-full.txt, openapi.json, SKILL.md, in that order, joined by a newline), each rendered with an empty version; it changes whenever anything a caller reads in them changes.
+
+Cost: free to every caller; no key, no account and no quota (never gated). The one exception is the operator's: a service can be switched off (503, reason `disabled`), and a spend breaker can cap each caller IP at 100 requests per 60 s for at most 12 hours (429, reason `rate-limited`).
+
+CORS: every answer carries `access-control-allow-origin: *` and exposes the provenance headers, a proxied answer included (the origin's own `access-control-allow-origin` replaced, its `access-control-allow-credentials` dropped); only an OPTIONS with `Access-Control-Request-Method` is this service's preflight (204), and it allows every request header the browser names; an OPTIONS without it is proxied to the origin like any other method, except on a root document or `/`, where any OPTIONS is the preflight; no credentials.
+
+Every service and its live status: https://web.pkgforge.dev/
+
+## When to use
+
+- raw bytes of a URL: status, headers, body as the origin sent them, except where `x-web-egress` reports a change
+- an origin behind a Cloudflare bot check: the default chain, no `__egress` named (cf-fetch; on a Cloudflare refusal, cf-vpc with a browser ClientHello, then a fetch provider; a 403 or 429 from a host Cloudflare does not serve goes once through cf-sockets)
+- an origin not served by Cloudflare that checks the TLS fingerprint: `__identity=browser&__egress=cf-sockets`; cf-sockets cannot reach a host Cloudflare serves, and naming it turns the escalation off
+- a resumable or revalidated download (If-Range, If-None-Match): `__egress=cf-sockets`
+- a GET, HEAD, POST, PUT, PATCH, DELETE or OPTIONS; a request body is forwarded on cf-fetch only
+- not for page text as Markdown: use read.web.pkgforge.dev
+
+## Shared parameters
+
+Two or more routes take each of these, as written here; each route names the ones it takes.
+
+| parameter | in | required | schema | meaning |
+| --- | --- | --- | --- | --- |
+| `target` | path | yes | `{"type":"string"}` | absolute http(s) URL, or host[:port]/path (https). OpenAPI cannot express a path parameter that holds `/`: the value may also be sent percent-encoded as one segment (`%2F` for `/`, `%3A` for `:`), and it is decoded once. |
+| `__egress` | query | no | `{"type":"string","examples":["cf-fetch","cf-sockets","broker:socks5","cf-vpc"]}` | transport id; default cf-fetch. cf-sockets = userland TLS 1.3, browser ClientHello. broker:socks5 = SOCKS5 tunnel, TLS end to end. cf-vpc = userland TLS 1.3 through Workers VPC (a relay Worker with no route of its own), browser ClientHello, for an https:// name that connect() refuses (Cloudflare-routed); fixed Cloudflare IPv6 literals only, /cdn-cgi/trace checked on each connection. Naming a transport with __egress (or the X-Proxy-Egress header) pins it and turns off the escalation of a refused cf-fetch answer (to cf-vpc or cf-sockets); __egress-fallbacks does not. A pinned transport that cannot apply to the request is set aside and the request goes on: cf-vpc for a host connect() opens goes to cf-sockets, cf-sockets for a host connect() refuses to cf-vpc, then __egress-fallbacks, then the default chain with its escalation; cannot apply also means cf-vpc with a probe that does not settle, an IP literal, an http:// target, a port off its list, a request body or no relay, cf-sockets with an http:// target or a request body, broker:socks5 with no proxy configured, and a transport that is not ready. x-web-egress then says `tried=<id>(not-applicable)+…` and `pinned=<id>`. With __identity=browser only cf-sockets and cf-vpc stand in. A pinned transport that applied and failed answers its own result. An id no transport has, here or in __egress-fallbacks, is a 400 `unknown-transport` listing the ids |
+| `__egress-fallbacks` | query | no | `{"type":"string"}` | comma-separated transport ids, tried in order on a dial failure before the first response byte; at most 4 transports are dialled per request |
+| `__identity` | query | no | `{"type":"string","enum":["passthrough","browser","fixed","edge"]}` | request header set: passthrough = the caller's own headers, user-agent included, minus hop-by-hop headers, this service's controls and, with __strip-platform-headers on, cf-*, cdn-loop and x-forwarded-*; browser = corpus profile (UA, client hints; header order and ClientHello on cf-sockets, cf-vpc and broker:socks5 only); fixed = the v1 Safari user-agent, the caller's Accept and Accept-Language kept and its client hints dropped; edge = Cloudflare-Workers UA. With no identity named the default is passthrough with the v1 rewrite: a scripted user-agent (curl, wget, a short one) is replaced by the v1 Safari one and x-web-egress says identity=fixed. Naming passthrough turns that rewrite off unless x-proxy-v1-ua-rewrite is set too |
+| `__profile` | query | no | `{"type":"string"}` | corpus profile id for identity=browser; default chrome-stable-latest-win64 |
+| `__provider` | query | no | `{"type":"string"}` | provider id, e.g. zenrows: a bodyless GET or HEAD goes to that provider only, no transport of ours dials; x-web-egress `egress=provider:<id> tried=provider:<id> provider=asked`, and x-web-provider, x-web-account, x-web-body, x-web-headers as on an escalated answer; unknown id 400, a provider that cannot fetch 503, held 429, failed 502 |
+| `__providers` | query | no | `{"type":"string","enum":["any","none"]}` | any (default) or none: none asks no fetch provider, so a Cloudflare refusal goes through cf-vpc at most and the origin's own answer is returned, and no provider's stored answer is served; every answer then carries x-web-providers: none. Another value is a 400 bad-request, and so is none with __provider |
+| `__redirects` | query | no | `{"type":"string","enum":["true","false","1","0","yes","no","on","off"]}` | rewrite a 3xx Location to point back through this proxy; default true. Every form (absolute, protocol-relative, root- or document-relative, backslash host) is resolved against the target as a browser does; a Location that is not http(s) is left as it is; x-web-egress ends `redirects=rewritten` when one was rewritten |
+| `__strip-platform-headers` | query | no | `{"type":"string","enum":["true","false","1","0","yes","no","on","off"]}` | drop the caller's own cf-*, cdn-loop, x-forwarded-* before the dial; default true. On cf-fetch, Cloudflare itself then adds cdn-loop, cf-ray, cf-worker, cf-ew-via and cf-visitor to the request the origin receives, and no setting removes them; cf-sockets, cf-vpc and broker:socks5 add none |
+| `__timeout-ms` | query | no | `{"type":"integer","minimum":0,"maximum":300000}` | connect deadline in ms, time to first byte only; default 0 (no deadline), max 300000. Set it to fail a slow origin with 504 after N ms |
+| `x-proxy-egress` | header | no | `{"type":"string","examples":["cf-fetch","cf-sockets","broker:socks5","cf-vpc"]}` | = __egress |
+| `x-proxy-egress-fallbacks` | header | no | `{"type":"string"}` | = __egress-fallbacks |
+| `x-proxy-identity` | header | no | `{"type":"string","enum":["passthrough","browser","fixed","edge"]}` | = __identity |
+| `x-proxy-persona` | header | no | `{"type":"string","enum":["passthrough","browser","fixed","edge"]}` | = x-proxy-identity (v1 name) |
+| `x-proxy-profile` | header | no | `{"type":"string"}` | = __profile |
+| `x-proxy-rewrite-redirects` | header | no | `{"type":"string","enum":["true","false","1","0","yes","no","on","off"]}` | = __redirects |
+| `x-proxy-strip-platform-headers` | header | no | `{"type":"string","enum":["true","false","1","0","yes","no","on","off"]}` | = __strip-platform-headers |
+| `x-proxy-forward-set-cookie` | header | no | `{"type":"string","enum":["true","false","1","0","yes","no","on","off"]}` | forward origin Set-Cookie; default true, except on a request a browser sent (one with Sec-Fetch-Mode), where Set-Cookie and the browser's Cookie are withheld unless this header is set: this host's cookie jar is shared by every site proxied through it |
+| `x-proxy-timeout-ms` | header | no | `{"type":"integer","minimum":0,"maximum":300000}` | = __timeout-ms |
+| `x-proxy-v1-ua-rewrite` | header | no | `{"type":"string","enum":["true","false","1","0","yes","no","on","off"]}` | replace a scripted UA (curl, wget, short) with the v1 browser UA; default true, and false when the request names identity passthrough |
+| `url` | query | yes | `{"type":"string","format":"uri"}` | absolute http(s) URL, percent-encoded |
+
+## Shared answers
+
+Two or more routes answer each of these, as written here; each route names the ones it answers.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | none | origin status, headers and body, streamed; an origin's own `x-web-*` headers are dropped, because that prefix is this service's provenance; the origin status passes through, except where x-web-egress reports a change: a cf-fetch range answered with an identity 206 is forwarded untouched with Content-Range and Content-Length (`range=partial(identity)`); a compressed 206 or any 416 is answered from the decoded representation, fetched again without Range, whatever Accept-Encoding the request sent: one plain range of a decoded body up to 64 MiB answers 206 with the decoded bytes and Content-Range over the decoded length, or 416 `bytes */<decoded length>` when it is unsatisfiable (`range=decoded-slice(<coding>)`), and a multi-range header, a larger body or a non-2xx retry answers whole (`range=whole-representation(<coding>)`); a 2xx that ignored the range under a coding other than gzip is re-issued without Range and answers with the retry's own status, the whole representation (`range=whole-representation(<coding>)`); a non-2xx under a coding other than gzip (a 416, say) is sent again with its Range for the runtime to decode, and keeps its status (`range=redialled(<coding>)`); a re-issue answered partial is refused with a 502. A whole body decoded from a content coding (`decoded=<coding>`, `range=whole-representation(<coding>)` or `range=redialled(<coding>)`) has no Content-Encoding or Content-Length, a decoded slice its own Content-Range and Content-Length; on each `responseFramingModified=true`, and a strong ETag is sent weak (`W/`): it still revalidates with If-None-Match and never matches If-Range, so a resume answers whole: for resumable or revalidated downloads use `__egress=cf-sockets`. cf-fetch always asks the origin for gzip and br (Cloudflare sets that coding on its subrequests); cf-sockets, cf-vpc and broker:socks5 ask for identity unless the caller asked for compression or `__identity=browser`, so an identity body keeps the origin's Content-Length and strong ETag |
+| 503 | `application/problem+json` | no usable transport in the chain |
+| 400 | `application/problem+json` | not a URL or a bare host; `__providers` other than any or none, or none with `__provider` (`bad-request`); a transport id no transport has (`unknown-transport`, body `unknownTransports` and `validTransports`); cf-sockets with an unusable port; with `__identity=browser`, which no platform handshake may stand in for, a pinned cf-sockets with an http:// target, or a pinned cf-vpc (`not-a-cf-vpc-target`) with an IP literal, an http:// target or a port outside 443, 8443, 2053, 2083, 2087, 2096, or a host connect() does not refuse when cf-sockets cannot stand in; without it each of these goes on through the transport that can |
+| 403 | `application/problem+json` | title `destination refused`, reason `destination-refused`: the guard refused, nothing dialled. Title `egress refused`, reason `platform-refused`: the platform refused the address after the dial (Cloudflare 1003, or any 1xxx code that is not a zone's), fatal. A Cloudflare zone's own 403 (`error code: <N>` with N one of 1005 to 1012, 1015, 1020, 1025 and 1027, the codes of a zone's own policy, its owner's ASN ban and its own Workers plan limits) is the origin's answer, passed through and escalated like any 403 |
+| 405 | `application/problem+json` | a method outside the list, or a root-document path with a method other than GET or HEAD |
+| 409 | `application/problem+json` | identity=browser on a chain with no fingerprint transport |
+| 429 | `application/problem+json` | `__provider=<id>` only, reason `held`: every account of the named provider is held by a rate limit or a spent allowance; `Retry-After` says when one reopens. An origin's own 429 is its answer, passed through |
+| 502 | `application/problem+json` | every transport in the chain failed; a request body on cf-sockets, cf-vpc or broker:socks5 counts as a failure |
+| 504 | `application/problem+json` | connect or total deadline expired |
+| 530 | `application/problem+json` | platform refusal, title `egress refused`: the status is the platform's (530, 520-526), the body names the Cloudflare error code, fatal, no fallback; reason `dns-failure` when the name did not resolve (1016, 1019), `origin-unreachable` for 520-526, `platform-refused` for any other 1xxx that is not a zone's. Always problem+json, also when the platform answered its HTML error page |
+| default | none | any status the origin answered with (a 404, a 301, a 500): the origin's status, headers and body, streamed as on a 200; a status listed here is also passed through when the origin sent it, and only this service's own answer is an RFC 9457 problem with `reason` |
+
+## Routes
+
+### GET /healthz
+
+service state and the running Worker version.
+
+JSON `{ok, service, version: {id, tag, at}, built, entry?, d1: {ok, ms, error?}, keys?: {state, ms}, gate?}`, always `no-store`. `version.id` is the Worker version that answered; `d1` is a `SELECT 1` on the service's D1 database, bounded at 1 s, and a failed one answers 503 with `ok: false`. `keys`, on a service that calls providers, says whether it could open one sealed key of the store with its own secret (`ok`, `failed`, `secret-unset`, `no-key`, `timeout`), never a value. `gate` says whether the operator or a spend breaker switched the service off; an off service still answers 200 here. A 200 says the Worker and its database answer, not that every route does. `checks.road` is the Workers VPC relay cf-vpc dials through: one call to it that dials nothing, within 1 s: `{ok, ms, addresses}`, or `ok: false` with `error` `unbound`, `failed`, `timeout` or `no-addresses`. A road that is down never makes the answer 503: cf-fetch and the providers still answer.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | `application/json` | up |
+| 503 | `application/json` | down: the same `application/json` body as the 200 with `ok: false`, not a problem; the D1 database did not answer `SELECT 1` within 1 s (`d1.error`: `failed`, `timeout`, `unbound`) |
+
+state and version:
+
+```bash
+curl -qfsS https://fetch.web.pkgforge.dev/healthz
+```
+
+### GET /{target}
+
+GET an origin URL, path form.
+
+`/https://host/path?q` (path-scheme) or `/host/path?q` (path-bare-host, https). `/https:/host/path` (one slash) is read as `https://host/path`, and the guard judges that URL. The query reaches the origin byte for byte, minus the controls listed below; any other key, `__token__` included, is forwarded. URL parsing normalises the path (dot segments resolved). Every answer carries `access-control-allow-origin: *` and `access-control-expose-headers: *` with the `x-web-*` names, never credentials; an origin's own `access-control-allow-origin` is replaced and its `access-control-allow-credentials` dropped. An OPTIONS with `Access-Control-Request-Method` is a browser preflight and is answered here, never dialled: 204, `access-control-allow-methods` the proxy's methods, `access-control-allow-headers` the headers the preflight asked for. An OPTIONS without it is proxied. A root-document path (`/llms.txt`, `/llms-full.txt`, `/openapi.json`, `/SKILL.md`) is never a target: GET and HEAD serve the document, OPTIONS is the CORS preflight (204), and any other method is 405 with `Allow: GET, HEAD`. A GET or HEAD of `/favicon.ico` or `/favicon.svg` is never a target either: it answers 301 to https://web.pkgforge.dev/favicon.svg. A target sent as one percent-encoded segment (`/https%3A%2F%2Fhost%2Fpath`, as an OpenAPI client encodes `{target}`) is decoded once. HEAD is the same route: no body, the GET's headers, content-length kept unless the body would be decoded.
+
+The shared parameters `target` (path) and `__egress`, `__egress-fallbacks`, `__identity`, `__profile`, `__provider`, `__providers`, `__redirects`, `__strip-platform-headers`, `__timeout-ms` (query) and `x-proxy-egress`, `x-proxy-egress-fallbacks`, `x-proxy-identity`, `x-proxy-persona`, `x-proxy-profile`, `x-proxy-rewrite-redirects`, `x-proxy-strip-platform-headers`, `x-proxy-forward-set-cookie`, `x-proxy-timeout-ms`, `x-proxy-v1-ua-rewrite` (header), each under Shared parameters.
+
+The shared answers 200, 400, 403, 405, 409, 429, 502, 503, 504, 530, default, each under Shared answers.
+
+path-scheme:
+
+```bash
+curl -qfsSL "https://fetch.web.pkgforge.dev/https://ip.pkgforge.dev/json"
+```
+
+path-bare-host:
+
+```bash
+curl -qfsSL "https://fetch.web.pkgforge.dev/ip.pkgforge.dev/json"
+```
+
+cf-sockets + browser identity, for an origin not served by Cloudflare that checks the TLS fingerprint (this one echoes the ClientHello it saw); for a Cloudflare-served origin name no __egress, so a refusal of cf-fetch goes on to cf-vpc, then a provider:
+
+```bash
+curl -qfsSL "https://fetch.web.pkgforge.dev/https://tls.peet.ws/api/clean?__egress=cf-sockets&__identity=browser"
+```
+
+### GET /
+
+GET an origin URL, ?url= form.
+
+`/?url=<percent-encoded URL>` (query-url). `url` is a control only on `/`; the other keys, minus the controls listed below, are appended to the target query byte for byte. A GET or HEAD of `/` with no query names no target and is the index of this service: A browser (`Accept: text/html`) gets an HTML index: links to the four root documents and the status page, and each route with its parameters and examples; any other caller gets llms.txt as `text/plain`. HEAD is the same route: no body, the GET's headers, content-length kept unless the body would be decoded.
+
+The shared parameters `url`, `__egress`, `__egress-fallbacks`, `__identity`, `__profile`, `__provider`, `__providers`, `__redirects`, `__strip-platform-headers`, `__timeout-ms` (query) and `x-proxy-egress`, `x-proxy-egress-fallbacks`, `x-proxy-identity`, `x-proxy-persona`, `x-proxy-profile`, `x-proxy-rewrite-redirects`, `x-proxy-strip-platform-headers`, `x-proxy-forward-set-cookie`, `x-proxy-timeout-ms`, `x-proxy-v1-ua-rewrite` (header), each under Shared parameters.
+
+The shared answers 200, 400, 403, 405, 409, 429, 502, 503, 504, 530, default, each under Shared answers.
+
+query-url:
+
+```bash
+curl -qfsSL "https://fetch.web.pkgforge.dev/?url=https%3A%2F%2Fip.pkgforge.dev%2Fjson"
+```
+
+### POST /{target}
+
+POST an origin URL, path form.
+
+`/https://host/path?q` (path-scheme) or `/host/path?q` (path-bare-host, https). `/https:/host/path` (one slash) is read as `https://host/path`, and the guard judges that URL. The query reaches the origin byte for byte, minus the controls listed below; any other key, `__token__` included, is forwarded. URL parsing normalises the path (dot segments resolved). Every answer carries `access-control-allow-origin: *` and `access-control-expose-headers: *` with the `x-web-*` names, never credentials; an origin's own `access-control-allow-origin` is replaced and its `access-control-allow-credentials` dropped. An OPTIONS with `Access-Control-Request-Method` is a browser preflight and is answered here, never dialled: 204, `access-control-allow-methods` the proxy's methods, `access-control-allow-headers` the headers the preflight asked for. An OPTIONS without it is proxied. A root-document path (`/llms.txt`, `/llms-full.txt`, `/openapi.json`, `/SKILL.md`) is never a target: GET and HEAD serve the document, OPTIONS is the CORS preflight (204), and any other method is 405 with `Allow: GET, HEAD`. A GET or HEAD of `/favicon.ico` or `/favicon.svg` is never a target either: it answers 301 to https://web.pkgforge.dev/favicon.svg. A target sent as one percent-encoded segment (`/https%3A%2F%2Fhost%2Fpath`, as an OpenAPI client encodes `{target}`) is decoded once.
+
+The shared parameters `target` (path) and `__egress`, `__egress-fallbacks`, `__identity`, `__profile`, `__provider`, `__providers`, `__redirects`, `__strip-platform-headers`, `__timeout-ms` (query) and `x-proxy-egress`, `x-proxy-egress-fallbacks`, `x-proxy-identity`, `x-proxy-persona`, `x-proxy-profile`, `x-proxy-rewrite-redirects`, `x-proxy-strip-platform-headers`, `x-proxy-forward-set-cookie`, `x-proxy-timeout-ms`, `x-proxy-v1-ua-rewrite` (header), each under Shared parameters.
+
+Request body: `application/octet-stream`, schema `{"type":"string","format":"binary"}`.
+
+The shared answers 200, 400, 403, 405, 409, 429, 502, 503, 504, 530, default, each under Shared answers.
+
+POST:
+
+```bash
+curl -qfsS -X POST --data-binary @body.json -H "content-type: application/json" "https://fetch.web.pkgforge.dev/https://httpbin.org/anything"
+```
+
+### POST /
+
+POST an origin URL, ?url= form.
+
+`/?url=<percent-encoded URL>` (query-url). `url` is a control only on `/`; the other keys, minus the controls listed below, are appended to the target query byte for byte.
+
+The shared parameters `url`, `__egress`, `__egress-fallbacks`, `__identity`, `__profile`, `__provider`, `__providers`, `__redirects`, `__strip-platform-headers`, `__timeout-ms` (query) and `x-proxy-egress`, `x-proxy-egress-fallbacks`, `x-proxy-identity`, `x-proxy-persona`, `x-proxy-profile`, `x-proxy-rewrite-redirects`, `x-proxy-strip-platform-headers`, `x-proxy-forward-set-cookie`, `x-proxy-timeout-ms`, `x-proxy-v1-ua-rewrite` (header), each under Shared parameters.
+
+Request body: `application/octet-stream`, schema `{"type":"string","format":"binary"}`.
+
+The shared answers 200, 400, 403, 405, 409, 429, 502, 503, 504, 530, default, each under Shared answers.
+
+query-url:
+
+```bash
+curl -qfsS -X POST --data-binary @body.json -H "content-type: application/json" "https://fetch.web.pkgforge.dev/?url=https%3A%2F%2Fip.pkgforge.dev%2Fjson"
+```
+
+### PUT /{target}
+
+PUT an origin URL, path form.
+
+`/https://host/path?q` (path-scheme) or `/host/path?q` (path-bare-host, https). `/https:/host/path` (one slash) is read as `https://host/path`, and the guard judges that URL. The query reaches the origin byte for byte, minus the controls listed below; any other key, `__token__` included, is forwarded. URL parsing normalises the path (dot segments resolved). Every answer carries `access-control-allow-origin: *` and `access-control-expose-headers: *` with the `x-web-*` names, never credentials; an origin's own `access-control-allow-origin` is replaced and its `access-control-allow-credentials` dropped. An OPTIONS with `Access-Control-Request-Method` is a browser preflight and is answered here, never dialled: 204, `access-control-allow-methods` the proxy's methods, `access-control-allow-headers` the headers the preflight asked for. An OPTIONS without it is proxied. A root-document path (`/llms.txt`, `/llms-full.txt`, `/openapi.json`, `/SKILL.md`) is never a target: GET and HEAD serve the document, OPTIONS is the CORS preflight (204), and any other method is 405 with `Allow: GET, HEAD`. A GET or HEAD of `/favicon.ico` or `/favicon.svg` is never a target either: it answers 301 to https://web.pkgforge.dev/favicon.svg. A target sent as one percent-encoded segment (`/https%3A%2F%2Fhost%2Fpath`, as an OpenAPI client encodes `{target}`) is decoded once.
+
+The shared parameters `target` (path) and `__egress`, `__egress-fallbacks`, `__identity`, `__profile`, `__provider`, `__providers`, `__redirects`, `__strip-platform-headers`, `__timeout-ms` (query) and `x-proxy-egress`, `x-proxy-egress-fallbacks`, `x-proxy-identity`, `x-proxy-persona`, `x-proxy-profile`, `x-proxy-rewrite-redirects`, `x-proxy-strip-platform-headers`, `x-proxy-forward-set-cookie`, `x-proxy-timeout-ms`, `x-proxy-v1-ua-rewrite` (header), each under Shared parameters.
+
+Request body: `application/octet-stream`, schema `{"type":"string","format":"binary"}`.
+
+The shared answers 200, 400, 403, 405, 409, 429, 502, 503, 504, 530, default, each under Shared answers.
+
+PUT:
+
+```bash
+curl -qfsS -X PUT --data-binary @body.json -H "content-type: application/json" "https://fetch.web.pkgforge.dev/https://httpbin.org/anything"
+```
+
+### PUT /
+
+PUT an origin URL, ?url= form.
+
+`/?url=<percent-encoded URL>` (query-url). `url` is a control only on `/`; the other keys, minus the controls listed below, are appended to the target query byte for byte.
+
+The shared parameters `url`, `__egress`, `__egress-fallbacks`, `__identity`, `__profile`, `__provider`, `__providers`, `__redirects`, `__strip-platform-headers`, `__timeout-ms` (query) and `x-proxy-egress`, `x-proxy-egress-fallbacks`, `x-proxy-identity`, `x-proxy-persona`, `x-proxy-profile`, `x-proxy-rewrite-redirects`, `x-proxy-strip-platform-headers`, `x-proxy-forward-set-cookie`, `x-proxy-timeout-ms`, `x-proxy-v1-ua-rewrite` (header), each under Shared parameters.
+
+Request body: `application/octet-stream`, schema `{"type":"string","format":"binary"}`.
+
+The shared answers 200, 400, 403, 405, 409, 429, 502, 503, 504, 530, default, each under Shared answers.
+
+query-url:
+
+```bash
+curl -qfsS -X PUT --data-binary @body.json -H "content-type: application/json" "https://fetch.web.pkgforge.dev/?url=https%3A%2F%2Fip.pkgforge.dev%2Fjson"
+```
+
+### PATCH /{target}
+
+PATCH an origin URL, path form.
+
+`/https://host/path?q` (path-scheme) or `/host/path?q` (path-bare-host, https). `/https:/host/path` (one slash) is read as `https://host/path`, and the guard judges that URL. The query reaches the origin byte for byte, minus the controls listed below; any other key, `__token__` included, is forwarded. URL parsing normalises the path (dot segments resolved). Every answer carries `access-control-allow-origin: *` and `access-control-expose-headers: *` with the `x-web-*` names, never credentials; an origin's own `access-control-allow-origin` is replaced and its `access-control-allow-credentials` dropped. An OPTIONS with `Access-Control-Request-Method` is a browser preflight and is answered here, never dialled: 204, `access-control-allow-methods` the proxy's methods, `access-control-allow-headers` the headers the preflight asked for. An OPTIONS without it is proxied. A root-document path (`/llms.txt`, `/llms-full.txt`, `/openapi.json`, `/SKILL.md`) is never a target: GET and HEAD serve the document, OPTIONS is the CORS preflight (204), and any other method is 405 with `Allow: GET, HEAD`. A GET or HEAD of `/favicon.ico` or `/favicon.svg` is never a target either: it answers 301 to https://web.pkgforge.dev/favicon.svg. A target sent as one percent-encoded segment (`/https%3A%2F%2Fhost%2Fpath`, as an OpenAPI client encodes `{target}`) is decoded once.
+
+The shared parameters `target` (path) and `__egress`, `__egress-fallbacks`, `__identity`, `__profile`, `__provider`, `__providers`, `__redirects`, `__strip-platform-headers`, `__timeout-ms` (query) and `x-proxy-egress`, `x-proxy-egress-fallbacks`, `x-proxy-identity`, `x-proxy-persona`, `x-proxy-profile`, `x-proxy-rewrite-redirects`, `x-proxy-strip-platform-headers`, `x-proxy-forward-set-cookie`, `x-proxy-timeout-ms`, `x-proxy-v1-ua-rewrite` (header), each under Shared parameters.
+
+Request body: `application/octet-stream`, schema `{"type":"string","format":"binary"}`.
+
+The shared answers 200, 400, 403, 405, 409, 429, 502, 503, 504, 530, default, each under Shared answers.
+
+PATCH:
+
+```bash
+curl -qfsS -X PATCH --data-binary @body.json -H "content-type: application/json" "https://fetch.web.pkgforge.dev/https://httpbin.org/anything"
+```
+
+### PATCH /
+
+PATCH an origin URL, ?url= form.
+
+`/?url=<percent-encoded URL>` (query-url). `url` is a control only on `/`; the other keys, minus the controls listed below, are appended to the target query byte for byte.
+
+The shared parameters `url`, `__egress`, `__egress-fallbacks`, `__identity`, `__profile`, `__provider`, `__providers`, `__redirects`, `__strip-platform-headers`, `__timeout-ms` (query) and `x-proxy-egress`, `x-proxy-egress-fallbacks`, `x-proxy-identity`, `x-proxy-persona`, `x-proxy-profile`, `x-proxy-rewrite-redirects`, `x-proxy-strip-platform-headers`, `x-proxy-forward-set-cookie`, `x-proxy-timeout-ms`, `x-proxy-v1-ua-rewrite` (header), each under Shared parameters.
+
+Request body: `application/octet-stream`, schema `{"type":"string","format":"binary"}`.
+
+The shared answers 200, 400, 403, 405, 409, 429, 502, 503, 504, 530, default, each under Shared answers.
+
+query-url:
+
+```bash
+curl -qfsS -X PATCH --data-binary @body.json -H "content-type: application/json" "https://fetch.web.pkgforge.dev/?url=https%3A%2F%2Fip.pkgforge.dev%2Fjson"
+```
+
+### DELETE /{target}
+
+DELETE an origin URL, path form.
+
+`/https://host/path?q` (path-scheme) or `/host/path?q` (path-bare-host, https). `/https:/host/path` (one slash) is read as `https://host/path`, and the guard judges that URL. The query reaches the origin byte for byte, minus the controls listed below; any other key, `__token__` included, is forwarded. URL parsing normalises the path (dot segments resolved). Every answer carries `access-control-allow-origin: *` and `access-control-expose-headers: *` with the `x-web-*` names, never credentials; an origin's own `access-control-allow-origin` is replaced and its `access-control-allow-credentials` dropped. An OPTIONS with `Access-Control-Request-Method` is a browser preflight and is answered here, never dialled: 204, `access-control-allow-methods` the proxy's methods, `access-control-allow-headers` the headers the preflight asked for. An OPTIONS without it is proxied. A root-document path (`/llms.txt`, `/llms-full.txt`, `/openapi.json`, `/SKILL.md`) is never a target: GET and HEAD serve the document, OPTIONS is the CORS preflight (204), and any other method is 405 with `Allow: GET, HEAD`. A GET or HEAD of `/favicon.ico` or `/favicon.svg` is never a target either: it answers 301 to https://web.pkgforge.dev/favicon.svg. A target sent as one percent-encoded segment (`/https%3A%2F%2Fhost%2Fpath`, as an OpenAPI client encodes `{target}`) is decoded once.
+
+The shared parameters `target` (path) and `__egress`, `__egress-fallbacks`, `__identity`, `__profile`, `__provider`, `__providers`, `__redirects`, `__strip-platform-headers`, `__timeout-ms` (query) and `x-proxy-egress`, `x-proxy-egress-fallbacks`, `x-proxy-identity`, `x-proxy-persona`, `x-proxy-profile`, `x-proxy-rewrite-redirects`, `x-proxy-strip-platform-headers`, `x-proxy-forward-set-cookie`, `x-proxy-timeout-ms`, `x-proxy-v1-ua-rewrite` (header), each under Shared parameters.
+
+The shared answers 200, 400, 403, 405, 409, 429, 502, 503, 504, 530, default, each under Shared answers.
+
+DELETE:
+
+```bash
+curl -qfsS -X DELETE "https://fetch.web.pkgforge.dev/https://httpbin.org/anything"
+```
+
+### DELETE /
+
+DELETE an origin URL, ?url= form.
+
+`/?url=<percent-encoded URL>` (query-url). `url` is a control only on `/`; the other keys, minus the controls listed below, are appended to the target query byte for byte.
+
+The shared parameters `url`, `__egress`, `__egress-fallbacks`, `__identity`, `__profile`, `__provider`, `__providers`, `__redirects`, `__strip-platform-headers`, `__timeout-ms` (query) and `x-proxy-egress`, `x-proxy-egress-fallbacks`, `x-proxy-identity`, `x-proxy-persona`, `x-proxy-profile`, `x-proxy-rewrite-redirects`, `x-proxy-strip-platform-headers`, `x-proxy-forward-set-cookie`, `x-proxy-timeout-ms`, `x-proxy-v1-ua-rewrite` (header), each under Shared parameters.
+
+The shared answers 200, 400, 403, 405, 409, 429, 502, 503, 504, 530, default, each under Shared answers.
+
+query-url:
+
+```bash
+curl -qfsS -X DELETE "https://fetch.web.pkgforge.dev/?url=https%3A%2F%2Fip.pkgforge.dev%2Fjson"
+```
+
+### OPTIONS /{target}
+
+OPTIONS an origin URL, path form.
+
+`/https://host/path?q` (path-scheme) or `/host/path?q` (path-bare-host, https). `/https:/host/path` (one slash) is read as `https://host/path`, and the guard judges that URL. The query reaches the origin byte for byte, minus the controls listed below; any other key, `__token__` included, is forwarded. URL parsing normalises the path (dot segments resolved). Every answer carries `access-control-allow-origin: *` and `access-control-expose-headers: *` with the `x-web-*` names, never credentials; an origin's own `access-control-allow-origin` is replaced and its `access-control-allow-credentials` dropped. An OPTIONS with `Access-Control-Request-Method` is a browser preflight and is answered here, never dialled: 204, `access-control-allow-methods` the proxy's methods, `access-control-allow-headers` the headers the preflight asked for. An OPTIONS without it is proxied. A root-document path (`/llms.txt`, `/llms-full.txt`, `/openapi.json`, `/SKILL.md`) is never a target: GET and HEAD serve the document, OPTIONS is the CORS preflight (204), and any other method is 405 with `Allow: GET, HEAD`. A GET or HEAD of `/favicon.ico` or `/favicon.svg` is never a target either: it answers 301 to https://web.pkgforge.dev/favicon.svg. A target sent as one percent-encoded segment (`/https%3A%2F%2Fhost%2Fpath`, as an OpenAPI client encodes `{target}`) is decoded once.
+
+The shared parameters `target` (path) and `__egress`, `__egress-fallbacks`, `__identity`, `__profile`, `__provider`, `__providers`, `__redirects`, `__strip-platform-headers`, `__timeout-ms` (query) and `x-proxy-egress`, `x-proxy-egress-fallbacks`, `x-proxy-identity`, `x-proxy-persona`, `x-proxy-profile`, `x-proxy-rewrite-redirects`, `x-proxy-strip-platform-headers`, `x-proxy-forward-set-cookie`, `x-proxy-timeout-ms`, `x-proxy-v1-ua-rewrite` (header), each under Shared parameters.
+
+The shared answers 200, 400, 403, 405, 409, 429, 502, 503, 504, 530, default, each under Shared answers.
+
+OPTIONS:
+
+```bash
+curl -qsS -X OPTIONS -i "https://fetch.web.pkgforge.dev/https://httpbin.org/anything"
+```
+
+### OPTIONS /
+
+OPTIONS an origin URL, ?url= form.
+
+`/?url=<percent-encoded URL>` (query-url). `url` is a control only on `/`; the other keys, minus the controls listed below, are appended to the target query byte for byte.
+
+The shared parameters `url`, `__egress`, `__egress-fallbacks`, `__identity`, `__profile`, `__provider`, `__providers`, `__redirects`, `__strip-platform-headers`, `__timeout-ms` (query) and `x-proxy-egress`, `x-proxy-egress-fallbacks`, `x-proxy-identity`, `x-proxy-persona`, `x-proxy-profile`, `x-proxy-rewrite-redirects`, `x-proxy-strip-platform-headers`, `x-proxy-forward-set-cookie`, `x-proxy-timeout-ms`, `x-proxy-v1-ua-rewrite` (header), each under Shared parameters.
+
+The shared answers 200, 400, 403, 405, 409, 429, 502, 503, 504, 530, default, each under Shared answers.
+
+query-url:
+
+```bash
+curl -qsS -X OPTIONS -i "https://fetch.web.pkgforge.dev/?url=https%3A%2F%2Fip.pkgforge.dev%2Fjson"
+```
+
+### The root documents
+
+Rendered from the route table the router is built from; a build whose documents differ from it fails.
+
+Each answers 200:
+
+| route | content type | meaning |
+| --- | --- | --- |
+| `GET /llms.txt` | `text/plain` | llmstxt.org index of this service |
+| `GET /llms-full.txt` | `text/plain` | every route with parameters, answers and examples inline |
+| `GET /openapi.json` | `application/json` | OpenAPI 3.1 for every route |
+| `GET /SKILL.md` | `text/markdown` | one file an agent reads to use this service |
+
+```bash
+curl -qfsS https://fetch.web.pkgforge.dev/llms.txt
+curl -qfsS https://fetch.web.pkgforge.dev/llms-full.txt
+curl -qfsS https://fetch.web.pkgforge.dev/openapi.json
+curl -qfsS https://fetch.web.pkgforge.dev/SKILL.md
+```
+
+## Provenance headers
+
+| header | meaning |
+| --- | --- |
+| `x-web-egress` | what the dial did, space-separated `key=value` tokens in fixed order: `egress=` transport that answered; `tried=` transports attempted, `+`-joined, a transport that could not apply to the request marked `<id>(not-applicable)` (nothing reached the origin through it); `pinned=` the transport `__egress` or X-Proxy-Egress named, present only when it could not apply or was not ready and another answered (a pin that applied is never set aside); `identity=` passthrough | browser | fixed | edge; `tls=` platform (Cloudflare handshake) | ours (userland TLS 1.3); `headers=` full | partial | partial(<names>), where <names> are the header names this service knows were not delivered as declared, never a complete list: cf-fetch is always `partial`, because Cloudflare's subrequest handling may drop or change names beyond the measured ones, and on any transport the origin and the CDN in front of it may drop others, so `full` (cf-sockets, cf-vpc or broker:socks5 with nothing changed) says only that every declared header was written to the connection; `dialFailureObservable=` true | false; `responseFramingModified=` true | false (true when the framing is this service's, not the origin's: a decoded body, a cut range); `profile=` <applied id>/corpus | <requested id>/fallback, identity=browser only; `truncated=` ids the chain cap cut; `unavailable=` named ids that are registered and not ready, skipped. Then the transport's own tokens: cf-sockets `tlsShape=`, `ja4=`, `trust=`, `verified=`, `revocation=`; cf-vpc the same five, then `dial=vpc6` (an IPv6 Workers VPC dial), `via=road` (through the Workers VPC relay), `addr=` the Cloudflare IPv6 literal dialled, `egress-proof=trace` (/cdn-cgi/trace on this connection answered ip= in 2a09:bac0::/29 and h= the target host); any transport `decoded=` gzip | br: the body is the origin's decoded from that content coding (no Content-Length, a strong ETag sent weak); after a refused cf-fetch answer, `escalated=` challenge | 403 | 429: the request went once through cf-vpc when connect() refuses the host (a Cloudflare zone), or through cf-sockets when connect() opens it (a host Cloudflare does not serve), `tried=` naming which, and on the cf-fetch answer returned instead `escalation=not-better(<status>)` or `escalation=failed(<status>)`; a candidate refusal (a 403, a 429, or a 4xx or 5xx with `cf-mitigated: challenge`) that was probed carries `probe=<verdict>(<ms>)` before those tokens, escalated or not: what connect() said of the host (refused | opened, the two that escalate | failed | pending) and in how many milliseconds, with a second `,<verdict>(<ms>)` entry only after a failed or a pending (a pending one is asked again for up to 1 s); the escalation has its own 10 s budget to the answer's head, and past it the held answer carries `escalation=failed(504)`; a Cloudflare zone's refusal still standing goes once through a fetch provider (a bodyless GET or HEAD, no `__egress` named): on the held answer `escalation=provider-failed(<status>)`, `escalation=provider-not-better(<status>)` or `escalation=provider-wrong-type(<status>)` (a document target, and a provider's 2xx or 3xx of another content type, a rendered page or a redirect in place of the document: the origin's own answer is returned; a document target is a URL whose extension names a document such as a PDF, a held 403 or 429 of a URL with a `/pdf/` path segment before its last, such as arxiv.org/pdf/<id>, a held answer whose own content-type is a document type other than plain text or Markdown, or an Accept whose most preferred types are not HTML, such as `application/pdf, */*;q=0.8`), and on a provider's 2xx or 3xx `egress=provider:<id>`, `tried=` ending `provider:<id>`, `escalated=`, `escalation=provider(<id>)`, with no tls or headers token, since no transport of ours carried that body; the escalation memo: a refusal of a URL whose host refused cf-fetch and cf-vpc in the last 10 minutes carries `memo=refused(<trigger>)` in place of the probe and goes to the providers with no cf-vpc dial, and a URL a provider answered 2xx in the last 5 minutes is answered from that stored answer, `egress=provider:<id>`, `tried=` what this request dialled, `escalation=memo(<id>)`; a URL whose provider walk tried a provider and failed, or answered no better, in the last 5 minutes walks no provider, probes nothing and dials no cf-vpc, and the held answer carries `escalation=memo-provider-failed(<status>)`, `escalation=memo-provider-not-better(<status>)` or, for a URL whose extension or `/pdf/` path names the document, `escalation=memo-provider-wrong-type(<status>)`; when the cf-vpc dial itself failed (`escalation=failed(<status>)`: the road may have been down, not the host refusing), that verdict and that failure are kept 60 s only and are read no more once the road answers again; cf-fetch `range=partial(identity)` (an identity 206 forwarded), `range=decoded-slice(<coding>)` (a compressed 206 or a 416 answered from the decoded representation; `unknown` for an identity 416), `range=whole-representation(<coding>)` (that decoded representation sent whole, or a 2xx with no native decoder re-issued without Range) or `range=redialled(<coding>)` (a non-2xx with no native decoder sent again with its Range). Last, on any proxied answer: `redirects=rewritten` (this service rewrote a 3xx Location to point back through itself, `__redirects`) and `cookies=withheld` (a request a browser sent, with Sec-Fetch-Mode: its Cookie was not sent to the origin, or the origin's Set-Cookie was dropped, because this host's cookie jar is shared by every site proxied through it; `x-proxy-forward-set-cookie: true` keeps Set-Cookie) |
+| `x-web-form` | which request form named the target: path-scheme | path-bare-host | query-url |
+| `x-web-provider` | on a provider's answer only (`egress=provider:<id>`, an escalation or `__provider`): the provider id |
+| `x-web-account` | on a provider's answer only: the label of the provider account that answered, a short name this service gives one of its own accounts at that provider; it names no key and no account of the caller |
+| `x-web-body` | on a provider's answer only: `verbatim` (the origin's bytes, as the provider says), `snapshot` (the origin's bytes, status and headers as a provider recorded them earlier, not a live answer: Cloudflare URL Scanner's record of a scan someone made) or `rewritten-by=<provider>` (a rendered DOM or a rewrite, never the origin's bytes); an answer from the escalation memo (`x-web-cache: hit`) keeps the label its provider's answer had |
+| `x-web-snapshot-at` | ISO 8601 UTC: with `x-web-body: snapshot`, when the provider recorded the answer; on any other answer from the escalation memo (`x-web-cache: hit`), when it was stored |
+| `x-web-cache` | on an escalated provider answer only: `miss`, the provider was asked for this request; `hit`, the provider's 2xx for the same URL stored at most 300 s ago (bodies up to 1048576 bytes in its D1 row, larger ones up to 67108864 streamed to R2), served because this request's own dial was refused again, and no provider was asked |
+| `x-web-headers` | on a provider's answer only: whose status and headers these are, `origin` or `provider` |
+| `x-web-origin-status` | on an escalated provider answer, a memo hit included: the status the origin gave this request's own dial (the 403, 429 or challenge the provider was asked past); absent on a `__provider` fetch, where nothing of ours dialled |
+| `x-web-provider-origin-status` | on a provider's answer only, when the provider reports it: the status the provider says the origin answered it with; the provider's own claim, never this request's dial |
+| `x-web-final-url` | on a provider's answer only, when the provider reports it: the URL it ended at after redirects |
+| `x-web-providers` | `none` on every answer of a request with `__providers=none`: no fetch provider was asked and no provider's stored answer was served |
+| `x-web-corpus` | browser-signature corpus revision that served the request: the b-ids pointer ETag or a sha256; `unknown` before the first refresh |
+| `x-web-store` | `degraded` when the provider walk behind a provider escalation, the held original it left standing, or a `__provider` fetch could not read the provider store: only this build's keyless providers were walked, unclaimed on any account's windows, and a keyed provider was not asked; absent when the store was read |
+
+## Failure states
+
+A path no route takes answers 404, reason `not-found`; a method a listed path does not take answers 405, reason `method-not-allowed`, with `Allow`; every non-2xx this service builds is an RFC 9457 problem whose `reason` is one of the values openapi.json publishes.
+
+| status | when | what to do |
+| --- | --- | --- |
+| 400 | reason `bad-request`: `__providers` is not any or none, or none was given with `__provider`. Reason `unknown-transport`: `__egress`, `__egress-fallbacks` or their headers name an id no transport has; body `validTransports` lists the ids. Reason `not-a-target` (`not-a-cf-vpc-target` for the cf-vpc rules): path is not an absolute http(s) URL or a dotted bare host; `/` with a query but no `url`; non-http(s) scheme; cf-sockets with an unusable port. A pinned transport that cannot apply goes on through one that can, so its 400 is answered only with `__identity=browser` and no fingerprint transport left to stand in: cf-sockets with an http:// target, or cf-vpc (`not-a-cf-vpc-target`, body `attempted` names `cf-vpc(not-applicable)`) with an IP literal or an http:// target the guard allows, a port outside its list (nothing probed), or a host connect() does not refuse once cf-sockets could not stand in either | fix the target or the transport id; body `hint` lists the three forms and `see` links llms.txt; for http:// or an IP literal with `__identity=browser`, drop `__egress` or the identity |
+| 403 | title `destination refused`, reason `destination-refused`: guard refusal (loopback, private, link-local, metadata or reserved address; refused suffix; mail port 25, 465, 587, 2525; any host in web.pkgforge.dev); on every transport, cf-vpc and an IPv6 literal included | do not retry; nothing was dialled |
+| 403 | title `egress refused`, reason `platform-refused`: the platform refused the address after the dial (Cloudflare 1003, or any 1xxx code that is not a zone's: an unmeasured code fails closed). A zone's own policy page (`error code: <N>` with N one of 1005 to 1012, 1015, 1020, 1025 and 1027, the codes of a zone's own policy, its owner's ASN ban and its own Workers plan limits) is not this: it is the origin's 403, passed through | do not retry on this transport; fatal, no fallback ran |
+| 405 | a method outside GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS; a root-document path with a method other than GET or HEAD | use a listed method; `Allow` names them |
+| 409 | `__identity=browser` with a fingerprint transport named and no fingerprint transport left in the chain | drop `__identity=browser`, or name cf-sockets (or cf-vpc for a Cloudflare-routed https:// name) with a ready chain |
+| 429 | reason `held`: `__provider=<id>` named a provider whose every account is held by a rate limit or a spent allowance; body `errors[]` names each attempt; `Retry-After` is when one reopens. An origin's own 429 is not this: it is passed through | retry after `Retry-After` seconds, or drop `__provider` so the default chain runs |
+| 502 | reason `egress-failed`: every transport in the chain failed before the first response byte; body `attempted` lists the dials that ran, `planned` the chain; a request body on cf-sockets, cf-vpc or broker:socks5 is a failure; on cf-vpc, a connection whose /cdn-cgi/trace did not prove Workers VPC egress (`egress-proof=failed(<reason>)` in `detail`, fatal), a host Cloudflare does not serve at its anycast addresses, or the Workers VPC relay refused an address from its own list (deployment fault, fatal); on cf-sockets, `the platform refused the dial` is connect()'s one answer for an address in Cloudflare's own IP ranges (every Cloudflare-fronted origin), a private, loopback, link-local or TEST-NET address, a blocked port and a name that does not resolve, so its text cannot name the class, and cf-sockets cannot apply to such a host: it is set aside for cf-vpc, then the rest of the chain (`attempted` names `cf-sockets(not-applicable)`), and this is the answer only when nothing after it could serve; cf-fetch reaches a Cloudflare-fronted origin through the platform's own TLS; `see` points here, at llms-full.txt | retry; drop `__egress` so the default chain runs (cf-fetch, and for a refusal of a bodyless GET or HEAD, cf-vpc then a fetch provider for a Cloudflare zone, cf-sockets for another host: `__egress=cf-fetch` named turns that escalation off), or set it to another transport; send a body with no `__egress` |
+| 503 | reason `no-usable-transport`: no usable transport: an unknown id in this deployment's own configuration (`unknownTransports`), not ready (`notReadyTransports`), or broker unconfigured; cf-vpc when this deployment has no Workers VPC relay, or the relay's address or port list does not parse. A pinned transport in any of these states is set aside and the default chain answers (`pinned=<id>` in x-web-egress), so this is answered to a pin only with `__identity=browser` and no fingerprint transport left | drop `__egress` so the default chain runs, or name a ready transport |
+| 504 | reason `deadline`: a connect deadline the caller set with `__timeout-ms` (none by default), or the deployment's total deadline (off by default), expired; body names the deadline | retry; raise or drop `__timeout-ms` for a slow origin |
+| 530 | title `egress refused`, reason `dns-failure` (the name did not resolve: Cloudflare 1016 or 1019), `origin-unreachable` (520-526) or `platform-refused` (any other 1xxx that is not a zone's): platform refusal; the status is the platform's, the body names the Cloudflare error code, problem+json even when the platform drew its HTML page | check the host name; do not retry on this transport; fatal, no fallback ran |
+| 503 | reason `disabled`: the operator, or a spend breaker, switched this service or every public service off; `scope` says which (`global` or `service`) and `since` since when. `/healthz` and the root documents still answer | wait `Retry-After` (60 s) and ask again; the state is read again every 5 s, and https://web.pkgforge.dev/status says when a service is off |
+| 429 | reason `rate-limited`: a spend breaker caps each caller IP at 100 requests per 60 s on every public service, and this caller is past it | wait `Retry-After` and ask again; the cap lifts after at most 12 hours |
+
+## Pipeline contract
+
+Stable: paths and methods, `reason` values and provenance header names, held by `packages/docs/src/stable.json` (a removal or rename edits it). Each JSON answer's required fields:
+
+- none: no route answers a JSON body of its own
+
+Retry, by what a client does:
+
+- retry after `Retry-After`: 429 `held`; 503 `disabled`, 429 `rate-limited` (any request route)
+- retry with backoff: 502 `egress-failed`; 504 `deadline`; 503 `deadline`, `budget`
+- retry only when `retryable` is true: 502 `providers-failed`; 530 `origin-unreachable`
+- no retry: fix the request: 400 `bad-request`, `not-a-cf-vpc-target`, `not-a-provider-request`, `not-a-target`, `provider-refused`, `transport-refused`, `unknown-provider`, `unknown-transport`; 409 `identity-not-available`; 405 `method-not-allowed`
+- no retry unchanged: 503 `none-configured`, `permanently-exhausted`, `no-usable-transport`; 403 `destination-refused`, `platform-refused`; 530 `dns-failure`, `platform-refused`
+
+Paging: no route pages; each answer is whole.

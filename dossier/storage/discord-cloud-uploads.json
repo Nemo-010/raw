@@ -1,0 +1,101 @@
+{
+  "topic": "storage",
+  "slug": "discord-cloud-uploads",
+  "provider": "Discord cloud uploads (direct-to-GCS, 500 MiB reservation)",
+  "url": "https://docs.discord.food/topics/cloud-uploads",
+  "category": "messaging",
+  "free_tier": {
+    "stated": "Reserve an upload slot with `POST /channels/{id}/attachments` and PUT the body straight into Discord's Google Cloud Storage bucket — the reservation path accepts up to 500 MiB per file, independent of the 20 MiB message-time limit. Note the file still hits the per-message limit when you actually send it, so 500 MiB only helps if the channel/boost tier allows it.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.discord.food/topics/cloud-uploads",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "500 MiB per file",
+    "bytes": 524288000,
+    "source_url": "https://docs.discord.food/topics/cloud-uploads",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.discord.food/topics/cloud-uploads",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free, unmetered, served from cdn.discordapp.com.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Documented unofficial-API reference (docs.discord.food, formerly 'userdoccers'); Python pseudocode in the page; used in production by large bots. No dedicated library needed — two HTTP calls.",
+  "chaining": "Upload slots are per-channel, so the 500 MiB ceiling multiplies by channel count (500/server) rather than by account.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "500 MiB per file",
+      "source": "https://docs.discord.food/topics/cloud-uploads"
+    }
+  ],
+  "limits_note": "1-10 files per reservation call; `is_clip` flag grants a 100 MiB default; requires same permissions as normal attach; `DELETE /attachments/{upload_filename}` to clean up unused reservations.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Endpoints are undocumented-but-stable and have moved URL shape before; a reservation you do not consume needs explicit deletion or it lingers.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.discord.food/topics/cloud-uploads",
+      "date": "2026-10-21",
+      "proved": "'This allows you to upload up a file up to 500 MiB directly to Google Cloud. Note that file size limits will still apply when sending the attachment in a message.'"
+    },
+    {
+      "url": "https://docs.discord.food/topics/cloud-uploads",
+      "date": "2026-10-21",
+      "proved": "'When uploading a clip, an increased default file size limit of 100 MiB applies.'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Reserve an upload slot with `POST /channels/{id}/attachments` and PUT the body straight into Discord's Google Cloud Storage bucket — the reservation path accepts up to 500 MiB per file, independent of the 20 MiB message-time limit. Note the file still hits the per-message limit when you actually send it, so 500 MiB only helps if the channel/boost tier allows it.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F2-discord-chat-cdn.json",
+    "seed_area": "F/F2",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "F/F2"
+      }
+    ],
+    "seed_confidence": "high",
+    "unit_note": "free_tier.unit is 'mixed' because the headline is denominated in MiB or KiB, which the schema enum does not carry; the verbatim free_tier.stated keeps the true unit. See the storage-dossier handover.",
+    "conflicts": [],
+    "target_document": "docs/storage/free/messaging.md",
+    "document_section": "Discord and chat CDNs",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Reserve an upload slot with `POST /channels/{id}/attachments` and PUT the body straight into Discord's Google Cloud Storage bucket — the reservation path accepts up to 500 MiB per file, independent of the 20 MiB message-time limit. Note the file still hits the per-message limit when you actually send it, so 500 MiB only helps if the channel/boost tier allows it.",
+    "limits_verbatim": "1-10 files per reservation call; `is_clip` flag grants a 100 MiB default; requires same permissions as normal attach; `DELETE /attachments/{upload_filename}` to clean up unused reservations.",
+    "egress_verbatim": "Free, unmetered, served from cdn.discordapp.com.",
+    "chaining_verbatim": "Upload slots are per-channel, so the 500 MiB ceiling multiplies by channel count (500/server) rather than by account.",
+    "tooling_verbatim": "Documented unofficial-API reference (docs.discord.food, formerly 'userdoccers'); Python pseudocode in the page; used in production by large bots. No dedicated library needed — two HTTP calls.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Discord and gaming/chat platforms' CDNs as storage: per-file caps, attachment-URL permanence, bot automation paths, and the server/channel/account multiplier"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

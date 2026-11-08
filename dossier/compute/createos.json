@@ -1,0 +1,149 @@
+{
+  "topic": "compute",
+  "slug": "createos",
+  "provider": "CreateOS Sandbox (NodeOps)",
+  "url": "https://createos.sh/products/sandbox",
+  "category": "container and VM sandbox",
+  "free_tier": {
+    "stated": "500 free credits to start; a sandbox auto-pauses after 5 minutes idle with memory and disk preserved and compute billing stopped",
+    "unit": "mixed",
+    "metered_on": "wall-clock",
+    "source_url": "https://createos.sh/products/sandbox",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://createos.sh/products/sandbox",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://createos.sh/products/sandbox",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "egress is unmetered at $0 at any volume; outbound traffic is firewalled to an allowlist and there is no ingress by default",
+    "metered": false,
+    "free_allowance": "unlimited",
+    "price_per_tb": "$0",
+    "source_url": "https://createos.sh/products/sandbox"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "REST API, CLI, a TypeScript SDK and MCP; no Python SDK",
+  "tooling": "not stated in the source card",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "500 free credits at signup",
+      "source": "https://createos.sh/products/sandbox"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "auto-pause after 5 minutes idle; memory and disk are snapshotted rather than lost",
+      "source": "https://createos.sh/products/sandbox"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email: the account documentation offers passwordless one-time codes by email, one-click Google sign-in and GitHub login ('Use passwordless OTP via email or one-click Google authentication for rapid entry.'), and names no phone and no identity document. The vendor's pricing page states the Free tier needs no card ('Start today, no credit card required.'). Whether the sign-up form asks for anything else is unverified.",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the sandbox page was read on 2026-10-22. The 500-credit grant is one-time; the 5-minute auto-pause is the wall-clock axis and it preserves state, which is the unusual half",
+  "evidence": [
+    {
+      "url": "https://createos.sh/products/sandbox",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://createos.sh/products/sandbox",
+      "date": "2026-10-22",
+      "proved": "'500 free credits to start.' and 'Idle 5 min → paused, disk + memory preserved' with 'A paused sandbox is a Firecracker snapshot on disk: guest memory and device state are frozen, and compute billing stops', quoted"
+    },
+    {
+      "url": "https://createos.sh/products/sandbox",
+      "date": "2026-11-04",
+      "proved": "SDK, CLI, MCP and REST API",
+      "capture": "sha256:771920ef867e86ee0ae168d9e61c0e342467ca3822ac771b318eef5be94bd317",
+      "quote": "A TypeScript SDK, the CLI, MCP, or the REST API from any language, so an agent can provision its own compute through a tool call."
+    },
+    {
+      "url": "https://createos.sh/products/sandbox",
+      "date": "2026-11-04",
+      "proved": "egress is not charged",
+      "capture": "sha256:771920ef867e86ee0ae168d9e61c0e342467ca3822ac771b318eef5be94bd317",
+      "quote": "Networking is unmetered, so egress is $0."
+    },
+    {
+      "url": "https://createos.sh/docs/Account-Billing/Account-Management",
+      "date": "2026-11-04",
+      "proved": "the login methods are an emailed one-time code, Google or GitHub, so an email address is the identity",
+      "capture": "sha256:e88d0ed4625d5ecfa237fb341f8c5415f6f5f6a9de16afa8743bd70abfa240cc",
+      "quote": "Use passwordless OTP via email or one-click Google authentication for rapid entry."
+    },
+    {
+      "url": "https://createos.sh/docs/Account-Billing/Account-Management",
+      "date": "2026-11-04",
+      "proved": "a GitHub account is the second accepted login",
+      "capture": "sha256:e88d0ed4625d5ecfa237fb341f8c5415f6f5f6a9de16afa8743bd70abfa240cc",
+      "quote": "**GitHub Login**\n The preferred method for developers, automatically preparing your identity for automated deployment flows."
+    },
+    {
+      "url": "https://nodeops.network/createos/pricing",
+      "date": "2026-11-04",
+      "proved": "the Free tier is available at sign-up with no card, so the free credits are not behind a card",
+      "capture": "sha256:c6c64c3fbb7e0feeb72b41218b96b7b0361dc2add88390742752b77369132968",
+      "quote": "Designed for every stage of your journey. Start today, no credit card required."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T15:51:59.406Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 35.61,
+    "talaria_m24h_usd": 85.46,
+    "nemo_m10h_usd": 36.56,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "first-party: PAUSED sandboxes stop vCPU billing but KEEP billing RAM at $0.01159025/GB-h",
+    "billing_model": "unclassified",
+    "shape": null,
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": 300,
+      "restart_required": false,
+      "note": "auto-pause at 5 minutes idle; the snapshot restores guest memory and device state, so the clock costs wall time but not work"
+    },
+    "persistent_storage": {
+      "included_gib": null,
+      "price_gib_month": "not published on this page",
+      "durability": "Firecracker snapshot on disk",
+      "survives_stop": true,
+      "survives_destroy": false,
+      "max_retention": "until deleted"
+    },
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "one-time-credit",
+    "granularity": {
+      "min_billed_s": 0,
+      "rounding_s": null
+    },
+    "burst_x": 1.0,
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22"
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "request-rate"
+}

@@ -1,0 +1,137 @@
+{
+  "topic": "compute",
+  "slug": "tothost",
+  "provider": "Tothost",
+  "url": "https://tothost.vn/",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "Cloud VPS TOT K from VND 67,500/month on the vendor's home page (the page's 'chi tu 67.500 VND/thang' entry for the TOT K line). The plan shapes are the tracker's: USD 3.00/month for 1 Intel core, 512 MB RAM, 8 GB SSD, 31,641 GB/month bandwidth on a 0.1 Gbps port; the vendor's TOT K line is sold in Ha Noi (VNPT or CMC) or Ho Chi Minh City (FPT), and the tracker's row is Ho Chi Minh. The TOT K plan table did not render to text, so the specs at VND 67,500 are not first-party here.",
+    "unit": "GiB",
+    "metered_on": "wall-clock",
+    "source_url": "https://tothost.vn/",
+    "read_on": "2026-10-22",
+    "notes": "trial"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://tothost.vn/",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://tothost.vn/",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "unlimited data transfer stated on the TOT K page; the tracker's 31,641 GB a month is not on the vendor page and matches the 100 Mb/s line rate over 30 days, so the port is the real limit",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://tothost.vn/vps-tot-k"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "the vendor sells VDC instances and a client portal at billing.tothost.vn with a looking glass at lg.tothost.vn; no API is documented on the page read",
+  "chaining": "a 100 Mb/s port caps this at roughly 1 TB a day at best, so it is a Vietnam-region presence rather than a transfer host; the 8 GB disk and 512 MB rule out anything but a probe, a proxy or a small scheduler",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "the vendor's TOT K page states unlimited data transfer (translated from the Vietnamese page text), so the wall is the 100 Mb/s port; the tracker's 31,641 GB a month is arithmetically the line rate of a 100 Mb/s port over 30 days, which suggests a derived figure rather than a published allowance",
+      "source": "https://tothost.vn/"
+    }
+  ],
+  "limits_note": "the vendor's TOT K page states unlimited data transfer (translated from the Vietnamese page text), so the wall is the 100 Mb/s port; the tracker's 31,641 GB a month is arithmetically the line rate of a 100 Mb/s port over 30 days, which suggests a derived figure rather than a published allowance",
+  "binding": "per-ip-shaping",
+  "binding_note": "the vendor's TOT K page states unlimited data transfer (translated from the Vietnamese page text), so the wall is the 100 Mb/s port; the tracker's 31,641 GB a month is arithmetically the line rate of a 100 Mb/s port over 30 days, which suggests a derived figure rather than a published allowance",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email: an account is created in the order flow with a working email address that must be verified ('Hãy sử dụng email đang hoạt động để đăng ký tài khoản', 'bạn nhớ vào kiểm tra và xác thực email nhé'). Card: not published: https://tothost.vn/chinh-sach-thanh-toan (2026-11-06) names payment gateways and states no card requirement at sign-up. Phone: not published: https://tothost.vn/huong-dan-su-dung/cach-dang-ky-tai-khoan-tothost (2026-11-06) states no phone requirement. Country: not published: the sign-up guide states no country restriction.",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://vpspricetracker.com/provider/Tothost/vps",
+      "date": "2026-10-22",
+      "proved": "cheapest row: 'Tothost - USD 3.00 / month', '1 Intel Cores (shared)', '512 MB RAM', '8 GB SSD', '31,641 GB/month bandwidth', '0.1 Gbps port speed', 'Ho Chi Minh Vietnam'; the page opens 'starting at USD 3.00 per month'"
+    },
+    {
+      "url": "https://tothost.vn/",
+      "date": "2026-10-22",
+      "proved": "home page, TOT K block, Vietnamese diacritics folded to ASCII: 'Cloud VPS TOT K', 'Chi tu 67.500 VND/Thang' (from 67,500 VND per month); the other lines read 156,750 for TOT Duo, 123,250 for TOT M, 532,800 for TOT GT"
+    },
+    {
+      "url": "https://tothost.vn/vps-tot-k",
+      "date": "2026-10-22",
+      "proved": "'Data Tranfer khong gioi han' (data transfer unlimited, diacritics folded), and the same page offers 'dang ky dung thu mien phi VPS TOT K', a free-trial registration with three configurations listed: 'TOT K Lite', 'TOT K12', 'TOT K22 - WinOS'"
+    },
+    {
+      "url": "https://tothost.vn/vps-tot-k",
+      "date": "2026-10-22",
+      "proved": "resource-upgrade price table, per month, diacritics folded and 'd' standing for dong: 'CPU Intel Xeon 60,000d 1 core', 'RAM 55,000d 1GB', 'SSD SAS 45,000d 10GB', 'SSD NVME 50.000d 10GB', 'IPv4 80,000 1 IP', 'Bang thong 350,000d 50 Mbps'"
+    },
+    {
+      "url": "https://tothost.vn/huong-dan-su-dung/cach-dang-ky-tai-khoan-tothost",
+      "date": "2026-11-04",
+      "proved": "the account is created with a working email address that is then verified",
+      "capture": "sha256:bae6402f09442a6242f21ffe93e31b04ee1f3ddcdb792396b2030c702feadbec",
+      "quote": "Hãy sử dụng email đang hoạt động để đăng ký tài khoản"
+    },
+    {
+      "url": "https://tothost.vn/huong-dan-su-dung/cach-dang-ky-tai-khoan-tothost",
+      "date": "2026-11-04",
+      "proved": "the email address must be verified before the account is usable",
+      "capture": "sha256:bae6402f09442a6242f21ffe93e31b04ee1f3ddcdb792396b2030c702feadbec",
+      "quote": "bạn nhớ vào kiểm tra và xác thực email nhé"
+    },
+    {
+      "url": "https://tothost.vn/chinh-sach-thanh-toan",
+      "date": "2026-11-04",
+      "proved": "a customer must register an account to order and use a service, which is the email account of the signup guide",
+      "capture": "sha256:c364ad573be0240b98beec44c461e58038678670c65b02113220b3786021e878",
+      "quote": "Khách hàng cần đăng ký một tài khoản trên TotHost để đăng ký dịch vụ và sử dụng dịch vụ trên Tothost."
+    },
+    {
+      "url": "https://tothost.vn/huong-dan-su-dung/cach-dang-ky-tai-khoan-tothost",
+      "date": "2026-11-04",
+      "proved": "the account gate is a working, verified email address, which is the email kind",
+      "capture": "sha256:bae6402f09442a6242f21ffe93e31b04ee1f3ddcdb792396b2030c702feadbec",
+      "quote": "Hãy sử dụng email đang hoạt động để đăng ký tài khoản"
+    },
+    {
+      "url": "https://tothost.vn/huong-dan-su-dung/cach-dang-ky-tai-khoan-tothost",
+      "date": "2026-11-06",
+      "proved": "the account is created with a working email address that must be verified, and the guide states no phone or country requirement",
+      "capture": "sha256:bae6402f09442a6242f21ffe93e31b04ee1f3ddcdb792396b2030c702feadbec",
+      "quote": "Hãy sử dụng email đang hoạt động để đăng ký tài khoản"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-06T17:42:12.768Z",
+  "notes": "The trial is the reason this record is not paid-only: the TOT K page carries a free-trial registration form, but the page states no duration, no configuration and no terms, so the trial is a claim to test rather than a quota to rely on. The vendor and the tracker quote different currencies for the same line, and no conversion was done. The vendor offers Ha Noi or Ho Chi Minh City for the same line, so the location in the offer is the tracker's row and not the only option. Not in dossier/compute (searched: tothost, no record). would-settle: the plan table behind the JS widget, which would give the specs at VND 67,500 first-party, and the trial terms. Rendering and provenance: currency symbols are written out (EUR, GBP, RUB, VND), diacritics in place names are folded to ASCII, and a price the page splits across two lines is joined as value/period; the tracker page stated 'Database update: 7 hours ago' when it was read on 2026-10-22.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "Tothost",
+      "class": null,
+      "category_as_written": "cloud VM",
+      "free_tier_kind": "trial",
+      "shape": {
+        "vcpu": 1,
+        "ram_gib": 0.5,
+        "disk_gib": 8,
+        "gpu_class": null,
+        "gpu_count": null
+      },
+      "seen_routes": null,
+      "agents": [
+        "lane8"
+      ],
+      "promoted_from": ".tmp/wave2"
+    }
+  }
+}

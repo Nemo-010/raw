@@ -1,0 +1,111 @@
+{
+  "topic": "ci-cd-runners",
+  "slug": "forgejo-gitea-actions",
+  "provider": "Forgejo and Gitea Actions (self-hosted)",
+  "url": "https://forgejo.org/docs/latest/user/actions/",
+  "category": "CI software",
+  "free_tier": {
+    "stated": "GPL v3+ for Forgejo v9.0 and later, MIT for Forgejo up to v8.0",
+    "unit": "unlimited",
+    "source_url": "https://forgejo.org/faq/",
+    "read_on": "2026-11-06",
+    "metered_on": "none",
+    "notes": "Gitea, the upstream project, is licensed under the MIT License."
+  },
+  "per_object_cap": {
+    "stated": "a job runs for at most the number of minutes its jobs.<job_id>.timeout-minutes key sets",
+    "bytes": null,
+    "source_url": "https://forgejo.org/docs/latest/user/actions/",
+    "notes": "the actual machine provided by the runner entirely depends on how the runner was registered"
+  },
+  "retention": {
+    "stated": "whatever the runner host retains",
+    "days": null,
+    "source_url": "https://forgejo.org/docs/latest/user/actions/"
+  },
+  "egress": {
+    "terms": "whatever the runner host charges",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://forgejo.org/docs/latest/user/actions/"
+  },
+  "interface": [
+    "git",
+    "cli"
+  ],
+  "interface_detail": "a .forgejo/workflows or .gitea/workflows YAML; the act runner; a compatible subset of GitHub Actions",
+  "tooling": "the forgejo or act runner binary; docker or a host backend",
+  "chaining": "Actions syntax without GitHub, which lets a workflow move between a free hosted runner and your own machine without a rewrite",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "a job runs for at most the number of minutes its jobs.<job_id>.timeout-minutes key sets",
+      "source": "https://forgejo.org/docs/latest/user/actions/"
+    }
+  ],
+  "binding": "none",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "the software needs no account",
+    "country": null
+  },
+  "reliability_note": "compatibility with GitHub Actions is a documented subset, so a workflow that runs on GitHub may need edits",
+  "confidence": "documented",
+  "confidence_note": "the Forgejo Actions user guide was read today; Codeberg's hosted instance runs the same software.",
+  "evidence": [
+    {
+      "url": "https://forgejo.org/docs/latest/user/actions/",
+      "date": "2026-10-22",
+      "proved": "Forgejo Actions is GitHub-Actions-compatible with documented differences; runners are user-provided"
+    },
+    {
+      "url": "https://codeberg.org/actions/meta",
+      "date": "2026-10-22",
+      "proved": "Codeberg's hosted runners use ghcr.io/catthehacker/ubuntu:act-latest to provide a compatibility level with GitHub Actions, and Docker-in-Docker is not officially supported"
+    },
+    {
+      "url": "https://forgejo.org/docs/latest/user/actions/",
+      "date": "2026-11-04",
+      "proved": "Forgejo Actions is not identical to GitHub Actions, so a workflow may need edits",
+      "capture": "sha256:8c8a779c1a4e82b1679b0238872cb7c0a41dee2aa0046ff47932817138faf289",
+      "quote": "However, GitHub Actions and Forgejo Actions *are not the same* and things might not work right away."
+    },
+    {
+      "url": "https://forgejo.org/faq/",
+      "date": "2026-11-06",
+      "proved": "Forgejo v9.0 and later is GPL v3+ and Forgejo up to v8.0 is MIT",
+      "capture": "sha256:09c8f6b9e7c660821c31c34a03ecd1c32b6731755ab183f685b753b9af7b5a8f",
+      "quote": "Forgejo versions v9.0 and later are distributed under the terms of the GPL v3+. ... Forgejo versions up to v8.0 inclusive are distributed under the terms of the MIT license."
+    },
+    {
+      "url": "https://github.com/go-gitea/gitea",
+      "date": "2026-11-06",
+      "proved": "Gitea is licensed under the MIT License",
+      "capture": "sha256:f44bcff37456431faa23c5d19b75db142fc191e3e0ef0d70c60bd4ceee5aea3a",
+      "quote": "This project is licensed under the MIT License."
+    },
+    {
+      "url": "https://forgejo.org/docs/latest/user/actions/",
+      "date": "2026-11-06",
+      "proved": "the jobs.<job_id>.timeout-minutes key caps how long a job runs",
+      "capture": "sha256:8c8a779c1a4e82b1679b0238872cb7c0a41dee2aa0046ff47932817138faf289",
+      "quote": "Set the number of minutes this job can be performed before it is canceled."
+    },
+    {
+      "url": "https://forgejo.org/docs/latest/user/actions/",
+      "date": "2026-11-06",
+      "proved": "the machine a job gets depends on how the runner was registered",
+      "capture": "sha256:8c8a779c1a4e82b1679b0238872cb7c0a41dee2aa0046ff47932817138faf289",
+      "quote": "The actual machine provided by the runner **entirely depends on how the runner was registered**"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-11-06T19:14:28.503Z",
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "The compatibility is the value and the subset is the cost. A workflow that depends on a GitHub-only action does not run.",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "self_hosted": true
+}

@@ -1,0 +1,323 @@
+{
+  "topic": "ci-cd-runners",
+  "slug": "actuated",
+  "provider": "Actuated",
+  "url": "https://actuated.com/pricing",
+  "category": "CI runner control plane",
+  "tier": "Self-Service",
+  "verdict": "paid-only",
+  "confidence": "documented",
+  "confidence_note": "the price, the plan terms and the registration requirements are quoted from the vendor's pricing page and documentation; no account was opened",
+  "verified_at": "2026-11-06T16:14:44.903Z",
+  "free_tier": {
+    "stated": "none at self-service: the Self-Service plan is a flat USD 150 a month for the first server and USD 125 for each additional, with unlimited build minutes and unlimited concurrency, and the servers are rented separately; the sponsored programme with the CNCF and Ampere grants no plan, no seat and no server, and the notes state what it does grant",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://actuated.com/pricing",
+    "read_on": "2026-11-04",
+    "notes": "there is no list price per minute: the pricing table shows USD 0.005 per minute for every runner size against USD 0.008 for GitHub's 2-core hosted runner, which is the flat USD 150 spread over the workload the page's calculator assumes"
+  },
+  "per_object_cap": {
+    "stated": "not stated as a number: a job is bounded by one server's vCPU and RAM, chosen per job with a runs-on label such as actuated-2cpu-8gb",
+    "bytes": null,
+    "source_url": "https://docs.actuated.com/provision-server/"
+  },
+  "retention": {
+    "stated": "each job runs in a microVM created for it and removed immediately after; server metrics are kept 14 days",
+    "days": null,
+    "source_url": "https://docs.actuated.com/"
+  },
+  "egress": {
+    "terms": "not stated by Actuated: jobs run on the rented server, so traffic leaves under that server provider's terms",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://docs.actuated.com/faq/"
+  },
+  "interface": [
+    "git"
+  ],
+  "interface_detail": "a GitHub Actions workflow targets the fleet with runs-on: actuated or a sized label such as actuated-2cpu-8gb; GitLab CI is also supported. The control plane schedules each job into a Firecracker microVM on a Linux server, x86_64 or 64-bit Arm, that runs the Actuated agent",
+  "endpoint": "https://github.com/apps/self-actuated",
+  "tooling": "the user rents a Linux server with KVM, bare metal or a cloud VM with nested virtualisation, and runs the Actuated agent on it; Actuated runs the control plane, the GitHub App and the managed VM images, and issues the Account API Token the agent installer needs",
+  "chaining": "the monthly floor is the USD 150 plan plus a rented server, which the vendor prices at 40-50 EUR a month at the low end of bare metal; GitHub Actions on a public repository stays free and comes first",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "a job is bounded by one server's vCPU and RAM; the plan sets how many servers may run",
+      "source": "https://docs.actuated.com/faq/"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "an autoenrolled agent offline for 15 minutes is removed automatically; jobs queue until a server is ready",
+      "source": "https://docs.actuated.com/install-agent/"
+    }
+  ],
+  "limits_note": "no minute cap: unlimited build minutes, RAM, CPUs and concurrency at a flat rate per server; plans are paid monthly with no minimum commitment; Linux only, AMD64 or 64-bit Arm; a GitHub organisation, not a personal account, and an organisation admin to install the GitHub App",
+  "binding": "per-object-cap",
+  "binding_note": "no free allowance, so the card and the plan price fail first; inside a plan the minutes are unlimited and the size of one rented server bounds every job",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "a GitHub organisation with admin access to install the actuated GitHub App, and a company credit card for the monthly subscription; the agent's Account API Token is issued on request; the sponsored CNCF programme is requested through the vendor's form instead of a subscription",
+    "country": null
+  },
+  "reliability_note": "the control plane holds jobs in a queue while no enrolled server is online, and drops an autoenrolled agent that has been offline for 15 minutes",
+  "price_per_tb_month": null,
+  "self_hosted": false,
+  "evidence": [
+    {
+      "url": "https://actuated.com/pricing",
+      "date": "2026-10-30",
+      "proved": "the plan is a flat USD 150 a month for the first server and USD 125 for each additional",
+      "capture": "sha256:66ba555698a7f1cfe52172f606a9edf8156aac30e93dbd6b29ac29a24b5b0cce",
+      "quote": "Flat rate per server: $150 for the first, $125 for each additional."
+    },
+    {
+      "url": "https://actuated.com/pricing",
+      "date": "2026-10-30",
+      "proved": "build minutes are not capped",
+      "capture": "sha256:66ba555698a7f1cfe52172f606a9edf8156aac30e93dbd6b29ac29a24b5b0cce",
+      "quote": "Unlimited build minutes"
+    },
+    {
+      "url": "https://actuated.com/pricing",
+      "date": "2026-10-30",
+      "proved": "concurrency is not capped by the plan",
+      "capture": "sha256:66ba555698a7f1cfe52172f606a9edf8156aac30e93dbd6b29ac29a24b5b0cce",
+      "quote": "Unlimited concurrency"
+    },
+    {
+      "url": "https://actuated.com/pricing",
+      "date": "2026-10-30",
+      "proved": "the comparison table shows USD 0.005 per minute at USD 150 a month for a 2-core runner",
+      "capture": "sha256:66ba555698a7f1cfe52172f606a9edf8156aac30e93dbd6b29ac29a24b5b0cce",
+      "quote": "| 2-core | $0.005 | $150 |"
+    },
+    {
+      "url": "https://actuated.com/pricing",
+      "date": "2026-10-30",
+      "proved": "the same table prices GitHub's 2-core hosted runner at USD 0.008 per minute, USD 240 a month",
+      "capture": "sha256:66ba555698a7f1cfe52172f606a9edf8156aac30e93dbd6b29ac29a24b5b0cce",
+      "quote": "| 2-core | $0.008 | $240 |"
+    },
+    {
+      "url": "https://docs.actuated.com/register/",
+      "date": "2026-10-30",
+      "proved": "Actuated is a managed control plane for runners on servers the customer supplies",
+      "capture": "sha256:48efbb7bd3eede03937897959fca38bcbd27e3694a57676502f931ef4774faf5",
+      "quote": "Actuated is a managed service, where you plug in your own servers, and we do everything else needed to create and manage self-hosted runners for your GitHub Actions."
+    },
+    {
+      "url": "https://docs.actuated.com/register/",
+      "date": "2026-10-30",
+      "proved": "registration needs a company credit card",
+      "capture": "sha256:48efbb7bd3eede03937897959fca38bcbd27e3694a57676502f931ef4774faf5",
+      "quote": "A company credit-card to pay for your subscription"
+    },
+    {
+      "url": "https://docs.actuated.com/register/",
+      "date": "2026-10-30",
+      "proved": "registration needs admin access to install the GitHub App",
+      "capture": "sha256:48efbb7bd3eede03937897959fca38bcbd27e3694a57676502f931ef4774faf5",
+      "quote": "Administrative access to install the actuated GitHub App"
+    },
+    {
+      "url": "https://docs.actuated.com/register/",
+      "date": "2026-10-30",
+      "proved": "plans are monthly with no minimum commitment",
+      "capture": "sha256:48efbb7bd3eede03937897959fca38bcbd27e3694a57676502f931ef4774faf5",
+      "quote": "Plans are paid monthly, without any minimum commitment."
+    },
+    {
+      "url": "https://docs.actuated.com/faq/",
+      "date": "2026-10-30",
+      "proved": "a GitHub organisation is required, not a personal account",
+      "capture": "sha256:e516f03472fda37e0119dd11da1d067822fc124bc7b6def9771e0bbae435c3df",
+      "quote": "For GitHub users, a GitHub organisation is required for installation, and runners are attached to individual repositories as required to execute builds."
+    },
+    {
+      "url": "https://docs.actuated.com/faq/",
+      "date": "2026-10-30",
+      "proved": "GitHub Actions and GitLab CI are both supported",
+      "capture": "sha256:e516f03472fda37e0119dd11da1d067822fc124bc7b6def9771e0bbae435c3df",
+      "quote": "Support for GitHub Actions and GitLab CI is available."
+    },
+    {
+      "url": "https://docs.actuated.com/faq/",
+      "date": "2026-10-30",
+      "proved": "only Linux on AMD64 or 64-bit Arm is supported",
+      "capture": "sha256:e516f03472fda37e0119dd11da1d067822fc124bc7b6def9771e0bbae435c3df",
+      "quote": "Linux is the only supported platform for actuated at this time on a AMD64 or 64-bit Arm architecture."
+    },
+    {
+      "url": "https://docs.actuated.com/faq/",
+      "date": "2026-10-30",
+      "proved": "a sponsored programme with the CNCF and Ampere covers some open-source projects",
+      "capture": "sha256:e516f03472fda37e0119dd11da1d067822fc124bc7b6def9771e0bbae435c3df",
+      "quote": "We have a sponsored program with the CNCF and Ampere for various Open Source projects"
+    },
+    {
+      "url": "https://docs.actuated.com/faq/",
+      "date": "2026-10-30",
+      "proved": "the plan sets how many servers may run",
+      "capture": "sha256:e516f03472fda37e0119dd11da1d067822fc124bc7b6def9771e0bbae435c3df",
+      "quote": "The plan you select will determine how many Actuated Servers you can run"
+    },
+    {
+      "url": "https://docs.actuated.com/faq/",
+      "date": "2026-10-30",
+      "proved": "jobs queue while no server is ready",
+      "capture": "sha256:e516f03472fda37e0119dd11da1d067822fc124bc7b6def9771e0bbae435c3df",
+      "quote": "Actuated will hold jobs in a queue until a server is ready to take them again."
+    },
+    {
+      "url": "https://docs.actuated.com/faq/",
+      "date": "2026-10-30",
+      "proved": "server metrics are kept 14 days",
+      "capture": "sha256:e516f03472fda37e0119dd11da1d067822fc124bc7b6def9771e0bbae435c3df",
+      "quote": "which has a 14 day retention policy"
+    },
+    {
+      "url": "https://docs.actuated.com/faq/",
+      "date": "2026-10-30",
+      "proved": "a cloud VM with nested virtualisation can serve as the server",
+      "capture": "sha256:e516f03472fda37e0119dd11da1d067822fc124bc7b6def9771e0bbae435c3df",
+      "quote": "If `/dev/kvm` is available within the VM, or the VM can be configured so that nested virtualisation is available, then you can use a VM as an actuated server."
+    },
+    {
+      "url": "https://docs.actuated.com/",
+      "date": "2026-10-30",
+      "proved": "each job environment is created for one build and removed after it",
+      "capture": "sha256:fd0e734b1ac636069bf9158db94ec1eda0261ef9c0b0f561f6ede93540ec1864",
+      "quote": "Each environment is created just in time to take a build, and is removed immediately after."
+    },
+    {
+      "url": "https://docs.actuated.com/install-agent/",
+      "date": "2026-10-30",
+      "proved": "an autoenrolled agent offline for 15 minutes is removed",
+      "capture": "sha256:ba8dfb74c061a001ea7113efa7a40b48e76a97f545f682aca69ee9252ee67fc3",
+      "quote": "Any Autoenrolled agent that has been offline for 15 minutes will be removed automatically."
+    },
+    {
+      "url": "https://docs.actuated.com/install-agent/",
+      "date": "2026-10-30",
+      "proved": "the agent installer needs an Account API Token that the vendor issues",
+      "capture": "sha256:ba8dfb74c061a001ea7113efa7a40b48e76a97f545f682aca69ee9252ee67fc3",
+      "quote": "`TOKEN` - your Account API Token - reach out to us and we'll generate one for you"
+    },
+    {
+      "url": "https://docs.actuated.com/provision-server/",
+      "date": "2026-10-30",
+      "proved": "the server must support Linux KVM",
+      "capture": "sha256:177497bd7195dfab630a5df724a6b171c02c898dbe87979a5f923cb65d3d489e",
+      "quote": "You'll need to provision a Server which is capable of virtualisation with Linux KVM."
+    },
+    {
+      "url": "https://docs.actuated.com/provision-server/",
+      "date": "2026-10-30",
+      "proved": "rented bare metal costs 40-50 EUR a month per host at the low end",
+      "capture": "sha256:177497bd7195dfab630a5df724a6b171c02c898dbe87979a5f923cb65d3d489e",
+      "quote": "At the lower end of bare-metal providers, you'll pay 40-50 EUR / mo per host, moving up to 80-150 EUR / mo for NVMe and AMD processors"
+    },
+    {
+      "url": "https://docs.actuated.com/provision-server/",
+      "date": "2026-10-30",
+      "proved": "job size is chosen per job with a runs-on label",
+      "capture": "sha256:177497bd7195dfab630a5df724a6b171c02c898dbe87979a5f923cb65d3d489e",
+      "quote": "by changing the `runs-on: actuated` label to: `runs-on: actuated-2cpu-8gb`"
+    },
+    {
+      "url": "https://actuated.com/pricing",
+      "date": "2026-11-04",
+      "proved": "the plan is a flat USD 150 a month for the first server and USD 125 for each additional; no free allowance",
+      "capture": "sha256:6633b8ed96589c5a0aec064e3023b8b91fe86e83bc521100971f8822394ff759",
+      "quote": "Flat rate per server: $150 for the first, $125 for each additional."
+    },
+    {
+      "url": "https://actuated.com/pricing",
+      "date": "2026-11-04",
+      "proved": "the Self-Service plan is USD 150 for the first server and USD 125 for each additional; no free allowance is offered",
+      "capture": "sha256:6633b8ed96589c5a0aec064e3023b8b91fe86e83bc521100971f8822394ff759",
+      "quote": "Flat rate per server: $150 for the first, $125 for each additional."
+    },
+    {
+      "url": "https://github.com/etcd-io/etcd/pull/16801",
+      "date": "2026-11-04",
+      "proved": "the sponsored pool's build slots are shared between all CNCF projects",
+      "capture": "sha256:d6ed1a3861acdaea89cb44f3ae7f9b0ae157dcf7f07ea4894ba80cc56d32dd44",
+      "quote": "There's a total of 20 build slots available to be shared between all CNCF projects in the pool."
+    },
+    {
+      "url": "https://actuated.com/blog/arm-ci-cncf-ampere",
+      "date": "2026-11-04",
+      "proved": "access is requested by a CNCF project through the vendor's form, not by buying a plan",
+      "capture": "sha256:7475ffc918738c870c0640d9be0eb325c9f04afae349a7f8a5bb99ade2c21ec0",
+      "quote": "If you are working on a CNCF project and would like access, please contact us via this form."
+    },
+    {
+      "url": "https://actuated.com/blog/arm-ci-cncf-ampere",
+      "date": "2026-11-04",
+      "proved": "the programme is a sponsor-funded one-year pilot for CNCF projects",
+      "capture": "sha256:7475ffc918738c870c0640d9be0eb325c9f04afae349a7f8a5bb99ade2c21ec0",
+      "quote": "Together, Ampere and the CNCF are now sponsoring an initial 1-year pilot of managed Arm CI provided by actuated, for CNCF projects, with the view to expand it, if the pilot is a success."
+    },
+    {
+      "url": "https://docs.actuated.com/faq/",
+      "date": "2026-11-04",
+      "proved": "a sponsored project must badge every repository that uses the runners",
+      "capture": "sha256:e516f03472fda37e0119dd11da1d067822fc124bc7b6def9771e0bbae435c3df",
+      "quote": "Sponsored projects are required to add our GitHub badge to the top of their README file for each repository where the actuated is being used, along with any other GitHub badges such as build status, code coverage, etc."
+    },
+    {
+      "url": "https://actuated.com/blog/cncf-arm-march-update",
+      "date": "2026-11-04",
+      "proved": "the pilot's slots were full by March 2024",
+      "capture": "sha256:6f5680475a48cea3a15674919c2e96e8fa5ec67a4851bbf75368f2626e3b78ac",
+      "quote": "Whilst the original pilot program is now full, we have the capacity to onboard many other projects and would love to work with you."
+    },
+    {
+      "url": "https://actuated.com/blog/cncf-arm-march-update",
+      "date": "2026-11-04",
+      "proved": "a project whose sponsored slots are gone is offered a discounted paid subscription instead",
+      "capture": "sha256:6f5680475a48cea3a15674919c2e96e8fa5ec67a4851bbf75368f2626e3b78ac",
+      "quote": "We are happy to offer a discounted subscription if your employer that sponsors your time on the said CNCF project will pay for it."
+    },
+    {
+      "url": "https://actuated.com/blog/actuated-com-two-year-review",
+      "date": "2026-11-04",
+      "proved": "the vendor also sponsored individual projects outside the CNCF programme",
+      "capture": "sha256:1f56a15f488988f78220fdf2a33c3e9dab0c2f5d3c13a46b683bfdd0700ae812",
+      "quote": "We've also sponsored the Atuin, runc and criu open-source projects."
+    },
+    {
+      "url": "https://actuated.com/blog/millions-of-cncf-minutes",
+      "date": "2026-11-04",
+      "proved": "a sponsored project uses a pool of servers the vendor manages, not a server of its own",
+      "capture": "sha256:a9455ec19d36e36443fd08b3549f103351f6cbacbd186e81bcbe384fbc6f70a4",
+      "quote": "After the program was live, teams who had been maintaining their own servers got to remove lengthy documentation on server configuration and maintenance, and relied on our team to manage a pool of servers used for scheduling microVMs."
+    },
+    {
+      "url": "https://actuated.com/blog/millions-of-cncf-minutes",
+      "date": "2026-11-04",
+      "proved": "the vendor granted sponsored access to runc, which it calls an OCI project under the Linux Foundation rather than a CNCF project",
+      "capture": "sha256:a9455ec19d36e36443fd08b3549f103351f6cbacbd186e81bcbe384fbc6f70a4",
+      "quote": "runc which is within the opencontainers organisation is technically an Open Container Initiative (OCI) project under the LinuxFoundation, rather than a CNCF project, but we gave them access since it is a key dependency for containerd and cri-o."
+    },
+    {
+      "url": "https://www.cncf.io/blog/2025/06/04/thank-you-equinix-metal-the-cncf-community-bids-farewell-to-the-bare-metal-cluster/",
+      "date": "2026-11-04",
+      "proved": "the CNCF Community Cluster that supplied the Equinix Metal credits was shut down at the end of 2025",
+      "capture": "sha256:52645983e2ddccc82332df457556c691ef8cf16ca55c5841410877ec8713267d",
+      "quote": "The CNCF Community Cluster will be completely decommissioned on December 31, 2025."
+    },
+    {
+      "url": "https://docs.equinix.com/metal/",
+      "date": "2026-11-06",
+      "proved": "Equinix Metal, which hosted the programme's Ampere Arm servers, ended service on 2026-06-30",
+      "capture": "sha256:684a2fbff56f206258da0dfac9975901abbe78047ff630556d3a73d8f496d047",
+      "quote": "Equinix Metal was sunset on June 30, 2026."
+    }
+  ],
+  "notes": "Paid only at self-service, and the one documented zero-cost route is the sponsored programme with the CNCF and Ampere. That programme is neither a plan, a seat nor a server of the project's own: it grants a selected project a share of a sponsor-funded pool of Arm64 runners that the vendor operates, shared with every other participating project, and reached with the same runs-on label as a paid fleet. The published pool is 20 build slots shared between all CNCF projects. It is limited to CNCF projects and to Arm CI only, so a project outside the CNCF cannot join it; the vendor granted access to individual non-CNCF projects case by case, runc among them, which it calls an OCI project under the Linux Foundation rather than a CNCF project while counting its minutes in the programme's totals, and it separately lists Atuin, runc and criu among the open-source projects it has sponsored, without naming the programme. A sponsored project keeps its own GitHub organisation, where a maintainer installs the Actuated GitHub App, and it must add the Actuated badge to the top of the README of every repository that uses the runners. The first one-year pilot filled every slot by March 2024, after which the vendor offered a discounted subscription to a company that would fund a maintainer's time. The vendor's FAQ still listed the programme when it was read on 2026-11-04, but no page states whether it accepts projects now, and the Arm servers it ran on were hosted by Equinix Metal, which ended service on 2026-06-30, so its current status is unverified. Hosted runners with a free allowance in this topic come first.",
+  "history": []
+}

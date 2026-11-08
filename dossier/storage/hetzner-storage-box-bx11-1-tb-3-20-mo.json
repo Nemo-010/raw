@@ -1,0 +1,193 @@
+{
+  "topic": "storage",
+  "slug": "hetzner-storage-box-bx11-1-tb-3-20-mo",
+  "provider": "Hetzner Storage Box BX11 — 1 TB, €3.20/mo (price floor, no free tier)",
+  "url": "https://www.hetzner.com/storage/storage-box/",
+  "category": "iaas",
+  "free_tier": {
+    "stated": "No free allowance. Priced plans per month, excl. VAT: BX11 1 TB at € 3.20, BX21 5 TB at € 10.90, BX31 10 TB at € 20.80, BX41 20 TB at € 40.60. Traffic is unlimited on every plan.",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://www.hetzner.com/storage/storage-box/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "No per-file cap published",
+    "source_url": "https://www.hetzner.com/storage/storage-box/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.hetzner.com/storage/storage-box/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Unlimited traffic on every plan ('Each Storage Box comes with unlimited traffic'); capacity is the only billed axis. Concurrent connections are limited to 10.",
+    "metered": false
+  },
+  "interface": [
+    "webdav",
+    "sftp",
+    "ftps",
+    "ftp",
+    "scp",
+    "rsync",
+    "smb",
+    "ssh",
+    "rclone"
+  ],
+  "interface_detail": "sftp",
+  "tooling": "The richest protocol set of any host in this slot, and Hetzner names our tooling explicitly on the product page: FTP, FTPS, SFTP, SCP, Samba/CIFS, HTTPS, WebDAV, plus a bulleted 'BorgBackup / rsync via SSH / Restic / Rclone' line. 10 concurrent connections, 10 snapshots, 100 sub-accounts.",
+  "chaining": "No free allowance; priced benchmark: a 20 TB archive costs € 40.60 per month excl. VAT on BX41, 10 TB costs € 20.80 on BX31.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "10 concurrent connections",
+      "source": "https://www.hetzner.com/storage/storage-box/"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "1, 5, 10 or 20 TB per Storage Box (BX11 to BX41)",
+      "source": "https://www.hetzner.com/storage/storage-box/"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "No per-file cap published",
+      "source": "https://www.hetzner.com/storage/storage-box/"
+    }
+  ],
+  "limits_note": "10 concurrent connections is the binding limit, not bytes — a parallel-GET benchmark will be shaped by connection count: 32 parallel ranged GETs cannot be opened here, only 10. 10 snapshots. No per-file cap published.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "payment methods: bank transfer, credit card, Paypal and SEPA direct debit (SEPA-country accounts); the registration fields are unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "RAID with checksums, explicitly NOT mirrored off-site ('The data is not mirrored onto other servers'). Snapshots can be automated. Long-standing German host; no data-loss pattern in these forums.",
+  "confidence": "documented",
+  "confidence_note": "the 2026-11-03 evidence rows read the vendor pages https://www.hetzner.com/storage/storage-box/ (plan prices, storage sizes, unlimited traffic, 10 concurrent connections, payment methods) and https://docs.hetzner.com/storage/storage-box/general/ (unlimited traffic); the sign-up fields, per-file cap and retention were not read on 2026-11-03",
+  "evidence": [
+    {
+      "url": "https://www.hetzner.com/storage/storage-box/",
+      "date": "2026-10-21",
+      "proved": "'BX11 … € 3.20 per month, excl. VAT … € 0.0051 per hour'; 'BX21 … € 10.90'; 'BX31 … € 20.80'; 'BX41 … € 40.60'"
+    },
+    {
+      "url": "https://www.hetzner.com/storage/storage-box/bx11/",
+      "date": "2026-10-21",
+      "proved": "'10 concurrent connections … BorgBackup / rsync via SSH / Restic / Rclone'; 'The data is not mirrored onto other servers'"
+    },
+    {
+      "url": "https://hostloc.com/thread-1305667-1-1.html",
+      "date": "2026-10-21",
+      "proved": "Chinese forum thread '最实惠的文件备份存储空间 Hetzner Storage Boxes' (the same conclusion reached independently on Hostloc before it closed)"
+    },
+    {
+      "url": "https://www.hetzner.com/storage/storage-box/",
+      "date": "2026-11-03",
+      "proved": "BX11 costs 3.20 EUR per month excl. VAT",
+      "capture": "sha256:d82a39e84f9d4b478e93cb8901ddb7a4be616b4e79c572e74a63609f995384c5",
+      "quote": "max/mo.  € 3.20 per month, excl. VAT"
+    },
+    {
+      "url": "https://www.hetzner.com/storage/storage-box/",
+      "date": "2026-11-03",
+      "proved": "traffic is unlimited on every plan",
+      "capture": "sha256:d82a39e84f9d4b478e93cb8901ddb7a4be616b4e79c572e74a63609f995384c5",
+      "quote": "| Traffic | * Unlimited |"
+    },
+    {
+      "url": "https://docs.hetzner.com/storage/storage-box/general/",
+      "date": "2026-11-03",
+      "proved": "traffic is unlimited",
+      "capture": "sha256:086437ab935f960103785ae9a1400c1dd9a3afde0f7d578d7dab265e17d909e9",
+      "quote": "Each Storage Box comes with unlimited traffic."
+    },
+    {
+      "url": "https://www.hetzner.com/storage/storage-box/",
+      "date": "2026-11-03",
+      "proved": "BX41 costs 40.60 EUR per month for 20 TB",
+      "capture": "sha256:d82a39e84f9d4b478e93cb8901ddb7a4be616b4e79c572e74a63609f995384c5",
+      "quote": "max/mo.  € 40.60 per month, excl. VAT"
+    },
+    {
+      "url": "https://www.hetzner.com/storage/storage-box/",
+      "date": "2026-11-03",
+      "proved": "BX31 costs 20.80 EUR per month for 10 TB",
+      "capture": "sha256:d82a39e84f9d4b478e93cb8901ddb7a4be616b4e79c572e74a63609f995384c5",
+      "quote": "max/mo.  € 20.80 per month, excl. VAT"
+    },
+    {
+      "url": "https://www.hetzner.com/storage/storage-box/",
+      "date": "2026-11-03",
+      "proved": "plan sizes run from 1 TB to 20 TB",
+      "capture": "sha256:d82a39e84f9d4b478e93cb8901ddb7a4be616b4e79c572e74a63609f995384c5",
+      "quote": "| Available storage | * 1 TB | * 5 TB | * 10 TB | * 20 TB |"
+    },
+    {
+      "url": "https://www.hetzner.com/storage/storage-box/",
+      "date": "2026-11-03",
+      "proved": "the listed payment methods",
+      "capture": "sha256:d82a39e84f9d4b478e93cb8901ddb7a4be616b4e79c572e74a63609f995384c5",
+      "quote": "| Possible payment methods | * bank transfer, credit card, Paypal and SEPA direct debit for accounts from SEPA countries |"
+    },
+    {
+      "url": "https://www.hetzner.com/storage/storage-box/",
+      "date": "2026-11-03",
+      "proved": "BX21 costs 10.90 EUR per month for 5 TB",
+      "capture": "sha256:d82a39e84f9d4b478e93cb8901ddb7a4be616b4e79c572e74a63609f995384c5",
+      "quote": "max/mo.  € 10.90 per month, excl. VAT"
+    },
+    {
+      "url": "https://www.hetzner.com/storage/storage-box/",
+      "date": "2026-11-03",
+      "proved": "10 concurrent connections on every plan",
+      "capture": "sha256:d82a39e84f9d4b478e93cb8901ddb7a4be616b4e79c572e74a63609f995384c5",
+      "quote": "| Concurrent connections | * 10 | * 10 | * 10 | * 10 |"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-03T15:04:17.078Z",
+  "notes": "No free allowance. Priced plans per month, excl. VAT: BX11 1 TB at € 3.20, BX21 5 TB at € 10.90, BX31 10 TB at € 20.80, BX41 20 TB at € 40.60. Traffic is unlimited on every plan.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F9-vps-forums.json",
+    "seed_area": "F/F9",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "F/F9"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "paid",
+      "why": "BX11 = 1 TB at €3.20/month excl. VAT (€0.0051/hr). Ladder: BX21 5 TB €10.90, BX31 10 TB €20.80, BX41 20 TB €40.60. Zero setup fee on every tier. No free tier of any size.",
+      "retry_when": "if the price drops below the paid-lane floor",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F9"
+    },
+    "target_document": "docs/storage/free/anonymous-hosts.md",
+    "document_section": "File hosts with a protocol endpoint",
+    "conversion": "mechanical",
+    "verified_at_basis": "re-read on 2026-11-03 from the vendor pages https://www.hetzner.com/storage/storage-box/ and https://docs.hetzner.com/storage/storage-box/general/, whose captures the 2026-11-03 evidence rows cite; the sign-up fields, per-file cap and retention were not read on 2026-11-03",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "BX11 = 1 TB at €3.20/month excl. VAT (€0.0051/hr). Ladder: BX21 5 TB €10.90, BX31 10 TB €20.80, BX41 20 TB €40.60. Zero setup fee on every tier. No free tier of any size.",
+    "limits_verbatim": "10 concurrent connections is the binding limit, not bytes — a parallel-GET benchmark will be shaped by connection count (relevant to round 1's 'benchmark with parallel ranged GETs' rule: you cannot open 32 here, only 10). 10 snapshots. No per-file cap published.",
+    "egress_verbatim": "Traffic is not the billed axis for Storage Box — pricing is capacity-only across the ladder (BX11 through BX41 differ solely in TB and hourly rate). This is the cheapest per-TB 'real storage you can serve from' in the entire corpus.",
+    "chaining_verbatim": "No free allowance — this is a cost benchmark, not a free source. Its role in the report is as the denominator: at €3.20/TB/mo, 20 TB cold archive is €40.60/mo, which is the number every 'free' claim in this corpus must beat.",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "The richest protocol set of any host in this slot, and Hetzner names our tooling explicitly on the product page: FTP, FTPS, SFTP, SCP, Samba/CIFS, HTTPS, WebDAV, plus a bulleted 'BorgBackup / rsync via SSH / Restic / Rclone' line. 10 concurrent connections, 10 snapshots, 100 sub-accounts.",
+    "interface_verbatim": "sftp",
+    "agent_focus": "VPS/hosting communities — NodeSeek, Hostloc, LowEndTalk, LowEndSpirit, r/selfhosted, r/DataHoarder, WebHostingTalk — for free/trial storage VPS, the 大容量VPS (large-capacity VPS) culture, and excess-usage economics"
+  },
+  "binding": "volume-quota",
+  "binding_note": "the largest plan is 20 TB, too small for 20 TiB of data (about 22 TB); the page does not say whether TB means 10^12 or 2^40 bytes.",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "price_per_tb_month": "EUR 2.03 per TB per month on BX41 (20 TB, EUR 40.60); EUR 2.08 on BX31 (10 TB, EUR 20.80); EUR 2.18 on BX21 (5 TB, EUR 10.90); EUR 3.20 on BX11 (1 TB); excl. VAT."
+}

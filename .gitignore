@@ -1,0 +1,90 @@
+# --- scratch -----------------------------------------------------------------
+# Every working file lands here first. Nothing in .tmp/ is ever committed: it is
+# the seed corpus, agent scratch, captured pages and probe output. A promotion
+# from .tmp/ into the tree is a deliberate act with a review behind it.
+.tmp/
+# a wipe in progress, or one whose delete failed (scripts/rq wipe deletes it next time)
+/.tmp.wipe-*/
+
+# --- generated ----------------------------------------------------------------
+# Files a script owns. They are rebuilt, never edited by hand, so they carry no
+# review value and would only produce conflicts between parallel sessions.
+*.generated.md
+*.generated.json
+table.generated.md
+index.generated.tsv
+
+# --- probe output -------------------------------------------------------------
+# Byte captures, hashes and timing records belong in .tmp/, not in the tree.
+# A dossier cites the probe by path and date; it does not carry the bytes.
+probe-out/
+*.probe.json
+*.sha256
+*.bin
+*.part
+
+# --- editor and OS ------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*~
+
+# --- language and tool caches -------------------------------------------------
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+node_modules/
+.venv/
+venv/
+
+# --- secrets ------------------------------------------------------------------
+# This repository holds no credential. An evidence file may quote a public key
+# found in a public repository; it never holds one that belongs to the operator.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa*
+credentials*
+*token*.local
+
+# --- reference payloads -------------------------------------------------------
+# references/ carries source we have pruned to what we cite. User content and
+# upstream build output are not part of that.
+references/**/.git/
+references/**/node_modules/
+references/**/target/
+references/**/dist/
+
+# --- compiled tools -----------------------------------------------------------
+# tools/ holds source. A built binary is rebuilt by `make` in its own directory
+# and would otherwise be committed by an agent that happened to build nearby.
+tools/**/dist/
+tools/**/bin/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# --- session state ------------------------------------------------------------
+# RESUME.md is a dead man's switch written at the START of a session, in the
+# session's own folder .tmp/session-<id>/ (scripts/rq folder session): thirty
+# sessions share one checkout. A RESUME.md at the root is a mistake and shows in
+# git status. See docs/sessions.md.
+
+# --- tool caches and agent state ----------------------------------------------
+# The wiki and its build moved to the public repository f-shy/fshy.ajam.dev;
+# nothing here builds a site. .wrangler/ and .cloudflare/ are CLI caches that a
+# session may still create. .claude/ holds agent settings (no research agent
+# makes a worktree, AGENTS.md section 2 rule 14), and .codegraph/ a local code
+# index; both belong to one machine.
+.wrangler/
+.cloudflare/
+.claude/
+.codegraph/

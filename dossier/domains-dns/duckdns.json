@@ -1,0 +1,92 @@
+{
+  "topic": "domains-dns",
+  "slug": "duckdns",
+  "provider": "DuckDNS",
+  "url": "https://www.duckdns.org/spec.jsp",
+  "category": "free dynamic subdomain",
+  "free_tier": {
+    "stated": "subdomains under duckdns.org with a token API, IPv4, IPv6 and TXT support",
+    "unit": "unlimited",
+    "source_url": "https://www.duckdns.org/spec.jsp",
+    "read_on": "2026-10-22",
+    "metered_on": "none"
+  },
+  "per_object_cap": {
+    "stated": "the number of subdomains per account is about 5, a third-party figure; DuckDNS publishes no number",
+    "bytes": null
+  },
+  "retention": {
+    "stated": "a record persists until updated or cleared with clear=true, provided the account is used",
+    "days": null,
+    "source_url": "https://www.duckdns.org/spec.jsp"
+  },
+  "egress": {
+    "terms": "no query cap published",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.duckdns.org/spec.jsp"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "a single HTTPS GET per update; the token is a query parameter",
+  "tooling": "curl, any DDNS client, a router's built-in DuckDNS provider",
+  "chaining": "a name for a home IP or a tunnel endpoint, and nothing else: no certificate automation and no proxying",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "about 5 subdomains, a third-party figure; DuckDNS publishes no number",
+      "source": "https://www.duckdns.org/spec.jsp"
+    }
+  ],
+  "binding": "per-object-cap",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "Google, GitHub or Reddit OAuth",
+    "country": null
+  },
+  "reliability_note": "a bad token returns HTTP 200 with the body KO, so a status-only check reports success on a failed update",
+  "confidence": "measured",
+  "confidence_note": "the update endpoint was called today with an empty token and answered 200 KO, which proves both the endpoint and the failure shape. The subdomain cap is third-party.",
+  "evidence": [
+    {
+      "url": "probe:https://www.duckdns.org/update?domains=example&token=&ip=",
+      "date": "2026-10-22",
+      "proved": "200 with a two-byte body 'KO'. A 200 is not success; the rejection is in the body"
+    },
+    {
+      "url": "https://www.duckdns.org/spec.jsp",
+      "date": "2026-10-22",
+      "proved": "the update URL, IPv4 and IPv6 parameters, the TXT form, and clear=true to delete records; a TXT record applies to all sub-subdomains under the name"
+    },
+    {
+      "url": "https://www.duckdns.org/spec.jsp",
+      "date": "2026-11-02",
+      "proved": "the update is a single HTTPS GET to DuckDNS",
+      "capture": "sha256:e44c623b17f38e48ed7e76eb9c55006a3474059f47c69f325427ad54cdedb50f",
+      "quote": "You can update your domain(s) with a single HTTPS get to DuckDNS"
+    },
+    {
+      "url": "https://www.duckdns.org/spec.jsp",
+      "date": "2026-11-02",
+      "proved": "clear=true makes the update call clear the IPv4 and IPv6 values of the named subnames instead of setting them",
+      "capture": "sha256:e44c623b17f38e48ed7e76eb9c55006a3474059f47c69f325427ad54cdedb50f",
+      "quote": "clear - OPTIONAL - if set to true, the update will ignore all ip's and clear both your records"
+    },
+    {
+      "url": "https://www.duckdns.org/spec.jsp",
+      "date": "2026-11-02",
+      "proved": "the update call is a GET to duckdns.org/update with the subnames and the account token as query parameters",
+      "capture": "sha256:e44c623b17f38e48ed7e76eb9c55006a3474059f47c69f325427ad54cdedb50f",
+      "quote": "https://www.duckdns.org/update?domains={YOURVALUE}&token={YOURVALUE}[&ip={YOURVALUE}][&ipv6={YOURVALUE}][&verbose=true][&clear=true]"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-02T10:17:37.731Z",
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "A DuckDNS name cannot be a Cloudflare zone, so it cannot carry a Tunnel, Email Routing or Universal SSL. It is a dynamic-DNS tool, not a name a service can live on.",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,116 @@
+{
+  "topic": "storage",
+  "slug": "nitroflare",
+  "provider": "Nitroflare",
+  "url": "https://nitroflare.com",
+  "category": "anonymous-dump",
+  "free_tier": {
+    "stated": "Free: 'You can upload up to 10 GB files, for free!'. No free total-storage figure published anywhere on the site.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://nitroflare.com/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "10 GB per file",
+    "bytes": 10000000000,
+    "source_url": "https://nitroflare.com/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://nitroflare.com/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free downloads are throttled and ad-gated; no free CDN path, no published allowance.",
+    "metered": false
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "wrapper-only",
+  "tooling": "JDownloader, Mipony and other multihost downloaders; no documented open API.",
+  "chaining": "10 GB per file with no stated total — chaining is bounded by an unpublished retention policy, so it cannot be sized.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "10 GB/day",
+      "source": "https://nitroflare.com/"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "100 GB/day",
+      "source": "https://nitroflare.com/"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "10 GB per file",
+      "source": "https://nitroflare.com/"
+    }
+  ],
+  "limits_note": "10 GB per file free. Retention not published on the pages reachable (its /faq and /pricing paths both return 404). Paid = 10 GB/day, 100 GB/day on Max, per the sister brand TezFiles.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: 0 GB/day, 100 GB/day on Max, per the sister brand TezFiles. anonymous-dump",
+    "country": null
+  },
+  "reliability_note": "The canonical /pricing and /faq URLs 404 on nginx, so any scraper or blog citing 'Nitroflare limits at /pricing' is pointing at a dead path. Numbers here come from the homepage meta only.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://nitroflare.com/",
+      "date": "2026-10-21",
+      "proved": "'You can upload up to 10 GB files, for free!'"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET /pricing -> 404 Not Found (nginx); GET /faq -> 404 Not Found"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Free: 'You can upload up to 10 GB files, for free!'. No free total-storage figure published anywhere on the site.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E6-regional-hosts.json",
+    "seed_area": "E/E6",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "E/E6"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "paid",
+      "why": "Free: 'You can upload up to 10 GB files, for free!'. No free total-storage figure published anywhere on the site.",
+      "retry_when": "if the price drops below the paid-lane floor",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E6"
+    },
+    "target_document": "docs/storage/free/ephemeral-hosts.md",
+    "document_section": "Regional file hosts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Free: 'You can upload up to 10 GB files, for free!'. No free total-storage figure published anywhere on the site.",
+    "limits_verbatim": "10 GB per file free. Retention not published on the pages reachable (its /faq and /pricing paths both return 404). Paid = 10 GB/day, 100 GB/day on Max, per the sister brand TezFiles.",
+    "egress_verbatim": "Free downloads are throttled and ad-gated; no free CDN path, no published allowance.",
+    "chaining_verbatim": "10 GB per file with no stated total — chaining is bounded by an unpublished retention policy, so it cannot be sized.",
+    "tooling_verbatim": "JDownloader, Mipony and other multihost downloaders; no documented open API.",
+    "interface_verbatim": "wrapper-only",
+    "agent_focus": "regional and non-English large-file hosts, especially very large single-file caps with no total-storage limit"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

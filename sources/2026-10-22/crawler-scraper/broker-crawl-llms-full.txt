@@ -1,0 +1,195 @@
+# crawl: provider crawl jobs
+
+> Multi-page crawls as jobs: POST https://crawl.web.pkgforge.dev/crawl submits one to a provider, GET /crawl/<job_id> polls it and answers its pages as Markdown.
+
+Host: `crawl.web.pkgforge.dev`. State: built.
+
+Version: `6767245fca12`, openapi.json's `info.version`, the first 12 hex digits of the SHA-256 of the four root documents (llms.txt, llms-full.txt, openapi.json, SKILL.md, in that order, joined by a newline), each rendered with an empty version; it changes whenever anything a caller reads in them changes.
+
+Cost: free to every caller; no key, no account and no quota (never gated). The one exception is the operator's: a service can be switched off (503, reason `disabled`), and a spend breaker can cap each caller IP at 100 requests per 60 s for at most 12 hours (429, reason `rate-limited`).
+
+CORS: every answer carries `access-control-allow-origin: *` and exposes the provenance headers; OPTIONS on a listed path is the preflight (204), and it allows every request header the browser names; no credentials.
+
+Every service and its live status: https://web.pkgforge.dev/
+
+## When to use
+
+- the pages of a site from one start URL, as Markdown: `POST /crawl`, then poll `GET /crawl/<job_id>`
+- not for one page: use read.web.pkgforge.dev
+- not for the origin's bytes: use fetch.web.pkgforge.dev
+- not for search results: use search.web.pkgforge.dev
+
+## Routes
+
+### GET /healthz
+
+service state and the running Worker version.
+
+JSON `{ok, service, version: {id, tag, at}, built, entry?, d1: {ok, ms, error?}, keys?: {state, ms}, gate?}`, always `no-store`. `version.id` is the Worker version that answered; `d1` is a `SELECT 1` on the service's D1 database, bounded at 1 s, and a failed one answers 503 with `ok: false`. `keys`, on a service that calls providers, says whether it could open one sealed key of the store with its own secret (`ok`, `failed`, `secret-unset`, `no-key`, `timeout`), never a value. `gate` says whether the operator or a spend breaker switched the service off; an off service still answers 200 here. A 200 says the Worker and its database answer, not that every route does.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | `application/json` | up |
+| 503 | `application/json` | down: the same `application/json` body as the 200 with `ok: false`, not a problem; the D1 database did not answer `SELECT 1` within 1 s (`d1.error`: `failed`, `timeout`, `unbound`) |
+
+state and version:
+
+```bash
+curl -qfsS https://crawl.web.pkgforge.dev/healthz
+```
+
+### GET /
+
+the index of this service.
+
+A browser (`Accept: text/html`) gets an HTML index: links to the four root documents and the status page, and each route with its parameters and examples; any other caller gets llms.txt as `text/plain`.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | `text/plain` | the HTML index for a browser, llms.txt otherwise |
+
+the index:
+
+```bash
+curl -qfsS https://crawl.web.pkgforge.dev/
+```
+
+### POST /crawl
+
+submit a crawl job.
+
+A crawl is a provider's job: submit it, then poll it. There is no callback and no stream; the caller polls. A submit goes to one provider chosen by tier, mode and health over providers > accounts > keys (ZenRows, Cloudflare Browser Run, Firecrawl, Hyperbrowser); the job's cost is reserved on the provider account at the most its options can cost a page, times its pages, and settled to what the provider reports once a poll reads it ended. A job nobody polls is settled or released by the service's cron after twice the provider's expected run. Pages are the provider's Markdown of each page, never the origin's bytes. No answer names the provider account, a key or the provider's own job id. Every non-2xx is an RFC 9457 problem with `reason`. The body is one JSON object; an unknown field is a 400, so no option is ever ignored silently.
+
+| parameter | in | required | schema | meaning |
+| --- | --- | --- | --- | --- |
+| `provider` | query | no | `{"type":"string","pattern":"^[a-z0-9][a-z0-9-]{0,63}$"}` | = the body's `provider` |
+
+Request body: `application/json`, schema `{"type":"object","additionalProperties":false,"required":["url"],"properties":{"url":{"type":"string","format":"uri","maxLength":2048,"description":"the start URL, absolute http(s); it passes the destination guard before any provider is asked"},"limit":{"type":"integer","minimum":1,"maximum":100,"default":10,"description":"the most pages the job may fetch; a provider with a lower cap fetches at most its cap, and the answer's `limit` says which"},"render":{"type":"boolean","default":false,"description":"ask for pages rendered in a browser. Browser Run follows it; ZenRows and Firecrawl decide per page whatever is asked (`x-web-crawl-render: provider-decides`); Hyperbrowser renders every page whatever is asked (`x-web-crawl-render: true`). Browser Run unrendered follows only a link written absolute (`https://…`) or from the root (`/docs/…`), never one written relative to the page (`rules/`, `../faq/`, as MkDocs writes every link): such a site's job ends at its start page with `reason: links-not-followed`. Rendered, it follows the links the browser resolves (measured 2026-10-21: 4 pages of such a site in 21 minutes, 5.8 browser-seconds)"},"depth":{"type":"integer","minimum":1,"maximum":10,"description":"link steps from the start URL; absent is the provider's default. Hyperbrowser takes no depth, so a job with one goes to another provider"},"provider":{"type":"string","pattern":"^[a-z0-9][a-z0-9-]{0,63}$","description":"a provider id (`zenrows`, `cfbr`, `firecrawl`, `hyperbrowser`): only that provider is asked, and its refusal is the answer; also accepted as the `provider` query parameter"},"include_paths":{"type":"array","maxItems":10,"items":{"type":"string","pattern":"^/[\\x21-\\x7e]*$","maxLength":200},"description":"path globs a page must match one of; a glob matches a page URL's whole path (never its host or query): it starts with `/`, `*` matches any characters but `/`, `**` any characters, e.g. `/docs/**`. Browser Run and Firecrawl apply them and keep the same paths: Browser Run as whole-URL wildcard patterns, `https://*<glob>` and `http://*<glob>`, each also with `?**` so a URL's query never decides, and Firecrawl as path regexes whose leading slash is optional; ZenRows and Hyperbrowser cannot, so a job with globs never goes to them. A provider fetches the start URL whatever the globs say: when its path is outside them, the provider is asked for one page more than `limit` (the answer's `provider_limit`, priced on that count), and that page, dropped, is not one of the `limit` pages. A poll drops every page outside the globs whatever the provider handed back, and names it in `dropped_urls`"},"exclude_paths":{"type":"array","maxItems":10,"items":{"type":"string","pattern":"^/[\\x21-\\x7e]*$","maxLength":200},"description":"path globs no page may match, written as include_paths; an exclude glob wins over an include glob"},"main_content":{"type":"boolean","default":false,"description":"true: only a provider that answers each page's main content, without the site's navigation, header and footer, runs the job: Firecrawl, asked `onlyMainContent: true`. Browser Run, ZenRows and Hyperbrowser answer each page whole, so a job with main_content never goes to them; pinned to one of them it is a 503 that names why. false (the default): every provider, Firecrawl included (`onlyMainContent: false`), is asked for each page whole, and `content` says `whole-page`"}}}`.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 202 | `application/json` | the provider accepted the job; `Location` is the path to poll |
+| 400 | `application/problem+json` | a body that is not one JSON object, an unknown field, a value out of range, an unknown provider id, or a crawl the provider refused as malformed (body `provider`) |
+| 403 | `application/problem+json` | the destination guard refused the start URL; no provider was asked |
+| 413 | `application/problem+json` | a body larger than 8192 bytes |
+| 429 | `application/problem+json` | every provider leg is held by a rate limit, a spent allowance or the reservations of running jobs; `Retry-After` is the earliest reopening |
+| 502 | `application/problem+json` | every provider asked failed; body `errors[]` names each attempt's classified kind |
+| 503 | `application/problem+json` | no provider can crawl: none configured, a pinned provider with no crawl leg or one that cannot apply the path globs or main_content, or every allowance spent |
+
+submit, any provider:
+
+```bash
+curl -qfsS -X POST "https://crawl.web.pkgforge.dev/crawl" -H 'content-type: application/json' -d '{"url":"https://example.com","limit":2}'
+```
+
+submit to Browser Run, and keep the headers:
+
+```bash
+curl -qfsS -X POST "https://crawl.web.pkgforge.dev/crawl?provider=cfbr" -H 'content-type: application/json' -d '{"url":"https://developers.cloudflare.com/browser-run/","limit":3}' -D h.txt -o b.json
+```
+
+### GET /crawl/{job_id}
+
+poll a crawl job.
+
+The job's state. While it runs, `pages` is empty. Once it has ended (`completed` or `failed`), `pages` holds the pages it fetched, at most 10 a read and at most `limit` over every read, and `next_cursor` reads the next ones. A failed job still answers the pages it fetched before it failed.
+
+| parameter | in | required | schema | meaning |
+| --- | --- | --- | --- | --- |
+| `job_id` | path | yes | `{"type":"string","pattern":"^cj_[0-9a-f]{32}$"}` | the `job_id` POST /crawl answered |
+| `cursor` | query | no | `{"type":"string","pattern":"^cc_[0-9a-f]{32}$"}` | the `next_cursor` of the previous read |
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | `application/json` | the job's state; its pages once it has ended, a page of results at a time |
+| 400 | `application/problem+json` | a job id or cursor this service never handed out, or an unknown query parameter |
+| 404 | `application/problem+json` | no such job: never submitted here, or deleted 15 days after it started |
+| 410 | `application/problem+json` | the job's results have expired at the provider (Browser Run keeps results 14 days, Hyperbrowser 7) |
+| 429 | `application/problem+json` | the provider refused the read for now; `Retry-After`, and every poll of the job until then is this answer with no provider read |
+| 502 | `application/problem+json` | the provider could not be read for the job (body `kind`) |
+| 503 | `application/problem+json` | this build holds no crawl leg for the job's provider |
+| 504 | `application/problem+json` | the provider did not answer within 25000 ms |
+
+poll the job just submitted:
+
+```bash
+curl -qfsS "https://crawl.web.pkgforge.dev/crawl/$(jq -r .job_id b.json)"
+```
+
+### The root documents
+
+Rendered from the route table the router is built from; a build whose documents differ from it fails.
+
+Each answers 200:
+
+| route | content type | meaning |
+| --- | --- | --- |
+| `GET /llms.txt` | `text/plain` | llmstxt.org index of this service |
+| `GET /llms-full.txt` | `text/plain` | every route with parameters, answers and examples inline |
+| `GET /openapi.json` | `application/json` | OpenAPI 3.1 for every route |
+| `GET /SKILL.md` | `text/markdown` | one file an agent reads to use this service |
+
+```bash
+curl -qfsS https://crawl.web.pkgforge.dev/llms.txt
+curl -qfsS https://crawl.web.pkgforge.dev/llms-full.txt
+curl -qfsS https://crawl.web.pkgforge.dev/openapi.json
+curl -qfsS https://crawl.web.pkgforge.dev/SKILL.md
+```
+
+## Provenance headers
+
+| header | meaning |
+| --- | --- |
+| `x-web-provider` | the provider id that runs the job, or that refused it |
+| `x-web-body` | on a poll, `rewritten-by=<provider>`: the pages are the provider's Markdown, never the origin's bytes |
+| `x-web-crawl-content` | what each page's Markdown holds, as the job asked: `main` (the main content, without the site's navigation: a job with `main_content: true`, Firecrawl asked `onlyMainContent: true`) or `whole-page` (the page as the provider renders it, navigation included: every other job, Firecrawl's included) |
+| `x-web-crawl-render` | `false` (pages fetched without a browser), `true` (rendered in a browser, as asked, or always by the provider: Hyperbrowser), or `provider-decides` (ZenRows renders a page only when the site needs it; Firecrawl decides how it loads each page) |
+| `x-web-attempts` | on a submit, the provider attempts the walk made |
+| `x-web-cache` | on a poll: `hit`, the stored answer of this page and no provider read (an ended job's page, kept until the job is deleted after 15 days, or at most 5 s when `incomplete` is above 0; a running job's state, at most 5 s old; or a 429 inside the hold the provider stated); `miss`, the provider was read for this poll |
+| `x-web-snapshot-at` | with `x-web-cache: hit` on a 200: when the stored answer was read from the provider, ISO 8601 UTC |
+| `location` | on a 202, the path to poll |
+| `x-web-store` | `degraded` when the provider walk behind a submit could not read the provider store: only this build's keyless providers were walked, unclaimed on any account's windows, and a keyed provider was not asked; absent when the store was read |
+
+## Failure states
+
+A path no route takes answers 404, reason `not-found`; a method a listed path does not take answers 405, reason `method-not-allowed`, with `Allow`; every non-2xx this service builds is an RFC 9457 problem whose `reason` is one of the values openapi.json publishes.
+
+| status | when | what to do |
+| --- | --- | --- |
+| 400 | a malformed body or query, an unknown field, an unknown provider id, a job id or cursor this service never handed out, or a crawl the provider refused as malformed | fix the request; do not retry it unchanged |
+| 403 | the destination guard refused the start URL | do not retry |
+| 404 | no such job; or a path not listed here (`reason: not-found`) | submit again; `/` and `/llms.txt` list the routes |
+| 405 | a method a listed path does not take: /crawl takes POST only, /crawl/<job_id> GET or HEAD only, so a GET on /crawl or a POST on /crawl/<job_id> is a 405; OPTIONS on either is the CORS preflight (204) | use the method the route names; `Allow` names it |
+| 410 | the job's results have expired at the provider | submit again |
+| 413 | a body larger than 8192 bytes | send only the body's own fields (url, limit, render, depth, provider, include_paths, exclude_paths and main_content), with fewer or shorter globs |
+| 429 | every provider leg is held, or a poll the provider refused for now | retry after `Retry-After` seconds |
+| 502 | every provider asked failed, or a poll the provider could not answer | retry later |
+| 503 | no provider can crawl, or none that can apply the path globs or `main_content` asked for | drop `provider` to let the service choose, or drop the globs or `main_content` |
+| 504 | a poll the provider did not answer in time | poll again |
+| 500 | a defect on this request; the error is logged | retry later |
+| 503 | reason `disabled`: the operator, or a spend breaker, switched this service or every public service off; `scope` says which (`global` or `service`) and `since` since when. `/healthz` and the root documents still answer | wait `Retry-After` (60 s) and ask again; the state is read again every 5 s, and https://web.pkgforge.dev/status says when a service is off |
+| 429 | reason `rate-limited`: a spend breaker caps each caller IP at 100 requests per 60 s on every public service, and this caller is past it | wait `Retry-After` and ask again; the cap lifts after at most 12 hours |
+
+## Pipeline contract
+
+Stable: paths and methods, `reason` values and provenance header names, held by `packages/docs/src/stable.json` (a removal or rename edits it). Each JSON answer's required fields:
+
+- `POST /crawl`: `job_id`, `provider`, `status`, `limit`, `content`, `poll`
+- `GET /crawl/{job_id}`: `job_id`, `provider`, `status`, `reason`, `url`, `limit`, `pages`, `dropped`, `dropped_urls`, `skipped_urls`, `unfollowed_urls`, `incomplete`, `next_cursor`, `usage`, `progress`, `pages_progress`, `started_at`
+
+Retry, by what a client does:
+
+- retry after `Retry-After`: 429 `held`; 503 `disabled`, 429 `rate-limited` (any request route)
+- retry with backoff: 504 `deadline`; 503 `deadline`, `budget`
+- retry only when `retryable` is true: 502 `providers-failed`
+- no retry: fix the request: 400 `bad-request`, `provider-refused`, `unknown-provider`
+- no retry unchanged: 503 `none-configured`, `permanently-exhausted`; 404 `unknown-job`; 403 `destination-refused`; 410 `provider-gone`; 413 `too-large`
+
+Paging `GET /crawl/{job_id}`: poll while `status` is `queued` or `running`, then pass `next_cursor` as `cursor` until it is null:
+
+```bash
+c=; while r=$(curl -qfsS "https://crawl.web.pkgforge.dev/crawl/$(jq -r .job_id b.json)${c:+?cursor=$c}"); do
+  case $(jq -r .status <<<"$r") in queued|running) sleep 5; continue;; esac
+  jq -c . <<<"$r" >> pages.jsonl; c=$(jq -r '.next_cursor // empty' <<<"$r"); [ -n "$c" ] || break
+done
+```

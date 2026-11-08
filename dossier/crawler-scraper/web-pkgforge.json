@@ -1,0 +1,101 @@
+{
+  "topic": "crawler-scraper",
+  "slug": "web-pkgforge",
+  "provider": "web.pkgforge.dev broker",
+  "url": "https://web.pkgforge.dev/",
+  "category": "broker",
+  "verdict": "qualifies",
+  "confidence": "measured",
+  "confidence_note": "",
+  "verified_at": "2026-10-22T00:00:00.000Z",
+  "free_tier": {
+    "stated": "free to every caller, no key, no account and no quota; a spend breaker can cap each caller IP at 100 requests per 60 seconds for at most 12 hours",
+    "unit": "requests",
+    "metered_on": "request-count",
+    "source_url": "https://web.pkgforge.dev/",
+    "read_on": "2026-10-22",
+    "notes": ""
+  },
+  "per_object_cap": {
+    "stated": "search count is clamped at 20; read __max-bytes 4,096 to 10,000,000; crawl limit 1 to 100; archive limit 1,000; research count 100",
+    "bytes": null,
+    "source_url": "https://web.pkgforge.dev/",
+    "notes": ""
+  },
+  "retention": {
+    "stated": "answers are cached 300 s for search, 300 or 3,600 s for read, 3,600 s for an archive listing and 24 h for a research lookup",
+    "days": null,
+    "source_url": "https://web.pkgforge.dev/",
+    "notes": ""
+  },
+  "egress": {
+    "terms": "not applicable: nothing is stored",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://web.pkgforge.dev/"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "six public hosts plus a GitHub proxy; curl with no key",
+  "tooling": "llms.txt, llms-full.txt, openapi.json and SKILL.md per host",
+  "chaining": "It is the instrument every other measurement in this topic was taken with",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "100 requests per 60 s per caller IP, lifting after at most 12 hours",
+      "source": "https://fetch.web.pkgforge.dev/llms-full.txt"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "search count clamped to 20; crawl 100 pages; archive 1,000 captures a page; research 100 works",
+      "source": "https://search.web.pkgforge.dev/llms-full.txt"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "a cached answer is served for 300 s and says x-web-cache: hit",
+      "source": "https://read.web.pkgforge.dev/llms-full.txt"
+    }
+  ],
+  "binding": "request-rate",
+  "limits_note": "",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "no key, no account",
+    "country": null
+  },
+  "reliability_note": "Degraded on 2026-10-22T02:50Z because one archive provider was failing; every other capability was 100 percent usable",
+  "price_per_tb_month": null,
+  "evidence": [
+    {
+      "url": "https://fetch.web.pkgforge.dev/healthz",
+      "date": "2026-10-22",
+      "proved": "200, version tag 72a4c8a4737a, d1 ok 186 ms; all six hosts answered 200"
+    },
+    {
+      "url": "https://fetch.web.pkgforge.dev/https://example.com/?__egress=cf-sockets",
+      "date": "2026-10-22",
+      "proved": "200 with egress=cf-vpc tried=cf-sockets(not-applicable)+cf-vpc pinned=cf-sockets: a pin that cannot apply is set aside"
+    },
+    {
+      "url": "https://read.web.pkgforge.dev/https://linux.do/",
+      "date": "2026-10-22",
+      "proved": "200, 18,041 bytes, x-reader-upstream-status 403, x-reader-fallback challenge: a walled page arrives as a 200"
+    },
+    {
+      "url": "https://web.pkgforge.dev/status.json",
+      "date": "2026-10-22",
+      "proved": "overall degraded at 02:50Z; commoncrawl failing with 9 consecutive probe timeouts; six capabilities usable except archive 3 of 4"
+    },
+    {
+      "url": "probe:fetch/https://proof.ovh.net/files/1Gb.dat",
+      "date": "2026-10-22",
+      "proved": "200, 1,073,741,824 bytes in 33.39 s at 30.67 MiB/s through fetch; and a 100 MiB file byte-identical to the direct download by sha256, so the 350 to 650 MB ceiling in the recon report does not hold"
+    }
+  ],
+  "notes": "Its seven root documents carry a version string; fetch was 02f50c101cb7 on 2026-10-22 and the seed copy is older and wrong about the egress pin. Large bodies do arrive: 1 GiB passed whole on 2026-10-22, against the recon report's 350 to 650 MB figure.",
+  "history": [],
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

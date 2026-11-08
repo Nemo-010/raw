@@ -1,0 +1,172 @@
+{
+  "topic": "compute",
+  "slug": "alibaba-agentrun",
+  "provider": "Alibaba Cloud Agent Sandbox / FC / AgentRun",
+  "url": "https://help.aliyun.com/zh/agent-sandbox/product-overview/billing-overview",
+  "category": "container and VM sandbox",
+  "free_tier": {
+    "stated": "no credit and no free compute; the only free allowance is 15 GiB of sandbox disk, and it is withdrawn while an instance is deep-asleep or snapshot-saved",
+    "unit": "GiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://help.aliyun.com/zh/agent-sandbox/product-overview/billing-overview",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://help.aliyun.com/zh/agent-sandbox/product-overview/billing-overview",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://help.aliyun.com/zh/agent-sandbox/product-overview/billing-overview",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "not published on the source card",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://help.aliyun.com/zh/agent-sandbox/product-overview/billing-overview"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "an API, per the billing overview page: \"自定义模板可通过 API 主动预热（Template Cache），减少沙箱首次启动耗时。\"",
+  "tooling": "no client is named on https://help.aliyun.com/zh/agent-sandbox/product-overview/billing-overview",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "vCPU, memory and disk are billed per second by QoS tier; the page's own example is '不足 1 秒按 1 秒计算'",
+      "source": "https://help.aliyun.com/zh/agent-sandbox/product-overview/billing-overview"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "15 GiB of free rootfs disk while active or shallow-asleep; deep sleep and snapshots lose it",
+      "source": "https://help.aliyun.com/zh/agent-sandbox/product-overview/billing-overview"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "shallow sleep is entered automatically below 0.01 core of CPU, below 1,000 bytes a second of network, or with no request; deep sleep keeps memory in a snapshot and bills the storage",
+      "source": "https://help.aliyun.com/zh/agent-sandbox/product-overview/billing-overview"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+  "identity_cost": {
+    "kind": "national-id",
+    "detail": "a China-site Alibaba Cloud account: registration needs a mobile number that can receive an SMS code, '注册前只需要准备一个...可以接收短信验证码的手机号码...即可，注册账号流程相同。', and '注册完成后，在充值和购买云产品之前需要完成账号的实名认证'. Individual verification takes '输入个人认证的姓名和身份证号码，开始认证，个人身份校验成功后进行扫脸', that is a name, an identity-card number and a face scan. The sandbox bills per second from the account balance ('账户余额不足导致欠费时，系统将发送欠费通知'), so the real-name check comes before use.",
+    "country": "CN"
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the billing overview was read on 2026-10-22 (help.aliyun.com, Chinese). It prices three lifecycle states separately and states a 15 GiB free disk allowance. There is no free compute allowance, so the free tier is the disk and the record says so",
+  "evidence": [
+    {
+      "url": "https://help.aliyun.com/zh/agent-sandbox/product-overview/billing-overview",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/agent-sandbox/product-overview/billing-overview",
+      "date": "2026-10-22",
+      "proved": "three states priced separately: '活跃' bills vCPU, memory and disk; '深休眠' snapshots the whole instance including memory to persistent storage and bills disk only; '浅休眠' bills memory and disk and is entered automatically when 'CPU 消耗 < 0.01 core', '网络流量 < 1,000 Bytes/s' or '无请求触发'; and '磁盘享受 15 GiB 免费额度'. Deep sleep loses the 15 GiB free disk allowance"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/agent-sandbox/product-overview/billing-overview",
+      "date": "2026-11-03",
+      "proved": "an API operation exists",
+      "capture": "sha256:0ba5638e5ac8343e0d93f7a027f9cdf5c3f9fd73d9fa905606ae8d8d8a5b64f7",
+      "quote": "自定义模板可通过 API 主动预热（Template Cache），减少沙箱首次启动耗时。"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/agent-sandbox/product-overview/billing-overview",
+      "date": "2026-11-04",
+      "proved": "the page names an API and no other access interface",
+      "capture": "sha256:0ba5638e5ac8343e0d93f7a027f9cdf5c3f9fd73d9fa905606ae8d8d8a5b64f7",
+      "quote": "自定义模板可通过 API 主动预热（Template Cache），减少沙箱首次启动耗时。"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/account/ali-cloud-account-registration-process",
+      "date": "2026-11-04",
+      "proved": "a China-site account must pass real-name verification before any recharge or purchase, and the sandbox bills from the account balance",
+      "capture": "sha256:b159830a3ef0c3e1f58629d5641376bea1bc6a65c433aa1ec7e15573252a9b98",
+      "quote": "注册完成后，在充值和购买云产品之前需要完成账号的实名认证"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/account/ali-cloud-account-registration-process",
+      "date": "2026-11-04",
+      "proved": "a mobile number able to receive an SMS code is all that registration requires",
+      "capture": "sha256:b159830a3ef0c3e1f58629d5641376bea1bc6a65c433aa1ec7e15573252a9b98",
+      "quote": "注册前只需要准备一个...可以接收短信验证码的手机号码...即可，注册账号流程相同。"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/account/verify-your-identity-individual-account",
+      "date": "2026-11-04",
+      "proved": "individual verification is a Chinese identity-card number plus a face scan, on the China site",
+      "capture": "sha256:fa61514d3943af491990bf35a4447df5567f1c43d925df8f1ddc438a9d689e2b",
+      "quote": "输入个人认证的姓名和身份证号码，开始认证，个人身份校验成功后进行扫脸。"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/agent-sandbox/product-overview/billing-overview",
+      "date": "2026-11-04",
+      "proved": "the sandbox bills against an account balance, so the account and its verification precede use",
+      "capture": "sha256:0ba5638e5ac8343e0d93f7a027f9cdf5c3f9fd73d9fa905606ae8d8d8a5b64f7",
+      "quote": "账户余额不足导致欠费时，系统将发送欠费通知。"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T15:51:56.483Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 16.48,
+    "talaria_m24h_usd": 39.55,
+    "nemo_m10h_usd": 16.86,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "unclassified",
+    "shape": null,
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "no vendor wall-clock cap: the caps are user-set. The automatic transition is shallow sleep, triggered by the same activity test Azure uses: under 0.01 core of CPU, under 1,000 bytes a second, or no request"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "allowance",
+    "granularity": {
+      "min_billed_s": 1,
+      "rounding_s": null
+    },
+    "burst_x": 1.0,
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": {
+      "gib": 15,
+      "price": "billed per GiB-second past the 15 GiB allowance",
+      "durability": "rootfs; a deep-sleep snapshot holds memory as well as disk",
+      "on_stop": true,
+      "on_destroy": false,
+      "retention": "until destroyed; a snapshot persists while it is billed"
+    },
+    "net": {
+      "out": true,
+      "in": true,
+      "ports": null,
+      "static_ip": null,
+      "ipv6": null,
+      "allowance": null
+    }
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "request-rate",
+  "history": [
+    "history/2026-10-22T050800Z/alibaba-sandbox-sleep-tiers-recorded.md"
+  ]
+}

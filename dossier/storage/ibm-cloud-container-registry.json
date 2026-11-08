@@ -1,0 +1,112 @@
+{
+  "topic": "storage",
+  "slug": "ibm-cloud-container-registry",
+  "provider": "IBM Cloud Container Registry (free plan)",
+  "url": "https://www.ibm.com/products/container-registry",
+  "category": "registry",
+  "free_tier": {
+    "stated": "500 MB storage and 5 GB pull traffic per month: 'Amount of storage for images | 500 MB | Unlimited', 'Pull traffic | 5 GB per month | Unlimited' (Free vs Standard). Free-plan allowance confirmed in the quota doc: 'The free tier allowance for storage is 512 MB and traffic is 5120 MB.'",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://cloud.ibm.com/docs/Registry?topic=Registry-registry_overview",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://cloud.ibm.com/docs/Registry?topic=Registry-registry_overview",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://cloud.ibm.com/docs/Registry?topic=Registry-registry_overview",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Pull traffic is metered as a quota, not priced per GB on the free plan: 'Pull traffic across public connections counts toward usage and quota. Pull traffic across private connections doesn't count.' Exceed it and access stops — 'If you exceed your storage or pull traffic limits, you cannot push or pull images to and from your namespace.'",
+    "metered": true
+  },
+  "interface": [
+    "oci",
+    "cli"
+  ],
+  "interface_detail": "oci",
+  "tooling": "ibmcloud cr CLI, docker/skopeo. OCI distribution spec compliant.",
+  "chaining": "None — 512 MB is per IBM Cloud account and the overage behaviour is a hard stop, not a bill.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "traffic | 5 GB per month | Unlimited' (Free vs Standard)",
+      "source": "https://cloud.ibm.com/docs/Registry?topic=Registry-registry_overview"
+    }
+  ],
+  "limits_note": "512 MB storage, 5 GB pull traffic per month, per account across all namespaces in a registry instance; overage blocks push and pull entirely.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Hard cutoff on quota rather than overage billing, so a bulk workload simply stops mid-transfer.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://cloud.ibm.com/docs/Registry?topic=Registry-registry_overview",
+      "date": "2026-10-21",
+      "proved": "Free plan 500 MB storage / 5 GB pull traffic; 'you cannot push or pull images' on exceed"
+    },
+    {
+      "url": "https://cloud.ibm.com/docs/Registry?topic=Registry-registry_quota",
+      "date": "2026-10-21",
+      "proved": "'free tier allowance for storage is 512 MB and traffic is 5120 MB'"
+    },
+    {
+      "url": "https://us.icr.io/v2/",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 401, Server: IBM Cloud Container Registry, realm https://us.icr.io/oauth/token"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "500 MB storage and 5 GB pull traffic per month: 'Amount of storage for images | 500 MB | Unlimited', 'Pull traffic | 5 GB per month | Unlimited' (Free vs Standard). Free-plan allowance confirmed in the quota doc: 'The free tier allowance for storage is 512 MB and traffic is 5120 MB.'",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B4-hyperscaler-registries.json",
+    "seed_area": "B/B4",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "B/B4"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "500 MB storage and 5 GB pull traffic per month: 'Amount of storage for images | 500 MB | Unlimited', 'Pull traffic | 5 GB per month | Unlimited' (Free vs Standard). Free-plan allowance confirmed in the quota doc: 'The free tier allowance for storage is 512 MB and traffic is 5120 MB.'",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area B/B4"
+    },
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "Hyperscaler registries",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "500 MB storage and 5 GB pull traffic per month: 'Amount of storage for images | 500 MB | Unlimited', 'Pull traffic | 5 GB per month | Unlimited' (Free vs Standard). Free-plan allowance confirmed in the quota doc: 'The free tier allowance for storage is 512 MB and traffic is 5120 MB.'",
+    "limits_verbatim": "512 MB storage, 5 GB pull traffic per month, per account across all namespaces in a registry instance; overage blocks push and pull entirely.",
+    "egress_verbatim": "Pull traffic is metered as a quota, not priced per GB on the free plan: 'Pull traffic across public connections counts toward usage and quota. Pull traffic across private connections doesn't count.' Exceed it and access stops — 'If you exceed your storage or pull traffic limits, you cannot push or pull images to and from your namespace.'",
+    "chaining_verbatim": "None — 512 MB is per IBM Cloud account and the overage behaviour is a hard stop, not a bill.",
+    "tooling_verbatim": "ibmcloud cr CLI, docker/skopeo. OCI distribution spec compliant.",
+    "interface_verbatim": "oci",
+    "agent_focus": "hyperscaler and mid-tier container registries judged on free storage + free egress; explicit test of whether any hyperscaler gives free public storage AND free internet egress"
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

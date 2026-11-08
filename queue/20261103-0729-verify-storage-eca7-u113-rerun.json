@@ -1,0 +1,20 @@
+{
+ "id": "20261103-0729-verify-storage-eca7-u113-rerun",
+ "kind": "verify",
+ "topic": "storage",
+ "question": "This run re-read these records and moved verified_at to 2026-11-03, adding evidence rows of that date with captures, but each still carries a confidence_note that says the pass did not re-check it (or that no page was read) and an extras.verified_at_basis that says it was not re-checked against the live service. Rewrite confidence_note and extras.verified_at_basis on each record to say what this pass read (the pages of its 2026-11-03 evidence rows, by URL), and raise confidence one rung only where every field that decides the verdict now cites a vendor capture. Read the record's own captures; change nothing else.\nAn audit of the first attempt judged these claims unsupported by their sources; settle each one first:\n- storage/openstreetmap-gps-traces $.limits_note: GPX only with zip/tar/tar.gz bundles and the August 2026 deprecation of Public and Private are supported (same capture). The clause 'Trackable = ... still retrievable by id' is not: GET /api/0.6/gpx/#id/data is owner-only unless the trace is public; Trackable points are exposed only through the anon\n- storage/pcloud-lifetime $.confidence_note: pCloud lists the 10 TB lifetime plan at 1499 USD, not EUR, on both https://www.pcloud.com/cloud-storage-pricing-plans.html (fresh read, provider firecrawl) and https://www.pcloud.com/lifetime.html ('1499 USD'). The plain broker read of the pricing page (sha256:dc4ba6bb...) renders no price. The same\n- storage/pcloud-lifetime $.free_tier.stated: Sizes and the one-time payment are right, but the vendor pages state the prices in USD (219 USD, 499 USD, 1499 USD), not EUR; the pricing page read via firecrawl (sha256:f1b8e281...) says the same: '219USD', '499USD', '1499USD'.\n- storage/pdfcoffee-dokumen-pub-idoc-pub $.extras.verified_at_basis: https://idoc.pub/faqs and https://dokument.pub/faqs (sha256:8c9dcc68...) are now parked domain-for-sale pages with no FAQ content, and https://dokumen.pub/faqs returns a bot challenge (upstream 403) to the plain broker read; only the two pdfcoffee.com pages of the named basis still carry content.",
+ "scope": {
+  "rids": [
+   "storage/openstreetmap-gps-traces",
+   "storage/pcloud-lifetime-plans",
+   "storage/pcloud-lifetime",
+   "storage/pdfcoffee-dokumen-pub-idoc-pub",
+   "storage/perforce-p4-free-edition",
+   "storage/pixeldrain-pro-prepaid",
+   "storage/pixelfed-de-pixelfed-15-mb-per-object-unlimited-per-acco",
+   "storage/playstation-app-captures-library"
+  ]
+ },
+ "origin": "audit u132 of 20261103-0729-verify-storage-eca7/u113 failed: 4 of 27 unsupported",
+ "created": "2026-11-04T02:01:17Z"
+}

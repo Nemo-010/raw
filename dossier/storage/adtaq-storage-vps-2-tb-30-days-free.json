@@ -1,0 +1,111 @@
+{
+  "topic": "storage",
+  "slug": "adtaq-storage-vps-2-tb-30-days-free",
+  "provider": "ADTAQ Storage VPS — 2 TB, 30 days free (card-gated)",
+  "url": "https://www.adtaq.com/storage-vps/",
+  "category": "iaas",
+  "free_tier": {
+    "stated": "2 TB HDD (SSD-cached), 2 vCPU, 2 GB RAM, 6 TB/month bandwidth on 1 Gbps — $20/month, FREE for the first month. Paid ladder is $10/TB/month with RAID6 + NVMe cache, up to 4 TB at $40.",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://lowendtalk.com/discussion/186689/adtaq-soft-launch-free-2tb-storage-vps-for-one-month",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://lowendtalk.com/discussion/186689/adtaq-soft-launch-free-2tb-storage-vps-for-one-month",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "30-day trial then $20/mo unless cancelled",
+    "days": 30,
+    "source_url": "https://lowendtalk.com/discussion/186689/adtaq-soft-launch-free-2tb-storage-vps-for-one-month",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "6 TB/month premium bandwidth included at 1 Gbps; beyond that it is metered. Not CF-covered. For the 'serve 500 GB–1 TiB/day' workload this is ~6 days of traffic — fails that workload but fits cold archive ingest.",
+    "metered": true,
+    "free_allowance": "6 TB per month"
+  },
+  "interface": [
+    "sftp",
+    "rsync",
+    "ssh",
+    "rclone"
+  ],
+  "interface_detail": "sftp",
+  "tooling": "Root KVM VPS: full SSH/SFTP/rsync, mountable as rclone sftp remote or with rclone mount + fuse. Host rep explicitly runs KVM + VirtFusion.",
+  "chaining": "One trial per customer (Stripe ties card to VirtFusion provisioning — 'our provisioning solution ties Stripe directly to Virtfusion'). The flow ties each card to one provisioning record, so a second trial needs a second card and this is NOT repeatable at scale.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "1 Gbps",
+      "source": "https://lowendtalk.com/discussion/186689/adtaq-soft-launch-free-2tb-storage-vps-for-one-month"
+    }
+  ],
+  "limits_note": "30-day trial then $20/mo unless cancelled. 6 TB/month egress cap. 2 TB per server; larger trial sizes explicitly refused ('we are not offering free trials for those at this time (nor do we plan to)').",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "Small Idaho host (Lincoln Freedom Group LLC), Boise datacentre, RAID6. New enough that the soft launch itself was the reliability test; no long-run track record. Trial VPS is deleted if not converted.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://lowendtalk.com/discussion/186689/adtaq-soft-launch-free-2tb-storage-vps-for-one-month",
+      "date": "2026-10-21",
+      "proved": "'$20/MONTH FREE for 1 Month'; 'Stripe is going to ask you for your credit card … Your card WILL NOT be charged unless you keep the server past the 30 day trial'"
+    },
+    {
+      "url": "https://www.adtaq.com/storage-vps/",
+      "date": "2026-10-21",
+      "proved": "current page, 'Storage VPS in Boise, Idaho — $10/TB, RAID6, 10G Uplink'"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "2 TB HDD (SSD-cached), 2 vCPU, 2 GB RAM, 6 TB/month bandwidth on 1 Gbps — $20/month, FREE for the first month. Paid ladder is $10/TB/month with RAID6 + NVMe cache, up to 4 TB at $40.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F9-vps-forums.json",
+    "seed_area": "F/F9",
+    "seed_verdict": [
+      {
+        "value": "trial-only",
+        "area": "F/F9"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "egress",
+      "why": "2 TB HDD (SSD-cached), 2 vCPU, 2 GB RAM, 6 TB/month bandwidth on 1 Gbps — $20/month, FREE for the first month. Paid ladder is $10/TB/month with RAID6 + NVMe cache, up to 4 TB at $40.",
+      "retry_when": "if the egress meter is removed or a Cloudflare path is added",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F9"
+    },
+    "target_document": "docs/storage/free/anonymous-hosts.md",
+    "document_section": "File hosts with a protocol endpoint",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "2 TB HDD (SSD-cached), 2 vCPU, 2 GB RAM, 6 TB/month bandwidth on 1 Gbps — $20/month, FREE for the first month. Paid ladder is $10/TB/month with RAID6 + NVMe cache, up to 4 TB at $40.",
+    "limits_verbatim": "30-day trial then $20/mo unless cancelled. 6 TB/month egress cap. 2 TB per server; larger trial sizes explicitly refused ('we are not offering free trials for those at this time (nor do we plan to)').",
+    "egress_verbatim": "6 TB/month premium bandwidth included at 1 Gbps; beyond that it is metered. Not CF-covered. For the 'serve 500 GB–1 TiB/day' workload this is ~6 days of traffic — fails that workload but fits cold archive ingest.",
+    "chaining_verbatim": "One trial per customer (Stripe ties card to VirtFusion provisioning — 'our provisioning solution ties Stripe directly to Virtfusion'). The flow ties each card to one provisioning record, so a second trial needs a second card and this is NOT repeatable at scale.",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "Root KVM VPS: full SSH/SFTP/rsync, mountable as rclone sftp remote or with rclone mount + fuse. Host rep explicitly runs KVM + VirtFusion.",
+    "interface_verbatim": "sftp",
+    "agent_focus": "VPS/hosting communities — NodeSeek, Hostloc, LowEndTalk, LowEndSpirit, r/selfhosted, r/DataHoarder, WebHostingTalk — for free/trial storage VPS, the '大容量VPS' large-capacity VPS culture, and excess-use economics"
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

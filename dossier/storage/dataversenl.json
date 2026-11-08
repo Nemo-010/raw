@@ -1,0 +1,169 @@
+{
+  "topic": "storage",
+  "slug": "dataversenl",
+  "provider": "DataverseNL",
+  "url": "https://dataverse.nl",
+  "category": "national Dataverse consortium (DANS)",
+  "free_tier": {
+    "stated": "no quota defined (API); effectiveDatasetFileCountLimit=10000 — the highest file-count ceiling seen in the sweep",
+    "unit": "unlimited",
+    "metered_on": "unstated",
+    "source_url": "https://dataverse.nl/api/dataverses/1/storage/quota?showInherited=true",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://dataverse.nl/api/dataverses/1/storage/quota?showInherited=true",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://dataverse.nl/api/dataverses/1/storage/quota?showInherited=true",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "free",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "REST (works even though the HTML front end is behind Anubis proof-of-work)",
+  "tooling": "REST; note the HTML UI returns an Anubis 'Making sure you're not a bot' PoW page to non-browser clients",
+  "chaining": "none — account provisioning is manual per institution",
+  "limits": [],
+  "limits_note": "no storage quota, 10,000 files/dataset, no files required to publish",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "institution — 'The institutions using DataverseNL are responsible for assigning permissions to user accounts'; users 'log in with their institutional account'. Prospective depositors without a partner institution are told to 'contact your institution' or find another repository.",
+    "country": null
+  },
+  "reliability_note": "API fully usable anonymously for read; the wall is account provisioning, not transport.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://dataverse.nl/api/dataverses/1/storage/quota?showInherited=true",
+      "date": "2026-10-21",
+      "proved": "{\"message\":\"No quota defined for this collection\"}"
+    },
+    {
+      "url": "https://dataverse.nl/api/dataverses/1",
+      "date": "2026-10-21",
+      "proved": "'effectiveDatasetFileCountLimit':10000"
+    },
+    {
+      "url": "https://dataverse.nl/api/dataverses/1",
+      "date": "2026-10-21",
+      "proved": "(description) — 'contact your institution directly ... If your institution is not in this list, and you are looking for a repository to publish research data, please contact [DANS]'"
+    },
+    {
+      "url": "https://dans.knaw.nl/en/data-services/dataversenl/user-guide/",
+      "date": "2026-10-21",
+      "proved": "(search snippet) — 'The institutions using DataverseNL are responsible for assigning permissions to user accounts'"
+    },
+    {
+      "url": "https://dataverse.nl/",
+      "date": "2026-10-21",
+      "proved": "Anubis proof-of-work interstitial to non-browser clients"
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "no quota defined (API); effectiveDatasetFileCountLimit=10000 — the highest file-count ceiling seen in the sweep",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E15-open-academic-no-verify.json",
+    "seed_area": "E/E15",
+    "seed_verdict": [
+      {
+        "value": "fails-identity",
+        "area": "E/E15"
+      },
+      {
+        "value": "fails-identity",
+        "area": "E/E16"
+      },
+      {
+        "value": "fails-identity",
+        "area": "D/D11"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "DataverseNL",
+      "DataverseNL (DANS)",
+      "DataverseNL (Dutch national Dataverse, DANS-operated)"
+    ],
+    "conflicts": [
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "no quota defined (API); effectiveDatasetFileCountLimit=10000 — the hig",
+            "source": "table.md row, area E/E15",
+            "evidence": null
+          },
+          {
+            "value": "No quota defined at root (literal API response). Deposit sits inside i",
+            "source": "table.md row, area E/E16",
+            "evidence": null
+          },
+          {
+            "value": "No quota defined at root.",
+            "source": "table.md row, area D/D11",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "no quota defined (API); effectiveDatasetFileCountLimit=10000 — the hig",
+            "source": "table.md (area E/E15)"
+          },
+          {
+            "value": "No quota defined at root (literal API response). Deposit sits inside i",
+            "source": "table.md (area E/E16)"
+          },
+          {
+            "value": "No quota defined at root.",
+            "source": "table.md (area D/D11)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "no quota defined (API); effectiveDatasetFileCountLimit=10000 — the highest file-count ceiling seen in the sweep",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E15"
+    },
+    "target_document": "docs/storage/free/academic-identity.md",
+    "document_section": "Open academic deposit with no identity check",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "no quota defined (API); effectiveDatasetFileCountLimit=10000 — the highest file-count ceiling seen in the sweep",
+    "limits_verbatim": "no storage quota, 10,000 files/dataset, no files required to publish",
+    "egress_verbatim": "free",
+    "chaining_verbatim": "none — account provisioning is manual per institution",
+    "identity_verbatim": "institution — 'The institutions using DataverseNL are responsible for assigning permissions to user accounts'; users 'log in with their institutional account'. Prospective depositors without a partner institution are told to 'contact your institution' or find another repository.",
+    "tooling_verbatim": "REST; note the HTML UI returns an Anubis 'Making sure you're not a bot' PoW page to non-browser clients",
+    "interface_verbatim": "REST (works even though the HTML front end is behind Anubis proof-of-work)",
+    "agent_focus": "Systematic sweep of ~50 Dataverse/DSpace/Invenio academic repositories to find which accept an outsider with a plain email address, plus what their caps actually are. Identity gate treated as the primary ranking field. Probe method: GET /api/dataverses/1/storage/quota?showInherited=true on every Dataverse instance (numeric root id works where alias 'root' 404s), GET /api/info/version for liveness, /api/dataverses/1 for effectiveDatasetFileCountLimit."
+  },
+  "binding": "none",
+  "binding_note": "the quota is real and unreachable: identity is the binding constraint, and it is not one of the six limits kinds",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

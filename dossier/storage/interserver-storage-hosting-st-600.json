@@ -1,0 +1,109 @@
+{
+  "topic": "storage",
+  "slug": "interserver-storage-hosting-st-600",
+  "provider": "InterServer Storage Hosting ST 600 (20 TB)",
+  "url": "https://www.interserver.net/storage/",
+  "category": "shared storage hosting (ZFS / RAID-Z2, DirectAdmin)",
+  "free_tier": {
+    "stated": "200 GB $3 · 1 TB $5 · 2 TB $8 · 4 TB $10 · 10 TB $25 · 20 TB $42, all per month",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://www.interserver.net/storage/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.interserver.net/storage/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.interserver.net/storage/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "VERBATIM per-tier transfer caps: 1 TB plan gets \"Transfer 2 TB\"; 4 TB gets 10 TB; 10 TB gets 15 TB; **20 TB gets only 20 TB of transfer**. So egress is ~1x storage at the top tier, decaying to 0.5x at the 200 GB tier. This is a metered product wearing an 'unlimited hosting' costume.",
+    "metered": true
+  },
+  "interface": [
+    "s3",
+    "webdav",
+    "sftp",
+    "ftps",
+    "ftp",
+    "scp",
+    "rsync",
+    "ssh"
+  ],
+  "interface_detail": "FTP/FTPS, SFTP, SCP, rsync over non-root SSH, DirectAdmin, Apache/PHP/MySQL, Nextcloud, web file delivery",
+  "tooling": "rsync/SFTP. \"Object Storage Beta\" exists but is beta — treat as unavailable. No S3, no WebDAV stated.",
+  "chaining": "DirectAdmin + Apache means you CAN serve HTTP directly from it, which is unusual and useful for a Cloudflare origin. But the 20 TB transfer cap at the 20 TB tier means one full re-sync exhausts the month.",
+  "limits": [],
+  "limits_note": "No root access on the shared storage product (\"Shared storage does not include root access\"). Transfer caps are the binding constraint, not capacity.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "Long-established (InterServer, since 1999), ZFS + RAID-Z2, 99.9% uptime claim, 24/7 support. Very stable operator. The product is priced to make capacity cheap and bandwidth expensive, which is the opposite of the requirement.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.interserver.net/storage/",
+      "date": "2026-10-21",
+      "proved": "the full six-tier table with Space and Transfer columns (opened this session)"
+    },
+    {
+      "url": "https://www.interserver.net/vps/storage.html",
+      "date": "2026-10-21",
+      "proved": "\"Starts at $3.00 per TB per month\", \"Each storage VPS slice adds 1TB SATA storage, 2GB memory, 2TB transfer\" (opened this session)"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$2.10/TB/mo at the 20 TB tier ($42) but with only 20 TB/mo of transfer. $2.50/TB/mo at the 10 TB tier with 15 TB transfer. 5 TB workload: buy the 10 TB tier = $2.50/TB/mo. 20 TB workload: $2.10/TB/mo. Cheap per TB, but egress = 1x storage makes it a trap for the 500 GB-1 TiB/day serving load.",
+  "notes": "200 GB $3 · 1 TB $5 · 2 TB $8 · 4 TB $10 · 10 TB $25 · 20 TB $42, all per month",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-P7-discount-channels.json",
+    "seed_area": "A/P7",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "A/P7"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "200 GB $3 · 1 TB $5 · 2 TB $8 · 4 TB $10 · 10 TB $25 · 20 TB $42, all per month",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/P7"
+    },
+    "target_document": "docs/storage/paid/lifetime-and-deals.md",
+    "document_section": "Discount channels and Black Friday",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "200 GB $3 · 1 TB $5 · 2 TB $8 · 4 TB $10 · 10 TB $25 · 20 TB $42, all per month",
+    "limits_verbatim": "No root access on the shared storage product (\"Shared storage does not include root access\"). Transfer caps are the binding constraint, not capacity.",
+    "egress_verbatim": "VERBATIM per-tier transfer caps: 1 TB plan gets \"Transfer 2 TB\"; 4 TB gets 10 TB; 10 TB gets 15 TB; **20 TB gets only 20 TB of transfer**. So egress is ~1x storage at the top tier, decaying to 0.5x at the 200 GB tier. This is a metered product wearing an 'unlimited hosting' costume.",
+    "chaining_verbatim": "DirectAdmin + Apache means you CAN serve HTTP directly from it, which is unusual and useful for a Cloudflare origin. But the 20 TB transfer cap at the 20 TB tier means one full re-sync exhausts the month.",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "rsync/SFTP. \"Object Storage Beta\" exists but is beta — treat as unavailable. No S3, no WebDAV stated.",
+    "interface_verbatim": "FTP/FTPS, SFTP, SCP, rsync over non-root SSH, DirectAdmin, Apache/PHP/MySQL, Nextcloud, web file delivery",
+    "price_verbatim": "$2.10/TB/mo at the 20 TB tier ($42) but with only 20 TB/mo of transfer. $2.50/TB/mo at the 10 TB tier with 15 TB transfer. 5 TB workload: buy the 10 TB tier = $2.50/TB/mo. 20 TB workload: $2.10/TB/mo. Cheap per TB, but egress = 1x storage makes it a trap for the 500 GB-1 TiB/day serving load.",
+    "agent_focus": "The cheap-paid lane — where bulk storage is actually bought (LowEndTalk offers, LowEndBox, r/DataHoarder, Slickdeals, 什么值得买, AppSumo, StackSocial, bundles, provider promo channels, lifetime flash sales). True $/TB/month price floor with free egress, stated at the 5 TB and 20 TB tiers, plus which providers run an annual promo window."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

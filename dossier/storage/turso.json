@@ -1,0 +1,141 @@
+{
+  "topic": "storage",
+  "slug": "turso",
+  "provider": "Turso",
+  "url": "https://turso.tech",
+  "category": "paas",
+  "free_tier": {
+    "stated": "5 GB total storage, 100 databases on Free",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://turso.tech/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://turso.tech/pricing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://turso.tech/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Not separately metered on Free; the binding meters are 500M rows read / 10M rows written per month, plus 3 GB embedded syncs. Serving files out of SQLite blobs burns rows-read, not bytes.",
+    "metered": true
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Turso CLI + HTTP API (`/v2/pipeline`), libSQL clients (JS/Python/Rust/Go), `turso db shell`, embedded replicas",
+  "chaining": "100 databases is a unit multiplier for ORGANIZATION, but the 5 GB storage is an ACCOUNT-level pot, not per database — 100 DBs x 50 MB each rather than 100 x 5 GB. Second axis: each org/account. Multiply accounts (GitHub OAuth is one click) — N accounts x 5 GB.",
+  "limits": [],
+  "limits_note": "5 GB is a hard total across all 100 DBs — this is the key trap: the big number is database COUNT, not storage. Exceeding rows-read returns `BLOCKED`. 3 GB sync cap for embedded replicas.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Exceeding quota returns BLOCKED errors on queries rather than data loss; DBs stay warm (no cold starts since Mar 2025).",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://turso.tech/pricing",
+      "date": "2026-10-21",
+      "proved": "'Free $0/month | 100 | 5GB | 500 Million | 10 Million | 3GB'"
+    },
+    {
+      "url": "https://turso.tech/blog/turso-cloud-debuts-the-new-developer-plan",
+      "date": "2026-10-21",
+      "proved": "'500 million rows read per month, 10 million rows written per month, and 5GB of storage'; Developer plan allows 1,000 databases"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "5 GB total storage, 100 databases on Free",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G3-baas-databases.json",
+    "seed_area": "G/G3",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "G/G3"
+      },
+      {
+        "value": "fails-quota",
+        "area": "G/G6"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Turso",
+      "Turso (libSQL/SQLite)"
+    ],
+    "conflicts": [
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "5 GB total storage, 100 databases on Free",
+            "source": "table.md row, area G/G3",
+            "evidence": null
+          },
+          {
+            "value": "5 GB total storage on Free; 100 databases; 500M rows read/month; 10M r",
+            "source": "table.md row, area G/G6",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "5 GB total storage, 100 databases on Free",
+            "source": "table.md (area G/G3)"
+          },
+          {
+            "value": "5 GB total storage on Free; 100 databases; 500M rows read/month; 10M r",
+            "source": "table.md (area G/G6)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "5 GB total storage, 100 databases on Free",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G3"
+    },
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Backend-as-a-service and databases",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "5 GB total storage, 100 databases on Free",
+    "limits_verbatim": "5 GB is a hard total across all 100 DBs — this is the key trap: the big number is database COUNT, not storage. Exceeding rows-read returns `BLOCKED`. 3 GB sync cap for embedded replicas.",
+    "egress_verbatim": "Not separately metered on Free; the binding meters are 500M rows read / 10M rows written per month, plus 3 GB embedded syncs. Serving files out of SQLite blobs burns rows-read, not bytes.",
+    "chaining_verbatim": "100 databases is a unit multiplier for ORGANIZATION, but the 5 GB storage is an ACCOUNT-level pot, not per database — 100 DBs x 50 MB each rather than 100 x 5 GB. Second axis: each org/account. Multiply accounts (GitHub OAuth is one click) — N accounts x 5 GB.",
+    "tooling_verbatim": "Turso CLI + HTTP API (`/v2/pipeline`), libSQL clients (JS/Python/Rust/Go), `turso db shell`, embedded replicas",
+    "interface_verbatim": "rest",
+    "agent_focus": "Backend-as-a-service and database platforms where free storage quota is expressed per PROJECT/DATASET/CLUSTER and the units may multiply with free orgs — plus the headless-CMS class, where assets are CDN-served at no egress cost"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

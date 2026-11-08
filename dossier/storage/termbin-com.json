@@ -1,0 +1,104 @@
+{
+  "topic": "storage",
+  "slug": "termbin-com",
+  "provider": "termbin.com",
+  "url": "https://termbin.com",
+  "category": "anonymous-dump",
+  "free_tier": {
+    "stated": "approx. 1 MB per paste, no account, no count limit. Measured: 1,000,000 bytes stored and retrievable; 2,400,000 bytes -> connection reset.",
+    "unit": "MB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://termbin.com/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://termbin.com/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://termbin.com/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "free direct GET over HTTPS, plain text, no metering.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "plain TCP: `nc termbin.com 9999` returns the URL on the socket. Works with any netcat, and with bash /dev/tcp where nc is absent (used for the probes here).",
+  "chaining": "unlimited pastes x ~1 MB. Its distinguishing property is that it needs no HTTP client and no TLS — a raw TCP sink. Useful as an out-of-band manifest/credential store, useless as a bulk tier.",
+  "limits": [],
+  "limits_note": "~1 MB per paste; no expiry documented; no delete path; no listing.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: approx. 1 MB per paste, no account, no count limit. Measured: 1,000,000 bytes stored and retrievable; 2,400,000 bytes -> connection reset. Oversize inp",
+    "country": null
+  },
+  "reliability_note": "Oversize input is dropped by resetting the connection mid-write, not by an error message — the client sees 'Connection reset by peer' and any partial data is lost. Random 4-5 char slugs, so URLs are guessable.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://termbin.com/",
+      "date": "2026-10-21",
+      "proved": "'echo just testing! | nc termbin.com 9999' -> 'https://termbin.com/test'; returns a URL on the socket"
+    },
+    {
+      "url": "https://termbin.com/9ffz",
+      "date": "2026-10-21",
+      "proved": "probe: printf ... >&3 to /dev/tcp/termbin.com/9999 -> ; GET -> 200"
+    },
+    {
+      "url": "https://termbin.com/c609",
+      "date": "2026-10-21",
+      "proved": "probe: 1,000,000-byte payload -> , GET bytes=1000000; 2,400,000-byte payload -> cat: write error: Connection reset by peer"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "approx. 1 MB per paste, no account, no count limit. Measured: 1,000,000 bytes stored and retrievable; 2,400,000 bytes -> connection reset.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E5-pastebins.json",
+    "seed_area": "E/E5",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "E/E5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "approx. 1 MB per paste, no account, no count limit. Measured: 1,000,000 bytes stored and retrievable; 2,400,000 bytes -> connection reset.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E5"
+    },
+    "target_document": "docs/storage/free/transfer-services.md",
+    "document_section": "Pastebins",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "approx. 1 MB per paste, no account, no count limit. Measured: 1,000,000 bytes stored and retrievable; 2,400,000 bytes -> connection reset.",
+    "limits_verbatim": "~1 MB per paste; no expiry documented; no delete path; no listing.",
+    "egress_verbatim": "free direct GET over HTTPS, plain text, no metering.",
+    "chaining_verbatim": "unlimited pastes x ~1 MB. Its distinguishing property is that it needs no HTTP client and no TLS — a raw TCP sink. Useful as an out-of-band manifest/credential store, useless as a bulk tier.",
+    "tooling_verbatim": "plain TCP: `nc termbin.com 9999` returns the URL on the socket. Works with any netcat, and with bash /dev/tcp where nc is absent (used for the probes here).",
+    "interface_verbatim": "rest",
+    "agent_focus": "pastebins and text dumps as storage: pastebin, hastebin, ghostbin, rentry, dpaste, privatebin, GitHub Gist, GitLab snippets, pastes.io, controlc, termbin, plus binary-to-text encoders"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

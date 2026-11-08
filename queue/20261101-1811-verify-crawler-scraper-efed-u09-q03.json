@@ -1,0 +1,15 @@
+{
+ "id": "20261101-1811-verify-crawler-scraper-efed-u09-q03",
+ "kind": "verify",
+ "topic": "crawler-scraper",
+ "question": "Decide whether a monthly credit that needs a card, with no card-free recurring lane, is fails-identity or qualifies-with-caveat, then apply that one rule to crawler-scraper/brave-search (fails-identity now) and crawler-scraper/parallel (qualifies-with-caveat now).",
+ "why": "Answer to queue item 20261030-1045-expand-crawler-scraper-47c4-u03-q02, read on 2026-11-01. Both records gate the same USD 5 monthly credit on a card. Brave opens an account with an email address and a password and asks the card at plan activation (quickstart and FAQ: a USD 0 or USD 1 hold, refunded; some cards are declined); Parallel gives the credit to an organization with a credit card on file, one card for one organization (free-tier post). They differ in two ways. Parallel also has two lanes with no card, the hosted MCP server and a signup credit of up to USD 80 (the vendor's comparison article: a card is needed 'Only for the monthly credit'), while Brave has none: no standalone free plan, and a keyless call answers HTTP 422 for a missing x-subscription-token. And Brave's prepaid plan pauses when the balance reaches USD 0, while Parallel bills usage past USD 5 to the card and its spend limits never block requests. The corpus holds both rules: brave-search and mojeek are fails-identity for a card gate, as are modal, koyeb and northflank since the history entry 2026-10-24T025000Z, while data-apis/here, data-apis/mapbox, databases-kv/dynamodb and ci-cd-runners/gitlab-ci are qualifies-with-caveat behind a card, and METHODOLOGY.md section 4.2 lists a card as reachable. Read three ways: (1) rule A applied to the provider, both verdicts stand, because Brave has no lane without a card and Parallel has two, which the proposed identity detail of crawler-scraper/parallel now states; (2) rule A applied to each record, crawler-scraper/parallel should read fails-identity once crawler-scraper/parallel-keyless carries the anonymous lane, so that the provider's best verdict stays usable; (3) rule B, crawler-scraper/brave-search should read qualifies-with-caveat. The proposed changes leave both verdicts as they are, because a change to parallel before parallel-keyless lands would hide its one anonymous lane, and the choice of rule is for the merge session or the operator.",
+ "scope": {
+  "rids": [
+   "crawler-scraper/brave-search",
+   "crawler-scraper/parallel"
+  ]
+ },
+ "origin": "20261101-1811-verify-crawler-scraper-efed/u09",
+ "created": "2026-11-02T01:02:26Z"
+}

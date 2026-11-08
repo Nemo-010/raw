@@ -1,0 +1,152 @@
+{
+  "topic": "storage",
+  "slug": "netlify-blobs",
+  "provider": "Netlify Blobs",
+  "url": "https://docs.netlify.com/build/data-and-storage/netlify-blobs/",
+  "category": "paas",
+  "free_tier": {
+    "stated": "Object store with 5 GB max per object, but the Free plan is 300 credits/month where 1 GB of web bandwidth = 20 credits — i.e. ~15 GB of transfer/month total, shared with every other metered feature.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/credit-based-pricing-plans/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "5 GB max per object",
+    "bytes": 5000000000,
+    "source_url": "https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/credit-based-pricing-plans/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/credit-based-pricing-plans/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Metered in credits: 'Web Bandwidth | 1 GB transferred | 20 credits'. Free plan has '300 credits/month with credit hard limit'. ~15 GB/month of egress — three orders of magnitude short.",
+    "metered": true,
+    "free_allowance": "15 GB per month"
+  },
+  "interface": [
+    "s3",
+    "rest",
+    "webdav",
+    "sftp",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Netlify JS/TS SDK (getStore/put/get) callable from Functions or Build Plugins; no S3/WebDAV/SFTP and no rclone backend. Access requires a Netlify site + function invocation.",
+  "chaining": "500 projects per team x 300 credits, but credits are per team, not per project, so 500 sites do not multiply the allowance. Unlimited free teams would multiply, at ~15 GB egress each.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "5 GB per object",
+      "source": "https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/credit-based-pricing-plans/"
+    }
+  ],
+  "limits_note": "5 GB per object, 600-byte object keys, 2 KB metadata; Free = 300 credits/month hard cap covering bandwidth, requests (10,000 req = 2 credits) and functions compute; Go functions cannot access Blobs.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Netlify moved all new accounts to credit billing on Sep 4, 2025 and the switch is irreversible; deploy-specific stores are deleted when the deploy is deleted.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/credit-based-pricing-plans/",
+      "date": "2026-10-21",
+      "proved": "'300 credits/month with credit hard limit'; 'Web Bandwidth | 1 GB transferred | 20 credits'"
+    },
+    {
+      "url": "https://docs.netlify.com/build/data-and-storage/netlify-blobs/",
+      "date": "2026-10-21",
+      "proved": "\"An individual object's total size cannot exceed 5 GB\""
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Object store with 5 GB max per object, but the Free plan is 300 credits/month where 1 GB of web bandwidth = 20 credits — i.e. ~15 GB of transfer/month total, shared with every other metered feature.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C5-static-hosts.json",
+    "seed_area": "C/C5",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "C/C5"
+      },
+      {
+        "value": "fails-egress",
+        "area": "G/G2"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Netlify Blobs",
+      "Netlify Blobs (credit-based Free plan)"
+    ],
+    "conflicts": [
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "Object store with 5 GB max per object, but the Free plan is 300 credit",
+            "source": "table.md row, area C/C5",
+            "evidence": null
+          },
+          {
+            "value": "5 GB per object, but NO total storage allowance and no public URLs. Ob",
+            "source": "table.md row, area G/G2",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "Object store with 5 GB max per object, but the Free plan is 300 credit",
+            "source": "table.md (area C/C5)"
+          },
+          {
+            "value": "5 GB per object, but NO total storage allowance and no public URLs. Ob",
+            "source": "table.md (area G/G2)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "egress",
+      "why": "Object store with 5 GB max per object, but the Free plan is 300 credits/month where 1 GB of web bandwidth = 20 credits — i.e. ~15 GB of transfer/month total, shared with every other metered feature.",
+      "retry_when": "if the egress meter is removed or a Cloudflare path is added",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area C/C5"
+    },
+    "target_document": "docs/storage/free/cloudflare-edge.md",
+    "document_section": "Cloudflare Pages and Workers static assets",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Object store with 5 GB max per object, but the Free plan is 300 credits/month where 1 GB of web bandwidth = 20 credits — i.e. ~15 GB of transfer/month total, shared with every other metered feature.",
+    "limits_verbatim": "5 GB per object, 600-byte object keys, 2 KB metadata; Free = 300 credits/month hard cap covering bandwidth, requests (10,000 req = 2 credits) and functions compute; Go functions cannot access Blobs.",
+    "egress_verbatim": "Metered in credits: 'Web Bandwidth | 1 GB transferred | 20 credits'. Free plan has '300 credits/month with credit hard limit'. ~15 GB/month of egress — three orders of magnitude short.",
+    "chaining_verbatim": "500 projects per team x 300 credits, but credits are per team, not per project, so 500 sites do not multiply the allowance. Unlimited free teams would multiply, at ~15 GB egress each.",
+    "tooling_verbatim": "Netlify JS/TS SDK (getStore/put/get) callable from Functions or Build Plugins; no S3/WebDAV/SFTP and no rclone backend. Access requires a Netlify site + function invocation.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Static/docs/wiki hosts with big free limits: GitHub Pages, GitLab Pages, Cloudflare Pages, Netlify, Vercel, Surge, Neocities, ReadTheDocs, GitBook, Notion, Outline, Confluence free, MkDocs hosts, per-site caps"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,137 @@
+{
+  "topic": "compute",
+  "slug": "remotehost",
+  "provider": "RemoteHost",
+  "url": "https://docs.remotehost.ai/docs/pricing",
+  "category": "container and VM sandbox",
+  "free_tier": {
+    "stated": "Starter is USD 20 per month and includes 610 machine-hours, 35 concurrent sandboxes rising to 1,200, and 24-hour sessions, self-serve with a 7-day free trial. A small machine (2 vCPU / 4 GB) counts 0.5 machine-hours per hour and a default machine (4 vCPU / 8 GB) counts 1, so the Starter allowance is 1,220 hours at 2 vCPU / 4 GB. Overage is USD 0.64 per standard machine-hour, metered by the second.",
+    "unit": "hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://docs.remotehost.ai/docs/pricing",
+    "read_on": "2026-10-22",
+    "notes": "trial"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://docs.remotehost.ai/docs/pricing",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://docs.remotehost.ai/docs/pricing",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "not published on the page read: no egress term was found, so nothing is asserted",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://docs.remotehost.ai/docs/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "ssh"
+  ],
+  "interface_detail": "REST API (OpenAPI), remote CLI, SSH via the RemoteHost gateway, TypeScript SDK @remotehost/sdk and a web console",
+  "tooling": "the `remote` CLI (alias `rh`), the TypeScript SDK `@remotehost/sdk`, and the REST API",
+  "chaining": "At 0.5 machine-hours per hour for a 2 vCPU / 4 GB box, USD 20 a month covers 1,220 hours, which is a 24/7 sandbox plus 490 spare hours for a second box part-time; that turns a per-hour sandbox into a fixed monthly cost, which is the shape a persistent agent service needs.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "The 610 machine-hour allowance is the binding term: a 4 vCPU / 8 GB sandbox running continuously needs 730 machine-hours a month and spends 120 hours of overage at USD 0.64, while a 2 vCPU / 4 GB box fits 24/7 inside the allowance.",
+      "source": "https://docs.remotehost.ai/docs/pricing"
+    }
+  ],
+  "limits_note": "The 610 machine-hour allowance is the binding term: a 4 vCPU / 8 GB sandbox running continuously needs 730 machine-hours a month and spends 120 hours of overage at USD 0.64, while a 2 vCPU / 4 GB box fits 24/7 inside the allowance.",
+  "binding": "volume-quota",
+  "binding_note": "The 610 machine-hour allowance is the binding term: a 4 vCPU / 8 GB sandbox running continuously needs 730 machine-hours a month and spends 120 hours of overage at USD 0.64, while a 2 vCPU / 4 GB box fits 24/7 inside the allowance.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "as stated by the provider's signup page",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://docs.remotehost.ai/docs/pricing",
+      "date": "2026-10-22",
+      "proved": "Starter USD 20 per month, 610 included machine-hours, 35 concurrent sandboxes up to 1,200, 24 hour sessions, 7-day free trial, self-serve; overage USD 0.64 per standard machine-hour"
+    },
+    {
+      "url": "https://docs.remotehost.ai/docs/pricing",
+      "date": "2026-10-22",
+      "proved": "machine-time multipliers: small 2 vCPU / 4 GB is 0.5x, default 4 vCPU / 8 GB is 1x, large 8 vCPU / 16 GB is 2x, and sandboxes are metered by the second while running with billing stopping when one is stopped"
+    },
+    {
+      "url": "https://docs.remotehost.ai/docs/pricing",
+      "date": "2026-10-22",
+      "proved": "Max carries 72-hour sessions and custom base images; Business is USD 100 per seat per month with 200 machine-hours per seat and overage USD 4.712 per standard machine-hour"
+    },
+    {
+      "url": "https://docs.remotehost.ai/docs/cli-reference",
+      "date": "2026-11-03",
+      "proved": "the CLI opens SSH to a sandbox through a gateway",
+      "capture": "sha256:1472e9d74124830f0c1f42fa78303bb01c90e35b08c5afec4688cb08d258b07f",
+      "quote": "Hosted sandboxes route through the RemoteHost SSH gateway"
+    },
+    {
+      "url": "https://docs.remotehost.ai/docs/sdk",
+      "date": "2026-11-03",
+      "proved": "a TypeScript SDK exists",
+      "capture": "sha256:cada2789f5a7ddfef695a11c33c49c9cbc704a211453025025e8dab1b90aad42",
+      "quote": "The official `@remotehost/sdk` package is the server-side TypeScript interface to RemoteHost."
+    },
+    {
+      "url": "https://docs.remotehost.ai/docs/pricing",
+      "date": "2026-11-03",
+      "proved": "the pricing page names two costs, plan price and machine-hour overage; no egress allowance or egress price is listed",
+      "capture": "sha256:bf50b2f1202829d408b67a853632e88f6976c4e8ca11a800818443f5628205c6",
+      "quote": "Remotehost has two costs: a plan's monthly price, and usage past the machine hours the plan includes."
+    },
+    {
+      "url": "https://docs.remotehost.ai/docs/cli-reference",
+      "date": "2026-11-04",
+      "proved": "the documented CLI is remote, alias rh",
+      "capture": "sha256:1472e9d74124830f0c1f42fa78303bb01c90e35b08c5afec4688cb08d258b07f",
+      "quote": "The CLI is `remote`. `rh` is a shorter alias for the same binary"
+    },
+    {
+      "url": "https://docs.remotehost.ai/docs/sdk",
+      "date": "2026-11-04",
+      "proved": "the documented SDK is @remotehost/sdk",
+      "capture": "sha256:cada2789f5a7ddfef695a11c33c49c9cbc704a211453025025e8dab1b90aad42",
+      "quote": "The official `@remotehost/sdk` package is the server-side TypeScript interface to RemoteHost."
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-04T02:24:16.350Z",
+  "notes": "This is the cheapest way found in this lane to keep a 2 vCPU / 4 GB sandbox alive every hour of the month: USD 20 buys 1,220 machine-hours at the 0.5x multiplier against a 730-hour month. It is recorded as trial-only because the free lane is a 7-day trial and the plan itself needs a card at checkout. The 24-hour session cap on Starter is the term that matters for a long-running service, since a session has to be recreated daily. Disk is not priced separately on the page I read; the repo-large and long-running profiles carry 80 GB and 160 GB disks. Checkout requires acknowledging that usage is measured from allocated resource-time.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "RemoteHost",
+      "class": "flat-monthly-sandbox",
+      "category_as_written": "agent sandbox platform, flat monthly plan with included machine-hours",
+      "free_tier_kind": "trial",
+      "shape": {
+        "vcpu": 2,
+        "ram_gib": 4,
+        "disk_gib": null,
+        "gpu_class": null,
+        "gpu_count": null
+      },
+      "seen_routes": [
+        "broker read https://docs.remotehost.ai/docs/pricing 200",
+        "broker search 'RemoteHost sandbox pricing' (snippet)"
+      ],
+      "agents": [
+        "agent-sandboxes"
+      ],
+      "promoted_from": ".tmp/wave2"
+    }
+  }
+}

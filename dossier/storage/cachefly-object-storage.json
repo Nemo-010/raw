@@ -1,0 +1,96 @@
+{
+  "topic": "storage",
+  "slug": "cachefly-object-storage",
+  "provider": "CacheFly Object Storage ($25/TB with $0 egress)",
+  "url": "https://www.cachefly.com/object-storage/",
+  "category": "object-storage",
+  "free_tier": {
+    "stated": "Unlimited, $25 per TB per month. S3-compatible.",
+    "unit": "unlimited",
+    "metered_on": "unstated",
+    "source_url": "https://www.cachefly.com/object-storage/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.cachefly.com/object-storage/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.cachefly.com/object-storage/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "**$0 ingress, $0 egress, $0 request fees — stated three ways on the same page** ('$25 per TB with $0 request, ingress or egress fees', 'Ingress and egress CacheFly is always free', 'no ingress or egress fees'). If the object storage is fronted by CacheFly's own CDN, delivery is included in the $25.",
+    "metered": true,
+    "price_per_tb": "$25 per TB"
+  },
+  "interface": [
+    "s3-compatible"
+  ],
+  "interface_detail": "s3",
+  "tooling": "S3 API. Self-signup is at portal.cachefly.com/signup/developer100gb.",
+  "chaining": "For a *serving*-heavy workload this is the cheapest egress-free paid option found: 1 TB stored and 30 TB/mo delivered costs $25/mo total, because the only metre is bytes at rest. That inverts the usual model — storage is the expensive line and egress is genuinely free. Pair with the free CDN tier (100 GB/mo) for the small hot set and put the 20 TiB cold archive elsewhere.",
+  "limits": [],
+  "limits_note": "per-object-cap: not stated on the page opened; no published cap. Request fees $0. Free developer account is 100 GB/month on one domain then $0.05/GB overage.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "Self-signup 'requires a credit card at registration … charged and refunded $1 to authenticate'. 65+ PoPs, 99.95% SLA. Object storage onboarding is sales-gated ('Sign Up' → contact-object-storage form), unlike the CDN developer account which is instant.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.cachefly.com/object-storage/",
+      "date": "2026-10-21",
+      "proved": "'$25 per TB with $0 request, ingress or egress fees'; 'Globally available starting at $25 per terabyte a month'; 'Ingress and egress CacheFly is always free' (read via read broker, upstream 200)"
+    },
+    {
+      "url": "https://www.cachefly.com/free/",
+      "date": "2026-10-21",
+      "proved": "'Self-signup plans require a credit card at registration … charged and refunded $1'; free developer account 100 GB/mo"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$25/TB stored with $0 egress/ingress/requests (object storage). CDN separately: free developer 100 GB/mo; $0.05/GB overage.",
+  "notes": "Unlimited, $25 per TB per month. S3-compatible.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G9-edge-cdn-as-storage.json",
+    "seed_area": "G/G9",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "G/G9"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "target_document": "docs/storage/free/cloudflare-edge.md",
+    "document_section": "Edge CDN used as an object store",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Unlimited, $25 per TB per month. S3-compatible.",
+    "limits_verbatim": "per-object-cap: not stated on the page opened; no published cap. Request fees $0. Free developer account is 100 GB/month on one domain then $0.05/GB overage.",
+    "egress_verbatim": "**$0 ingress, $0 egress, $0 request fees — stated three ways on the same page** ('$25 per TB with $0 request, ingress or egress fees', 'Ingress and egress CacheFly is always free', 'no ingress or egress fees'). If the object storage is fronted by CacheFly's own CDN, delivery is included in the $25.",
+    "chaining_verbatim": "For a *serving*-heavy workload this is the cheapest egress-free paid option found: 1 TB stored and 30 TB/mo delivered costs $25/mo total, because the only metre is bytes at rest. That inverts the usual model — storage is the expensive line and egress is genuinely free. Pair with the free CDN tier (100 GB/mo) for the small hot set and put the 20 TiB cold archive elsewhere.",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "S3 API. Self-signup is at portal.cachefly.com/signup/developer100gb.",
+    "interface_verbatim": "s3",
+    "price_verbatim": "$25/TB stored with $0 egress/ingress/requests (object storage). CDN separately: free developer 100 GB/mo; $0.05/GB overage.",
+    "agent_focus": "CDN / edge platforms as storage+egress: Fastly (free tier + Fast Forward OSS), Akamai/Linode, Bunny.net (storage + free origin->CDN transit), KeyCDN, CacheFly, Gcore, CDN77, StackPath status, Edgio/Limelight status, jsDelivr, unpkg, esm.sh, Statically, raw.githack, ghproxy mirrors. Question asked: which CDN gives free or near-free egress so a cheap origin becomes viable. Cloudflare R2 excluded per brief. Hard-probed every per-file cap with real GETs this session."
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

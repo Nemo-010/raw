@@ -1,0 +1,113 @@
+{
+  "topic": "storage",
+  "slug": "upyun-uss",
+  "provider": "UPYUN 又拍云 USS (Storage Service)",
+  "url": "https://www.upyun.com",
+  "category": "iaas",
+  "free_tier": {
+    "stated": "No standing free tier. Free capacity comes from (a) a 7-day trial with no storage/traffic cap, (b) 61 CNY voucher on real-name signup (1 month), (c) the 又拍云联盟 programme: a one-off 12-month resource grant worth 67 CNY — described as '一年内每月可免费使用 10GB 存储空间及 15GB 的 CDN 流量'. Billing model is unusual: '按照日 CDN 流量 1:1 免费日存储容量，仅收取对应差值存储容量费用'.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://help.upyun.com/knowledge-base/账号及费用类/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://help.upyun.com/knowledge-base/账号及费用类/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://help.upyun.com/knowledge-base/账号及费用类/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Metered — CDN traffic at ¥0.29/GB. The 1:1 storage-for-traffic credit is the only offset and it only covers storage, never egress.",
+    "metered": true
+  },
+  "interface": [
+    "s3",
+    "rest",
+    "rclone",
+    "webdav-proxy"
+  ],
+  "interface_detail": "s3",
+  "tooling": "OpenList driver `uss` (bucket + endpoint + operator name/password + anti-leech token, sign_url_expire) — proves the UPYUN REST/S3-ish API is mountable; also a first-class rclone-adjacent target via S3 compatibility.",
+  "chaining": "10 GB/month per alliance account is a rounding error. The multiplier that *would* matter: the 1:1 traffic-to-storage credit means a high-traffic public bucket is storage-free — but the egress is what you pay for, so it inverts into a loss.",
+  "limits": [],
+  "limits_note": "quota: 10 GB under the alliance grant. egress: ¥0.29/GB, the binding cost. real-name required for vouchers.",
+  "identity_cost": {
+    "kind": "national-id",
+    "detail": "national-id (实名认证 required for the 61 CNY voucher).",
+    "country": null
+  },
+  "reliability_note": "Mature CDN vendor; nothing unstable. The problem is purely economic.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://help.upyun.com/knowledge-base/账号及费用类/",
+      "date": "2026-10-21",
+      "proved": "'新账号注册，提交实名认证会赠送 61 元 1 个月有效期的代金券'; '联盟活动...合计 67'"
+    },
+    {
+      "url": "https://www.yigujin.cn/blog/p1440.html",
+      "date": "2026-10-21",
+      "proved": "'一年内每月可免费使用 10GB 存储空间及 15GB 的 CDN 流量'"
+    },
+    {
+      "url": "https://www.upyun.com/price_instruction",
+      "date": "2026-10-21",
+      "proved": "'按照日 CDN 流量 1:1 免费日存储容量...（日存储量 - 日流量）× 存储容量单价'"
+    },
+    {
+      "url": "https://github.com/OpenListTeam/OpenList/tree/main/drivers/uss",
+      "date": "2026-10-21",
+      "proved": "working driver"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No standing free tier. Free capacity comes from (a) a 7-day trial with no storage/traffic cap, (b) 61 CNY voucher on real-name signup (1 month), (c) the 又拍云联盟 programme: a one-off 12-month resource grant worth 67 CNY — described as '一年内每月可免费使用 10GB 存储空间及 15GB 的 CDN 流量'. Billing model is unusual: '按照日 CDN 流量 1:1 免费日存储容量，仅收取对应差值存储容量费用'.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E12-github-keyword-sweep.json",
+    "seed_area": "E/E12",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "E/E12"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "identity",
+      "why": "No standing free tier. Free capacity comes from (a) a 7-day trial with no storage/traffic cap, (b) 61 CNY voucher on real-name signup (1 month), (c) the 又拍云联盟 programme: a one-off 12-month resource grant worth 67 CNY — described as '一年内每月可免费使用 10GB 存储空间及 15GB 的 CDN 流量'. Billing model is unusual: '按照日 CDN 流量 1:1 免费日存储容量，仅收取对应差值存储容量费用'.",
+      "retry_when": "if the registration gate opens to a foreign individual",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E12"
+    },
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "The GitHub keyword sweep, and what it proved",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No standing free tier. Free capacity comes from (a) a 7-day trial with no storage/traffic cap, (b) 61 CNY voucher on real-name signup (1 month), (c) the 又拍云联盟 programme: a one-off 12-month resource grant worth 67 CNY — described as '一年内每月可免费使用 10GB 存储空间及 15GB 的 CDN 流量'. Billing model is unusual: '按照日 CDN 流量 1:1 免费日存储容量，仅收取对应差值存储容量费用'.",
+    "limits_verbatim": "quota: 10 GB under the alliance grant. egress: ¥0.29/GB, the binding cost. real-name required for vouchers.",
+    "egress_verbatim": "Metered — CDN traffic at ¥0.29/GB. The 1:1 storage-for-traffic credit is the only offset and it only covers storage, never egress.",
+    "chaining_verbatim": "10 GB/month per alliance account is a rounding error. The multiplier that *would* matter: the 1:1 traffic-to-storage credit means a high-traffic public bucket is storage-free — but the egress is what you pay for, so it inverts into a loss.",
+    "identity_verbatim": "national-id (实名认证 required for the 61 CNY voucher).",
+    "tooling_verbatim": "OpenList driver `uss` (bucket + endpoint + operator name/password + anti-leech token, sign_url_expire) — proves the UPYUN REST/S3-ish API is mountable; also a first-class rclone-adjacent target via S3 compatibility.",
+    "interface_verbatim": "s3",
+    "agent_focus": "systematic GitHub keyword sweep (EN + zh-CN + ja + ru) for projects that advertise free/unlimited storage, used as a discovery net to surface named providers and wrappers not yet in the corpus"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

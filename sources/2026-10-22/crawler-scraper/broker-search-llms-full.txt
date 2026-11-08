@@ -1,0 +1,198 @@
+# search: web search, brokered
+
+> A search gateway: one query goes to one upstream provider chosen by tier, mode and health, and the answer is one normalised results[] with provenance.
+
+Host: `search.web.pkgforge.dev`. State: built.
+
+Version: `75c922fee334`, openapi.json's `info.version`, the first 12 hex digits of the SHA-256 of the four root documents (llms.txt, llms-full.txt, openapi.json, SKILL.md, in that order, joined by a newline), each rendered with an empty version; it changes whenever anything a caller reads in them changes.
+
+Cost: free to every caller; no key, no account and no quota (never gated). The one exception is the operator's: a service can be switched off (503, reason `disabled`), and a spend breaker can cap each caller IP at 100 requests per 60 s for at most 12 hours (429, reason `rate-limited`).
+
+CORS: every answer carries `access-control-allow-origin: *` and exposes the provenance headers; OPTIONS on a listed path is the preflight (204), and it allows every request header the browser names; no credentials.
+
+Every service and its live status: https://web.pkgforge.dev/
+
+## When to use
+
+- web search results (URL, title, snippet) for a query, as JSON: `GET /search?q=`
+- narrow by recency (`freshness`) or by host (`include_domains`, `exclude_domains`)
+- primary sources first: name their hosts, `include_domains=rfc-editor.org,developers.cloudflare.com`; a provider that cannot apply the filter is not asked
+- `provider=<id>` to ask one provider only; its refusal is the answer
+- results come sorted by relevance to the query (Workers AI bge-reranker-base, `x-web-rank`); `rank=provider` turns that off and keeps the provider's own order
+- not for a page's content: a snippet is the provider's extract; fetch the URL through fetch.web.pkgforge.dev or read.web.pkgforge.dev
+
+## Shared answers
+
+Two or more routes answer each of these, as written here; each route names the ones it answers.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | `application/json` | a provider answered; `results` is empty when the provider returned no usable result (a result whose URL is not http(s) is dropped), and with `include_domains` only when every provider asked returned none (`empty` names them) |
+| 503 | `application/problem+json` | `reason` none-configured (body `errors[]` names each gap, e.g. `provider disabled`) or permanently-exhausted |
+| 400 | `application/problem+json` | a malformed request, an unknown provider id, or a query the provider refused as malformed (body `provider`) |
+| 429 | `application/problem+json` | every provider leg is held by a rate limit or a spent allowance that reopens; `Retry-After` is the earliest reopening, body `errors[]` each hold |
+| 502 | `application/problem+json` | every provider asked failed; body `errors[]` has one row per provider with each attempt's account and classified kind |
+
+## Routes
+
+### GET /healthz
+
+service state and the running Worker version.
+
+JSON `{ok, service, version: {id, tag, at}, built, entry?, d1: {ok, ms, error?}, keys?: {state, ms}, gate?}`, always `no-store`. `version.id` is the Worker version that answered; `d1` is a `SELECT 1` on the service's D1 database, bounded at 1 s, and a failed one answers 503 with `ok: false`. `keys`, on a service that calls providers, says whether it could open one sealed key of the store with its own secret (`ok`, `failed`, `secret-unset`, `no-key`, `timeout`), never a value. `gate` says whether the operator or a spend breaker switched the service off; an off service still answers 200 here. A 200 says the Worker and its database answer, not that every route does.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | `application/json` | up |
+| 503 | `application/json` | down: the same `application/json` body as the 200 with `ok: false`, not a problem; the D1 database did not answer `SELECT 1` within 1 s (`d1.error`: `failed`, `timeout`, `unbound`) |
+
+state and version:
+
+```bash
+curl -qfsS https://search.web.pkgforge.dev/healthz
+```
+
+### GET /
+
+the index of this service.
+
+A browser (`Accept: text/html`) gets an HTML index: links to the four root documents and the status page, and each route with its parameters and examples; any other caller gets llms.txt as `text/plain`.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | `text/plain` | the HTML index for a browser, llms.txt otherwise |
+
+the index:
+
+```bash
+curl -qfsS https://search.web.pkgforge.dev/
+```
+
+### GET /search
+
+web search, brokered to one upstream provider.
+
+One query goes to one provider, chosen by tier, mode and health over providers > accounts > keys; a failure moves to the next leg only when another account or provider can change the answer, and never fans out. The answers are 200, 400, 429, 502 and 503 from the providers, 405 for a method other than GET, HEAD or POST (OPTIONS is the CORS preflight, 204), and 500 for a defect or a store fault (logged); every non-200 is an RFC 9457 problem with `reason` and `see`. A provider store that cannot be read is not a 500: the query goes to this build's keyless providers only, and the answer says `x-web-store: degraded`. An identical query (every parameter equal) within 300 s is answered from a cache shared by every colo with `cached: true`, while the provider that answered it is still enabled. HEAD is answered as GET: on a cache miss it asks the provider and stores the answer, and only the body is left out. The results are then reranked: Workers AI's bge-reranker-base scores the first 30 results' titles and snippets against the query, first on the Cloudflare accounts within at most 3000 ms (narrowed to 1.5 times the slowest of their recent answers once a Worker isolate has seen three; two timeouts in a row at that bound skip the accounts for a minute), then, when no account answered, on this deployment's binding within a budget that grows with the results scored up to 1500 ms, and those results are sorted by that score, highest first (`x-web-rank: reranked(bge-reranker-base@<where>)`); results past the first 30 follow them in the provider's order, with no `extra.rank`. A rerank past its budget, a model error or a spent Neuron allocation answers the provider's own order, named in `x-web-rank: provider(<reason>)`, and that answer is not stored. After 3 failed reranks (a timeout or an error) within 60 s, the rerank's breaker opens for 60 s: a rerank then calls no model and waits on nothing, answers `provider(skipped:breaker)`, and that answer is stored for 60 s; the breaker is kept per Worker isolate. `rank=provider` asks for the provider's order and calls no model. An unknown parameter, or one given twice, is a 400.
+
+| parameter | in | required | schema | meaning |
+| --- | --- | --- | --- | --- |
+| `q` | query | yes | `{"type":"string","minLength":1,"maxLength":400}` | the query, 1 to 400 characters after trimming; given once |
+| `count` | query | no | `{"type":"integer","minimum":1,"default":10}` | results wanted, from 1; default 10. Above 20 it is clamped to 20, and `count_asked` and `x-web-count-clamped` say so. A provider that caps lower returns fewer |
+| `freshness` | query | no | `{"type":"string","enum":["day","week","month","year"]}` | only results from the last day, week, month or year |
+| `include_domains` | query | no | `{"type":"string"}` | only results from these hosts: comma-separated host names, at most 50; a host in both lists is a 400. The list goes to the provider as its own host filter, and a provider that cannot apply it is not asked. A provider that answers no result passes the query to the next one, and `empty` names each that did; when every provider asked answers none, the first one's empty answer is the answer. That empty answer is stored for 300 s only when every provider able to serve the query was asked and answered none; when the walk stopped for its budget or deadline, a provider failed, or one was held or breaker-open and not asked, it is stored for 60 s. To favour primary sources, name them here: a standard body, a vendor's own documentation, a journal |
+| `exclude_domains` | query | no | `{"type":"string"}` | no results from these hosts: comma-separated host names, at most 50; a host in both lists is a 400 |
+| `raw` | query | no | `{"type":"string","enum":["true","false","1","0"]}` | true appends the provider's own answer as `raw`; default false |
+| `provider` | query | no | `{"type":"string","pattern":"^[a-z0-9][a-z0-9-]{0,63}$"}` | a provider id: only that provider is asked, and its refusal is the answer, never another provider's |
+| `rank` | query | no | `{"type":"string","enum":["reranked","provider"],"default":"reranked"}` | reranked (default): the results sorted by Workers AI's bge-reranker-base score against the query, each score under `extra.rank`; provider: the provider's own order, no model called |
+
+The shared answers 200, 400, 429, 502, 503, each under Shared answers.
+
+search:
+
+```bash
+curl -qfsS "https://search.web.pkgforge.dev/search?q=cloudflare+workers"
+```
+
+five results from the last week, from one host:
+
+```bash
+curl -qfsS "https://search.web.pkgforge.dev/search?q=workers+limits&count=5&freshness=week&include_domains=developers.cloudflare.com"
+```
+
+the provenance headers:
+
+```bash
+curl -qsS -o /dev/null -D - "https://search.web.pkgforge.dev/search?q=cloudflare+workers"
+```
+
+pin one provider:
+
+```bash
+curl -qfsS "https://search.web.pkgforge.dev/search?q=cloudflare+workers&provider=tavily-keyless"
+```
+
+the provider's own order, no rerank:
+
+```bash
+curl -qfsS -D - -o /dev/null "https://search.web.pkgforge.dev/search?q=cloudflare+workers&rank=provider"
+```
+
+### POST /search
+
+web search with a JSON body.
+
+One query goes to one provider, chosen by tier, mode and health over providers > accounts > keys; a failure moves to the next leg only when another account or provider can change the answer, and never fans out. The answers are 200, 400, 429, 502 and 503 from the providers, 405 for a method other than GET, HEAD or POST (OPTIONS is the CORS preflight, 204), and 500 for a defect or a store fault (logged); every non-200 is an RFC 9457 problem with `reason` and `see`. A provider store that cannot be read is not a 500: the query goes to this build's keyless providers only, and the answer says `x-web-store: degraded`. An identical query (every parameter equal) within 300 s is answered from a cache shared by every colo with `cached: true`, while the provider that answered it is still enabled. HEAD is answered as GET: on a cache miss it asks the provider and stores the answer, and only the body is left out. The results are then reranked: Workers AI's bge-reranker-base scores the first 30 results' titles and snippets against the query, first on the Cloudflare accounts within at most 3000 ms (narrowed to 1.5 times the slowest of their recent answers once a Worker isolate has seen three; two timeouts in a row at that bound skip the accounts for a minute), then, when no account answered, on this deployment's binding within a budget that grows with the results scored up to 1500 ms, and those results are sorted by that score, highest first (`x-web-rank: reranked(bge-reranker-base@<where>)`); results past the first 30 follow them in the provider's order, with no `extra.rank`. A rerank past its budget, a model error or a spent Neuron allocation answers the provider's own order, named in `x-web-rank: provider(<reason>)`, and that answer is not stored. After 3 failed reranks (a timeout or an error) within 60 s, the rerank's breaker opens for 60 s: a rerank then calls no model and waits on nothing, answers `provider(skipped:breaker)`, and that answer is stored for 60 s; the breaker is kept per Worker isolate. `rank=provider` asks for the provider's order and calls no model. The body is one JSON object, at most 16384 bytes, with the GET parameters as members; domain lists are arrays and raw is a boolean. An unknown member is a 400.
+
+Request body: `application/json`, schema `{"type":"object","additionalProperties":false,"required":["q"],"properties":{"q":{"type":"string","minLength":1,"maxLength":400},"count":{"type":"integer","minimum":1},"freshness":{"type":"string","enum":["day","week","month","year"]},"include_domains":{"type":"array","items":{"type":"string"},"maxItems":50},"exclude_domains":{"type":"array","items":{"type":"string"},"maxItems":50},"raw":{"type":"boolean"},"provider":{"type":"string","pattern":"^[a-z0-9][a-z0-9-]{0,63}$"},"rank":{"type":"string","enum":["reranked","provider"],"default":"reranked"}}}`.
+
+The shared answers 200, 400, 429, 502, 503, each under Shared answers.
+
+search with a JSON body:
+
+```bash
+curl -qfsS -X POST -H 'content-type: application/json' --data '{"q":"cloudflare workers","count":5}' https://search.web.pkgforge.dev/search
+```
+
+### The root documents
+
+Rendered from the route table the router is built from; a build whose documents differ from it fails.
+
+Each answers 200:
+
+| route | content type | meaning |
+| --- | --- | --- |
+| `GET /llms.txt` | `text/plain` | llmstxt.org index of this service |
+| `GET /llms-full.txt` | `text/plain` | every route with parameters, answers and examples inline |
+| `GET /openapi.json` | `application/json` | OpenAPI 3.1 for every route |
+| `GET /SKILL.md` | `text/markdown` | one file an agent reads to use this service |
+
+```bash
+curl -qfsS https://search.web.pkgforge.dev/llms.txt
+curl -qfsS https://search.web.pkgforge.dev/llms-full.txt
+curl -qfsS https://search.web.pkgforge.dev/openapi.json
+curl -qfsS https://search.web.pkgforge.dev/SKILL.md
+```
+
+## Provenance headers
+
+| header | meaning |
+| --- | --- |
+| `x-web-provider` | the provider id that answered (200), or that refused the query as malformed (400), e.g. `tavily-keyless` |
+| `x-web-account` | the label of the provider account that answered: a short name this service gives one of its own accounts at that provider; it names no key and no account of the caller, e.g. `keyless` for a provider's public route |
+| `x-web-rank` | the order of `results`: `reranked(bge-reranker-base@<where>)`, sorted by the reranker's score (each under `extra.rank`), where `<where>` is the label of the Cloudflare account that ran the model (each account has its own daily Neurons, and the accounts are asked first) or `binding` (this deployment's own Workers AI binding, asked when no account answered); or `provider(<reason>)`, the provider's own order, where reason is `asked` (rank=provider), `few` (fewer than two results), `unbound` (no account answered and no Workers AI binding), `timeout` (past the legs' budgets: the accounts' at most 3000 ms, the binding's at most 1500 ms), `allocation` (the Neuron allocation is spent or held), `error` (the model failed or its answer was not one score per result) or `skipped:breaker` (the rerank's breaker is open after 3 failed reranks in 60 s: no model was called, and the answer is stored for 60 s). On a cache hit, the rank the answer was stored with |
+| `x-web-cache` | `hit`: a stored answer to an identical query, at most 300 s old, from a provider that is still enabled, and no provider was asked; `miss`: a provider was asked |
+| `x-web-count-clamped` | present when `count` was over 20: the count used |
+| `x-web-body` | `normalised` on every 200: the provider's results mapped into the result schema, never the provider's bytes; with `raw=true` the provider's own answer is the `raw` member of that body |
+| `x-web-store` | `degraded` when the provider walk behind an answer from the providers (never a cache hit) could not read the provider store: only this build's keyless providers were walked, unclaimed on any account's windows, and a keyed provider was not asked; absent when the store was read |
+
+## Failure states
+
+A path no route takes answers 404, reason `not-found`; a method a listed path does not take answers 405, reason `method-not-allowed`, with `Allow`; every non-2xx this service builds is an RFC 9457 problem whose `reason` is one of the values openapi.json publishes.
+
+| status | when | what to do |
+| --- | --- | --- |
+| 400 | `q` missing, empty or too long; an unknown or repeated parameter; a bad `count`, `freshness`, domain, `provider` or `rank`, or a body that is not one JSON object (`reason: bad-request`); an unknown provider id (`unknown-provider`, body `validProviders` lists the ids); or the provider refused the query as malformed (`provider-refused`, body names `provider`) | fix the request; do not retry it unchanged |
+| 404 | a path not listed here; body `reason: not-found` | use /search; `/` and `/llms.txt` list the routes |
+| 405 | a listed path with a method it does not take, e.g. /search with one other than GET, HEAD or POST; OPTIONS is the CORS preflight (204) | use GET or POST; `Allow` names them |
+| 429 | `reason: held`: every provider leg is held until a known reset (a rate limit or a spent allowance) | retry after `Retry-After` seconds |
+| 502 | `reason: providers-failed`: every provider asked failed (5xx, timeout, unreachable, a challenge page, an answer that is not a result set, or a provider refused the query); body `errors[]` names each provider and attempt | when `errors[]` shows a provider refused the query (an attempt of kind `input-refused`), change the query: the same query is refused again. Otherwise (5xx, timeout, unreachable) retry later; an account's breaker opens after 3 failures in 60 s, skips that account, and lets one probe through after 60 s |
+| 503 | `reason: none-configured`: no provider can serve, each gap named in `errors[]` (a request pinned to a disabled provider answers this); `reason: permanently-exhausted`: every leg's allowance is spent with no reset | do not retry soon; drop `provider` to let selection choose |
+| 500 | a defect or a store fault on this request; the error is logged | retry later |
+| 503 | reason `disabled`: the operator, or a spend breaker, switched this service or every public service off; `scope` says which (`global` or `service`) and `since` since when. `/healthz` and the root documents still answer | wait `Retry-After` (60 s) and ask again; the state is read again every 5 s, and https://web.pkgforge.dev/status says when a service is off |
+| 429 | reason `rate-limited`: a spend breaker caps each caller IP at 100 requests per 60 s on every public service, and this caller is past it | wait `Retry-After` and ask again; the cap lifts after at most 12 hours |
+
+## Pipeline contract
+
+Stable: paths and methods, `reason` values and provenance header names, held by `packages/docs/src/stable.json` (a removal or rename edits it). Each JSON answer's required fields:
+
+- `GET /search`, `POST /search`: `query`, `results`, `provider`, `account`, `cached`, `rank`, `dropped`
+
+Retry, by what a client does:
+
+- retry after `Retry-After`: 429 `held`; 503 `disabled`, 429 `rate-limited` (any request route)
+- retry with backoff: 503 `deadline`, `budget`
+- retry only when `retryable` is true: 502 `providers-failed`
+- no retry: fix the request: 400 `bad-request`, `provider-refused`, `unknown-provider`
+- no retry unchanged: 503 `none-configured`, `permanently-exhausted`
+
+Paging: no route pages; each answer is whole.

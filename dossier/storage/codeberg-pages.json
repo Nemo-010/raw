@@ -1,0 +1,118 @@
+{
+  "topic": "storage",
+  "slug": "codeberg-pages",
+  "provider": "Codeberg Pages (git-pages)",
+  "url": "https://codeberg.page",
+  "category": "git",
+  "free_tier": {
+    "stated": "No hard quota: 'there is no quota for valid use-cases', with a soft review threshold at 750 MiB Git storage and 1.5 GiB packages/LFS/attachments per account.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.codeberg.org/getting-started/faq/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.codeberg.org/getting-started/faq/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.codeberg.org/getting-started/faq/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "No egress quota or charge published; Codeberg runs its own pages server (git-pages) and asks users not to be wasteful rather than metering.",
+    "metered": false
+  },
+  "interface": [
+    "git",
+    "cli"
+  ],
+  "interface_detail": "git",
+  "tooling": "git-pages accepts a direct HTTP upload ('git-pages-cli https://coolcat.wiki --password ... --upload-dir site/') or a Forgejo Actions webhook; any Forgejo host can self-host the same server.",
+  "chaining": "One account with many repos, each with its own pages branch; unlimited repos per account in practice. But 750 MiB-per-account soft line means the multiplier is accounts, not repos.",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "review threshold at 750 MiB Git storage and 1",
+      "source": "https://docs.codeberg.org/getting-started/faq/"
+    },
+    {
+      "kind": "write-gated",
+      "value": "review request is expected",
+      "source": "https://docs.codeberg.org/getting-started/faq/"
+    }
+  ],
+  "limits_note": "750 MiB Git storage and 1.5 GiB packages/LFS/attachments before an admin review request is expected; files under 1 MiB are cached at the edge; each repo gets one pages site.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Codeberg explicitly reviews and can deny 'unreasonable' resource usage — this is a community forge with active human moderation of storage, which is a different reliability class from a commercial CDN.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.codeberg.org/getting-started/faq/",
+      "date": "2026-10-21",
+      "proved": "'no quota for valid use-cases', 'If you intend to use more than: 750 MiB for Git storage, 1.5 GiB of packages, LFS and attachments ... request these resources first'"
+    },
+    {
+      "url": "https://codeberg.org/Codeberg/pages-server",
+      "date": "2026-10-21",
+      "proved": "pages-server 'in maintenance mode', Codeberg Pages migrating to git-pages"
+    },
+    {
+      "url": "https://docs.codeberg.org/codeberg-pages/troubleshooting/",
+      "date": "2026-10-21",
+      "proved": "files under 1 MiB are cached at the edge"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No hard quota: 'there is no quota for valid use-cases', with a soft review threshold at 750 MiB Git storage and 1.5 GiB packages/LFS/attachments per account.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C5-static-hosts.json",
+    "seed_area": "C/C5",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "C/C5"
+      }
+    ],
+    "seed_confidence": "medium",
+    "unit_note": "free_tier.unit is 'mixed' because the headline is denominated in MiB or KiB, which the schema enum does not carry; the verbatim free_tier.stated keeps the true unit. See the storage-dossier handover.",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "write-gated",
+      "why": "No hard quota: 'there is no quota for valid use-cases', with a soft review threshold at 750 MiB Git storage and 1.5 GiB packages/LFS/attachments per account.",
+      "retry_when": "if the write gate becomes self-service",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area C/C5"
+    },
+    "target_document": "docs/storage/free/cloudflare-edge.md",
+    "document_section": "Cloudflare Pages and Workers static assets",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "No hard quota: 'there is no quota for valid use-cases', with a soft review threshold at 750 MiB Git storage and 1.5 GiB packages/LFS/attachments per account.",
+    "limits_verbatim": "750 MiB Git storage and 1.5 GiB packages/LFS/attachments before an admin review request is expected; files under 1 MiB are cached at the edge; each repo gets one pages site.",
+    "egress_verbatim": "No egress quota or charge published; Codeberg runs its own pages server (git-pages) and asks users not to be wasteful rather than metering.",
+    "chaining_verbatim": "One account with many repos, each with its own pages branch; unlimited repos per account in practice. But 750 MiB-per-account soft line means the multiplier is accounts, not repos.",
+    "tooling_verbatim": "git-pages accepts a direct HTTP upload ('git-pages-cli https://coolcat.wiki --password ... --upload-dir site/') or a Forgejo Actions webhook; any Forgejo host can self-host the same server.",
+    "interface_verbatim": "git",
+    "agent_focus": "Static/docs/wiki hosts with big free limits: GitHub Pages, GitLab Pages, Cloudflare Pages, Netlify, Vercel, Surge, Neocities, ReadTheDocs, GitBook, Notion, Outline, Confluence free, MkDocs hosts, per-site caps"
+  },
+  "binding": "write-gated",
+  "binding_note": "the write is a queue with a person or a rule in it, so the upload rate is set by somebody else",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

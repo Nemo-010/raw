@@ -1,0 +1,102 @@
+{
+  "topic": "storage",
+  "slug": "xbox-services-title-storage",
+  "provider": "XBOX services Title Storage",
+  "url": "https://devdocs.xbox.com/services/xbox-services/storage/title-storage/live-title-storage-overview",
+  "category": "paas",
+  "free_tier": {
+    "stated": "Trusted Platform: 256 MB per player (Managed Partners) / 64 MB per player (Creators Program). Universal Platform: 64 MB per player. Global: 256 MB. No total-title byte cap published.",
+    "unit": "MB",
+    "metered_on": "unstated",
+    "source_url": "https://devdocs.xbox.com/services/xbox-services/storage/title-storage/live-title-storage-overview",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap: 64 MB",
+    "bytes": 64000000,
+    "source_url": "https://devdocs.xbox.com/services/xbox-services/storage/title-storage/live-title-storage-overview",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://devdocs.xbox.com/services/xbox-services/storage/title-storage/live-title-storage-overview",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Not metered separately in the Title Storage docs; access is through Xbox services.",
+    "metered": true
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Xbox services REST endpoints + GDK; data must be hex or base64 encoded because Title Storage 'doesn't process encoded data'.",
+  "chaining": "256 MB per player x unlimited players, but the per-write encoding overhead (base64 = +33%) eats the ceiling, and Managed Partner status is a gate for the 256 MB tier.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap: 64 MB",
+      "source": "https://devdocs.xbox.com/services/xbox-services/storage/title-storage/live-title-storage-overview"
+    }
+  ],
+  "limits_note": "per-object-cap: 64 MB per player on the Creator-Program tier; request-rate: ~60 reads or writes per hour per session, then throttled. Binary must be base64/hex encoded. Retention: not documented as expiring — data persists with the title.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Throttles to roughly one call per minute averaged over an hour-long session, so bulk transfer is painful; the 256 MB tier requires Managed Partner status rather than self-serve signup.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://devdocs.xbox.com/services/xbox-services/storage/title-storage/live-title-storage-overview",
+      "date": "2026-10-21",
+      "proved": "quota table: 'Trusted Platform | 256 MB per player | 64 MB per player', 'Universal Platform | 64 MB per player', 'Global | 256 MB'; 'a title can make 60 reads or writes at the beginning of a session, but no more for the remainder of the hour'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Trusted Platform: 256 MB per player (Managed Partners) / 64 MB per player (Creators Program). Universal Platform: 64 MB per player. Global: 256 MB. No total-title byte cap published.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F6-game-cloud-saves.json",
+    "seed_area": "F/F6",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "F/F6"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Trusted Platform: 256 MB per player (Managed Partners) / 64 MB per player (Creators Program). Universal Platform: 64 MB per player. Global: 256 MB. No total-title byte cap published.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F6"
+    },
+    "target_document": "docs/storage/free/social-and-fediverse.md",
+    "document_section": "Game platforms and cloud saves",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 1,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Trusted Platform: 256 MB per player (Managed Partners) / 64 MB per player (Creators Program). Universal Platform: 64 MB per player. Global: 256 MB. No total-title byte cap published.",
+    "limits_verbatim": "per-object-cap: 64 MB per player on the Creator-Program tier; request-rate: ~60 reads or writes per hour per session, then throttled. Binary must be base64/hex encoded. Retention: not documented as expiring — data persists with the title.",
+    "egress_verbatim": "Not metered separately in the Title Storage docs; access is through Xbox services.",
+    "chaining_verbatim": "256 MB per player x unlimited players, but the per-write encoding overhead (base64 = +33%) eats the ceiling, and Managed Partner status is a gate for the 256 MB tier.",
+    "tooling_verbatim": "Xbox services REST endpoints + GDK; data must be hex or base64 encoded because Title Storage 'doesn't process encoded data'.",
+    "interface_verbatim": "rest",
+    "agent_focus": "game platforms as storage: cloud saves, game backends, mod hosting. Per-user total caps and whether save data is retrievable via API."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

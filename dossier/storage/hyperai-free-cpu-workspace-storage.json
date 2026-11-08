@@ -1,0 +1,97 @@
+{
+  "topic": "storage",
+  "slug": "hyperai-free-cpu-workspace-storage",
+  "provider": "HyperAI (hyper.ai) — free CPU workspace + storage",
+  "url": "https://hyper.ai",
+  "category": "iaas",
+  "free_tier": {
+    "stated": "Free tier storage is 'Free 20 GB + Extra 50 GB, totaling 70 GB' — but the 70 GB is explicitly a Pro benefit ('Upgrade to HyperAI Pro, Unlock More Benefits ... 3.5× more storage: Free 20 GB + Extra 50 GB, totaling 70 GB'). So free is 20 GB, and 70 GB costs $4.99/month.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://hyper.ai/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://hyper.ai/pricing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://hyper.ai/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Not metered on the free tier; storage tiers are the paid dimension (a discounted tier table exists for scalable storage).",
+    "metered": true
+  },
+  "interface": [
+    "s3",
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Web console + app.hyper.ai notebooks; no documented S3/CLI blob API found. Storage is attached to notebooks rather than exposed as a bucket.",
+  "chaining": "20 GB per account is too small to multiply usefully; 500 accounts per 10 TiB.",
+  "limits": [],
+  "limits_note": "20 GB free, 2 vCPU / 4 GB RAM, 2 h max continuous CPU runtime (8 h on Pro), 30 h/month compute on Pro. Storage is workspace-scoped, not bucket-scoped.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email.",
+    "country": null
+  },
+  "reliability_note": "Small aggregator-style GPU marketplace; the storage is a notebook side-car, so data tied to a workspace that may be reclaimed.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://hyper.ai/pricing",
+      "date": "2026-10-21",
+      "proved": "read live: 'Run experiments and light workloads on our Free CPU—2 vCPU · 4 GB RAM'; Pro block: '3.5× more storage — Free 20 GB + Extra 50 GB, totaling 70 GB'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Free tier storage is 'Free 20 GB + Extra 50 GB, totaling 70 GB' — but the 70 GB is explicitly a Pro benefit ('Upgrade to HyperAI Pro, Unlock More Benefits ... 3.5× more storage: Free 20 GB + Extra 50 GB, totaling 70 GB'). So free is 20 GB, and 70 GB costs $4.99/month.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D9-hf-competitors.json",
+    "seed_area": "D/D9",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "D/D9"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Free tier storage is 'Free 20 GB + Extra 50 GB, totaling 70 GB' — but the 70 GB is explicitly a Pro benefit ('Upgrade to HyperAI Pro, Unlock More Benefits ... 3.5× more storage: Free 20 GB + Extra 50 GB, totaling 70 GB'). So free is 20 GB, and 70 GB costs $4.99/month.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area D/D9"
+    },
+    "target_document": "docs/storage/free/models-and-media.md",
+    "document_section": "Hugging Face competitors",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 1,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Free tier storage is 'Free 20 GB + Extra 50 GB, totaling 70 GB' — but the 70 GB is explicitly a Pro benefit ('Upgrade to HyperAI Pro, Unlock More Benefits ... 3.5× more storage: Free 20 GB + Extra 50 GB, totaling 70 GB'). So free is 20 GB, and 70 GB costs $4.99/month.",
+    "limits_verbatim": "20 GB free, 2 vCPU / 4 GB RAM, 2 h max continuous CPU runtime (8 h on Pro), 30 h/month compute on Pro. Storage is workspace-scoped, not bucket-scoped.",
+    "egress_verbatim": "Not metered on the free tier; storage tiers are the paid dimension (a discounted tier table exists for scalable storage).",
+    "chaining_verbatim": "20 GB per account is too small to multiply usefully; 500 accounts per 10 TiB.",
+    "identity_verbatim": "email.",
+    "tooling_verbatim": "Web console + app.hyper.ai notebooks; no documented S3/CLI blob API found. Storage is attached to notebooks rather than exposed as a bucket.",
+    "interface_verbatim": "rest",
+    "agent_focus": "New and up-and-coming competitors to Hugging Face and ModelScope, judged on the hard test the brief sets: a credible HF competitor must permit multi-TB objects and generous per-account storage, because model weights and datasets routinely run to hundreds of GB / TiB. Split into three classes — Chinese domestic hubs (HF is blocked there, so a separate ecosystem exists), Western MLOps artifact stores (W&B/Comet/ClearML/Lightning/Deep Lake), and dataset-publishing startups (Source Cooperative, Oxen, OpenDataLab). Excluded and not re-reported: Hugging Face, ModelScope, Kaggle, Civitai, Ollama, Replicate, DagsHub, OpenML, fal.ai, Baseten, Modal."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

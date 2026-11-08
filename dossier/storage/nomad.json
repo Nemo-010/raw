@@ -1,0 +1,105 @@
+{
+  "topic": "storage",
+  "slug": "nomad",
+  "provider": "NOMAD (NOMAD Central / nomad-lab.eu)",
+  "url": "https://nomad-lab.eu",
+  "category": "research-data-repository",
+  "free_tier": {
+    "stated": "32 GiB maximum per project, and at most 10 unpublished projects per user. Both are config knobs (process.max_upload_size, services.upload_limit) rather than business limits, and they differ per deployment. Publishing requires at least one successfully parsed entry, and publishing is what frees the 10-project slot.",
+    "unit": "GiB",
+    "metered_on": "unstated",
+    "source_url": "https://docs.nomad-lab.eu/howto/manage/gui/upload.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.nomad-lab.eu/howto/manage/gui/upload.html",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.nomad-lab.eu/howto/manage/gui/upload.html",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free and anonymous for published entries via the NOMAD API and GUI.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "A documented REST API (I got HTTP 401 'Authentication required.' from /prod/v1/api/v1/info, which is the correct behaviour — a real auth gate, not a fake 200) with API-token upload from the GUI's 'Upload via API' dialog. Parsers are plugin-based, so what counts as a valid file is deployment-specific.",
+  "chaining": "10 unpublished projects × 32 GiB = 320 GiB of live scratch on a free account, and publishing an entry releases a slot. So the steady-state ceiling is bounded by how fast a human can publish, not by bytes.",
+  "limits": [],
+  "limits_note": "fails-quota at 32 GiB, and write-gated by the parser: 'A project must contain at least one successfully processed entry before it can be published.' Content must be materials-science-shaped (DFT codes, ELN exports) to be parseable at all. Both limits together make it useless as bulk storage despite the clean API.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "Well-run EU (FAIRmat) infrastructure with a real API. The constraint is semantic, not technical.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.nomad-lab.eu/howto/manage/gui/upload.html",
+      "date": "2026-10-21",
+      "proved": "opened: 'a maximum project size of 32 GiB, controlled by process.max_upload_size'; 'at most 10 unpublished projects per user, controlled by services.upload_limit'; 'A project must contain at least one successfully processed entry before it can be published.'"
+    },
+    {
+      "url": "https://nomad-lab.eu/prod/v1/api/v1/info",
+      "date": "2026-10-21",
+      "proved": "PROBED: curl -> HTTP 200, 271,764 bytes (public endpoint). curl https://nomad-lab.eu/prod/v1/api/v1/uploads?page_size=1 -> HTTP 401, 37 bytes, {\"detail\":\"Authentication required.\"} — an honest auth gate."
+    },
+    {
+      "url": "https://nomad-lab.eu/prod/v1/docs/howto/manage/gui/upload.html",
+      "date": "2026-10-21",
+      "proved": "(older v1 doc, reached via search) — same 32 GB / 10 upload figures, confirming the numbers are stable across doc generations."
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "32 GiB maximum per project, and at most 10 unpublished projects per user. Both are config knobs (process.max_upload_size, services.upload_limit) rather than business limits, and they differ per deployment. Publishing requires at least one successfully parsed entry, and publishing is what frees the 10-project slot.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D10-preprint-and-data-2026.json",
+    "seed_area": "D/D10",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "D/D10"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "32 GiB maximum per project, and at most 10 unpublished projects per user. Both are config knobs (process.max_upload_size, services.upload_limit) rather than business limits, and they differ per deployment. Publishing requires at least one successfully parsed entry, and publishing is what frees the 10-project slot.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area D/D10"
+    },
+    "target_document": "docs/storage/free/academic.md",
+    "document_section": "Preprint and data repositories, 2026",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "32 GiB maximum per project, and at most 10 unpublished projects per user. Both are config knobs (process.max_upload_size, services.upload_limit) rather than business limits, and they differ per deployment. Publishing requires at least one successfully parsed entry, and publishing is what frees the 10-project slot.",
+    "limits_verbatim": "fails-quota at 32 GiB, and write-gated by the parser: 'A project must contain at least one successfully processed entry before it can be published.' Content must be materials-science-shaped (DFT codes, ELN exports) to be parseable at all. Both limits together make it useless as bulk storage despite the clean API.",
+    "egress_verbatim": "Free and anonymous for published entries via the NOMAD API and GUI.",
+    "chaining_verbatim": "10 unpublished projects × 32 GiB = 320 GiB of live scratch on a free account, and publishing an entry releases a slot. So the steady-state ceiling is bounded by how fast a human can publish, not by bytes.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "A documented REST API (I got HTTP 401 'Authentication required.' from /prod/v1/api/v1/info, which is the correct behaviour — a real auth gate, not a fake 200) with API-token upload from the GUI's 'Upload via API' dialog. Parsers are plugin-based, so what counts as a valid file is deployment-specific.",
+    "interface_verbatim": "rest",
+    "agent_focus": "2026-era research-data and data-marketplace platforms, deliberately judged on the BINDING constraint (does a person with only an email get past the write gate?) rather than on the marketing quota. Coverage: IEEE DataPort (the wave-7 discovery this slot confirms and extends), Mozilla Data Collective (2025 launch, the only new ≥100 GB-per-file free host found), Source Cooperative re-probed at the byte level, the French national Dataverse (Recherche Data Gouv) as the one genuinely EU-funded space with a self-serve email account, plus the 2026 data-marketplace entrants (Snowflake, Databricks Free Edition, data.world, Datarade, Tableland, Spice.ai, DataChain), the EU Data Spaces (Gaia-X / Catena-X / EOSC EU Node / DICE) and ResearchGate/Academia.edu data upload. Two structural results dominate: (a) the 'data marketplace' category is uniformly not storage — they are catalogues, and every one of them fails on per-object size by two to three orders of magnitude; (b) the EU Data Spaces are real and large but gated on eduGAIN/eIDAS identity, so they are closed on identity exactly like CSC Allas and LUMI-O before them."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

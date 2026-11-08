@@ -1,0 +1,102 @@
+{
+  "topic": "storage",
+  "slug": "gitea-forgejo-self-hosted-with-any-s3-lfs-backend",
+  "provider": "Gitea / Forgejo self-hosted with any S3 LFS backend",
+  "url": "https://forgejo.org/docs/latest/admin/advanced/quota/",
+  "category": "paas",
+  "free_tier": {
+    "stated": "Unlimited by default: `quota.default.TOTAL = -1` means unlimited, and the soft-quota feature is 'currently not yet enabled by default'. You supply the disk/object store, so bytes = your infrastructure.",
+    "unit": "unlimited",
+    "metered_on": "stored-bytes",
+    "source_url": "https://forgejo.org/docs/latest/admin/advanced/quota/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "No per-file cap unless you set one",
+    "source_url": "https://forgejo.org/docs/latest/admin/advanced/quota/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://forgejo.org/docs/latest/admin/advanced/quota/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Yours to pay for — unless the LFS backend is one of the free S3 endpoints (HF buckets, IA), in which case egress is the backend's and is free/CDN.",
+    "metered": false
+  },
+  "interface": [
+    "s3-compatible",
+    "rest",
+    "git"
+  ],
+  "interface_detail": "git",
+  "tooling": "Gitea/Forgejo binaries (single Go binary), `git-lfs` client, S3-compatible LFS storage config (`[lfs] STORAGE_TYPE=minio`). REST API + Swagger for full automation. Gitea Cloud offers a 30-day trial, not free.",
+  "chaining": "The pattern that makes 500 GB+ real: self-host the forge on a free-tier VM (or any always-on box) and set LFS storage to a free S3 endpoint. The forge holds ~metadata only; the bytes never touch your disk. Gitea's `LFS_MAX_FILE_SIZE`/`LFS_START_SERVER` are config, not policy.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "No per-file cap unless you set one",
+      "source": "https://forgejo.org/docs/latest/admin/advanced/quota/"
+    }
+  ],
+  "limits_note": "Soft-quota only: 'Forgejo checks the quota usage only before an action is executed, but it will allow a started action to complete' — so it can be overshot. No per-file cap unless you set one.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Quota feature is explicitly 'still in development' with 'little support for early prevention of operations in the UI'. Self-hosted means a dead VM = dead forge, but the LFS blobs survive in the object store.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://forgejo.org/docs/latest/admin/advanced/quota/",
+      "date": "2026-10-21",
+      "proved": "'quota.default.TOTAL is -1 (unlimited) by default'; soft-quota semantics quoted"
+    },
+    {
+      "url": "https://forgejo.org/docs/latest/admin/setup/storage/",
+      "date": "2026-10-21",
+      "proved": "storage backend configuration for LFS/attachments"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Unlimited by default: `quota.default.TOTAL = -1` means unlimited, and the soft-quota feature is 'currently not yet enabled by default'. You supply the disk/object store, so bytes = your infrastructure.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C3-git-annex-lfs.json",
+    "seed_area": "C/C3",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "C/C3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "Git LFS and git-annex special remotes",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Unlimited by default: `quota.default.TOTAL = -1` means unlimited, and the soft-quota feature is 'currently not yet enabled by default'. You supply the disk/object store, so bytes = your infrastructure.",
+    "limits_verbatim": "Soft-quota only: 'Forgejo checks the quota usage only before an action is executed, but it will allow a started action to complete' — so it can be overshot. No per-file cap unless you set one.",
+    "egress_verbatim": "Yours to pay for — unless the LFS backend is one of the free S3 endpoints (HF buckets, IA), in which case egress is the backend's and is free/CDN.",
+    "chaining_verbatim": "The pattern that makes 500 GB+ real: self-host the forge on a free-tier VM (or any always-on box) and set LFS storage to a free S3 endpoint. The forge holds ~metadata only; the bytes never touch your disk. Gitea's `LFS_MAX_FILE_SIZE`/`LFS_START_SERVER` are config, not policy.",
+    "tooling_verbatim": "Gitea/Forgejo binaries (single Go binary), `git-lfs` client, S3-compatible LFS storage config (`[lfs] STORAGE_TYPE=minio`). REST API + Swagger for full automation. Gitea Cloud offers a 30-day trial, not free.",
+    "interface_verbatim": "git",
+    "agent_focus": "Large-file versioning layer: git-annex special remotes, Git LFS hosts, DVC remotes, Perforce/SVN, and which free backends those layers can be pointed at"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "self_hosted": true
+}

@@ -1,0 +1,102 @@
+{
+  "topic": "storage",
+  "slug": "cachix",
+  "provider": "Cachix (Nix binary cache hosting)",
+  "url": "https://www.cachix.org",
+  "category": "paas",
+  "free_tier": {
+    "stated": "5 GB free for open-source projects: 'Users have a free 5 GB limit for open source projects and 20 Cachix Deploy agents.' Paid tiers start at 50 GiB.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://www.cachix.org/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.cachix.org/pricing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.cachix.org/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Unlimited bandwidth even on the paid Starter tier ('Unlimited bandwidth', 'CloudFlare CDN caching'); free tier inherits the CF-backed delivery. Free egress is genuinely not the constraint here.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "`cachix` CLI (push/use), Nix `--substituters`, and the standard Nix binary-cache HTTP protocol (narinfo/nar). No rclone backend but the nar protocol is scriptable.",
+  "chaining": "one cache per account, 5 GB free; unlimited free accounts x 5 GB. Because a Nix cache is content-addressed and deduplicated, identical NARs are only stored once per cache - so multiplication is by account, not by file.",
+  "limits": [],
+  "limits_note": "per-account quota: 5 GB hard on free (open-source only). retention: garbage collection removes unreferenced paths after a retention window (docs have a dedicated GC page). request-rate: not documented; served via Cloudflare.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Clean, documented, Cloudflare-fronted, unlimited bandwidth - the 5 GB is the only issue, and it is 100x short of the workload. Any Nix-cache-based plan is account-farming at 5 GB/account.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.cachix.org/pricing",
+      "date": "2026-10-21",
+      "proved": "'Users have a free 5 GB limit for open source projects and 20 Cachix Deploy agents'; '50 GiB of storage / Unlimited bandwidth / CloudFlare CDN caching' on Starter"
+    },
+    {
+      "url": "https://cachix.org/api/v1/cache/nixpkgs",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, 241 bytes (cache endpoint live, anonymous)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "5 GB free for open-source projects: 'Users have a free 5 GB limit for open source projects and 20 Cachix Deploy agents.' Paid tiers start at 50 GiB.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H7-software-archives.json",
+    "seed_area": "H/H7",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "H/H7"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "5 GB free for open-source projects: 'Users have a free 5 GB limit for open source projects and 20 Cachix Deploy agents.' Paid tiers start at 50 GiB.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H7"
+    },
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Software archives",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "5 GB free for open-source projects: 'Users have a free 5 GB limit for open source projects and 20 Cachix Deploy agents.' Paid tiers start at 50 GiB.",
+    "limits_verbatim": "per-account quota: 5 GB hard on free (open-source only). retention: garbage collection removes unreferenced paths after a retention window (docs have a dedicated GC page). request-rate: not documented; served via Cloudflare.",
+    "egress_verbatim": "Unlimited bandwidth even on the paid Starter tier ('Unlimited bandwidth', 'CloudFlare CDN caching'); free tier inherits the CF-backed delivery. Free egress is genuinely not the constraint here.",
+    "chaining_verbatim": "one cache per account, 5 GB free; unlimited free accounts x 5 GB. Because a Nix cache is content-addressed and deduplicated, identical NARs are only stored once per cache - so multiplication is by account, not by file.",
+    "tooling_verbatim": "`cachix` CLI (push/use), Nix `--substituters`, and the standard Nix binary-cache HTTP protocol (narinfo/nar). No rclone backend but the nar protocol is scriptable.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Software preservation + package-archive mirrors as free bulk storage: which ones accept arbitrary blobs at scale, and what the per-artifact / monthly / retention caps actually are. Sources limited to pages opened in this session; every quota below was read live or from a dated archive capture."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

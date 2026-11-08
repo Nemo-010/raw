@@ -1,0 +1,283 @@
+{
+  "topic": "compute",
+  "slug": "simpfun",
+  "provider": "SimpFun",
+  "url": "https://simpfun.tx648.cn/",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "translated from the vendor page: a daily check-in earns points that keep one 4-core / 16 GiB server running long term, and an instance is charged by the day, so a day on which it is never started costs nothing; a CNY 1 verification fee is charged before the first server since SFE4.0, and the page says the fee exists to prevent abuse.",
+    "unit": "credits",
+    "metered_on": "wall-clock",
+    "source_url": "https://simpfun.tx648.cn/",
+    "read_on": "2026-11-04",
+    "notes": "allowance"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://simpfun.tx648.cn/",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "points are charged for each day the instance is started; when the balance cannot cover a day the instance is shut down, an instance not started for seven consecutive days is destroyed, and an image kept for 60 days allows a restore.",
+    "days": null,
+    "source_url": "https://simpfun.tx648.cn/",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "not published on the page read: no egress term was found, so nothing is asserted",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://simpfun.tx648.cn/"
+  },
+  "interface": [
+    "ssh"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "not stated in the finding; the provider documents no client",
+  "chaining": "a 4-core / 16 GiB server that stays running holds a relay and a workload at once, and the vendor runs it on its own hardware around the clock; the gate to it is identity, not capacity.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "points are charged for each day the instance is started; when the balance cannot cover a day the instance is shut down, an instance not started for seven consecutive days is destroyed, and an image kept for 60 days allows a restore.",
+      "source": "https://simpfun.tx648.cn/"
+    }
+  ],
+  "limits_note": "the check-in allowance is 50 points a day and the vendor's FAQ states 50 points exactly covers the base specs C+.I.M+.L and B+.I.L.L, so a started day on the free shape costs 50 points; at a zero balance a single missed check-in leaves the next day uncovered, and a server over 50 points a day needs extra points.",
+  "binding": "retention-clamped",
+  "binding_note": "the check-in allowance is the binding constraint: points are charged for each day the instance is started, the instance is shut down when the balance cannot cover a day, and seven idle days destroy it.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "a WeChat account able to pay CNY 1 in the vendor's WeChat mini-programme. The vendor's own documentation states the check is not a real-name system, that it works because WeChat Pay requires a bank card and real-name information bound to the wallet, that SimpFun stores no real-name information, and that a phone-number binding was rejected as a privacy collection. WeChat Pay's own documentation lets an unverified overseas phone number bind an international card and pay without uploading an identity document, up to CNY 3,000 a transaction, and accepts a passport for a verified wallet, so a wallet without mainland real-name can pay the CNY 1. SimpFun states no rule on international cards, and WeChat Pay notes that some merchants do not accept them, so that part is unverified. The nearest kind is card; the true one is a wallet-payment kind, which the vocabulary lacks.",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "reported",
+  "evidence": [
+    {
+      "url": "https://simpfun.tx648.cn/",
+      "date": "2026-10-22",
+      "proved": "quoted, translated: a daily check-in is enough to keep a 4 vCPU / 16 GiB server running long term; from SFE4.0 a CNY 1 verification fee is required before opening a server, to prevent abuse; domestic BGP routing, Docker container isolation, 100,000 or more users"
+    },
+    {
+      "url": "https://d.709000.xyz/",
+      "date": "2026-10-01",
+      "proved": "the community documentation site, confirming the platform runs a public doc set and that signup uses an invitation code"
+    },
+    {
+      "url": "https://game.3loumao.org/588188917",
+      "date": "2026-05-01",
+      "proved": "a third-party guide, translated: registration costs one yuan and the reason given is to prevent abuse; the free shape is described as a panel server with reliable domestic network quality"
+    },
+    {
+      "url": "https://www.yuque.com/simpfun/sfe/create",
+      "date": "2026-11-04",
+      "proved": "an instance spec is priced in points per day, so the allowance is a count of points and not of GiB",
+      "capture": "sha256:32c17218b0c7478373e53502c6e4df94e5354efe92bad19bf94f6c3f4bb5d2ba",
+      "quote": "教程中选择了 50 积分/天实例规格"
+    },
+    {
+      "url": "https://simpfun.tx648.cn/",
+      "date": "2026-11-04",
+      "proved": "the free shape is 4 cores, 16 GiB of memory and 16 GB of disk, kept alive by check-in points",
+      "capture": "sha256:59f2b9b2417bdf6de4c53f3011cf2bb20197c61b9a794d0eed1b15a6ce3e4a93",
+      "quote": "**正确的！** 我们提供 **4核16G内存16G磁盘** 的高性能服务器实例。您只需每日签到即可获得足够使用时长"
+    },
+    {
+      "url": "https://simpfun.tx648.cn/",
+      "date": "2026-11-04",
+      "proved": "the instance runs on the vendor's own machines around the clock, so it is an always-on box rather than a session",
+      "capture": "sha256:cda8363bac6b04684c553bdd9ecda692a84cd8af5145dda27406ec54609832d3",
+      "quote": "服务端直接运行在我们的物理机上，24小时不断电，用户随时可以访问，不再需要挂机。"
+    },
+    {
+      "url": "https://next.simpdoc.top/docs/web/create_server",
+      "date": "2026-11-04",
+      "proved": "points running out shuts the instance down, seven idle days destroy it, and the image is kept 60 days",
+      "capture": "sha256:4b919b51f7fa68262d3987a2de709b715150d86929c7bf66c2af13dd62668c3c",
+      "quote": "若当日开服所需积分不足，则会关闭实例，若连续7天未启动实例，则会 **销毁实例**，实例销毁前将会自动创建一个时限 60 天的备份"
+    },
+    {
+      "url": "https://www.yuque.com/simpfun/sfe/create",
+      "date": "2026-11-04",
+      "proved": "charging is per day the instance is started, so the point balance spent on started days is what limits use",
+      "capture": "sha256:32c17218b0c7478373e53502c6e4df94e5354efe92bad19bf94f6c3f4bb5d2ba",
+      "quote": "实例计费方式为按天付费，当日不开服不扣积分"
+    },
+    {
+      "url": "https://www.yuque.com/simpfun/sfe/authentication",
+      "date": "2026-11-04",
+      "proved": "the gate is a WeChat Pay payment, which needs a bank card and a real-name record bound to the wallet, and the vendor says it stores no ID document or phone number itself",
+      "capture": "sha256:eee101f44ffe9d98c828788c7ef3c2ec441912f4ac9824a6e076a6853f399c36",
+      "quote": "简幻欢 认证的原理为 微信支付 = 认证成功因为 微信支付 需要 微信 绑定 银行卡 与 实名信息，且账户信用足够"
+    },
+    {
+      "url": "https://www.yuque.com/simpfun/sfe/authentication",
+      "date": "2026-11-04",
+      "proved": "the vendor says its check is not a real-name system, and the same page gives the bank-card requirement of the payment",
+      "capture": "sha256:eee101f44ffe9d98c828788c7ef3c2ec441912f4ac9824a6e076a6853f399c36",
+      "quote": "认证是实名吗？我的信息安全吗？SFE4 认证并非所谓的实名制"
+    },
+    {
+      "url": "https://simpfun.tx648.cn/",
+      "date": "2026-11-04",
+      "proved": "the free shape is 4 cores, 16 GiB of memory and 16 GB of disk",
+      "capture": "sha256:59f2b9b2417bdf6de4c53f3011cf2bb20197c61b9a794d0eed1b15a6ce3e4a93",
+      "quote": "**正确的！** 我们提供 **4核16G内存16G磁盘** 的高性能服务器实例。您只需每日签到即可获得足够使用时长"
+    },
+    {
+      "url": "https://simpfun.cn/",
+      "date": "2026-11-04",
+      "proved": "the vendor page was read again and still offers server time for a daily check-in",
+      "capture": "sha256:cda8363bac6b04684c553bdd9ecda692a84cd8af5145dda27406ec54609832d3",
+      "quote": "每日签到即可免费获得服务器时长，支持 Minecraft、我的世界等多款游戏。"
+    },
+    {
+      "url": "https://simpfun.cn/",
+      "date": "2026-11-04",
+      "proved": "check-in time keeps one 4-core / 16 GiB server running long term",
+      "capture": "sha256:cda8363bac6b04684c553bdd9ecda692a84cd8af5145dda27406ec54609832d3",
+      "quote": "在简幻欢您可以通过签到免费获得服务器时长，仅每天签到足够长期使用一个4核16G配置的服务器。"
+    },
+    {
+      "url": "https://www.yuque.com/simpfun/sfe/gah5gn9pfcwnssde",
+      "date": "2026-11-06",
+      "proved": "the vendor's FAQ states 50 points exactly covers the base specs C+.I.M+.L and B+.I.L.L",
+      "capture": "sha256:43e92ea8c498a07a039b5bc264d91adff99a43107353d091f7d69b4d3e2be418",
+      "quote": "经调查，50积分正好可以长期使用  C+.I.M+.L  和 B+.I.L.L 规格的实例，且满足大部分用户的需求。"
+    },
+    {
+      "url": "https://pay.weixin.qq.com/doc/user/4021838768",
+      "date": "2026-11-06",
+      "proved": "WeChat Pay lets a user with no identity-document upload bind an international card and pay up to CNY 3,000 a transaction",
+      "capture": "sha256:eeb194e80cd45e42fc41c59e8a4d0048aec565f78b5cca817ab62c4bdc26bf8b",
+      "quote": "境外人士无需上传证件信息，即可在微信支付绑定国际银行卡进行支付，单笔交易最高金额不超过3000元人民币。"
+    },
+    {
+      "url": "https://www.yuque.com/simpfun/sfe/use_higher_spec_for_free",
+      "date": "2026-11-06",
+      "proved": "the vendor treats 50 points a day as the free baseline; a server over 50 points a day needs extra points",
+      "capture": "sha256:16a582e49205da3ee2a0b849d538876124c5d7af738d30fff4dbabdf0737cc72",
+      "quote": "超过50积分/天的服务器也可以长期完全免费使用，以下以C++节点为例提供一些方案，供参考："
+    },
+    {
+      "url": "https://simpfun.cn/",
+      "date": "2026-11-06",
+      "proved": "the free shape is 4 cores, 16 GiB of memory and 16 GB of disk",
+      "capture": "sha256:59f2b9b2417bdf6de4c53f3011cf2bb20197c61b9a794d0eed1b15a6ce3e4a93",
+      "quote": "我们提供 **完全免费的4核心16G内存16G磁盘** 公益服务器。"
+    },
+    {
+      "url": "https://www.bilibili.com/opus/1162680864325238790",
+      "date": "2026-11-06",
+      "proved": "the base spec is a C+ 4-core / 16 GiB instance kept by a daily check-in",
+      "capture": "sha256:4ef04a42baa9cc34d751ad04b5dc85c97f452cb1a10af4b6d1d758f36c3e61f0",
+      "quote": "1.2 据需要选择服务器配置，最基础是C+4核+16G，完全够用，每天签到就能长期开。"
+    },
+    {
+      "url": "https://simpfun.cn/",
+      "date": "2026-11-06",
+      "proved": "a CNY 1 verification fee is charged before the first instance, with no later fee",
+      "capture": "sha256:59f2b9b2417bdf6de4c53f3011cf2bb20197c61b9a794d0eed1b15a6ce3e4a93",
+      "quote": "为了有效防止资源滥用，保障服务质量，您在首次创建实例前需要支付1元认证，后续无额外费用。"
+    },
+    {
+      "url": "https://pay.weixin.qq.com/doc/user/4021838768",
+      "date": "2026-11-06",
+      "proved": "some merchants do not accept international cards, so the merchant decides whether a CNY 1 payment succeeds",
+      "capture": "sha256:eeb194e80cd45e42fc41c59e8a4d0048aec565f78b5cca817ab62c4bdc26bf8b",
+      "quote": "微信支付绑定国际银行卡目前支持衣食住行日常消费，不支持理财，转账，提现、红包等功能，同时也存在部分商户暂不支持使用国际卡支付的情况，建议您以实际消费时页面提示为准。"
+    },
+    {
+      "url": "https://cs.help.wechat.com/hc/en-us/articles/11975770896271-How-to-Set-Up-International-Cards-for-Weixin-Pay",
+      "date": "2026-11-06",
+      "proved": "a mainland phone number is not required to set up Weixin Pay",
+      "capture": "sha256:a825787c5ebb15d4e5732d3b355e55dcf075eb860d0753979a1232e893c7c647",
+      "quote": "A: No. You can use your international phone number as long as it can receive SMS verification codes."
+    },
+    {
+      "url": "https://www.yuque.com/simpfun/sfe/gah5gn9pfcwnssde",
+      "date": "2026-11-06",
+      "proved": "SimpFun collects no ID number or real-name data itself",
+      "capture": "sha256:43e92ea8c498a07a039b5bc264d91adff99a43107353d091f7d69b4d3e2be418",
+      "quote": "简幻欢高度依赖微信及其生态来验证，在此期间并不会收集您的敏感信息（如身份证号，实名等）"
+    },
+    {
+      "url": "https://www.yuque.com/simpfun/sfe/authentication",
+      "date": "2026-11-06",
+      "proved": "the vendor's check is a WeChat Pay payment, which the vendor says needs a bank card and real-name data in the wallet",
+      "capture": "sha256:1925d2c8dbfe7f53e535d90b92a6111605bf3deb1c404b1e283c66049321eead",
+      "quote": "简幻欢 认证的原理为 微信支付 = 认证成功因为 微信支付 需要 微信 绑定 银行卡 与 实名信息，且账户信用足够"
+    },
+    {
+      "url": "https://www.yuque.com/simpfun/sfe/create",
+      "date": "2026-11-06",
+      "proved": "an instance is billed per day and a day it is not started costs nothing",
+      "capture": "sha256:f8c161a9762af57b184acb3a14ea4fa40269112936771ff3b7a17e05c975aabe",
+      "quote": "实例计费方式为按天付费，当日不开服不扣积分"
+    },
+    {
+      "url": "https://www.yuque.com/simpfun/sfe/create",
+      "date": "2026-11-06",
+      "proved": "points running out shuts the instance down, seven idle days destroy it, and the image is kept 60 days",
+      "capture": "sha256:f8c161a9762af57b184acb3a14ea4fa40269112936771ff3b7a17e05c975aabe",
+      "quote": "若当日开服所需积分不足，则会关闭实例，若连续7天未启动实例，则会销毁实例，实例销毁前将会默认创建完整镜像，此镜像保留60天"
+    },
+    {
+      "url": "https://pay.weixin.qq.com/doc/user/4021838768",
+      "date": "2026-11-06",
+      "proved": "an unverified overseas phone number can add an international card and use WeChat Pay",
+      "capture": "sha256:eeb194e80cd45e42fc41c59e8a4d0048aec565f78b5cca817ab62c4bdc26bf8b",
+      "quote": "境外手机号未实名用户，关注微信支付公众号后，点击微信支付公众号推送消息，选择添加国际银行卡，快速使用微信支付，根据页面提示绑卡并设置支付密码，绑卡成功即可使用。"
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-11-06T18:48:55.199Z",
+  "notes": "the shape is the finding: 4 cores and 16 GiB with no clock, behind a WeChat Pay check of CNY 1 and a wallet that needs a bank card. The documentation covers a game-server panel and not a general VM, so the tooling is a web console with game templates rather than SSH, which is a tooling note and not a rejection. Whether a smaller shape is also offered is unverified: the vendor page states this one.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "SimpFun (jianhuanhua, 4 vCPU / 16 GiB game server)",
+      "class": "free-vps",
+      "category_as_written": "free VPS",
+      "free_tier_kind": "allowance",
+      "shape": {
+        "vcpu": 4,
+        "ram_gib": 16,
+        "gpu_class": null,
+        "gpu_count": 0
+      },
+      "seen_routes": [
+        "broker read 200 simpfun.tx648.cn",
+        "broker search --tsv (vendor page indexed in full)"
+      ],
+      "agents": [
+        "a09-forums"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "recheck": {
+      "historical_evidence": [
+        {
+          "url": "https://www.gofarlic.com/techArticleDetail?noticeId=359193",
+          "date": "2023-02-06",
+          "proved": "an older version note, translated: the base 4 core / 8 GB node was set at 48 points a day, so one day of check-in paid for one day of server, and the project described itself as entirely free with no paid items",
+          "_recheck": {
+            "fetch_exit": 0,
+            "token_overlap": 0.0,
+            "checked_on": "2026-10-22",
+            "why": "the page no longer carries the claim, or could not be read"
+          }
+        }
+      ],
+      "note": "rows here were cited by an earlier pass and no longer support the claim when re-read on 2026-10-22; they are kept, not deleted"
+    },
+    "superseded": {
+      "identity_cost": {
+        "kind": "national-id",
+        "detail": "as stated by the provider's signup page",
+        "country": null
+      }
+    }
+  }
+}

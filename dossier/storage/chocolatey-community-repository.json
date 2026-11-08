@@ -1,0 +1,128 @@
+{
+  "topic": "storage",
+  "slug": "chocolatey-community-repository",
+  "provider": "Chocolatey Community Repository",
+  "url": "https://community.chocolatey.org",
+  "category": "registry",
+  "free_tier": {
+    "stated": "200 MB hard per package: 'NOTE: 200MB is the maximum size of a package on the Chocolatey Community Repository. The package must download larger tools from a vendor site or mirror, or if possible, create semi-embedded packages.'",
+    "unit": "MB",
+    "metered_on": "unstated",
+    "source_url": "https://github.com/chocolatey-community/chocolatey-packages/blob/master/CONTRIBUTING.md",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap: 200 MB",
+    "bytes": 200000000,
+    "source_url": "https://github.com/chocolatey-community/chocolatey-packages/blob/master/CONTRIBUTING.md",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "per-object-cap: 200 MB per .nupkg. retention: indefinite for moderated packages; unlisted packages remain downloadable",
+    "source_url": "https://github.com/chocolatey-community/chocolatey-packages/blob/master/CONTRIBUTING.md",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free serving, but every package is human-moderated before publication (CPMR rule set, VirusTotal scanning).",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "`choco push` (write, needs API key), `choco install/download` (read), NuGet v2 OData at community.chocolatey.org/api/v2/. No rclone backend.",
+  "chaining": "unlimited packages x unlimited versions x 200 MB, but each package is virus-scanned and moderated. The 2 GB NuGet limitation means large content must be fetched at install time from elsewhere - which is the opposite of storage.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap: 200 MB",
+      "source": "https://github.com/chocolatey-community/chocolatey-packages/blob/master/CONTRIBUTING.md"
+    }
+  ],
+  "limits_note": "per-object-cap: 200 MB per .nupkg. retention: indefinite for moderated packages; unlisted packages remain downloadable. request-rate: push is rate-limited per API key; moderation queue is the real gate.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: emain downloadable. request-rate: push is rate-limited per API key; moderation queue is the real gate. registry",
+    "country": null
+  },
+  "reliability_note": "200 MB plus mandatory malware scanning plus human moderation. Cannot hold large binaries at all - Chocolatey's own docs route >2 GB content to external hosting.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://github.com/chocolatey-community/chocolatey-packages/blob/master/CONTRIBUTING.md",
+      "date": "2026-10-21",
+      "proved": "'200MB is the maximum size of a package on the Chocolatey Community Repository.'"
+    },
+    {
+      "url": "https://docs.chocolatey.org/en-us/guides/create/create-large-files-package/",
+      "date": "2026-10-21",
+      "proved": "'Chocolatey is built on top of NuGet, which itself does not gracefully handle packages that contain files over 2GB'"
+    },
+    {
+      "url": "https://community.chocolatey.org/api/v2/",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, 408 bytes (NuGet v2 OData service document live)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "200 MB hard per package: 'NOTE: 200MB is the maximum size of a package on the Chocolatey Community Repository. The package must download larger tools from a vendor site or mirror, or if possible, create semi-embedded packages.'",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H7-software-archives.json",
+    "seed_area": "H/H7",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "H/H7"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [
+      {
+        "field": "verdict",
+        "class": "same provider is both a table row and a dead end",
+        "claims": [
+          {
+            "value": "fails-quota",
+            "source": "table.md"
+          },
+          {
+            "value": "dead-end: 200 MB per package, plus human moderation and VirusTotal scanning; large content is explicitly pushed to external hosts.",
+            "source": "DEAD-ENDS.md"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "200 MB hard per package: 'NOTE: 200MB is the maximum size of a package on the Chocolatey Community Repository. The package must download larger tools from a vendor site or mirror, or if possible, create semi-embedded packages.'",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H7"
+    },
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Software archives",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "200 MB hard per package: 'NOTE: 200MB is the maximum size of a package on the Chocolatey Community Repository. The package must download larger tools from a vendor site or mirror, or if possible, create semi-embedded packages.'",
+    "limits_verbatim": "per-object-cap: 200 MB per .nupkg. retention: indefinite for moderated packages; unlisted packages remain downloadable. request-rate: push is rate-limited per API key; moderation queue is the real gate.",
+    "egress_verbatim": "Free serving, but every package is human-moderated before publication (CPMR rule set, VirusTotal scanning).",
+    "chaining_verbatim": "unlimited packages x unlimited versions x 200 MB, but each package is virus-scanned and moderated. The 2 GB NuGet limitation means large content must be fetched at install time from elsewhere - which is the opposite of storage.",
+    "tooling_verbatim": "`choco push` (write, needs API key), `choco install/download` (read), NuGet v2 OData at community.chocolatey.org/api/v2/. No rclone backend.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Software preservation + package-archive mirrors as free bulk storage: which ones accept arbitrary blobs at scale, and what the per-artifact / monthly / retention caps actually are. Sources limited to pages opened in this session; every quota below was read live or from a dated archive capture."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

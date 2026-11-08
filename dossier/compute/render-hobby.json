@@ -1,0 +1,153 @@
+{
+  "topic": "compute",
+  "slug": "render-hobby",
+  "provider": "Render Hobby",
+  "url": "https://render.com/docs/outbound-bandwidth",
+  "category": "platform host",
+  "free_tier": {
+    "stated": "Batch 1 recorded Render's Hobby plan at 5 GB of bandwidth a month, down from 100 GB, with the failure being a suspension. Render's documentation confirms both the figure and the mechanism, quoted: 'Hobby | 5 GB' in the included-bandwidth table, and 'If you consume all of your outbound bandwidth during a given month, Render bills you for a supplementary amount. If you haven't added a payment method, Render instead suspends all of your Free services for the remainder of the month.' A separate 750-hour monthly instance cap suspends free web services when exhausted.",
+    "unit": "GiB",
+    "metered_on": "wall-clock",
+    "source_url": "https://render.com/docs/outbound-bandwidth",
+    "read_on": "2026-10-22",
+    "notes": "perpetual-monthly"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://render.com/docs/outbound-bandwidth",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://render.com/docs/outbound-bandwidth",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "'Hobby | 5 GB' included bandwidth; 'Render spins down your workspace's services until the start of the next month' when the allowance is exhausted with no payment method",
+    "metered": true,
+    "free_allowance": "5 GB a month on the Hobby plan",
+    "price_per_tb": "USD 153.60 per TiB (USD 0.15 per GB) over the public internet; USD 30.72 per TiB (USD 0.03 per GB) over a private link",
+    "source_url": "https://render.com/docs/outbound-bandwidth"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "REST API (API key created in Account Settings) and the Render CLI are documented. Dashboard shell and SSH are not available for a Free web service; they are listed for paid web services, private services and background workers only.",
+  "tooling": "Render CLI (Homebrew, WinGet, curl installer) and the public REST API with an API key.",
+  "chaining": "Render's free web service composes with a free Postgres only for 30 days, because a free Postgres database expires 30 days after creation with a 14-day grace period before deletion.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "5 GB a month is about 170 MB a day, and the second cap arrives first for a service that is always on: 750 free instance hours across all free services in a workspace, which one always-on service exhausts in 31 days.",
+      "source": "https://render.com/docs/outbound-bandwidth"
+    }
+  ],
+  "limits_note": "5 GB a month is about 170 MB a day, and the second cap arrives first for a service that is always on: 750 free instance hours across all free services in a workspace, which one always-on service exhausts in 31 days.",
+  "binding": "volume-quota",
+  "binding_note": "5 GB a month is about 170 MB a day, and the second cap arrives first for a service that is always on: 750 free instance hours across all free services in a workspace, which one always-on service exhausts in 31 days.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no card is required to hold the free plan, and its absence is what triggers suspension rather than a bill: the docs state 'If you haven't added a payment method, Render instead suspends all of your Free services for the remainder of the month'. No hold amount is stated because no payment method is required. The signup form is not quoted, so the email requirement is inferred rather than read; debit and prepaid acceptance are not stated, and a card only changes overage from suspension to billing.",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://render.com/docs/outbound-bandwidth",
+      "date": "2026-10-22",
+      "proved": "quoted: 'Hobby | 5 GB' included bandwidth; 'Render spins down your workspace's services until the start of the next month' when the allowance is exhausted with no payment method"
+    },
+    {
+      "url": "https://render.com/docs/free",
+      "date": "2026-10-22",
+      "proved": "quoted: 'Render grants 750 Free instance hours to each workspace per calendar month'; 'If you consume all of your Free instance hours during a given month, Render suspends all of your Free web services until the start of the next month'"
+    },
+    {
+      "url": "https://render.com/docs/outbound-bandwidth",
+      "date": "2026-10-22",
+      "proved": "quoted: 'If your workspace exceeds this amount, Render bills you for each additional GB of bandwidth used: $0.15 per GB for traffic sent over the public internet, $0.03 per GB for traffic sent over a private link connection', with the included-bandwidth table row 'Hobby | 5 GB' and the FAQ 'If you've linked a payment method, Render bills you for each additional GB of bandwidth ... Otherwise, Render spins down your workspace's services until the start of the next month.' Supports the 5 GB included allowance, the per-month clock and the suspend-without-a-payment-method mechanism the verdict rests on. It also documents a per-GB price above the allowance, so egress is metered once the included volume is passed, which the stored egress.metered=false does not carry; the qualifies-with-caveat verdict is unaffected"
+    },
+    {
+      "url": "https://render.com/docs/api",
+      "date": "2026-11-04",
+      "proved": "a public REST API is documented",
+      "capture": "sha256:45fa8e8d7421472917883b5b1daa4872dfd64a34c013b175423e7d31e1cd9d2a",
+      "quote": "Render provides a public REST API for managing your services and other resources programmatically."
+    },
+    {
+      "url": "https://render.com/docs/cli",
+      "date": "2026-11-04",
+      "proved": "a CLI is documented",
+      "capture": "sha256:539c756bda23b82cba3ebfd4190e5f2f3f6b9f8ccf9c4701828cdcfd1e2d6ca1",
+      "quote": "Use the Render CLI to manage your Render services and datastores directly from your terminal"
+    },
+    {
+      "url": "https://render.com/docs/ssh",
+      "date": "2026-11-04",
+      "proved": "a Free web service has neither dashboard shell nor SSH; paid web services, private services and background workers do",
+      "capture": "sha256:895e57c76e33f152510f853bd76862286e3460d0fc5af5b26fba0b4e03c005c7",
+      "quote": "| *[Free](free) web service* | ❌ | ❌ |"
+    },
+    {
+      "url": "https://render.com/docs/outbound-bandwidth",
+      "date": "2026-11-04",
+      "proved": "Hobby included outbound bandwidth is 5 GB",
+      "capture": "sha256:89c1fbd972104a7331abd08fb82d09478a85446f0c5b971112155d98bbe461c2",
+      "quote": "| *Hobby* | 5 GB |"
+    },
+    {
+      "url": "https://render.com/docs/outbound-bandwidth",
+      "date": "2026-11-04",
+      "proved": "overage price over the public internet",
+      "capture": "sha256:89c1fbd972104a7331abd08fb82d09478a85446f0c5b971112155d98bbe461c2",
+      "quote": "*$0.15 per GB* for traffic sent over the public internet"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T06:20:49.284Z",
+  "notes": "The term that binds first for an always-on service: 750 instance hours a month is 31.25 days, so a single always-on free web service uses the whole workspace pool and a second free service has none. Render's free tier also has two traps a reader should know before planning: a free Postgres expires after 30 days, and free services spin down after 15 minutes of inactivity with about a minute to restart. The page states both a 5 GB Hobby egress allowance and a per-GB price beyond it.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "Render Hobby - the 5 GB bandwidth figure is confirmed and the failure is a suspension, not a bill",
+      "class": "verification",
+      "category_as_written": "paas",
+      "free_tier_kind": "perpetual-monthly",
+      "shape": null,
+      "seen_routes": [
+        "broker read 200 render.com/docs/outbound-bandwidth",
+        "broker read 200 render.com/docs/free",
+        "broker search 200"
+      ],
+      "agents": [
+        "b09-inverse-search"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "recheck": {
+      "historical_evidence": [
+        {
+          "url": "https://community.render.com/t/suspended-by-render/12987",
+          "date": "2023-06-16",
+          "proved": "a Render staff reply attributes a suspension to the 750 free instance hours across all free web services, confirming the cap is enforced",
+          "_recheck": {
+            "fetch_exit": 4,
+            "checked_on": "2026-10-22",
+            "why": "the broker refused the request, which establishes nothing about the target; the rule the anecdote illustrates is now cited from the vendor documentation read the same day"
+          }
+        }
+      ],
+      "note": "a 2023 forum post attributed a suspension to the 750 free instance hours; the rule itself is cited from https://render.com/docs/free read 2026-10-22, so the anecdote is kept here rather than as live evidence"
+    },
+    "superseded": {
+      "identity_cost": {
+        "kind": "email",
+        "detail": "as stated by the provider's signup page",
+        "country": null
+      }
+    }
+  }
+}

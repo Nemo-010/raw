@@ -1,0 +1,110 @@
+{
+  "topic": "storage",
+  "slug": "github-issue-pr-comment-attachments",
+  "provider": "GitHub issue/PR comment attachments (user-attachments)",
+  "url": "https://github.com",
+  "category": "media",
+  "free_tier": {
+    "stated": "no account-level byte quota stated; per-file only — 10 MB images/GIFs, 25 MB other files, 10 MB video on free plan (100 MB on paid)",
+    "unit": "MB",
+    "metered_on": "unstated",
+    "source_url": "https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/attaching-files",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "25 MB/file",
+    "bytes": 25000000,
+    "source_url": "https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/attaching-files",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/attaching-files",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "free and unmetered — 'For public repositories, uploaded files can be accessed without authentication'; served from githubusercontent CDN, cached by Camo",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "GitHub CLI: 'You can also attach local images and videos from the command line with GitHub CLI' (gh issue comment / gh pr comment --attach, changelog 2026-09-01); plus any REST client against the comment API",
+  "chaining": "unlimited comments per issue x unlimited issues x unlimited free repos; 25 MB per non-image attachment. 1 GiB of payload = ~41 comments. Effectively per-record-unlimited storage keyed to comment IDs, not to an account quota",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "25 MB/file",
+      "source": "https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/attaching-files"
+    }
+  ],
+  "limits_note": "25 MB/file (10 MB images), per-comment attachment count not documented; uploads are immediate on attach, so a failed comment still leaves the asset",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: no account-level byte quota stated; per-file only — 10 MB images/GIFs, 25 MB other files, 10 MB video on free plan (100 MB on paid",
+    "country": null
+  },
+  "reliability_note": "assets persist after comment edit/delete in practice (URL is anonymised and not reference-counted); bulk comment-creation is the one thing GitHub's usage-anomaly systems actually watch, and secondary rate limits are aggressive",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/attaching-files",
+      "date": "2026-10-21",
+      "proved": "'The maximum file size is: 10MB for images and gifs ... 25MB for all other files'"
+    },
+    {
+      "url": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-anonymized-urls",
+      "date": "2026-10-21",
+      "proved": "uploads get anonymous githubusercontent URLs via Camo"
+    },
+    {
+      "url": "https://github.blog/changelog/2026-09-01-github-cli-media-in-issues-pull-requests-and-comments/",
+      "date": "2026-10-21",
+      "proved": "scriptable attach path exists (API criterion met)"
+    },
+    {
+      "url": "https://github.com/user-attachments/assets/<uuid>",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 404 text/plain for a bogus id (route exists, not a generic 403)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "no account-level byte quota stated; per-file only — 10 MB images/GIFs, 25 MB other files, 10 MB video on free plan (100 MB on paid)",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F5-social-forums.json",
+    "seed_area": "F/F5",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "F/F5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/social-and-fediverse.md",
+    "document_section": "Social and forum platforms",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "no account-level byte quota stated; per-file only — 10 MB images/GIFs, 25 MB other files, 10 MB video on free plan (100 MB on paid)",
+    "limits_verbatim": "25 MB/file (10 MB images), per-comment attachment count not documented; uploads are immediate on attach, so a failed comment still leaves the asset",
+    "egress_verbatim": "free and unmetered — 'For public repositories, uploaded files can be accessed without authentication'; served from githubusercontent CDN, cached by Camo",
+    "chaining_verbatim": "unlimited comments per issue x unlimited issues x unlimited free repos; 25 MB per non-image attachment. 1 GiB of payload = ~41 comments. Effectively per-record-unlimited storage keyed to comment IDs, not to an account quota",
+    "tooling_verbatim": "GitHub CLI: 'You can also attach local images and videos from the command line with GitHub CLI' (gh issue comment / gh pr comment --attach, changelog 2026-09-01); plus any REST client against the comment API",
+    "interface_verbatim": "rest",
+    "agent_focus": "social platforms and forums as attachment storage — permanent attachment URLs, CDN serving, API path"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

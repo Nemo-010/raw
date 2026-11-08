@@ -1,0 +1,109 @@
+{
+  "topic": "netdisk-pan",
+  "slug": "pan-timero-xyz",
+  "provider": "ximu's alist",
+  "url": "https://pan.timero.xyz/",
+  "category": "public-instance",
+  "free_tier": {
+    "stated": "anonymous guest read of 1724 root entries; no account and no payment",
+    "unit": "unlimited",
+    "metered_on": "none",
+    "source_url": "https://pan.timero.xyz/",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "the upstream provider's cap; the instance publishes none",
+    "source_url": "https://pan.timero.xyz/"
+  },
+  "retention": {
+    "stated": "until the operator's account or tenant fails; no TTL and no notice",
+    "days": null,
+    "source_url": "https://pan.timero.xyz/"
+  },
+  "egress": {
+    "terms": "served through cloudflare; the reader pays nothing",
+    "metered": false,
+    "source_url": "https://pan.timero.xyz/"
+  },
+  "interface": [
+    "rest",
+    "webdav"
+  ],
+  "interface_detail": "rest",
+  "tooling": "the AList/OpenList REST surface (/api/fs/list, /api/fs/get, /api/fs/put) and the WebDAV endpoint at /dav; the rclone alist backend speaks the REST",
+  "chaining": "a fetch substrate: point a cache and two mirrors at it, never a write tier Read-only. allow_indexed true means /api/public/search can enumerate the whole tree without walking it, which is the useful mechanism to take from this host",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "no published rate; one operator and a CDN front absorb the read",
+      "source": "https://pan.timero.xyz/"
+    },
+    {
+      "kind": "write-gated",
+      "value": "PUT denied at the guest role",
+      "source": "probe:https://pan.timero.xyz/api/fs/put"
+    }
+  ],
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "no registration; /api/me returns a guest session",
+    "country": null
+  },
+  "reliability_note": "1,724 root entries on an AList v3.43 build, base_path /onedrive/adv_lib_001, provider Onedrive. The largest listing in the population and the clearest example of a pooled tenant re-exported.",
+  "confidence": "measured",
+  "evidence": [
+    {
+      "url": "probe:https://pan.timero.xyz/api/public/settings",
+      "date": "2026-10-22",
+      "proved": "HTTP 200, JSON carrying a code field, site_title \"ximu's alist\""
+    },
+    {
+      "url": "probe:https://pan.timero.xyz/api/fs/list",
+      "date": "2026-10-22",
+      "proved": "anonymous POST /api/fs/list on / returned code 200 with 1724 root entries; write:false, write_content_bypass:None, provider:Onedrive"
+    },
+    {
+      "url": "probe:https://pan.timero.xyz/api/fs/put",
+      "date": "2026-10-22",
+      "proved": "the zero-byte oracle (PUT at an existing directory with Overwrite:false) returned code 403 with message 'permission denied' inside HTTP 200, so the write permission failed and nothing was written"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-22T03:37:00.574Z",
+  "binding": "per-ip-shaping",
+  "notes": "1,724 root entries on an AList v3.43 build, base_path /onedrive/adv_lib_001, provider Onedrive. The largest listing in the population and the clearest example of a pooled tenant re-exported.",
+  "history": [],
+  "extras": {
+    "access_mode": "public-instance",
+    "read_capability": "full",
+    "write_capability": "permission-denied",
+    "upstream_provider": "Onedrive",
+    "fronting_cdn": "cloudflare",
+    "advertised_write_flag": false,
+    "write_content_bypass": null,
+    "permission_bitmask": "0",
+    "base_path": "/onedrive/adv_lib_001",
+    "listing_sha256": "6e818fb6",
+    "first_seen": "2024-01-20",
+    "first_seen_source": "kuhehe.github.io/20240120224502, whose page was edited in place until 2025-06-17",
+    "last_verified_alive": "2026-10-22T03:37:00.574Z",
+    "last_verified_dead": null,
+    "consecutive_failures": 0,
+    "aliases": [
+      "pan.timero.xyz (ximu's alist) — public AList, 1,724-entry visual-novel library"
+    ],
+    "seed_facts": {
+      "quota_verbatim": "No stated quota. The root listing reports 1,724 entries on a OneDrive backend, with per-title folders in the sample directories",
+      "per_object_cap_verbatim": "Not applicable",
+      "chaining_verbatim": "Read-only. allow_indexed true means /api/public/search can enumerate the whole tree without walking it, which is the useful mechanism to take from this host",
+      "reliability_verbatim": "Alive and actively mounted. A personal visual-novel collection, largely irrelevant to the workloads in scope",
+      "tooling_verbatim": "the AList v3.43.0 REST API, anonymous, with allow_indexed and allow_mounted both true. No guest WebDAV credential is published",
+      "binding_note_verbatim": "Read-only, personal and a 1,724-entry visual-novel library. Nothing here is capacity and the gate is the write refusal, so the record exists for the census and for the allow_indexed mechanism.",
+      "deferred_name": "pan.timero.xyz (ximu's alist) — public AList, 1,724-entry visual-novel library",
+      "folded_from": "dossier/netdisk-pan/pan-timero-xyz-public-alist-1-724-entry-visual-novel-lib.json, written by this pass and folded here"
+    },
+    "allow_indexed": true
+  },
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

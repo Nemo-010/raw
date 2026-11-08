@@ -1,0 +1,216 @@
+{
+  "topic": "storage",
+  "slug": "hi168-s3-compatible-object-storage",
+  "provider": "Hi168 (上海海文) — S3-compatible object storage",
+  "url": "https://www.hi168.com",
+  "category": "cloud-drive",
+  "free_tier": {
+    "stated": "500 GB on registration without real-name verification and 1 TB with it (实名), as posted in January 2026; the same thread notes that new signups get only 5 GB.",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://www.appinn.com/1tb-free-s3-hi168/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.appinn.com/1tb-free-s3-hi168/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.appinn.com/1tb-free-s3-hi168/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "No metered egress announced; the reviewer measured 2–4 MB/s up and ~1 MB/s down in daytime,几 hundred KB/s at evening peak — so it is bandwidth-shaped, not byte-metered.",
+    "metered": true
+  },
+  "interface": [
+    "s3",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "s3",
+  "tooling": "S3 endpoint https://s3.hi168.com with an AccessKey and SecretKey issued from the 存储管理 app inside their cloud desktop; path-style addressing must be forced (OpenList lists no files otherwise); works with rclone s3, s3cmd, aws-cli, OpenClaw. No named first-party client.",
+  "chaining": "1 TB per account after real-name. Bucket count per account unverified (the article shows bucket creation, count not stated). The only way the total grows is another account, and each one costs a 实名 identity — so this does NOT multiply.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "4 MB/s",
+      "source": "https://www.appinn.com/1tb-free-s3-hi168/"
+    }
+  ],
+  "limits_note": "per-object-cap unknown; throughput is the binding limit (2–4 MB/s up). Public bucket support unclear.",
+  "identity_cost": {
+    "kind": "national-id",
+    "detail": "registration asks for a mobile phone number (reported on a blog dated 2026-01-27); 1 TB needs real-name verification (实名) and 500 GB does not",
+    "country": null
+  },
+  "reliability_note": "On 2026-11-03 the home page shows a maintenance notice that suspends Hi168 services. A direct probe of https://www.hi168.com timed out while a brokered read returned that notice, and the S3 endpoint s3.hi168.com failed certificate verification (tls_untrusted).",
+  "confidence": "reported",
+  "confidence_note": "the 2026-11-03 evidence rows read https://www.nodeloc.com/t/topic/75399, the blog.xiaohack.org tutorial tag page and https://www.appinn.com/1tb-free-s3-hi168/ (third-party posts), the vendor home page https://www.hi168.com (a maintenance notice that suspends the service) and probes of s3.hi168.com and www.hi168.com; no vendor page states the quota, so the quota rests on third-party reports",
+  "evidence": [
+    {
+      "url": "https://www.appinn.com/1tb-free-s3-hi168/",
+      "date": "2026-10-21",
+      "proved": "'注册后，会自动获得 500GB 存储空间，再经过实名制验证，就能得到 1TB'; tested 2–4 MB/s upload"
+    },
+    {
+      "url": "https://www.nodeloc.com/t/topic/75399",
+      "date": "2026-10-21",
+      "proved": "2026-01-19, '目前新用户注册只有5G了，仅做留档'"
+    },
+    {
+      "url": "https://linux.do/t/topic/1521675",
+      "date": "2026-10-21",
+      "proved": "a linux.do user recalls '有一个h168?还是啥的 国内的…免费 1T s3存储'"
+    },
+    {
+      "url": "https://www.nodeloc.com/t/topic/75399",
+      "date": "2026-11-03",
+      "proved": "the thread states 1 TB after real-name verification and 500 GB without it",
+      "capture": "sha256:2f3e07623580f23b6e3097f898b8b9f9008ec4488402cf3dcc012566c9542276",
+      "quote": "实名以后可以有1T的空间，不实名就是500G"
+    },
+    {
+      "url": "https://www.nodeloc.com/t/topic/75399",
+      "date": "2026-11-03",
+      "proved": "the thread notes that new signups get only 5 GB",
+      "capture": "sha256:2f3e07623580f23b6e3097f898b8b9f9008ec4488402cf3dcc012566c9542276",
+      "quote": "注：目前新用户注册只有5G了，仅做留档"
+    },
+    {
+      "url": "https://www.hi168.com",
+      "date": "2026-11-03",
+      "proved": "the home page announces a system maintenance that suspends Hi168 services",
+      "capture": "sha256:b04ad637551fcd46c5252349b91e60a9ec43bbee1bf0e0763240a28cae2e491e",
+      "quote": "维护期间暂停Hi168相关服务"
+    },
+    {
+      "url": "probe:s3.hi168.com",
+      "date": "2026-11-03",
+      "proved": "a probe of the S3 endpoint ended in tls_untrusted",
+      "capture": "sha256:bd6a18bcdbd2602ee814392069fd178ca60d039d0c96f180e861717ed4b8e288",
+      "quote": "\"error\": \"tls_untrusted\""
+    },
+    {
+      "url": "probe:www.hi168.com",
+      "date": "2026-11-03",
+      "proved": "a direct probe of the home page timed out",
+      "capture": "sha256:6c85d7178ddc3043f251d96446267c7f3d7745d064606c1aa900c5edf572553a",
+      "quote": "\"error\": \"timeout\""
+    },
+    {
+      "url": "https://www.nodeloc.com/t/topic/75399",
+      "date": "2026-11-03",
+      "proved": "path-style addressing must be forced for the S3 endpoint",
+      "capture": "sha256:2f3e07623580f23b6e3097f898b8b9f9008ec4488402cf3dcc012566c9542276",
+      "quote": "openlist挂载时要打开强制路径样式，否则会无法列出文件"
+    },
+    {
+      "url": "https://blog.xiaohack.org/tag/%E6%95%99%E7%A8%8B/",
+      "date": "2026-11-03",
+      "proved": "registration needs a mobile phone number",
+      "capture": "sha256:fc56b41d2cad91312305fed3a5e037382efba734dab7726518b41ecab1044f86",
+      "quote": "第一步：填写信息注册（需要手机号）"
+    },
+    {
+      "url": "https://www.appinn.com/1tb-free-s3-hi168/",
+      "date": "2026-11-03",
+      "proved": "tested 2 to 4 MB/s upload and about 1 MB/s download in daytime",
+      "capture": "sha256:92b6dbb9c6299d0c022d0f5d918f6041bb80295756a9f29761a13867c98a311a",
+      "quote": "上传在2～4MB/s 左右，下载 1MB/s 左右"
+    },
+    {
+      "url": "https://www.nodeloc.com/t/topic/75399",
+      "date": "2026-11-03",
+      "proved": "the 2026-01-19 thread still states the 5 GB figure for new signups",
+      "capture": "sha256:2f3e07623580f23b6e3097f898b8b9f9008ec4488402cf3dcc012566c9542276",
+      "quote": "注：目前新用户注册只有5G了，仅做留档"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-11-03T15:04:18.959Z",
+  "notes": "500 GB on registration, 1 TB after real-name verification (实名). Forum dealers advertised it as '免费领取1T超大对象存储' in Jan 2026; by 2026-01-19 nodeloc reported '新用户注册只有5G了，仅做留档' — i.e. the grant was already being clawed back.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F8-linuxdo.json",
+    "seed_area": "F/F8",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "F/F8"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [
+      {
+        "field": "free_tier.stated",
+        "class": "quota contradicted inside the corpus, and the endpoint no longer answers",
+        "claims": [
+          {
+            "value": "500 GB on registration, 1 TB after real-name verification",
+            "source": "FINAL-REPORT.md §4, §8, §11 and ROUND2-FINDINGS.md (all now marked disputed)",
+            "evidence": null
+          },
+          {
+            "value": "new signups get 5 GB",
+            "source": "a nodeloc.com post dated 2026-01-19",
+            "evidence": null
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row F/F8, confidence medium",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "endpoint liveness changed during the recon pass",
+        "claims": [
+          {
+            "value": "the S3 endpoint is live behind an incomplete TLS chain",
+            "source": "the seed dossier",
+            "evidence": null
+          },
+          {
+            "value": "SEC_E_UNTRUSTED_ROOT with verification, and a timeout with verification disabled: the host no longer answers at all",
+            "source": "recon PROBES.md row 29, 2026-10-22",
+            "evidence": null
+          }
+        ],
+        "resolution": "the endpoint is worse than the seed recorded, not better; the fails-quota class stands and the reason is now stronger. The quota itself is still unresolved."
+      }
+    ],
+    "dead_end": {
+      "failure_class": "identity",
+      "why": "500 GB on registration, 1 TB after real-name verification (实名). Forum dealers advertised it as '免费领取1T超大对象存储' in Jan 2026; by 2026-01-19 nodeloc reported '新用户注册只有5G了，仅做留档' — i.e. the grant was already being clawed back.",
+      "retry_when": "if the registration gate opens to a foreign individual",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F8"
+    },
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "S3-compatible object storage reached from a forum",
+    "conversion": "mechanical",
+    "verified_at_basis": "re-read on 2026-11-03 from the third-party posts https://www.nodeloc.com/t/topic/75399, the blog.xiaohack.org tutorial tag page and https://www.appinn.com/1tb-free-s3-hi168/, the vendor home page https://www.hi168.com and probes of s3.hi168.com and www.hi168.com; the vendor pages state no quota",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "500 GB on registration, 1 TB after real-name verification (实名). Forum dealers advertised it as '免费领取1T超大对象存储' in Jan 2026; by 2026-01-19 nodeloc reported '新用户注册只有5G了，仅做留档' — i.e. the grant was already being clawed back.",
+    "limits_verbatim": "per-object-cap unknown; throughput is the binding limit (2–4 MB/s up). Public bucket support unclear.",
+    "egress_verbatim": "No metered egress announced; the reviewer measured 2–4 MB/s up and ~1 MB/s down in daytime,几 hundred KB/s at evening peak — so it is bandwidth-shaped, not byte-metered.",
+    "chaining_verbatim": "1 TB per account after real-name. Bucket count per account unverified (the article shows bucket creation, count not stated). The only way the total grows is another account, and each one costs a 实名 identity — so this does NOT multiply.",
+    "identity_verbatim": "national-id",
+    "tooling_verbatim": "Real S3 endpoint with AccessKey/SecretKey issued from the '存储管理' app inside their cloud desktop; works with rclone s3, s3cmd, aws-cli, OpenClaw. No named first-party client.",
+    "interface_verbatim": "s3",
+    "agent_focus": "linux.do (largest Chinese-language tech forum) — provider slang, 优惠活动 deal posts, real enforcement limits, 2026 liveness, and routes for registering from outside the country"
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

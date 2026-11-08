@@ -1,0 +1,115 @@
+{
+  "topic": "storage",
+  "slug": "debian-salsa-gitlab-with-generic-package-registry",
+  "provider": "Debian Salsa (salsa.debian.org) - GitLab with Generic package registry",
+  "url": "https://salsa.debian.org",
+  "category": "paas",
+  "free_tier": {
+    "stated": "No published total-storage quota, but a fully published per-object table on the instance-configuration page. Package registry per-file caps: Generic 5 GiB, Conan 3 GiB, Maven 3 GiB, PyPI 3 GiB, Terraform 1 GiB, npm/NuGet 500 MiB, Helm 5 MiB. Core GitLab: max push size '-' (unlimited), max attachment 20 MiB, job artifact 750 MiB, pages 300 MiB, snippet 50 MiB, import remote file 10 GiB, download file 5 GiB.",
+    "unit": "GiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://salsa.debian.org/help/instance_configuration",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-file caps: Generic 5 GiB",
+    "bytes": 5368709120,
+    "source_url": "https://salsa.debian.org/help/instance_configuration",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "per-object-cap: 5 GiB per Generic package file; 750 MiB per CI artifact; 300 MiB Pages. retention: indefinite for packages and repos (no pruning policy published on this page)",
+    "source_url": "https://salsa.debian.org/help/instance_configuration",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free. Debian-hosted infrastructure with no billing, no per-GB meter, and package/registry downloads served straight from the instance. No Cloudflare dependency to worry about.",
+    "metered": false
+  },
+  "interface": [
+    "ssh",
+    "git"
+  ],
+  "interface_detail": "git",
+  "tooling": "Full GitLab: `git` over SSH/HTTPS, GitLab Generic Package API (`PUT /projects/:id/packages/generic/:package_name/:version/:file_name`), CI runners, `glab`/`lab` CLIs, `python-gitlab`. Max push size is '-' (unlimited) which is the interesting cell - the per-object cap is on the *registry*, not on git.",
+  "chaining": "Unlimited projects per account x 5 GiB per Generic-package file x unlimited files per package version x unlimited versions. Plus unlimited-size git pushes as a second surface. The binding limit is account creation, not storage.",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "reviewed due to the high volume of spam registrations",
+      "source": "https://salsa.debian.org/help/instance_configuration"
+    },
+    {
+      "kind": "write-gated",
+      "value": "approved",
+      "source": "https://salsa.debian.org/help/instance_configuration"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "per-file caps: Generic 5 GiB",
+      "source": "https://salsa.debian.org/help/instance_configuration"
+    }
+  ],
+  "limits_note": "per-object-cap: 5 GiB per Generic package file; 750 MiB per CI artifact; 300 MiB Pages. retention: indefinite for packages and repos (no pruning policy published on this page). request-rate: the same page publishes Rate Limits and Files/Users/Groups/Projects API rate-limit sections (not transcribed here). THE GATE: 'New user registrations are manually reviewed due to the high volume of spam registrations. It may take a few days before a new account is approved.'",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: y per-file caps: Generic 5 GiB, Conan 3 GiB, Maven 3 GiB, PyPI 3 GiB, Terraform 1 GiB, npm/NuGet 500 MiB, Helm 5 MiB. Core GitLab: max push size '-' (unlimited), max attachment 20 Mi",
+    "country": null
+  },
+  "reliability_note": "Manual registration review is the whole story - it converts account-farming from an API call into a queue measured in days, which is fatal for the 'unlimited free orgs' pattern that made the Google-Drive-service-account trick work. Once in, the surface is clean and standard GitLab. Public read is fine (project pages and package downloads are anonymous).",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://salsa.debian.org/help/instance_configuration",
+      "date": "2026-10-21",
+      "proved": "'## Size Limits ... Maximum push size | - ... Maximum job artifact size | 750 MiB'; '## Package registry ... Generic | 5 GiB'"
+    },
+    {
+      "url": "https://salsa.debian.org/users/sign_up",
+      "date": "2026-10-21",
+      "proved": "'New user registrations are manually reviewed due to the high volume of spam registrations. It may take a few days before a new account is approved.'"
+    },
+    {
+      "url": "https://salsa.debian.org/help/instance_configuration",
+      "date": "2026-10-21",
+      "proved": "'There are several size limits in place for the package registry.' (table as quoted in quota)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No published total-storage quota, but a fully published per-object table on the instance-configuration page. Package registry per-file caps: Generic 5 GiB, Conan 3 GiB, Maven 3 GiB, PyPI 3 GiB, Terraform 1 GiB, npm/NuGet 500 MiB, Helm 5 MiB. Core GitLab: max push size '-' (unlimited), max attachment 20 MiB, job artifact 750 MiB, pages 300 MiB, snippet 50 MiB, import remote file 10 GiB, download file 5 GiB.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H11-code-forges.json",
+    "seed_area": "H/H11",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H11"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "Code forges",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No published total-storage quota, but a fully published per-object table on the instance-configuration page. Package registry per-file caps: Generic 5 GiB, Conan 3 GiB, Maven 3 GiB, PyPI 3 GiB, Terraform 1 GiB, npm/NuGet 500 MiB, Helm 5 MiB. Core GitLab: max push size '-' (unlimited), max attachment 20 MiB, job artifact 750 MiB, pages 300 MiB, snippet 50 MiB, import remote file 10 GiB, download file 5 GiB.",
+    "limits_verbatim": "per-object-cap: 5 GiB per Generic package file; 750 MiB per CI artifact; 300 MiB Pages. retention: indefinite for packages and repos (no pruning policy published on this page). request-rate: the same page publishes Rate Limits and Files/Users/Groups/Projects API rate-limit sections (not transcribed here). THE GATE: 'New user registrations are manually reviewed due to the high volume of spam registrations. It may take a few days before a new account is approved.'",
+    "egress_verbatim": "Free. Debian-hosted infrastructure with no billing, no per-GB meter, and package/registry downloads served straight from the instance. No Cloudflare dependency to worry about.",
+    "chaining_verbatim": "Unlimited projects per account x 5 GiB per Generic-package file x unlimited files per package version x unlimited versions. Plus unlimited-size git pushes as a second surface. The binding limit is account creation, not storage.",
+    "tooling_verbatim": "Full GitLab: `git` over SSH/HTTPS, GitLab Generic Package API (`PUT /projects/:id/packages/generic/:package_name/:version/:file_name`), CI runners, `glab`/`lab` CLIs, `python-gitlab`. Max push size is '-' (unlimited) which is the interesting cell - the per-object cap is on the *registry*, not on git.",
+    "interface_verbatim": "git",
+    "agent_focus": "The code-forge seam: OSS project hosts, software-download directories, game/mod distribution and mirror services. Question for each: (a) any published byte quota, (b) is upload possible over SFTP/rsync/SCP/SSH rather than a web form, (c) is there a public download CDN, (d) does it need an approved project or can any account create one, (e) per-file cap. Round 2 flagged that SourceForge has no published quota and serves over plain SFTP with a global mirror CDN, and that an rclone-backend enumerator would score the niche as empty. This slot tests that class systematically. Every number below was read live or from a dated archive capture this session."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

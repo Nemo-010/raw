@@ -1,0 +1,15 @@
+{
+ "id": "20261101-1810-verify-dev-services-2fd8-u05-q04",
+ "kind": "verify",
+ "topic": "dev-services",
+ "question": "Add `events` to the free_tier.unit vocabulary, for a count of events, spans, log records or metric data points?",
+ "why": "No existing unit fits: requests counts calls, and one batch request carries many events (Honeycomb's batch endpoint takes one or more events; PostHog's /batch has no limit on the events in a request); objects counts stored things. Honeycomb (20M events and 100M metrics data points a month) and PostHog (1M analytics events a month) use mixed and name the true unit in free_tier.notes. A store query finds ten records of unit mixed whose free-tier text names events, spans or data points: compute/mastra, compute/sentry, dev-services/better-stack, dev-services/datadog, dev-services/growthbook, dev-services/honeycomb, dev-services/launchdarkly, dev-services/posthog, dev-services/sentry and storage/comet-ml-artifact-dataset-management. The same records disagree on metered_on for an event count (object-count at Honeycomb and Datadog, request-count at PostHog and Sentry), so a matching metered_on term such as event-count may be wanted.",
+ "scope": {
+  "rids": [
+   "dev-services/honeycomb",
+   "dev-services/posthog"
+  ]
+ },
+ "origin": "20261101-1810-verify-dev-services-2fd8/u05",
+ "created": "2026-11-02T00:37:34Z"
+}

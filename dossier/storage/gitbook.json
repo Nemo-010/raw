@@ -1,0 +1,111 @@
+{
+  "topic": "storage",
+  "slug": "gitbook",
+  "provider": "GitBook (Free plan file library)",
+  "url": "https://www.gitbook.com",
+  "category": "paas",
+  "free_tier": {
+    "stated": "No published total storage quota. Per-file cap is explicit: 'GitBook allows you to upload files up to 100MB per file.' GitBook's own docs ask-API, queried live, answered: 'I cannot find a documented storage quota or total storage limit per organization on the Free plan.'",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://gitbook.com/docs/create-content/blocks/insert-files",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "100MB per file",
+    "bytes": 100000000,
+    "source_url": "https://gitbook.com/docs/create-content/blocks/insert-files",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "Access token in the download URL is NOT enforced — a deliberately bogus `token=0000` returned the identical 838-byte file (same sha256), so file URLs are effectively public and permanent",
+    "source_url": "https://gitbook.com/docs/create-content/blocks/insert-files",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free and CDN-served. Files land on `*-files.gitbook.io` (backed by `gitbook-x-prod.appspot.com`), fronted by Cloudflare with `Cache-Control: public, max-age=31536000`, `Accept-Ranges: bytes`, `Access-Control-Allow-Origin: *`.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "git",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "GitBook Platform API `POST /v1/orgs/{org}/storage` + a `?ask=` query interface on the docs. No rclone backend. Git sync (GitHub/GitLab) is a second, separate route.",
+  "chaining": "Unlimited free GitBook accounts/orgs x 100 MB per file x unbounded file count (undocumented total). If the total really is unbounded this is per-record-unlimited; if it is soft-limited, the multiplier is free orgs.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "100MB per file",
+      "source": "https://gitbook.com/docs/create-content/blocks/insert-files"
+    }
+  ],
+  "limits_note": "per-object-cap: 100 MB per file — the only hard published number. Total org storage: undocumented (searched the docs ask-API, no figure). Retention: files persist while the org exists; no TTL clause.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: upload files up to 100MB per file.' GitBook's own docs ask-API, queried live, answered: 'I cannot find a documented storage quota or total storage limit per organization on the Free",
+    "country": null
+  },
+  "reliability_note": "Access token in the download URL is NOT enforced — a deliberately bogus `token=0000` returned the identical 838-byte file (same sha256), so file URLs are effectively public and permanent. That cuts both ways: stable hotlinks, but no way to keep a file private.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://gitbook.com/docs/create-content/blocks/insert-files",
+      "date": "2026-10-21",
+      "proved": "'GitBook allows you to upload files up to 100MB per file.'"
+    },
+    {
+      "url": "https://1050631731-files.gitbook.io/~/files/v0/gitbook-x-prod.appspot.com/o/spaces%2F...%2Factions.svg?alt=media&token=0000",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, 838 bytes, sha256 2d47fd8e...7356 — byte-identical to the correct-token fetch; the token is decorative"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: same URL with `Range: bytes=0-99` -> 206, 100 bytes (ranging works, so parallel ranged GETs are available)"
+    },
+    {
+      "url": "https://gitbook.com/docs/developers/gitbook-api/api-reference/storage.md?ask=",
+      "date": "2026-10-21",
+      "proved": "... — 'I cannot find a documented storage quota or total storage limit per organization on the Free plan'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No published total storage quota. Per-file cap is explicit: 'GitBook allows you to upload files up to 100MB per file.' GitBook's own docs ask-API, queried live, answered: 'I cannot find a documented storage quota or total storage limit per organization on the Free plan.'",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C6-docs-wiki-kb.json",
+    "seed_area": "C/C6",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "C/C6"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "Docs, wiki and knowledge-base hosts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No published total storage quota. Per-file cap is explicit: 'GitBook allows you to upload files up to 100MB per file.' GitBook's own docs ask-API, queried live, answered: 'I cannot find a documented storage quota or total storage limit per organization on the Free plan.'",
+    "limits_verbatim": "per-object-cap: 100 MB per file — the only hard published number. Total org storage: undocumented (searched the docs ask-API, no figure). Retention: files persist while the org exists; no TTL clause.",
+    "egress_verbatim": "Free and CDN-served. Files land on `*-files.gitbook.io` (backed by `gitbook-x-prod.appspot.com`), fronted by Cloudflare with `Cache-Control: public, max-age=31536000`, `Accept-Ranges: bytes`, `Access-Control-Allow-Origin: *`.",
+    "chaining_verbatim": "Unlimited free GitBook accounts/orgs x 100 MB per file x unbounded file count (undocumented total). If the total really is unbounded this is per-record-unlimited; if it is soft-limited, the multiplier is free orgs.",
+    "tooling_verbatim": "GitBook Platform API `POST /v1/orgs/{org}/storage` + a `?ask=` query interface on the docs. No rclone backend. Git sync (GitHub/GitLab) is a second, separate route.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Documentation and knowledge-base platforms with large attachment quotas — wiki farms, helpdesk KBs, docs hosts; whether per-workspace quotas multiply across free workspaces"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

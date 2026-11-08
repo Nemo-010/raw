@@ -1,0 +1,128 @@
+{
+  "topic": "storage",
+  "slug": "dspace-7-platform-class",
+  "provider": "DSpace 7+ platform class (MIT, UCT, demo.dspace.org and ~3,485 registered sites)",
+  "url": "https://dspace.mit.edu",
+  "category": "academic repository / DSpace 7.x–10.2",
+  "free_tier": {
+    "stated": "NO QUOTA CONCEPT AT ALL. The string 'quota' does not appear once in DSpace's 2,125-line dspace.cfg; the only two hits repo-wide are a Solr query-parser class and a discovery.cfg comment. There is no per-user, per-collection or per-installation storage limit in the software. The only byte constraint is a per-request multipart limit.",
+    "unit": "unlimited",
+    "metered_on": "stored-bytes",
+    "source_url": "https://github.com/DSpace/DSpace/blob/main/dspace-server-webapp/src/main/resources/application.properties",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "512 MB/file",
+    "bytes": 512000000,
+    "source_url": "https://github.com/DSpace/DSpace/blob/main/dspace-server-webapp/src/main/resources/application.properties",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://github.com/DSpace/DSpace/blob/main/dspace-server-webapp/src/main/resources/application.properties",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Cloudflare-fronted.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "REST (/server/api), OAI-PMH, SWORD",
+  "tooling": "curl / dspace CLI / OAI-PMH harvesters",
+  "chaining": "Unbounded by construction — but every instance's write path is affiliation-gated in practice, and the registry is dominated by pre-7 installs with no REST API at all.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "512 MB/file",
+      "source": "https://github.com/DSpace/DSpace/blob/main/dspace-server-webapp/src/main/resources/application.properties"
+    }
+  ],
+  "limits_note": "per-object-cap 512 MB/file in DSpace 7+ (spring.servlet.multipart.max-file-size = 512MB, max-request-size = 512MB). DSpace 6 and below used upload.max, which accepts -1 for 'no limit'.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "institution",
+    "country": null
+  },
+  "reliability_note": "60 of 60 sampled registry sites returned no /server/api/info, i.e. they are DSpace 6 or earlier and expose no modern REST API — the registry is a lagging indicator of what is programmatically usable.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://raw.githubusercontent.com/DSpace/DSpace/main/dspace-server-webapp/src/main/resources/application.properties",
+      "date": "2026-10-21",
+      "proved": "'spring.servlet.multipart.max-file-size = 512MB' and 'max-request-size = 512MB'"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/DSpace/DSpace/main/dspace/config/dspace.cfg",
+      "date": "2026-10-21",
+      "proved": "2,125 lines, zero occurrences of 'quota'"
+    },
+    {
+      "url": "https://api.gh.pkgforge.dev/search/code?q=quota+repo:DSpace/DSpace",
+      "date": "2026-10-21",
+      "proved": "total_count 2, both unrelated (dspace-api/.../core/Utils.java, dspace/config/modules/discovery.cfg)"
+    },
+    {
+      "url": "https://demo.dspace.org/server/api",
+      "date": "2026-10-21",
+      "proved": "'DSpace 10.2-SNAPSHOT', REST root present"
+    },
+    {
+      "url": "https://demo.dspace.org/server/api/eperson/registrations",
+      "date": "2026-10-21",
+      "proved": "POST — 403 'Invalid CSRF token.' (endpoint exists and is CSRF-guarded, so self-registration is a deployment toggle)"
+    },
+    {
+      "url": "https://dspace.org/registry/",
+      "date": "2026-10-21",
+      "proved": "'Displaying 1 - 100 of 3,485', 35 pages"
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "NO QUOTA CONCEPT AT ALL. The string 'quota' does not appear once in DSpace's 2,125-line dspace.cfg; the only two hits repo-wide are a Solr query-parser class and a discovery.cfg comment. There is no per-user, per-collection or per-installation storage limit in the software. The only byte constraint is a per-request multipart limit.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D11-dataverse-and-dspace-sweep.json",
+    "seed_area": "D/D11",
+    "seed_verdict": [
+      {
+        "value": "fails-identity",
+        "area": "D/D11"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "NO QUOTA CONCEPT AT ALL. The string 'quota' does not appear once in DSpace's 2,125-line dspace.cfg; the only two hits repo-wide are a Solr query-parser class and a discovery.cfg comment. There is no per-user, per-collection or per-installation storage limit in the software. The only byte constraint is a per-request multipart limit.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area D/D11"
+    },
+    "target_document": "docs/storage/free/academic-identity.md",
+    "document_section": "The Dataverse and DSpace sweep",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 6,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "NO QUOTA CONCEPT AT ALL. The string 'quota' does not appear once in DSpace's 2,125-line dspace.cfg; the only two hits repo-wide are a Solr query-parser class and a discovery.cfg comment. There is no per-user, per-collection or per-installation storage limit in the software. The only byte constraint is a per-request multipart limit.",
+    "limits_verbatim": "per-object-cap 512 MB/file in DSpace 7+ (spring.servlet.multipart.max-file-size = 512MB, max-request-size = 512MB). DSpace 6 and below used upload.max, which accepts -1 for 'no limit'.",
+    "egress_verbatim": "Cloudflare-fronted.",
+    "chaining_verbatim": "Unbounded by construction — but every instance's write path is affiliation-gated in practice, and the registry is dominated by pre-7 installs with no REST API at all.",
+    "identity_verbatim": "institution",
+    "tooling_verbatim": "curl / dspace CLI / OAI-PMH harvesters",
+    "interface_verbatim": "REST (/server/api), OAI-PMH, SWORD",
+    "agent_focus": "Systematic sweep of self-hosted academic repository software (Dataverse, DSpace, InvenioRDM, EPrints, Fedora/Islandora) scored on the four client questions: institutional-email requirement, per-file cap, per-collection/dataset cap, and whether the install enforces a quota object at all. Primary method was machine probing, not page reading: /api/info/version and /api/dataverses/:root/storage/quota?showInherited=true against the full official Dataverse installation registry (150 hostnames), the native-signup form probe /dataverseuser.xhtml?editMode=CREATE against all 83 no-quota hosts, and the platform source defaults read out of the upstream config files for DSpace, InvenioRDM, EPrints, libp2p and iroh. Secondary coverage of the relay/P2P half of the slot."
+  },
+  "binding": "none",
+  "binding_note": "the quota is real and unreachable: identity is the binding constraint, and it is not one of the six limits kinds",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

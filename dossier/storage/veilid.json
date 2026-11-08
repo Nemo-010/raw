@@ -1,0 +1,117 @@
+{
+  "topic": "storage",
+  "slug": "veilid",
+  "provider": "Veilid",
+  "url": "https://veilid.com/how-it-works/networking/",
+  "category": "p2p-relay-network",
+  "free_tier": {
+    "stated": "no quota and no account — 'All Veilid applications running veilid-core are nodes, and they are all equal in the eyes of the network. No nodes are special. Nodes are only limited by the resources they bring.'",
+    "unit": "unlimited",
+    "metered_on": "unstated",
+    "source_url": "https://veilid.com/how-it-works/networking/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://veilid.com/how-it-works/networking/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://veilid.com/how-it-works/networking/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "free — peer-to-peer, with inbound/outbound relays only for reachability.",
+    "metered": false
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "AppMessage / AppCall primitives over routes; the core never parses app bytes. DHT for storage of small records.",
+  "tooling": "veilid-core in Rust with bindings; veilid-server binary.",
+  "chaining": "not a file transport. Designed mobile-first for 'intermittent network connections, volatile IP addresses, CGNAT, limited storage and bandwidth' — the opposite of a bulk path.",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "applications running veilid-core are nodes, and they are all equal in the eyes of the netwo",
+      "source": "https://veilid.com/how-it-works/networking/"
+    }
+  ],
+  "limits_note": "no congestion control implemented — open issue #404 'congestion control could be implemented with NodeStatus'; relay throttling is a to-do, not a feature.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "anonymous",
+    "country": null
+  },
+  "reliability_note": "sending bulk data through Veilid is unsupported in practice: without flow control a large transfer either starves or gets dropped. Eliminated on reliability, not on quota.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://veilid.com/how-it-works/networking/",
+      "date": "2026-10-21",
+      "proved": "'No nodes are special ... Nodes are only limited by the resources they bring and the configuration of the network they are on'"
+    },
+    {
+      "url": "https://gitlab.com/veilid/veilid/-/issues/404",
+      "date": "2026-10-21",
+      "proved": "'congestion control could be implemented with NodeStatus'; 'max bytes a flow can consume in X minutes' proposed as an unimplemented idea"
+    },
+    {
+      "url": "https://gitlab.com/groups/veilid/-/work_items/3",
+      "date": "2026-10-21",
+      "proved": "'Relay traffic could use bandwidth throttling or roundrobin assignments' listed as To do"
+    },
+    {
+      "url": "https://veilid.gitlab.io/developer-book/why-veilid/",
+      "date": "2026-10-21",
+      "proved": "'limited storage and bandwidth' as a design assumption (mobile-first)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "no quota and no account — 'All Veilid applications running veilid-core are nodes, and they are all equal in the eyes of the network. No nodes are special. Nodes are only limited by the resources they bring.'",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A14-holepunch-relay-networks.json",
+    "seed_area": "A/A14",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "A/A14"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "write-gated",
+      "why": "no quota and no account — 'All Veilid applications running veilid-core are nodes, and they are all equal in the eyes of the network. No nodes are special. Nodes are only limited by the resources they bring.'",
+      "retry_when": "if the write gate becomes self-service",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/A14"
+    },
+    "target_document": "docs/storage/free/relays-and-transports.md",
+    "document_section": "Hole-punch and relay networks",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "no quota and no account — 'All Veilid applications running veilid-core are nodes, and they are all equal in the eyes of the network. No nodes are special. Nodes are only limited by the resources they bring.'",
+    "limits_verbatim": "no congestion control implemented — open issue #404 'congestion control could be implemented with NodeStatus'; relay throttling is a to-do, not a feature.",
+    "egress_verbatim": "free — peer-to-peer, with inbound/outbound relays only for reachability.",
+    "chaining_verbatim": "not a file transport. Designed mobile-first for 'intermittent network connections, volatile IP addresses, CGNAT, limited storage and bandwidth' — the opposite of a bulk path.",
+    "identity_verbatim": "anonymous",
+    "tooling_verbatim": "veilid-core in Rust with bindings; veilid-server binary.",
+    "interface_verbatim": "AppMessage / AppCall primitives over routes; the core never parses app bytes. DHT for storage of small records.",
+    "agent_focus": "Relay/P2P transport networks that could carry bulk data without a central provider. For each: is data ROUTED (a real path) or is it only SIGNALLING (relay coordinates, bytes go peer-to-peer)? Free bandwidth? Can it carry 1 TiB/day (= 12.7 MB/s = ~102 Mbit/s sustained)? Identity gate recorded as the primary ranking axis."
+  },
+  "binding": "write-gated",
+  "binding_note": "the write is a queue with a person or a rule in it, so the upload rate is set by somebody else",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "self_hosted": true
+}

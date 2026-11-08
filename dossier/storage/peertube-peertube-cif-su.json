@@ -1,0 +1,190 @@
+{
+  "topic": "storage",
+  "slug": "peertube-peertube-cif-su",
+  "provider": "PeerTube — peertube.cif.su (open registration, unlimited quota)",
+  "url": "https://peertube.cif.su",
+  "category": "media",
+  "free_tier": {
+    "stated": "Unlimited total quota (`user.videoQuota: -1`), 5 GiB per day (`videoQuotaDaily: 5368709120`). Registration open, no approval, no email verification.",
+    "unit": "GiB",
+    "metered_on": "unstated",
+    "source_url": "https://peertube.cif.su/api/v1/config",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://peertube.cif.su/api/v1/config",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://peertube.cif.su/api/v1/config",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free — instance serves HTTP + WebTorrent/HLS; no egress meter. Peers can also seed via BitTorrent, offloading the host.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "yt-dlp `PeerTube` extractor (verified present). Native REST API v1: `/api/v1/videos`, `/api/v1/users/me`, resumable upload via `X-Upload-Content-Length`. rclone has no native backend; a shell/curl wrapper is trivial.",
+  "chaining": "cif.su alone is 5 GiB/day = ~1.8 TiB/year per account with no total ceiling. Multiply across the ~15 open-signup instances in the index and across accounts. hittube.fr is a flat 50 GiB with unlimited daily; arkcast.mycreationhaven.com is 5 GiB with unlimited daily.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "5 GiB per day",
+      "source": "https://peertube.cif.su/api/v1/config"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "5 GiB/day",
+      "source": "https://peertube.cif.su/api/v1/config"
+    },
+    {
+      "kind": "write-gated",
+      "value": "approval, no email verification",
+      "source": "https://peertube.cif.su/api/v1/config"
+    },
+    {
+      "kind": "write-gated",
+      "value": "approval-gated and not open-signup",
+      "source": "https://peertube.cif.su/api/v1/config"
+    }
+  ],
+  "limits_note": "5 GiB/day at cif.su is the binding constraint (a two-year fill for 3 TiB). Per-file cap is the global `video.file` size limit, not separately published; accepted containers include mkv/mov/avi/flac, so arbitrary-ish binaries can be wrapped. Some instances (diode.zone) are unlimited but approval-gated and not open-signup.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: uotaDaily: 5368709120`). Registration open, no approval, no email verification. Volunteer-run instances disappear without notice — a single admin's disk decision deletes the archive.",
+    "country": null
+  },
+  "reliability_note": "Volunteer-run instances disappear without notice — a single admin's disk decision deletes the archive. `videoFile.update` is disabled on cif.su, so you cannot patch an upload in place.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET peertube.cif.su/api/v1/config -> {\"signup\":{\"allowed\":true,\"requiresApproval\":false,\"requiresEmailVerification\":false},\"user\":{\"videoQuota\":-1,\"videoQuotaDaily\":5368709120}}"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET instances.joinpeertube.org/api/v1/instances?count=100 -> 1,783 instances indexed; open-signup with quota: hittube.fr 53687091200, arkcast 5368709120, cif.su -1"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET peertube.cif.su/api/v1/videos/<uuid> -> files[] = {fileUrl: .../static/web-videos/<uuid>-0.mp4, size, resolution}, downloadEnabled: true"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Unlimited total quota (`user.videoQuota: -1`), 5 GiB per day (`videoQuotaDaily: 5368709120`). Registration open, no approval, no email verification.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H1-video-platforms.json",
+    "seed_area": "H/H1",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "H/H1"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H1"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "PeerTube — peertube.cif.su (open registration, unlimited quota)",
+      "PeerTube — hittube.fr (50 GiB, no daily cap)"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md row, area H/H1",
+            "evidence": "quota: Unlimited total quota (`user.videoQuota: -1`), 5 GiB per day (`videoQu"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area H/H1",
+            "evidence": "quota: 50 GiB total per user (53,687,091,200 bytes), unlimited daily quota (`"
+          }
+        ],
+        "resolution": "qualifies-with-caveat: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies. The table.md (area H/H1) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "Unlimited total quota (`user.videoQuota: -1`), 5 GiB per day (`videoQu",
+            "source": "table.md row, area H/H1",
+            "evidence": null
+          },
+          {
+            "value": "50 GiB total per user (53,687,091,200 bytes), unlimited daily quota (`",
+            "source": "table.md row, area H/H1",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md (area H/H1)"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area H/H1)"
+          }
+        ],
+        "resolution": "qualifies-with-caveat: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies. The table.md (area H/H1) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "Unlimited total quota (`user.videoQuota: -1`), 5 GiB per day (`videoQu",
+            "source": "table.md (area H/H1)"
+          },
+          {
+            "value": "50 GiB total per user (53,687,091,200 bytes), unlimited daily quota (`",
+            "source": "table.md (area H/H1)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Video platforms",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Unlimited total quota (`user.videoQuota: -1`), 5 GiB per day (`videoQuotaDaily: 5368709120`). Registration open, no approval, no email verification.",
+    "limits_verbatim": "5 GiB/day at cif.su is the binding constraint (a two-year fill for 3 TiB). Per-file cap is the global `video.file` size limit, not separately published; accepted containers include mkv/mov/avi/flac, so arbitrary-ish binaries can be wrapped. Some instances (diode.zone) are unlimited but approval-gated and not open-signup.",
+    "egress_verbatim": "Free — instance serves HTTP + WebTorrent/HLS; no egress meter. Peers can also seed via BitTorrent, offloading the host.",
+    "chaining_verbatim": "cif.su alone is 5 GiB/day = ~1.8 TiB/year per account with no total ceiling. Multiply across the ~15 open-signup instances in the index and across accounts. hittube.fr is a flat 50 GiB with unlimited daily; arkcast.mycreationhaven.com is 5 GiB with unlimited daily.",
+    "tooling_verbatim": "yt-dlp `PeerTube` extractor (verified present). Native REST API v1: `/api/v1/videos`, `/api/v1/users/me`, resumable upload via `X-Upload-Content-Length`. rclone has no native backend; a shell/curl wrapper is trivial.",
+    "interface_verbatim": "rest",
+    "agent_focus": "video/media platforms as bulk storage — the crux is whether the ORIGINAL file is retrievable, or only a re-encode"
+  },
+  "binding": "write-gated",
+  "binding_note": "the write is a queue with a person or a rule in it, so the upload rate is set by somebody else",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

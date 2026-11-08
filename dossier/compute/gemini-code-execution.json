@@ -1,0 +1,174 @@
+{
+  "topic": "compute",
+  "slug": "gemini-code-execution",
+  "provider": "Gemini API code execution",
+  "url": "https://ai.google.dev/gemini-api/docs/code-execution",
+  "category": "container and VM sandbox",
+  "free_tier": {
+    "stated": "'There's no additional charge for enabling code execution from the Gemini API.' The generated code, its results and the summary are billed as input and output tokens at the rate of the Gemini model used; https://ai.google.dev/gemini-api/docs/code-execution (read 2026-10-30) states no amount or period of free use",
+    "unit": "tokens",
+    "metered_on": "request-count",
+    "source_url": "https://ai.google.dev/gemini-api/docs/code-execution",
+    "read_on": "2026-10-30",
+    "notes": "The token allowance is the Gemini API free tier of the model used: the pricing page says 'Start building free of charge with generous limits' and lists input and output as 'Free of charge' on the Free Tier of the models that have one; Gemini 4 Argon is not available on the Free tier. The per-model free-tier volume is unverified."
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://ai.google.dev/gemini-api/docs/code-execution",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://ai.google.dev/gemini-api/docs/code-execution",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "not published on the source card",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://ai.google.dev/gemini-api/docs/code-execution"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "REST API (POST to generativelanguage.googleapis.com/v1beta/interactions with the code_execution tool) and the Google GenAI SDK, both documented on the code execution page.",
+  "tooling": "Google GenAI SDK (Python package google-genai, JavaScript package @google/genai, Go and Java); the REST API directly.",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "the maximum input file size is bounded by the model's token window, not by a code-execution quota",
+      "source": "https://ai.google.dev/gemini-api/docs/code-execution"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field; excluded as too-big",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email: a Google account, because the API key page redirects to Google's sign-in, which asks for a Google Account, and AI Studio then creates the project and the key. No card is required for the free tier: linking a billing account is what moving to the paid tier means. No phone is named, and access is limited to the countries and territories Google lists.",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the code-execution page and the Gemini API pricing page were read on 2026-10-30: code execution carries no charge of its own and bills as model tokens, one code run is capped at 30 seconds, and file input is bounded by the model's token window",
+  "evidence": [
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/code-execution",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/code-execution",
+      "date": "2026-10-22",
+      "proved": "the code-execution documentation was read on 2026-10-22 and describes the tool and its limitations; it states no free allowance of its own, so the boundary is the model's token window"
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/code-execution",
+      "date": "2026-10-30",
+      "proved": "code execution carries no charge of its own and the page states no amount or period of free use",
+      "capture": "sha256:9bc3d729aad2d8d3b9fa0e6c6175a15fdcf9632e721aa85371e341a46bf105ab",
+      "quote": "There's no additional charge for enabling code execution from the Gemini API."
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/code-execution",
+      "date": "2026-10-30",
+      "proved": "code execution is billed as input and output tokens at the rate of the model used",
+      "capture": "sha256:9bc3d729aad2d8d3b9fa0e6c6175a15fdcf9632e721aa85371e341a46bf105ab",
+      "quote": "You'll be billed at the current rate of input and output tokens based on the Gemini model you're using."
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "date": "2026-10-30",
+      "proved": "the Gemini API has a free-of-charge tier with limits; the same page marks Free Tier input and output as free of charge per model",
+      "capture": "sha256:5ab384ae802aa78696805f7765aab6206fdbeb7fb85b2839c8b15e233280c456",
+      "quote": "Start building free of charge with generous limits, then scale up with prepaid and pay-as-you-go pricing for your production-ready applications."
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/code-execution",
+      "date": "2026-10-30",
+      "proved": "one code run is capped at 30 seconds",
+      "capture": "sha256:9bc3d729aad2d8d3b9fa0e6c6175a15fdcf9632e721aa85371e341a46bf105ab",
+      "quote": "The maximum runtime of the code environment is 30 seconds."
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/code-execution",
+      "date": "2026-10-30",
+      "proved": "the largest file input is bounded by the model's context window, as the limits row says",
+      "capture": "sha256:9bc3d729aad2d8d3b9fa0e6c6175a15fdcf9632e721aa85371e341a46bf105ab",
+      "quote": "The maximum file input size is limited by the model token window."
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/code-execution",
+      "date": "2026-11-03",
+      "proved": "a REST call is documented",
+      "capture": "sha256:876019c9a9109f52ea1d6d40af08a125301e867c13c34bb4b1d6df7db4f9b961",
+      "quote": "curl -X POST \"https://generativelanguage.googleapis.com/v1beta/interactions\""
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/code-execution",
+      "date": "2026-11-04",
+      "proved": "the code execution page documents a REST call that enables the tool",
+      "capture": "sha256:876019c9a9109f52ea1d6d40af08a125301e867c13c34bb4b1d6df7db4f9b961",
+      "quote": "curl -X POST \"https://generativelanguage.googleapis.com/v1beta/interactions\""
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/libraries",
+      "date": "2026-11-04",
+      "proved": "google-genai is the documented Python SDK for the Gemini API",
+      "capture": "sha256:9e8df22992ad56933ddeae4a9d91bf3c8b8652e43063d528d3adf11fb29bcd0c",
+      "quote": "Installation: `pip install google-genai`"
+    },
+    {
+      "url": "https://aistudio.google.com/apikey",
+      "date": "2026-11-04",
+      "proved": "the API key page sends the visitor to Google's sign-in, which asks for a Google Account",
+      "capture": "sha256:e1e6c96d69a53501d7db2a20a5a0ef783ffa89bcaa3ab91d9786b9c3e05e7e4e",
+      "quote": "Use your Google Account"
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/available-regions",
+      "date": "2026-11-04",
+      "proved": "the service is offered only in the listed countries and territories",
+      "capture": "sha256:16fe97734c44c3907864cb292c14c55f55e91c1bae07a0cb13489905ee25a891",
+      "quote": "The Gemini API and Google AI Studio are available in the following countries and territories."
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/billing",
+      "date": "2026-11-04",
+      "proved": "a billing account belongs to the paid tier, not to the free tier where code execution is used",
+      "capture": "sha256:fce5df7e18606f4d34abc098916442b901b3b124c1a23ab16ef1bee3e9e34e73",
+      "quote": "Upgrading from the Free Tier to the Paid Tier means linking a billing account"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T15:51:59.409Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "too-big",
+    "talaria_m10h_usd": null,
+    "talaria_m24h_usd": null,
+    "nemo_m10h_usd": null,
+    "keep_rate": null,
+    "keep_rate_basis": "no field in the source",
+    "billing_model": "unclassified",
+    "shape": null,
+    "session_cap": {
+      "wall_clock_min": 0.5,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "'The maximum runtime of the code environment is 30 seconds.'; after an error the model may regenerate the code up to 5 times"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "allowance",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "net": null
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "per-object-cap"
+}

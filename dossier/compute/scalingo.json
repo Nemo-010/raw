@@ -1,0 +1,216 @@
+{
+  "topic": "compute",
+  "slug": "scalingo",
+  "provider": "Scalingo",
+  "url": "https://scalingo.com/pricing",
+  "category": "platform host",
+  "free_tier": {
+    "stated": "no perpetual free tier: 'start free for 30 days', then containers bill by the minute; containers never sleep on any plan",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://scalingo.com/pricing",
+    "read_on": "2026-10-24"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a container"
+  },
+  "retention": {
+    "stated": "not applicable to a free tier; there is none"
+  },
+  "egress": {
+    "terms": "a TCP Gateway with unlimited traffic is free and a Scalingo OpenVPN option with unlimited traffic is EUR 30.00; no container egress allowance or overage price is printed on https://scalingo.com/pricing read 2026-11-04",
+    "metered": false,
+    "free_allowance": "unlimited on the TCP Gateway",
+    "source_url": "https://scalingo.com/pricing"
+  },
+  "interface": [
+    "cli",
+    "ssh"
+  ],
+  "interface_detail": "Scalingo CLI, which talks to api.<region>.scalingo.com on port 443 over HTTPS and to ssh.<region>.scalingo.com on port 22 over SSH; documented at doc.scalingo.com/cli",
+  "tooling": "Scalingo CLI (precompiled binaries for each operating system)",
+  "chaining": "30 days of a never-sleeping container is a migration testbed, not a home for a service; the value is the measurement of whether the code runs, and the run must then move to a tier that does not sleep.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "the 30-day trial is the whole free allowance",
+      "source": "https://scalingo.com/pricing"
+    },
+    {
+      "kind": "write-gated",
+      "value": "a card is required to start the trial",
+      "source": "https://scalingo.com/pricing"
+    }
+  ],
+  "limits_note": "the 30-day trial is the whole free allowance; after it the smallest container bills per minute for as long as it exists.",
+  "binding": "retention-clamped",
+  "binding_note": "day 31 ends it, and there is no sleep to extend it.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "a card at signup; the price page states prices VAT excluded and bills monthly",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://scalingo.com/pricing",
+      "date": "2026-10-22",
+      "proved": "page description reads 'start free for 30 days'; the pricing body lists containers, databases and network with no zero-price plan, quoted"
+    },
+    {
+      "url": "https://scalingo.com/pricing",
+      "date": "2026-10-22",
+      "proved": "'Always included: custom domains, automatic Let's Encrypt SSL certificates, performance metrics, unlimited collaborators, unlimited logs archives, containers never sleeps', quoted"
+    },
+    {
+      "url": "https://scalingo.com/pricing",
+      "date": "2026-10-24",
+      "proved": "quoted: 'Always included: custom domains, automatic Let's Encrypt SSL certificates, performance metrics, unlimited collaborators, unlimited logs archives, containers never sleeps.'"
+    },
+    {
+      "url": "https://scalingo.com/pricing",
+      "date": "2026-10-24",
+      "proved": "quoted page description: 'Optimize hosting costs, start free for 30 days, and scale when you'"
+    },
+    {
+      "url": "https://scalingo.com/pricing",
+      "date": "2026-11-04",
+      "proved": "Scalingo OpenVPN with unlimited traffic is 30.00 EUR",
+      "capture": "sha256:cce0459f68e2fe18804e73bd30c3cc7b6aee27e6c13d1c38c2b31c0285de0554",
+      "quote": "50\\.00 €, Scalingo OpenVPN, Unlimited traffic, 30\\.00 €"
+    },
+    {
+      "url": "https://doc.scalingo.com/cli",
+      "date": "2026-11-04",
+      "proved": "Scalingo ships a CLI",
+      "capture": "sha256:bc913a73e0e38dc1428fd45a59c0102bab3d63b673a7ea653314b9f685225950",
+      "quote": "We provide a command line interface (CLI) tool to interact with the platform."
+    },
+    {
+      "url": "https://doc.scalingo.com/cli",
+      "date": "2026-11-04",
+      "proved": "an SSH endpoint exists on port 22",
+      "capture": "sha256:bc913a73e0e38dc1428fd45a59c0102bab3d63b673a7ea653314b9f685225950",
+      "quote": "`ssh.<REGION NAME>.scalingo.com:22`"
+    },
+    {
+      "url": "https://scalingo.com/pricing",
+      "date": "2026-11-04",
+      "proved": "the TCP Gateway has unlimited traffic at no charge",
+      "capture": "sha256:cce0459f68e2fe18804e73bd30c3cc7b6aee27e6c13d1c38c2b31c0285de0554",
+      "quote": "Network, Description, Price¹, TCP Gateway, Unlimited traffic, Free, Scalingo Docker Image"
+    },
+    {
+      "url": "https://doc.scalingo.com/cli",
+      "date": "2026-11-04",
+      "proved": "the CLI documents HTTPS API and SSH endpoints",
+      "capture": "sha256:bc913a73e0e38dc1428fd45a59c0102bab3d63b673a7ea653314b9f685225950",
+      "quote": "The port `443` will receive HTTPS stream. The port `22` is for SSH."
+    },
+    {
+      "url": "https://doc.scalingo.com/cli",
+      "date": "2026-11-04",
+      "proved": "the provider ships a named CLI",
+      "capture": "sha256:bc913a73e0e38dc1428fd45a59c0102bab3d63b673a7ea653314b9f685225950",
+      "quote": "We provide a command line interface (CLI) tool to interact with the platform."
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-04T02:24:35.124Z",
+  "notes": "Confirms the corpus row. Worth keeping for one reason: it is the only provider in this lane that states plainly that its containers do not sleep, which is the trade the free tiers make in the other direction.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "Scalingo",
+      "class": "refutation",
+      "category_as_written": "platform host",
+      "free_tier_kind": "trial",
+      "shape": {
+        "vcpu": null,
+        "ram_gib": null,
+        "gpu_class": null,
+        "gpu_count": null
+      },
+      "seen_routes": [
+        "broker read 200 https://scalingo.com/pricing"
+      ],
+      "agents": [
+        "paas"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "shape": {
+      "vcpu": null,
+      "ram_gib": null,
+      "disk_gib": null,
+      "gpu_class": null,
+      "gpu_count": null
+    },
+    "billing_model": "per-minute",
+    "term": "monthly",
+    "m10h_usd": null,
+    "m24h_usd": null,
+    "price_arithmetic": "not computed: the page renders container prices through a selector and prints no figure in the text read",
+    "free_tier_kind": "trial-only",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "the container port plus a free TCP Gateway",
+      "static_ip": false,
+      "ipv6": false,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "'containers never sleeps'"
+    },
+    "superseded": {
+      "free_tier": {
+        "stated": "No perpetual free tier. The site offers 'start free for 30 days' and then bills containers by the minute; containers never sleep on any plan, which is the opposite trade from the free tiers in this lane.",
+        "unit": "unlimited",
+        "metered_on": "wall-clock",
+        "source_url": "https://scalingo.com/pricing",
+        "read_on": "2026-10-22",
+        "notes": "trial"
+      },
+      "per_object_cap": {
+        "stated": "not applicable: the unit is a machine, not an object",
+        "bytes": null,
+        "source_url": "https://scalingo.com/pricing",
+        "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+      },
+      "retention": {
+        "stated": "the 30-day trial is the whole free allowance; after it the smallest container bills per minute for as long as it exists.",
+        "days": null,
+        "source_url": "https://scalingo.com/pricing",
+        "notes": "a machine record: what is lost is the running process, not a stored object"
+      },
+      "egress": {
+        "terms": "not published on the page read: no egress term was found, so nothing is asserted",
+        "metered": false,
+        "free_allowance": null,
+        "price_per_tb": null,
+        "source_url": "https://scalingo.com/pricing"
+      },
+      "limits": [
+        {
+          "kind": "retention-clamped",
+          "value": "the 30-day trial is the whole free allowance; after it the smallest container bills per minute for as long as it exists.",
+          "source": "https://scalingo.com/pricing"
+        }
+      ],
+      "binding_note": "the 30-day trial is the whole free allowance; after it the smallest container bills per minute for as long as it exists.",
+      "identity_cost": {
+        "kind": "card",
+        "detail": "as stated by the provider's signup page",
+        "country": null
+      },
+      "notes": "Candidates: (a) a hidden free Starter tier exists; refuted, the cheapest units are per container and the FAQ says services are billed by the minute monthly, and the only free item listed is the TCP gateway. (b) The 30 days is a credit rather than a clock; not established, no credit figure is printed. The card requirement is inferred from the FAQ question 'Am I charged when I enter my credit card', which implies a card at signup.",
+      "verified_at": "2026-10-22T00:00:00.000Z"
+    }
+  },
+  "tier": "30-day trial then per-container billing",
+  "confidence_note": "'start free for 30 days' and 'containers never sleeps' were read on the pricing page today"
+}

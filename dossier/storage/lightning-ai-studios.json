@@ -1,0 +1,114 @@
+{
+  "topic": "storage",
+  "slug": "lightning-ai-studios",
+  "provider": "Lightning AI Studios",
+  "url": "https://lightning.ai",
+  "category": "iaas",
+  "free_tier": {
+    "stated": "Free plan: '1 free active Studio (4 hour restarts)', 'Persistent storage (200 GB limit)'. Studio docs say the default Studio disk is 400 GB; pricing page caps the free tier at 200 GB.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://lightning.ai/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://lightning.ai/pricing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "Free Studio restarts every 4 hours (compute restarts, disk persists); auto-sleep after 10 min idle; free GPU hours come from 'up to 30 credits'; account data deleted after 6 months without login.",
+    "days": 0,
+    "source_url": "https://lightning.ai/pricing",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "No egress meter or per-GB transfer price is published on the pricing page — free/public app serving on Studios is included in the plan.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "sftp",
+    "ssh",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "SSH/SFTP into a Studio (docs: 'Connect any local IDE or SSH'), plus a documented public-port feature; `lightning` CLI and SDK. No rclone backend.",
+  "chaining": "1 Studio per free account with 200 GB persistent; N free accounts. Studios can be mounted as read-only 'datasets' shared across a teamspace, so one account can fan out many consumers.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "deleted after 6 months",
+      "source": "https://lightning.ai/pricing"
+    }
+  ],
+  "limits_note": "Free Studio restarts every 4 hours (compute restarts, disk persists); auto-sleep after 10 min idle; free GPU hours come from 'up to 30 credits'; account data deleted after 6 months without login.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "inferred from the category 'iaas'; the source record states no identity cost, so this is a class assumption, not evidence",
+    "country": null
+  },
+  "reliability_note": "Disk genuinely persists across sleep/switch ('Studios persist their environments when sleeping and switching machines'); the 4-hour restart interrupts serving but does not lose files.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://lightning.ai/pricing",
+      "date": "2026-10-21",
+      "proved": "Free plan list: '1 free active Studio (4 hour restarts)', 'Persistent storage (200 GB limit)'"
+    },
+    {
+      "url": "https://lightning.ai/docs/platform/build/ai-studio/environment-persistence",
+      "date": "2026-10-21",
+      "proved": "'Everything in the Studio home (~, /teamspace/studios/this_studio) is persisted'"
+    },
+    {
+      "url": "https://lightning.ai/docs/platform/build/ai-studio/deploy-on-public-ports",
+      "date": "2026-10-21",
+      "proved": "'Studios support any kind of server as long as it exposes a port'"
+    },
+    {
+      "url": "https://lightning.ai/docs/platform/security/privacy/data-retention-policy",
+      "date": "2026-10-21",
+      "proved": "6-month inactivity -> account scheduled for deletion, 30-day notice"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Free plan: '1 free active Studio (4 hour restarts)', 'Persistent storage (200 GB limit)'. Studio docs say the default Studio disk is 400 GB; pricing page caps the free tier at 200 GB.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G5-notebooks-compute.json",
+    "seed_area": "G/G5",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "G/G5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Notebook disks and compute-attached storage",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Free plan: '1 free active Studio (4 hour restarts)', 'Persistent storage (200 GB limit)'. Studio docs say the default Studio disk is 400 GB; pricing page caps the free tier at 200 GB.",
+    "limits_verbatim": "Free Studio restarts every 4 hours (compute restarts, disk persists); auto-sleep after 10 min idle; free GPU hours come from 'up to 30 credits'; account data deleted after 6 months without login.",
+    "egress_verbatim": "No egress meter or per-GB transfer price is published on the pricing page — free/public app serving on Studios is included in the plan.",
+    "chaining_verbatim": "1 Studio per free account with 200 GB persistent; N free accounts. Studios can be mounted as read-only 'datasets' shared across a teamspace, so one account can fan out many consumers.",
+    "tooling_verbatim": "SSH/SFTP into a Studio (docs: 'Connect any local IDE or SSH'), plus a documented public-port feature; `lightning` CLI and SDK. No rclone backend.",
+    "interface_verbatim": "rest",
+    "agent_focus": "notebook/compute hosts and the persistent disk bundled with them — can a free compute box double as storage and as an HTTP origin"
+  },
+  "binding": "retention-clamped",
+  "binding_note": "a clock, not a quota: bytes leave whether or not the client is finished with them",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

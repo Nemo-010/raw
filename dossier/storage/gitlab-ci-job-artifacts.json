@@ -1,0 +1,99 @@
+{
+  "topic": "storage",
+  "slug": "gitlab-ci-job-artifacts",
+  "provider": "GitLab CI Job Artifacts (GitLab.com Free)",
+  "url": "https://gitlab.com",
+  "category": "paas",
+  "free_tier": {
+    "stated": "Not counted against the 10 GiB project storage limit ('build artifacts are not included in the limit'). 1 GB compressed maximum per artifact archive on GitLab.com.",
+    "unit": "GiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "Default expiry 30 days, but `expire_in: never` is a valid documented value and the latest-successful-job artifact on every ref is exempt from expiry entirely",
+    "days": 30,
+    "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free, anonymous for public projects. Verified a 321 MB anonymous download.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "GET /projects/:id/jobs/artifacts/:ref/download?job=NAME, and GET /projects/:id/jobs/:job_id/artifacts (zip). No auth needed against a public project. Upload is automatic from .gitlab-ci.yml `artifacts:`.",
+  "chaining": "Unlimited jobs per project x 1 GB per artifact archive, uncounted against quota. Force permanence with `expire_in: never` or the 'Keep' button. Because 'artifacts from the latest pipeline for the ref' never expire regardless of expire_in, every branch/tag becomes a permanent shelf: unlimited branches x 1 GB.",
+  "limits": [],
+  "limits_note": "1 GB compressed per archive. Default expiry 30 days, but `expire_in: never` is a valid documented value and the latest-successful-job artifact on every ref is exempt from expiry entirely. Free tier: 400 compute minutes/month, so bulk upload is compute-bound, not storage-bound.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Expiry is enforced hourly and irreversible — anything not pinned with `never`/Keep silently vanishes. Treat as durable only when pinned.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.gitlab.com/ci/yaml/",
+      "date": "2026-10-21",
+      "proved": "'artifacts:expire_in ... Valid values include ... never' and 'expire_in does not affect artifacts from the latest job'"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/gitlab_com/",
+      "date": "2026-10-21",
+      "proved": "'Artifacts maximum size (compressed) | 1 GB' and 'Artifacts expiry time | 30 days unless otherwise specified'"
+    },
+    {
+      "url": "https://gitlab.com/api/v4/projects/gitlab-org%2Fgitlab-foss/jobs/artifacts/master/download?job=setup-test-env",
+      "date": "2026-10-21",
+      "proved": "probe: curl -L -> 302 then 200, 321472291 bytes, no auth"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Not counted against the 10 GiB project storage limit ('build artifacts are not included in the limit'). 1 GB compressed maximum per artifact archive on GitLab.com.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C4-build-caches.json",
+    "seed_area": "C/C4",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "C/C4"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "Build caches and CI artifacts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Not counted against the 10 GiB project storage limit ('build artifacts are not included in the limit'). 1 GB compressed maximum per artifact archive on GitLab.com.",
+    "limits_verbatim": "1 GB compressed per archive. Default expiry 30 days, but `expire_in: never` is a valid documented value and the latest-successful-job artifact on every ref is exempt from expiry entirely. Free tier: 400 compute minutes/month, so bulk upload is compute-bound, not storage-bound.",
+    "egress_verbatim": "Free, anonymous for public projects. Verified a 321 MB anonymous download.",
+    "chaining_verbatim": "Unlimited jobs per project x 1 GB per artifact archive, uncounted against quota. Force permanence with `expire_in: never` or the 'Keep' button. Because 'artifacts from the latest pipeline for the ref' never expire regardless of expire_in, every branch/tag becomes a permanent shelf: unlimited branches x 1 GB.",
+    "tooling_verbatim": "GET /projects/:id/jobs/artifacts/:ref/download?job=NAME, and GET /projects/:id/jobs/:job_id/artifacts (zip). No auth needed against a public project. Upload is automatic from .gitlab-ci.yml `artifacts:`.",
+    "interface_verbatim": "rest",
+    "agent_focus": "CI/CD build caches and artifacts as storage: GitHub Actions artifacts+cache (per-repo caps, retention days), CircleCI, Travis, AppVeyor, Azure Pipelines, Buildkite, Codemagic, Bitrise, Drone — retention windows and whether artifacts are publicly retrievable"
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

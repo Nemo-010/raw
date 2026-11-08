@@ -1,0 +1,127 @@
+{
+  "topic": "storage",
+  "slug": "file-kiwi",
+  "provider": "file.kiwi",
+  "url": "https://file.kiwi",
+  "category": "anonymous-dump",
+  "free_tier": {
+    "stated": "Web Folder Basic: 'No capacity limit. Auto-deleted 90 hours after upload.' API flow: 10 files per WebFolder, 999 GiB max per file",
+    "unit": "GiB",
+    "metered_on": "unstated",
+    "source_url": "https://file.kiwi/price",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "999 GiB max per file",
+    "bytes": 1072668082176,
+    "source_url": "https://file.kiwi/price",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "Auto-deleted 90 hours after upload.' API flow: 10 files per WebFolder, 999 GiB max per file",
+    "days": 3,
+    "source_url": "https://file.kiwi/price",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "No egress charge; instead a hard time gate — free download window is 48 h (<10 GB), 12 h (10-20 GB), 6 h (>=20 GB); after that a $2+ Download Pass or $5 expiry extension is required",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Documented v2 REST API at api.file.kiwi (POST /v2/folders returns presigned R2 PUT URLs), 36 h presigned-URL validity, client-side E2E keys (RFC 8188 AES-128-GCM); no rclone backend",
+  "chaining": "No account at all — one API call creates a folder; anonymous IDs are unlimited. Multiplication is trivial, the 90-hour delete is the wall",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "999 GiB/file",
+      "source": "https://file.kiwi/price"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "deleted 90 hours",
+      "source": "https://file.kiwi/price"
+    }
+  ],
+  "limits_note": "999 GiB/file; 10 files/WebFolder; 90 h total life; download window collapses to 6 h for >=20 GB; 1 concurrent chunk upload; download count capped at 3 in Korea",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: : 'No capacity limit. Auto-deleted 90 hours after upload.' API flow: 10 files per WebFolder, 999 GiB max per file same; no account, so nothing to vary none in the API path; the brows",
+    "country": null
+  },
+  "reliability_note": "6-48 h download windows make it a transfer tool, not storage; the 90 h auto-delete is unconditional",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://file.kiwi/price",
+      "date": "2026-10-21",
+      "proved": "'Web Folder Basic — No capacity limit. Auto-deleted 90 hours after upload. $0'; lifecycle T0 -> T0+6~48 h -> T0+90 h"
+    },
+    {
+      "url": "https://file.kiwi/api",
+      "date": "2026-10-21",
+      "proved": "Limits table: 'Files per WebFolder 10 · Max file size 999 GiB · Presigned URL validity 36 hours · Download count (Korea) 3'; 'Free Download Hours by File Size: <10 GB 24 hours / 10-20 GB 12 hours / >=20 GB 6 hours'"
+    },
+    {
+      "url": "https://file.kiwi/",
+      "date": "2026-10-21",
+      "proved": "'No Sign-up Required: Use it immediately without registration'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Web Folder Basic: 'No capacity limit. Auto-deleted 90 hours after upload.' API flow: 10 files per WebFolder, 999 GiB max per file",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A9-foreign-signup.json",
+    "seed_area": "A/A9",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "A/A9"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [
+      {
+        "field": "verdict",
+        "class": "same provider is both a table row and a dead end",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md"
+          },
+          {
+            "value": "dead-end: Claims 'no file size limit' and 10 GB-500 GB single uploads, but every file is time-limited (validity period, extended o",
+            "source": "DEAD-ENDS.md"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "Registration open to a foreign individual",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Web Folder Basic: 'No capacity limit. Auto-deleted 90 hours after upload.' API flow: 10 files per WebFolder, 999 GiB max per file",
+    "limits_verbatim": "999 GiB/file; 10 files/WebFolder; 90 h total life; download window collapses to 6 h for >=20 GB; 1 concurrent chunk upload; download count capped at 3 in Korea",
+    "egress_verbatim": "No egress charge; instead a hard time gate — free download window is 48 h (<10 GB), 12 h (10-20 GB), 6 h (>=20 GB); after that a $2+ Download Pass or $5 expiry extension is required",
+    "chaining_verbatim": "No account at all — one API call creates a folder; anonymous IDs are unlimited. Multiplication is trivial, the 90-hour delete is the wall",
+    "tooling_verbatim": "Documented v2 REST API at api.file.kiwi (POST /v2/folders returns presigned R2 PUT URLs), 36 h presigned-URL validity, client-side E2E keys (RFC 8188 AES-128-GCM); no rclone backend",
+    "interface_verbatim": "rest",
+    "agent_focus": "registration friction for a signup with no local identity in China, the US or the EU: which free providers accept a foreign identity (email or any international number, no local ID, no local card), which geo-fence or IP-classify the signup, and whether the foreign signup gets the advertised quota"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

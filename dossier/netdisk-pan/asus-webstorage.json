@@ -1,0 +1,135 @@
+{
+  "topic": "netdisk-pan",
+  "slug": "asus-webstorage",
+  "provider": "ASUS WebStorage",
+  "url": "https://www.asuswebstorage.com/",
+  "category": "hardware-vendor cloud",
+  "free_tier": {
+    "stated": "5 GB on the plan listed as Free Trial, priced 'Lifetime Free'; paid Lite 100 GB, Pro 1 TB, Enterprise 5 TB",
+    "unit": "GiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://service.asuswebstorage.com/store/?bp=_t",
+    "read_on": "2026-10-21"
+  },
+  "per_object_cap": {
+    "stated": "Not published",
+    "bytes": null,
+    "source_url": "https://service.asuswebstorage.com/store/?bp=_t"
+  },
+  "retention": {
+    "stated": "Not published",
+    "days": null,
+    "source_url": "https://www.asuswebstorage.com/"
+  },
+  "egress": {
+    "terms": "Not published; FTP is offered on paid tiers with a bandwidth limit",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://service.asuswebstorage.com/store/?bp=_t"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "tooling": "reverse-engineered. A draft rclone backend, pull request 6808, whose description states 'API is not publicly available. Protocol and API were discovered with official Linux client.', was opened 2023-03-06 and closed unmerged on 2026-02-26; it is in no release",
+  "chaining": "Had the rclone backend landed this would be a clean one-line remote. It did not: the pull request was closed unmerged on 2026-02-26, and rclone's maintainer required someone to commit to maintaining a backend whose API is not public",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "API calls are a paid-tier entitlement: 10 million a month on Pro, 50 million on Enterprise",
+      "source": "https://service.asuswebstorage.com/store/?bp=_t"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "5 GB is the free tier total, which is the cap in practice",
+      "source": "https://service.asuswebstorage.com/store/?bp=_t"
+    }
+  ],
+  "identity_cost": {
+    "kind": "email",
+    "detail": "an email address",
+    "country": null
+  },
+  "reliability_note": "The draft rclone backend was closed unmerged on 2026-02-26 and the API is not public. Do not plan on it",
+  "confidence": "reported",
+  "evidence": [
+    {
+      "url": "https://service.asuswebstorage.com/store/?bp=_t",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: plan table Free Trial 5 GB, Lite 100 GB, Pro 1 TB, Enterprise 5 TB, and 'API Function: Pro 10 million per month'"
+    },
+    {
+      "url": "https://github.com/rclone/rclone/pull/6808",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: 'API is not publicly available. Protocol and API were discovered with official Linux client', state Draft since 2023-03-06"
+    },
+    {
+      "url": "probe:https://www.asuswebstorage.com/navigate/price/",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: HTTP 404 with a 774-byte body, so that path is dead and the live price page is service.asuswebstorage.com/store/"
+    },
+    {
+      "url": "https://service.asuswebstorage.com/store/?bp=_t",
+      "date": "2026-11-03",
+      "proved": "the Free Trial column is priced Lifetime Free; its storage row is 5GB",
+      "capture": "sha256:0cb2ecfe6ef114ac6b32d8747a5f0958baeefdc71920c188209d0803535bb869",
+      "quote": "| Price/Year | Lifetime Free | -- | -- | -- |"
+    },
+    {
+      "url": "https://github.com/rclone/rclone/pull/6808",
+      "date": "2026-11-03",
+      "proved": "the rclone maintainer closed the pull request on 2026-02-26",
+      "capture": "sha256:a16b294e58891192480d91ea9d204b69745721f5341e48ec4f6944629ef0c5bf",
+      "quote": "I'm going to close this now - feel free to submit again if you have more time to work on it."
+    },
+    {
+      "url": "https://github.com/rclone/rclone/pull/6808",
+      "date": "2026-11-03",
+      "proved": "rclone's condition for merging a backend with no public API",
+      "capture": "sha256:a16b294e58891192480d91ea9d204b69745721f5341e48ec4f6944629ef0c5bf",
+      "quote": "I've decided that in order to merge a backend with no public API I need to get someone else to maintain it indefinitely."
+    },
+    {
+      "url": "https://service.asuswebstorage.com/service/",
+      "date": "2026-11-03",
+      "proved": "the first-party service page offers 5 GB free for an account number, password and email address",
+      "capture": "sha256:345deed73c2db43df9e450356caf0d39f2bf416bd0c89e4540554348c77aee63",
+      "quote": "please go to ASUS WebStorage website to apply for 5GB free storage. In turn, please set your personal account number, password and email address to formally start the"
+    },
+    {
+      "url": "https://service.asuswebstorage.com/store/?bp=_t",
+      "date": "2026-11-03",
+      "proved": "API calls are a Pro and Enterprise entitlement, 10 million and 50 million per month",
+      "capture": "sha256:0cb2ecfe6ef114ac6b32d8747a5f0958baeefdc71920c188209d0803535bb869",
+      "quote": "| API Function |  |  | ● (10 million per month) | ● (50 million per month) |"
+    },
+    {
+      "url": "https://service.asuswebstorage.com/store/?bp=_t",
+      "date": "2026-11-03",
+      "proved": "plan storage: Free Trial 5GB, Lite 100GB, Pro 1TB, Enterprise 5TB",
+      "capture": "sha256:0cb2ecfe6ef114ac6b32d8747a5f0958baeefdc71920c188209d0803535bb869",
+      "quote": "| Cloud Storage | 5GB | 100GB | 1TB | 5TB |"
+    },
+    {
+      "url": "probe:https://www.asuswebstorage.com/navigate/price/",
+      "date": "2026-11-03",
+      "proved": "the old price path still answers HTTP 404 with a 774-byte body",
+      "capture": "sha256:bebc4154eb8c63b69f50ad584e36a71facfc51c07810c611710738d63bd1b1dc",
+      "quote": "\"status\": 404"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-11-04T00:20:56.366Z",
+  "history": [],
+  "binding": "per-object-cap",
+  "binding_note": "5 GB free, and the API is metered by a paid-tier entitlement, so there is no free programmatic path at any capacity.",
+  "notes": "Both a quota failure and a tooling failure, recorded as fails-quota because the quota is the first thing a reader checks. The API being a paid-tier entitlement is the part that would surprise a reader who assumed the draft rclone backend implied free access.",
+  "extras": {
+    "access_mode": "registration-gated",
+    "rclone_backend": "PR 6808, closed unmerged on 2026-02-26, not in any release",
+    "api_included_free": false,
+    "seed_source": "storage-research",
+    "seed_wave": "A-A12-android-tv-cloud.json",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service"
+  }
+}

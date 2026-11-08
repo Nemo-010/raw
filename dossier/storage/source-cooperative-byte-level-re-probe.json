@@ -1,0 +1,174 @@
+{
+  "topic": "storage",
+  "slug": "source-cooperative-byte-level-re-probe",
+  "provider": "Source Cooperative (source.coop / data.source.coop) — byte-level re-probe",
+  "url": "https://source.coop",
+  "category": "dataset-hosting",
+  "free_tier": {
+    "stated": "No published byte quota; the org states it 'hosts over 5 petabytes of data' across 330+ products from 130+ organisations and serves ~700 TB/month, and positions itself as 'data publishing at any scale'. I could not find any per-product, per-account or per-file cap in the docs. Wave 5 recorded this provider but did not probe it; this slot adds the probe and the pricing status.",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://docs.source.coop/what-is-source",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.source.coop/what-is-source",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.source.coop/what-is-source",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free and unmetered in practice for the reader: anonymous GET with no credentials, Cloudflare in front, R2/Turbo-adjacent CDN headers. No egress meter appears anywhere in the docs.",
+    "metered": false
+  },
+  "interface": [
+    "s3",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "s3",
+  "tooling": "Genuine S3 proxy. Endpoint https://data.source.coop, --no-sign-request for reads. Upload credentials are Source-issued but in AWS format and valid only at the proxy; path is s3://<account-id>/<product-id>/ and you cannot write outside your own prefix. Accepts aws cli, boto3, rclone with a custom endpoint, plus a Source CLI and service accounts for CI.",
+  "chaining": "Multiplier is data products per account/org, and orgs can hold team members. Because reads are anonymous and S3-native, this is the cleanest 'someone else's S3 on a real CDN' shape in the whole D area — it can be mounted by AList/rclone and fronted by Cloudflare exactly per §2.1.",
+  "limits": [],
+  "limits_note": "write-gated: 'publishing data requires applying to be a beta tester' via a Google Form, still beta as of this session. Flat pricing 'will be announced soon' — i.e. free today, unpriced tomorrow, which is a real durability risk for capacity planning. Data products are public by default and there is no private mode.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "Beta + announced-but-unpublished pricing means the free window has an unknown end date. Store only data that has a second home.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://data.source.coop/kerner-lab/fields-of-the-world/README.md",
+      "date": "2026-10-21",
+      "proved": "PROBED (this is the new evidence): curl -qsS -D - -> HTTP 200, Content-Length: 16187, Accept-Ranges: bytes, ETag, Last-Modified, Server: cloudflare, CF-Cache-Status: DYNAMIC. Downloaded twice and SHA-256 compared: cdd18d37e1af2320c2eaa763a6b70a8258a1ee2e5dc78e558ea0922e981e56d6 on both copies, and 16,187 bytes on disk matches the declared Content-Length — a true roundtrip, not a 200-with-empty-body."
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "PROBED: curl -H 'Range: bytes=0-99' on the same object -> HTTP 206 Partial Content, Content-Range: bytes 0-99/16187, 100 bytes body. Range requests work, so resumable/parallel fetches are viable."
+    },
+    {
+      "url": "https://data.source.coop/kerner-lab?list-type=2&max-keys=5",
+      "date": "2026-10-21",
+      "proved": "PROBED: curl '' -> real <ListBucketResult> with CommonPrefixes (fields-of-the-world-austria/, -belgium/, -brazil/, …), KeyCount 5, IsTruncated true. Anonymous bucket listing works — the catalogue is enumerable without credentials."
+    },
+    {
+      "url": "https://data.source.coop/?list-type=2&delimiter=/&max-keys=5",
+      "date": "2026-10-21",
+      "proved": "PROBED: curl '' -> body is literally 'Source Cooperative Data Proxy v2.5.1', not an S3 error. Root listing is disabled but the service identifies itself; useful as a liveness probe."
+    },
+    {
+      "url": "https://docs.source.coop/what-is-source",
+      "date": "2026-10-21",
+      "proved": "opened: 'Hosts over 5 petabytes … Serves approximately 700 terabytes of data transfer per month … Supports over 330 data products from 130+ organizations'; 'Source is currently in beta … publishing data requires applying to be a beta tester.'"
+    },
+    {
+      "url": "https://source.coop/",
+      "date": "2026-10-21",
+      "proved": "opened: 'Flat pricing … Pricing plans based on data volume and usage will be announced soon.' Confirms unpriced."
+    },
+    {
+      "url": "https://docs.source.coop/data-proxy",
+      "date": "2026-10-21",
+      "proved": "opened: 'The Source Data Proxy provides S3-compatible access to all data hosted on Source Cooperative. You can access data through the proxy without authentication.'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No published byte quota; the org states it 'hosts over 5 petabytes of data' across 330+ products from 130+ organisations and serves ~700 TB/month, and positions itself as 'data publishing at any scale'. I could not find any per-product, per-account or per-file cap in the docs. Wave 5 recorded this provider but did not probe it; this slot adds the probe and the pricing status.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D10-preprint-and-data-2026.json",
+    "seed_area": "D/D10",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D10"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D9"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "G/G8"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Source Cooperative (source.coop / data.source.coop) — byte-level re-probe",
+      "Source Cooperative (source.coop / data.source.coop)",
+      "Source Cooperative (Radiant Earth)"
+    ],
+    "conflicts": [
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "No published byte quota; the org states it 'hosts over 5 petabytes of",
+            "source": "table.md row, area D/D10",
+            "evidence": null
+          },
+          {
+            "value": "No published byte quota — by design. It is a nonprofit 'data publishin",
+            "source": "table.md row, area D/D9",
+            "evidence": null
+          },
+          {
+            "value": "No published per-account quota. Holds ~5 PB across the platform; a sin",
+            "source": "table.md row, area G/G8",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "No published byte quota; the org states it 'hosts over 5 petabytes of",
+            "source": "table.md (area D/D10)"
+          },
+          {
+            "value": "No published byte quota — by design. It is a nonprofit 'data publishin",
+            "source": "table.md (area D/D9)"
+          },
+          {
+            "value": "No published per-account quota. Holds ~5 PB across the platform; a sin",
+            "source": "table.md (area G/G8)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/free/academic.md",
+    "document_section": "Preprint and data repositories, 2026",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 7,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No published byte quota; the org states it 'hosts over 5 petabytes of data' across 330+ products from 130+ organisations and serves ~700 TB/month, and positions itself as 'data publishing at any scale'. I could not find any per-product, per-account or per-file cap in the docs. Wave 5 recorded this provider but did not probe it; this slot adds the probe and the pricing status.",
+    "limits_verbatim": "write-gated: 'publishing data requires applying to be a beta tester' via a Google Form, still beta as of this session. Flat pricing 'will be announced soon' — i.e. free today, unpriced tomorrow, which is a real durability risk for capacity planning. Data products are public by default and there is no private mode.",
+    "egress_verbatim": "Free and unmetered in practice for the reader: anonymous GET with no credentials, Cloudflare in front, R2/Turbo-adjacent CDN headers. No egress meter appears anywhere in the docs.",
+    "chaining_verbatim": "Multiplier is data products per account/org, and orgs can hold team members. Because reads are anonymous and S3-native, this is the cleanest 'someone else's S3 on a real CDN' shape in the whole D area — it can be mounted by AList/rclone and fronted by Cloudflare exactly per §2.1.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "Genuine S3 proxy. Endpoint https://data.source.coop, --no-sign-request for reads. Upload credentials are Source-issued but in AWS format and valid only at the proxy; path is s3://<account-id>/<product-id>/ and you cannot write outside your own prefix. Accepts aws cli, boto3, rclone with a custom endpoint, plus a Source CLI and service accounts for CI.",
+    "interface_verbatim": "s3",
+    "agent_focus": "2026-era research-data and data-marketplace platforms, deliberately judged on the BINDING constraint (does a person with only an email get past the write gate?) rather than on the marketing quota. Coverage: IEEE DataPort (the wave-7 discovery this slot confirms and extends), Mozilla Data Collective (2025 launch, the only new ≥100 GB-per-file free host found), Source Cooperative re-probed at the byte level, the French national Dataverse (Recherche Data Gouv) as the one genuinely EU-funded space with a self-serve email account, plus the 2026 data-marketplace entrants (Snowflake, Databricks Free Edition, data.world, Datarade, Tableland, Spice.ai, DataChain), the EU Data Spaces (Gaia-X / Catena-X / EOSC EU Node / DICE) and ResearchGate/Academia.edu data upload. Two structural results dominate: (a) the 'data marketplace' category is uniformly not storage — they are catalogues, and every one of them fails on per-object size by two to three orders of magnitude; (b) the EU Data Spaces are real and large but gated on eduGAIN/eIDAS identity, so they are closed on identity exactly like CSC Allas and LUMI-O before them."
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

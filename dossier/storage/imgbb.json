@@ -1,0 +1,97 @@
+{
+  "topic": "storage",
+  "slug": "imgbb",
+  "provider": "ImgBB",
+  "url": "https://imgbb.com",
+  "category": "media",
+  "free_tier": {
+    "stated": "Unlimited/indefinite storage for free accounts; no published total-byte cap. Third-party trackers consistently report 'unlimited storage, permanent hosting'.",
+    "unit": "unlimited",
+    "metered_on": "stored-bytes",
+    "source_url": "https://imgbb.com/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://imgbb.com/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "Unlimited/indefinite storage for free accounts; no published total-byte cap",
+    "source_url": "https://imgbb.com/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free, unmetered direct links on i.ibb.co. No bandwidth quota published, no hotlink restriction.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Official API v1 at api.imgbb.com — POST multipart or GET with base64/URL, single 'key' param. ShareX, PicGo and Flameshot all ship ImgBB destinations.",
+  "chaining": "Unlimited free accounts, each with its own API key. Each upload returns a delete_url, so per-file turnover is scriptable.",
+  "limits": [],
+  "limits_note": "32 MB/image via API (binary, base64, or image URL). Optional 'expiration' 60-15,552,000 s. The anonymous upload endpoint needs a session token, so automation must use the API-key path.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: opagate slowly. Unlimited free accounts, each with its own API key. Each upload returns a delete_url, so per-file turnover is scriptable. 32 MB/image via API (binary, base64, or imag",
+    "country": null
+  },
+  "reliability_note": "No re-compression documented and large JPEGs survive byte-for-byte. No inactivity deletion. Long Cache-Control (10y) means deletions propagate slowly.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://api.imgbb.com/",
+      "date": "2026-10-21",
+      "proved": "'image (required) A binary file, base64 data, or an image URL (up to 32 MB)'"
+    },
+    {
+      "url": "https://imgbb.com/",
+      "date": "2026-10-21",
+      "proved": "'32 MB limit. Direct image links, BBCode, and HTML thumbnails.'"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: HEAD i.ibb.co/20z1mhT/0004-016.jpg -> 200, Content-Length 125707, image/jpeg — matches the 125.7 KB the site records for the original, i.e. no re-encode; Expires 2037"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Unlimited/indefinite storage for free accounts; no published total-byte cap. Third-party trackers consistently report 'unlimited storage, permanent hosting'.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H2-image-hosts.json",
+    "seed_area": "H/H2",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "H/H2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/anonymous-hosts.md",
+    "document_section": "Image hosts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Unlimited/indefinite storage for free accounts; no published total-byte cap. Third-party trackers consistently report 'unlimited storage, permanent hosting'.",
+    "limits_verbatim": "32 MB/image via API (binary, base64, or image URL). Optional 'expiration' 60-15,552,000 s. The anonymous upload endpoint needs a session token, so automation must use the API-key path.",
+    "egress_verbatim": "Free, unmetered direct links on i.ibb.co. No bandwidth quota published, no hotlink restriction.",
+    "chaining_verbatim": "Unlimited free accounts, each with its own API key. Each upload returns a delete_url, so per-file turnover is scriptable.",
+    "tooling_verbatim": "Official API v1 at api.imgbb.com — POST multipart or GET with base64/URL, single 'key' param. ShareX, PicGo and Flameshot all ship ImgBB destinations.",
+    "interface_verbatim": "rest",
+    "agent_focus": "image hosts and photo platforms as bulk binary storage: free byte ceilings are high or unlimited because photos are the product, but most re-encode. Crux = which hosts return the original bytes, verified by HEAD/hash, not by marketing copy."
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

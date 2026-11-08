@@ -1,0 +1,102 @@
+{
+  "topic": "storage",
+  "slug": "sellfy",
+  "provider": "Sellfy",
+  "url": "https://sellfy.com",
+  "category": "Digital-product storefront",
+  "free_tier": {
+    "stated": "Their own sell-downloads page: 'Upload unlimited eBooks, music, software, courses, or other digital products packing up to 50 files per product, with each file weighing in at up to 20GB.' FAQ repeats: 'As many as you want! There are no limits to the number of products... Each file can be up to 20GB in size.'",
+    "unit": "objects",
+    "metered_on": "unstated",
+    "source_url": "https://sellfy.com/sell-downloads/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap 20 GB",
+    "bytes": 20000000000,
+    "source_url": "https://sellfy.com/sell-downloads/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://sellfy.com/sell-downloads/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "No bandwidth quota published. Assets served from d369wu82uo9y4b.cloudfront.net (CloudFront).",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "Web upload; REST API on paid plans.",
+  "tooling": "Web/API.",
+  "chaining": "20 GB/file is the largest single-object figure in the fulfilment group and 4x Payhip's — a 20 GB shard size makes a 20 TiB archive only 1,024 objects. 50 files/product x unlimited products.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap 20 GB",
+      "source": "https://sellfy.com/sell-downloads/"
+    }
+  ],
+  "limits_note": "per-object-cap 20 GB; 50 files/product; unlimited products. No aggregate cap stated.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "No free tier — plans start at $22/mo with a 14-day trial, so it is paid-only. CloudFront egress is a cost the seller does not see but which the platform will police.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://sellfy.com/sell-downloads/",
+      "date": "2026-10-21",
+      "proved": "'Unlimited storage ... up to 50 files per product, with each file weighing in at up to 20GB' (quoted from the page's own FAQPage JSON-LD, i.e. structured data the vendor publishes)"
+    },
+    {
+      "url": "https://sellfy.com/pricing/",
+      "date": "2026-10-21",
+      "proved": "'Plans From $22/mo', 14-day free trial, no free tier"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$22/mo on Starter; 20 GB/file, so ~$22 for unlimited-but-policed TB — priced per plan, not per TB. Effectively $0/TB until policed.",
+  "notes": "Their own sell-downloads page: 'Upload unlimited eBooks, music, software, courses, or other digital products packing up to 50 files per product, with each file weighing in at up to 20GB.' FAQ repeats: 'As many as you want! There are no limits to the number of products... Each file can be up to 20GB in size.'",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H14-print-and-media-fulfilment.json",
+    "seed_area": "H/H14",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H14"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Print and media fulfilment",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Their own sell-downloads page: 'Upload unlimited eBooks, music, software, courses, or other digital products packing up to 50 files per product, with each file weighing in at up to 20GB.' FAQ repeats: 'As many as you want! There are no limits to the number of products... Each file can be up to 20GB in size.'",
+    "limits_verbatim": "per-object-cap 20 GB; 50 files/product; unlimited products. No aggregate cap stated.",
+    "egress_verbatim": "No bandwidth quota published. Assets served from d369wu82uo9y4b.cloudfront.net (CloudFront).",
+    "chaining_verbatim": "20 GB/file is the largest single-object figure in the fulfilment group and 4x Payhip's — a 20 GB shard size makes a 20 TiB archive only 1,024 objects. 50 files/product x unlimited products.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "Web/API.",
+    "interface_verbatim": "Web upload; REST API on paid plans.",
+    "price_verbatim": "$22/mo on Starter; 20 GB/file, so ~$22 for unlimited-but-policed TB — priced per plan, not per TB. Effectively $0/TB until policed.",
+    "agent_focus": "Print-on-demand, media and fulfilment platforms that host your uploads permanently and serve them cheaply. The question for every candidate was NOT 'can I upload' (all of them accept uploads) but: does the platform serve my ORIGINAL bytes back, unsigned, indefinitely, from a CDN I can hot-link? POD image hosts (Redbubble/Printful/Printify/Society6/Threadless/Zazzle/Etsy) all re-encode, cap at 20-300 MB and gate the write behind account setup — they are inverted (tiny ingress, no egress). The value in this niche is the DIGITAL-PRODUCT fulfilment layer and the 3D-model repositories, which are the two places where arbitrary file types survive ingest at GB scale."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

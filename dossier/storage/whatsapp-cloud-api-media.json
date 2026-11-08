@@ -1,0 +1,119 @@
+{
+  "topic": "storage",
+  "slug": "whatsapp-cloud-api-media",
+  "provider": "WhatsApp Cloud API — Media (upload / media_id)",
+  "url": "https://developers.facebook.com/docs/whatsapp/cloud-api/reference/media",
+  "category": "messaging",
+  "free_tier": {
+    "stated": "Per-file caps only, no storage quota: documents 100 MB, images 5 MB, video 16 MB, audio 16 MB, stickers 500 KB (as listed on the reference page). Files persist 30 days.",
+    "unit": "MB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://developers.facebook.com/docs/whatsapp/cloud-api/reference/media",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "Per-file caps only, no storage quota: documents 100 MB",
+    "bytes": 100000000,
+    "source_url": "https://developers.facebook.com/docs/whatsapp/cloud-api/reference/media",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "'All media files sent through this API are encrypted and persist for 30 days, unless they are deleted earlier.' Media IDs also expire at 30 days (7 days for IDs arriving in webhooks)",
+    "days": 30,
+    "source_url": "https://developers.facebook.com/docs/whatsapp/cloud-api/reference/media",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Download is free of per-GB charge but doubly gated: media URLs EXPIRE AFTER 5 MINUTES and must be re-fetched via the media ID using a Bearer token. There is no public URL at any point.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "graph",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Graph API; official SDKs (facebook-business, whatsapp-cloud-api wrappers). No rclone backend. Wrappers exist but cannot beat the 30-day deletion.",
+  "chaining": "Does not multiply — retention, not count, is the wall. Unlimited phone numbers x 30 days each is still a 30-day window, i.e. a cache, not storage.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "expire at 30 days",
+      "source": "https://developers.facebook.com/docs/whatsapp/cloud-api/reference/media"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "Per-file caps only, no storage quota: documents 100 MB",
+      "source": "https://developers.facebook.com/docs/whatsapp/cloud-api/reference/media"
+    }
+  ],
+  "limits_note": "HARD 30-DAY DELETION — the disqualifier. 'All media files sent through this API are encrypted and persist for 30 days, unless they are deleted earlier.' Media IDs also expire at 30 days (7 days for IDs arriving in webhooks). Media URLs live 5 minutes.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ION — the disqualifier. 'All media files sent through this API are encrypted and persist for 30 days, unless they are deleted earlier.' Media IDs also expire at 30 days (7 days for I",
+    "country": null
+  },
+  "reliability_note": "Deterministic deletion, not a fair-use throttle: on day 31 the bytes are gone and only an error remains. Would silently destroy a 20 TiB archive.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://developers.facebook.com/docs/whatsapp/cloud-api/reference/media",
+      "date": "2026-10-21",
+      "proved": "read live: 'All media files sent through this API are encrypted and persist for 30 days, unless they are deleted earlier.'; 'Media IDs returned by the API expire after 30 days. Media IDs in webhooks expire after 7 days.'; 'Media URLs expire after 5 minutes'"
+    },
+    {
+      "url": "https://developers.facebook.com/docs/whatsapp/cloud-api/reference/media",
+      "date": "2026-10-21",
+      "proved": "read live: size table 'Text .txt text/plain 100 MB', 'AAC .aac 16 MB', etc."
+    },
+    {
+      "url": "https://graph.facebook.com/v21.0/123456/media",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 400 (anonymous call refused; token mandatory)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Per-file caps only, no storage quota: documents 100 MB, images 5 MB, video 16 MB, audio 16 MB, stickers 500 KB (as listed on the reference page). Files persist 30 days.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F4-consumer-im-apis.json",
+    "seed_area": "F/F4",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "F/F4"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Per-file caps only, no storage quota: documents 100 MB, images 5 MB, video 16 MB, audio 16 MB, stickers 500 KB (as listed on the reference page). Files persist 30 days.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F4"
+    },
+    "target_document": "docs/storage/free/messaging.md",
+    "document_section": "Consumer IM APIs",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Per-file caps only, no storage quota: documents 100 MB, images 5 MB, video 16 MB, audio 16 MB, stickers 500 KB (as listed on the reference page). Files persist 30 days.",
+    "limits_verbatim": "HARD 30-DAY DELETION — the disqualifier. 'All media files sent through this API are encrypted and persist for 30 days, unless they are deleted earlier.' Media IDs also expire at 30 days (7 days for IDs arriving in webhooks). Media URLs live 5 minutes.",
+    "egress_verbatim": "Download is free of per-GB charge but doubly gated: media URLs EXPIRE AFTER 5 MINUTES and must be re-fetched via the media ID using a Bearer token. There is no public URL at any point.",
+    "chaining_verbatim": "Does not multiply — retention, not count, is the wall. Unlimited phone numbers x 30 days each is still a 30-day window, i.e. a cache, not storage.",
+    "tooling_verbatim": "Graph API; official SDKs (facebook-business, whatsapp-cloud-api wrappers). No rclone backend. Wrappers exist but cannot beat the 30-day deletion.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Consumer/enterprise messaging platforms with media APIs as bulk storage — the crux being RETENTION: which platforms keep uploaded media indefinitely and serve it without an auth token. Telegram, Discord, Slack, Teams, Notion and Airtable were already covered by other slots and are excluded here."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

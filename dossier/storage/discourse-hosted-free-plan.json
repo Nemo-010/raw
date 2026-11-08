@@ -1,0 +1,104 @@
+{
+  "topic": "storage",
+  "slug": "discourse-hosted-free-plan",
+  "provider": "Discourse hosted Free plan",
+  "url": "https://www.discourse.org/free",
+  "category": "paas",
+  "free_tier": {
+    "stated": "5 GB storage per free site, with unlimited topics, chat and members",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://meta.discourse.org/t/youre-invited-to-try-the-discourse-free-plan-beta/395632",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://meta.discourse.org/t/youre-invited-to-try-the-discourse-free-plan-beta/395632",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://meta.discourse.org/t/youre-invited-to-try-the-discourse-free-plan-beta/395632",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free; uploads served from *.discourse-cdn.com behind CloudFront, so a Cloudflare/CloudFront cache sits in front already",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Discourse's own REST API is fully available on the free site (POST /uploads.json with an API key, /posts.json, /latest.json); no rclone backend",
+  "chaining": "5 GB x N free sites. Free sites are self-serve from id.discourse.com/create-site with a Discourse ID; provisioning is rate-limited but per-hour, not per-account. 100 sites = 500 GB; 400 sites = 2 TB.",
+  "limits": [],
+  "limits_note": "5 GB per site; 2 staff seats; 10 categories; no tags; no private categories; site provisioning throttled ('You have provisioned too many sites in the past hour'); post/upload rate limits are default Discourse",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Free plan launched 2026-02 and is still labelled beta; the provisioning throttle is the real scaling brake, and the 10-category cap makes bulk-upload workflows awkward.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://meta.discourse.org/t/youre-invited-to-try-the-discourse-free-plan-beta/395632",
+      "date": "2026-10-21",
+      "proved": "'Unlimited topics, chat and members... 2 staff seats, 5GB storage'"
+    },
+    {
+      "url": "https://www.discourse.org/free",
+      "date": "2026-10-21",
+      "proved": "'A real Discourse, free forever... No credit card - Unlimited members - Set up in about 1 minute'"
+    },
+    {
+      "url": "https://meta.discourse.org/latest.json",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> HTTP 200 application/json (public read API works anonymously); POST https://meta.discourse.org/uploads.json -> HTTP 403 (write path auth-gated as expected)"
+    },
+    {
+      "url": "https://sea3.discourse-cdn.com/meta/user_avatar/",
+      "date": "2026-10-21",
+      "proved": "probe: GET ... -> 302 -> 200 via CloudFront (uploads are CDN-fronted)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "5 GB storage per free site, with unlimited topics, chat and members",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F3-team-chat.json",
+    "seed_area": "F/F3",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "F/F3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/messaging.md",
+    "document_section": "Team chat",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "5 GB storage per free site, with unlimited topics, chat and members",
+    "limits_verbatim": "5 GB per site; 2 staff seats; 10 categories; no tags; no private categories; site provisioning throttled ('You have provisioned too many sites in the past hour'); post/upload rate limits are default Discourse",
+    "egress_verbatim": "Free; uploads served from *.discourse-cdn.com behind CloudFront, so a Cloudflare/CloudFront cache sits in front already",
+    "chaining_verbatim": "5 GB x N free sites. Free sites are self-serve from id.discourse.com/create-site with a Discourse ID; provisioning is rate-limited but per-hour, not per-account. 100 sites = 500 GB; 400 sites = 2 TB.",
+    "tooling_verbatim": "Discourse's own REST API is fully available on the free site (POST /uploads.json with an API key, /posts.json, /latest.json); no rclone backend",
+    "interface_verbatim": "rest",
+    "agent_focus": "Team collaboration suites: Slack free (files, retention), Microsoft Teams, Mattermost, Rocket.Chat, Zulip, Twist, Discourse, Basecamp, ClickUp, Notion, Coda, Airtable attachments"
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

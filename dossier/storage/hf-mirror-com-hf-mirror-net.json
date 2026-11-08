@@ -1,0 +1,112 @@
+{
+  "topic": "storage",
+  "slug": "hf-mirror-com-hf-mirror-net",
+  "provider": "hf-mirror.com / hf-mirror.net (Hugging Face mirror — read-only proxy)",
+  "url": "https://hf-mirror.com",
+  "category": "anonymous-dump",
+  "free_tier": {
+    "stated": "None of its own — it is a transparent reverse proxy. Its published conditions say so explicitly: it is a '非盈利性、公共人工智能技术基础设施加速节点' (non-profit public AI infra acceleration node) that '仅为 ... 提供透明网络代理与下载分发加速支持' (only provides transparent proxying and download acceleration), and '本站 ... 本身不产生或修改上游内容' (this site does not itself produce or modify upstream content).",
+    "unit": "none",
+    "metered_on": "unstated",
+    "source_url": "https://hf-mirror.net/terms.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "50 GB/file",
+    "bytes": 50000000000,
+    "source_url": "https://hf-mirror.net/terms.html",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://hf-mirror.net/terms.html",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free and anonymous for reads; resolves to HF's own CDN. Not applicable as a storage delta — the bytes live on HF, which is already known and excluded as a discovery.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Drop-in hostname swap: HF_ENDPOINT=https://hf-mirror.com for huggingface_hub / hf_transfer / rclone (rclone 'hf' backend points at it).",
+  "chaining": "Only as an egress accelerator for an HF dataset you already have — it is a CDN in front of a host already on the known list, not a new quota. Worth noting for the serving workload (500 GB-1 TiB/day): it is an extra free CDN edge for HF pulls from mainland China, and its published conditions place '高频非法盗链或恶意耗尽公用网络资源' (hotlinking to exhaust shared bandwidth) outside the allocation.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "50 GB/file",
+      "source": "https://hf-mirror.net/terms.html"
+    }
+  ],
+  "limits_note": "per-object-cap: inherits HF (50 GB/file at the time of the linked HF issues). Retention: inherits HF. Write path is redirected straight to huggingface.co, not mirrored: probe POST /api/repos/create -> 308 Location: https://huggingface.co/api/repos/create. So the mirror gives you nothing new to store INTO.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: cted straight to huggingface.co, not mirrored: probe POST /api/repos/create -> 308 Location: https://huggingface.co/api/repos/create. So the mirror gives you nothing new to store INT",
+    "country": null
+  },
+  "reliability_note": "Reads work; the published conditions reserve the right to block addresses that exceed the allocation and disclaim all availability ('按现状 AS-IS'). One probe returned a bare 200 with an HTML body from the LFS batch endpoint rather than JSON — parse the body, not the status.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://hf-mirror.net/terms.html",
+      "date": "2026-10-21",
+      "proved": "(last revised 2026-09-11) — proxy-only positioning, no storage offered, no upload surface"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET hf-mirror.com/HPAI-BSC/Llama3.1-Aloe-Beta-8B/resolve/main/LICENSE -r 0-99 -L -> 308 (Caddy) -> 307 to HF CDN"
+    },
+    {
+      "url": "https://huggingface.co/api/repos/create",
+      "date": "2026-10-21",
+      "proved": "probe: POST hf-mirror.com/api/repos/create -> 308 Location: (writes are not mirrored)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "None of its own — it is a transparent reverse proxy. Its published conditions say so explicitly: it is a '非盈利性、公共人工智能技术基础设施加速节点' (non-profit public AI infra acceleration node) that '仅为 ... 提供透明网络代理与下载分发加速支持' (only provides transparent proxying and download acceleration), and '本站 ... 本身不产生或修改上游内容' (this site does not itself produce or modify upstream content).",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B7-model-media-hubs.json",
+    "seed_area": "B/B7",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "B/B7"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "None of its own — it is a transparent reverse proxy. Its published conditions say so explicitly: it is a '非盈利性、公共人工智能技术基础设施加速节点' (non-profit public AI infra acceleration node) that '仅为 ... 提供透明网络代理与下载分发加速支持' (only provides transparent proxying and download acceleration), and '本站 ... 本身不产生或修改上游内容' (this site does not itself produce or modify upstream content).",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area B/B7"
+    },
+    "target_document": "docs/storage/free/models-and-media.md",
+    "document_section": "Model and media hubs",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "None of its own — it is a transparent reverse proxy. Its published conditions say so explicitly: it is a '非盈利性、公共人工智能技术基础设施加速节点' (non-profit public AI infra acceleration node) that '仅为 ... 提供透明网络代理与下载分发加速支持' (only provides transparent proxying and download acceleration), and '本站 ... 本身不产生或修改上游内容' (this site does not itself produce or modify upstream content).",
+    "limits_verbatim": "per-object-cap: inherits HF (50 GB/file at the time of the linked HF issues). Retention: inherits HF. Write path is redirected straight to huggingface.co, not mirrored: probe POST /api/repos/create -> 308 Location: https://huggingface.co/api/repos/create. So the mirror gives you nothing new to store INTO.",
+    "egress_verbatim": "Free and anonymous for reads; resolves to HF's own CDN. Not applicable as a storage delta — the bytes live on HF, which is already known and excluded as a discovery.",
+    "chaining_verbatim": "Only as an egress accelerator for an HF dataset you already have — it is a CDN in front of a host already on the known list, not a new quota. Worth noting for the serving workload (500 GB-1 TiB/day): it is an extra free CDN edge for HF pulls from mainland China, and its published conditions place '高频非法盗链或恶意耗尽公用网络资源' (hotlinking to exhaust shared bandwidth) outside the allocation.",
+    "tooling_verbatim": "Drop-in hostname swap: HF_ENDPOINT=https://hf-mirror.com for huggingface_hub / hf_transfer / rclone (rclone 'hf' backend points at it).",
+    "interface_verbatim": "rest",
+    "agent_focus": "Model / adapter / media-asset hubs that are NOT Hugging Face or ModelScope — per-file caps (several allow 40-455 GiB), anonymous download speed, and whether arbitrary bytes can be pushed through a 'model' slot"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,113 @@
+{
+  "topic": "storage",
+  "slug": "paste-gg",
+  "provider": "paste.gg",
+  "url": "https://paste.gg",
+  "category": "anonymous-dump",
+  "free_tier": {
+    "stated": "10 MiB total per paste, 5 MiB per file. Anonymous pastes expire after 7 days; signed-in pastes can be permanent. Built on Cloudflare Workers.",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://paste.gg/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "5 MiB per file",
+    "bytes": 5242880,
+    "source_url": "https://paste.gg/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "Anonymous pastes expire after 7 days; signed-in pastes can be permanent",
+    "days": 7,
+    "source_url": "https://paste.gg/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "free, served from Cloudflare's edge (Workers) — effectively CF-covered, cacheable, no metering.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "https://api.paste.gg/v1/pastes, JSON body {name, files:[{name, content:{format:'text', value}}]}; no key needed for anonymous, returns a deletion key. API keys available at Settings -> API keys.",
+  "chaining": "unlimited anonymous pastes x up to 10 MiB, but 7-day anonymous expiry makes it a hot/cache tier only. With free accounts: permanent pastes x unlimited per account — that is the only archive-shaped path.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "5 MiB per file",
+      "source": "https://paste.gg/"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "expire after 7 days",
+      "source": "https://paste.gg/"
+    }
+  ],
+  "limits_note": "10 MiB total / 5 MiB per file; 7-day expiry anonymous; visibility public or unlisted when anonymous.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: 10 MiB total per paste, 5 MiB per file. Anonymous pastes expire after 7 days; signed-in pastes can be permanent. Built on Cloudflare Workers. CF Workers edge means fa",
+    "country": null
+  },
+  "reliability_note": "CF Workers edge means fast global reads and no egress bill. Anonymous content is dropped at 7 days by design; signed-in is required for anything you want to keep.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://paste.gg/",
+      "date": "2026-10-21",
+      "proved": "'All pastes: up to 10 MiB total and 5 MiB per file', 'Anonymous: public or unlisted, with expiration after 7 days'"
+    },
+    {
+      "url": "https://api.paste.gg/v1/pastes",
+      "date": "2026-10-21",
+      "proved": "probe: POST with 1 file -> {\"status\":\"success\",\"result\":{\"id\":\"89d9c016...\",\"visibility\":\"unlisted\"}}; GET /p/anonymous/89d9c016... -> 200"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "10 MiB total per paste, 5 MiB per file. Anonymous pastes expire after 7 days; signed-in pastes can be permanent. Built on Cloudflare Workers.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E5-pastebins.json",
+    "seed_area": "E/E5",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "E/E5"
+      }
+    ],
+    "seed_confidence": "high",
+    "unit_note": "free_tier.unit is 'mixed' because the headline is denominated in MiB or KiB, which the schema enum does not carry; the verbatim free_tier.stated keeps the true unit. See the storage-dossier handover.",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "retention",
+      "why": "10 MiB total per paste, 5 MiB per file. Anonymous pastes expire after 7 days; signed-in pastes can be permanent. Built on Cloudflare Workers.",
+      "retry_when": "if the retention model changes from a clock to indefinite",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E5"
+    },
+    "target_document": "docs/storage/free/transfer-services.md",
+    "document_section": "Pastebins",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "10 MiB total per paste, 5 MiB per file. Anonymous pastes expire after 7 days; signed-in pastes can be permanent. Built on Cloudflare Workers.",
+    "limits_verbatim": "10 MiB total / 5 MiB per file; 7-day expiry anonymous; visibility public or unlisted when anonymous.",
+    "egress_verbatim": "free, served from Cloudflare's edge (Workers) — effectively CF-covered, cacheable, no metering.",
+    "chaining_verbatim": "unlimited anonymous pastes x up to 10 MiB, but 7-day anonymous expiry makes it a hot/cache tier only. With free accounts: permanent pastes x unlimited per account — that is the only archive-shaped path.",
+    "tooling_verbatim": "https://api.paste.gg/v1/pastes, JSON body {name, files:[{name, content:{format:'text', value}}]}; no key needed for anonymous, returns a deletion key. API keys available at Settings -> API keys.",
+    "interface_verbatim": "rest",
+    "agent_focus": "pastebins and text dumps as storage: pastebin, hastebin, ghostbin, rentry, dpaste, privatebin, GitHub Gist, GitLab snippets, pastes.io, controlc, termbin, plus binary-to-text encoders"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

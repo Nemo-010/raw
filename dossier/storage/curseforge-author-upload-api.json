@@ -1,0 +1,111 @@
+{
+  "topic": "storage",
+  "slug": "curseforge-author-upload-api",
+  "provider": "CurseForge (Overwolf) author upload API",
+  "url": "https://www.curseforge.com",
+  "category": "registry",
+  "free_tier": {
+    "stated": "No published per-file or total quota. Known caps: project media/gallery images limited to 2 MB (author complaint, Apr 2026); mod file upload limit not documented anywhere public — the biggest evidence gap in this dossier.",
+    "unit": "MB",
+    "metered_on": "unstated",
+    "source_url": "https://support.curseforge.com/en/support/solutions/articles/9000197321-curseforge-upload-api",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://support.curseforge.com/en/support/solutions/articles/9000197321-curseforge-upload-api",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://support.curseforge.com/en/support/solutions/articles/9000197321-curseforge-upload-api",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free, Cloudflare-fronted (edge.forgecdn.net / mediafilez.forgecdn.net), no auth on downloads.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Documented Upload API: POST /api/projects/{projectId}/upload-file with multipart `metadata` + `file`, X-Api-Token header; also Maven for some project types. Third-party wrapper: github.com/itsmeow/curseforge-upload. No rclone.",
+  "chaining": "Unlimited projects per author account (no documented cap) x unknown per-file size. If the effective cap resembles Modrinth's 500 MiB, 1000 projects = ~500 GB.",
+  "limits": [],
+  "limits_note": "Every project and every file goes through human moderation before release; media 2 MB; project metadata must be in English and must plausibly describe a mod. Upload limit per file is unverified.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Manual moderation queue means automated bulk uploads get rejected or the author account locked; releases can be delisted retroactively.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://support.curseforge.com/en/support/solutions/articles/9000197321-curseforge-upload-api",
+      "date": "2026-10-21",
+      "proved": "'POST multipart/form-data request to /api/projects/{projectId}/upload-file'"
+    },
+    {
+      "url": "https://wiki.nemonotfound.com/third-party/curseforge-upload-api",
+      "date": "2026-10-21",
+      "proved": "token generation + auth details"
+    },
+    {
+      "url": "https://curseforge-ideas.overwolf.com/ideas/CF-I-8110",
+      "date": "2026-10-21",
+      "proved": "'Why is it only 2MB??' for media uploads, Apr 2026"
+    },
+    {
+      "url": "https://blog.curseforge.com/curseforge-platform-release-notes-march/",
+      "date": "2026-10-21",
+      "proved": "'Improved the ability to upload bigger files to projects' (no number given)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No published per-file or total quota. Known caps: project media/gallery images limited to 2 MB (author complaint, Apr 2026); mod file upload limit not documented anywhere public — the biggest evidence gap in this dossier.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H6-weird-protocols.json",
+    "seed_area": "H/H6",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "H/H6"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "No published per-file or total quota. Known caps: project media/gallery images limited to 2 MB (author complaint, Apr 2026); mod file upload limit not documented anywhere public — the biggest evidence gap in this dossier.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H6"
+    },
+    "target_document": "docs/storage/free/relays-and-transports.md",
+    "document_section": "Weird transports",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "No published per-file or total quota. Known caps: project media/gallery images limited to 2 MB (author complaint, Apr 2026); mod file upload limit not documented anywhere public — the biggest evidence gap in this dossier.",
+    "limits_verbatim": "Every project and every file goes through human moderation before release; media 2 MB; project metadata must be in English and must plausibly describe a mod. Upload limit per file is unverified.",
+    "egress_verbatim": "Free, Cloudflare-fronted (edge.forgecdn.net / mediafilez.forgecdn.net), no auth on downloads.",
+    "chaining_verbatim": "Unlimited projects per author account (no documented cap) x unknown per-file size. If the effective cap resembles Modrinth's 500 MiB, 1000 projects = ~500 GB.",
+    "tooling_verbatim": "Documented Upload API: POST /api/projects/{projectId}/upload-file with multipart `metadata` + `file`, X-Api-Token header; also Maven for some project types. Third-party wrapper: github.com/itsmeow/curseforge-upload. No rclone.",
+    "interface_verbatim": "rest",
+    "agent_focus": "weird transports: blockchain blobs/calldata, DNS TXT, Usenet, FTP, Gopher/Gemini, IPFS-over-DNS, mod CDNs (Steam/CurseForge/Modrinth/Thunderstore/Roblox)"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

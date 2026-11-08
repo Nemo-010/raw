@@ -1,0 +1,128 @@
+{
+  "topic": "compute",
+  "slug": "runmyjob",
+  "provider": "RunMyJob",
+  "url": "https://runjob.eu/",
+  "category": "CI runner",
+  "free_tier": {
+    "stated": "Batch 1 recorded RunMyJob as a perpetual free allowance at https://runmyjob.io/pricing. That URL returns HTTP 404 today. The brand is now RunJob, and the read of https://runmyjob.io/ redirects to https://runjob.eu/, whose own title is 'Pay for CI Usage, Not Idle Time!' and which describes 'Cloud runners for GitHub Actions and GitLab CI'. A directory record states the move, quoted: 'RunMyJob has rebranded as RunJob and moved to runjob.eu'.",
+    "unit": "GiB",
+    "metered_on": "wall-clock",
+    "source_url": "https://runjob.eu/",
+    "read_on": "2026-10-22",
+    "notes": "perpetual-allowance"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://runjob.eu/",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://runjob.eu/",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "not published on the page read: no egress term was found, so nothing is asserted",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://runjob.eu/"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "a dashboard and a declarative API for managing runners; Kubernetes API access and Terraform modules for scaling; jobs arrive through the GitHub Actions or GitLab CI runner integration. No page read names REST.",
+  "tooling": "not stated in the finding; the provider documents no client",
+  "chaining": "A free CI runner with per-second load metering is a place to run a burst without a card, and it composes with a public GitHub repository the same way the GitHub-hosted runner does, but with a meter.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "The free plan is metered in CPU-seconds and GB-seconds, not in runner-hours, so a 12 vCPU job burns the monthly allowance at twelve times the wall-clock rate, and the allowance figure cannot be read as hours.",
+      "source": "https://runjob.eu/"
+    }
+  ],
+  "limits_note": "The free plan is metered in CPU-seconds and GB-seconds, not in runner-hours, so a 12 vCPU job burns the monthly allowance at twelve times the wall-clock rate, and the allowance figure cannot be read as hours.",
+  "binding": "volume-quota",
+  "binding_note": "The free plan is metered in CPU-seconds and GB-seconds, not in runner-hours, so a 12 vCPU job burns the monthly allowance at twelve times the wall-clock rate, and the allowance figure cannot be read as hours.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "as stated by the provider's signup page",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://runmyjob.io/pricing",
+      "date": "2026-10-22",
+      "proved": "HTTP 404 Not Found: the earlier URL of the free plan no longer exists"
+    },
+    {
+      "url": "https://runmyjob.io/",
+      "date": "2026-10-22",
+      "proved": "redirects to runjob.eu; the page reads 'Cloud runners for GitHub Actions and GitLab CI' and 'Pay only for actual CPU and memory load'"
+    },
+    {
+      "url": "https://app.dealroom.co/news/feed/runjob-launches-spike-instances-with-load-based-billing-for-european-ci-infrastructure",
+      "date": "2026-08-01",
+      "proved": "quoted: 'RunMyJob has rebranded as RunJob and moved to runjob.eu' [date precision: month precision]"
+    },
+    {
+      "url": "https://runmyjob.io/",
+      "date": "2026-10-22",
+      "proved": "Free plan EUR 0/m: 1 integration with GitLab or GitHub organization, 10 concurrent jobs, 12 vCPU and 32 GB memory per job, 400 vCPU-minutes included monthly, quoted"
+    },
+    {
+      "url": "https://runmyjob.io/",
+      "date": "2026-10-22",
+      "proved": "usage price over the allowance is EUR 0.00002 per vCPU-second and EUR 0.000001 per GB-second, quoted"
+    },
+    {
+      "url": "https://euro-stack.com/solutions/runmyjob-io",
+      "date": "2026-10-22",
+      "proved": "a directory record of the plans: 'Free (10 concurrent jobs, 12 vCPU, 32 GB per job), Business (EUR 50/month, unlimited concurrent jobs, 48 vCPU, 96 GB per job)' [date precision: year precision] [re-read 2026-10-22]"
+    },
+    {
+      "url": "https://runjob.eu/docs",
+      "date": "2026-11-04",
+      "proved": "Terraform modules and Kubernetes API access are offered",
+      "capture": "sha256:0c9066265889a2168b26f52bbd75b068bb078774d93032b187a7ad55b6f41965",
+      "quote": "the service does provide Terraform modules and Kubernetes API access as an advantage for those who wish to utilize it to scale up and manage their operations with ease."
+    },
+    {
+      "url": "https://runjob.eu/",
+      "date": "2026-11-04",
+      "proved": "runners are managed through a dashboard or a declarative API; no protocol is named",
+      "capture": "sha256:ff4a8e74f1492585bc5e827331113da5dc09f1b5f5f3867d3b579c5424aa4481",
+      "quote": "Manage your runners via dashboard or declarative API"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T10:36:18.029Z",
+  "notes": "This is a liveness correction rather than a refutation: the product is alive and the citation is not. The free plan's metering unit is the finding, because a 'free' CI runner that meters CPU-seconds is not comparable to a GitHub public-repository runner that meters nothing. The figures here come from a third-party directory and the vendor's own marketing copy; the free plan's allowance number was not read from a first-party pricing page today and stays `unverified`.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "RunMyJob - the vendor moved to runjob.eu and batch 1 cites a URL that now 404s",
+      "class": "verification",
+      "category_as_written": "ci-runner",
+      "free_tier_kind": "perpetual-allowance",
+      "shape": {
+        "vcpu": 12,
+        "ram_gib": 32
+      },
+      "seen_routes": [
+        "broker fetch 200/404 runmyjob.io",
+        "broker read 200 runmyjob.io redirect",
+        "broker search 200"
+      ],
+      "agents": [
+        "a10-repos",
+        "b09-inverse-search"
+      ],
+      "promoted_from": ".tmp/wave2"
+    }
+  }
+}

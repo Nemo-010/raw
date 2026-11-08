@@ -1,0 +1,115 @@
+{
+  "topic": "storage",
+  "slug": "rumble",
+  "provider": "Rumble",
+  "url": "https://rumble.com",
+  "category": "media",
+  "free_tier": {
+    "stated": "No published total storage cap. 15 GB per file standard, 30 GB for Premium/monetised channels; up to 8 hours duration.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://rumble.support/help/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "15 GB per file",
+    "bytes": 15000000000,
+    "source_url": "https://rumble.support/help/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://rumble.support/help/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free — Rumble serves its own CDN, no egress billing.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "yt-dlp `Rumble`, `RumbleChannel`, `RumbleEmbed` extractors (verified present). No public upload API; upload is web-only.",
+  "chaining": "Unlimited files x unlimited accounts at 15 GB each. No documented daily cap, which is unusual and useful.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "15 GB per file",
+      "source": "https://rumble.support/help/"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "15 GB/file",
+      "source": "https://rumble.support/help/"
+    }
+  ],
+  "limits_note": "15 GB/file is mid-tier. Upload is web-form only — this is the automation blocker, since yt-dlp solves retrieval but nothing solves programmatic upload.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "rumble.com/faq returned 404/504/410 on three fetch attempts from this network; the 15 GB figure is third-party (kompozy.io, allplatforms.io) rather than a page I could read on Rumble's own domain.",
+  "confidence": "inferred",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://kompozy.io/specs/rumble-file-size-limit",
+      "date": "2026-05-22",
+      "proved": "'Rumble max file size: 15 GB per upload' (third-party, claims last verified 2026-05-22)"
+    },
+    {
+      "url": "https://allplatforms.io/rumble/",
+      "date": "2026-10-21",
+      "proved": "'Max File Size 15 GB (standard) / 30 GB (Premium/monetised)'"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: `yt-dlp --list-extractors` -> Rumble, RumbleChannel, RumbleEmbed present"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "unverified: rumble.com/faq and rumble.com/pricing returned 404/410/504 — blocked/unavailable, no first-party page read"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No published total storage cap. 15 GB per file standard, 30 GB for Premium/monetised channels; up to 8 hours duration.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H1-video-platforms.json",
+    "seed_area": "H/H1",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H1"
+      }
+    ],
+    "seed_confidence": "low",
+    "conflicts": [],
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Video platforms",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 1,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "No published total storage cap. 15 GB per file standard, 30 GB for Premium/monetised channels; up to 8 hours duration.",
+    "limits_verbatim": "15 GB/file is mid-tier. Upload is web-form only — this is the automation blocker, since yt-dlp solves retrieval but nothing solves programmatic upload.",
+    "egress_verbatim": "Free — Rumble serves its own CDN, no egress billing.",
+    "chaining_verbatim": "Unlimited files x unlimited accounts at 15 GB each. No documented daily cap, which is unusual and useful.",
+    "tooling_verbatim": "yt-dlp `Rumble`, `RumbleChannel`, `RumbleEmbed` extractors (verified present). No public upload API; upload is web-only.",
+    "interface_verbatim": "rest",
+    "agent_focus": "video/media platforms as bulk storage — the crux is whether the ORIGINAL file is retrievable, or only a re-encode"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

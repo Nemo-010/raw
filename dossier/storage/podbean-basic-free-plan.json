@@ -1,0 +1,117 @@
+{
+  "topic": "storage",
+  "slug": "podbean-basic-free-plan",
+  "provider": "Podbean — Basic Free plan",
+  "url": "https://www.podbean.com",
+  "category": "media",
+  "free_tier": {
+    "stated": "5 hours / 500 MB TOTAL, not monthly: 'Total storage: 5 hours (500MB). Note: Storage does not reset monthly.' Help centre adds: 'The total file size should not exceed 500MB' and 'The total length of the file should not exceed 5 hours' — both accumulate and block further uploads when either is hit.",
+    "unit": "MB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://help.podbean.com/support/solutions/articles/25000019893-basic-free-plan-features",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "file size should not exceed 500MB",
+    "bytes": 500000000,
+    "source_url": "https://help.podbean.com/support/solutions/articles/25000019893-basic-free-plan-features",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://help.podbean.com/support/solutions/articles/25000019893-basic-free-plan-features",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "100 GB per month on Free ('Monthly bandwidth: 100GB'), unmetered beyond that in the sense of no per-GB charge but the account stalls at the cap. Paid Unlimited Audio ($12/mo) is 'Unmetered bandwidth'.",
+    "metered": false,
+    "free_allowance": "100 GB per month"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "No public upload API on Free (Podbean developer docs exist for read/embed; upload is dashboard). Migration-in by RSS is one click and is explicitly free, which is a heavier hammer than a per-episode upload.",
+  "chaining": "5 hours / 500 MB per free account, 100 GB/mo bandwidth. At ~128 kbps that is ~9 hours of audio; at 500 MB hard cap the file-size ceiling bites first for anything lossless. Genuinely small — only interesting multiplied across many accounts, and each account needs an email + verification.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "file size should not exceed 500MB",
+      "source": "https://help.podbean.com/support/solutions/articles/25000019893-basic-free-plan-features"
+    }
+  ],
+  "limits_note": "3 episodes/day; 100 MB single file on Free (3 GB on paid); RSS feed exposes only the most recent 20 episodes on Free; formats on Free are MP3 and M4A only (paid adds ogg/zip/pdf/pptx/docx/xml — note zip is a paid-plan format, so Free cannot take archives at all).",
+  "identity_cost": {
+    "kind": "country-phone",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ent-Range 0-1023/73948726; declared length 73948726 for a 3081 s episode = 191,988 bps, i.e. exactly 192 kbps CBR, and the ID3 tag names Lavf60.16.1 (ffmpeg) as the encoder. The uplo",
+    "country": null
+  },
+  "reliability_note": "Likely re-encodes. Verified live: enclosure https://mcdn.podbean.com/mf/web/rhvxkzpmimms9sf5/riverside_....mp3 -> 302 -> 206, Content-Range 0-1023/73948726; declared length 73948726 for a 3081 s episode = 191,988 bps, i.e. exactly 192 kbps CBR, and the ID3 tag names Lavf60.16.1 (ffmpeg) as the encoder. The upload was a 'riverside_..._processed.mp3' (Riverside's own processed export, normally 128 kbps), so 192k suggests Podbean re-encoded upward rather than storing as-is — unverified without an account, but the ffmpeg stamp plus exact CBR strongly implies server-side processing.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://help.podbean.com/support/solutions/articles/25000019893-basic-free-plan-features",
+      "date": "2026-10-21",
+      "proved": "'Total storage: 5 hours (500MB)'; 'Storage does not reset monthly'; 'Monthly bandwidth: 100GB'; 'Maximum of 3 episodes ... per day'; 'Single file size limit: 100MB'; 'Displays up to 20 episodes in the RSS feed'"
+    },
+    {
+      "url": "https://podbean.freshdesk.com/support/solutions/articles/25000029110-how-to-calculate-upload-space-free-account-upload-limits",
+      "date": "2026-10-21",
+      "proved": "'The total file size should not exceed 500MB'; 'Total file length = actual used length + estimated length < 18000 seconds'"
+    },
+    {
+      "url": "https://help.podbean.com/support/solutions/articles/25000005097-podbean-supported-file-formats-and-single-file-size-limit",
+      "date": "2026-10-21",
+      "proved": "'Free plan: mp3, m4a'; 'The maximum allowed single file size: 3GB' (paid)"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET feed.podbean.com/jmonken/feed.xml -> 200; enclosure mcdn.podbean.com -> 302 -> 206, 73,948,726 bytes for 3081 s = 192 kbps, ID3 TSSE 'Lavf60.16.1'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "5 hours / 500 MB TOTAL, not monthly: 'Total storage: 5 hours (500MB). Note: Storage does not reset monthly.' Help centre adds: 'The total file size should not exceed 500MB' and 'The total length of the file should not exceed 5 hours' — both accumulate and block further uploads when either is hit.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H3-audio-podcast.json",
+    "seed_area": "H/H3",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "H/H3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "5 hours / 500 MB TOTAL, not monthly: 'Total storage: 5 hours (500MB). Note: Storage does not reset monthly.' Help centre adds: 'The total file size should not exceed 500MB' and 'The total length of the file should not exceed 5 hours' — both accumulate and block further uploads when either is hit.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H3"
+    },
+    "target_document": "docs/storage/free/anonymous-hosts.md",
+    "document_section": "Audio and podcast hosts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "5 hours / 500 MB TOTAL, not monthly: 'Total storage: 5 hours (500MB). Note: Storage does not reset monthly.' Help centre adds: 'The total file size should not exceed 500MB' and 'The total length of the file should not exceed 5 hours' — both accumulate and block further uploads when either is hit.",
+    "limits_verbatim": "3 episodes/day; 100 MB single file on Free (3 GB on paid); RSS feed exposes only the most recent 20 episodes on Free; formats on Free are MP3 and M4A only (paid adds ogg/zip/pdf/pptx/docx/xml — note zip is a paid-plan format, so Free cannot take archives at all).",
+    "egress_verbatim": "100 GB per month on Free ('Monthly bandwidth: 100GB'), unmetered beyond that in the sense of no per-GB charge but the account stalls at the cap. Paid Unlimited Audio ($12/mo) is 'Unmetered bandwidth'.",
+    "chaining_verbatim": "5 hours / 500 MB per free account, 100 GB/mo bandwidth. At ~128 kbps that is ~9 hours of audio; at 500 MB hard cap the file-size ceiling bites first for anything lossless. Genuinely small — only interesting multiplied across many accounts, and each account needs an email + verification.",
+    "tooling_verbatim": "No public upload API on Free (Podbean developer docs exist for read/embed; upload is dashboard). Migration-in by RSS is one click and is explicitly free, which is a heavier hammer than a per-episode upload.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Audio and podcast hosting where per-episode caps are large and hosts accept arbitrary files disguised as audio. Crux: does the RSS enclosure serve the ORIGINAL uploaded bytes from a permanent URL, or a re-encoded house stream?"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

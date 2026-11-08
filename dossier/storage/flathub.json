@@ -1,0 +1,128 @@
+{
+  "topic": "storage",
+  "slug": "flathub",
+  "provider": "Flathub (dl.flathub.org OSTree repo)",
+  "url": "https://flathub.org",
+  "category": "paas",
+  "free_tier": {
+    "stated": "No published storage quota for published applications. This is a deduplicating OSTree/OCI repo: apps are stored as content-addressed ostree commits, so identical files across apps are stored once. Review is human: submissions arrive as a pull request to github.com/flathub/flathub and 'will be reviewed' - there is no self-service arbitrary-blob publish.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.flathub.org/docs/for-app-authors/submission",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.flathub.org/docs/for-app-authors/submission",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "per-object-cap: none published; the practical constraint is the build (GitHub-hosted runners with limited CPU/memory/time). retention: indefinite for published apps (OSTree history is retained; `flatpak repair`/`prune` is user-side)",
+    "source_url": "https://docs.flathub.org/docs/for-app-authors/submission",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free, CDN-backed static repo at dl.flathub.org. No billing.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "oci",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "`flatpak` (client), `flatpak-builder` + `org.flatpak.Builder`, `ostree` tooling, and the repo is readable as a plain static OSTree (summary / summary.idx / objects). No rclone backend and no OCI registry (registry.flathub.org does not resolve publicly - DNS NXDOMAIN from this vantage).",
+  "chaining": "one repo, unlimited apps x unlimited architectures (x86_64, aarch64) x unlimited builds. Per-app dedup means 20 TiB of distinct content is not achievable here; dedup only helps legitimately-overlapping app payloads. Multiplication is by flatpak app, not by account, and every app is human-reviewed.",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "applications",
+      "source": "https://docs.flathub.org/docs/for-app-authors/submission"
+    },
+    {
+      "kind": "write-gated",
+      "value": "Review is human: submissions arrive as a pull request to github",
+      "source": "https://docs.flathub.org/docs/for-app-authors/submission"
+    }
+  ],
+  "limits_note": "per-object-cap: none published; the practical constraint is the build (GitHub-hosted runners with limited CPU/memory/time). retention: indefinite for published apps (OSTree history is retained; `flatpak repair`/`prune` is user-side). request-rate: dl.flathub.org supports ranges (verified 206). Builds that exceed CI limits 'fail to build'. Human review gates publication.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Read path is excellent and range-capable. Write path is not programmatic: a pull request + human review + a CI build. Content must be a valid Flatpak app manifest that builds from source, so arbitrary blobs cannot be published without wrapping them in an app (and reviewers will see them). dl.flathub.org works; registry.flathub.org does not resolve.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://dl.flathub.org/repo/summary",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, 12,702,673 bytes (real binary OSTree summary, contains app/ai.jan.Jan/x86_64/stable etc.)"
+    },
+    {
+      "url": "https://dl.flathub.org/repo/appstream/x86_64/appstream.xml.gz",
+      "date": "2026-10-21",
+      "proved": "probe: ranged GET bytes 0-1048575 on -> 206, 1,048,576 bytes"
+    },
+    {
+      "url": "https://dl.flathub.org/repo/appstream/x86_64/appstream.xml.gz",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, 10,738,037 bytes"
+    },
+    {
+      "url": "https://docs.flathub.org/docs/for-app-authors/submission",
+      "date": "2026-10-21",
+      "proved": "submission is a PR to github.com/flathub/flathub, built with org.flatpak.Builder and reviewed"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: DNS registry.flathub.org -> NXDOMAIN (the OCI registry endpoint is not publicly resolvable)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No published storage quota for published applications. This is a deduplicating OSTree/OCI repo: apps are stored as content-addressed ostree commits, so identical files across apps are stored once. Review is human: submissions arrive as a pull request to github.com/flathub/flathub and 'will be reviewed' - there is no self-service arbitrary-blob publish.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H7-software-archives.json",
+    "seed_area": "H/H7",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "H/H7"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "write-gated",
+      "why": "No published storage quota for published applications. This is a deduplicating OSTree/OCI repo: apps are stored as content-addressed ostree commits, so identical files across apps are stored once. Review is human: submissions arrive as a pull request to github.com/flathub/flathub and 'will be reviewed' - there is no self-service arbitrary-blob publish.",
+      "retry_when": "if the write gate becomes self-service",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H7"
+    },
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Software archives",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "No published storage quota for published applications. This is a deduplicating OSTree/OCI repo: apps are stored as content-addressed ostree commits, so identical files across apps are stored once. Review is human: submissions arrive as a pull request to github.com/flathub/flathub and 'will be reviewed' - there is no self-service arbitrary-blob publish.",
+    "limits_verbatim": "per-object-cap: none published; the practical constraint is the build (GitHub-hosted runners with limited CPU/memory/time). retention: indefinite for published apps (OSTree history is retained; `flatpak repair`/`prune` is user-side). request-rate: dl.flathub.org supports ranges (verified 206). Builds that exceed CI limits 'fail to build'. Human review gates publication.",
+    "egress_verbatim": "Free, CDN-backed static repo at dl.flathub.org. No billing.",
+    "chaining_verbatim": "one repo, unlimited apps x unlimited architectures (x86_64, aarch64) x unlimited builds. Per-app dedup means 20 TiB of distinct content is not achievable here; dedup only helps legitimately-overlapping app payloads. Multiplication is by flatpak app, not by account, and every app is human-reviewed.",
+    "tooling_verbatim": "`flatpak` (client), `flatpak-builder` + `org.flatpak.Builder`, `ostree` tooling, and the repo is readable as a plain static OSTree (summary / summary.idx / objects). No rclone backend and no OCI registry (registry.flathub.org does not resolve publicly - DNS NXDOMAIN from this vantage).",
+    "interface_verbatim": "rest",
+    "agent_focus": "Software preservation + package-archive mirrors as free bulk storage: which ones accept arbitrary blobs at scale, and what the per-artifact / monthly / retention caps actually are. Sources limited to pages opened in this session; every quota below was read live or from a dated archive capture."
+  },
+  "binding": "write-gated",
+  "binding_note": "the write is a queue with a person or a rule in it, so the upload rate is set by somebody else",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

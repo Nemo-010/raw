@@ -1,0 +1,101 @@
+{
+  "topic": "storage",
+  "slug": "farcaster-hubs-snapchain-storage-rent-actively-metered",
+  "provider": "Farcaster hubs / Snapchain — storage RENT, actively metered",
+  "url": "https://github.com/farcasterxyz/protocol/blob/main/docs/SPECIFICATION.md",
+  "category": "farcaster",
+  "free_tier": {
+    "stated": "Storage is allocated in integer units per fid and must be BOUGHT from the Storage Registry contract on Optimism (0x00000000fcCe7f938e7aE6D3c335bD6a1a7c593D). Each CRDT specifies messages-per-unit, so the unit is a message count, not bytes.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://raw.githubusercontent.com/farcasterxyz/protocol/main/docs/SPECIFICATION.md",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://raw.githubusercontent.com/farcasterxyz/protocol/main/docs/SPECIFICATION.md",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://raw.githubusercontent.com/farcasterxyz/protocol/main/docs/SPECIFICATION.md",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "n/a — hubs replicate messages, media is a URL in the cast body pointing at an external host (often Cloudflare Images / imgur).",
+    "metered": false
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "grpc",
+  "tooling": "gRPC hub API (submitMessage); `@farcaster/hub-nodejs`. Storage must be purchased on-chain before a message is accepted.",
+  "chaining": "None. Media is never stored by the protocol — a cast embed is a plain URL. Farcaster is a message log with paid rent, not a file store.",
+  "limits": [],
+  "limits_note": "per-object-cap not applicable; the binding limit is storage units paid for on Optimism plus per-CRDT message-count accounting. Free tier = whatever 1 storage unit covers (a few hundred casts).",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Rent model means capacity is explicitly priced, which is the opposite of the brief. Snapchain (2025 rewrite) preserves the rent model.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://raw.githubusercontent.com/farcasterxyz/protocol/main/docs/SPECIFICATION.md",
+      "date": "2026-10-21",
+      "proved": "'The Storage registry contract keeps track of the storage allocated to each fid. The storage for an fid is denominated in integer units. Each CRDT specifies the number of messages it can store per unit.'; 'For a message to be accepted, the fid must be registered in the Id registry, and signed with a valid signer present in the Key registry, and the fid must have enough storage allocated in the Storage registry.'"
+    },
+    {
+      "url": "https://docs.farcaster.xyz/learn/architecture/storage",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 404 (moved); docs.farcaster.xyz is a Next.js shell with no server-rendered quota table"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Storage is allocated in integer units per fid and must be BOUGHT from the Storage Registry contract on Optimism (0x00000000fcCe7f938e7aE6D3c335bD6a1a7c593D). Each CRDT specifies messages-per-unit, so the unit is a message count, not bytes.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F7-fediverse.json",
+    "seed_area": "F/F7",
+    "seed_verdict": [
+      {
+        "value": "?",
+        "area": "F/F7"
+      }
+    ],
+    "seed_confidence": "high",
+    "verdict_note": "the seed left this row with verdict '?'; PLAN.md §3.2 rules fails-quota by default, because no row in this set clears 500 GiB per unit. A writer's judgement, not the seed's, and flagged as such",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Storage is allocated in integer units per fid and must be BOUGHT from the Storage Registry contract on Optimism (0x00000000fcCe7f938e7aE6D3c335bD6a1a7c593D). Each CRDT specifies messages-per-unit, so the unit is a message count, not bytes.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F7"
+    },
+    "target_document": "docs/storage/free/social-and-fediverse.md",
+    "document_section": "Fediverse instances",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Storage is allocated in integer units per fid and must be BOUGHT from the Storage Registry contract on Optimism (0x00000000fcCe7f938e7aE6D3c335bD6a1a7c593D). Each CRDT specifies messages-per-unit, so the unit is a message count, not bytes.",
+    "limits_verbatim": "per-object-cap not applicable; the binding limit is storage units paid for on Optimism plus per-CRDT message-count accounting. Free tier = whatever 1 storage unit covers (a few hundred casts).",
+    "egress_verbatim": "n/a — hubs replicate messages, media is a URL in the cast body pointing at an external host (often Cloudflare Images / imgur).",
+    "chaining_verbatim": "None. Media is never stored by the protocol — a cast embed is a plain URL. Farcaster is a message log with paid rent, not a file store.",
+    "tooling_verbatim": "gRPC hub API (submitMessage); `@farcaster/hub-nodejs`. Storage must be purchased on-chain before a message is accepted.",
+    "interface_verbatim": "grpc",
+    "agent_focus": "Fediverse / decentralised social instances as media storage: Mastodon, Misskey/Sharkey/IceShark, Pleroma/Akkoma, Pixelfed, Lemmy/pict-rs, Bluesky AT Protocol PDS, Nostr relays + Blossom, Farcaster hubs/Snapchain. Per-user media quotas, per-file caps, media-URL permanence, and the 'unlimited instances x modest quota' multiplication."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

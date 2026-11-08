@@ -1,0 +1,163 @@
+{
+  "topic": "compute",
+  "slug": "lite-host",
+  "provider": "LITE.HOST",
+  "url": "https://lite.host/vds",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "RUB 285 per month for the Kallisto row: 1 vCPU, 1024 MB RAM, 10 GB SSD, up to 200 Mbit/s, Moscow. Pluto is RUB 350 for the same shape with 20 GB. The page's configurator shows '5 GB SSD' at RUB 252.5 per month, and the page's meta description states a floor of RUB 159.38 per month; no row at that floor was found on the page read. The page states unlimited traffic at up to 200 Mbit/s, weekly backups to a separate data centre, and a free WAF+ plan.",
+    "unit": "GiB",
+    "metered_on": "wall-clock",
+    "source_url": "https://lite.host/vds",
+    "read_on": "2026-10-23",
+    "notes": "none"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://lite.host/vds",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://lite.host/vds",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "unlimited traffic at up to 200 Mbit/s; no byte allowance and no overage price stated",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://lite.host/vds"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "own control panel with power control, OS reinstall and a resource-health view; no API documented on the page read",
+  "chaining": "The 5 GB configurator row at RUB 252.5 is the cheapest Moscow box that still states a backup copy in a second data centre, which is the difference between a lost disk and a lost day",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "Traffic is stated as unlimited at up to 200 Mbit/s, so the port is the wall; the page publishes no byte allowance and no throttle-after-allowance term.",
+      "source": "https://lite.host/vds"
+    }
+  ],
+  "limits_note": "Traffic is stated as unlimited at up to 200 Mbit/s, so the port is the wall; the page publishes no byte allowance and no throttle-after-allowance term.",
+  "binding": "per-ip-shaping",
+  "binding_note": "Traffic is stated as unlimited at up to 200 Mbit/s, so the port is the wall; the page publishes no byte allowance and no throttle-after-allowance term.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "the order page's account section requires first name, last name, email and password; an optional company branch asks for entity name, phone, INN and KPP (read 2026-11-07)",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://lite.host/vds",
+      "date": "2026-10-23",
+      "proved": "cheapest named row quoted: 'Каллисто … 1 vCPU … 1024 МБ … 10 ГБ SSD … до 200 мбит/с … 285 ₽ / мес.', 'Плутон … 20 ГБ SSD … 350 ₽ / мес.'; configurator 'ДИСКОВОЕ ПРОСТРАНСТВО - 5 ГБ SSD 252.5 ₽ в месяц'"
+    },
+    {
+      "url": "https://lite.host/vds",
+      "date": "2026-10-23",
+      "proved": "meta description quoted: 'стоимостью от 159.38 рублей в месяц'; body 'Размещение в проверенных дата-центрах Москвы', 'Неограниченный трафик на скорости до 200 мбит/с'; hardware 'HP и SuperMicro с процессорами Intel и SSD корпоративного уровня'"
+    },
+    {
+      "url": "https://lite.host/order/vds/callisto/monthly",
+      "date": "2026-11-07",
+      "proved": "the Callisto order page prices the server 285 RUB per month",
+      "capture": "sha256:9f6105c8b70ef32bc8f06ca49040917c130a9abd81ee2e8b46fb23f1b921a880",
+      "quote": "Стоимость сервера\n\n285 ₽ в месяц"
+    },
+    {
+      "url": "https://lite.host/order/vds/callisto/annually",
+      "date": "2026-11-07",
+      "proved": "the order page prices the annual term 2907 RUB",
+      "capture": "sha256:35bfd72812e614d205ac1ee210b45d6515500ad914839dc7c05bdd5161af993b",
+      "quote": "Стоимость сервера\n\n2907 ₽ в год"
+    },
+    {
+      "url": "https://lite.host/order/vds/callisto/monthly",
+      "date": "2026-11-07",
+      "proved": "the order page prints the cycle price and no renewal figure",
+      "capture": "sha256:9f6105c8b70ef32bc8f06ca49040917c130a9abd81ee2e8b46fb23f1b921a880",
+      "quote": "Стоимость сервера\n\n285 ₽ в месяц"
+    },
+    {
+      "url": "https://lite.host/order/vds/callisto/monthly",
+      "date": "2026-11-07",
+      "proved": "the cycle selector prints the annual option at 15 percent off",
+      "capture": "sha256:bd4f6fcb675de54c3d310425e54ad981699b020fce639aa6f745a162e8c4804c",
+      "quote": "<option value=\"annually\" >Ежегодно (15% скидка)</option>"
+    },
+    {
+      "url": "https://lite.host/order/vds/callisto/annually",
+      "date": "2026-11-07",
+      "proved": "the order form renders its continue button; no out-of-stock marker",
+      "capture": "sha256:35bfd72812e614d205ac1ee210b45d6515500ad914839dc7c05bdd5161af993b",
+      "quote": "Продолжить"
+    },
+    {
+      "url": "https://lite.host/order/vds/callisto/monthly",
+      "date": "2026-11-07",
+      "proved": "the checkout page prices the plan 285 RUB monthly",
+      "capture": "sha256:9f6105c8b70ef32bc8f06ca49040917c130a9abd81ee2e8b46fb23f1b921a880",
+      "quote": "Стоимость сервера\n\n285 ₽ в месяц"
+    },
+    {
+      "url": "https://lite.host/order/vds/callisto/monthly",
+      "date": "2026-11-07",
+      "proved": "the order form's required email field",
+      "capture": "sha256:bd4f6fcb675de54c3d310425e54ad981699b020fce639aa6f745a162e8c4804c",
+      "quote": "<input type=\"email\" name=\"mail\" required=\"\" placeholder=\"Почтовый ящик\" autocomplete=\"off\">"
+    },
+    {
+      "url": "https://lite.host/vds",
+      "date": "2026-11-07",
+      "proved": "the entry plan's shape and price are unchanged on 2026-11-07",
+      "capture": "sha256:f0dae3fb0cc3d4f7e43d35d2c7845f3501d748da96c2e1595f860f2b3916c610",
+      "quote": "- 1 vCPU\n- 1024 МБ\n- 10 ГБ SSD\n- до 200 мбит/с\n- 285 ₽ / мес."
+    },
+    {
+      "url": "https://lite.host/order/vds/callisto/monthly",
+      "date": "2026-11-07",
+      "proved": "the order page prices the Kallisto server RUB 285 per month",
+      "capture": "sha256:9f6105c8b70ef32bc8f06ca49040917c130a9abd81ee2e8b46fb23f1b921a880",
+      "quote": "Стоимость сервера\n\n285 ₽ в месяц"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-07T17:40:53.065Z",
+  "notes": "Source: vps.today index row ('LITE.HOST | 10 GB SSD | 1 GB | 1 x 2.4 GHz | 200 Mbit/s | ( ) KVM IPv6 DDoS ! | 285 .'), then the vendor page. The RUB 159.38 floor in the meta description has no matching row on the page read and stays unverified. Rendering and provenance: currency written as RUB.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "LITE.HOST",
+      "class": null,
+      "category_as_written": "cloud VM",
+      "free_tier_kind": "none",
+      "shape": {
+        "vcpu": 1,
+        "ram_gib": 1,
+        "disk_gib": 10,
+        "gpu_class": null,
+        "gpu_count": null
+      },
+      "seen_routes": null,
+      "agents": [
+        "cn-ru-aggregators"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "monthly_price": "RUB 285 per month for the Callisto plan in Moscow; the order page prices the same plan 285 RUB monthly",
+    "annual_price": "RUB 2907 per year: the order page with the annual cycle prints 'Стоимость сервера 2907 ₽ в год'",
+    "renewal_price": "not published: no page read prints a renewal price",
+    "billing_term": "monthly by default; the order form's cycle selector offers quarterly at 5 percent off, semi-annual at 10 percent and annual at 15 percent",
+    "stock": "orderable: the order form renders the plan with its cycle selector and continue button, and no out-of-stock marker",
+    "cart_price": "RUB 285 per month at the monthly cycle: the order page is the checkout (account data and payment on the same page) and prices the plan before an account exists",
+    "price_on_page": "RUB 285/month for the Kallisto VPS (Callisto)",
+    "renewal_usd": "not published: the order page prints the cycle price and no renewal figure"
+  }
+}

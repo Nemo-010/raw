@@ -1,0 +1,105 @@
+{
+  "topic": "storage",
+  "slug": "greencloudvps-storage-kvm",
+  "provider": "GreenCloudVPS Storage KVM",
+  "url": "https://green.cloud/storage-kvm-vps.php",
+  "category": "storage-vps",
+  "free_tier": {
+    "stated": "US/EU: Storage-0.5TB 500 GB, Storage-1 1 TB, Storage-2 2 TB (SATA RAID-10, 10 Gbps port). APAC: same three sizes in Tokyo and Singapore but with a quarter of the bandwidth. **No plan above 2 TB exists.**",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://green.cloud/storage-kvm-vps.php",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://green.cloud/storage-kvm-vps.php",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://green.cloud/storage-kvm-vps.php",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Metered annual-bundled allowance, no published overage rate. US/EU: 0.5 TB->3 TB, 1 TB->6 TB, 2 TB->10 TB per month. APAC: 0.5 TB->1 TB, 1 TB->2 TB, 2 TB->4 TB — i.e. APAC is 1/2.5 of the US figure. This is the Asia option's real trap: the Tokyo/Singapore plans cost the same as US/EU and give 40% of the traffic.",
+    "metered": true,
+    "free_allowance": "10 TB per month"
+  },
+  "interface": [
+    "rest",
+    "sftp",
+    "rsync",
+    "rclone"
+  ],
+  "interface_detail": "sftp, rsync, rest (self-hosted)",
+  "tooling": "rclone SFTP, root KVM",
+  "chaining": "Root KVM on a 10 Gbps port, which is unusually fast for this price class. Ceiling of 2 TB per VM means 10 VMs for 20 TB — workable for the chunk-and-replicate pattern but not for a single 10 TiB working set.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "10 Gbps",
+      "source": "https://green.cloud/storage-kvm-vps.php"
+    }
+  ],
+  "limits_note": "per-object-cap: none. Hard 2 TB per-VM ceiling. APAC bandwidth 40% of US/EU.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "'#1 Top Provider Award & #1 Most Stable Provider on LowEndTalk' is their own claim on their own page. Widely used in the LET storage-VPS recommendation threads with no data-loss reports surfaced in this session.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://green.cloud/storage-kvm-vps.php",
+      "date": "2026-10-21",
+      "proved": "both tables read this session: Storage-0.5TB $25/yr (500 GB, 3 TB), Storage-1 $45/yr (1024 GB, 6 TB), Storage-2 $80/yr (2048 GB, 10 TB); APAC block identical pricing with 1/2/4 TB"
+    },
+    {
+      "url": "https://lowendtalk.com/discussion/193376/",
+      "date": "2026-10-21",
+      "proved": "user citing GreenCloud 500 GB / 3 TB for '$2.08 / month'"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$3.33/TB/mo at the 2 TB rung ($80/yr = $6.67/mo). At 5 TB: 2x Storage-2 + 1x Storage-1 = $13.33 + $3.75 = $17.08/mo = $3.42/TB. At 20 TB: 10x Storage-2 = $66.67/mo = $3.33/TB. Annual-only pricing; the per-TB rate is already the annual rate.",
+  "notes": "US/EU: Storage-0.5TB 500 GB, Storage-1 1 TB, Storage-2 2 TB (SATA RAID-10, 10 Gbps port). APAC: same three sizes in Tokyo and Singapore but with a quarter of the bandwidth. **No plan above 2 TB exists.**",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "P-P2-storage-vps-us-asia.json",
+    "seed_area": "P/P2",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "P/P2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/paid/storage-boxes.md",
+    "document_section": "US and Asia storage VPS",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "US/EU: Storage-0.5TB 500 GB, Storage-1 1 TB, Storage-2 2 TB (SATA RAID-10, 10 Gbps port). APAC: same three sizes in Tokyo and Singapore but with a quarter of the bandwidth. **No plan above 2 TB exists.**",
+    "limits_verbatim": "per-object-cap: none. Hard 2 TB per-VM ceiling. APAC bandwidth 40% of US/EU.",
+    "egress_verbatim": "Metered annual-bundled allowance, no published overage rate. US/EU: 0.5 TB->3 TB, 1 TB->6 TB, 2 TB->10 TB per month. APAC: 0.5 TB->1 TB, 1 TB->2 TB, 2 TB->4 TB — i.e. APAC is 1/2.5 of the US figure. This is the Asia option's real trap: the Tokyo/Singapore plans cost the same as US/EU and give 40% of the traffic.",
+    "chaining_verbatim": "Root KVM on a 10 Gbps port, which is unusually fast for this price class. Ceiling of 2 TB per VM means 10 VMs for 20 TB — workable for the chunk-and-replicate pattern but not for a single 10 TiB working set.",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "rclone SFTP, root KVM",
+    "interface_verbatim": "sftp, rsync, rest (self-hosted)",
+    "price_verbatim": "$3.33/TB/mo at the 2 TB rung ($80/yr = $6.67/mo). At 5 TB: 2x Storage-2 + 1x Storage-1 = $13.33 + $3.75 = $17.08/mo = $3.42/TB. At 20 TB: 10x Storage-2 = $66.67/mo = $3.33/TB. Annual-only pricing; the per-TB rate is already the annual rate.",
+    "agent_focus": "cheap-PAID lane — cheapest $/TB/month storage outside Europe for a self-funded buyer. Every candidate priced at the 5 TB and 20 TB tier as $ per TB per month, egress policy quoted verbatim, and payment friction for a non-US/non-EU buyer recorded. Deliberately excludes AWS/Azure/GCP/Alibaba/R2/B2/iDrive e2 (rejected). FX rates used throughout, taken 2026-10-21 from api.frankfurter.dev: EUR 0.89015, CAD 1.4046, INR 94.47, JPY 157.88, KRW 1325.57 per USD."
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,17 @@
+{
+ "id": "20261101-1810-verify-dev-services-2fd8-u11-q05",
+ "kind": "verify",
+ "topic": "dev-services",
+ "question": "Queue item 20261030-1251-expand-dev-services-c696-u04-q02: should limits[].kind get a seat-cap term, and does free_tier.unit need a seats term? Proposal: add seat-cap to limits[].kind and to the binding vocabulary, defined as a cap on how many people may hold a login on the account (dashboard seats, team members, platform users), counted per account and not over a period; add no seats unit. dev-services/clerk (Hobby: up to 3 dashboard seats), dev-services/growthbook (Starter: up to 3 users, where the plan guide says a seat is an individual platform user and not an end user) and dev-services/flagsmith (Free: 1 team member) each gain a seat-cap row in limits[] and drop the seat sentence of limits_note.",
+ "why": "No existing term fits. volume-quota is defined in dossier/README.md as a byte allowance over a period, and a seat cap breaks at invitation, not at use. free_tier.unit users already covers a headline seat count (egress/twingate 'Up to 5 users', egress/netmaker '3 users', egress/tailscale-personal '6 users', each metered on identity-count), so a seats unit is not needed by these four records: Clerk keeps users (50,000 monthly retained users is its headline), Flagsmith keeps requests, GrowthBook keeps mixed (seats, CDN requests, CDN bandwidth and warehouse events), and LaunchDarkly keeps mixed for service connections, client-side MAU, logs, traces, session replays, errors and AI runs. The queue item's premise that LaunchDarkly counts seats does not hold: its Developer plan lists Unlimited seats on the pricing page, unchanged when read on 2026-11-01. Other records with a seat-like cap that a seat-cap kind would serve: compute/beam (1 seat), compute/inference-net (1 seat), dev-services/new-relic (one free full platform user), storage/comet-ml-artifact-dataset-management (10 team members), storage/dagshub (2 collaborators on private repos), storage/discourse-hosted-free-plan (2 staff seats). Queue items 20261030-1251-expand-dev-services-c696-u05-q02 (monetary credit, metric series, hosts) and 20261030-1251-expand-dev-services-c696-u03-q02 (concurrency cap, monthly active users) ask for count terms of the same family, so one rules change can settle them together. If one unit term for both seats and end users is preferred, users already serves.",
+ "scope": {
+  "rids": [
+   "dev-services/clerk",
+   "dev-services/growthbook",
+   "dev-services/flagsmith",
+   "dev-services/launchdarkly"
+  ]
+ },
+ "origin": "20261101-1810-verify-dev-services-2fd8/u11",
+ "created": "2026-11-02T00:37:55Z"
+}

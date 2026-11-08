@@ -1,0 +1,96 @@
+{
+  "topic": "storage",
+  "slug": "tencent-cloud-cos-new-user-free-tier",
+  "provider": "Tencent Cloud COS — new-user free tier",
+  "url": "https://www.tencentcloud.com/document/product/436/6240",
+  "category": "iaas",
+  "free_tier": {
+    "stated": "50 GB STANDARD storage capacity, valid 6 months (180 days), new users only. Some third-party summaries claim enterprise accounts get 1 TB/month for 6 months — not stated on the vendor page I read, so unverified.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.tencentcloud.com/document/product/436/6240",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.tencentcloud.com/document/product/436/6240",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.tencentcloud.com/document/product/436/6240",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Explicitly NOT covered: 'The free quota resource packages cannot be used to offset billable items for non-STANDARD storage usage, such as ... requests, and traffic.' Public network downstream traffic is billed from byte one at ~$0.1/GB.",
+    "metered": true
+  },
+  "interface": [
+    "s3-compatible",
+    "rclone"
+  ],
+  "interface_detail": "s3",
+  "tooling": "COS XML/S3-compatible API — rclone 's3' provider 'Tencent Cloud Object Storage (COS)'; COSCLI; SDKs. Public-read buckets and pre-signed URLs supported.",
+  "chaining": "One free package per new account; 50 GB x 6 months. Account multiplication requires separate verified identities.",
+  "limits": [],
+  "limits_note": "50 GB, 6 months, storage only. Egress and requests are never free — 'user downloaded 10 GB ... 0.1 x 10 = 1 USD' in the vendor's own billing example.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "inferred from the category 'iaas'; the source record states no identity cost, so this is a class assumption, not evidence",
+    "country": null
+  },
+  "reliability_note": "Reliable; the trap is that egress is charged from the first byte, so a public bucket can generate a real bill while storage itself is still free.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.tencentcloud.com/document/product/436/6240",
+      "date": "2026-10-21",
+      "proved": "'New user | 50GB STANDARD storage capacity package | 6 months (180 days)'; 'cannot be used to offset ... requests, and traffic'"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "50 GB STANDARD storage capacity, valid 6 months (180 days), new users only. Some third-party summaries claim enterprise accounts get 1 TB/month for 6 months — not stated on the vendor page I read, so unverified.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G4-cloud-free-tiers.json",
+    "seed_area": "G/G4",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "G/G4"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "50 GB STANDARD storage capacity, valid 6 months (180 days), new users only. Some third-party summaries claim enterprise accounts get 1 TB/month for 6 months — not stated on the vendor page I read, so unverified.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G4"
+    },
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "Cloud free tiers that include a drive",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 1,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "50 GB STANDARD storage capacity, valid 6 months (180 days), new users only. Some third-party summaries claim enterprise accounts get 1 TB/month for 6 months — not stated on the vendor page I read, so unverified.",
+    "limits_verbatim": "50 GB, 6 months, storage only. Egress and requests are never free — 'user downloaded 10 GB ... 0.1 x 10 = 1 USD' in the vendor's own billing example.",
+    "egress_verbatim": "Explicitly NOT covered: 'The free quota resource packages cannot be used to offset billable items for non-STANDARD storage usage, such as ... requests, and traffic.' Public network downstream traffic is billed from byte one at ~$0.1/GB.",
+    "chaining_verbatim": "One free package per new account; 50 GB x 6 months. Account multiplication requires separate verified identities.",
+    "tooling_verbatim": "COS XML/S3-compatible API — rclone 's3' provider 'Tencent Cloud Object Storage (COS)'; COSCLI; SDKs. Public-read buckets and pre-signed URLs supported.",
+    "interface_verbatim": "s3",
+    "agent_focus": "Big-cloud free tiers and always-free/credit programmes, judged on >=500GB free per unit, free egress, and programmatic access"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

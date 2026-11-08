@@ -1,0 +1,133 @@
+{
+  "topic": "storage",
+  "slug": "beehiiv-500-mb-per-podcast-episode-newsletter-attachment",
+  "provider": "beehiiv (free plan) — 500 MB per podcast episode, newsletter attachment host",
+  "url": "https://www.beehiiv.com",
+  "category": "media",
+  "free_tier": {
+    "stated": "Free plan is \"Free forever\" with unlimited email sends (pricing page). Per-file: \"The maximum file size for a single podcast episode upload is 500 MB.\" File blocks in posts allow attachments; images must be under 5 MB.",
+    "unit": "unlimited",
+    "metered_on": "unstated",
+    "source_url": "https://www.beehiiv.com/support/article/41323776364823",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "maximum file size for a single podcast episode upload is 500 MB",
+    "bytes": 500000000,
+    "source_url": "https://www.beehiiv.com/support/article/41323776364823",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.beehiiv.com/support/article/41323776364823",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "CDN-served post media; no egress billing on the free plan.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "REST API exists (beehiiv API + Zapier integration, v3 app). No rclone backend. Note: the brief's Substack comparison is the right frame — Substack is 700 MB/PDF, beehiiv is 500 MB/episode.",
+  "chaining": "Episodes are per-show; multiple shows × multiple publications per account. But 500 MB × episodes is a podcasting quota, not a blob store, and the free plan's real limit is subscriber count (2,500), not bytes.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "maximum file size for a single podcast episode upload is 500 MB",
+      "source": "https://www.beehiiv.com/support/article/41323776364823"
+    }
+  ],
+  "limits_note": "per-object-cap 500 MB podcast audio, 5 MB images, 1 MB fonts. Email body itself is capped at Gmail's 102 KB clipping threshold, so the attachment is the only real payload path. No published aggregate byte quota on free.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: Free plan is \"Free forever\" with unlimited email sends (pricing page). Per-file: \"The maximum file size for a single podcast episode upload is 500 MB.\" File blocks in p",
+    "country": null
+  },
+  "reliability_note": "Media re-encoding risk must be assumed for audio/video paths; original-byte retrieval is not documented. Treat as CDN surface, not storage.",
+  "confidence": "documented",
+  "confidence_note": "Re-read on 2026-11-03 from vendor pages: https://www.beehiiv.com/support/article/41323776364823 (500 MB maximum for a single podcast episode upload) and https://www.beehiiv.com/pricing (Free includes up to 2,500 subscribers; every plan includes unlimited email sends). The per-object cap that binds the verdict cites a vendor capture; the image, font and email-clipping limits stay unverified.",
+  "evidence": [
+    {
+      "url": "https://www.beehiiv.com/support/article/41323776364823",
+      "date": "2026-10-21",
+      "proved": "\"maximum file size for a single podcast episode upload is 500 MB\""
+    },
+    {
+      "url": "https://www.beehiiv.com/pricing",
+      "date": "2026-10-21",
+      "proved": "Free forever, up to 2,500 subscribers, unlimited sends"
+    },
+    {
+      "url": "https://www.beehiiv.com/support/article/4413255394583",
+      "date": "2026-10-21",
+      "proved": "Gmail 102 KB clipping limit governs email payload"
+    },
+    {
+      "url": "https://www.beehiiv.com/support/article/41323776364823",
+      "date": "2026-11-03",
+      "proved": "the per-episode upload cap is 500 MB",
+      "capture": "sha256:c7285ee138c1d367f02698b04be3cbb22245e0d89768b94992aa6278ca98e8df",
+      "quote": "The maximum file size for a single podcast episode upload is 500 MB."
+    },
+    {
+      "url": "https://www.beehiiv.com/pricing",
+      "date": "2026-11-03",
+      "proved": "plans are tiered on subscriber count, not stored bytes",
+      "capture": "sha256:90cf63a8ddde4516a4a048253649d3dbd7e77b9f79dbbf55b8a46d28d1e28e2b",
+      "quote": "Free includes up to 2,500 subscribers, Lite up to 100,000, Pro up to 250,000, and Enterprise is custom."
+    },
+    {
+      "url": "https://www.beehiiv.com/pricing",
+      "date": "2026-11-03",
+      "proved": "sends are unmetered on every plan",
+      "capture": "sha256:90cf63a8ddde4516a4a048253649d3dbd7e77b9f79dbbf55b8a46d28d1e28e2b",
+      "quote": "No. Every plan includes unlimited email sends."
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-11-03T15:04:38.757Z",
+  "notes": "Free plan is \"Free forever\" with unlimited email sends (pricing page). Per-file: \"The maximum file size for a single podcast episode upload is 500 MB.\" File blocks in posts allow attachments; images must be under 5 MB.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H8-email-as-storage.json",
+    "seed_area": "H/H8",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "H/H8"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Free plan is \"Free forever\" with unlimited email sends (pricing page). Per-file: \"The maximum file size for a single podcast episode upload is 500 MB.\" File blocks in posts allow attachments; images must be under 5 MB.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H8"
+    },
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Email as storage",
+    "conversion": "mechanical",
+    "verified_at_basis": "re-read on 2026-11-03 against https://www.beehiiv.com/support/article/41323776364823 and https://www.beehiiv.com/pricing; image, font and email-clipping limits stay unverified",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Free plan is \"Free forever\" with unlimited email sends (pricing page). Per-file: \"The maximum file size for a single podcast episode upload is 500 MB.\" File blocks in posts allow attachments; images must be under 5 MB.",
+    "limits_verbatim": "per-object-cap 500 MB podcast audio, 5 MB images, 1 MB fonts. Email body itself is capped at Gmail's 102 KB clipping threshold, so the attachment is the only real payload path. No published aggregate byte quota on free.",
+    "egress_verbatim": "CDN-served post media; no egress billing on the free plan.",
+    "chaining_verbatim": "Episodes are per-show; multiple shows × multiple publications per account. But 500 MB × episodes is a podcasting quota, not a blob store, and the free plan's real limit is subscriber count (2,500), not bytes.",
+    "tooling_verbatim": "REST API exists (beehiiv API + Zapier integration, v3 app). No rclone backend. Note: the brief's Substack comparison is the right frame — Substack is 700 MB/PDF, beehiiv is 500 MB/episode.",
+    "interface_verbatim": "rest",
+    "agent_focus": "email and mail-adjacent storage: webmail quotas, IMAP-as-block-device, mailing-list archives, newsletter attachment hosts"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

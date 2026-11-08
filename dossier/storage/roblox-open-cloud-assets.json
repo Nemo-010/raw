@@ -1,0 +1,110 @@
+{
+  "topic": "storage",
+  "slug": "roblox-open-cloud-assets",
+  "provider": "Roblox Open Cloud Assets",
+  "url": "https://create.roblox.com/docs/cloud/guides/usage-assets",
+  "category": "paas",
+  "free_tier": {
+    "stated": "Per-asset caps only, no aggregate quota: 20 MB for most asset types; Video up to 3.75 GB each, up to 20 video uploads/day for ID-verified 13+ accounts (5 min duration, 4096x2160 max). Audio: 100 uploads/month if ID-verified, 10/month if not.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://create.roblox.com/docs/en-us/cloud/guides/usage-assets.md",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "20 MB/asset",
+    "bytes": 20000000,
+    "source_url": "https://create.roblox.com/docs/en-us/cloud/guides/usage-assets.md",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "20 MB/asset for models, images, decals, animation; video 3.75 GB but capped at 20/day and 5 min; audio hard-capped monthly; all uploads land in moderation; assets are permanently tied to a creator account.",
+    "source_url": "https://create.roblox.com/docs/en-us/cloud/guides/usage-assets.md",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free — asset delivery is served by Roblox's own CDN (assetdelivery.roblox.com / rbxcdn), never metered to the uploader.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Documented Open Cloud REST: POST https://apis.roblox.com/assets/v1/assets (multipart, x-api-key header), plus asset delivery API. API keys scoped to a user or group; no rclone.",
+  "chaining": "20 videos/day x 3.75 GB = 75 GB/day per ID-verified account = ~2.2 TB/month; unlimited accounts (each needing ID verification) and unlimited assets per account since there is no total quota. Non-video types: 20 MB x unlimited assets x 100-upload monthly audio cap.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "100 uploads/month",
+      "source": "https://create.roblox.com/docs/en-us/cloud/guides/usage-assets.md"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "20 MB/asset",
+      "source": "https://create.roblox.com/docs/en-us/cloud/guides/usage-assets.md"
+    }
+  ],
+  "limits_note": "20 MB/asset for models, images, decals, animation; video 3.75 GB but capped at 20/day and 5 min; audio hard-capped monthly; all uploads land in moderation; assets are permanently tied to a creator account.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: sibly; read-back needs an authenticated assetdelivery call (anonymous GET -> 401), so it is not a public cacheable fetch path. 20 videos/day x 3.75 GB = 75 GB/day per ID-verified account =",
+    "country": null
+  },
+  "reliability_note": "Moderation removes assets silently and irreversibly; read-back needs an authenticated assetdelivery call (anonymous GET -> 401), so it is not a public cacheable fetch path.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://create.roblox.com/docs/en-us/cloud/guides/usage-assets.md",
+      "date": "2026-10-21",
+      "proved": "limits table: 'file size up to 20 MB', Video 'Up to 3.75 GB', 'Up to 20 uploads per day if you're 13+ and ID-verified', Audio 'Up to 100 uploads per month if you're ID-verified'"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET assetdelivery.roblox.com/v1/asset?id=10334973820 -> 401 Unauthorized"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET apis.roblox.com/assets/v1/assets/10334973820 -> 403 Forbidden"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Per-asset caps only, no aggregate quota: 20 MB for most asset types; Video up to 3.75 GB each, up to 20 video uploads/day for ID-verified 13+ accounts (5 min duration, 4096x2160 max). Audio: 100 uploads/month if ID-verified, 10/month if not.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H6-weird-protocols.json",
+    "seed_area": "H/H6",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H6"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/relays-and-transports.md",
+    "document_section": "Weird transports",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Per-asset caps only, no aggregate quota: 20 MB for most asset types; Video up to 3.75 GB each, up to 20 video uploads/day for ID-verified 13+ accounts (5 min duration, 4096x2160 max). Audio: 100 uploads/month if ID-verified, 10/month if not.",
+    "limits_verbatim": "20 MB/asset for models, images, decals, animation; video 3.75 GB but capped at 20/day and 5 min; audio hard-capped monthly; all uploads land in moderation; assets are permanently tied to a creator account.",
+    "egress_verbatim": "Free — asset delivery is served by Roblox's own CDN (assetdelivery.roblox.com / rbxcdn), never metered to the uploader.",
+    "chaining_verbatim": "20 videos/day x 3.75 GB = 75 GB/day per ID-verified account = ~2.2 TB/month; unlimited accounts (each needing ID verification) and unlimited assets per account since there is no total quota. Non-video types: 20 MB x unlimited assets x 100-upload monthly audio cap.",
+    "tooling_verbatim": "Documented Open Cloud REST: POST https://apis.roblox.com/assets/v1/assets (multipart, x-api-key header), plus asset delivery API. API keys scoped to a user or group; no rclone.",
+    "interface_verbatim": "rest",
+    "agent_focus": "weird transports: blockchain blobs/calldata, DNS TXT, Usenet, FTP, Gopher/Gemini, IPFS-over-DNS, mod CDNs (Steam/CurseForge/Modrinth/Thunderstore/Roblox)"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

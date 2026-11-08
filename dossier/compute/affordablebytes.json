@@ -1,0 +1,151 @@
+{
+  "topic": "compute",
+  "slug": "affordablebytes",
+  "provider": "AffordableBytes",
+  "url": "https://affordablebytes.com/",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "EUR 3.49 per month for the Xeon Gold 6150 entry plan in Frankfurt: 1 vCore, 6 GB DDR4, 45 GB RAID 1 NVMe, 5 TB traffic, 1 Gbit uplink, 1 IPv4 plus a /64 IPv6, AS203446 DDoS protection; the ladder above it is EUR 7.99 (4 vCore, 11 GB, 100 GB, 15 TB), EUR 14.99 (6 vCore, 22 GB, 200 GB, 25 TB) and EUR 24.99 (8 vCore, 40 GB, 150 GB, 40 TB). The cart rents by a 30-day unit on a runtime slider of 30 to 360 days paid upfront at the same monthly rate, the renewal amount row is filled with the same computed price as due today, and no annual price is published. One exception: the 22 GB plan's cart prices EUR 15.99 against the marketing page's EUR 14.99. Every cart visited renders a 'Sold out' banner above a checkout that still prices the plan, so whether a plan can actually be provisioned is unverified: the banner's subject is not printed.",
+    "unit": "GiB",
+    "metered_on": "wall-clock",
+    "source_url": "https://affordablebytes.com/",
+    "read_on": "2026-10-22",
+    "notes": "none"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://affordablebytes.com/",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://affordablebytes.com/",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "5 TB a month on the entry plan; the S3 line adds 10 TB of egress included per TB of storage bought. No overage price and no post-allowance throttle stated",
+    "metered": true,
+    "free_allowance": "5 TB per month",
+    "price_per_tb": null,
+    "source_url": "https://affordablebytes.com/"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "s3-compatible"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "the vendor advertises its own control panel and published node statistics; no API or CLI is documented on the page read",
+  "chaining": "EUR 3.49 for 6 GB and 45 GB with 5 TB is the lowest cost per gigabyte of RAM in this lane by a wide margin, which is what makes it a candidate for a memory-resident index or a build worker rather than for moving bytes; the same vendor's S3 line at EUR 4.95 per TB per month with 10 TB of egress per TB is the paired answer when the same bytes have to be stored as well as processed",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "5 TB a month on the 6 GB plan, 15 TB on the 11 GB, 25 TB on the 22 GB and 40 TB on the 40 GB, each stated per plan. The allowance is the wall before the 1 Gbit uplink is: 5 TB a month averages well under 1 Gbit, so the counter binds first. No overage price and no post-allowance throttle are stated on either page read.",
+      "source": "https://affordablebytes.com/"
+    }
+  ],
+  "limits_note": "5 TB a month on the 6 GB plan, 15 TB on the 11 GB, 25 TB on the 22 GB and 40 TB on the 40 GB, each stated per plan. The allowance is the wall before the 1 Gbit uplink is: 5 TB a month averages well under 1 Gbit, so the counter binds first. No overage price and no post-allowance throttle are stated on either page read.",
+  "binding": "volume-quota",
+  "binding_note": "5 TB a month on the 6 GB plan, 15 TB on the 11 GB, 25 TB on the 22 GB and 40 TB on the 40 GB, each stated per plan. The allowance is the wall before the 1 Gbit uplink is: 5 TB a month averages well under 1 Gbit, so the counter binds first. No overage price and no post-allowance throttle are stated on either page read.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "not read: the signup page was not fetched in this lane",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://affordablebytes.com/",
+      "date": "2026-10-22",
+      "proved": "vendor plan block quoted: 'Xeon Gold 6150', 'EUR 3.49 / month', '1 vCore', '6 GB DDR4 Memory', '45 GB RAID 1 NVMe Storage', '5 TB Bandwidth', '1x IPv4 Address', '1x /64 IPv6 Subnet', '1 Gbit Uplink', 'AS203446 DDoS Protection'; the next rows print 'EUR 7.99 / month' with '11 GB' and '15 TB Bandwidth', and 'EUR 24.99 / month' with '40 GB' and '40 TB Bandwidth'"
+    },
+    {
+      "url": "https://lowendbox.com/blog/high-ram-low-prices-must-be-an-affordablebytes-offer-get-a-6gb-vps-for-only-e3-49-month/",
+      "date": "2026-10-22",
+      "proved": "third-party offer post, published 2026-10-08: 'Xeon Gold | 6GB ... 1x vCore - Xeon Gold 6150 ... 6 GB DDR4 Memory ... 45 GB RAID 1 NVMe Storage ... 5 TB Traffic ... 1 Gbit Uplink ... EUR 3.49 / month'; body text: 'And service renews at the same price!'; the post prints 'EUR 15.99 / month' for the 22 GB plan and '20 TB Traffic' for the 40 GB plan"
+    },
+    {
+      "url": "https://affordablebytes.com/",
+      "date": "2026-11-07",
+      "proved": "the marketing page prices the entry plan at EUR 3.49 per month and prints the full plan ladder",
+      "capture": "sha256:7e9ff7203e37594881ec63b618f671491f58a4ad4a059114de5e74b4d19a54e5",
+      "quote": "€ 3.49 / month"
+    },
+    {
+      "url": "https://panel.affordablebytes.com/order/config/2/40a23cee-c4c2-4775-beb9-190bf97c95ce/2",
+      "date": "2026-11-07",
+      "proved": "the cart prices the 22 GB plan at EUR 15.99 renewal and due today, above the marketing page's EUR 14.99",
+      "capture": "sha256:938290f5259d4df76955785892bcd7da5ae824f4298eb4f21fe56946aac54ab4",
+      "quote": "Renewal amount (30 Days) 15.99 €"
+    },
+    {
+      "url": "https://affordablebytes.com/",
+      "date": "2026-11-07",
+      "proved": "the marketing page's plan cards print 5 TB Bandwidth on the entry plan and the EUR 3.49 / 7.99 / 14.99 / 24.99 monthly prices",
+      "capture": "sha256:7e9ff7203e37594881ec63b618f671491f58a4ad4a059114de5e74b4d19a54e5",
+      "quote": "5 TB Bandwidth"
+    },
+    {
+      "url": "https://panel.affordablebytes.com/order/config/2/74dc787e-f807-4efa-addc-16582b71a58e/2",
+      "date": "2026-11-07",
+      "proved": "account creation at the order flow asks a username, an e-mail and a password, with a 2FA code field on sign-in; no phone or card is asked before payment",
+      "capture": "sha256:85b8be5b31dfe94d57ebfbf51e3b1f6f3cd05cdc4a50204c9edb3f17ca0fb978",
+      "quote": "Username E-Mail Password"
+    },
+    {
+      "url": "https://panel.affordablebytes.com/order/config/2/74dc787e-f807-4efa-addc-16582b71a58e/2",
+      "date": "2026-11-07",
+      "proved": "the 6 GB plan's own cart prices its base configuration at EUR 3.49 and rents by a 30-day unit",
+      "capture": "sha256:1f7938afcf5dd0b38c9c53136ea33292bc7b78ed2528eb6bb6bffa445dadc4f6",
+      "quote": "var basePrice = 3.49;"
+    },
+    {
+      "url": "https://panel.affordablebytes.com/order/config/2/40a23cee-c4c2-4775-beb9-190bf97c95ce/2",
+      "date": "2026-11-07",
+      "proved": "the 22 GB plan's own cart prices its base configuration at EUR 15.99 against the marketing page's EUR 14.99",
+      "capture": "sha256:e89a199bc03977b1e4d998ba5b721eeca780dbe1b7caa9156ee732d2e2874361",
+      "quote": "var basePrice = 15.99;"
+    },
+    {
+      "url": "https://affordablebytes.com/",
+      "date": "2026-11-07",
+      "proved": "the marketing page's plan cards still print the 5 TB allowance and the EUR 3.49 / 7.99 / 14.99 / 24.99 ladder",
+      "capture": "sha256:7e9ff7203e37594881ec63b618f671491f58a4ad4a059114de5e74b4d19a54e5",
+      "quote": "5 TB Bandwidth"
+    },
+    {
+      "url": "https://affordablebytes.com/",
+      "date": "2026-11-07",
+      "proved": "the vendor's own marketing page prices the entry plan at EUR 3.49 a month",
+      "capture": "sha256:7e9ff7203e37594881ec63b618f671491f58a4ad4a059114de5e74b4d19a54e5",
+      "quote": "€ 3.49 / month"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-07T14:17:00.739Z",
+  "notes": "Not in dossier/compute (searched: affordablebytes, no record). The two pages agree on the 6 GB and 11 GB rows and disagree on two others: the post prices the 22 GB plan at EUR 15.99 while the vendor page prints EUR 14.99, and the post gives the 40 GB plan 20 TB of traffic while the vendor page gives it 40 TB. The vendor page is the later and the first-party of the two, so the record takes its numbers; the disagreement itself is recorded here because it means the offer post is not a reliable copy of the plan table. The euro sign was dropped by the text extractor on the post, so the currency is taken from the vendor page rather than from the garbled glyph.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "AffordableBytes",
+      "class": null,
+      "category_as_written": "cloud VM",
+      "free_tier_kind": "none",
+      "shape": {
+        "vcpu": 1,
+        "ram_gib": 6,
+        "disk_gib": 45,
+        "gpu_class": null,
+        "gpu_count": null
+      },
+      "seen_routes": null,
+      "agents": [
+        "lowendbox"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "price_on_page": "EUR 3.49/month for the Xeon Gold 6150 entry plan (6 GB)"
+  }
+}

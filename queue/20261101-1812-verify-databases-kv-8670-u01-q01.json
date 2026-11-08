@@ -1,0 +1,15 @@
+{
+ "id": "20261101-1812-verify-databases-kv-8670-u01-q01",
+ "kind": "verify",
+ "topic": "databases-kv",
+ "question": "Should free_tier.metered_on gain a term, such as spend, for an allowance that is a currency credit drawn down by several meters?",
+ "why": "databases-kv/chroma-cloud (a USD 5 credit spent on four meters: GiB written, GiB stored, TiB queried, GiB returned) and databases-kv/railway (a USD 1 monthly credit spent on CPU, memory and disk per second and on egress per GB) fit no term of the closed set. none is used with unit none or unlimited and says there is no meter; unstated says the meter is not published, and both pages publish it. The schema gives none of the nine terms a meaning. In the store, 132 records with unit credits or mixed state a credit and a currency sign or code in free_tier.stated, and they carry eight different terms (wall-clock 74, request-count 20, downloaded-bytes 11, unstated 11, none 7, stored-bytes 5, uploaded-bytes 1, object-count 1, and 2 with none set), so a count over metered_on cannot tell a dollar balance from a request or time meter. Proposal: add spend, defined as a currency or credit balance drawn down by more than one meter; the two records then take it and keep their meters in free_tier.notes. Until the term exists both records hold none and name spend in free_tier.notes. limits[].kind has the same gap: monetary credits are filed as volume-quota, which dossier/README.md defines as a byte allowance, in compute/railway, compute/manufact, dev-services/trigger-dev and dev-services/temporal-cloud.",
+ "scope": {
+  "rids": [
+   "databases-kv/chroma-cloud",
+   "databases-kv/railway"
+  ]
+ },
+ "origin": "20261101-1812-verify-databases-kv-8670/u01",
+ "created": "2026-11-02T00:44:00Z"
+}

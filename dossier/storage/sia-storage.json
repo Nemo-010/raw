@@ -1,0 +1,112 @@
+{
+  "topic": "storage",
+  "slug": "sia-storage",
+  "provider": "Sia Storage (hosted indexer, sia.storage)",
+  "url": "https://sia.storage",
+  "category": "p2p",
+  "free_tier": {
+    "stated": "50 GB free — 'The free plan includes 50 GB of storage, up to 3 connected apps, and transfer speeds up to 524 Mbps — with no Siacoin to buy and no server to run.'",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.sia.tech/store-your-data/using-sia-storage.md",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.sia.tech/store-your-data/using-sia-storage.md",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.sia.tech/store-your-data/using-sia-storage.md",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "unmetered but rate-shaped by plan: 'transfer speeds up to 524 Mbps' on Free. No per-GB egress line item exists in Sia's model.",
+    "metered": false
+  },
+  "interface": [
+    "s3-compatible",
+    "rclone"
+  ],
+  "interface_detail": "s3",
+  "tooling": "s3d gateway (github.com/SiaFoundation/s3d) exposes an S3-compatible API; docs name Rclone and Cyberduck explicitly. Python/Go/Rust/JS SDKs also exist. rclone has a native 'sia' backend (rclone.org/sia/).",
+  "chaining": "50 GB x unlimited accounts (signup is free, no Siacoin required). The plan gate is '3 connected apps' per account, and an app is a token — the same wrapper pattern as Google service accounts. 400 accounts = 20 TB, but each is a separate signup.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "524 Mbps",
+      "source": "https://docs.sia.tech/store-your-data/using-sia-storage.md"
+    }
+  ],
+  "limits_note": "per-object-cap: not stated on the pages read. request-rate / per-ip-shaping: 'transfer speeds up to 524 Mbps' is the explicit Free-plan throttle. retention: not stated; storage is contract-based, so retention is paid-for duration, not decaying.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "New hosted product (app launched 2026); only paths offered on the free page are the iOS/Android app and the s3d gateway, so scripting depends entirely on s3d working.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.sia.tech/store-your-data/using-sia-storage.md",
+      "date": "2026-10-21",
+      "proved": "'The free plan includes 50 GB of storage, up to 3 connected apps, and transfer speeds up to 524 Mbps'"
+    },
+    {
+      "url": "https://docs.sia.tech/store-your-data/about-renting",
+      "date": "2026-10-21",
+      "proved": "'Sia Storage ... gives you 50 GB free with nothing to install or maintain'"
+    },
+    {
+      "url": "https://sia.storage",
+      "date": "2026-10-21",
+      "proved": "page metadata 'Start with 50GB free'; pricing table renders Free / 50 GB / Unlimited"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "50 GB free — 'The free plan includes 50 GB of storage, up to 3 connected apps, and transfer speeds up to 524 Mbps — with no Siacoin to buy and no server to run.'",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A7-crypto-web3-drives.json",
+    "seed_area": "A/A7",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "A/A7"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "50 GB free — 'The free plan includes 50 GB of storage, up to 3 connected apps, and transfer speeds up to 524 Mbps — with no Siacoin to buy and no server to run.'",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/A7"
+    },
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "Crypto and Web3 drives",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "50 GB free — 'The free plan includes 50 GB of storage, up to 3 connected apps, and transfer speeds up to 524 Mbps — with no Siacoin to buy and no server to run.'",
+    "limits_verbatim": "per-object-cap: not stated on the pages read. request-rate / per-ip-shaping: 'transfer speeds up to 524 Mbps' is the explicit Free-plan throttle. retention: not stated; storage is contract-based, so retention is paid-for duration, not decaying.",
+    "egress_verbatim": "unmetered but rate-shaped by plan: 'transfer speeds up to 524 Mbps' on Free. No per-GB egress line item exists in Sia's model.",
+    "chaining_verbatim": "50 GB x unlimited accounts (signup is free, no Siacoin required). The plan gate is '3 connected apps' per account, and an app is a token — the same wrapper pattern as Google service accounts. 400 accounts = 20 TB, but each is a separate signup.",
+    "tooling_verbatim": "s3d gateway (github.com/SiaFoundation/s3d) exposes an S3-compatible API; docs name Rclone and Cyberduck explicitly. Python/Go/Rust/JS SDKs also exist. rclone has a native 'sia' backend (rclone.org/sia/).",
+    "interface_verbatim": "s3",
+    "agent_focus": "consumer cloud drives from crypto/Web3 companies with real free tiers; separate real free object storage from token-incentive schemes that require staking"
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

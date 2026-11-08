@@ -1,0 +1,211 @@
+{
+  "topic": "storage",
+  "slug": "contabo-object-storage",
+  "provider": "Contabo Object Storage (S3-compatible)",
+  "url": "https://contabo.com/en/object-storage/",
+  "category": "S3-compatible object storage, 250 GB slices",
+  "free_tier": {
+    "stated": "250 GB increments, up to 25 TB, 5 TB max object size",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://docs.contabo.com/docs/storage/object-storage/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "5 TB per object, with no object size minimum",
+    "bytes": 5000000000000,
+    "source_url": "https://docs.contabo.com/docs/storage/object-storage/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.contabo.com/docs/storage/object-storage/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Truly free and unlimited — page title is 'S3-Compatible & Free Egress'; body: 'unlimited transfer included in the flat monthly rate', 'no hidden traffic or download' charges, 'retrieval is not billed separately'. Requests also included.",
+    "metered": false
+  },
+  "interface": [
+    "s3-compatible",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "S3 API (Ceph-backed, eu2.contabostorage.com returned HTTP 401 Key realm=\"kong\" this session — endpoint live)",
+  "tooling": "rclone, aws-cli, any S3 SDK",
+  "chaining": "direct origin, Cloudflare-friendly",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "5 TB per object, with no object size minimum",
+      "source": "https://docs.contabo.com/docs/storage/object-storage/"
+    }
+  ],
+  "limits_note": "Slice granularity of 250 GB means you cannot right-size. 5 TB max object size. Regions: EU, US Central, Singapore (+€0.50). No egress fees, no request fees, no retrieval fees — the pricing model is genuinely simple.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "the order form's Personal Data fields are listed as a first and last name, an email address, a phone number and a postal address, and the vendor words them as fields these may include, so a phone number is asked and whether it is required is not stated. Payment is by credit card, PayPal, Skrill, bank transfer or direct debit, and every rail other than credit card needs the first payment done manually",
+    "country": null
+  },
+  "reliability_note": "Triple-replicated Ceph per their docs. The structural oddity: this is the ONLY mainstream S3 provider here with free egress AND no retrieval fee AND no minimum storage duration — but the per-TB price is 2.5× Datalix and 5× Hetzner.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://contabo.com/en/object-storage/",
+      "date": "2026-10-21",
+      "proved": "'S3-compatible object storage at a fraction of AWS pricing. Unlimited free egress, end-to-end encryption'; 'Prices from €2.49/month'; 'no hidden traffic or download' charges"
+    },
+    {
+      "url": "https://contabo.com/en/object-storage/order/?qty=1&region=european-union&size=2000",
+      "date": "2026-10-21",
+      "proved": "'Monthly Base Price €2.49', region EU, Singapore +€0.50"
+    },
+    {
+      "url": "https://contabo.com/blog/introducing-all-inclusive-object-storage/",
+      "date": "2026-10-21",
+      "proved": "'$2.99/€2.49 per month for each slice of 250 GB with unlimited traffic'"
+    },
+    {
+      "url": "https://docs.contabo.com/docs/storage/object-storage/",
+      "date": "2026-10-21",
+      "proved": "max object size 5 TB, 100 buckets default, 250 GB capacity increments"
+    },
+    {
+      "url": "https://help.contabo.com/en/support/solutions/articles/103000394299-how-to-order-a-contabo-product",
+      "date": "2026-11-01",
+      "proved": "a new-customer order form takes an email address and a telephone number",
+      "capture": "sha256:d836a2ffdd7dd97cf8c0c50097fa948069647d9a6da238563e01071257b925bd",
+      "quote": "- Email address\n- Telephone number"
+    },
+    {
+      "url": "https://help.contabo.com/en/support/solutions/articles/103000269311-which-currencies-are-accepted-by-contabo-",
+      "date": "2026-11-01",
+      "proved": "payment is by credit card, PayPal, Skrill, bank transfer or direct debit",
+      "capture": "sha256:3e413841f0fd25bfc37b7fa8fdcbc50bcb8121bb3d3d30121fcf431d4d33dea0",
+      "quote": "Credit Card\nPayPal\nSkrill\nBank Transfer\nDirect Debit (for qualifying customers)"
+    },
+    {
+      "url": "https://contabo.com/en/object-storage/",
+      "date": "2026-11-01",
+      "proved": "every payment rail other than credit card needs a manual first payment",
+      "capture": "sha256:b9c21baa6040814736b259183d61519e8469b7edfe3fcba5028a11c5b8568cf4",
+      "quote": "For all payment methods other than credit card, the first payment after you have submitted an order has to be done manually."
+    },
+    {
+      "url": "https://contabo.com/en/object-storage/",
+      "date": "2026-11-01",
+      "proved": "the largest single object is 5 TB",
+      "capture": "sha256:b9c21baa6040814736b259183d61519e8469b7edfe3fcba5028a11c5b8568cf4",
+      "quote": "Our infrastructure supports large file storage up to 5 TB per object."
+    },
+    {
+      "url": "https://contabo.com/en/object-storage/",
+      "date": "2026-11-01",
+      "proved": "the per-object cap is 5 TB",
+      "capture": "sha256:b9c21baa6040814736b259183d61519e8469b7edfe3fcba5028a11c5b8568cf4",
+      "quote": "Our infrastructure supports large file storage up to 5 TB per object."
+    },
+    {
+      "url": "https://help.contabo.com/en/support/solutions/articles/103000394299-how-to-order-a-contabo-product",
+      "date": "2026-11-01",
+      "proved": "a new-customer order needs personal details including a telephone number",
+      "capture": "sha256:d836a2ffdd7dd97cf8c0c50097fa948069647d9a6da238563e01071257b925bd",
+      "quote": "Fill in the required fields under **Personal Data **in the 'I'm new to Contabo' section. These may include:"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-01T18:05:15.749Z",
+  "price_per_tb_month": "€9.96/TB/mo (€2.49 per 250 GB × 4) ≈ $11.55 — flat at 1, 5, 10 and 20 TB, no volume discount. Free egress is real but does not rescue a 5× storage premium.",
+  "notes": "250 GB increments, up to 25 TB, 5 TB max object size",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "P-P1-storage-vps-eu.json",
+    "seed_area": "P/P1",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "P/P1"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "A/P3"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Contabo Object Storage (S3-compatible)",
+      "Contabo Object Storage"
+    ],
+    "conflicts": [
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "250 GB increments, up to 25 TB, 5 TB max object size",
+            "source": "table.md row, area P/P1",
+            "evidence": null
+          },
+          {
+            "value": "Sold in fixed slices: 250 GB EUR 2.49, 500 GB EUR 4.49, 1 TB EUR 6.99",
+            "source": "table.md row, area A/P3",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "250 GB increments, up to 25 TB, 5 TB max object size",
+            "source": "table.md (area P/P1)"
+          },
+          {
+            "value": "Sold in fixed slices: 250 GB EUR 2.49, 500 GB EUR 4.49, 1 TB EUR 6.99",
+            "source": "table.md (area A/P3)"
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider is both a table row and a dead end",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md"
+          },
+          {
+            "value": "dead-end: The 'unlimited free egress' claim is real but the price is €2.49 per 250 GB slice = €9.96/TB/mo, roughly 5× Hetzner Stor",
+            "source": "DEAD-ENDS.md"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/paid/storage-boxes.md",
+    "document_section": "European storage VPS and dedicated",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "250 GB increments, up to 25 TB, 5 TB max object size",
+    "limits_verbatim": "Slice granularity of 250 GB means you cannot right-size. 5 TB max object size. Regions: EU, US Central, Singapore (+€0.50). No egress fees, no request fees, no retrieval fees — the pricing model is genuinely simple.",
+    "egress_verbatim": "Truly free and unlimited — page title is 'S3-Compatible & Free Egress'; body: 'unlimited transfer included in the flat monthly rate', 'no hidden traffic or download' charges, 'retrieval is not billed separately'. Requests also included.",
+    "chaining_verbatim": "direct origin, Cloudflare-friendly",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "rclone, aws-cli, any S3 SDK",
+    "interface_verbatim": "S3 API (Ceph-backed, eu2.contabostorage.com returned HTTP 401 Key realm=\"kong\" this session — endpoint live)",
+    "price_verbatim": "€9.96/TB/mo (€2.49 per 250 GB × 4) ≈ $11.55 — flat at 1, 5, 10 and 20 TB, no volume discount. Free egress is real but does not rescue a 5× storage premium.",
+    "agent_focus": "Cheapest per-TB-month storage VPS and Storage Boxes in Europe. Price floor hunt with egress as the deciding term. Tiers recorded at 1TB/5TB/10TB/20TB. Excludes AWS/Azure/GCP/Alibaba/R2/B2/iDrive e2 per client instruction."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

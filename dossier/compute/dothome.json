@@ -1,0 +1,120 @@
+{
+  "topic": "compute",
+  "slug": "dothome",
+  "provider": "Dothome",
+  "url": "https://www.dothome.co.kr/web/free/index.php",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "'무료호스팅 기본사양 무료' (free hosting, base spec, free) with '디스크 500M' (500 MB disk), '트래픽(월) 15G' (15 GB traffic a month), '기본 도메인 제공' (a base domain supplied) and 'DB 무제한' (unlimited databases). PHP 7.4, 8.0, 8.2 or 8.4 with MySQL 8.x. The page description reads '지금 신청하면 평생 무료호스팅을 이용할 수 있습니다' (apply now for lifetime free hosting), and the manual says '무료호스팅은 6개월 단위로 연장하면 계속해서 무료로 사용하실 수 있습니다' (renew every six months and it stays free).",
+    "unit": "GiB",
+    "metered_on": "wall-clock",
+    "source_url": "https://www.dothome.co.kr/web/free/index.php",
+    "read_on": "2026-10-22",
+    "notes": "perpetual-renewable"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://www.dothome.co.kr/web/free/index.php",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://www.dothome.co.kr/web/free/index.php",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "Traffic is metered at 15 GB a month on the free hosting; extra traffic is sold as 50 GB for KRW 3,000 a month or a 100 GB top-up for KRW 10,000.",
+    "metered": true,
+    "free_allowance": "15 GB per month",
+    "price_per_tb": null,
+    "source_url": "https://www.dothome.co.kr/web/free/index.php"
+  },
+  "interface": [
+    "ssh"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "not stated in the finding; the provider documents no client",
+  "chaining": "A Korean-region PHP and MySQL host with no card is a durable place to keep a small service and its database, and it chains with any free compute that can call an HTTP endpoint: the compute does the work, Dothome keeps the state and the domain, and neither needs a card.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "500 MiB of disk and 15 GiB of traffic a month, on a shared host with no SSH, so the first wall is the byte counter and the second is the absence of a shell: this is a place to serve a small PHP app from, not a machine to compute on.",
+      "source": "https://www.dothome.co.kr/web/free/index.php"
+    }
+  ],
+  "limits_note": "500 MiB of disk and 15 GiB of traffic a month, on a shared host with no SSH, so the first wall is the byte counter and the second is the absence of a shell: this is a place to serve a small PHP app from, not a machine to compute on.",
+  "binding": "volume-quota",
+  "binding_note": "500 MiB of disk and 15 GiB of traffic a month, on a shared host with no SSH, so the first wall is the byte counter and the second is the absence of a shell: this is a place to serve a small PHP app from, not a machine to compute on.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email verification plus a Google reCAPTCHA, with no phone step in the documented flow: the manual describes the application as email verification then reCAPTCHA then apply, and records that no phone step appears in that flow. Whether a Korean mobile number is demanded at member level is not established, because the signup form itself was not opened. No card is stated for the free plan",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://www.dothome.co.kr/web/free/index.php",
+      "date": "2026-10-22",
+      "proved": "' 500M', ' ( ) 15G', ' ', 'DB ', ' PHP 7.4, 8.0, 8.2, 8.4 ', quoted; the meta description reads ' '"
+    },
+    {
+      "url": "https://docs.dothome.co.kr/books/9bf31/page/41f1f",
+      "date": "2026-10-22",
+      "proved": "' PHP 7.4 , 8.0 , 8.2, 8.4 / MySQL 8.x ' and, for applications after 2025-07-17, SSL on the base domain 'https:// .dothome.co.kr', quoted"
+    },
+    {
+      "url": "https://docs.dothome.co.kr/books/9bf31/page/084b6",
+      "date": "2026-10-22",
+      "proved": "the application flow is email verification then a Google reCAPTCHA then apply: ' ... [ ]', then ' ', quoted; no phone step appears in the documented flow"
+    },
+    {
+      "url": "https://docs.dothome.co.kr/books/faq-GiU",
+      "date": "2026-10-22",
+      "proved": "the free plan excludes domain connection, SSL on your own domain and 'SSH ' (SSH access) unless the paid option is added at KRW 500 a month, quoted"
+    },
+    {
+      "url": "https://www.dothome.co.kr/web/free/index.php",
+      "date": "2026-11-03",
+      "proved": "the free hosting base spec lists 15 GB of traffic a month",
+      "capture": "sha256:4f273992231860d1371e91c34ba0296d7eeeacd2413e277e2b7a932a6dcf6369",
+      "quote": "트래픽(월) 15G"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T05:43:13.247Z",
+  "notes": "Korea's most durable free allowance, running since the company's founding and still advertised as lifetime. The one thing not established is whether member signup demands a Korean mobile number: the free-hosting manual documents only email verification and a reCAPTCHA, and no identity step appears in that flow, but Korean sites often add a real-name step at member level and this pass did not open the signup form. Settling it needs a signup attempt. The paid sibling, at KRW 500 a month, is the cheapest route found in this lane to attach an owned domain to a free host.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "Dothome ( ) free hosting",
+      "class": "regional",
+      "category_as_written": "shared web hosting (Korea)",
+      "free_tier_kind": "perpetual-renewable",
+      "shape": {
+        "vcpu": null,
+        "ram_gib": null,
+        "gpu_class": null,
+        "gpu_count": 0
+      },
+      "seen_routes": [
+        "broker read 200 on dothome.co.kr/web/free/index.php",
+        "broker read 200 on docs.dothome.co.kr service pages",
+        "broker search 200 on Korean query"
+      ],
+      "agents": [
+        "b10-regional-deep"
+      ],
+      "promoted_from": ".tmp/wave2",
+      "restored_original_quote": "restored 2026-10-22: the first promotion stripped non-Latin characters from this sentence, leaving empty quotation marks. The vendor wording is restored verbatim."
+    },
+    "superseded": {
+      "identity_cost": {
+        "kind": "email",
+        "detail": "as stated by the provider's signup page",
+        "country": null
+      }
+    }
+  }
+}

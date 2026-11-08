@@ -1,0 +1,118 @@
+{
+  "topic": "storage",
+  "slug": "temp-sh",
+  "provider": "temp.sh",
+  "url": "https://temp.sh",
+  "category": "anonymous-dump",
+  "free_tier": {
+    "stated": "no account; 4 GB per file, 3-day retention",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://temp.sh/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "4 GB per file",
+    "bytes": 4000000000,
+    "source_url": "https://temp.sh/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no account; 4 GB per file, 3-day retention | 4 GB/file, 'Files expire after 3 days' (page description: 'Temporary File Upload",
+    "days": 3,
+    "source_url": "https://temp.sh/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "unmetered but requires a POST to the file page (a form submit, not a GET)",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "curl -F 'file=@x' https://temp.sh/upload ; ShareX supported per the page",
+  "chaining": "none — per-file, 3-day expiry.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "4 GB per file",
+      "source": "https://temp.sh/"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "4 GB/file",
+      "source": "https://temp.sh/"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "retention 4 GB/file, 'Files expire after 3 days",
+      "source": "https://temp.sh/"
+    }
+  ],
+  "limits_note": "4 GB/file, 'Files expire after 3 days' (page description: 'Temporary File Upload. 3 days. 4GB Size Limit.').",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: no account; 4 GB per file, 3-day retention The GET-returns-HTML trap in its purest form: a plain download link is not a downloa",
+    "country": null
+  },
+  "reliability_note": "The GET-returns-HTML trap in its purest form: a plain download link is not a download, it is a one-button form. Any client that only GETs (wget, rclone, a naive fetch loop, a CDN in front) gets 3165 bytes of HTML at 200 with no error. This is precisely the failure mode the brief warned about.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://temp.sh/",
+      "date": "2026-10-21",
+      "proved": "'Files expire after 3 days', 4 GB, curl -F upload example"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: POST /upload -> 200 + URL; GET URL -> 200 / 3165 B HTML (form); POST URL -> 200 / 32768 B / sha256 match"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "no account; 4 GB per file, 3-day retention",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E1-ephemeral-dumps.json",
+    "seed_area": "E/E1",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "E/E1"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "retention",
+      "why": "no account; 4 GB per file, 3-day retention",
+      "retry_when": "if the retention model changes from a clock to indefinite",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E1"
+    },
+    "target_document": "docs/storage/free/ephemeral-hosts.md",
+    "document_section": "Ephemeral dump hosts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "no account; 4 GB per file, 3-day retention",
+    "limits_verbatim": "4 GB/file, 'Files expire after 3 days' (page description: 'Temporary File Upload. 3 days. 4GB Size Limit.').",
+    "egress_verbatim": "unmetered but requires a POST to the file page (a form submit, not a GET)",
+    "chaining_verbatim": "none — per-file, 3-day expiry.",
+    "tooling_verbatim": "curl -F 'file=@x' https://temp.sh/upload ; ShareX supported per the page",
+    "interface_verbatim": "rest",
+    "probe_in_seed": "POST /upload -> 200 'https://temp.sh/VQJJo/probe.bin'. GET that URL -> 200 but 3165 B text/html (a page with a single <form method=POST> 'Click here to download'). POST to the same URL -> 200, 32768 B, sha256 MATCH.",
+    "agent_focus": "anonymous/ephemeral file dumps — hand-probed (upload a 32 KiB random file, download it back, compare sha256)"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

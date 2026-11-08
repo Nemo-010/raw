@@ -1,0 +1,102 @@
+{
+  "topic": "storage",
+  "slug": "playbook-100-gb-free",
+  "provider": "Playbook — 100 GB free (300-asset cap)",
+  "url": "https://www.playbook.com",
+  "category": "cloud-drive",
+  "free_tier": {
+    "stated": "Free: '100GB included' OR 300 total assets, whichever comes first. API 1K calls/month. Paid Pro $10/mo/member = 2 TB + 1 TB per added member up to 10 TB.",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://www.playbook.com/pricing/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.playbook.com/pricing/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.playbook.com/pricing/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "CDN links are a paid-tier feature ('CDN links' listed under Pro). Free tier egress not metered but also not CDN-served.",
+    "metered": true
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Documented developer API (dev.playbook.com), 1,000 calls/month on free. No rclone backend.",
+  "chaining": "100 GB per account, and a second account carries a second allowance, but the 300-asset cap binds first for bulk data — 300 objects at 100 GB means ~333 MB average object.",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "review), not bulk objects",
+      "source": "https://www.playbook.com/pricing/"
+    }
+  ],
+  "limits_note": "300 assets OR 100 GB, whichever first — this is an asset-count cap disguised as a storage cap, the same failure mode as TeraBox's 500-file cap. API 1K calls/month is request-rate bound.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "Designed for creatives (image/video preview), not bulk objects. No egress story. Below the 500 GB floor unless a second account carries a second allowance.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.playbook.com/pricing/",
+      "date": "2026-10-21",
+      "proved": "'Free: The Free plan includes 300 total assets or 100GB of storage, whichever comes first', 'API 1K calls / month', fetched 2026-10-21"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Free: '100GB included' OR 300 total assets, whichever comes first. API 1K calls/month. Paid Pro $10/mo/member = 2 TB + 1 TB per added member up to 10 TB.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E13-deals-channels.json",
+    "seed_area": "E/E13",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "E/E13"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Free: '100GB included' OR 300 total assets, whichever comes first. API 1K calls/month. Paid Pro $10/mo/member = 2 TB + 1 TB per added member up to 10 TB.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E13"
+    },
+    "target_document": "docs/storage/paid/lifetime-and-deals.md",
+    "document_section": "Deal channels and the lifetime graveyard",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 1,
+    "evidence_dated_to_seed_pass": 0,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Free: '100GB included' OR 300 total assets, whichever comes first. API 1K calls/month. Paid Pro $10/mo/member = 2 TB + 1 TB per added member up to 10 TB.",
+    "limits_verbatim": "300 assets OR 100 GB, whichever first — this is an asset-count cap disguised as a storage cap, the same failure mode as TeraBox's 500-file cap. API 1K calls/month is request-rate bound.",
+    "egress_verbatim": "CDN links are a paid-tier feature ('CDN links' listed under Pro). Free tier egress not metered but also not CDN-served.",
+    "chaining_verbatim": "100 GB per account, and a second account carries a second allowance, but the 300-asset cap binds first for bulk data — 300 objects at 100 GB means ~333 MB average object.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "Documented developer API (dev.playbook.com), 1,000 calls/month on free. No rclone backend.",
+    "interface_verbatim": "rest",
+    "agent_focus": "deals, 优惠活动 (discount campaign) communities, coupon channels, lifetime-deal graveyard, student programmes, trial-stacking"
+  },
+  "binding": "write-gated",
+  "binding_note": "the write is a queue with a person or a rule in it, so the upload rate is set by somebody else",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

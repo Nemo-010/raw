@@ -1,0 +1,192 @@
+{
+  "topic": "storage",
+  "slug": "wikimedia-commons",
+  "provider": "Wikimedia Commons",
+  "url": "https://commons.wikimedia.org",
+  "category": "open media repository (institutional-grade, Wikimedia Foundation)",
+  "free_tier": {
+    "stated": "NO TOTAL QUOTA — read verbatim from Commons:Maximum_file_size: 'there is no limit to the *total* size of uploads by an individual account.' Per-file cap is 5 GiB (5,368,709,120 bytes) via chunked upload, 100 MiB otherwise. Live API confirms: `maxuploadsize: 5368709120`.",
+    "unit": "GiB",
+    "metered_on": "unstated",
+    "source_url": "https://commons.wikimedia.org/wiki/Commons:Maximum_file_size",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "5 GiB/file",
+    "bytes": 5368709120,
+    "source_url": "https://commons.wikimedia.org/wiki/Commons:Maximum_file_size",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://commons.wikimedia.org/wiki/Commons:Maximum_file_size",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "free, unmetered, CDN (upload.wikimedia.org), no auth, Range supported. Wikimedia runs its own edge cache in front of Swift.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "MediaWiki Action API + REST; `action=upload` with `stash`/`filekey` for chunked; `upload_by_url` right for server-side upload",
+  "tooling": "mwclient / pywikibot / commons-cli; `upload` and `upload_by_url` are granted to the plain `user` group (verified in siteinfo usergroups), so a brand-new account can already do server-side upload without waiting",
+  "chaining": "`upload_by_url` means Commons fetches the file from YOUR url — no local bandwidth at all. Files land at upload.wikimedia.org/wikipedia/commons/<x>/<xy>/<name>, hash-addressed and immutably versioned.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "5 GiB/file",
+      "source": "https://commons.wikimedia.org/wiki/Commons:Maximum_file_size"
+    },
+    {
+      "kind": "write-gated",
+      "value": "review at the community level",
+      "source": "https://commons.wikimedia.org/wiki/Commons:Maximum_file_size"
+    }
+  ],
+  "limits_note": "5 GiB/file, 100 MiB without chunking; per-licence/scope review at the community level; thumbnailing capped at a 59 s timeout, 100 MP for GIFs",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email — account is username+password+email, no affiliation. Note the nuance: upload itself is in the base `user` group, but `reupload` (overwrite) needs autoconfirmed. So first uploads are open; overwriting an existing file needs account age.",
+    "country": null
+  },
+  "reliability_note": "The one platform here where a multi-TB batch is explicitly contemplated — Commons asks you to warn sysadmins before 'batch uploads amounting to several TB', which is an acknowledgement that people do it.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://commons.wikimedia.org/w/api.php?action=query&meta=siteinfo&siprop=general&format=json",
+      "date": "2026-10-21",
+      "proved": "maxuploadsize: 5368709120, generator MediaWiki 1.47.0-wmf.24"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "same API with siprop=usergroups — `user` group holds ['upload','upload_by_url','reupload-own','move-categorypages']"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Commons:Maximum_file_size",
+      "date": "2026-10-21",
+      "proved": "'no limit to the *total* size of uploads by an individual account'; 5 GiB chunked / 100 MiB direct"
+    },
+    {
+      "url": "https://commons.wikimedia.org/w/api.php?...siprop=statistics",
+      "date": "2026-10-21",
+      "proved": "149,839,243 files on the cluster (scale of the storage layer)"
+    },
+    {
+      "url": "https://wikitech.wikimedia.org/wiki/Uploading_large_files",
+      "date": "2026-10-21",
+      "proved": "'Our swift backend storage is limited to files smaller than 5 Gb'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "NO TOTAL QUOTA — read verbatim from Commons:Maximum_file_size: 'there is no limit to the *total* size of uploads by an individual account.' Per-file cap is 5 GiB (5,368,709,120 bytes) via chunked upload, 100 MiB otherwise. Live API confirms: `maxuploadsize: 5368709120`.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H16-citizen-science-and-heritage.json",
+    "seed_area": "H/H16",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "H/H16"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "C/C6"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Wikimedia Commons",
+      "Wikimedia Commons (MediaWiki)"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md row, area H/H16",
+            "evidence": "quota: NO TOTAL QUOTA — read verbatim from Commons:Maximum_file_size: 'there"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area C/C6",
+            "evidence": "quota: No total quota: 'there is no limit to the *total* size of uploads by a"
+          }
+        ],
+        "resolution": "qualifies-with-caveat: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies. The table.md (area C/C6) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "NO TOTAL QUOTA — read verbatim from Commons:Maximum_file_size: 'there",
+            "source": "table.md row, area H/H16",
+            "evidence": null
+          },
+          {
+            "value": "No total quota: 'there is no limit to the *total* size of uploads by a",
+            "source": "table.md row, area C/C6",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md (area H/H16)"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area C/C6)"
+          }
+        ],
+        "resolution": "qualifies-with-caveat: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies. The table.md (area C/C6) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "NO TOTAL QUOTA — read verbatim from Commons:Maximum_file_size: 'there",
+            "source": "table.md (area H/H16)"
+          },
+          {
+            "value": "No total quota: 'there is no limit to the *total* size of uploads by a",
+            "source": "table.md (area C/C6)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Citizen science and heritage",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "NO TOTAL QUOTA — read verbatim from Commons:Maximum_file_size: 'there is no limit to the *total* size of uploads by an individual account.' Per-file cap is 5 GiB (5,368,709,120 bytes) via chunked upload, 100 MiB otherwise. Live API confirms: `maxuploadsize: 5368709120`.",
+    "limits_verbatim": "5 GiB/file, 100 MiB without chunking; per-licence/scope review at the community level; thumbnailing capped at a 59 s timeout, 100 MP for GIFs",
+    "egress_verbatim": "free, unmetered, CDN (upload.wikimedia.org), no auth, Range supported. Wikimedia runs its own edge cache in front of Swift.",
+    "chaining_verbatim": "`upload_by_url` means Commons fetches the file from YOUR url — no local bandwidth at all. Files land at upload.wikimedia.org/wikipedia/commons/<x>/<xy>/<name>, hash-addressed and immutably versioned.",
+    "identity_verbatim": "email — account is username+password+email, no affiliation. Note the nuance: upload itself is in the base `user` group, but `reupload` (overwrite) needs autoconfirmed. So first uploads are open; overwriting an existing file needs account age.",
+    "tooling_verbatim": "mwclient / pywikibot / commons-cli; `upload` and `upload_by_url` are granted to the plain `user` group (verified in siteinfo usergroups), so a brand-new account can already do server-side upload without waiting",
+    "interface_verbatim": "MediaWiki Action API + REST; `action=upload` with `stash`/`filekey` for chunked; `upload_by_url` right for server-side upload",
+    "agent_focus": "Citizen-science / heritage / crowdsourced-imagery platforms judged on three things: (a) does a quota even exist in the server code, (b) can the ORIGINAL bytes be pulled back out, (c) what identity does signup demand. Plus the relay/P2P half: signalling vs true relaying, and which free relays carry data."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

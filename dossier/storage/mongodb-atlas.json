@@ -1,0 +1,191 @@
+{
+  "topic": "storage",
+  "slug": "mongodb-atlas",
+  "provider": "MongoDB Atlas (M0 / Free cluster)",
+  "url": "https://www.mongodb.com/atlas",
+  "category": "paas",
+  "free_tier": {
+    "stated": "512 MB data storage per free cluster (0.5 GB, uncompressed BSON + indexes); one free cluster per project; 250 projects per Atlas user and 250 per organization",
+    "unit": "objects",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.mongodb.com/docs/atlas/reference/free-shared-limitations/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.mongodb.com/docs/atlas/reference/free-shared-limitations/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.mongodb.com/docs/atlas/reference/free-shared-limitations/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Data transfer out is not the metered axis on M0 — there is no published egress allowance or overage for Free clusters; the limits that bite are 500 connections and 100 ops/sec. Effectively unmetered for read volume, which makes M0 unusual in this class.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Standard MongoDB drivers (pymongo, motor), `mongosh`, Atlas Data API (HTTPS), `mongodump`/`mongorestore`; GridFS for files >16 MB via pymongo's gridfs",
+  "chaining": "250 projects per user x 1 free cluster each x 512 MB = ~128 GB per Atlas account, and 250 organizations per user gives another axis. GridFS chunks (255 KB default) mean no practical per-object cap beyond the 512 MB total.",
+  "limits": [],
+  "limits_note": "512 MB total is tiny per unit — the whole value is the 250x multiplier. 100 ops/sec, 500 connections, no sharding, no configurable storage. Cluster creation is heavily rate-limited in practice (one free cluster per project, project creation itself throttled).",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Free clusters are shared and throttle at 100 ops/sec; a bulk-write workload will be visibly slow rather than failing. Data is 3-node replicated, no vanishing.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.mongodb.com/pricing",
+      "date": "2026-10-21",
+      "proved": "'M0 | 512 MB | Shared | Shared | Free forever'"
+    },
+    {
+      "url": "https://www.mongodb.com/docs/atlas/reference/free-shared-limitations/",
+      "date": "2026-10-21",
+      "proved": "'Free clusters: 0.5 GB ... all uncompressed BSON documents ... plus the bytes stored in their associated indexes'; 'only one Free cluster per project'"
+    },
+    {
+      "url": "https://www.mongodb.com/docs/atlas/reference/atlas-limits/",
+      "date": "2026-10-21",
+      "proved": "'Projects per Atlas User | 250', 'Projects per Atlas Organization | 250'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "512 MB data storage per free cluster (0.5 GB, uncompressed BSON + indexes); one free cluster per project; 250 projects per Atlas user and 250 per organization",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G3-baas-databases.json",
+    "seed_area": "G/G3",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "G/G3"
+      },
+      {
+        "value": "fails-quota",
+        "area": "G/G6"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "MongoDB Atlas (M0 / Free cluster)",
+      "MongoDB Atlas (Free cluster / M0)"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area G/G3",
+            "evidence": "quota: 512 MB data storage per free cluster (0.5 GB, uncompressed BSON + inde"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row, area G/G6",
+            "evidence": "quota: 512 MB storage per free cluster; exactly one free cluster per project;"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried dead-end: Hard 512 MB, not configurable: 'you are over your space quota, using 513 MB of 512 MB'. Three orders of magnitude short. and qualifies-with-caveat. The table.md row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "512 MB data storage per free cluster (0.5 GB, uncompressed BSON + inde",
+            "source": "table.md row, area G/G3",
+            "evidence": null
+          },
+          {
+            "value": "512 MB storage per free cluster; exactly one free cluster per project;",
+            "source": "table.md row, area G/G6",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area G/G3)"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md (area G/G6)"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried dead-end: Hard 512 MB, not configurable: 'you are over your space quota, using 513 MB of 512 MB'. Three orders of magnitude short. and qualifies-with-caveat. The table.md row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "512 MB data storage per free cluster (0.5 GB, uncompressed BSON + inde",
+            "source": "table.md (area G/G3)"
+          },
+          {
+            "value": "512 MB storage per free cluster; exactly one free cluster per project;",
+            "source": "table.md (area G/G6)"
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider is both a table row and a dead end",
+        "claims": [
+          {
+            "value": "fails-quota",
+            "source": "table.md"
+          },
+          {
+            "value": "dead-end: Hard 512 MB, not configurable: 'you are over your space quota, using 513 MB of 512 MB'. Three orders of magnitude short.",
+            "source": "DEAD-ENDS.md"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried dead-end: Hard 512 MB, not configurable: 'you are over your space quota, using 513 MB of 512 MB'. Three orders of magnitude short. and qualifies-with-caveat. The table.md row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "512 MB data storage per free cluster (0.5 GB, uncompressed BSON + indexes); one free cluster per project; 250 projects per Atlas user and 250 per organization",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G3"
+    },
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Backend-as-a-service and databases",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "512 MB data storage per free cluster (0.5 GB, uncompressed BSON + indexes); one free cluster per project; 250 projects per Atlas user and 250 per organization",
+    "limits_verbatim": "512 MB total is tiny per unit — the whole value is the 250x multiplier. 100 ops/sec, 500 connections, no sharding, no configurable storage. Cluster creation is heavily rate-limited in practice (one free cluster per project, project creation itself throttled).",
+    "egress_verbatim": "Data transfer out is not the metered axis on M0 — there is no published egress allowance or overage for Free clusters; the limits that bite are 500 connections and 100 ops/sec. Effectively unmetered for read volume, which makes M0 unusual in this class.",
+    "chaining_verbatim": "250 projects per user x 1 free cluster each x 512 MB = ~128 GB per Atlas account, and 250 organizations per user gives another axis. GridFS chunks (255 KB default) mean no practical per-object cap beyond the 512 MB total.",
+    "tooling_verbatim": "Standard MongoDB drivers (pymongo, motor), `mongosh`, Atlas Data API (HTTPS), `mongodump`/`mongorestore`; GridFS for files >16 MB via pymongo's gridfs",
+    "interface_verbatim": "rest",
+    "agent_focus": "Backend-as-a-service and database platforms where free storage quota is expressed per PROJECT/DATASET/CLUSTER and the units may multiply with free orgs — plus the headless-CMS class, where assets are CDN-served at no egress cost"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

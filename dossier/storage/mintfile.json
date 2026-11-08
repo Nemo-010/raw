@@ -1,0 +1,100 @@
+{
+  "topic": "storage",
+  "slug": "mintfile",
+  "provider": "Mintfile",
+  "url": "https://mintfile.com",
+  "category": "anonymous-dump",
+  "free_tier": {
+    "stated": "Up to 300 GB per transfer, free, no sign-up, 100 files per transfer. There is no total-storage account at all — it is a per-transfer envelope.",
+    "unit": "objects",
+    "metered_on": "stored-bytes",
+    "source_url": "https://mintfile.com/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://mintfile.com/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "300 GB per transfer, 100 files per transfer, retention selectable 3 to 100 days then auto-delete",
+    "days": 100,
+    "source_url": "https://mintfile.com/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "No monthly transfer caps stated: 'no sign-up, no monthly transfer caps'. No egress price.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Web only; no documented API, no rclone backend.",
+  "chaining": "300 GB x unlimited transfers, but retention is 3-100 days, so accumulation requires a re-upload loop. Useful as a transit leg, not a store.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "retention selectable 3 to 100 days",
+      "source": "https://mintfile.com/"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "Retention max 100 days",
+      "source": "https://mintfile.com/"
+    }
+  ],
+  "limits_note": "300 GB per transfer, 100 files per transfer, retention selectable 3 to 100 days then auto-delete. Every upload is security-scanned before publish, so flagged content never appears.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: Up to 300 GB per transfer, free, no sign-up, 100 files per transfer. There is no total-storage account at all — it is a per-transfer envelope. Retention max 100",
+    "country": null
+  },
+  "reliability_note": "Retention max 100 days plus a mandatory malware scan on every file makes this a transfer service; a large binary dataset may be held for scanning before the link works.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://mintfile.com/",
+      "date": "2026-10-21",
+      "proved": "'up to 300GB ... up to 100 files per transfer, kept up to 100 days'; 'Pick a retention window from 3 to 100 days'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Up to 300 GB per transfer, free, no sign-up, 100 files per transfer. There is no total-storage account at all — it is a per-transfer envelope.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E6-regional-hosts.json",
+    "seed_area": "E/E6",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "E/E6"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "target_document": "docs/storage/free/ephemeral-hosts.md",
+    "document_section": "Regional file hosts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 1,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Up to 300 GB per transfer, free, no sign-up, 100 files per transfer. There is no total-storage account at all — it is a per-transfer envelope.",
+    "limits_verbatim": "300 GB per transfer, 100 files per transfer, retention selectable 3 to 100 days then auto-delete. Every upload is security-scanned before publish, so flagged content never appears.",
+    "egress_verbatim": "No monthly transfer caps stated: 'no sign-up, no monthly transfer caps'. No egress price.",
+    "chaining_verbatim": "300 GB x unlimited transfers, but retention is 3-100 days, so accumulation requires a re-upload loop. Useful as a transit leg, not a store.",
+    "tooling_verbatim": "Web only; no documented API, no rclone backend.",
+    "interface_verbatim": "rest",
+    "agent_focus": "regional and non-English large-file hosts, especially very large single-file caps with no total-storage limit"
+  },
+  "binding": "retention-clamped",
+  "binding_note": "a clock, not a quota: bytes leave whether or not the client is finished with them",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,194 @@
+{
+  "topic": "compute",
+  "slug": "iwinv",
+  "provider": "iwinv",
+  "url": "https://www.iwinv.kr/server/server",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "no free tier; the smallest server is KRW 5,600 a month for 1 vCPU, 1 GB and 25 GB NVMe",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://www.iwinv.kr/server/server",
+    "read_on": "2026-10-24"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "source_url": "https://www.iwinv.kr/server/server",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.shape"
+  },
+  "retention": {
+    "stated": "monthly billing; the server persists while paid",
+    "source_url": "https://www.iwinv.kr/server/server",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "20 GB a day (600 GB a month) on the entry plan, and beyond that a tiered rate applies: '20 GB/일 (월 600 GB) * 초과시 구간 요금제 적용'",
+    "metered": true,
+    "free_allowance": "600 GB a month",
+    "source_url": "https://www.iwinv.kr/server/server"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "not stated in the finding; the provider documents no client",
+  "chaining": "At KRW 5,600 a month with NVMe and a per-day meter, iwinv is the cheapest Korean box found that can be staged for a single day of work and deleted; it chains with nothing because the 600 GB monthly allowance is gone in hours at the serving rate.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "20 GB a day, 600 GB a month, then a tiered rate",
+      "source": "https://www.iwinv.kr/server/server"
+    }
+  ],
+  "limits_note": "The traffic allowance is 20 GB a day and 600 GB a month, counted per server, with tiered billing above it; a load of more than 20 GB a day exceeds it, and the overage is metered rather than absorbed.",
+  "binding": "volume-quota",
+  "binding_note": "600 GB a month is the smallest monthly allowance on any sub-USD-5 row here, but the identity wall is what actually decides it",
+  "identity_cost": {
+    "kind": "national-id",
+    "detail": "South Korean nationality and a Korean mobile phone are both required: '대한민국 국적의 만 14세 이상이며 핸드폰 인증이 가능한 사용자라면 누구나 회원가입 후 서비스 이용이 가능합니다.' Card registration needs a Korean public certificate: '정상적인 카드 등록을 위해 공동인증서가 필요합니다.' The collected fields on identity verification are name, mobile number, date of birth, address and a duplicate-registration identifier (DI)",
+    "country": "KR"
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://www.iwinv.kr/server/server",
+      "date": "2026-10-22",
+      "proved": "the price table gives vgna_1_n as 1 vCPU, 1 GB, NVMe 25 GB, 20 GB a day (600 GB a month, tiered above) at 210 원 a day and 5,600 원 a month, and lists vgna_2_n at 13,100 원, vgna_4_n at 24,000 원, vgna_6_n at 35,000 원 and vgna_8_n at 46,000 원 a month"
+    },
+    {
+      "url": "https://help.iwinv.kr/manual/604",
+      "date": "2026-10-22",
+      "proved": "the vendor's own manual states that billing is per day with a monthly consolidation, that a daily base transfer allowance is included, and that usage above it is settled monthly at a discount to the daily rate"
+    },
+    {
+      "url": "https://www.iwinv.kr/server/server",
+      "date": "2026-10-24",
+      "proved": "quoted: '| KR1-Z01 KR1-Z02 KR1-Z03 KR1-Lite1 | vgna_1_n | 1 | 1 GB | NVMe 25 GB | 20 GB/일 (월 600 GB) * 초과시 구간 요금제 적용 | 210 원 | 5,600 원 |'"
+    },
+    {
+      "url": "https://help.iwinv.kr/manual/398",
+      "date": "2026-10-24",
+      "proved": "quoted: '대한민국 국적의 만 14세 이상이며 핸드폰 인증이 가능한 사용자라면 누구나 회원가입 후 서비스 이용이 가능합니다.'"
+    },
+    {
+      "url": "https://www.iwinv.kr/guide/console",
+      "date": "2026-10-24",
+      "proved": "quoted: '정상적인 카드 등록을 위해 공동인증서가 필요합니다.'"
+    },
+    {
+      "url": "https://www.iwinv.kr/treaty/treaty/person",
+      "date": "2026-10-24",
+      "proved": "quoted: identity verification collects '성명, 휴대전화번호, 생년월일, 주소, 중복가입확인정보(DI)'"
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-10-24T02:05:00.000Z",
+  "notes": "KRW 5,600 divided by 1,324.702169 = USD 4.23, which is the second-cheapest shape under the line, and it is unreachable without Korean nationality. Recorded as a finding, not discarded: the price is real and the wall is the finding.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "iwinv (SmileServ)",
+      "class": "regional-paid-floor",
+      "category_as_written": "cloud VM (Korea)",
+      "free_tier_kind": "none",
+      "shape": {
+        "vcpu": 1,
+        "ram_gib": 1,
+        "gpu_class": null,
+        "gpu_count": 0
+      },
+      "seen_routes": [
+        "broker read 200 (iwinv.kr/server/server)",
+        "broker read 200 (help.iwinv.kr/manual/604)",
+        "broker search 200 (Korean query)"
+      ],
+      "agents": [
+        "kr-jp-forums"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "shape": {
+      "vcpu": 1,
+      "ram_gib": 1,
+      "disk_gib": 25,
+      "gpu_class": null,
+      "gpu_count": null
+    },
+    "billing_model": "monthly",
+    "term": "monthly",
+    "m10h_usd": 4.23,
+    "m24h_usd": 4.23,
+    "price_arithmetic": "KRW 5,600 a month / 1,324.702169 KRW per USD = USD 4.23",
+    "renewal_usd": 4.23,
+    "fx": {
+      "pair": "USD/KRW",
+      "rate": 1324.702169,
+      "date": "2026-10-24",
+      "source": "open.er-api.com/v6/latest/USD"
+    },
+    "free_tier_kind": "none",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "all",
+      "static_ip": true,
+      "ipv6": true,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "none; it is a VPS that bills whether it runs or not"
+    },
+    "english": "no; Korean only",
+    "payment_methods": "Korean credit or check card, with a Korean public certificate to register it",
+    "superseded": {
+      "free_tier": {
+        "stated": "The shared-line server vgna_1_n is 1 vCPU, 1 GB memory, 25 GB NVMe and 20 GB of daily traffic (600 GB a month, tiered above that) at KRW 210 a day or KRW 5,600 a month. The ladder above it is KRW 13,100 for 2 vCPU and 2 GB, 24,000 for 4 vCPU and 4 GB, 35,000 for 6 vCPU and 6 GB, 46,000 for 8 vCPU and 8 GB, all with NVMe and the same daily traffic allowance.",
+        "unit": "GiB",
+        "metered_on": "wall-clock",
+        "source_url": "https://www.iwinv.kr/server/server",
+        "read_on": "2026-10-22",
+        "notes": "none"
+      },
+      "per_object_cap": {
+        "stated": "not applicable: the unit is a machine, not an object",
+        "bytes": null,
+        "source_url": "https://www.iwinv.kr/server/server",
+        "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+      },
+      "retention": {
+        "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+        "days": null,
+        "source_url": "https://www.iwinv.kr/server/server",
+        "notes": "a machine record: what is lost is the running process, not a stored object"
+      },
+      "egress": {
+        "terms": "not published on the page read: no egress term was found, so nothing is asserted",
+        "metered": false,
+        "free_allowance": null,
+        "price_per_tb": null,
+        "source_url": "https://www.iwinv.kr/server/server"
+      },
+      "limits": [
+        {
+          "kind": "volume-quota",
+          "value": "The traffic allowance is 20 GB a day and 600 GB a month, counted per server, with tiered billing above it; for a workload serving 500 GB to 1 TiB a day this is exceeded in the first day of use, and the overage is metered rather than absorbed.",
+          "source": "https://www.iwinv.kr/server/server"
+        }
+      ],
+      "binding_note": "The traffic allowance is 20 GB a day and 600 GB a month, counted per server, with tiered billing above it; for a workload serving 500 GB to 1 TiB a day this is exceeded in the first day of use, and the overage is metered rather than absorbed.",
+      "identity_cost": {
+        "kind": "card",
+        "detail": "as stated by the provider's signup page",
+        "country": null
+      },
+      "verdict": "paid-only",
+      "notes": "iwinv is the consumer brand of SmileServ, which the corpus has no record of. The vendor quotes prices excluding VAT; add 10 percent for the Korean consumer price. The daily meter is the useful design detail: KRW 210 for one day of a 1 GB box is the lowest single-day Korean cost found. The market-position claim in the vendor's own copy (' ', half-price server) is marketing and is not repeated as a fact. Payment method was not read on a vendor page this session; the card identity cost is inferred from a monthly or hourly billing model, and the signup page is the route that would settle it.",
+      "verified_at": "2026-10-22T00:00:00.000Z"
+    }
+  },
+  "tier": "vgna_1_n",
+  "confidence_note": "price table and traffic term read on the vendor's own server page today; the nationality and certificate gates quoted from the vendor's own help pages"
+}

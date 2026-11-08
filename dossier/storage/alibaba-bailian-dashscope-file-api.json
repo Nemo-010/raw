@@ -1,0 +1,151 @@
+{
+  "topic": "storage",
+  "slug": "alibaba-bailian-dashscope-file-api",
+  "provider": "Alibaba Bailian / DashScope File API (QwenCloud SG)",
+  "url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
+  "category": "Chinese LLM platform /v1/files",
+  "free_tier": {
+    "stated": "100 GB total per workspace and 10,000 files, with no stated expiry: '百炼存储空间支持的最大文件数为10000个，总大小不超过100 GB，暂时没有有效期限制。' Per file: 150 MB for purpose=file-extract and 500 MB for purpose=batch.",
+    "unit": "objects",
+    "metered_on": "unstated",
+    "source_url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "Per-file: 150 MB",
+    "bytes": 150000000,
+    "source_url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "No metered egress on file retrieval. The legacy get-file endpoint returns a pre-signed aliyuncs.com OSS URL, i.e. served from Alibaba OSS rather than a billed gateway.",
+    "metered": true
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "OpenAI-compatible: base_url https://dashscope.aliyuncs.com/compatible-mode/v1 with the openai SDK; also https://dashscope-intl.aliyuncs.com for international, and https://maas.qwencloudapi.com/compatible-mode/v1 for the Singapore QwenCloud brand",
+  "tooling": "openai-python with a swapped base_url; curl multipart; documented endpoints upload/retrieve/list/delete plus GET /files/{file_id}/content",
+  "chaining": "100 GB per workspace, and workspaces are a creatable dimension. 'Never expire' is the whole point: this is the only major /v1/files endpoint found that gives permanent retention on the free tier. At 500 MB/batch file, 10,000 files = 5 TB of nominal slots against a 100 GB byte wall — the byte wall binds.",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "review status (`checking` -> `available`/`rejected`) before they can be referenced",
+      "source": "https://help.aliyun.com/zh/model-studio/openai-file-interface"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "Per-file: 150 MB",
+      "source": "https://help.aliyun.com/zh/model-studio/openai-file-interface"
+    }
+  ],
+  "limits_note": "per-object-cap 150 MB (file-extract) / 500 MB (batch). 100 GB workspace byte cap and 10,000-file count cap, whichever hits first. Files enter a safety-review status (`checking` -> `available`/`rejected`) before they can be referenced.",
+  "identity_cost": {
+    "kind": "any-phone",
+    "detail": "an email address plus a mobile number from outside the Chinese mainland, for security verification, on the international site; real-name verification is required only to use Chinese-mainland resources or to apply for a credit line, and whether a card is asked for was not read.",
+    "country": null
+  },
+  "reliability_note": "TWO CONTRADICTORY READ PATHS depending on which generation of the API you use. The NEW Agent Studio `GET /files/{file_id}/content` documents 'only files with downloadable=true can be downloaded; files uploaded directly or copied into a session sandbox are downloadable=false and return 400' — a read gate. The file-list example on the same doc set literally shows `\"downloadable\": false` on a directly uploaded CSV. But the LEGACY `GET /api/v1/files/{file_id}` returns a signed OSS `url` in the metadata, which is a real read path. The docs say the legacy interface is 'mainly for compatibility with historical scenarios', so its survival is not guaranteed — probe the legacy path before relying on it. Alibaba Cloud international registration is email + mobile (any-phone); Chinese-mainland identity verification (passport/driver's licence) is only required for products deployed in mainland China.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
+      "date": "2026-10-21",
+      "proved": "'百炼存储空间支持的最大文件数为10000个，总大小不超过100 GB，暂时没有有效期限制' (10,000 files, 100 GB, no expiry); '单个文件最大为 150 MB' for file-extract; batch 500 MB"
+    },
+    {
+      "url": "https://docs.qwencloud.com/api-reference/platform-api/file",
+      "date": "2026-10-21",
+      "proved": "'You can store up to 10,000 files and 100 GB total. Files never expire.' — the Singapore/international wording of the same product"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/file-download",
+      "date": "2026-10-21",
+      "proved": "'仅 downloadable 为 true 的文件可下载；当前接口直传与会话沙箱拷贝的文件 downloadable 均为 false，调用会返回 400'"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/file-list",
+      "date": "2026-10-21",
+      "proved": "response example shows `\"downloadable\": false`"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/get-file-api",
+      "date": "2026-10-21",
+      "proved": "legacy GET returns `\"url\": \"http://xxxxx.oss-cn-hangzhou.aliyuncs.com/oss%3A//dashscope-pre/...&Signature=...\"` (signed OSS URL)"
+    },
+    {
+      "url": "https://www.alibabacloud.com/help/en/account/aliyun-vs-alibaba-cloud",
+      "date": "2026-10-21",
+      "proved": "international site 'Requires an email address for registration, plus a mobile'"
+    },
+    {
+      "url": "https://dashscope.aliyuncs.com/compatible-mode/v1/files",
+      "date": "2026-10-21",
+      "proved": "PROBE: curl -D - -> 401, content-length 228; https://dashscope-intl.aliyuncs.com/api/v1/files/abc/content -> 401, 109 bytes; https://maas.qwencloudapi.com/compatible-mode/v1/files -> 401, 228 — all three live"
+    },
+    {
+      "url": "https://www.alibabacloud.com/help/en/account/aliyun-vs-alibaba-cloud",
+      "date": "2026-11-01",
+      "proved": "the international site registers with an email address and a mobile number from outside the Chinese mainland",
+      "capture": "sha256:93a46222b5dfbd4250e93409aab9ab71046f8e0b31170aa6f9ce604ef62add4f",
+      "quote": "Requires an email address for registration, plus a mobile number from outside the Chinese mainland (including Hong Kong (China), Macao (China), and Taiwan (China)) for security verification."
+    },
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
+      "date": "2026-11-01",
+      "proved": "the workspace holds 10,000 files totalling 100 GB with no stated validity period",
+      "capture": "sha256:d2595b6e67a40546a868709c806860f060eea661eb13e06d3c2dcb483ee54391",
+      "quote": "百炼存储空间支持的最大文件数为10000个，总大小不超过100 GB，暂时没有有效期限制。当文件数量或总大小达到任一上限时，新的文件上传请求将会失败。"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
+      "date": "2026-11-01",
+      "proved": "the 150 MB per-file ceiling for file-extract is unchanged",
+      "capture": "sha256:d2595b6e67a40546a868709c806860f060eea661eb13e06d3c2dcb483ee54391",
+      "quote": "将purpose指定为`file-extract`，文件格式支持文本文件（ TXT、DOCX、PDF、XLSX、EPUB、MOBI、MD、CSV、JSON），图片文件（BMP、PNG、JPG/JPEG、GIF和PDF扫描件），单个文件最大为 **150 MB**。"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-01T18:05:08.101Z",
+  "notes": "100 GB total per workspace; 10,000 files; NO expiry ('暂时没有有效期限制' — no validity-period limit for now). Per-file: 150 MB for purpose=file-extract, 500 MB for purpose=batch, 300 MB for fine-tune, 50 MB for the newer Agent Studio endpoint.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F11-search-and-ai-notebook.json",
+    "seed_area": "F/F11",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "F/F11"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/social-and-fediverse.md",
+    "document_section": "Search and AI notebooks",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 7,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "100 GB total per workspace; 10,000 files; NO expiry ('暂时没有有效期限制' — no validity-period limit for now). Per-file: 150 MB for purpose=file-extract, 500 MB for purpose=batch, 300 MB for fine-tune, 50 MB for the newer Agent Studio endpoint.",
+    "limits_verbatim": "per-object-cap 150 MB (file-extract) / 500 MB (batch). 100 GB workspace byte cap and 10,000-file count cap, whichever hits first. Files enter a safety-review status (`checking` -> `available`/`rejected`) before they can be referenced.",
+    "egress_verbatim": "No metered egress on file retrieval. The legacy get-file endpoint returns a pre-signed aliyuncs.com OSS URL, i.e. served from Alibaba OSS rather than a billed gateway.",
+    "chaining_verbatim": "100 GB per workspace, and workspaces are a creatable dimension. 'Never expire' is the whole point: this is the only major /v1/files endpoint found that gives permanent retention on the free tier. At 500 MB/batch file, 10,000 files = 5 TB of nominal slots against a 100 GB byte wall — the byte wall binds.",
+    "identity_verbatim": "any-phone",
+    "tooling_verbatim": "openai-python with a swapped base_url; curl multipart; documented endpoints upload/retrieve/list/delete plus GET /files/{file_id}/content",
+    "interface_verbatim": "OpenAI-compatible: base_url https://dashscope.aliyuncs.com/compatible-mode/v1 with the openai SDK; also https://dashscope-intl.aliyuncs.com for international, and https://maas.qwencloudapi.com/compatible-mode/v1 for the Singapore QwenCloud brand",
+    "agent_focus": "AI/agent platforms where file storage is a side effect of inference: /v1/files endpoints on LLM providers, chat-product file libraries (ChatGPT, Claude, Gemini Notebook, Perplexity, Grok, Poe), RAG/index stores, and agent-infrastructure storage. Key question for each: is the storage number large, and can you get the bytes BACK?"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

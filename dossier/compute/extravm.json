@@ -1,0 +1,110 @@
+{
+  "topic": "compute",
+  "slug": "extravm",
+  "provider": "ExtraVM",
+  "url": "https://extravm.com/vps",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "The 1 GB plan at USD 4.50 per month (1 core, 15 GB NVMe, 3 TB at 1 Gbps) is marked 'Sold Out' on the vendor's own plan table, so the cheapest plan the same table lets you order is the 2 GB tier: 1 core, 2 GB RAM, 30 GB NVMe, 5 TB a month at 1 Gbps, USD 8.00 per month. The table heading states 'This is the monthly traffic allocation and network port speed. We only limit outbound port speed, inbound is 10Gbps.' Locations offered: Dallas TX, Los Angeles CA, Miami FL, Secaucus NJ, Amsterdam NL, Singapore, Tokyo JP, Sydney AU. The tracker lists the 1 GB plan at USD 4.50 in Dallas, Miami and Los Angeles with no stock flag.",
+    "unit": "GiB",
+    "metered_on": "wall-clock",
+    "source_url": "https://extravm.com/vps",
+    "read_on": "2026-10-22",
+    "notes": "none"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://extravm.com/vps",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://extravm.com/vps",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "monthly traffic allocation with only the outbound port speed limited; inbound is stated as 10 Gbps. No overage rate is published",
+    "metered": true,
+    "free_allowance": "5 TB a month on the 2 GB tier; 3 TB a month on the sold-out 1 GB tier",
+    "price_per_tb": null,
+    "source_url": "https://extravm.com/vps"
+  },
+  "interface": [
+    "ssh",
+    "rest"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "KVM with full kernel access, ISO install, Linux/Windows/BSD; SSH and a client dashboard, no public API documented on the page read",
+  "chaining": "at USD 8.00 the 2 GB tier is the cheapest way to get 5 TB a month out of a US host in this lane; it suits a crawler that needs to send bulk bytes from a US address",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "5 TB a month on the cheapest orderable tier, outbound only, with inbound stated as unmetered at 10 Gbps; 30 GB of NVMe is the second wall and the 1 GB tier that would have carried 3 TB is sold out",
+      "source": "https://extravm.com/vps"
+    }
+  ],
+  "limits_note": "5 TB a month on the cheapest orderable tier, outbound only, with inbound stated as unmetered at 10 Gbps; 30 GB of NVMe is the second wall and the 1 GB tier that would have carried 3 TB is sold out",
+  "binding": "volume-quota",
+  "binding_note": "5 TB a month on the cheapest orderable tier, outbound only, with inbound stated as unmetered at 10 Gbps; 30 GB of NVMe is the second wall and the 1 GB tier that would have carried 3 TB is sold out",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "not read: the signup page was not fetched in this lane",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://extravm.com/vps",
+      "date": "2026-10-22",
+      "proved": "plan table rows quoted: '1 GB RAM / 1 Core / 15 GB NVMe / 3 TB - 1Gbps / $4.50 /mo / Sold Out' and '2 GB RAM / 1 Core / 30 GB NVMe / 5 TB - 1Gbps / $8.00 /mo / Order'"
+    },
+    {
+      "url": "https://extravm.com/vps",
+      "date": "2026-10-22",
+      "proved": "column note quoted: 'This is the monthly traffic allocation and network port speed. We only limit outbound port speed, inbound is 10Gbps.'"
+    },
+    {
+      "url": "https://vpspricetracker.com/provider/ExtraVM/vps",
+      "date": "2026-10-22",
+      "proved": "row quoted from the Cheapest VPSs table: 'USD 4.50 / month', '1 Ryzen Cores (shared)', '1,024 MB RAM', '15 GB NVMe', '3,072 GB/month bandwidth', '1 Gbps port speed', 'Dallas Texas U.S.A.'"
+    },
+    {
+      "url": "https://extravm.com/vps",
+      "date": "2026-11-07",
+      "proved": "the plan table prices the 1 GB tier at $4.50 a month marked Sold Out and the 2 GB tier at $8.00 a month with an Order button",
+      "capture": "sha256:5b663ff1f8b86917b5855cb548715d2b3aac3de3a003d3f2427b379879af4a0d",
+      "quote": "| 1 GB RAM | 1 Core | 15 GB NVMe | 3 TB - 1Gbps |  | $4.50 /mo | Sold Out |\n| 2 GB RAM | 1 Core | 30 GB NVMe | 5 TB - 1Gbps |  | $8.00 /mo | [Order](https://extravm.com/billing/store/kvm-nvme-vps-dallas-tx/2gb-ram-dallas) |"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-07T14:17:06.322Z",
+  "notes": "The tracker reports the 1 GB plan as currently offered and the vendor marks it sold out on the day of reading, so this record prices the 2 GB tier instead and keeps the USD 4.50 row in evidence. That is a stock disagreement, not a withdrawal, so the verdict is not dead. Only the 2 GB, 3 GB, 4 GB, 5 GB and 6 GB rows carry an order button; every tier from 8 GB up is sold out. would-settle: the overage charge and whether the 3 TB and 5 TB figures are outbound only in practice.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "ExtraVM",
+      "class": "price-floor",
+      "category_as_written": "KVM VPS",
+      "free_tier_kind": "none",
+      "shape": {
+        "vcpu": 1,
+        "ram_gib": 2,
+        "disk_gib": 30,
+        "gpu_class": null,
+        "gpu_count": null
+      },
+      "seen_routes": [
+        "broker fetch 200 on vpspricetracker.com provider page",
+        "broker fetch 200 on vendor /vps"
+      ],
+      "agents": [
+        "lane3"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "price_on_page": "USD 8.00/month: the 2 GB tier, the cheapest the plan table lets you order (the 1 GB tier at USD 4.50 is marked Sold Out)",
+    "renewal_note": "not published: the vendor's own VPS page read on 2026-11-07 prints a monthly price per tier and no renewal price"
+  }
+}

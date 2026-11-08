@@ -1,0 +1,19 @@
+{
+ "id": "20261102-0021-verify-data-apis-a382-u06-q03",
+ "kind": "verify",
+ "topic": "data-apis",
+ "question": "Operator step with a free account for each provider: make one keyed lookup of 8.8.8.8 and record the HTTP status and every response header. Calls: IPinfo Lite GET https://api.ipinfo.io/lite/8.8.8.8?token=TOKEN, ipapi.is GET https://api.ipapi.is/?q=8.8.8.8&key=KEY, IPLocate GET https://iplocate.io/api/lookup/8.8.8.8 with the apikey parameter, IPGeolocation.io GET https://api.ipgeolocation.io/v3/ipgeo?apiKey=KEY&ip=8.8.8.8, ipwho.org GET https://api.ipwho.org/ip/8.8.8.8?apiKey=KEY, The IP API GET https://api.theipapi.com/v1/ip/8.8.8.8?api_key=KEY. Register each answer as a probe record. For every rate-limit header record its name, its value and the period that it counts.",
+ "why": "unverified: behind a sign-up. A keyless call answers HTTP 403 (IPinfo Lite), HTTP 401 (IPGeolocation.io, ipwho.org, The IP API) or a reduced answer (ipapi.is, IPLocate). Documented headers: IPLocate sends x-ratelimit-limit, x-ratelimit-remaining and x-ratelimit-reset, and a keyless call showed a daily period that resets at 00:00:00 UTC; IPGeolocation.io sends x-credits-charged; ipapi.is documents Retry-After on a keyless 429 only; the other providers document no header.",
+ "scope": {
+  "rids": [
+   "data-apis/ipinfo",
+   "data-apis/ipapi-is",
+   "data-apis/iplocate",
+   "data-apis/ipgeolocation-io",
+   "data-apis/ipwho-org",
+   "data-apis/theipapi"
+  ]
+ },
+ "origin": "20261102-0021-verify-data-apis-a382/u06",
+ "created": "2026-11-03T00:27:33Z"
+}

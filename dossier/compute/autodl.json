@@ -1,0 +1,184 @@
+{
+  "topic": "compute",
+  "slug": "autodl",
+  "provider": "AutoDL",
+  "url": "https://www.autodl.com/",
+  "category": "GPU cloud",
+  "free_tier": {
+    "stated": "Retail per-hour GPU rental with no minimum term, from the front-page price table: RTX 4090 24GB CNY 1.88 per hour, RTX 3090 CNY 1.32, RTX 5090 CNY 2.78, A800-80GB CNY 5.59, PRO 6000 96GB CNY 6.98, H800-80GB CNY 9.98, H20 96GB CNY 9.98, V100 CNY 1.88, RTX 2080Ti CNY 0.88, RTX A4000 CNY 0.92, RTX 3080Ti CNY 0.98 and MTT S4000 48GB CNY 1.86; every row is marked 会员95折, a 5 percent member rate. H100, L40S and L4: not listed. A100 SXM4 80 GB and L40 48 GB are named in the card ranking with no rate. No free hour and no credit are stated on the page. A banner announces a change to part of the GPU price list on 12 November.",
+    "unit": "hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://www.autodl.com/",
+    "read_on": "2026-11-06",
+    "notes": "none"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://www.autodl.com/",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://www.autodl.com/",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "not published on the page read: no egress term was found, so nothing is asserted",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.autodl.com/"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "not stated in the finding; the provider documents no client",
+  "chaining": "The per-second meter composes with object storage for checkpoints: rent a 4090 for the training step, stop it, and keep the dataset on the 20 GiB free netdisk, so idle time costs nothing between runs.",
+  "limits": [],
+  "limits_note": "Nothing throttles: billing is per second from container start to container stop with a CNY 0.01 minimum, so the constraint is money. A 24 GB RTX 4090 at CNY 1.88 an hour exhausts a CNY 100 deposit in about 53 hours, and the account stops when the balance reaches zero.",
+  "binding": "none",
+  "binding_note": "Nothing throttles: billing is per second from container start to container stop with a CNY 0.01 minimum, so the constraint is money. A 24 GB RTX 4090 at CNY 1.88 an hour exhausts a CNY 100 deposit in about 53 hours, and the account stops when the balance reaches zero.",
+  "identity_cost": {
+    "kind": "national-id",
+    "detail": "Real-name certification is required for the products that carry it, in the vendor's own wording (agreeing to this notice lets you buy and use products that require real-name certification), and it offers three individual routes: a PRC identity card plus a face video, a bank card plus a face image, or , which the page names as (overseas passport), or a driving licence issued outside China. The passport route is the one a non-Chinese person can produce. The registration form itself was not read, so the phone requirement is unstated.",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://www.autodl.com/",
+      "date": "2026-10-22",
+      "proved": "front-page price table lists RTX 3090 at CNY 1.32/hour, RTX 4090 at CNY 1.88/hour, A800-80GB at CNY 5.59/hour and H800-80GB at CNY 9.98/hour, each marked 会员95折, quoted"
+    },
+    {
+      "url": "https://www.autodl.com/",
+      "date": "2026-10-22",
+      "proved": "banner states 学生认证即刻升级炼丹会员 (student verification upgrades to the member tier) and 注册立送30天会员 (30 days of membership on registration), quoted"
+    },
+    {
+      "url": "https://www.autodl.com/docs/real_name_cert/",
+      "date": "2026-10-22",
+      "proved": "real-name accepts 身份证 plus 人脸视频, or 其他个人证件 named as 海外护照, 港澳居民来往内地通行证 or a non-China driver licence, quoted"
+    },
+    {
+      "url": "https://www.autodl.com/docs/student/",
+      "date": "2026-10-22",
+      "proved": "student certification runs one year per cycle and is performed by educational email, quoted: 通过教育邮件进行认证"
+    },
+    {
+      "url": "https://www.autodl.com/docs/price/",
+      "date": "2026-10-22",
+      "proved": "billing rules: per-second metering with a CNY 0.01 floor, 20 GiB of free netdisk, 30 GiB of free image storage, data deletion reserved after 3 months without a login or CNY 50 of arrears"
+    },
+    {
+      "url": "https://www.autodl.com/home",
+      "date": "2026-10-22",
+      "proved": "quoted per-hour CNY rates for 12 accelerator classes from RTX 2080Ti at CNY 0.88 to H800 80GB at CNY 9.98; translated from the Chinese page: the signup banner offers 30 days of membership as a registration gift, and the footer states 20000 or more cards online"
+    },
+    {
+      "url": "https://www.autodl.com/register",
+      "date": "2026-10-22",
+      "proved": "the registration form is a phone number plus an SMS code, and the country selector renders four codes: +86 China, +852 China Hong Kong, +853 China Macao and +886 China Taiwan"
+    },
+    {
+      "url": "https://www.autodl.com/home",
+      "date": "2026-10-22",
+      "proved": "translated from the Chinese page: a free membership upgrade channel is offered to students, which is a discount rather than compute"
+    },
+    {
+      "url": "https://api.frankfurter.app/latest?from=USD&to=CNY",
+      "date": "2026-10-22",
+      "proved": "USD 1 = CNY 6.6743 on 2026-10-22, used for every conversion above"
+    },
+    {
+      "url": "https://www.autodl.com/",
+      "date": "2026-11-06",
+      "proved": "the RTX 4090 24GB row is CNY 1.88 an hour with the 95 percent member rate marked on it",
+      "capture": "sha256:9777623abcfd3b44ff5751d03d56464fa85b78e3a6e69eb13eacdd9f8e328f8a",
+      "quote": "NVIDIA RTX 4090 / 24GB单精 82.58 TFLOPS / 半精 165.2 Tensor TFLOPS￥1.88 /时 会员95折"
+    },
+    {
+      "url": "https://www.autodl.com/",
+      "date": "2026-11-06",
+      "proved": "the price is quoted per hour of a card, not per byte",
+      "capture": "sha256:9777623abcfd3b44ff5751d03d56464fa85b78e3a6e69eb13eacdd9f8e328f8a",
+      "quote": "NVIDIA RTX 4090 / 24GB单精 82.58 TFLOPS / 半精 165.2 Tensor TFLOPS￥1.88 /时 会员95折"
+    },
+    {
+      "url": "https://www.autodl.com/",
+      "date": "2026-11-06",
+      "proved": "the RTX 4090 24GB row is unchanged at CNY 1.88 an hour",
+      "capture": "sha256:9777623abcfd3b44ff5751d03d56464fa85b78e3a6e69eb13eacdd9f8e328f8a",
+      "quote": "NVIDIA RTX 4090 / 24GB单精 82.58 TFLOPS / 半精 165.2 Tensor TFLOPS￥1.88 /时 会员95折"
+    },
+    {
+      "url": "https://www.autodl.com/",
+      "date": "2026-11-06",
+      "proved": "the platform announces a change to part of the GPU price list on 12 November",
+      "capture": "sha256:9777623abcfd3b44ff5751d03d56464fa85b78e3a6e69eb13eacdd9f8e328f8a",
+      "quote": "因供应侧成本剧烈波动，平台将于11月12日调整部分GPU价格。"
+    },
+    {
+      "url": "https://www.autodl.com/",
+      "date": "2026-11-06",
+      "proved": "the front-page rate table is unchanged",
+      "capture": "sha256:9777623abcfd3b44ff5751d03d56464fa85b78e3a6e69eb13eacdd9f8e328f8a",
+      "quote": "NVIDIA RTX 4090 / 24GB单精 82.58 TFLOPS / 半精 165.2 Tensor TFLOPS￥1.88 /时 会员95折"
+    },
+    {
+      "url": "https://www.autodl.com/",
+      "date": "2026-11-06",
+      "proved": "the A100 SXM4 80GB appears in the ranking with no rate",
+      "capture": "sha256:9777623abcfd3b44ff5751d03d56464fa85b78e3a6e69eb13eacdd9f8e328f8a",
+      "quote": "NVIDIA A100 SXM4 / 80GB"
+    },
+    {
+      "url": "https://www.autodl.com/",
+      "date": "2026-11-06",
+      "proved": "the L40 48GB appears in the ranking with no rate, and no L40S is listed",
+      "capture": "sha256:9777623abcfd3b44ff5751d03d56464fa85b78e3a6e69eb13eacdd9f8e328f8a",
+      "quote": "NVIDIA L40 / 48GB"
+    },
+    {
+      "url": "https://www.autodl.com/",
+      "date": "2026-11-06",
+      "proved": "the RTX 4090 24GB is CNY 1.88 an hour before the member rate",
+      "capture": "sha256:9777623abcfd3b44ff5751d03d56464fa85b78e3a6e69eb13eacdd9f8e328f8a",
+      "quote": "NVIDIA RTX 4090 / 24GB单精 82.58 TFLOPS / 半精 165.2 Tensor TFLOPS￥1.88 /时 会员95折"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-06T18:39:12.191Z",
+  "notes": "Per-card hourly rates on the front-page table, CNY per hour before the 5 percent member rate: RTX 4090 24GB CNY 1.88, RTX 3090 CNY 1.32, RTX 5090 32GB CNY 2.78, A800-80GB CNY 5.59, PRO 6000 96GB CNY 6.98, H800-80GB CNY 9.98, H20 96GB CNY 9.98, V100 32GB CNY 1.88, RTX 2080Ti CNY 0.88, RTX A4000 CNY 0.92, RTX 3080Ti CNY 0.98 and MTT S4000 48GB CNY 1.86. H100, L40S and L4: not listed. A100 SXM4 80GB and L40 48GB are named in the GPU算力排名 ranking with no rate, so no A100 80 GB price is published. The undiscounted figure is the one kept because the member price is not published per card. Billing is per second with a CNY 0.01 minimum, and a banner announces a change to part of the GPU price list on 12 November.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "AutoDL",
+      "class": "regional-floor-price",
+      "category_as_written": "GPU rental, mainland China retail",
+      "free_tier_kind": "none",
+      "shape": {
+        "vcpu": null,
+        "ram_gib": null,
+        "gpu_class": "RTX 4090",
+        "gpu_count": 1,
+        "vram_gib": 24,
+        "disk_gib": null
+      },
+      "seen_routes": [
+        "broker read https://www.autodl.com/ 200, price table extracted",
+        "broker read /docs/student/ 200",
+        "broker read /docs/real_name_cert/ 200",
+        "broker read /docs/price/ 200"
+      ],
+      "agents": [
+        "cn-forums",
+        "gpu-brokers"
+      ],
+      "promoted_from": ".tmp/wave2"
+    }
+  }
+}

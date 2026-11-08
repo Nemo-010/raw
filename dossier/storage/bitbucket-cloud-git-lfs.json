@@ -1,0 +1,106 @@
+{
+  "topic": "storage",
+  "slug": "bitbucket-cloud-git-lfs",
+  "provider": "Bitbucket Cloud Git LFS",
+  "url": "https://www.atlassian.com/software/bitbucket/pricing",
+  "category": "registry",
+  "free_tier": {
+    "stated": "Free (up to 5 users): 1 GB LFS storage. Academic 5 GB, Standard 5 GB, Premium 10 GB. Extra storage sold in 100 GB units at $10/month. Notable counter-property: no per-file cap at all.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://support.atlassian.com/bitbucket-cloud/docs/storage-policy-for-git-lfs-with-bitbucket/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-file cap at all",
+    "source_url": "https://support.atlassian.com/bitbucket-cloud/docs/storage-policy-for-git-lfs-with-bitbucket/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://support.atlassian.com/bitbucket-cloud/docs/storage-policy-for-git-lfs-with-bitbucket/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Not metered — Atlassian publishes no LFS bandwidth quota, only storage in 100 GB units. This is the one LFS host where the storage number is small but the transfer side is genuinely unstated/unbilled.",
+    "metered": true
+  },
+  "interface": [
+    "ssh",
+    "git"
+  ],
+  "interface_detail": "git",
+  "tooling": "git-lfs. Note: SSH not usable for LFS repos? (not stated) — the documented limitation is that repository transfer and forking both break LFS links; the alternative route is `git lfs fetch --all` + `git lfs push --all`.",
+  "chaining": "1 GB per free workspace, unlimited free workspaces (each needs an email). 500 workspaces = 500 GB of very awkward storage. Weak: no route to manage many workspaces at once, and the workspace is tied to users.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "no per-file cap at all",
+      "source": "https://support.atlassian.com/bitbucket-cloud/docs/storage-policy-for-git-lfs-with-bitbucket/"
+    }
+  ],
+  "limits_note": "'there's no limit on the LFS file size you can push to Bitbucket Cloud' — genuinely no per-file cap. Forks do not copy LFS objects (fork points at parent's store, and the fork lacks permission) — so fork-based sharding fails. Repo archives do not include LFS files.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: 5 GB, Premium 10 GB. Extra storage sold in 100 GB units at $10/month. Notable counter-property: no per-file cap at all. Fork/transfer/archive are all documented as broken for LFS",
+    "country": null
+  },
+  "reliability_note": "Fork/transfer/archive are all documented as broken for LFS repos, which makes recovery awkward. Storage overage is auto-billed in 100 GB increments rather than blocked.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://support.atlassian.com/bitbucket-cloud/docs/storage-policy-for-git-lfs-with-bitbucket/",
+      "date": "2026-10-21",
+      "proved": "'Free (up to 5 users) | 1 GB'; '100 GB of file storage | Your monthly bill goes up $10'"
+    },
+    {
+      "url": "https://support.atlassian.com/bitbucket-cloud/docs/current-limitations-for-git-lfs-with-bitbucket/",
+      "date": "2026-10-21",
+      "proved": "'there's no limit on the LFS file size you can push'; 'the transfer of repositories with Git LFS files is disabled'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Free (up to 5 users): 1 GB LFS storage. Academic 5 GB, Standard 5 GB, Premium 10 GB. Extra storage sold in 100 GB units at $10/month. Notable counter-property: no per-file cap at all.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C3-git-annex-lfs.json",
+    "seed_area": "C/C3",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "C/C3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Free (up to 5 users): 1 GB LFS storage. Academic 5 GB, Standard 5 GB, Premium 10 GB. Extra storage sold in 100 GB units at $10/month. Notable counter-property: no per-file cap at all.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area C/C3"
+    },
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "Git LFS and git-annex special remotes",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Free (up to 5 users): 1 GB LFS storage. Academic 5 GB, Standard 5 GB, Premium 10 GB. Extra storage sold in 100 GB units at $10/month. Notable counter-property: no per-file cap at all.",
+    "limits_verbatim": "'there's no limit on the LFS file size you can push to Bitbucket Cloud' — genuinely no per-file cap. Forks do not copy LFS objects (fork points at parent's store, and the fork lacks permission) — so fork-based sharding fails. Repo archives do not include LFS files.",
+    "egress_verbatim": "Not metered — Atlassian publishes no LFS bandwidth quota, only storage in 100 GB units. This is the one LFS host where the storage number is small but the transfer side is genuinely unstated/unbilled.",
+    "chaining_verbatim": "1 GB per free workspace, unlimited free workspaces (each needs an email). 500 workspaces = 500 GB of very awkward storage. Weak: no route to manage many workspaces at once, and the workspace is tied to users.",
+    "tooling_verbatim": "git-lfs. Note: SSH not usable for LFS repos? (not stated) — the documented limitation is that repository transfer and forking both break LFS links; the alternative route is `git lfs fetch --all` + `git lfs push --all`.",
+    "interface_verbatim": "git",
+    "agent_focus": "Large-file versioning layer: git-annex special remotes, Git LFS hosts, DVC remotes, Perforce/SVN, and which free backends those layers can be pointed at"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

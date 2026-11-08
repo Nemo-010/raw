@@ -1,0 +1,278 @@
+{
+  "topic": "compute",
+  "slug": "baidu-ai-studio",
+  "provider": "Baidu AI Studio",
+  "url": "https://aistudio.baidu.com/",
+  "category": "notebook runtime",
+  "free_tier": {
+    "stated": "8 points a day, where 'each point buys 2 hours of the advanced GPU V100 16GB or 1 hour of the advanced GPU V100 32GB', so the daily allowance is 8 hours on a V100 32GB or 16 hours on a V100 16GB; the same documentation caps the advanced GPU at 48 hours a week at bronze level",
+    "unit": "hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://ai.baidu.com/ai-doc/AISTUDIO/nk39v9kec",
+    "read_on": "2026-11-04",
+    "notes": "allowance"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://aistudio.baidu.com/",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "the daily window is somewhere between 2.6 and 8 hours and the container is destroyed rather than paused, so a checkpoint outside the persistent mount is lost each day; the Chinese real-name requirement is the harder wall.",
+    "days": null,
+    "source_url": "https://aistudio.baidu.com/",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "not published on the page read: no egress term was found, so nothing is asserted",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://aistudio.baidu.com/"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "not stated in the finding; the provider documents no client",
+  "chaining": "A V100 32 GB is the only free card found in this wave that can hold a 13B model unquantised, and as a chain element it is the training half and never the serving half.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "48 hours a week of advanced-edition GPU and 4 hours a week of premium-edition GPU at the lowest level (power value 0 to 50), rising to 168 and 48 hours a week at the top level; 48 hours a week is below the 56 hours a week that 8 hours a day would allow",
+      "source": "https://ai.baidu.com/ai-doc/AISTUDIO/1kczvydw9"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "the container keeps running for 10 minutes after the browser is closed and is then terminated, and billing stops when that timer ends; stopping the project by hand from the project list reclaims it sooner",
+      "source": "https://ai.baidu.com/ai-doc/AISTUDIO/nk39v9kec"
+    }
+  ],
+  "limits_note": "the daily window is somewhere between 2.6 and 8 hours and the container is destroyed rather than paused, so a checkpoint outside the persistent mount is lost each day; the Chinese real-name requirement is the harder wall.",
+  "binding": "volume-quota",
+  "binding_note": "the weekly cap of 48 hours at bronze level binds before the daily allowance: 8 hours a day is 56 hours a week, which the weekly cap refuses",
+  "identity_cost": {
+    "kind": "national-id",
+    "detail": "a Baidu account. The registration form asks for a username, a phone number chosen from a country selector that lists mainland China, Hong Kong, Macau, Taiwan, the United States and others, a password and a captcha, and asks for no identity document. The help-site FAQ says the verification SMS reaches Hong Kong, Macau, Taiwan and countries and regions outside the mainland, and that a number is entered as a plus sign and the country code followed by the number, so a non-mainland number can receive it. Whether starting a GPU notebook then requires an ID-document real-name step is unverified: behind a sign-up; the real-name page answers 'This operation requires login', no first-party page read states an ID document, AI Studio's model-creation page requires 完善身份信息 (completing identity information), and a third-party review reports a real-name step binding a phone number and an ID card before a GPU environment can start, so the kind rests on that report.",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "reported",
+  "evidence": [
+    {
+      "url": "https://linux.do/t/topic/2068176",
+      "date": "2026-04-27",
+      "proved": "quoted, translated: Baidu AI Studio gives 2.6 hours of V100 32 GB a day, is extremely unstable, and writing large files crashes the container [re-read 2026-10-22: fetch exit 0, token overlap 0.0; the original capture stands]"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/nk39v9kec",
+      "date": "2026-10-22",
+      "proved": "quoted, translated from the vendor help page: 'each point buys 2 hours of the advanced GPU V100 16GB or 1 hour of the advanced GPU V100 32GB', and 'running a project each day grants 8 points', so the published daily allowance is 8 hours on a V100 32GB, which is the top of the stored 2.6-to-8-hour range and not the bottom; the same page states the environment 'keeps running for 10 minutes' after the browser closes and 'after 10 minutes it will be terminated', which supports the destroyed-not-paused claim. Supports the quota and the retention; the real-name gate is not on this page and stays reported"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/nk39v9kec",
+      "date": "2026-11-03",
+      "proved": "one point buys 2 hours of V100 16GB or 1 hour of V100 32GB",
+      "capture": "sha256:62f65fdda10fb86b27f6cbf85fa062da68352770007c64679831a9543e65f18d",
+      "quote": "算力卡单位为点，每点可使用高级GPU V100 16GB算力2小时或高级GPU V100 32GB算力1小时"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/nk39v9kec",
+      "date": "2026-11-03",
+      "proved": "running a project each day grants 8 points, which is 16 hours of V100 16GB",
+      "capture": "sha256:62f65fdda10fb86b27f6cbf85fa062da68352770007c64679831a9543e65f18d",
+      "quote": "每日运行项目即送8点算力，可使用高级GPU V100 16GB算力运行16小时"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/nk39v9kec",
+      "date": "2026-11-03",
+      "proved": "after the browser closes the environment keeps running 10 minutes and is then terminated",
+      "capture": "sha256:62f65fdda10fb86b27f6cbf85fa062da68352770007c64679831a9543e65f18d",
+      "quote": "当您关闭浏览器时，资源不会立刻回收，而是会继续运行**10分钟**，10分钟之后将会被中止。"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/1kczvydw9",
+      "date": "2026-11-03",
+      "proved": "the lowest level gets 48 hours a week of advanced GPU and 4 hours a week of premium GPU; the top level row gives 168 and 48",
+      "capture": "sha256:96c61049932d65b3bc46b11a9a7e4d8d9bb2df576be6c2a075c77f00d95c03d8",
+      "quote": "| 青铜（0-50） | 48小时 | 4小时 | 100 | 徽章、等级 | 可进行实物兑换，不可兑换算力卡 |"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/1kczvydw9",
+      "date": "2026-11-03",
+      "proved": "the top level (power value 5000 and above) gets 168 hours a week of advanced GPU and 48 hours a week of premium GPU",
+      "capture": "sha256:96c61049932d65b3bc46b11a9a7e4d8d9bb2df576be6c2a075c77f00d95c03d8",
+      "quote": "| 至尊（5000及以上） | 168小时 | 48小时 | 300 | 徽章、等级、排行榜 | 实物兑换积分9折，算力卡兑换5折 |"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/1lu5r7wzw",
+      "date": "2026-11-03",
+      "proved": "the weekly run-time cap applies to the free route; purchased A-coins remove it",
+      "capture": "sha256:f5ac1fb9797b741d9f4307a00e2a8393e8ce3433349bcb1e399909d87171a695",
+      "quote": "A币成功购买后即可运行付费资源池中的算力资源，使用时长取决于A币余额，不再限制每周运行时长。"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/Dk3e2vxg9",
+      "date": "2026-11-03",
+      "proved": "the notebook environments are CPU, DCU 16GB, advanced V100 16GB and 32GB, and premium A100 or 4 x V100 32GB",
+      "capture": "sha256:5b096a1ad861de0e06cfc6e1e84402e3ad711cd706a6a214ae447187f3a27492",
+      "quote": "支持基础版(CPU)、基础版（DCU-16GB）、高级版(GPU-V100-16GB)、高级版（GPU-V100-32GB）、尊享版（GPU-A100-GB）、尊享版（GPU-4×V100-4×32GB）"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/5k39vd65f",
+      "date": "2026-11-03",
+      "proved": "the container is reclaimed when idle and has a forced maximum lifetime, with no value published on this page",
+      "capture": "sha256:d0209ed9aa76dafd1e16cd0b917f0f6706a14f32860a187fee79dc6609070767",
+      "quote": "docker容器闲置一段时间后会被回收，并且系统为docker容器强制设置了最长有效期"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/5k39vd65f",
+      "date": "2026-11-03",
+      "proved": "the help page says SMS verification covers Hong Kong, Macau, Taiwan and 207 countries and regions and tells foreign users to enter the plus sign and country code; it does not say whether a real-name check follows",
+      "capture": "sha256:d0209ed9aa76dafd1e16cd0b917f0f6706a14f32860a187fee79dc6609070767",
+      "quote": "短信服务覆盖港澳台及全球207个国家与地区"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/nk39v9kec",
+      "date": "2026-11-04",
+      "proved": "the 10-minute termination follows closing the browser, not a period of disuse",
+      "capture": "sha256:a2d91adf611a8f488c8d4d089b279ba10391dbd99473911bda9ebfee64c56071",
+      "quote": "当您关闭浏览器时，资源不会立刻回收，而是会继续运行 10分钟，10分钟之后将会被中止。"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/5k39vd65f",
+      "date": "2026-11-04",
+      "proved": "the verification SMS reaches 207 countries and regions, so a non-mainland number can receive it",
+      "capture": "sha256:8c883cccc34520a78f0f54766e3cf36befdeb17d329785c0bcc794bb0159fff8",
+      "quote": "207个国家与地区，首先您可以先确认您所在的地址是否在我们们所支持的地区中，查看详情"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/nk39v9kec",
+      "date": "2026-11-04",
+      "proved": "the allowance page was read again and still grants 8 points on a project run each day",
+      "capture": "sha256:a2d91adf611a8f488c8d4d089b279ba10391dbd99473911bda9ebfee64c56071",
+      "quote": "每日运行项目即送8点算力，可使用高级GPU V100 16GB算力运行16小时"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/nk39v9kec",
+      "date": "2026-11-04",
+      "proved": "one point buys one hour of V100 32GB, so the 8 points granted each day buy 8 hours on that card",
+      "capture": "sha256:a2d91adf611a8f488c8d4d089b279ba10391dbd99473911bda9ebfee64c56071",
+      "quote": "算力卡单位为点，每点可使用高级GPU V100 16GB算力2小时或高级GPU V100 32GB算力1小时"
+    },
+    {
+      "url": "https://passport.baidu.com/v2/?reg&overseas=1",
+      "date": "2026-11-06",
+      "proved": "the registration form asks for a phone number chosen from a country selector that lists mainland China, Hong Kong, Macau, Taiwan and the United States/Canada, so an international number can be entered",
+      "capture": "sha256:89243433a130f4c68494a45e9613325ded061518c3aabb1bc752953376f0eab2",
+      "quote": "手机号+86请输入中国大陆手机号,其他用户不可见\n\n- +86中国境内（不含港澳台）\n- +1美国/加拿大\n- +852中国香港地区\n- +853中国澳门地区\n- +886中国台湾地区"
+    },
+    {
+      "url": "https://passport.baidu.com/v2/?reg&overseas=1",
+      "date": "2026-11-06",
+      "proved": "the same form's other fields are a username, a password and a captcha; the captured form has no identity-document field",
+      "capture": "sha256:89243433a130f4c68494a45e9613325ded061518c3aabb1bc752953376f0eab2",
+      "quote": "用户名设置后不可更改，中英文均可，最长14个英文或7个汉字\n\n密　码* ** *请输入密码\n\n*◆**◆*\n\n- 长度为8\\~14个字符\n- 字母/数字以及标点符号至少包含2种\n- 不允许有空格、中文\n- 密码不可包含完整用户名\n\n验证码"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/3k39vrahw",
+      "date": "2026-11-06",
+      "proved": "AI Studio requires a Baidu account",
+      "capture": "sha256:3076c32594afba8eef33d064608ec0e396f271bbbbf6b2bc9eb1b5cb2d278e9d",
+      "quote": "您需要拥有一个百度账户并登录您的百度账户才能使用AI Studio的服务。"
+    },
+    {
+      "url": "https://passport.baidu.com/static/passpc-account/html/protocal.html",
+      "date": "2026-11-06",
+      "proved": "the Baidu account agreement lists the real name, contact information and ID number among the information a user must fill in for certain Baidu services",
+      "capture": "sha256:4af589c955091fbdd244e43802020318dc581e176c7ac1273f2fc4d918673d95",
+      "quote": "真实的姓名、联系方式、身份证号等"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/6mc4w8q30",
+      "date": "2026-11-06",
+      "proved": "AI Studio requires identity information to be completed before a model can be created",
+      "capture": "sha256:8cc25a18f41200ef20d21bd94295736bf5adcebca959d915d846dcb413a1de2e",
+      "quote": "权限要求：在AI Studio完善身份信息即可创建模型"
+    },
+    {
+      "url": "https://aistudio.baidu.com/account/realname",
+      "date": "2026-11-06",
+      "proved": "the real-name page answers with a login wall, so the ID step cannot be read without an account",
+      "capture": "sha256:9580c5dae0264c6ac57044e285a15014eed695b3bd1453dd55992453d24fd477",
+      "quote": "This operation requires login, please choose the following method"
+    },
+    {
+      "url": "https://www.sanwenge.com/post/1141.html",
+      "date": "2026-11-06",
+      "proved": "a third-party review reports that AI Studio requires real-name verification binding a phone number and an ID card, and that the environment entries are greyed out without it",
+      "capture": "sha256:6c63768bfff21713902d8ead42e721b779781bfc75e64ba7678c656488155e75",
+      "quote": "必须完成实名认证才能使用。认证入口在“个人中心”—“账号安全”，用手机号和身份证完成绑定。不认证的话，登录后看到的环境入口全是灰色的。"
+    },
+    {
+      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/5k39vd65f",
+      "date": "2026-11-06",
+      "proved": "the help page tells a user outside the mainland to enter a plus sign and the country code before the number",
+      "capture": "sha256:c163bbf9516eddc3dfe562adf5e3ef21b91b24f6e387b18c8a3448e8d849d2e1",
+      "quote": "在手机号中填写“+”+“国家（或地区）码”+“您的手机号”即可"
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-11-06T18:49:42.138Z",
+  "notes": "A V100 at 32 GB a day for years is a real perpetual allowance and worth recording even though the door is shut, because the number is what makes the door worth naming. The daily figure is 2.6, 3 to 4 or 8 hours depending on the poster, which is the signature of a shifting allocation; the range is recorded rather than a point.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "Baidu AI Studio (PaddlePaddle)",
+      "class": "free-gpu-notebook",
+      "category_as_written": "free GPU notebook",
+      "free_tier_kind": "allowance",
+      "shape": {
+        "vcpu": null,
+        "ram_gib": null,
+        "gpu_class": "V100",
+        "gpu_count": 1,
+        "vram_gib": 32
+      },
+      "seen_routes": [
+        "broker search --domains linux.do x3"
+      ],
+      "agents": [
+        "a09-forums"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "recheck": {
+      "historical_evidence": [
+        {
+          "url": "https://linux.do/t/topic/1124506",
+          "date": "2025-11-04",
+          "proved": "quoted, translated: Baidu AI Studio gives 3 to 4 hours of V100 a day free, and the terminal has no sudo permission",
+          "_recheck": {
+            "fetch_exit": 0,
+            "token_overlap": 0.3,
+            "checked_on": "2026-10-22",
+            "why": "the page no longer carries the claim, or could not be read"
+          }
+        },
+        {
+          "url": "https://linux.do/t/topic/691704",
+          "date": "2025-05-31",
+          "proved": "third report, translated: Baidu's Paddle can also be used 8 hours a day, which disagrees with the other two posts",
+          "_recheck": {
+            "fetch_exit": 0,
+            "token_overlap": 0.11,
+            "checked_on": "2026-10-22",
+            "why": "the page no longer carries the claim, or could not be read"
+          }
+        },
+        {
+          "url": "https://linux.do/t/topic/2068176",
+          "date": "2026-04-27",
+          "proved": "quoted, translated: Baidu AI Studio gives 2.6 hours of V100 32 GB a day, is extremely unstable, and writing large files crashes the container [re-read 2026-10-22: fetch exit 0, token overlap 0.0; the original capture stands]"
+        }
+      ],
+      "note": "rows here were cited by an earlier pass and no longer support the claim when re-read on 2026-10-22; they are kept, not deleted"
+    }
+  }
+}

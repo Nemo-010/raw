@@ -1,0 +1,105 @@
+{
+  "topic": "storage",
+  "slug": "dailymotion",
+  "provider": "Dailymotion",
+  "url": "https://www.dailymotion.com",
+  "category": "media",
+  "free_tier": {
+    "stated": "No total storage cap stated. Per-account upload policy: 4 GB per file, 2 hours per file, 15 videos per 24 hours, 10 hours of content per 24 hours (standard creators). Premium/Edge lifts to 64 GB/file and unlimited duration.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://faq.dailymotion.com/hc/en-us/articles/115009030568-Upload-policies-technical-specifications",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "4 GB per file",
+    "bytes": 4000000000,
+    "source_url": "https://faq.dailymotion.com/hc/en-us/articles/115009030568-Upload-policies-technical-specifications",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://faq.dailymotion.com/hc/en-us/articles/115009030568-Upload-policies-technical-specifications",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free, ad-supported CDN playback. No egress meter on standard accounts.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "yt-dlp `dailymotion` extractor (verified present) plus `dailymotion:playlist|search|user`. Official Data API with resumable upload.",
+  "chaining": "10 hours of content per 24 h per account x unlimited accounts. At a 4 GB/2 h ceiling that is ~20 GB/day ceiling per account, ~7 TB/year, if you fill every slot.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "4 GB per file",
+      "source": "https://faq.dailymotion.com/hc/en-us/articles/115009030568-Upload-policies-technical-specifications"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "64 GB/file",
+      "source": "https://faq.dailymotion.com/hc/en-us/articles/115009030568-Upload-policies-technical-specifications"
+    }
+  ],
+  "limits_note": "4 GB per file is small for bulk. 15 videos/24h and 10 h/24h are enforced by suspension of upload privileges for 24 hours, which makes it a bad target for automated batch loading.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Exceeding either the count or duration limit suspends uploads for 24 hours; the platform is also ad-driven and aggressively deletes non-video content, so it is not a general blob store.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://faq.dailymotion.com/hc/en-us/articles/115009030568-Upload-policies-technical-specifications",
+      "date": "2026-10-21",
+      "proved": "table: '4 GB per file maximum', '2 hours per file maximum', '15 videos uploaded per 24 hours', '10 hours of content uploaded per 24 hours'"
+    },
+    {
+      "url": "https://www.dailymotion.com/video/x8j8n7k`",
+      "date": "2026-10-21",
+      "proved": "probe: `yt-dlp -F -> 'Access forbidden' (token endpoint blocks datacenter IPs)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No total storage cap stated. Per-account upload policy: 4 GB per file, 2 hours per file, 15 videos per 24 hours, 10 hours of content per 24 hours (standard creators). Premium/Edge lifts to 64 GB/file and unlimited duration.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H1-video-platforms.json",
+    "seed_area": "H/H1",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H1"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Video platforms",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "No total storage cap stated. Per-account upload policy: 4 GB per file, 2 hours per file, 15 videos per 24 hours, 10 hours of content per 24 hours (standard creators). Premium/Edge lifts to 64 GB/file and unlimited duration.",
+    "limits_verbatim": "4 GB per file is small for bulk. 15 videos/24h and 10 h/24h are enforced by suspension of upload privileges for 24 hours, which makes it a bad target for automated batch loading.",
+    "egress_verbatim": "Free, ad-supported CDN playback. No egress meter on standard accounts.",
+    "chaining_verbatim": "10 hours of content per 24 h per account x unlimited accounts. At a 4 GB/2 h ceiling that is ~20 GB/day ceiling per account, ~7 TB/year, if you fill every slot.",
+    "tooling_verbatim": "yt-dlp `dailymotion` extractor (verified present) plus `dailymotion:playlist|search|user`. Official Data API with resumable upload.",
+    "interface_verbatim": "rest",
+    "agent_focus": "video/media platforms as bulk storage — the crux is whether the ORIGINAL file is retrievable, or only a re-encode"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

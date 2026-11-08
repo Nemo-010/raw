@@ -1,0 +1,205 @@
+{
+  "topic": "storage",
+  "slug": "feijipan",
+  "provider": "小飞机网盘 FeijiPan (feijipan.com)",
+  "url": "https://www.feijipan.com",
+  "category": "cloud-drive",
+  "free_tier": {
+    "stated": "Homepage: '上传下载永不限速，该权益开放给所有用户，无需开通会员即刻享有极速下载' + '签约领1024G — 为支持站长、自媒体主分享资源，小飞机网盘推出「开发者计划」活动，参与活动签约成功即可领取1TB网盘空间'. Baseline free space is small; the 1 TB comes from the developer-signing programme. Their own blog: '免费用户🉑️通过完成活动获取2T空间（非永久）'; VIP 10T / SVIP 15T.",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://www.feijipan.com/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "10 GB per file",
+    "bytes": 10000000000,
+    "source_url": "https://www.feijipan.com/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.feijipan.com/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Unmetered and unshaped for everyone, including free: '下载不限速，百兆宽带，下载速度在75~80MB/S。无需开通会员即可享受不限速的下载。会员与非会员享同样的不限速'. Sharing links download without login.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "webdav",
+    "webdav-proxy"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Parsed by both qaiu/netdisk-fast-download (`fj`, 3.4k stars, returns a 302 direct link via /parser) and ByLsPro/JxPan (Cloudflare Worker). No OpenList driver, no WebDAV — so it is a *download* target rather than a mountable drive.",
+  "chaining": "1 TB per signed developer account; 2 TB per account via the activity path (time-limited). Accounts are email/phone based, so N accounts x 1 TB. Per-file 10 GB x unlimited files.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "10 GB per file",
+      "source": "https://www.feijipan.com/"
+    },
+    {
+      "kind": "write-gated",
+      "value": "review, not signup",
+      "source": "https://www.feijipan.com/"
+    }
+  ],
+  "limits_note": "per-object-cap: 10 GB per file for free users ('单文件上传最大支持10G，会员目前最大也是不超过10G'). request-rate: upload throttling exists but is undocumented — the netdisk-fast-download README warns '小飞机近期封号频繁' and that parser use from datacenter IPs is blocked. Free batch upload capped at 30 files.",
+  "identity_cost": {
+    "kind": "any-phone",
+    "detail": "any-phone (PRC number for the 2 TB activity; the 1 TB needs a signed developer agreement).",
+    "country": null
+  },
+  "reliability_note": "Actively bans: the most-used parser project warns of frequent account bans and IP-blocks for server-side use. 1 TB is conditional on a '签约' (signing) review, not signup.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.feijipan.com/",
+      "date": "2026-10-21",
+      "proved": "'上传下载永不限速，该权益开放给所有用户'; '参与活动签约成功即可领取1TB网盘空间'"
+    },
+    {
+      "url": "https://blog.feijipan.com/share-download-store/",
+      "date": "2026-10-21",
+      "proved": "'单文件上传最大支持10G'; '免费用户可通过完成活动获取2T空间（非永久）'"
+    },
+    {
+      "url": "https://github.com/qaiu/netdisk-fast-download",
+      "date": "2026-10-21",
+      "proved": "`fj` parser with 302 direct-link output; README warns of frequent bans"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Homepage: '上传下载永不限速，该权益开放给所有用户，无需开通会员即刻享有极速下载' + '签约领1024G — 为支持站长、自媒体主分享资源，小飞机网盘推出「开发者计划」活动，参与活动签约成功即可领取1TB网盘空间'. Baseline free space is small; the 1 TB comes from the developer-signing programme. Their own blog: '免费用户🉑️通过完成活动获取2T空间（非永久）'; VIP 10T / SVIP 15T.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E12-github-keyword-sweep.json",
+    "seed_area": "E/E12",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "E/E12"
+      },
+      {
+        "value": "fails-egress",
+        "area": "A/A8"
+      }
+    ],
+    "seed_confidence": "medium",
+    "merged_spellings": [
+      "小飞机网盘 FeijiPan (feijipan.com)",
+      "小飞机网盘 / Feijipan"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area E/E12",
+            "evidence": "quota: Homepage: '上传下载永不限速，该权益开放给所有用户，无需开通会员即刻享有极速下载' + '签约领1024G — 为支持站长、自媒体"
+          },
+          {
+            "value": "fails-egress",
+            "source": "table.md row, area A/A8",
+            "evidence": "quota: Base free tier small; 1024 GB via the 开发者计划 signing programme ('参与活动签约"
+          }
+        ],
+        "resolution": "fails-egress: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried dead-end: Already in the corpus. Base is only 10 GB; the much-quoted 2 TB is a one-year verification promo ('通过认证有1年的2TB'), and it and qualifies-with-caveat. The table.md row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "Homepage: '上传下载永不限速，该权益开放给所有用户，无需开通会员即刻享有极速下载' + '签约领1024G — 为支持站长、自媒体",
+            "source": "table.md row, area E/E12",
+            "evidence": null
+          },
+          {
+            "value": "Base free tier small; 1024 GB via the 开发者计划 signing programme ('参与活动签约",
+            "source": "table.md row, area A/A8",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area E/E12)"
+          },
+          {
+            "value": "fails-egress",
+            "source": "table.md (area A/A8)"
+          }
+        ],
+        "resolution": "fails-egress: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried dead-end: Already in the corpus. Base is only 10 GB; the much-quoted 2 TB is a one-year verification promo ('通过认证有1年的2TB'), and it and qualifies-with-caveat. The table.md row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "Homepage: '上传下载永不限速，该权益开放给所有用户，无需开通会员即刻享有极速下载' + '签约领1024G — 为支持站长、自媒体",
+            "source": "table.md (area E/E12)"
+          },
+          {
+            "value": "Base free tier small; 1024 GB via the 开发者计划 signing programme ('参与活动签约",
+            "source": "table.md (area A/A8)"
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider is both a table row and a dead end",
+        "claims": [
+          {
+            "value": "fails-egress",
+            "source": "table.md"
+          },
+          {
+            "value": "dead-end: Already in the corpus. Base is only 10 GB; the much-quoted 2 TB is a one-year verification promo ('通过认证有1年的2TB'), and it",
+            "source": "DEAD-ENDS.md"
+          }
+        ],
+        "resolution": "fails-egress: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried dead-end: Already in the corpus. Base is only 10 GB; the much-quoted 2 TB is a one-year verification promo ('通过认证有1年的2TB'), and it and qualifies-with-caveat. The table.md row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Homepage: '上传下载永不限速，该权益开放给所有用户，无需开通会员即刻享有极速下载' + '签约领1024G — 为支持站长、自媒体主分享资源，小飞机网盘推出「开发者计划」活动，参与活动签约成功即可领取1TB网盘空间'. Baseline free space is small; the 1 TB comes from the developer-signing programme. Their own blog: '免费用户🉑️通过完成活动获取2T空间（非永久）'; VIP 10T / SVIP 15T.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E12"
+    },
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "The GitHub keyword sweep, and what it proved",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Homepage: '上传下载永不限速，该权益开放给所有用户，无需开通会员即刻享有极速下载' + '签约领1024G — 为支持站长、自媒体主分享资源，小飞机网盘推出「开发者计划」活动，参与活动签约成功即可领取1TB网盘空间'. Baseline free space is small; the 1 TB comes from the developer-signing programme. Their own blog: '免费用户🉑️通过完成活动获取2T空间（非永久）'; VIP 10T / SVIP 15T.",
+    "limits_verbatim": "per-object-cap: 10 GB per file for free users ('单文件上传最大支持10G，会员目前最大也是不超过10G'). request-rate: upload throttling exists but is undocumented — the netdisk-fast-download README warns '小飞机近期封号频繁' and that parser use from datacenter IPs is blocked. Free batch upload capped at 30 files.",
+    "egress_verbatim": "Unmetered and unshaped for everyone, including free: '下载不限速，百兆宽带，下载速度在75~80MB/S。无需开通会员即可享受不限速的下载。会员与非会员享同样的不限速'. Sharing links download without login.",
+    "chaining_verbatim": "1 TB per signed developer account; 2 TB per account via the activity path (time-limited). Accounts are email/phone based, so N accounts x 1 TB. Per-file 10 GB x unlimited files.",
+    "identity_verbatim": "any-phone (PRC number for the 2 TB activity; the 1 TB needs a signed developer agreement).",
+    "tooling_verbatim": "Parsed by both qaiu/netdisk-fast-download (`fj`, 3.4k stars, returns a 302 direct link via /parser) and ByLsPro/JxPan (Cloudflare Worker). No OpenList driver, no WebDAV — so it is a *download* target rather than a mountable drive.",
+    "interface_verbatim": "rest",
+    "agent_focus": "systematic GitHub keyword sweep (EN + zh-CN + ja + ru) for projects that advertise free/unlimited storage, used as a discovery net to surface named providers and wrappers not yet in the corpus"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

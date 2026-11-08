@@ -1,0 +1,218 @@
+{
+  "topic": "storage",
+  "slug": "google-artifact-registry",
+  "provider": "Google Artifact Registry (incl. the gcr.io domain)",
+  "url": "https://cloud.google.com/artifact-registry/pricing",
+  "category": "registry",
+  "free_tier": {
+    "stated": "0.5 GiB-month, once per billing account, shared across every project on it: 'Artifact Registry Storage | 0 gibibyte month to 0.5 gibibyte month | $0.00 (Free) / 1 gibibyte hour, per 1 month / account'; above that $0.000136986/GiB-hour (~$0.10/GiB-month). The page explicitly closes the multi-project loophole: 'Pricing applies to billing accounts, not individual Google Cloud projects ... the limit for the storage free tier is for total usage across all the attached projects.'",
+    "unit": "GiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://cloud.google.com/artifact-registry/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://cloud.google.com/artifact-registry/pricing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://cloud.google.com/artifact-registry/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "NOT free — this is the clearest egress failure among the three hyperscalers: 'Pricing for outbound Internet data transfer is based on Premium tier pricing. This is network traffic leaving a repository to a client that is not a Google product, such as using a local server that is downloading artifacts.' Intra-Google traffic is $0.00, and same-continent repository-to-service moves are $0.00, but anything to the open internet is metered at Google's premium internet egress rates. There is no anonymous or public-repo egress allowance.",
+    "metered": true
+  },
+  "interface": [
+    "oci"
+  ],
+  "interface_detail": "oci",
+  "tooling": "docker/ORAS/gcloud artifacts; gcr.io domain repositories are billed as Artifact Registry.",
+  "chaining": "0.5 GiB per billing account is not worth chaining; a second billing account requires a second payment instrument.",
+  "limits": [],
+  "limits_note": "0.5 GiB free total; no per-layer cap published in the pricing page; repository-scoped IAM.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "Billing signup requires a credit card or other payment method; the Free Tier needs a Google Cloud billing account, which a new user gets by signing up for a Free Trial.",
+    "country": null
+  },
+  "reliability_note": "Stable, but the free tier is effectively decorative and the egress meter is the hard wall.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://cloud.google.com/artifact-registry/pricing",
+      "date": "2026-10-21",
+      "proved": "'0 gibibyte month to 0.5 gibibyte month $0.00 (Free)', 'Pricing applies to billing accounts, not individual Google Cloud projects'"
+    },
+    {
+      "url": "https://cloud.google.com/artifact-registry/pricing",
+      "date": "2026-10-21",
+      "proved": "'Pricing for outbound Internet data transfer is based on Premium tier pricing'"
+    },
+    {
+      "url": "https://cloud.google.com/network-tiers/pricing",
+      "date": "2026-10-21",
+      "proved": "'Premium Tier egress is priced at internet egress rates'"
+    },
+    {
+      "url": "https://cloud.google.com/free/docs/free-cloud-features",
+      "date": "2026-11-03",
+      "proved": "Google Cloud signup, which the Free Tier needs a billing account from, requires a credit card or other payment method",
+      "capture": "sha256:1b2c72166c369756ff5dff598a4a1f009ccc902f90e5efcd6100de6e0ab17c85",
+      "quote": "During the sign up, you must provide a credit card or other payment method"
+    },
+    {
+      "url": "https://cloud.google.com/artifact-registry/pricing",
+      "date": "2026-11-03",
+      "proved": "the Artifact Registry storage free band is 0 to 0.5 GiB-month",
+      "capture": "sha256:7f2494db97135609215183bd8a23681344dac0a3b0d828dbba55a55ba1421c82",
+      "quote": "Artifact Registry Storage | 0 gibibyte month to 0.5 gibibyte month"
+    },
+    {
+      "url": "https://cloud.google.com/artifact-registry/pricing",
+      "date": "2026-11-03",
+      "proved": "the free band is per billing account, not per project",
+      "capture": "sha256:7f2494db97135609215183bd8a23681344dac0a3b0d828dbba55a55ba1421c82",
+      "quote": "Pricing applies to billing accounts, not individual Google Cloud projects."
+    },
+    {
+      "url": "https://cloud.google.com/free/docs/free-cloud-features",
+      "date": "2026-11-03",
+      "proved": "the Free Tier table lists 0.5 GB of Artifact Registry storage per month",
+      "capture": "sha256:1b2c72166c369756ff5dff598a4a1f009ccc902f90e5efcd6100de6e0ab17c85",
+      "quote": "0.5 GB of storage per month."
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-11-03T01:28:49.780Z",
+  "notes": "0.5 GiB-month, once per billing account, shared across every project on it: 'Artifact Registry Storage | 0 gibibyte month to 0.5 gibibyte month | $0.00 (Free) / 1 gibibyte hour, per 1 month / account'; above that $0.000136986/GiB-hour (~$0.10/GiB-month). The page explicitly closes the multi-project loophole: 'Pricing applies to billing accounts, not individual Google Cloud projects ... the limit for the storage free tier is for total usage across all the attached projects.'",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B4-hyperscaler-registries.json",
+    "seed_area": "B/B4",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "B/B4"
+      },
+      {
+        "value": "fails-quota",
+        "area": "B/B5"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Google Artifact Registry (incl. the gcr.io domain)",
+      "Google Artifact Registry"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "fails-egress",
+            "source": "table.md row, area B/B4",
+            "evidence": "quota: 0.5 GiB-month, once per billing account, shared across every project o"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row, area B/B5",
+            "evidence": "quota: 0.5 GiB-month free per BILLING ACCOUNT (not per project): '0 gibibyte"
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "0.5 GiB-month, once per billing account, shared across every project o",
+            "source": "table.md row, area B/B4",
+            "evidence": null
+          },
+          {
+            "value": "0.5 GiB-month free per BILLING ACCOUNT (not per project): '0 gibibyte",
+            "source": "table.md row, area B/B5",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "fails-egress",
+            "source": "table.md (area B/B4)"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md (area B/B5)"
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "0.5 GiB-month, once per billing account, shared across every project o",
+            "source": "table.md (area B/B4)"
+          },
+          {
+            "value": "0.5 GiB-month free per BILLING ACCOUNT (not per project): '0 gibibyte",
+            "source": "table.md (area B/B5)"
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider is both a table row and a dead end",
+        "claims": [
+          {
+            "value": "fails-quota",
+            "source": "table.md"
+          },
+          {
+            "value": "dead-end: Free tier is 1 GiB-month of storage per billing account, shared across all projects, and egress between regions is $0.01",
+            "source": "DEAD-ENDS.md"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "0.5 GiB-month, once per billing account, shared across every project on it: 'Artifact Registry Storage | 0 gibibyte month to 0.5 gibibyte month | $0.00 (Free) / 1 gibibyte hour, per 1 month / account'; above that $0.000136986/GiB-hour (~$0.10/GiB-month). The page explicitly closes the multi-project loophole: 'Pricing applies to billing accounts, not individual Google Cloud projects ... the limit for the storage free tier is for total usage across all the attached projects.'",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area B/B4"
+    },
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "Hyperscaler registries",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "0.5 GiB-month, once per billing account, shared across every project on it: 'Artifact Registry Storage | 0 gibibyte month to 0.5 gibibyte month | $0.00 (Free) / 1 gibibyte hour, per 1 month / account'; above that $0.000136986/GiB-hour (~$0.10/GiB-month). The page explicitly closes the multi-project loophole: 'Pricing applies to billing accounts, not individual Google Cloud projects ... the limit for the storage free tier is for total usage across all the attached projects.'",
+    "limits_verbatim": "0.5 GiB free total; no per-layer cap published in the pricing page; repository-scoped IAM.",
+    "egress_verbatim": "NOT free — this is the clearest egress failure among the three hyperscalers: 'Pricing for outbound Internet data transfer is based on Premium tier pricing. This is network traffic leaving a repository to a client that is not a Google product, such as using a local server that is downloading artifacts.' Intra-Google traffic is $0.00, and same-continent repository-to-service moves are $0.00, but anything to the open internet is metered at Google's premium internet egress rates. There is no anonymous or public-repo egress allowance.",
+    "chaining_verbatim": "0.5 GiB per billing account is not worth chaining; a second billing account requires a second payment instrument.",
+    "tooling_verbatim": "docker/ORAS/gcloud artifacts; gcr.io domain repositories are billed as Artifact Registry.",
+    "interface_verbatim": "oci",
+    "agent_focus": "hyperscaler and mid-tier container registries judged on free storage + free egress; explicit test of whether any hyperscaler gives free public storage AND free internet egress"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

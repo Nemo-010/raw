@@ -1,0 +1,110 @@
+{
+  "topic": "storage",
+  "slug": "netdynamics24-germany-backup-sftp",
+  "provider": "NetDynamics24 Germany Backup SFTP (LET50% recurring)",
+  "url": "https://www.netdynamics24.com/client/order.php?step=1&productGroup=13",
+  "category": "backup storage / SFTP box (RAID-6, Enterprise HDD)",
+  "free_tier": {
+    "stated": "250 GB $3/mo · 500 GB $4/mo · 1 TB $6/mo · 2 TB $11/mo. Germany (Falkenstein) and Finland (Helsinki) sold as separate product groups.",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://www.netdynamics24.com/client/order.php?step=1&productGroup=13",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.netdynamics24.com/client/order.php?step=1&productGroup=13",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.netdynamics24.com/client/order.php?step=1&productGroup=13",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "\"Unmetered Traffic\" with \"1 GBit/s\" port, on both the DE and FI product pages. This is the cleanest egress term among the records read — a port speed with no counter and no published fair-use threshold.",
+    "metered": false
+  },
+  "interface": [
+    "s3",
+    "webdav",
+    "ftp",
+    "rsync",
+    "ssh"
+  ],
+  "interface_detail": "(S)FTP, SSH, rsync, BorgBackup, control panel",
+  "tooling": "rsync/Borg/restic over SSH. No S3, no WebDAV.",
+  "chaining": "Archive/backup leg only. No object API means it cannot serve the hot set or back a Cloudflare origin directly.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "1 Gbit/s",
+      "source": "https://www.netdynamics24.com/client/order.php?step=1&productGroup=13"
+    }
+  ],
+  "limits_note": "No WebDAV, no S3. Capacity ladder stops at 2 TB per box on the page I opened — for 20 TB you would need ten boxes, which is operationally ugly even if the per-TB price holds.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "Small host (NetDynamics LLC), advertises 256 GB RAM Xeon E5-1650v3 storage nodes with RAID-6 and unmetered 1 Gbit/s. The LET50% coupon is quoted by the provider's own Host Rep account on LET, which is a stronger source than a third-party coupon site — but I could not observe it applied at checkout without an order.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://netdynamics24.com/backup-services.php",
+      "date": "2026-10-21",
+      "proved": "\"Unmetered Traffic\", \"RAID-6 protection\", \"Starting From $3.00 per month\", DE + FI (opened this session)"
+    },
+    {
+      "url": "https://www.netdynamics24.com/client/order.php?step=1&productGroup=13",
+      "date": "2026-10-21",
+      "proved": "the four tiers with monthly/yearly/3-year prices (opened this session)"
+    },
+    {
+      "url": "https://lowendtalk.com/discussion/209856/looking-for-1tb-for-restic",
+      "date": "2026-10-21",
+      "proved": "\"Please check our Storage plans: ... and use the coupon code: LET50% to get a recurring annual 50% discount\" (NetDynamics24 Host Rep account)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "List: $6.00/TB/mo at 1 TB, $5.50/TB/mo at 2 TB. With LET50% on annual: 1 TB = $30/yr = $2.50/TB/mo; 2 TB = $55/yr = $2.29/TB/mo. 5 TB workload: three 2 TB boxes = $2.29/TB/mo. 20 TB workload: same $2.29/TB/mo but requires ten boxes. Unmetered 1 Gbit/s is the reason to care.",
+  "notes": "250 GB $3/mo · 500 GB $4/mo · 1 TB $6/mo · 2 TB $11/mo. Germany (Falkenstein) and Finland (Helsinki) sold as separate product groups.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-P7-discount-channels.json",
+    "seed_area": "A/P7",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "A/P7"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "target_document": "docs/storage/paid/lifetime-and-deals.md",
+    "document_section": "Discount channels and Black Friday",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "250 GB $3/mo · 500 GB $4/mo · 1 TB $6/mo · 2 TB $11/mo. Germany (Falkenstein) and Finland (Helsinki) sold as separate product groups.",
+    "limits_verbatim": "No WebDAV, no S3. Capacity ladder stops at 2 TB per box on the page I opened — for 20 TB you would need ten boxes, which is operationally ugly even if the per-TB price holds.",
+    "egress_verbatim": "VERBATIM: \"Unmetered Traffic\" with \"1 GBit/s\" port, on both the DE and FI product pages. This is the cleanest egress term in the dossier — a port speed with no counter and no published fair-use threshold.",
+    "chaining_verbatim": "Archive/backup leg only. No object API means it cannot serve the hot set or back a Cloudflare origin directly.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "rsync/Borg/restic over SSH. No S3, no WebDAV.",
+    "interface_verbatim": "(S)FTP, SSH, rsync, BorgBackup, control panel",
+    "price_verbatim": "List: $6.00/TB/mo at 1 TB, $5.50/TB/mo at 2 TB. With LET50% on annual: 1 TB = $30/yr = $2.50/TB/mo; 2 TB = $55/yr = $2.29/TB/mo. 5 TB workload: three 2 TB boxes = $2.29/TB/mo. 20 TB workload: same $2.29/TB/mo but requires ten boxes. Unmetered 1 Gbit/s is the reason to care.",
+    "agent_focus": "The cheap-paid lane — where bulk storage is actually bought (LowEndTalk offers, LowEndBox, r/DataHoarder, Slickdeals, 什么值得买, AppSumo, StackSocial, bundles, provider promo channels, lifetime flash sales). True $/TB/month price floor with free egress, stated at the 5 TB and 20 TB tiers, plus which providers run an annual promo window."
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

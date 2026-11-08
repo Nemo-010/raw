@@ -1,0 +1,106 @@
+{
+  "topic": "storage",
+  "slug": "solana-account-rent-as-raw-storage",
+  "provider": "Solana account rent as raw storage",
+  "url": "https://solana.com/docs/core/accounts",
+  "category": "blockchain",
+  "free_tier": {
+    "stated": "No free tier — storage is a refundable rent-exempt deposit: 10 MiB account costs 53,268,311,040 lamports (~53.27 SOL) to create, reclaimed only on close.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://solana.com/docs/core/accounts/account-structure",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://solana.com/docs/core/accounts/account-structure",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://solana.com/docs/core/accounts/account-structure",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free reads via RPC while the account exists; all RPC providers rate-limit or block bulk account-data reads.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Solana JSON-RPC (getMinimumBalanceForRentExemption, getAccountInfo), solana-sdk, Anchor. Wrapper examples exist but nothing production-grade for bulk file storage.",
+  "chaining": "Cost scales linearly with bytes at ~5 SOL/MiB; 1 TiB would need ~5.3 million SOL of locked capital. Sharding across wallets does not reduce the deposit.",
+  "limits": [],
+  "limits_note": "Rent-exempt deposit per byte; per-transaction size cap means large accounts are written in many transactions; account data is public and account creation is rate-limited/expensive.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Funds are recoverable on close (so it is a deposit, not a fee) but the capital lock at TB scale is prohibitive; the public RPC blocked this session's probes (403 'Your IP or provider is blocked').",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: POST solana-rpc.publicnode.com getMinimumBalanceForRentExemption([10485760]) -> result 53268311040 lamports for a 10 MiB account"
+    },
+    {
+      "url": "https://solana.com/docs/core/accounts/account-structure",
+      "date": "2026-10-21",
+      "proved": "'Accounts must hold a minimum lamport balance proportional to their data size to stay onchain'"
+    },
+    {
+      "url": "https://solana.com/developers/cookbook/accounts/calculate-rent",
+      "date": "2026-10-21",
+      "proved": "rent is reclaimable in full when the account is closed"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No free tier — storage is a refundable rent-exempt deposit: 10 MiB account costs 53,268,311,040 lamports (~53.27 SOL) to create, reclaimed only on close.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H6-weird-protocols.json",
+    "seed_area": "H/H6",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "H/H6"
+      }
+    ],
+    "seed_confidence": "high",
+    "unit_note": "free_tier.unit is 'mixed' because the headline is denominated in MiB or KiB, which the schema enum does not carry; the verbatim free_tier.stated keeps the true unit. See the storage-dossier handover.",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "paid",
+      "why": "No free tier — storage is a refundable rent-exempt deposit: 10 MiB account costs 53,268,311,040 lamports (~53.27 SOL) to create, reclaimed only on close.",
+      "retry_when": "if the price drops below the paid-lane floor",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H6"
+    },
+    "target_document": "docs/storage/free/relays-and-transports.md",
+    "document_section": "Weird transports",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "No free tier — storage is a refundable rent-exempt deposit: 10 MiB account costs 53,268,311,040 lamports (~53.27 SOL) to create, reclaimed only on close.",
+    "limits_verbatim": "Rent-exempt deposit per byte; per-transaction size cap means large accounts are written in many transactions; account data is public and account creation is rate-limited/expensive.",
+    "egress_verbatim": "Free reads via RPC while the account exists; all RPC providers rate-limit or block bulk account-data reads.",
+    "chaining_verbatim": "Cost scales linearly with bytes at ~5 SOL/MiB; 1 TiB would need ~5.3 million SOL of locked capital. Sharding across wallets does not reduce the deposit.",
+    "tooling_verbatim": "Solana JSON-RPC (getMinimumBalanceForRentExemption, getAccountInfo), solana-sdk, Anchor. Wrapper examples exist but nothing production-grade for bulk file storage.",
+    "interface_verbatim": "rest",
+    "agent_focus": "weird transports: blockchain blobs/calldata, DNS TXT, Usenet, FTP, Gopher/Gemini, IPFS-over-DNS, mod CDNs (Steam/CurseForge/Modrinth/Thunderstore/Roblox)"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

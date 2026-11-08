@@ -1,0 +1,115 @@
+{
+  "topic": "storage",
+  "slug": "jsdelivr",
+  "provider": "jsDelivr (npm + GitHub proxy CDN)",
+  "url": "https://www.jsdelivr.com",
+  "category": "registry",
+  "free_tier": {
+    "stated": "No storage quota of its own — it is a *serving and permanence* layer over npm and GitHub, so the quota is whatever the origin package holds. Hard limits: packages >150 MB and (for GitHub) single files >20 MB are refused by default, raisable on request.",
+    "unit": "MB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.jsdelivr.com/about",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "single files >20 MB",
+    "bytes": 20000000,
+    "source_url": "https://www.jsdelivr.com/about",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "| Retention is *stronger* than the origin: 'Previously served immutable files may be retained in permanent storage even after upstream deletion",
+    "source_url": "https://www.jsdelivr.com/about",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Fully free and explicitly unmetered. Terms of Use (effective Oct 5, 2026), verbatim: 'using jsDelivr CDN is free for both personal and commercial use, there are no limits on bandwidth or number of requests.' About page: 'There are no bandwidth limits or premium features and its completely free to use by anybody.'",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Plain GET on cdn.jsdelivr.net/npm/<pkg>@<ver>/<path> and /gh/<owner>/<repo>@<ref>/<path>. No client needed. Cache-purge API exists (email-gated).",
+  "chaining": "Chains onto npm (see npm candidate) or onto GitHub repos: publish the blob as an npm tarball, then serve it from jsDelivr at a URL with 1-year immutable cache and no bandwidth charge. This upgrades any npm/GitHub bulk store from 'downloadable' to 'CDN-served with free egress', which is exactly the 1 TiB/day serving workload.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "single files >20 MB",
+      "source": "https://www.jsdelivr.com/about"
+    }
+  ],
+  "limits_note": "150 MB per npm package, 20 MB per single GitHub file (both default, raisable via GitHub issue). Rate limiting applies to purge, not to reads. Terms prohibit 'using jsDelivr CDN as a general-purpose file or media hosting service' and 'hosting videos, file backups, or other files in large quantities' — enforcement is the technical risk, not the capability.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Retention is *stronger* than the origin: 'Previously served immutable files may be retained in permanent storage even after upstream deletion. We do not accept removal requests simply because a package or version was unpublished, deleted upstream, or is no longer needed.' Once a URL has been fetched it keeps working after you delete the npm package — that is a genuine cold-archive property. Counter-risk: a 150 MB package cap means a naive >150 MB npm tarball 403s ('Package size exceeded the configured limit of 150 MB') even though npm itself accepted it.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.jsdelivr.com/about",
+      "date": "2026-10-21",
+      "proved": "'no bandwidth limits or premium features and its completely free to use by anybody'"
+    },
+    {
+      "url": "https://github.com/jsdelivr/jsdelivr/blob/master/Terms%20of%20Use.md",
+      "date": "2026-10-21",
+      "proved": "'no limits on bandwidth or number of requests'; 'Previously served immutable files may be retained in permanent storage even after upstream deletion'"
+    },
+    {
+      "url": "https://github.com/jsdelivr/jsdelivr",
+      "date": "2026-10-21",
+      "proved": "(README) — 'Packages larger than 150 MB or single files larger than 20 MB (in the case of GitHub) are not supported by default'"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/left-pad@1.3.0/package.json",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, Access-Control-Allow-Origin: *, Cache-Control: public, max-age=31536000, s-maxage=31536000, immutable, Server: cloudflare"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-node@1.20.1/bin/napi-v3/win32/x64/onnxruntime.dll",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 403, body 'Package size exceeded the configured limit of 150 MB.' (confirms the cap is real and enforced at fetch time)"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No storage quota of its own — it is a *serving and permanence* layer over npm and GitHub, so the quota is whatever the origin package holds. Hard limits: packages >150 MB and (for GitHub) single files >20 MB are refused by default, raisable on request.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C2-package-ecosystems.json",
+    "seed_area": "C/C2",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "C/C2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "Language package ecosystems",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "No storage quota of its own — it is a *serving and permanence* layer over npm and GitHub, so the quota is whatever the origin package holds. Hard limits: packages >150 MB and (for GitHub) single files >20 MB are refused by default, raisable on request.",
+    "limits_verbatim": "150 MB per npm package, 20 MB per single GitHub file (both default, raisable via GitHub issue). Rate limiting applies to purge, not to reads. Terms prohibit 'using jsDelivr CDN as a general-purpose file or media hosting service' and 'hosting videos, file backups, or other files in large quantities' — enforcement is the technical risk, not the capability.",
+    "egress_verbatim": "Fully free and explicitly unmetered. Terms of Use (effective Oct 5, 2026), verbatim: 'using jsDelivr CDN is free for both personal and commercial use, there are no limits on bandwidth or number of requests.' About page: 'There are no bandwidth limits or premium features and its completely free to use by anybody.'",
+    "chaining_verbatim": "Chains onto npm (see npm candidate) or onto GitHub repos: publish the blob as an npm tarball, then serve it from jsDelivr at a URL with 1-year immutable cache and no bandwidth charge. This upgrades any npm/GitHub bulk store from 'downloadable' to 'CDN-served with free egress', which is exactly the 1 TiB/day serving workload.",
+    "tooling_verbatim": "Plain GET on cdn.jsdelivr.net/npm/<pkg>@<ver>/<path> and /gh/<owner>/<repo>@<ref>/<path>. No client needed. Cache-purge API exists (email-gated).",
+    "interface_verbatim": "rest",
+    "agent_focus": "Package ecosystems as blob stores: npm, PyPI, crates.io, Maven Central, NuGet, RubyGems, Packagist, Conda/conda-forge, Hex, Pub.dev, CocoaPods, R, CPAN, Hackage — per-artifact caps, version-unlimited behaviour, retention/deletion policy"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,175 @@
+{
+  "topic": "compute",
+  "slug": "cloudbrowser",
+  "provider": "CloudBrowser AI",
+  "url": "https://cloudbrowser.ai/",
+  "category": "browser host",
+  "free_tier": {
+    "stated": "a 7-day free trial on the Basic plan and a free open-source MCP connector; browser hours beyond the trial need a paid plan from $25 a month for 250 hours",
+    "unit": "hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://cloudbrowser.ai/",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://cloudbrowser.ai/",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://cloudbrowser.ai/",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "not published: the page read states no egress allowance and no overage price per TB",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://cloudbrowser.ai/"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "HTTP API to open a browser, then Chrome DevTools Protocol with Puppeteer or Playwright; official .NET and Node.js SDKs; a remote MCP server; a web dashboard",
+  "tooling": "HTTP API plus CDP with Puppeteer or Playwright; official .NET and Node.js SDKs",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "250 browser hours a month on the $25 tier",
+      "source": "https://cloudbrowser.ai/"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "the free period is 7 days on Basic and ends regardless of usage",
+      "source": "https://cloudbrowser.ai/"
+    },
+    {
+      "kind": "request-rate",
+      "value": "10 concurrent instances on Basic and 25 on Premium, three tabs each",
+      "source": "https://cloudbrowser.ai/"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field; excluded as off-category",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email: an account needs an email address and authentication ('An email address and authentication information are necessary for an account; payment and usage information are necessary for a paid plan.'). A card is not required for the 7-day trial: the same statement makes payment information necessary for a paid plan, and the trial page states 'Start a 7-day free trial on Basic. No browser to install, no servers to run.'. A phone is not required: the policy's account data is 'your email address, password authentication records, language preferences, account identifiers, API credentials and security events', which names no phone. Country: not published at https://cloudbrowser.ai/privacy-policy.",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the site was read on 2026-10-22 and states the 7-day trial, the $25 tier and 250 browser hours. The free half is a trial, so the verdict moves to trial-only rather than paid-only",
+  "evidence": [
+    {
+      "url": "https://cloudbrowser.ai/",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://cloudbrowser.ai/",
+      "date": "2026-10-22",
+      "proved": "'The open-source MCP connector is free. Browser usage requires a CloudBrowser account and a paid plan after the 7-day Basic trial.' and 'Start with a 7-day free trial on Basic' with '$25/month' and '250 browser hours/mo', quoted"
+    },
+    {
+      "url": "https://cloudbrowser.ai/",
+      "date": "2026-11-03",
+      "proved": "the pricing section lists browser hours and concurrency and states no egress allowance or overage price",
+      "capture": "sha256:7145d4284d77d8f8bbbccc5f177efc19de817856ad00fc079cf71c4bd76d5a97",
+      "quote": "250 browser hours/mo"
+    },
+    {
+      "url": "https://cloudbrowser.ai/",
+      "date": "2026-11-03",
+      "proved": "browsers are opened over an HTTP API and driven over CDP",
+      "capture": "sha256:7145d4284d77d8f8bbbccc5f177efc19de817856ad00fc079cf71c4bd76d5a97",
+      "quote": "Open stealth Chrome with one HTTP call, then drive it over CDP with Puppeteer or Playwright."
+    },
+    {
+      "url": "https://cloudbrowser.ai/sdk",
+      "date": "2026-11-04",
+      "proved": "the first step of the documented quickstart is an account",
+      "capture": "sha256:69540af350abe495fc12b77a1ec1f7426d01a829f87e9b448beff8892a3376d4",
+      "quote": "Create an account"
+    },
+    {
+      "url": "https://cloudbrowser.ai/privacy-policy",
+      "date": "2026-11-04",
+      "proved": "the account needs an email and authentication, and payment details only for a paid plan",
+      "capture": "sha256:3153cd6069cbb6ff6d83d7e3e563bfabd8ada91dd44c3da69723a9faedc552c6",
+      "quote": "An email address and authentication information are necessary for an account; payment and usage information are necessary for a paid plan."
+    },
+    {
+      "url": "https://cloudbrowser.ai/privacy-policy",
+      "date": "2026-11-06",
+      "proved": "an email address and authentication are necessary for an account, and payment information only for a paid plan",
+      "capture": "sha256:3153cd6069cbb6ff6d83d7e3e563bfabd8ada91dd44c3da69723a9faedc552c6",
+      "quote": "An email address and authentication information are necessary for an account; payment and usage information are necessary for a paid plan."
+    },
+    {
+      "url": "https://cloudbrowser.ai/sdk",
+      "date": "2026-11-06",
+      "proved": "the trial starts on Basic with nothing installed and no server",
+      "capture": "sha256:69540af350abe495fc12b77a1ec1f7426d01a829f87e9b448beff8892a3376d4",
+      "quote": "Start a 7-day free trial on Basic. No browser to install, no servers to run."
+    },
+    {
+      "url": "https://cloudbrowser.ai/privacy-policy",
+      "date": "2026-11-06",
+      "proved": "the account data the policy lists is an email address and authentication records, with no phone",
+      "capture": "sha256:3153cd6069cbb6ff6d83d7e3e563bfabd8ada91dd44c3da69723a9faedc552c6",
+      "quote": "your email address, password authentication records, language preferences, account identifiers, API credentials and security events"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-06T17:48:23.920Z",
+  "price_per_tb_month": null,
+  "notes": " Reclassified: no free tier on the catalogue card is a paid-only product, not a closed one. `dead` is reserved for a product that is withdrawn or unreachable.",
+  "extras": {
+    "seed_status": "off-category",
+    "talaria_m10h_usd": null,
+    "talaria_m24h_usd": null,
+    "nemo_m10h_usd": null,
+    "keep_rate": null,
+    "keep_rate_basis": "no field in the source",
+    "billing_model": "unclassified",
+    "shape": null,
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "the trial clock is 7 days; a session itself has its own limit per plan"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "trial",
+    "reclassified_from": "dead",
+    "reclassify_reason": "no free tier recorded on the card is not evidence that the product is gone",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": {
+      "gib": null,
+      "price": "saved sessions store cookies and localStorage",
+      "durability": "saved session",
+      "on_stop": true,
+      "on_destroy": false,
+      "retention": "until removed"
+    },
+    "net": {
+      "out": true,
+      "in": false,
+      "ports": null,
+      "static_ip": false,
+      "ipv6": null,
+      "allowance": "premium proxies included on every plan"
+    }
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "retention-clamped",
+  "history": [
+    "history/2026-10-22T053100Z/nineteen-credits-called-tiers-and-tiers-called-credits.md"
+  ]
+}

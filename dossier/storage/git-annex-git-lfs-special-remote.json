@@ -1,0 +1,94 @@
+{
+  "topic": "storage",
+  "slug": "git-annex-git-lfs-special-remote",
+  "provider": "git-annex git-lfs special remote (annex over any LFS host)",
+  "url": "https://git-annex.branchable.com/special_remotes/git-lfs/",
+  "category": "registry",
+  "free_tier": {
+    "stated": "N/A — a protocol adapter. Turns ANY git-lfs server (GitHub, GitLab, Bitbucket, a self-hosted Gitea) into an annex special remote, so the LFS host's quota applies but annex adds hash-verified partial clone and `whereis` across mirrors.",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://git-annex.branchable.com/special_remotes/git-lfs/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://git-annex.branchable.com/special_remotes/git-lfs/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "| Cannot delete = every mistake is permanent on the LFS side, and the host's month-storage accounting (GitHub) means you keep paying for it in quota",
+    "source_url": "https://git-annex.branchable.com/special_remotes/git-lfs/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Inherited from the LFS host.",
+    "metered": false
+  },
+  "interface": [
+    "git"
+  ],
+  "interface_detail": "git",
+  "tooling": "`git annex initremote lfstest type=git-lfs url=... encryption=shared`. Supports gcrypt:: URL prefix for encrypting the git side too.",
+  "chaining": "Because annex can hold the same content on several LFS remotes, you can stack the 10 GiB/project GitLab allowance and the 10 GiB GitHub allowance as tiers of one logical dataset, with annex tracking which objects live where. Sharding a 1 TiB corpus across 100 GitLab projects becomes a `git annex copy --to` loop.",
+  "limits": [],
+  "limits_note": "Hard, documented limitations: 'The git-lfs protocol does not support deleting content, so git-annex cannot delete anything from a git-lfs special remote'; no upload resume; 'git-annex doesn't do batching. This may cause it to fall afoul of rate limiting of git-lfs servers' — which directly collides with GitLab's 1000 req/min LFS limit. Requires SHA256 backend for efficiency.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Cannot delete = every mistake is permanent on the LFS side, and the host's month-storage accounting (GitHub) means you keep paying for it in quota. No batching + per-object request = the exact workload LFS rate limits are designed to stop.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://git-annex.branchable.com/special_remotes/git-lfs/",
+      "date": "2026-10-21",
+      "proved": "limitations section quoted above"
+    },
+    {
+      "url": "https://git-annex.branchable.com/special_remotes/git-lfs/",
+      "date": "2026-10-21",
+      "proved": "example: 'git annex initremote lfstest type=git-lfs url=gcrypt::git@github.com:username/somerepo.git encryption=shared'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "N/A — a protocol adapter. Turns ANY git-lfs server (GitHub, GitLab, Bitbucket, a self-hosted Gitea) into an annex special remote, so the LFS host's quota applies but annex adds hash-verified partial clone and `whereis` across mirrors.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C3-git-annex-lfs.json",
+    "seed_area": "C/C3",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "C/C3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "Git LFS and git-annex special remotes",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "N/A — a protocol adapter. Turns ANY git-lfs server (GitHub, GitLab, Bitbucket, a self-hosted Gitea) into an annex special remote, so the LFS host's quota applies but annex adds hash-verified partial clone and `whereis` across mirrors.",
+    "limits_verbatim": "Hard, documented limitations: 'The git-lfs protocol does not support deleting content, so git-annex cannot delete anything from a git-lfs special remote'; no upload resume; 'git-annex doesn't do batching. This may cause it to fall afoul of rate limiting of git-lfs servers' — which directly collides with GitLab's 1000 req/min LFS limit. Requires SHA256 backend for efficiency.",
+    "egress_verbatim": "Inherited from the LFS host.",
+    "chaining_verbatim": "Because annex can hold the same content on several LFS remotes, you can stack the 10 GiB/project GitLab allowance and the 10 GiB GitHub allowance as tiers of one logical dataset, with annex tracking which objects live where. Sharding a 1 TiB corpus across 100 GitLab projects becomes a `git annex copy --to` loop.",
+    "tooling_verbatim": "`git annex initremote lfstest type=git-lfs url=... encryption=shared`. Supports gcrypt:: URL prefix for encrypting the git side too.",
+    "interface_verbatim": "git",
+    "agent_focus": "Large-file versioning layer: git-annex special remotes, Git LFS hosts, DVC remotes, Perforce/SVN, and which free backends those layers can be pointed at"
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "self_hosted": true
+}

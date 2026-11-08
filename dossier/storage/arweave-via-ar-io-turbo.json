@@ -1,0 +1,104 @@
+{
+  "topic": "storage",
+  "slug": "arweave-via-ar-io-turbo",
+  "provider": "Arweave via ar.io / Turbo (ario-deploy free tier)",
+  "url": "https://docs.ar.io/sdks/ario-deploy/free-tier/",
+  "category": "p2p",
+  "free_tier": {
+    "stated": "Turbo free tier: 105 KiB per data item, 10 MiB over the lifetime of a wallet AND 10 MiB over the lifetime of an IP range. Larger files are billed.",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://docs.ar.io/sdks/ario-deploy/free-tier/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "105 KiB/file",
+    "bytes": 107520,
+    "source_url": "https://docs.ar.io/sdks/ario-deploy/free-tier/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.ar.io/sdks/ario-deploy/free-tier/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Arweave reads are effectively unmetered through gateways (arweave.net, ar.io gateways) — genuinely free egress, which is why this would otherwise be interesting. But there is nothing to serve.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "ario-deploy CLI, Turbo SDK (@ardriveapp/turbo-sdk), ar.io SDK; arbundles/Irys for direct bundling.",
+  "chaining": "Actively defeated by design: the IP-range meter means the entire free allowance for a datacenter is shared. 'ario-deploy can check the wallet's allowance... It cannot check the IP range, so a deploy can pass the credit check and still be refused at upload time with HTTP 402 when other people on the same network have used the range's allowance.'",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "105 KiB/file",
+      "source": "https://docs.ar.io/sdks/ario-deploy/free-tier/"
+    }
+  ],
+  "limits_note": "105 KiB/file; 10 MiB/wallet lifetime; 10 MiB/IP-range lifetime; HTTP 402 past that.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "The IP-range metering is the anti-farming mechanism, and it works: this is the one design in the class that explicitly anticipates the 'unlimited wallets' move. Confirms the prior agent's finding, with the mechanism spelled out (dual metering, wallet + range, 402 on the range).",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.ar.io/sdks/ario-deploy/free-tier/",
+      "date": "2026-10-21",
+      "proved": "'105 KiB per file (per data item)'; '10 MiB over the lifetime of a wallet, and 10 MiB over the lifetime of an IP range. Turbo meters both'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Turbo free tier: 105 KiB per data item, 10 MiB over the lifetime of a wallet AND 10 MiB over the lifetime of an IP range. Larger files are billed.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E7-decentralised.json",
+    "seed_area": "E/E7",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "E/E7"
+      }
+    ],
+    "seed_confidence": "high",
+    "unit_note": "free_tier.unit is 'mixed' because the headline is denominated in MiB or KiB, which the schema enum does not carry; the verbatim free_tier.stated keeps the true unit. See the storage-dossier handover.",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Turbo free tier: 105 KiB per data item, 10 MiB over the lifetime of a wallet AND 10 MiB over the lifetime of an IP range. Larger files are billed.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E7"
+    },
+    "target_document": "docs/storage/free/relays-and-transports.md",
+    "document_section": "Content-addressed and decentralised stores",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 1,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Turbo free tier: 105 KiB per data item, 10 MiB over the lifetime of a wallet AND 10 MiB over the lifetime of an IP range. Larger files are billed.",
+    "limits_verbatim": "105 KiB/file; 10 MiB/wallet lifetime; 10 MiB/IP-range lifetime; HTTP 402 past that.",
+    "egress_verbatim": "Arweave reads are effectively unmetered through gateways (arweave.net, ar.io gateways) — genuinely free egress, which is why this would otherwise be interesting. But there is nothing to serve.",
+    "chaining_verbatim": "Actively defeated by design: the IP-range meter means the entire free allowance for a datacenter is shared. 'ario-deploy can check the wallet's allowance... It cannot check the IP range, so a deploy can pass the credit check and still be refused at upload time with HTTP 402 when other people on the same network have used the range's allowance.'",
+    "tooling_verbatim": "ario-deploy CLI, Turbo SDK (@ardriveapp/turbo-sdk), ar.io SDK; arbundles/Irys for direct bundling.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Decentralised storage / IPFS pinning judged on gateway egress economics: Pinata, Storacha/web3.storage, Filebase, 4EVERLAND, Lighthouse, thirdweb, Fleek, QuickNode, Infura, Kubo+self-host, dweb.link/ipfs.io, Sia/Skynet, Storj, Akash, Arweave (ar.io/Turbo/Irys), Walrus, Filecoin/Fil+/FCSS, BitTorrent, ZeroNet, Hypercore, Earthstar, Crust"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

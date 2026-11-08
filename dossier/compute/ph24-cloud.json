@@ -1,0 +1,204 @@
+{
+  "topic": "compute",
+  "slug": "ph24-cloud",
+  "provider": "ph24 Cloud (ProHosting24)",
+  "url": "https://ph24.io/cloud",
+  "category": "cloud VM",
+  "tier": "B1-4",
+  "free_tier": {
+    "stated": "No free tier: every B1 server carries an hourly and a monthly price. The cheapest hourly configuration is B1-4, 1 vCPU, 4 GB RAM and a 50 GB OS disk, at EUR 0.00916 per hour or EUR 6.82 per month, prices including 19% VAT.",
+    "unit": "none",
+    "metered_on": "wall-clock",
+    "source_url": "https://ph24.io/cloud",
+    "read_on": "2026-11-06",
+    "notes": "the page lists seven B1 flavours, B1-4 to B1-48, and four LB1 load-balancer flavours, each with a 50 GB OS disk; a public IPv4 is a per-server option at EUR 0.002023 per hour and EUR 1.50 per month; volume, snapshot, backup and image storage are priced separately; no GPU or ARM flavour is listed"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object; every B1 flavour ships with a 50 GB OS disk, and further storage is a separate volume at EUR 0.000476 per hour and EUR 0.36 per month",
+    "bytes": null,
+    "source_url": "https://ph24.io/cloud"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine, not stored bytes; the service is prepaid from a customer account in euro, and every flavour carries both an hourly and a monthly price",
+    "days": null,
+    "source_url": "https://ph24.io/cloud",
+    "notes": "a machine record: what is lost is the running process and its disk"
+  },
+  "egress": {
+    "terms": "no traffic allowance and no price per GB are published on the cloud page; the vendor's ToS reserves the right to disable a service on above-average fair-use traffic without stating a number",
+    "metered": false,
+    "free_allowance": "not stated",
+    "price_per_tb": null,
+    "source_url": "https://ph24.io/cloud"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "a public OpenAPI 3.1 document at https://ph24.io/service/api-docs/public lists the cloud API: create, update and delete a server, volumes, network ports, floating IPs, load balancers and Kubernetes clusters; the API is served from https://ph24.io/service",
+  "endpoint": "https://ph24.io/service",
+  "tooling": "the public REST API and its OpenAPI document; the vendor's API page names a Terraform-compatible cloud API and Kubernetes CRDs; no CLI or SDK was read",
+  "chaining": "A B1-4 with a public IPv4 is a full KVM server that can be created and destroyed through the API, so a job that runs for hours is billed for those hours only and the machine can be rebuilt from an image for the next run; the vendor's monthly VPS line is the alternative for a machine that stays up all month",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "50 GB OS disk on every B1 flavour; a larger disk is a separate volume at EUR 0.000476 per hour and EUR 0.36 per month",
+      "source": "https://ph24.io/cloud"
+    }
+  ],
+  "limits_note": "no traffic allowance, bandwidth cap or request rate is published for ph24 Cloud; whether a stopped server still bills was not stated",
+  "binding": "per-object-cap",
+  "binding_note": "the 50 GB OS disk is the only published cap and the first wall a job meets; a larger disk needs a separate volume, and no traffic or request limit is published to bind before it",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "registration needs a user name, an e-mail address and a password; the account is prepaid in euro and is charged by PayPal, Sofort, paysafecard or credit card; the ToS names no phone number or identity document, and says the registration form asks for personal data",
+    "country": null
+  },
+  "reliability_note": "the vendor's status page lists 100% uptime for Cloud API eu-central and KVM FRA1, and 98.9% for Backup FRA1",
+  "confidence": "documented",
+  "confidence_note": "the price table, the shapes, the VAT and the billing unit come from the vendor's cloud page; identity comes from the vendor's ToS; the API comes from the vendor's OpenAPI document; nothing was probed, so no value is measured",
+  "verdict": "paid-only",
+  "verified_at": "2026-11-06T16:59:07.363Z",
+  "notes": "the hourly price is the one to compare against other cloud VMs and the monthly figure is the price of a full month; the public IPv4 is a per-server option and the storage tables price volume, snapshot, backup and image separately; the cloud is reached through a public API, so a machine can be scripted end to end",
+  "evidence": [
+    {
+      "url": "https://ph24.io/cloud",
+      "date": "2026-11-06",
+      "proved": "the cheapest hourly server row is B1-4 with 1 vCPU, 4 GB RAM and a 50 GB OS disk at EUR 0.00916 per hour or EUR 6.82 per month",
+      "capture": "sha256:df4f0d13d5c6df08f8fc4ccb1c764e1bac38fce16c5486166a835cf01e440e3c",
+      "quote": "| B1-4 | 1 Cores | 4 GB RAM | 50 GB |  | 0.00916 € / h6.82 € / Month |"
+    },
+    {
+      "url": "https://ph24.io/cloud",
+      "date": "2026-11-06",
+      "proved": "the largest B1 flavour is 12 vCPU, 48 GB RAM and a 50 GB OS disk at EUR 0.0639 per hour or EUR 47.54 per month",
+      "capture": "sha256:df4f0d13d5c6df08f8fc4ccb1c764e1bac38fce16c5486166a835cf01e440e3c",
+      "quote": "| B1-48 | 12 Cores | 48 GB RAM | 50 GB |  | 0.0639 € / h47.54 € / Month |"
+    },
+    {
+      "url": "https://ph24.io/cloud",
+      "date": "2026-11-06",
+      "proved": "a public IPv4 costs EUR 0.002023 per hour or EUR 1.50 per month",
+      "capture": "sha256:df4f0d13d5c6df08f8fc4ccb1c764e1bac38fce16c5486166a835cf01e440e3c",
+      "quote": "| Public IP address | 0.002023 € / h1.5 € / Month |"
+    },
+    {
+      "url": "https://ph24.io/cloud",
+      "date": "2026-11-06",
+      "proved": "a volume costs EUR 0.000476 per hour or EUR 0.36 per month",
+      "capture": "sha256:df4f0d13d5c6df08f8fc4ccb1c764e1bac38fce16c5486166a835cf01e440e3c",
+      "quote": "| Volume |  | 0.000476 € / h0.36 € / Month |"
+    },
+    {
+      "url": "https://ph24.io/cloud",
+      "date": "2026-11-06",
+      "proved": "the listed prices include the legally applicable value added tax",
+      "capture": "sha256:48951a7d102ed429118dca5531c5d63b7fc1de557c6570c4228c4d6f04047206",
+      "quote": "The prices include the legally applicable value added tax."
+    },
+    {
+      "url": "https://ph24.io/cloud",
+      "date": "2026-11-06",
+      "proved": "the page prices the B1-4 instance at EUR 0.00476 an hour and its volume entry at EUR 0.00238 an hour in its own price data",
+      "capture": "sha256:48951a7d102ed429118dca5531c5d63b7fc1de557c6570c4228c4d6f04047206",
+      "quote": "\\\"hourlyPrice\\\":{\\\"finalPrice\\\":0.00476,\\\"taxPrice\\\":0.00076,\\\"netPrice\\\":0.004,\\\"taxRate\\\":19},\\\"identifier\\\":\\\"flavor_b7febc68-b31d-4c63-9120-f130e61f666f\\\"}"
+    },
+    {
+      "url": "https://ph24.io/terms-of-service",
+      "date": "2026-11-06",
+      "proved": "registration needs a user name, an e-mail address and a password",
+      "capture": "sha256:5e270d0a27005878d7f159ef308cd2ff06852b383866eb073c3fbcae29a42c66",
+      "quote": "User name, e-mail address and password are required for registration."
+    },
+    {
+      "url": "https://ph24.io/terms-of-service",
+      "date": "2026-11-06",
+      "proved": "the prepaid customer account is charged by PayPal, Sofort, paysafecard or credit card",
+      "capture": "sha256:5e270d0a27005878d7f159ef308cd2ff06852b383866eb073c3fbcae29a42c66",
+      "quote": "The customer account can be chargen up with the offered means of payment (e.g. PayPal, Sofort, paysafecard or Creditcard)."
+    },
+    {
+      "url": "https://ph24.io/terms-of-service",
+      "date": "2026-11-06",
+      "proved": "the service is booked on a prepaid system, so a machine runs on credit already in the account",
+      "capture": "sha256:5e270d0a27005878d7f159ef308cd2ff06852b383866eb073c3fbcae29a42c66",
+      "quote": "The services of ph24 are booked according to a pre-paid system."
+    },
+    {
+      "url": "https://ph24.io/terms-of-service",
+      "date": "2026-11-06",
+      "proved": "the ToS reserves the right to disable a service on above-average fair-use traffic without stating a number",
+      "capture": "sha256:5e270d0a27005878d7f159ef308cd2ff06852b383866eb073c3fbcae29a42c66",
+      "quote": "In the event of above-average use of fair-use traffic, ph24 reserves the right to disable the respective rented services."
+    },
+    {
+      "url": "https://ph24.io/service/openapi",
+      "date": "2026-11-06",
+      "proved": "a documented cloud API exists in the public OpenAPI 3.1 specification",
+      "capture": "sha256:3bdecd28d168299622fd3e47a5ebc130b485fb19f56beaebb3b2bb2b11a52758",
+      "quote": "### [cloud](https://ph24.io/service/swagger-ui/index.html\\#/cloud)    the cloud API"
+    },
+    {
+      "url": "https://ph24.io/service/openapi",
+      "date": "2026-11-06",
+      "proved": "the API creates a cloud server, and the server URL is https://ph24.io/service",
+      "capture": "sha256:3bdecd28d168299622fd3e47a5ebc130b485fb19f56beaebb3b2bb2b11a52758",
+      "quote": "[/v1/cloud/project/{projectId}/server](https://ph24.io/service/swagger-ui/index.html#/cloud-compute/createCloudServer)"
+    },
+    {
+      "url": "https://ph24.io/about/api",
+      "date": "2026-11-06",
+      "proved": "the vendor's API page names a Terraform-compatible cloud API and Kubernetes CRDs",
+      "capture": "sha256:8737b3c55d5e0bc42dd275898b3a0c2e05f1fc7ac2cf1cdeb1984de24bd0da2d",
+      "quote": "Terraform compatible"
+    },
+    {
+      "url": "https://ph24.io/about/api",
+      "date": "2026-11-06",
+      "proved": "the API covers OpenStack, Kubernetes and ph24 resources",
+      "capture": "sha256:8737b3c55d5e0bc42dd275898b3a0c2e05f1fc7ac2cf1cdeb1984de24bd0da2d",
+      "quote": "Our API connects your infrastructure: OpenStack environment, Kubernetes management and ph24 resources - seamlessly and flexibly."
+    },
+    {
+      "url": "https://status.ph24.io",
+      "date": "2026-11-06",
+      "proved": "the status page lists the cloud API at 100% uptime",
+      "capture": "sha256:9e4ba3a7f27ffa74a83cca9dc9ba61c513caccfbcdd3d7614f4252e09de3bb71",
+      "quote": "Cloud API eu-central\n\n100% uptime"
+    },
+    {
+      "url": "https://status.ph24.io",
+      "date": "2026-11-06",
+      "proved": "the status page lists KVM FRA1 at 100% uptime",
+      "capture": "sha256:9e4ba3a7f27ffa74a83cca9dc9ba61c513caccfbcdd3d7614f4252e09de3bb71",
+      "quote": "KVM FRA1\n\n100% uptime"
+    },
+    {
+      "url": "https://status.ph24.io",
+      "date": "2026-11-06",
+      "proved": "the status page lists Backup FRA1 at 98.9% uptime",
+      "capture": "sha256:9e4ba3a7f27ffa74a83cca9dc9ba61c513caccfbcdd3d7614f4252e09de3bb71",
+      "quote": "Backup FRA1\n\n98.9% uptime"
+    },
+    {
+      "url": "https://ph24.io/about/bandwidth",
+      "date": "2026-11-06",
+      "proved": "the cloud and Kubernetes environments are described as 10GbE to tenant and external networks",
+      "capture": "sha256:71223a299316af6d515cb3a21834ccd3a27830b37e93bcd3ea7c13b6ee426ffa",
+      "quote": "Leveraging 100GbE technology and CDN77 as our carrier, the ph24 Cloud and Kubernetes environments provide stable 10GbE connectivity to both tenant and external networks, ensuring reliable global reach."
+    },
+    {
+      "url": "https://ph24.io/about/datacenter",
+      "date": "2026-11-06",
+      "proved": "the facilities are maincubes and NTT",
+      "capture": "sha256:8811d9e5db6a83111434faf33f48d7400ea3a5d5e013cfc9c8e2fc7cd2f4e35d",
+      "quote": "Renowned datacenter vendors such as maincubes and NTT are the foundation of ph24."
+    },
+    {
+      "url": "https://ph24.io/legal-notice",
+      "date": "2026-11-06",
+      "proved": "the ph24.io legal notice gives a prohosting24.de contact address, so the two domains are one operator",
+      "capture": "sha256:e984e861f0052fbaf6de34b49b6ef004bf186e5f644e31231adcab6c56c89cc7",
+      "quote": "General: info@prohosting24.de"
+    }
+  ]
+}

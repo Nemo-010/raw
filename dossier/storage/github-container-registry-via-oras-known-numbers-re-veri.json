@@ -1,0 +1,125 @@
+{
+  "topic": "storage",
+  "slug": "github-container-registry-via-oras-known-numbers-re-veri",
+  "provider": "GitHub Container Registry (GHCR) via ORAS — known, numbers re-verified",
+  "url": "https://ghcr.io",
+  "category": "registry",
+  "free_tier": {
+    "stated": "Container image storage and bandwidth are free: \"Container image storage and bandwidth for the Container registry is currently free. If you use Container registry, you'll be informed at least one month in advance of any change to this policy.\" Ceiling is per-blob, not per-account: \"The Container registry has a 10 GB size limit for each layer\" and \"a 10 minute timeout limit for uploads\".",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free/unmetered per the billing page note above; blobs 307-redirect to pkg-containers.githubusercontent.com (Azure Blob, Fastly fronted).",
+    "metered": false
+  },
+  "interface": [
+    "oci"
+  ],
+  "interface_detail": "oci",
+  "tooling": "oras-project/oras (2,474 stars) — `oras push` with `--artifact-type`, one file per layer, so the 10 GB/layer cap becomes the per-file cap. Docker/skopeo/crane also work. Androsh7/layerstash (1 star) is a purpose-built 'Data Storage Tool for Docker Hub and GHCR'.",
+  "chaining": "unlimited repos x unlimited tags/versions x (10 GB per blob). A 30 TiB corpus = 3,000 x 10 GB ORAS layers, spread over any number of repos/tags; multiply by unlimited accounts and orgs. Effectively unbounded, capped only by upload throughput.",
+  "limits": [],
+  "limits_note": "10 GB per layer (per file), 10 minute upload timeout per blob, anonymous PUSH denied, anonymous PULL allowed for public packages. npm/nuget/maven/ruby registries on the same product are NOT free like this — see dead ends.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: each layer\" and \"a 10 minute timeout limit for uploads\". Anonymous pull verified end-to-end; nothing expires. The 10-minute upload timeout is the real constraint on large single layers f",
+    "country": null
+  },
+  "reliability_note": "Anonymous pull verified end-to-end; nothing expires. The 10-minute upload timeout is the real constraint on large single layers from a slow link — use several smaller layers.",
+  "confidence": "documented",
+  "confidence_note": "re-read from read-broker on 2026-10-22 (HTTP 200, 17000 bytes, sha256 4b3a2c0a26a56c2a). The page states the number in the record; the claim is documented, not measured.",
+  "evidence": [
+    {
+      "url": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry",
+      "date": "2026-10-22",
+      "proved": "10 GB per layer on GHCR. Re-read https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry: HTTP 200, 17000 bytes, sha256 4b3a2c0a26a56c2a. Quoted: push: true outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=My multi-arch image ``` ## Troubleshooting * The Container registry has a 10 GB size limit for each layer. * The Container registry has a 10 minute timeout limit for uploads."
+    },
+    {
+      "url": "https://docs.github.com/en/billing/concepts/product-billing/github-packages",
+      "date": "2026-10-21",
+      "proved": "'Container image storage and bandwidth for the Container registry is currently free'"
+    },
+    {
+      "url": "https://ghcr.io/token",
+      "date": "2026-10-21",
+      "proved": "probe: GET ghcr.io/v2/ -> 401 with www-authenticate: Bearer realm=\"\",service=\"ghcr.io\" (auth flow entry point)"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET ghcr.io/token?scope=repository:actions/actions-runner:pull (anonymous) -> token len 60; GET /v2/actions/actions-runner/manifests/latest -> 200 index; child manifest -> 200, 10 layers, 543.1 MB total"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET /v2/actions/actions-runner/blobs/<digest> -r 0-65535 -> 307 to pkg-containers.githubusercontent.com ... -> 206, Content-Range: bytes 0-65535/29765758"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET ghcr.io/token?scope=repository:test/x:pull,push (anonymous) -> {\"errors\":[{\"code\":\"DENIED\"}]}; POST token with user:PAT basic auth -> 200 {\"token\":...} (real login flow)"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-10-22T00:00:00.000Z",
+  "notes": "Container image storage and bandwidth are free: \"Container image storage and bandwidth for the Container registry is currently free. If you use Container registry, you'll be informed at least one month in advance of any change to this policy.\" Ceiling is per-blob, not per-account: \"The Container registry has a 10 GB size limit for each layer\" and \"a 10 minute timeout limit for uploads\".",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B1-github-packages.json",
+    "seed_area": "B/B1",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "B/B1"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "GitHub Packages and GHCR",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Container image storage and bandwidth are free: \"Container image storage and bandwidth for the Container registry is currently free. If you use Container registry, you'll be informed at least one month in advance of any change to this policy.\" Ceiling is per-blob, not per-account: \"The Container registry has a 10 GB size limit for each layer\" and \"a 10 minute timeout limit for uploads\".",
+    "limits_verbatim": "10 GB per layer (per file), 10 minute upload timeout per blob, anonymous PUSH denied, anonymous PULL allowed for public packages. npm/nuget/maven/ruby registries on the same product are NOT free like this — see dead ends.",
+    "egress_verbatim": "Free/unmetered per the billing page note above; blobs 307-redirect to pkg-containers.githubusercontent.com (Azure Blob, Fastly fronted).",
+    "chaining_verbatim": "unlimited repos x unlimited tags/versions x (10 GB per blob). A 30 TiB corpus = 3,000 x 10 GB ORAS layers, spread over any number of repos/tags; multiply by unlimited accounts and orgs. Effectively unbounded, capped only by upload throughput.",
+    "tooling_verbatim": "oras-project/oras (2,474 stars) — `oras push` with `--artifact-type`, one file per layer, so the 10 GB/layer cap becomes the per-file cap. Docker/skopeo/crane also work. Androsh7/layerstash (1 star) is a purpose-built 'Data Storage Tool for Docker Hub and GHCR'.",
+    "interface_verbatim": "oci",
+    "agent_focus": "GitHub as storage — quantitative ceilings (per-file / per-release / per-repo / per-account), multiplication model, and the automation layer (gh, oras, softprops, gh-large-releases, cf-github-releases, jsDelivr)",
+    "verified_in_pass": [
+      {
+        "url": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry",
+        "date": "2026-10-22",
+        "via": "read-broker",
+        "http_status": 200,
+        "bytes": 17000,
+        "sha256": "4b3a2c0a26a56c2a4cfd47016d4f6a9c5f388b00b9a4eb57386569eab7a9495b",
+        "pattern_found": true,
+        "what_changed": "no change: the page still states the claim",
+        "capture": "captures\\ghcr-github-container-registry-ghcr-via-oras-known-numbers-re-docs-github-com-en-packages-.txt"
+      }
+    ]
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

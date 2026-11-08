@@ -1,0 +1,112 @@
+{
+  "topic": "storage",
+  "slug": "iiif-archive-org",
+  "provider": "iiif.archive.org (free IIIF Image API over any uploaded image)",
+  "url": "https://iiif.archive.org/iiif/",
+  "category": "academic",
+  "free_tier": {
+    "stated": "No separate quota — it is a free image server over items you already hold, one image per item. Capacity therefore follows the 1TB/item rule.",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://training.iiif.io/iiif-bl-workshop/day-two/image-servers/iiif-hosting-ia.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "1TB/item",
+    "bytes": 1000000000000,
+    "source_url": "https://training.iiif.io/iiif-bl-workshop/day-two/image-servers/iiif-hosting-ia.html",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "One image per item for reliable IIIF (multiple images need multiple items); must upload to the 'Community Image' collection or the viewer breaks; test-style uploads can be deleted after 30 days.",
+    "days": 30,
+    "source_url": "https://training.iiif.io/iiif-bl-workshop/day-two/image-servers/iiif-hosting-ia.html",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free, and it is a rendering endpoint, so one stored master serves arbitrary region/size/rotation/quality requests — the cheapest possible way to serve image bytes at many sizes",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "IIIF Image API v2 and v3 (Cantaloupe server); any IIIF viewer or plain GET on /iiif/<identifier>/info.json; no rclone backend",
+  "chaining": "Store one large master per item, then let clients request tiles/thumbnails instead of originals — cuts served bytes by orders of magnitude for an image-heavy 500GB-1TiB/day workload. Multiply by unlimited items.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "1TB/item",
+      "source": "https://training.iiif.io/iiif-bl-workshop/day-two/image-servers/iiif-hosting-ia.html"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "deleted after 30 days",
+      "source": "https://training.iiif.io/iiif-bl-workshop/day-two/image-servers/iiif-hosting-ia.html"
+    }
+  ],
+  "limits_note": "One image per item for reliable IIIF (multiple images need multiple items); must upload to the 'Community Image' collection or the viewer breaks; test-style uploads can be deleted after 30 days.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "inferred from the category 'academic'; the source record states no identity cost, so this is a class assumption, not evidence",
+    "country": null
+  },
+  "reliability_note": "Third-party workshop doc, not IA's own page; no live probe possible this session (iiif.archive.org is on the same blocked network as archive.org) — treat the serving path as unverified.",
+  "confidence": "inferred",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://training.iiif.io/iiif-bl-workshop/day-two/image-servers/iiif-hosting-ia.html",
+      "date": "2026-10-21",
+      "proved": "(snapshot 2026-07-12) — 'The Internet Archive allows you to upload images and then provides a IIIF Image API service ... images can be accessed as either Version 2 or Version 3'"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "same page — 'Ensure you only upload 1 image (if you want multiple images you will need to create multiple items ... collection is Community Image'"
+    },
+    {
+      "url": "https://iiif.archive.org/iiif/nasa/info.json",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> connection timeout; via fetch proxy -> 522 (same network block as archive.org)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No separate quota — it is a free image server over items you already hold, one image per item. Capacity therefore follows the 1TB/item rule.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H5-internet-archive.json",
+    "seed_area": "H/H5",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H5"
+      }
+    ],
+    "seed_confidence": "low",
+    "conflicts": [],
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Internet Archive",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "No separate quota — it is a free image server over items you already hold, one image per item. Capacity therefore follows the 1TB/item rule.",
+    "limits_verbatim": "One image per item for reliable IIIF (multiple images need multiple items); must upload to the 'Community Image' collection or the viewer breaks; test-style uploads can be deleted after 30 days.",
+    "egress_verbatim": "Free, and it is a rendering endpoint, so one stored master serves arbitrary region/size/rotation/quality requests — the cheapest possible way to serve image bytes at many sizes",
+    "chaining_verbatim": "Store one large master per item, then let clients request tiles/thumbnails instead of originals — cuts served bytes by orders of magnitude for an image-heavy 500GB-1TiB/day workload. Multiply by unlimited items.",
+    "tooling_verbatim": "IIIF Image API v2 and v3 (Cantaloupe server); any IIIF viewer or plain GET on /iiif/<identifier>/info.json; no rclone backend",
+    "interface_verbatim": "rest",
+    "agent_focus": "Internet Archive deep dive: IAS3 S3-like API, per-item unlimited size, upload API, metadata, derivatives, CDX, the web archive as a CDN, practical throughput/rate limits for 20TB"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

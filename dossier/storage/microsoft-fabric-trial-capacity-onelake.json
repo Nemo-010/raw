@@ -1,0 +1,106 @@
+{
+  "topic": "storage",
+  "slug": "microsoft-fabric-trial-capacity-onelake",
+  "provider": "Microsoft Fabric trial capacity / OneLake",
+  "url": "https://learn.microsoft.com/en-us/fabric/fundamentals/fabric-trial",
+  "category": "iaas",
+  "free_tier": {
+    "stated": "1 TB of data in OneLake, free for 60 days.",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://learn.microsoft.com/en-us/fabric/fundamentals/fabric-trial",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://learn.microsoft.com/en-us/fabric/fundamentals/fabric-trial",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://learn.microsoft.com/en-us/fabric/fundamentals/fabric-trial",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Not separately metered during trial; capacity is F4 or F64 SKU consumption.",
+    "metered": true
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Genuinely excellent interface: OneLake speaks the ADLS Gen2 DFS API and the Blob API - https://onelake.dfs.fabric.microsoft.com/<workspace>/<item>.<type>/<path>, plus an ABFS driver URI. Any Azure Storage SDK or rclone 'azureblob' remote can talk to it. 1 TB beats most free tiers on volume.",
+  "chaining": "Trials are per-user/per-tenant, so theoretically N accounts x 1 TB x 60 days - but the trial expires and the data does not survive usefully.",
+  "limits": [],
+  "limits_note": "60 days only. On expiry, non-Power BI items become inactive and 'All content remains stored in OneLake for 7 days' before being inaccessible. Then needs a paid F or P capacity.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "inferred from the category 'iaas'; the source record states no identity cost, so this is a class assumption, not evidence",
+    "country": null
+  },
+  "reliability_note": "Hard 60-day expiry with a 7-day grace window - this is a trial, not storage. Fine for a one-off bulk ingest/egress burst, useless for a 20 TB archive.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://learn.microsoft.com/en-us/fabric/fundamentals/fabric-trial",
+      "date": "2026-10-21",
+      "proved": "'free access for 60 days'; 'Store up to 1 TB of data in OneLake'; 'All content remains stored in OneLake for 7 days'"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/fabric/onelake/onelake-access-api",
+      "date": "2026-10-21",
+      "proved": "'OneLake provides open access to all of your Fabric items through existing Azure Data Lake Storage (ADLS) and Blob APIs'; 'https://onelake.dfs.fabric.microsoft.com/<workspace>/<item>.<itemtype>/<path>/<fileName>'"
+    },
+    {
+      "url": "https://onelake.dfs.fabric.microsoft.com/test?resource=filesystem",
+      "date": "2026-10-21",
+      "proved": "probe: curl -> HTTP 401 {\"error\":{\"code\":\"Unauthorized\",\"message\":\"Authentication Failed with Bearer token is not present in the request\"}} (endpoint live, needs Entra token; no anonymous access)"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "1 TB of data in OneLake, free for 60 days.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A2-onedrive-sharepoint.json",
+    "seed_area": "A/A2",
+    "seed_verdict": [
+      {
+        "value": "trial-only",
+        "area": "A/A2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "1 TB of data in OneLake, free for 60 days.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/A2"
+    },
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "OneDrive, SharePoint and the M365 tenant",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "1 TB of data in OneLake, free for 60 days.",
+    "limits_verbatim": "60 days only. On expiry, non-Power BI items become inactive and 'All content remains stored in OneLake for 7 days' before being inaccessible. Then needs a paid F or P capacity.",
+    "egress_verbatim": "Not separately metered during trial; capacity is F4 or F64 SKU consumption.",
+    "chaining_verbatim": "Trials are per-user/per-tenant, so theoretically N accounts x 1 TB x 60 days - but the trial expires and the data does not survive usefully.",
+    "tooling_verbatim": "Genuinely excellent interface: OneLake speaks the ADLS Gen2 DFS API and the Blob API - https://onelake.dfs.fabric.microsoft.com/<workspace>/<item>.<type>/<path>, plus an ABFS driver URI. Any Azure Storage SDK or rclone 'azureblob' remote can talk to it. 1 TB beats most free tiers on volume.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Microsoft ecosystem: OneDrive, SharePoint, Office 365 dev/E5, Azure Blob free tier, Azure DevOps, Teams files"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

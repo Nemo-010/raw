@@ -1,0 +1,115 @@
+{
+  "topic": "storage",
+  "slug": "discord-ddrive",
+  "provider": "Discord + ddrive (Discord as a datastore)",
+  "url": "https://discord.com",
+  "category": "messaging",
+  "free_tier": {
+    "stated": "No total storage cap on free accounts; 10 MB per file on free (20 MB per Discord's own File Attachments FAQ), 50 MB Nitro Basic, 1 GB Nitro; attachments upload up to 500 MiB per file via the cloud-upload endpoint before the message-time limit applies",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://support.discord.com/hc/en-us/articles/25444343291031-File-Attachments-FAQ",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "10 MB per file",
+    "bytes": 10000000,
+    "source_url": "https://support.discord.com/hc/en-us/articles/25444343291031-File-Attachments-FAQ",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://support.discord.com/hc/en-us/articles/25444343291031-File-Attachments-FAQ",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free and CDN-served; every attachment URL is signed with `ex`/`is`/`hm` params, so links are time-limited but re-mintable via the API at zero cost",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "forscht/ddrive (533 stars, MIT, active 4.x line, Docker image, OpenAPI 3.1 REST front end, Postgres metadata, webhook-based to avoid rate limits) - explicitly 'unlimited file size and unlimited storage'; also theseyan/distore, iShibi/discord-drive",
+  "chaining": "Per-file cap x shard count is irrelevant because ddrive splits into 24 MB chunks. Author reports 'tested with storing 4000 GB of data on single discord channel'. Several free Discord accounts, servers and channels each carry a separate allowance, and a bot token can span many channels.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "10 MB per file",
+      "source": "https://support.discord.com/hc/en-us/articles/25444343291031-File-Attachments-FAQ"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "500 MiB per file",
+      "source": "https://support.discord.com/hc/en-us/articles/25444343291031-File-Attachments-FAQ"
+    }
+  ],
+  "limits_note": "24 MB chunk size in ddrive; 500 MiB per-file ceiling on the cloud-upload path; aggressive per-channel message and upload rate limits (ddrive moves to webhooks specifically to route around them); attachment URLs expire (hex `ex` timestamp) and must be re-fetched",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Highest operational risk of the set: Discord rate-limits uploads hard, CDN URLs expire, and the reference demo (ddrive.forscht.dev) is currently down (HTTP 522), so the wrapper is battle-tested but its hosted instance is not.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://support.discord.com/hc/en-us/articles/25444343291031-File-Attachments-FAQ",
+      "date": "2026-10-21",
+      "proved": "'For non-Nitro subscribers, the maximum file upload is 20MB.' (page updated 2026-09-30)"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/forscht/ddrive/master/README.md",
+      "date": "2026-10-21",
+      "proved": "'Supports an unlimited file size and unlimited storage... Tested with storing 4000 GB of data on single discord channel'; 'splitting the file in 24mb chunks'; 'Now uses webhooks instead of bot/user tokens to bypass the discord rate limit' (the author's own phrase for moving uploads to a webhook, which is outside the per-channel message limit)"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/discord-userdoccers/discord-userdoccers/main/pages/topics/cloud-uploads.mdx",
+      "date": "2026-10-21",
+      "proved": "'upload up a file up to 500 MiB directly to Google Cloud'; reference.mdx documents `ex` as 'Hex timestamp indicating when an attachment CDN URL will expire'"
+    },
+    {
+      "url": "https://cdn.discordapp.com/embed/avatars/0.png",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200 image/png via Cloudflare edge; GET https://ddrive.forscht.dev/ -> 522 (demo down)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No total storage cap on free accounts; 10 MB per file on free (20 MB per Discord's own File Attachments FAQ), 50 MB Nitro Basic, 1 GB Nitro; attachments upload up to 500 MiB per file via the cloud-upload endpoint before the message-time limit applies",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F3-team-chat.json",
+    "seed_area": "F/F3",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "F/F3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/messaging.md",
+    "document_section": "Team chat",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 1,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "No total storage cap on free accounts; 10 MB per file on free (20 MB per Discord's own File Attachments FAQ), 50 MB Nitro Basic, 1 GB Nitro; attachments upload up to 500 MiB per file via the cloud-upload endpoint before the message-time limit applies",
+    "limits_verbatim": "24 MB chunk size in ddrive; 500 MiB per-file ceiling on the cloud-upload path; aggressive per-channel message and upload rate limits (ddrive moves to webhooks specifically to route around them); attachment URLs expire (hex `ex` timestamp) and must be re-fetched",
+    "egress_verbatim": "Free and CDN-served; every attachment URL is signed with `ex`/`is`/`hm` params, so links are time-limited but re-mintable via the API at zero cost",
+    "chaining_verbatim": "Per-file cap x shard count is irrelevant because ddrive splits into 24 MB chunks. Author reports 'tested with storing 4000 GB of data on single discord channel'. Several free Discord accounts, servers and channels each carry a separate allowance, and a bot token can span many channels.",
+    "tooling_verbatim": "forscht/ddrive (533 stars, MIT, active 4.x line, Docker image, OpenAPI 3.1 REST front end, Postgres metadata, webhook-based to avoid rate limits) - explicitly 'unlimited file size and unlimited storage'; also theseyan/distore, iShibi/discord-drive",
+    "interface_verbatim": "rest",
+    "agent_focus": "Team collaboration suites: Slack free (files, retention), Microsoft Teams, Mattermost, Rocket.Chat, Zulip, Twist, Discourse, Basecamp, ClickUp, Notion, Coda, Airtable attachments"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

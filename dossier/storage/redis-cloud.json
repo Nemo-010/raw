@@ -1,0 +1,96 @@
+{
+  "topic": "storage",
+  "slug": "redis-cloud",
+  "provider": "Redis Cloud (free tier)",
+  "url": "https://redis.io/cloud/",
+  "category": "paas",
+  "free_tier": {
+    "stated": "30 MB single database, free forever",
+    "unit": "MB",
+    "metered_on": "unstated",
+    "source_url": "https://redis.io/pricing/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://redis.io/pricing/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "until the instance is recycled; not persistent",
+    "source_url": "https://redis.io/pricing/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Not metered on the free plan (bandwidth is bundled), but 30 MB of storage makes egress moot.",
+    "metered": true
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "redis-cli, any Redis client (redis-py, ioredis), RESP over TLS; RedisInsight GUI",
+  "chaining": "30 MB x 1 DB. Creating multiple free databases is the only path, and Redis Cloud's free plan is one 30 MB DB per subscription — you would need ~17,000 free subscriptions for 500 GB. This is the weakest structured store on bytes.",
+  "limits": [],
+  "limits_note": "30 MB memory; single DB; no persistence guarantees on the free tier beyond snapshotting; eviction policy applies under memory pressure",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Redis Cloud free is a real managed instance and stable, but with 30 MB it is a cache, not storage. Data can be evicted under maxmemory pressure.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://redis.io/pricing/",
+      "date": "2026-10-21",
+      "proved": "'Free | Up to 30 MB | 30 MB single DB | From $0/hour'; Essentials from $0.007/hour; Pro from $0.014/hour"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "30 MB single database, free forever",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G6-db-kv-blobs.json",
+    "seed_area": "G/G6",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "G/G6"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "30 MB single database, free forever",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G6"
+    },
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Database and KV blobs",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 1,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "30 MB single database, free forever",
+    "limits_verbatim": "30 MB memory; single DB; no persistence guarantees on the free tier beyond snapshotting; eviction policy applies under memory pressure",
+    "egress_verbatim": "Not metered on the free plan (bandwidth is bundled), but 30 MB of storage makes egress moot.",
+    "chaining_verbatim": "30 MB x 1 DB. Creating multiple free databases is the only path, and Redis Cloud's free plan is one 30 MB DB per subscription — you would need ~17,000 free subscriptions for 500 GB. This is the weakest structured store on bytes.",
+    "tooling_verbatim": "redis-cli, any Redis client (redis-py, ioredis), RESP over TLS; RedisInsight GUI",
+    "interface_verbatim": "rest",
+    "agent_focus": "Structured stores (SQL/NoSQL/KV/queue/search) repurposed as blob storage by encoding bytes into rows, values and documents — free bytes, per-item caps, op quotas, and the bytes-per-operation arithmetic that decides whether any of them can carry 500 GB"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

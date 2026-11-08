@@ -1,0 +1,112 @@
+{
+  "topic": "storage",
+  "slug": "vk-cloud-object-storage",
+  "provider": "VK Cloud Object Storage",
+  "url": "https://cloud.vk.ru/storage/",
+  "category": "iaas",
+  "free_tier": {
+    "stated": "no perpetual free volume — pay-as-you-go per GB, per storage class (Hotbox/Icebox/Backup)",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://cloud.vk.ru/docs/en/storage/s3/tariffication",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://cloud.vk.ru/docs/en/storage/s3/tariffication",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "bonus expires in 60 days and unused balance is revoked; bonus cannot be spent on CDN, licences or marketplace",
+    "days": 60,
+    "source_url": "https://cloud.vk.ru/docs/en/storage/s3/tariffication",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "metered: 'Outgoing traffic is any downloading of information from the bucket ... In both cases, the bucket is accessed using an external IP address' — charged per GB on Hotbox and Icebox; only incoming traffic and API calls are free",
+    "metered": true
+  },
+  "interface": [
+    "s3-compatible",
+    "rclone"
+  ],
+  "interface_detail": "s3",
+  "tooling": "S3-compatible API, rclone via S3 backend; the only free axis is the 5 000 RUB (individual) / 12 000 RUB (legal entity) welcome bonus, 60 days",
+  "chaining": "welcome bonus only: 5 000 RUB per individual, one-time, 60-day expiry, requires a corporate-domain email and an RF IP; = N identities x ~60 days of storage, not perpetual",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "expires in 60 days",
+      "source": "https://cloud.vk.ru/docs/en/storage/s3/tariffication"
+    }
+  ],
+  "limits_note": "bonus expires in 60 days and unused balance is revoked; bonus cannot be spent on CDN, licences or marketplace",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: idual, one-time, 60-day expiry, requires a corporate-domain email and an RF IP; = N identities x ~60 days of storage, not perpetual bonus expires in 60 days and unused balance is revoke",
+    "country": null
+  },
+  "reliability_note": "Bonus-grant model means the storage disappears at day 60 unless paid; per-GB egress makes any serving workload a bill.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://cloud.vk.ru/docs/en/storage/s3/tariffication",
+      "date": "2026-10-21",
+      "proved": "'Outgoing traffic is any downloading of information from the bucket ... you pay for: Volume of stored data (per GB). Outgoing traffic (per GB)'"
+    },
+    {
+      "url": "https://cloud.vk.ru/bonus/",
+      "date": "2026-10-21",
+      "proved": "'5000 бонусных рублей для физических лиц и 12 000 — для юридических лиц', 'Бонус выдается на срок 60 дней'"
+    },
+    {
+      "url": "https://hb.ru-msk.vkcloud-storage.ru/",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 307, Location https://fetch.web.pkgforge.dev/http://biz.mail.ru/hotbox/, header x-host: hb-bl13 (VK Object Storage endpoint redirects into Mail.ru's hotbox backend — VK Cloud and Mail.ru Cloud share one storage stack)"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "no perpetual free volume — pay-as-you-go per GB, per storage class (Hotbox/Icebox/Backup)",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A4-cis-drives.json",
+    "seed_area": "A/A4",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "A/A4"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "no perpetual free volume — pay-as-you-go per GB, per storage class (Hotbox/Icebox/Backup)",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/A4"
+    },
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "CIS drives",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "no perpetual free volume — pay-as-you-go per GB, per storage class (Hotbox/Icebox/Backup)",
+    "limits_verbatim": "bonus expires in 60 days and unused balance is revoked; bonus cannot be spent on CDN, licences or marketplace",
+    "egress_verbatim": "metered: 'Outgoing traffic is any downloading of information from the bucket ... In both cases, the bucket is accessed using an external IP address' — charged per GB on Hotbox and Icebox; only incoming traffic and API calls are free",
+    "chaining_verbatim": "welcome bonus only: 5 000 RUB per individual, one-time, 60-day expiry, requires a corporate-domain email and an RF IP; = N identities x ~60 days of storage, not perpetual",
+    "tooling_verbatim": "S3-compatible API, rclone via S3 backend; the only free axis is the 5 000 RUB (individual) / 12 000 RUB (legal entity) welcome bonus, 60 days",
+    "interface_verbatim": "s3",
+    "agent_focus": "Russian/CIS drives and clouds: Yandex Disk, Mail.ru Cloud, VK Cloud, Cloud.ru, Selectel, SberCloud, Disk-O, 1TB+ free promos"
+  },
+  "binding": "retention-clamped",
+  "binding_note": "a clock, not a quota: bytes leave whether or not the client is finished with them",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

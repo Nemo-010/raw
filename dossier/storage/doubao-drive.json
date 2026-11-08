@@ -1,0 +1,113 @@
+{
+  "topic": "storage",
+  "slug": "doubao-drive",
+  "provider": "豆包云盘 Doubao Drive (ByteDance; storage provided by 北京飞书科技)",
+  "url": "https://www.doubao.com",
+  "category": "cloud-drive",
+  "free_tier": {
+    "stated": "The stated allowance is deliberately unquantified: '豆包通过云盘功能向普通账号提供一定额度的免费云存储空间'. Reported reality: legacy users 100 GB, new users 10 GB, API reports 5 TB but that is decorative — '注：抓包/facade/get_user_storage会显示5TB空间，但实测为上限为100G'. A 2026-06 protocol revision added paid expansion on top of the free allowance.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.doubao.com/legal/ai_space",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap: '上传限制300MB",
+    "bytes": 300000000,
+    "source_url": "https://www.doubao.com/legal/ai_space",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.doubao.com/legal/ai_space",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Not applicable at these sizes; downloads are CDN-served with no published meter.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "webdav-proxy"
+  ],
+  "interface_detail": "rest",
+  "tooling": "OpenList driver `doubao` (cookie auth, download_api select get_file_url/get_download_info, 2 r/s client-side rate limit) — reverse-engineered and explicitly unmaintained ('本接口是基于历史产物的逆向接口').",
+  "chaining": "ByteDance account per phone number, 10–100 GB each. The 5 TB figure in the API is exactly the 'unlimited that isn't' trap from §3.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap: '上传限制300MB",
+      "source": "https://www.doubao.com/legal/ai_space"
+    }
+  ],
+  "limits_note": "quota: 100 GB for legacy accounts, 10 GB new. per-object-cap: '上传限制300MB，但是去除一个get参数' can be raised. The 5 TB API value does not correspond to usable capacity.",
+  "identity_cost": {
+    "kind": "country-phone",
+    "detail": "country-phone (ByteDance/抖音 account)",
+    "country": null
+  },
+  "reliability_note": "Quota direction is downward (AI-space free tier was cut to 5 TB then to 100 GB); the interface is unofficial and the 'unlimited' banner has already been retired.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.doubao.com/legal/ai_space",
+      "date": "2026-10-21",
+      "proved": "'豆包通过云盘功能向普通账号提供一定额度的免费云存储空间'"
+    },
+    {
+      "url": "https://forum.naixi.net/thread-9862-1-1.html",
+      "date": "2026-10-21",
+      "proved": "'豆包老用户给100g空间...抓包会显示5TB空间，但实测为上限为100G。新用户给10g空间。上传限制300MB'"
+    },
+    {
+      "url": "https://www.youleyou.com/wenzhang/3109022.html",
+      "date": "2026-10-21",
+      "proved": "'云盘容量上限已锁定为5TB' after '近乎无限容量'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "The stated allowance is deliberately unquantified: '豆包通过云盘功能向普通账号提供一定额度的免费云存储空间'. Reported reality: legacy users 100 GB, new users 10 GB, API reports 5 TB but that is decorative — '注：抓包/facade/get_user_storage会显示5TB空间，但实测为上限为100G'. A 2026-06 protocol revision added paid expansion on top of the free allowance.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E12-github-keyword-sweep.json",
+    "seed_area": "E/E12",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "E/E12"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "The stated allowance is deliberately unquantified: '豆包通过云盘功能向普通账号提供一定额度的免费云存储空间'. Reported reality: legacy users 100 GB, new users 10 GB, API reports 5 TB but that is decorative — '注：抓包/facade/get_user_storage会显示5TB空间，但实测为上限为100G'. A 2026-06 protocol revision added paid expansion on top of the free allowance.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E12"
+    },
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "The GitHub keyword sweep, and what it proved",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Contractual language is deliberately unquantified: '豆包通过云盘功能向普通账号提供一定额度的免费云存储空间'. Reported reality: legacy users 100 GB, new users 10 GB, API reports 5 TB but that is decorative — '注：抓包/facade/get_user_storage会显示5TB空间，但实测为上限为100G'. A 2026-06 protocol revision added paid expansion on top of the free allowance.",
+    "limits_verbatim": "quota: 100 GB for legacy accounts, 10 GB new. per-object-cap: '上传限制300MB，但是去除一个get参数' can be raised. The 5 TB API value does not correspond to usable capacity.",
+    "egress_verbatim": "Not applicable at these sizes; downloads are CDN-served with no published meter.",
+    "chaining_verbatim": "ByteDance account per phone number, 10–100 GB each. The 5 TB figure in the API is exactly the 'unlimited that isn't' trap from §3.",
+    "identity_verbatim": "country-phone (ByteDance/抖音 account)",
+    "tooling_verbatim": "OpenList driver `doubao` (cookie auth, download_api select get_file_url/get_download_info, 2 r/s client-side rate limit) — reverse-engineered and explicitly unmaintained ('本接口是基于历史产物的逆向接口').",
+    "interface_verbatim": "rest",
+    "agent_focus": "systematic GitHub keyword sweep (EN + zh-CN + ja + ru) for projects that advertise free/unlimited storage, used as a discovery net to surface named providers and wrappers not yet in the corpus"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

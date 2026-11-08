@@ -1,0 +1,184 @@
+{
+  "topic": "storage",
+  "slug": "neon",
+  "provider": "Neon (Object Storage + Postgres)",
+  "url": "https://neon.com",
+  "category": "paas",
+  "free_tier": {
+    "stated": "5 GB object storage per project + 1 GB Postgres per project (20 GB account total); 100 projects on Free",
+    "unit": "objects",
+    "metered_on": "stored-bytes",
+    "source_url": "https://neon.com/docs/introduction/plans",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "object size 5 GiB",
+    "bytes": 5368709120,
+    "source_url": "https://neon.com/docs/introduction/plans",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://neon.com/docs/introduction/plans",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "5 GB/month public network transfer per project, shared across Postgres, object storage and functions; then $0.10/GB on paid only — Free is a hard 5 GB.",
+    "metered": true,
+    "free_allowance": "5 GB per month"
+  },
+  "interface": [
+    "s3-compatible",
+    "cli"
+  ],
+  "interface_detail": "s3",
+  "tooling": "Real S3 API (`forcePathStyle: true`, path-style only), AWS SDK/boto3/aws CLI, `neon buckets` CLI, files-sdk.dev `neon` adapter. Endpoint is per-branch: https://br-<name>.storage.<cell>.<region>.aws.neon.tech",
+  "chaining": "100 projects/org (Free) x 5 GB object storage = 500 GB; x 20 GB Postgres cap = only 20 GB of DB storage, but object storage is NOT under that 20 GB cap — it is per project. Add branches: 10 branches/project, objects branch without copying. Multiple orgs per account are allowed ('one Neon account can belong to multiple orgs on different plans').",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "object size 5 GiB",
+      "source": "https://neon.com/docs/introduction/plans"
+    }
+  ],
+  "limits_note": "Max object size 5 GiB; throttling returns 503 SlowDown under load; path-style only, no virtual-host buckets; ACL/policy must be set via Console/API, not S3 wire. 5 GB egress/project/month is the real wall for serving.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ttling returns 503 SlowDown under load; path-style only, no virtual-host buckets; ACL/policy must be set via Console/API, not S3 wire. 5 GB egress/project/month is the real wall for ser",
+    "country": null
+  },
+  "reliability_note": "Compute scale-to-zero after 5 min (Free, cannot disable); project data persists. Rate limiting is documented and retryable.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://neon.com/docs/introduction/plans",
+      "date": "2026-10-21",
+      "proved": "'Storage 1 GB/project, 20 GB account total | Object Storage 5 GB per project included | Public network transfer (egress) 5 GB per project included | Projects 100'"
+    },
+    {
+      "url": "https://neon.com/docs/storage/overview",
+      "date": "2026-10-21",
+      "proved": "'Free plan object storage 5 GB per project'"
+    },
+    {
+      "url": "https://neon.com/docs/storage/s3-compatibility",
+      "date": "2026-10-21",
+      "proved": "'compatible with the AWS SDK..., forcePathStyle: true, path-style addressing only'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "5 GB object storage per project + 1 GB Postgres per project (20 GB account total); 100 projects on Free",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G3-baas-databases.json",
+    "seed_area": "G/G3",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "G/G3"
+      },
+      {
+        "value": "fails-quota",
+        "area": "G/G6"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Neon (Object Storage + Postgres)",
+      "Neon (Lakebase/Postgres)"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area G/G3",
+            "evidence": "quota: 5 GB object storage per project + 1 GB Postgres per project (20 GB acc"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row, area G/G6",
+            "evidence": "quota: 1 GB Postgres storage per project AND 20 GB total across all projects"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area G/G6) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "5 GB object storage per project + 1 GB Postgres per project (20 GB acc",
+            "source": "table.md row, area G/G3",
+            "evidence": null
+          },
+          {
+            "value": "1 GB Postgres storage per project AND 20 GB total across all projects",
+            "source": "table.md row, area G/G6",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area G/G3)"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md (area G/G6)"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area G/G6) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "5 GB object storage per project + 1 GB Postgres per project (20 GB acc",
+            "source": "table.md (area G/G3)"
+          },
+          {
+            "value": "1 GB Postgres storage per project AND 20 GB total across all projects",
+            "source": "table.md (area G/G6)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "5 GB object storage per project + 1 GB Postgres per project (20 GB account total); 100 projects on Free",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G3"
+    },
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Backend-as-a-service and databases",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "5 GB object storage per project + 1 GB Postgres per project (20 GB account total); 100 projects on Free",
+    "limits_verbatim": "Max object size 5 GiB; throttling returns 503 SlowDown under load; path-style only, no virtual-host buckets; ACL/policy must be set via Console/API, not S3 wire. 5 GB egress/project/month is the real wall for serving.",
+    "egress_verbatim": "5 GB/month public network transfer per project, shared across Postgres, object storage and functions; then $0.10/GB on paid only — Free is a hard 5 GB.",
+    "chaining_verbatim": "100 projects/org (Free) x 5 GB object storage = 500 GB; x 20 GB Postgres cap = only 20 GB of DB storage, but object storage is NOT under that 20 GB cap — it is per project. Add branches: 10 branches/project, objects branch without copying. Multiple orgs per account are allowed ('one Neon account can belong to multiple orgs on different plans').",
+    "tooling_verbatim": "Real S3 API (`forcePathStyle: true`, path-style only), AWS SDK/boto3/aws CLI, `neon buckets` CLI, files-sdk.dev `neon` adapter. Endpoint is per-branch: https://br-<name>.storage.<cell>.<region>.aws.neon.tech",
+    "interface_verbatim": "s3",
+    "agent_focus": "Backend-as-a-service and database platforms where free storage quota is expressed per PROJECT/DATASET/CLUSTER and the units may multiply with free orgs — plus the headless-CMS class, where assets are CDN-served at no egress cost"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

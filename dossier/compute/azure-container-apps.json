@@ -1,0 +1,222 @@
+{
+  "topic": "compute",
+  "slug": "azure-container-apps",
+  "provider": "Azure Container Apps (Consumption, Dedicated, Dynamic Sessions)",
+  "url": "https://azure.microsoft.com/en-us/pricing/details/container-apps/",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "per subscription per month: 'The first 180,000 vCPU-seconds, 360,000 GiB-seconds, and 2 million requests per subscription per month are free.'",
+    "unit": "seconds",
+    "metered_on": "wall-clock",
+    "source_url": "https://azure.microsoft.com/en-us/pricing/details/container-apps/",
+    "read_on": "2026-10-24"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a replica"
+  },
+  "retention": {
+    "stated": "ephemeral storage per replica; no persistent disk in the free allowance"
+  },
+  "egress": {
+    "terms": "per the general Azure bandwidth page, the first 100 GB a month of internet egress is free for all customers in all regions; beyond it from North America and Europe the next tier is USD 0.087 per GB, then USD 0.083, 0.07 and 0.05 per GB",
+    "metered": true,
+    "free_allowance": "100 GB per month",
+    "source_url": "https://azure.microsoft.com/en-us/pricing/details/container-apps/"
+  },
+  "interface": [
+    "cli"
+  ],
+  "interface_detail": "Azure CLI extension, Azure portal or ARM templates, per the Container Apps overview: \"Use the Azure CLI extension, Azure portal or ARM templates\"",
+  "tooling": "the Azure CLI extension, per the Container Apps overview: \"Use the Azure CLI extension, Azure portal or ARM templates\"",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "180,000 vCPU-seconds and 360,000 GiB-seconds a month per subscription",
+      "source": "https://azure.microsoft.com/en-us/pricing/details/container-apps/"
+    },
+    {
+      "kind": "request-rate",
+      "value": "2 million requests a month per subscription",
+      "source": "https://azure.microsoft.com/en-us/pricing/details/container-apps/"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "a replica is billed while active: above 0.01 cores of vCPU use or above 1,000 bytes a second of inbound data",
+      "source": "https://azure.microsoft.com/en-us/pricing/details/container-apps/"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "an Azure subscription with a card; the free grant is a monthly allowance on a paid subscription",
+    "country": null
+  },
+  "reliability_note": "an application can scale to zero with no usage charge; a configured minimum replica bills at a reduced idle rate",
+  "confidence": "documented",
+  "confidence_note": "the grant, the active-replica thresholds and the scale-to-zero rule were read on the pricing page today",
+  "evidence": [
+    {
+      "url": "https://azure.microsoft.com/en-us/pricing/details/container-apps/",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://azure.microsoft.com/en-us/pricing/details/container-apps/",
+      "date": "2026-10-22",
+      "proved": "'The first 180,000 vCPU-seconds, 360,000 GiB-seconds, and 2 million requests per subscription per month are free' and 'A replica is active when vCPU usage is above 0.01 cores or when data received is above 1,000 bytes per second', quoted"
+    },
+    {
+      "url": "https://azure.microsoft.com/en-us/pricing/details/container-apps/",
+      "date": "2026-10-24",
+      "proved": "quoted: 'The first 180,000 vCPU-seconds, 360,000 GiB-seconds, and 2 million requests per subscription per month are free.'"
+    },
+    {
+      "url": "https://azure.microsoft.com/en-us/pricing/details/container-apps/",
+      "date": "2026-10-24",
+      "proved": "quoted: 'A replica is active when vCPU usage is above 0.01 cores or when data received is above 1,000 bytes per second.'"
+    },
+    {
+      "url": "https://azure.microsoft.com/en-us/pricing/details/bandwidth/",
+      "date": "2026-11-04",
+      "proved": "the first 100 GB a month of internet egress is free",
+      "capture": "sha256:17b0834dc9bfb334d1ea1d89035316e3d5c65a5b6fe295104b858e261f5491e6",
+      "quote": "Azure already offers the first 100 GB/month of egressed data for free to all customers in all Azure regions around the world (see Internet Egress table above)."
+    },
+    {
+      "url": "https://azure.microsoft.com/en-us/pricing/details/bandwidth/",
+      "date": "2026-11-04",
+      "proved": "after the free first tier, USD 0.087 per GB is the next tier from North America and Europe",
+      "capture": "sha256:17b0834dc9bfb334d1ea1d89035316e3d5c65a5b6fe295104b858e261f5491e6",
+      "quote": "| From North America, Europe to any destination | Free | $0.087 per GB | $0.083 per GB | $0.07 per GB | $0.05 per GB |"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/container-apps/overview",
+      "date": "2026-11-04",
+      "proved": "Container Apps is managed with the Azure CLI extension, the portal or ARM templates",
+      "capture": "sha256:a34f1446c4fb00a13f9f600d4b8f8851edf2716289ca8520ea62abd48e0e87ad",
+      "quote": "Use the Azure CLI extension, Azure portal or ARM templates"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/container-apps/overview",
+      "date": "2026-11-04",
+      "proved": "the overview names the Azure CLI extension, the portal and ARM templates",
+      "capture": "sha256:a34f1446c4fb00a13f9f600d4b8f8851edf2716289ca8520ea62abd48e0e87ad",
+      "quote": "Use the Azure CLI extension, Azure portal or ARM templates"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T11:01:15.544Z",
+  "price_per_tb_month": null,
+  "notes": "The page's per-unit prices render as '-' in the extracted text, so no rate is recorded. Arithmetic from the free grant only: 0.25 vCPU and 512 MiB always-on is 648,000 vCPU-seconds and 1,296,000 GiB-seconds a month, so the grant covers 720,000 seconds of it, 8.3 days.",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 59.4,
+    "talaria_m24h_usd": 150.12,
+    "nemo_m10h_usd": 3.6,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "per-second",
+    "shape": {
+      "vcpu": 0.25,
+      "ram_gib": 0.5,
+      "disk_gib": null,
+      "gpu_class": null,
+      "gpu_count": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "scale to zero unless a minimum replica count is set"
+    },
+    "persistent_storage": null,
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "ingress on the container port with an Azure-provided hostname",
+      "static_ip": false,
+      "ipv6": false,
+      "per_session_bytes": null
+    },
+    "price_note": "the two seed columns disagree because nemo applied the USD 5.40 monthly grant to a SKU the grant does not cover. talaria's USD 59.40 is the gross bill at the published rate and nemo's USD 3.60 nets a grant against it. One of them applied the credit to the wrong meter",
+    "free_tier_kind": "monthly-grant",
+    "catalogue_field_warning": "free_monthly_credit conflates a recurring grant with a one-time grant divided by a month",
+    "dispute": "talaria USD 59.40 vs nemo USD 3.60. The plan names this as a credit-applied-to-the-wrong-meter case, so it is an error rather than product ambiguity: the grant does not attach to the SKU nemo priced",
+    "granularity": {
+      "min_billed_s": 0,
+      "rounding_s": null
+    },
+    "seed_min_bill": "min 1 h",
+    "burst_x": 3.5,
+    "burst_bill": "min 1 h",
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "net": null,
+    "term": "monthly",
+    "m10h_usd": 0.0,
+    "m24h_usd": 0.0,
+    "price_arithmetic": "free inside the monthly grant; 8.3 days of a 0.25 vCPU / 512 MiB replica exhausts both meters",
+    "superseded": {
+      "free_tier": {
+        "stated": "180,000 vCPU-seconds, 360,000 GiB-seconds and 2 million requests a month per subscription, recurring; that is 50 vCPU-hours and 100 GiB-hours",
+        "unit": "seconds",
+        "metered_on": "wall-clock",
+        "source_url": "https://azure.microsoft.com/en-us/pricing/details/container-apps/",
+        "read_on": "2026-10-22"
+      },
+      "per_object_cap": {
+        "stated": "not stated in the source card",
+        "bytes": null,
+        "source_url": "https://azure.microsoft.com/en-us/pricing/details/container-apps/",
+        "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+      },
+      "retention": {
+        "stated": "not stated in the source card",
+        "days": null,
+        "source_url": "https://azure.microsoft.com/en-us/pricing/details/container-apps/",
+        "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+      },
+      "egress": {
+        "terms": "not published on the source card",
+        "metered": false,
+        "free_allowance": null,
+        "price_per_tb": null,
+        "source_url": "https://azure.microsoft.com/en-us/pricing/details/container-apps/"
+      },
+      "limits": [
+        {
+          "kind": "request-rate",
+          "value": "180,000 vCPU-seconds and 360,000 GiB-seconds a month per subscription",
+          "source": "https://azure.microsoft.com/en-us/pricing/details/container-apps/"
+        },
+        {
+          "kind": "per-object-cap",
+          "value": "2 million requests a month per subscription",
+          "source": "https://azure.microsoft.com/en-us/pricing/details/container-apps/"
+        },
+        {
+          "kind": "retention-clamped",
+          "value": "a replica is billed while it is active: above 0.01 of a core or above 1,000 bytes a second of inbound data",
+          "source": "https://azure.microsoft.com/en-us/pricing/details/container-apps/"
+        }
+      ],
+      "binding": "request-rate",
+      "identity_cost": {
+        "kind": "email",
+        "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+        "country": null
+      },
+      "reliability_note": "no reliability event recorded in the source passes",
+      "confidence_note": "the Container Apps pricing page was read on 2026-10-22 and states the monthly free allowance in vCPU-seconds, GiB-seconds and requests. That is a recurring consumption tier, not the USD 200 credit the record carried",
+      "notes": " The grant's meter is the disagreement, and the plan resolves it against nemo.",
+      "verified_at": "2026-10-22T04:46:18.729Z"
+    }
+  },
+  "binding": "volume-quota",
+  "history": [
+    "history/2026-10-22T050600Z/azure-allowances-are-monthly-not-credit.md"
+  ],
+  "tier": "Consumption plan",
+  "binding_note": "360,000 GiB-seconds at 512 MiB is 720,000 seconds, 8.3 days, and the vCPU grant at a quarter core is 720,000 seconds, so both meters run out together in the second week."
+}

@@ -1,0 +1,114 @@
+{
+  "topic": "netdisk-pan",
+  "slug": "al-chirmyram-com",
+  "provider": "OpenList",
+  "url": "https://al.chirmyram.com/",
+  "category": "public-instance",
+  "free_tier": {
+    "stated": "anonymous guest read of 9 root entries; no account and no payment",
+    "unit": "unlimited",
+    "metered_on": "none",
+    "source_url": "https://al.chirmyram.com/",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "the upstream provider's cap; the instance publishes none",
+    "source_url": "https://al.chirmyram.com/"
+  },
+  "retention": {
+    "stated": "until the operator's account or tenant fails; no TTL and no notice",
+    "days": null,
+    "source_url": "https://al.chirmyram.com/"
+  },
+  "egress": {
+    "terms": "served through cloudflare; the reader pays nothing",
+    "metered": false,
+    "source_url": "https://al.chirmyram.com/"
+  },
+  "interface": [
+    "rest",
+    "webdav"
+  ],
+  "interface_detail": "rest",
+  "tooling": "the AList/OpenList REST surface (/api/fs/list, /api/fs/get, /api/fs/put) and the WebDAV endpoint at /dav; the rclone alist backend speaks the REST",
+  "chaining": "a fetch substrate: point a cache and two mirrors at it, never a write tier A read-only corpus, so there is no multiplication. Useful as a fetch mirror and as the reference implementation of publishing guest credentials and putting Cloudflare in front, which is the transferable part",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "no published rate; one operator and a CDN front absorb the read",
+      "source": "https://al.chirmyram.com/"
+    },
+    {
+      "kind": "write-gated",
+      "value": "PUT denied at the guest role",
+      "source": "probe:https://al.chirmyram.com/api/fs/put"
+    }
+  ],
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "no registration; /api/me returns a guest session",
+    "country": null
+  },
+  "reliability_note": "The reference reader. A 7.43 TiB book and comic corpus, Cloudflare-fronted, and a 36,747,196-byte PDF read back at 206 with cf-cache-status HIT. The upstream is a SharePoint tenant, which is why single files reach tens of GiB.",
+  "confidence": "measured",
+  "evidence": [
+    {
+      "url": "probe:https://al.chirmyram.com/api/public/settings",
+      "date": "2026-10-22",
+      "proved": "HTTP 200, JSON carrying a code field, site_title 'OpenList'"
+    },
+    {
+      "url": "probe:https://al.chirmyram.com/api/fs/list",
+      "date": "2026-10-22",
+      "proved": "anonymous POST /api/fs/list on / returned code 200 with 9 root entries; write:true, write_content_bypass:False, provider:unknown"
+    },
+    {
+      "url": "probe:https://al.chirmyram.com/api/fs/put",
+      "date": "2026-10-22",
+      "proved": "the zero-byte oracle (PUT at an existing directory with Overwrite:false) returned code 403 with message 'permission denied' inside HTTP 200, so the write permission failed and nothing was written"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-22T03:37:00.574Z",
+  "binding": "per-ip-shaping",
+  "notes": "The reference reader. A 7.43 TiB book and comic corpus, Cloudflare-fronted, and a 36,747,196-byte PDF read back at 206 with cf-cache-status HIT. The upstream is a SharePoint tenant, which is why single files reach tens of GiB.",
+  "history": [],
+  "extras": {
+    "access_mode": "public-instance",
+    "read_capability": "full",
+    "write_capability": "permission-denied",
+    "upstream_provider": "unknown",
+    "fronting_cdn": "cloudflare",
+    "advertised_write_flag": true,
+    "write_content_bypass": false,
+    "permission_bitmask": "0",
+    "base_path": "/",
+    "listing_sha256": "aa7d8309",
+    "first_seen": "2024-01-20",
+    "first_seen_source": "kuhehe.github.io/20240120224502, whose page was edited in place until 2025-06-17",
+    "last_verified_alive": "2026-10-22T03:37:00.574Z",
+    "last_verified_dead": null,
+    "consecutive_failures": 0,
+    "aliases": [
+      "七米蓝仓库 (al.chirmyram.com) — public AList instance, read-only, WebDAV + CF cache HIT"
+    ],
+    "seed_facts": {
+      "quota_verbatim": "No stated quota. One /doc/出版 subtree alone lists 4,058,674,141,521 bytes, about 4.06 TB, as a single directory, with further subtrees at 0.94 TB, 1.36 TB and 0.33 TB. The visible corpus is in the tens of terabytes",
+      "per_object_cap_verbatim": "Not applicable",
+      "chaining_verbatim": "A read-only corpus, so there is no multiplication. Useful as a fetch mirror and as the reference implementation of publishing guest credentials and putting Cloudflare in front, which is the transferable part",
+      "reliability_verbatim": "Alive and the read path is solid. Occasional cold-mount 500s clear on retry because the OneDrive backend hiccups and the instance does not. Upload throughput on a single stream was 20.2 MiB/s and eight parallel ranged GETs reached 20.48 MiB/s aggregate, which is already line rate, so there is no concurrency curve to take advantage of. The sweep file wrote these as MB/s; the probe moved 8 x 4 MiB, so the unit is binary and this is the correction",
+      "tooling_verbatim": "AList 3.x WebDAV at /dav/ with the published guest credential alist:alist, PROPFIND Depth 1 returning 207 with 9 root collections; rclone webdav with vendor other; the REST API is anonymous",
+      "binding_note_verbatim": "The read path is the best in the population and it is Cloudflare-cached, so egress is nearly free. What binds is that nothing can be written, which makes it a mirror and not a store.",
+      "deferred_name": "七米蓝仓库 (al.chirmyram.com) — public AList instance, read-only, WebDAV + CF cache HIT",
+      "folded_from": "dossier/netdisk-pan/public-alist-instance-read-only-webdav-cf-cache-hit.json, written by this pass and folded here",
+      "unit_correction": "the sweep file and the seed recorded 20.2 MB/s and 20.48 MB/s; both are MiB/s, because the parallel probe moved 8 x 4 MiB = 32 MiB. Corrected 2026-10-22."
+    },
+    "largest_listed_directory_bytes": 4058674141521,
+    "cf_cache_hit": true,
+    "guest_credentials": [
+      "alist:alist"
+    ]
+  },
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

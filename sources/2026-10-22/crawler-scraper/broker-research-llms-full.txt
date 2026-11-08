@@ -1,0 +1,282 @@
+# research: scholarly works, brokered
+
+> A scholarly works broker: a paper search and a lookup of one work by DOI, arXiv id, PMID, PMCID or OpenAlex id, each answered as one normalised works[] with provenance.
+
+Host: `research.web.pkgforge.dev`. State: built.
+
+Version: `b92c62204f7b`, openapi.json's `info.version`, the first 12 hex digits of the SHA-256 of the four root documents (llms.txt, llms-full.txt, openapi.json, SKILL.md, in that order, joined by a newline), each rendered with an empty version; it changes whenever anything a caller reads in them changes.
+
+Cost: free to every caller; no key, no account and no quota (never gated). The one exception is the operator's: a service can be switched off (503, reason `disabled`), and a spend breaker can cap each caller IP at 100 requests per 60 s for at most 12 hours (429, reason `rate-limited`).
+
+CORS: every answer carries `access-control-allow-origin: *` and exposes the provenance headers; OPTIONS on a listed path is the preflight (204), and it allows every request header the browser names; no credentials.
+
+Every service and its live status: https://web.pkgforge.dev/
+
+## When to use
+
+- papers on a topic, as structured records (title, authors, year, venue, DOI, abstract when the provider holds one, open-access URL, citation count as `cited_by`): `GET /works?q=`
+- narrow a search by publication date (`from`, `to`), work type (`type`) or open access (`oa=true`)
+- resolve a DOI, arXiv id, PubMed id, PMC id or OpenAlex id to one record: `GET /works/<kind>:<value>`
+- `provider=<id>` to ask one provider only; its refusal is the answer
+- search results come sorted by relevance to the query (Workers AI bge-reranker-base, `x-web-rank`); `rank=provider` turns that off and keeps the provider's own order
+- not for web pages: use search.web.pkgforge.dev to find them and read.web.pkgforge.dev to read one; an `oa_url` is fetched through fetch.web.pkgforge.dev
+
+## Shared parameters
+
+Two or more routes take each of these, as written here; each route names the ones it takes.
+
+| parameter | in | required | schema | meaning |
+| --- | --- | --- | --- | --- |
+| `provider` | query | no | `{"type":"string","pattern":"^[a-z0-9][a-z0-9-]{0,63}$"}` | a provider id: only that provider is asked, and its refusal is the answer, never another provider's |
+
+## Shared answers
+
+Two or more routes answer each of these, as written here; each route names the ones it answers.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 503 | `application/problem+json` | `reason` none-configured (body `errors[]` names each gap, e.g. a credential that is not set, or `provider disabled`) or permanently-exhausted |
+| 429 | `application/problem+json` | every provider leg is held by a rate limit or a spent daily budget that reopens; `Retry-After` is the earliest reopening, body `errors[]` each hold |
+| 502 | `application/problem+json` | every provider asked failed; body `errors[]` has one row per provider with each attempt's account and classified kind |
+
+## Routes
+
+### GET /healthz
+
+service state and the running Worker version.
+
+JSON `{ok, service, version: {id, tag, at}, built, entry?, d1: {ok, ms, error?}, keys?: {state, ms}, gate?}`, always `no-store`. `version.id` is the Worker version that answered; `d1` is a `SELECT 1` on the service's D1 database, bounded at 1 s, and a failed one answers 503 with `ok: false`. `keys`, on a service that calls providers, says whether it could open one sealed key of the store with its own secret (`ok`, `failed`, `secret-unset`, `no-key`, `timeout`), never a value. `gate` says whether the operator or a spend breaker switched the service off; an off service still answers 200 here. A 200 says the Worker and its database answer, not that every route does. `checks` holds the breakers of the two sources read outside the provider store, `arxiv` and `ncbi-pmc-idconv`: `{ok, state}`, `state` `closed` (with `failures` in the window), `open` or `half-open` (with `since` and `until`). 2 failures (a timeout, a failed dial, a 429 or a 5xx) within 60 s open one for 60 s; while it is open the source is not asked and the check it feeds says `unavailable` with `breaker-open`. An open one never makes the answer 503.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | `application/json` | up |
+| 503 | `application/json` | down: the same `application/json` body as the 200 with `ok: false`, not a problem; the D1 database did not answer `SELECT 1` within 1 s (`d1.error`: `failed`, `timeout`, `unbound`) |
+
+state and version:
+
+```bash
+curl -qfsS https://research.web.pkgforge.dev/healthz
+```
+
+### GET /
+
+the index of this service.
+
+A browser (`Accept: text/html`) gets an HTML index: links to the four root documents and the status page, and each route with its parameters and examples; any other caller gets llms.txt as `text/plain`.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | `text/plain` | the HTML index for a browser, llms.txt otherwise |
+
+the index:
+
+```bash
+curl -qfsS https://research.web.pkgforge.dev/
+```
+
+### GET /works
+
+search scholarly works.
+
+Papers and other works matching `q`. One request goes to one provider, chosen by rank, tier, mode and health over providers > accounts > keys: OpenAlex (the works index) first, then TinyFish and Exa (web indexes that search papers; they look no work up by id and filter neither `type` nor `oa`, and TinyFish filters by whole years only, so such a request skips them), then Firecrawl's Research Index, keyed and then keyless, which has no venue, type or citation count; a failure moves to the next leg only when another account or provider can change the answer, and never fans out. The answers are 200, 400, 429, 502 and 503, 404 for an unknown route, 405 for a method other than GET or HEAD, and 500 for a defect or a store fault (logged); every non-200 is an RFC 9457 problem. Each work is the provider's record normalised into one schema (`x-web-body: normalised`), never its bytes. The same request is answered from a cache shared by every colo with `cached: true` and `x-web-cache: hit` while the provider that answered it is still enabled. An unknown parameter, or one given twice, is a 400. A search with no match is a 200 with an empty `works`; it is not asked of another provider. A reranked search of fewer than 20 works asks a provider that bills by the call, not by the work (OpenAlex, Firecrawl's Research Index; not Exa), for 20, and answers the `count` asked, the first in rank order, so a well-known work the provider's own order puts past `count` can still be answered. The works are then reranked: Workers AI's bge-reranker-base scores the first 30 works' titles and the start of their abstracts (the first 600 characters of title and abstract; a title alone when there is none) against `q`, within a budget that grows with the works scored up to 4000 ms, or the time left of the request's deadline when that is less, on the Cloudflare accounts first and this deployment's own binding when no account answered, and that score (`relevance_score`) is blended with the work's citations, `rank_score = relevance_score × (1 + 0.1 × ln(1 + cited_by))`, so a much-cited work is not ranked under an uncited one the model scores a little higher (22,025 citations double a score); the works are sorted by `rank_score`, highest first, ties by the work's DOI (else its first id, open-access URL or title), then the provider's order (`x-web-rank: reranked(bge-reranker-base@<account or binding>)`), so the order is one scale whichever index answered; works past the first 30 follow them in the provider's order, with no `rank_score`. When the model does not answer (past its budget, a model error, a spent Neuron allocation, or no model to ask), the works are sorted by `cited_by`, highest first, a work with none last, ties by the work's DOI (else its first id, open-access URL or title), then the provider's order, named in `x-web-rank: cited(<reason>)`: one order for one set of works, the same on every repeat, whichever provider answered (the provider's own relevance score is not in the work schema, so it plays no part). Such an answer, other than `cited(unbound)`, is stored for 60 s, so the same search inside it is that answer and the first after it is reranked. `rank=provider` asks for the provider's order and calls no model. Each work that names an arXiv id is checked against arXiv's own record, one read for the search made while the works are reranked (`arxiv_check` on the work, `x-web-arxiv-check`): a work whose record is arXiv's own is corrected as a lookup's is (another paper's title, authors and abstract, and a year, PDF or DOI arXiv disagrees with); a published version with an arXiv copy is only flagged (`doi-differs`) when arXiv does not state its DOI. A search whose check could not read arXiv is stored for 60 s. Stored for 300 s. Paging: when OpenAlex answered and more works remain, `more` is true and `next` is this search again with an opaque `cursor` (pinned to OpenAlex, bound to `q`, `from`, `to`, `type`, `oa` and `rank`). A page is a window of OpenAlex's works (its `page` of the size the first page asked: `count` and the merge margin, at least 20 when reranked), ranked as above, from where the last page ended: the next page is the same window's next `count` while it holds more, then the next window, so every work of every window is answered once and in rank order within its window, not across windows. Each page asks OpenAlex again (one search, 10 credits) and is ranked again; a window ranked differently on two pages (`rank` differs, e.g. `reranked` then `cited(timeout)`) can repeat or pass over a work, so give `rank=provider` to page in OpenAlex's own order. Pages end where OpenAlex's own paging does: at 10,000 works, or when it answers a window short of its size; the works OpenAlex counts (`count=<n>` in `x-web-provider-notes`) past that are not reachable by paging. Another provider's answer has `more: null`: it pages no search.
+
+| parameter | in | required | schema | meaning |
+| --- | --- | --- | --- | --- |
+| `q` | query | yes | `{"type":"string","minLength":1,"maxLength":1000}` | the search text, 1 to 1000 characters after trimming and at most 3000 bytes once URL-encoded; OpenAlex reads boolean operators and quoted phrases |
+| `from` | query | no | `{"type":"string"}` | the earliest publication date: a year (YYYY, its 1 January) or a date (YYYY-MM-DD) |
+| `to` | query | no | `{"type":"string"}` | the latest publication date: a year (YYYY, its 31 December) or a date (YYYY-MM-DD); not before `from` |
+| `type` | query | no | `{"type":"string","pattern":"^[a-z][a-z-]{0,39}$"}` | the provider's work type, e.g. article, preprint, review, book-chapter, dataset |
+| `oa` | query | no | `{"type":"string","enum":["true","false","1","0"]}` | true: open-access works only; false: closed ones only |
+| `count` | query | no | `{"type":"integer","minimum":1,"default":10}` | works wanted, default 10; above 100 it is clamped to 100, `query.count_asked` and `x-web-count-clamped` say so; TinyFish answers at most 10. Versions of one work are merged into one (`merged`), so a provider that bills by the call (OpenAlex, Firecrawl's Research Index) is asked for a tenth more, at least 2, up to its own maximum; fewer than `count` come back when the provider holds fewer, when more versions merge than that margin, when its maximum (OpenAlex's 100) is reached, or from Exa, which bills by the work and is asked for `count` |
+| `rank` | query | no | `{"type":"string","enum":["reranked","provider"],"default":"reranked"}` | reranked (default): the works sorted by Workers AI's bge-reranker-base score of each work's title and abstract against `q`, blended with its citations (`rank_score`); provider: the provider's own order, no model called |
+| `cursor` | query | no | `{"type":"string"}` | the `cursor` of an earlier page of this search, given with its `q`, `from`, `to`, `type`, `oa` and `rank`; `next` carries it. Opaque, bound to its search, and pinned to OpenAlex: one this service did not write, one given with another search, or with a `provider` other than openalex, is a 400 |
+
+Also the shared parameters `provider` (query), each under Shared parameters.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | `application/json` | the provider answered; `works` is empty when nothing matched |
+| 400 | `application/problem+json` | `q` missing, empty or too long; a bad `from`, `to`, `type`, `oa`, `count`, `provider` or `rank`; a `cursor` this service did not write, one handed out for another search (`cursor was not handed out for this search`), or with a provider other than openalex; an unknown or repeated parameter; an unknown provider id; or the provider refused the search as malformed (body `provider`) |
+
+Also the shared answers 429, 502, 503, each under Shared answers.
+
+search:
+
+```bash
+curl -qfsS "https://research.web.pkgforge.dev/works?q=crispr+base+editing&count=5"
+```
+
+open-access articles from 2020 to 2021:
+
+```bash
+curl -qfsS "https://research.web.pkgforge.dev/works?q=crispr+base+editing&from=2020&to=2021&type=article&oa=true"
+```
+
+the provenance headers:
+
+```bash
+curl -qsS -o /dev/null -D - "https://research.web.pkgforge.dev/works?q=crispr+base+editing&count=5"
+```
+
+pin one provider:
+
+```bash
+curl -qfsS "https://research.web.pkgforge.dev/works?q=crispr+base+editing&provider=openalex"
+```
+
+papers from a web index, by whole years:
+
+```bash
+curl -qfsS "https://research.web.pkgforge.dev/works?q=crispr+base+editing&from=2024&to=2025&provider=tinyfish"
+```
+
+the provider's own order, no rerank:
+
+```bash
+curl -qfsS -D - -o /dev/null "https://research.web.pkgforge.dev/works?q=crispr+base+editing&rank=provider"
+```
+
+the next page: GET the answer's next:
+
+```bash
+curl -qfsS "$(curl -qfsS "https://research.web.pkgforge.dev/works?q=crispr+base+editing&count=5" | jq -r .next)"
+```
+
+### GET /works/{id}
+
+one work by DOI, arXiv id, PMID, PMCID or OpenAlex id.
+
+`/works/doi:10.7717/peerj.4375`, `/works/arxiv:1706.03762`, `/works/pmid:29456894`, `/works/pmcid:PMC5815332` or `/works/openalex:W2741809807`. A DOI keeps its slashes; a `?` or `#` inside it is percent-encoded; a bare DOI (`/works/10.7717/peerj.4375`) is read as `doi:`, a bare arXiv id (`/works/2211.17192` or `2211.17192v2`) as `arxiv:`, and a URL as the id it names: `https://doi.org/<doi>` and `https://dx.doi.org/<doi>` a DOI, `https://arxiv.org/abs/<id>` (or `/pdf/`) an arXiv id, a PubMed or PubMed Central URL its PMID or PMCID; a URL that names none is a 400. An arXiv id is looked up at OpenAlex by its DataCite DOI (10.48550/arXiv.<id>), and `ids.arxiv` keeps the id asked. A PMCID is first resolved through NCBI's PMC ID Converter (one keyless read of pmc.ncbi.nlm.nih.gov), since OpenAlex holds no PMCID: the providers are asked by its DOI, else its PMID, so `pmcid:`, `pmid:` and `doi:` answer the same record, and the work takes the PMCID, the PMID and the PMC article page as `oa_url` where the provider gives none (`id_resolved`, `x-web-id-resolved`); a lookup whose resolution could not read NCBI is asked by the PMCID and stored for 300 s. A work a lookup by any other id found that names a PMID and no PMCID takes its PMCID from NCBI's record of that PMID (`ids_filled`, `x-web-ids-filled`), so the three ids answer the same `ids`; no read is made for a work with no PMID. A work found that names an arXiv id, by whichever id it was looked up, is then checked against arXiv's own record (one keyless read of export.arxiv.org): where the work is arXiv's own record, a provider record whose title or first author is not arXiv's is another paper's and takes arXiv's title, authors and abstract, arXiv's year and PDF are answered where the provider's disagree, and a provider DOI that is neither the DataCite DOI nor the journal DOI arXiv states is replaced by that journal DOI, else by the DataCite DOI, so `openalex:` and `arxiv:` answer the same record; a work a `doi:` lookup found by another DOI is only checked. `arxiv_check` and `x-web-arxiv-check` say which fields changed, with the provider's values; a lookup whose check could not read arXiv is stored for 300 s. When a provider holds no such work the next works provider is asked, except a DOI that `openalex` answers it holds no work for: that is the answer, and no other provider is asked, since it indexes the DOI registries' works (when it fails rather than answers, the next is asked); when none does, the answer is a 404 problem with `reason: not-found`, an empty `works` and a `misses` row per provider asked, each with `reason: none`, stored for 300 s like an answer; a provider that could not be asked makes it a 502 instead. An account that has not answered a lookup in 5 s gives way to the next leg. One request goes to one provider, chosen by rank, tier, mode and health over providers > accounts > keys: OpenAlex (the works index) first, then TinyFish and Exa (web indexes that search papers; they look no work up by id and filter neither `type` nor `oa`, and TinyFish filters by whole years only, so such a request skips them), then Firecrawl's Research Index, keyed and then keyless, which has no venue, type or citation count; a failure moves to the next leg only when another account or provider can change the answer, and never fans out. The answers are 200, 400, 429, 502 and 503, 404 for an unknown route, 405 for a method other than GET or HEAD, and 500 for a defect or a store fault (logged); every non-200 is an RFC 9457 problem. Each work is the provider's record normalised into one schema (`x-web-body: normalised`), never its bytes. The same request is answered from a cache shared by every colo with `cached: true` and `x-web-cache: hit` while the provider that answered it is still enabled. An unknown parameter, or one given twice, is a 400. A work found is stored for 86400 s, a miss for 300 s.
+
+| parameter | in | required | schema | meaning |
+| --- | --- | --- | --- | --- |
+| `id` | path | yes | `{"type":"string"}` | <kind>:<value>, kind one of doi, arxiv, pmid, pmcid, openalex; a bare DOI, 10.<registrant>/<suffix>; a bare arXiv id, YYMM.NNNNN with an optional version; or a doi.org, dx.doi.org, arxiv.org/abs, PubMed or PubMed Central URL. OpenAPI cannot express a path parameter that holds `/`: the value may also be sent percent-encoded as one segment (`%2F` for `/`, `%3A` for `:`), and it is decoded once. |
+
+Also the shared parameters `provider` (query), each under Shared parameters.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | `application/json` | the work |
+| 400 | `application/problem+json` | a malformed id, an unknown id kind, or a URL that names no work id; an unknown or repeated parameter; an unknown provider id; or the provider refused the lookup as malformed |
+| 404 | `application/problem+json` | every provider asked answered that it holds no such work: `reason: not-found`, with `id`, an empty `works` and one `misses` row per provider asked |
+
+Also the shared answers 429, 502, 503, each under Shared answers.
+
+by DOI:
+
+```bash
+curl -qfsS "https://research.web.pkgforge.dev/works/doi:10.7717/peerj.4375"
+```
+
+by arXiv id:
+
+```bash
+curl -qfsS "https://research.web.pkgforge.dev/works/arxiv:1706.03762"
+```
+
+by a bare arXiv id:
+
+```bash
+curl -qfsS "https://research.web.pkgforge.dev/works/2211.17192"
+```
+
+by a doi.org URL:
+
+```bash
+curl -qfsS "https://research.web.pkgforge.dev/works/https://doi.org/10.7717/peerj.4375"
+```
+
+by PubMed id:
+
+```bash
+curl -qfsS "https://research.web.pkgforge.dev/works/pmid:29456894"
+```
+
+by PubMed Central id, resolved through NCBI:
+
+```bash
+curl -qfsS "https://research.web.pkgforge.dev/works/pmcid:PMC5815332"
+```
+
+the provenance headers:
+
+```bash
+curl -qsS -o /dev/null -D - "https://research.web.pkgforge.dev/works/doi:10.7717/peerj.4375?provider=openalex"
+```
+
+### The root documents
+
+Rendered from the route table the router is built from; a build whose documents differ from it fails.
+
+Each answers 200:
+
+| route | content type | meaning |
+| --- | --- | --- |
+| `GET /llms.txt` | `text/plain` | llmstxt.org index of this service |
+| `GET /llms-full.txt` | `text/plain` | every route with parameters, answers and examples inline |
+| `GET /openapi.json` | `application/json` | OpenAPI 3.1 for every route |
+| `GET /SKILL.md` | `text/markdown` | one file an agent reads to use this service |
+
+```bash
+curl -qfsS https://research.web.pkgforge.dev/llms.txt
+curl -qfsS https://research.web.pkgforge.dev/llms-full.txt
+curl -qfsS https://research.web.pkgforge.dev/openapi.json
+curl -qfsS https://research.web.pkgforge.dev/SKILL.md
+```
+
+## Provenance headers
+
+| header | meaning |
+| --- | --- |
+| `x-web-provider` | the provider id that answered (200), or that refused the request as malformed (400), e.g. `openalex`; on a lookup no provider holds (404), every provider asked, comma-separated |
+| `x-web-account` | the label of the provider account that answered: a short name this service gives one of its own accounts at that provider; it names no key and no account of the caller |
+| `x-web-cache` | `hit`: a stored answer to the same request, from a provider that is still enabled, and no provider was asked; `miss`: a provider was asked |
+| `x-web-body` | `normalised`: the provider's record mapped into the work schema (OpenAlex's abstract rebuilt from its word index), never the provider's bytes |
+| `x-web-provider-notes` | the provider's own facts, `key=value` tokens: `credits=<n>` (what the call cost at OpenAlex), `count=<n>` (OpenAlex's total matches), `merged-from=<id>` (a merged work's id, followed to its canonical one) |
+| `x-web-count-clamped` | present when `count` was over 100: the count used |
+| `x-web-works-merged` | on a search: the works merged into another as its version (body `merged`), 0 when none |
+| `x-web-arxiv-check` | on a lookup that found a work naming an arXiv id: `agrees`, `corrected(<fields>)`, `doi-differs`, `absent` or `unavailable`; `<fields>` are the fields whose provider value arXiv's replaced, e.g. `corrected(year,oa_url,doi)`, or `corrected(title,authors,abstract,doi)` for a provider record of another paper; body `arxiv_check` holds the values. On a search with a work that names an arXiv id: `checked=<n> corrected=<n> doi-differs=<n>`, or `unavailable` when arXiv could not be read; each work's `arxiv_check` holds its values |
+| `x-web-id-resolved` | on a `pmcid:` lookup: `resolved(doi)`, `resolved(pmid)`, `resolved(pmcid)`, `absent` or `unavailable`; `resolved(<kind>)` names the kind of id NCBI's PMC ID Converter gave and the providers were asked by, `pmcid` when NCBI states neither a DOI nor a PMID; `absent`: PMC holds no such PMCID; `unavailable`: NCBI could not be read. With `absent` and `unavailable` the providers were asked by the PMCID. Body `id_resolved` holds the values |
+| `x-web-ids-filled` | on a lookup by another id whose work names a PMID and no PMCID: `filled` (NCBI states the PMC copy; `ids.pmcid` taken from it), `absent` (PMC holds no copy) or `unavailable` (NCBI could not be read). Body `ids_filled` holds the values |
+| `x-web-rank` | on a search, the order of `works`: `reranked(bge-reranker-base@<where>)`, sorted by the reranker's score blended with citations (each as `rank_score`, the model's as `relevance_score`), where `<where>` is the label of the Cloudflare account that ran the model (each account has its own daily Neurons, and the accounts are asked first) or `binding` (this deployment's own Workers AI binding, asked when no account answered); `provider(<reason>)`, the provider's own order, where reason is `asked` (rank=provider) or `few` (fewer than two works); or `cited(<reason>)`, sorted by `cited_by` then the provider's order because the model did not answer, where reason is `unbound` (no account answered and no Workers AI binding), `timeout` (past the rerank's budget, at most 4000 ms, or the request's deadline), `allocation` (the Neuron allocation is spent) or `error` (the model failed or its answer was not one score per work). On a cache hit, the rank the answer was stored with |
+| `x-web-store` | `degraded` when the provider walk behind an answer from the providers (never a cache hit) could not read the provider store: only this build's keyless providers were walked, unclaimed on any account's windows, and a keyed provider was not asked; absent when the store was read |
+
+## Failure states
+
+A path no route takes answers 404, reason `not-found`; a method a listed path does not take answers 405, reason `method-not-allowed`, with `Allow`; every non-2xx this service builds is an RFC 9457 problem whose `reason` is one of the values openapi.json publishes.
+
+| status | when | what to do |
+| --- | --- | --- |
+| 400 | a malformed request (see each route), an unknown or repeated parameter, an unknown provider id, or the provider refused it as malformed (body names `provider`) | fix the request; do not retry it unchanged |
+| 404 | a path not listed here, or a lookup no provider asked holds (body `misses[]` names each provider asked); body `reason: not-found` | for a path, use /works or /works/<id>; `/` and `/llms.txt` list the routes. For a lookup, check the id; a work indexed later is found once the stored miss expires |
+| 405 | a listed path with a method other than GET or HEAD; OPTIONS is the CORS preflight (204) | use GET; `Allow` names it |
+| 429 | every provider leg is held until a known reset: a per-second limit, or OpenAlex's daily budget, which resets at 00:00 UTC | retry after `Retry-After` seconds |
+| 502 | every provider asked failed (5xx, timeout, unreachable, an answer that is not a works list, or a provider refused the query); body `errors[]` names each provider and attempt | when `errors[]` shows a provider refused the query (an attempt of kind `input-refused`), change the query: the same query is refused again. Otherwise (5xx, timeout, unreachable) retry later; an account's breaker opens after 3 failures in 60 s, skips that account, and lets one probe through after 60 s |
+| 503 | `reason: none-configured`: no provider can answer, each gap named in `errors[]` (a request pinned to a provider with no works leg, or to one whose leg cannot take it, e.g. a lookup or a `type` filter at tinyfish or exa, answers this); `reason: permanently-exhausted`: every leg's allowance is spent with no reset | do not retry soon; drop `provider` to let selection choose |
+| 500 | a defect or a store fault on this request; the error is logged | retry later |
+| 503 | reason `disabled`: the operator, or a spend breaker, switched this service or every public service off; `scope` says which (`global` or `service`) and `since` since when. `/healthz` and the root documents still answer | wait `Retry-After` (60 s) and ask again; the state is read again every 5 s, and https://web.pkgforge.dev/status says when a service is off |
+| 429 | reason `rate-limited`: a spend breaker caps each caller IP at 100 requests per 60 s on every public service, and this caller is past it | wait `Retry-After` and ask again; the cap lifts after at most 12 hours |
+
+## Pipeline contract
+
+Stable: paths and methods, `reason` values and provenance header names, held by `packages/docs/src/stable.json` (a removal or rename edits it). Each JSON answer's required fields:
+
+- `GET /works`: `query`, `works`, `merged`, `provider`, `account`, `cached`, `rank`, `more`, `cursor`, `next`
+- `GET /works/{id}`: `id`, `works`, `misses`, `provider`, `account`, `cached`
+
+Retry, by what a client does:
+
+- retry after `Retry-After`: 429 `held`; 503 `disabled`, 429 `rate-limited` (any request route)
+- retry with backoff: 503 `deadline`, `budget`
+- retry only when `retryable` is true: 502 `providers-failed`
+- no retry: fix the request: 400 `bad-request`, `provider-refused`, `unknown-provider`
+- no retry unchanged: 503 `none-configured`, `permanently-exhausted`; 404 `not-found`
+
+Paging `GET /works`: follow `next`, the next page's URL, until it is null:
+
+```bash
+u="https://research.web.pkgforge.dev/works?q=crispr+base+editing&count=5"
+while [ -n "$u" ] && r=$(curl -qfsS "$u"); do
+  jq -c . <<<"$r" >> pages.jsonl; u=$(jq -r '.next // empty' <<<"$r")
+done
+```

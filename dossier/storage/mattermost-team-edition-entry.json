@@ -1,0 +1,113 @@
+{
+  "topic": "storage",
+  "slug": "mattermost-team-edition-entry",
+  "provider": "Mattermost Team Edition / Entry (self-hosted)",
+  "url": "https://docs.mattermost.com/product-overview/editions-and-offerings",
+  "category": "messaging",
+  "free_tier": {
+    "stated": "No storage quota at all in self-hosted Mattermost, free or paid. Only the per-file ceiling is configurable: default 100 MB (`MaxFileSize = 104857600` bytes), settable to anything.",
+    "unit": "MB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.mattermost.com/configure/environment-configuration-settings.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-file ceiling is configurable: default 100 MB",
+    "bytes": 100000000,
+    "source_url": "https://docs.mattermost.com/configure/environment-configuration-settings.html",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.mattermost.com/configure/environment-configuration-settings.html",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Your server. Free of platform metering; you pay the host.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Mattermost REST API v4 `POST /api/v4/files` (multipart, up to 10 files per post) returning file IDs. Team Edition is MIT-licensed; Entry is the free mode of Enterprise Edition.",
+  "chaining": "N self-hosted deployments; 10,000 teams per deployment; users per team 'no enforced limit'. Storage is whatever disk you mount — including an S3/MinIO backend via FileSettings.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-file ceiling is configurable: default 100 MB",
+      "source": "https://docs.mattermost.com/configure/environment-configuration-settings.html"
+    }
+  ],
+  "limits_note": "100 MB per attachment default (configurable), 10 attachments per post, 16,383-char messages. Entry caps message history at 10,000 channel messages across all channels and 1,000 Board cards.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Zero platform risk — nothing can delete your files. The failure mode is operational: attachments live on the app server's local disk unless you configure S3, and the docs warn that raising MaxFileSize risks server crashes on large uploads.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.mattermost.com/administration-guide/manage/product-limits",
+      "date": "2026-10-21",
+      "proved": "'Attachment file size | 100 MB | Configurable'; 'Attachments per message ... 10'; 'Teams per deployment 10,000'; 'Users per team No enforced limit'"
+    },
+    {
+      "url": "https://docs.mattermost.com/configure/environment-configuration-settings.html",
+      "date": "2026-10-21",
+      "proved": "'The maximum file size for message attachments and plugin uploads... The default is 104857600 bytes (100 mebibytes)'"
+    },
+    {
+      "url": "https://docs.mattermost.com/product-overview/editions-and-offerings",
+      "date": "2026-10-21",
+      "proved": "'Team Edition is a free-to-use, open source, self-hosted collaboration platform... MIT'"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No storage quota at all in self-hosted Mattermost, free or paid. Only the per-file ceiling is configurable: default 100 MB (`MaxFileSize = 104857600` bytes), settable to anything.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F2-discord-chat-cdn.json",
+    "seed_area": "F/F2",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "F/F2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "No storage quota at all in self-hosted Mattermost, free or paid. Only the per-file ceiling is configurable: default 100 MB (`MaxFileSize = 104857600` bytes), settable to anything.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F2"
+    },
+    "target_document": "docs/storage/free/messaging.md",
+    "document_section": "Discord and chat CDNs",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "No storage quota at all in self-hosted Mattermost, free or paid. Only the per-file ceiling is configurable: default 100 MB (`MaxFileSize = 104857600` bytes), settable to anything.",
+    "limits_verbatim": "100 MB per attachment default (configurable), 10 attachments per post, 16,383-char messages. Entry caps message history at 10,000 channel messages across all channels and 1,000 Board cards.",
+    "egress_verbatim": "Your server. Free of platform metering; you pay the host.",
+    "chaining_verbatim": "N self-hosted deployments; 10,000 teams per deployment; users per team 'no enforced limit'. Storage is whatever disk you mount — including an S3/MinIO backend via FileSettings.",
+    "tooling_verbatim": "Mattermost REST API v4 `POST /api/v4/files` (multipart, up to 10 files per post) returning file IDs. Team Edition is MIT-licensed; Entry is the free mode of Enterprise Edition.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Discord and gaming/chat platforms' CDNs as storage: per-file caps, attachment-URL permanence, bot automation paths, and the server/channel/account multiplier"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "self_hosted": true
+}

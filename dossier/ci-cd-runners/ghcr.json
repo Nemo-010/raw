@@ -1,0 +1,125 @@
+{
+  "topic": "ci-cd-runners",
+  "slug": "ghcr",
+  "provider": "GitHub Container Registry",
+  "url": "https://docs.github.com/en/billing/concepts/product-billing/github-packages",
+  "category": "container registry",
+  "free_tier": {
+    "stated": "container image storage and bandwidth for the Container registry is currently free; a change to that policy is announced at least one month in advance",
+    "unit": "unlimited",
+    "source_url": "https://docs.github.com/en/billing/concepts/product-billing/github-packages",
+    "read_on": "2026-11-06",
+    "metered_on": "none"
+  },
+  "per_object_cap": {
+    "stated": "a 10 GB size limit for each layer, and a 10 minute timeout limit for uploads",
+    "bytes": null,
+    "source_url": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry"
+  },
+  "retention": {
+    "stated": "a package persists until deleted; it shares the storage pool with artifacts, which expire at 90 days",
+    "days": 90,
+    "source_url": "https://docs.github.com/en/billing/concepts/product-billing/github-packages"
+  },
+  "egress": {
+    "terms": "container image storage and bandwidth for the Container registry is currently free; a change to that policy is announced at least one month in advance",
+    "metered": false,
+    "free_allowance": "currently free",
+    "price_per_tb": null,
+    "source_url": "https://docs.github.com/en/billing/concepts/product-billing/github-packages"
+  },
+  "interface": [
+    "oci",
+    "rest"
+  ],
+  "interface_detail": "the OCI distribution API at ghcr.io; docker login with a personal access token or GITHUB_TOKEN",
+  "tooling": "docker, podman, skopeo, oras, crane",
+  "chaining": "the artifact store for a GitHub Actions build; the 10 GB per-layer size and the 10 minute upload timeout are the limits to watch",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "a 10 GB size limit for each layer",
+      "source": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "a 10 minute timeout limit for uploads",
+      "source": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry"
+    }
+  ],
+  "limits_note": "container image storage and bandwidth for the Container registry is currently free; a change to that policy is announced at least one month in advance",
+  "binding": "per-object-cap",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "a GitHub account; a personal access token with packages scope for a push",
+    "country": null
+  },
+  "reliability_note": "a public package pulls anonymously, as Docker Hub does; a token request for a repository that does not exist returns 403 DENIED, which states nothing about private ones",
+  "confidence": "documented",
+  "confidence_note": "the storage and transfer figures are a first-party page, and they are the fields the verdict rests on. The anonymous token and manifest probes prove the read path, which does not raise a documented quota. An earlier version of this record was measured on a probe of a repository that does not exist on ghcr.io; see history/2026-10-22T041501Z/ghcr-anonymous-pull-wrong-namespace.md",
+  "evidence": [
+    {
+      "url": "probe:https://ghcr.io/token?scope=repository:catthehacker/ubuntu:pull&service=ghcr.io",
+      "date": "2026-10-22",
+      "proved": "200 with 69 bytes of token JSON, {\"token\":\"djE6Y2F0dGhlaGFja2VyL3VidW50dToxNzkyNjQxMjI2Njg2NzQ2MTE3\"}, sha256 e26b35c1dc64bf51b6e02f5a20f7d7fbf436a944d445155e8fc313a42ec3a808; GHCR issues an anonymous pull token for a public package"
+    },
+    {
+      "url": "probe:https://ghcr.io/v2/catthehacker/ubuntu/manifests/act-latest",
+      "date": "2026-10-22",
+      "proved": "200 with 754 bytes, schemaVersion 2, mediaType application/vnd.oci.image.index.v1+json, sha256 62d572b92f9f32d3427b6d220ad1f9dca9c7b6ffad37d295425037dbff78abaf; the anonymous token fetches a manifest"
+    },
+    {
+      "url": "probe:https://ghcr.io/token?scope=repository:library/hello-world:pull&service=ghcr.io",
+      "date": "2026-10-22",
+      "proved": "403 with 86 bytes, DENIED. This is the negative control: library/ is Docker Hub's namespace and does not exist on ghcr.io, so the 403 answers the path, not the anonymity policy"
+    },
+    {
+      "url": "probe:https://auth.docker.io/token?service=registry.docker.io&scope=repository:library/alpine:pull",
+      "date": "2026-10-22",
+      "proved": "200 with 5,489 bytes of token JSON, so Docker Hub does issue anonymous pull tokens and a public base image is free"
+    },
+    {
+      "url": "https://docs.github.com/en/billing/concepts/product-billing/github-packages",
+      "date": "2026-10-22",
+      "proved": "storage is shared with Actions artifacts and cannot exceed the plan amount; a 500 MB package in a private repository consumes 500 MB of storage and a download consumes 500 MB of transfer; an Actions download with GITHUB_TOKEN does not count"
+    },
+    {
+      "url": "https://docs.github.com/en/billing/concepts/product-billing/github-packages",
+      "date": "2026-11-06",
+      "proved": "container image storage and bandwidth are currently free, with at least one month's notice of a change",
+      "capture": "sha256:e86d8202da6424d7fe777a09cf7daa8f56612d3bd02b7fe08da73f46ea4aa5a2",
+      "quote": "Container image storage and bandwidth for the Container registry is currently free. If you use Container registry, you'll be informed at least one month in advance of any change to this policy."
+    },
+    {
+      "url": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry",
+      "date": "2026-11-06",
+      "proved": "the registry publishes a 10 GB per-layer size limit and a 10 minute upload timeout",
+      "capture": "sha256:4b3a2c0a26a56c2a4cfd47016d4f6a9c5f388b00b9a4eb57386569eab7a9495b",
+      "quote": "* The Container registry has a 10 GB size limit for each layer. ... * The Container registry has a 10 minute timeout limit for uploads."
+    },
+    {
+      "url": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry",
+      "date": "2026-11-06",
+      "proved": "the registry publishes a 10 GB per-layer size limit",
+      "capture": "sha256:4b3a2c0a26a56c2a4cfd47016d4f6a9c5f388b00b9a4eb57386569eab7a9495b",
+      "quote": "* The Container registry has a 10 GB size limit for each layer."
+    },
+    {
+      "url": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry",
+      "date": "2026-11-06",
+      "proved": "the registry publishes a 10 minute upload timeout",
+      "capture": "sha256:4b3a2c0a26a56c2a4cfd47016d4f6a9c5f388b00b9a4eb57386569eab7a9495b",
+      "quote": "* The Container registry has a 10 minute timeout limit for uploads."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-06T19:14:28.504Z",
+  "price_per_tb_month": null,
+  "history": [
+    "history/2026-10-22T041501Z/ghcr-anonymous-pull-wrong-namespace.md"
+  ],
+  "notes": "Container image storage and bandwidth are currently free, so the per-layer size and the upload timeout are the limits that bind. The earlier 'no anonymous pull token' claim came from requesting library/hello-world, which is Docker Hub's namespace; real public packages return a manifest.",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding_note": "the Container registry publishes two limits of its own, a 10 GB size limit for each layer and a 10 minute timeout limit for uploads"
+}

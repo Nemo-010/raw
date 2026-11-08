@@ -1,0 +1,292 @@
+{
+  "topic": "email",
+  "slug": "mailersend",
+  "provider": "MailerSend",
+  "url": "https://www.mailersend.com/pricing",
+  "category": "transactional sender",
+  "free_tier": {
+    "stated": "500 emails/month on the Free plan once the account is approved, with a daily quota of 100 API and SMTP relay requests; 1 domain, 1 API token, 1 webhook, 1 template",
+    "unit": "requests",
+    "metered_on": "request-count",
+    "source_url": "https://www.mailersend.com/pricing",
+    "read_on": "2026-10-31",
+    "notes": "Sandbox mode, open with no payment method, gives 100 emails a month with a cap of 100 API requests a day, to any 2 recipients until the account is approved, with no time limit"
+  },
+  "per_object_cap": {
+    "stated": "not applicable",
+    "bytes": null,
+    "notes": ""
+  },
+  "retention": {
+    "stated": "1-day activity data retention on the free plan",
+    "days": 1,
+    "notes": "",
+    "source_url": "https://www.mailersend.com/pricing"
+  },
+  "egress": {
+    "terms": "not applicable: an outbound sender",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.mailersend.com/pricing"
+  },
+  "interface": [
+    "rest"
+  ],
+  "tooling": "curl, any SMTP client",
+  "chaining": "composes with a domain and with nothing that needs volume.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "500 emails per month",
+      "source": "https://www.mailersend.com/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "100 API or SMTP relay requests per day on the Free plan; every request counts against the quota, which resets at midnight UTC",
+      "source": "https://www.mailersend.com/help/smtp-relay"
+    }
+  ],
+  "identity_cost": {
+    "kind": "card",
+    "detail": "signup needs an email address, confirmed from a verification email sent to that address; approval then asks for details of the company or organization and how the service will be used, and takes up to 48 hours; Sandbox mode needs no payment method; the Free plan is subscribed on the Plan and billing page with an organization address and credit card information, after the account is approved, and is not charged",
+    "country": null
+  },
+  "reliability_note": "sending pauses when the monthly limit is reached and resumes when the 30-day period resets; the Free plan allows no extra usage",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://www.mailersend.com/pricing",
+      "date": "2026-10-22",
+      "proved": "the Free column reads '500 emails /month', 1 domain, 1-day retention and '100' daily API requests"
+    },
+    {
+      "url": "probe:smtp://smtp.mailersend.net:587",
+      "date": "2026-10-22",
+      "proved": "banner 250, STARTTLS completed and AUTH LOGIN returned 334; EHLO advertises 8BITMIME and no SIZE extension"
+    },
+    {
+      "url": "https://www.mailersend.com/help/plans-features-and-limits",
+      "date": "2026-10-30",
+      "proved": "the Free plan sends 500 emails a month after approval, with a daily limit of 100",
+      "capture": "sha256:e001c62342515d98999ec2419834e3feb3a51988a999648ea007d8052ade193e",
+      "quote": "Once approved, the Free plan allows you to send up to 500 emails a month for free, with a daily limit of 100 emails."
+    },
+    {
+      "url": "https://www.mailersend.com/help/sandbox-mode-and-the-professional-trial",
+      "date": "2026-10-30",
+      "proved": "Sandbox mode sends 100 emails a month, to 2 recipients until approval",
+      "capture": "sha256:b5ef3fb2b60bcdf994077330814f71bdd93114d9465c48877b6c306c51cea629",
+      "quote": "You can send to any 2 recipients in Sandbox mode, until your account is approved, after which your 100 monthly emails can go to any recipient."
+    },
+    {
+      "url": "https://www.mailersend.com/pricing",
+      "date": "2026-10-30",
+      "proved": "the Free plan needs an organization address and a credit card on file",
+      "capture": "sha256:e04f553ab7ed38fe36dce2571fa42d54916e068c356975ff8e473b473f53143d",
+      "quote": "Simply go to the Plan and billing page and enter your organization’s address and credit card information to complete your subscription."
+    },
+    {
+      "url": "https://www.mailersend.com/help/plans-features-and-limits",
+      "date": "2026-10-30",
+      "proved": "the Free plan keeps activity data 24 hours",
+      "capture": "sha256:e001c62342515d98999ec2419834e3feb3a51988a999648ea007d8052ade193e",
+      "quote": "| Activity retention | 24 hours | 24 hours | 7 days | 30 days |"
+    },
+    {
+      "url": "https://www.mailersend.com/help/plans-features-and-limits",
+      "date": "2026-10-30",
+      "proved": "sending pauses at the limit until the 30-day period resets",
+      "capture": "sha256:e001c62342515d98999ec2419834e3feb3a51988a999648ea007d8052ade193e",
+      "quote": "If you reach this limit within the 30-day usage period, your sendings will be paused until a new period begins and your email limit is reset."
+    },
+    {
+      "url": "https://www.mailersend.com/help/plans-features-and-limits",
+      "date": "2026-10-30",
+      "proved": "the plans help page calls the daily 100 a limit of emails",
+      "capture": "sha256:e001c62342515d98999ec2419834e3feb3a51988a999648ea007d8052ade193e",
+      "quote": "Once approved, the Free plan allows you to send up to 500 emails a month for free, with a daily limit of 100 emails."
+    },
+    {
+      "url": "https://www.mailersend.com/help/sandbox-mode-and-the-professional-trial",
+      "date": "2026-10-30",
+      "proved": "the 14-day trial ends on the Free plan",
+      "capture": "sha256:b5ef3fb2b60bcdf994077330814f71bdd93114d9465c48877b6c306c51cea629",
+      "quote": "If you haven't chosen a plan by the time your 14 days are up, your account moves to the Free plan."
+    },
+    {
+      "url": "https://www.mailersend.com/pricing",
+      "date": "2026-10-30",
+      "proved": "a card is asked for the Free plan and is not charged",
+      "capture": "sha256:e04f553ab7ed38fe36dce2571fa42d54916e068c356975ff8e473b473f53143d",
+      "quote": "You won't be charged for anything on the Free plan; we just ask that you provide this information to prevent abuse of the platform."
+    },
+    {
+      "url": "probe:smtp.mailersend.net:587",
+      "date": "2026-10-31",
+      "proved": "the MailerSend SMTP relay answers on port 587 with a 220 ESMTP banner",
+      "capture": "sha256:21ba8b1bab525e6e89e778a2ad76f72cca8dfb34d1db49abb91165c33c3ddcd9",
+      "quote": "\"banner\": \"220 smtp.mailersend.net ESMTP\""
+    },
+    {
+      "url": "https://www.mailersend.com/pricing",
+      "date": "2026-10-30",
+      "proved": "the Free plan sends 500 emails a month",
+      "capture": "sha256:e04f553ab7ed38fe36dce2571fa42d54916e068c356975ff8e473b473f53143d",
+      "quote": "This plan lets you send up to 500 emails per month for free!"
+    },
+    {
+      "url": "https://www.mailersend.com/pricing",
+      "date": "2026-10-31",
+      "proved": "the pricing page, the free tier's source_url, states the 500-email Free plan when read on 2026-10-31",
+      "capture": "sha256:e04f553ab7ed38fe36dce2571fa42d54916e068c356975ff8e473b473f53143d",
+      "quote": "This plan lets you send up to 500 emails per month for free!"
+    },
+    {
+      "url": "https://www.mailersend.com/help/plans-features-and-limits",
+      "date": "2026-10-31",
+      "proved": "the Free plan sends 500 emails a month after approval, with a daily limit of 100",
+      "capture": "sha256:e001c62342515d98999ec2419834e3feb3a51988a999648ea007d8052ade193e",
+      "quote": "Once approved, the Free plan allows you to send up to 500 emails a month for free, with a daily limit of 100 emails."
+    },
+    {
+      "url": "https://www.mailersend.com/pricing",
+      "date": "2026-10-31",
+      "proved": "the Free plan allows 100 requests a day, 1 domain, 1 API token, 1 webhook and 1 template",
+      "capture": "sha256:e04f553ab7ed38fe36dce2571fa42d54916e068c356975ff8e473b473f53143d",
+      "quote": "Our Free plan has a few limits per account: 1 template, 1 domain, 1 user (plus 1 accountant), 1 API token, 1 webhook, and 100 daily requests."
+    },
+    {
+      "url": "https://www.mailersend.com/help/plans-features-and-limits",
+      "date": "2026-10-31",
+      "proved": "the Free plan column (first) keeps activity data 24 hours",
+      "capture": "sha256:e001c62342515d98999ec2419834e3feb3a51988a999648ea007d8052ade193e",
+      "quote": "| Activity retention | 24 hours | 24 hours | 7 days | 30 days |"
+    },
+    {
+      "url": "https://www.mailersend.com/pricing",
+      "date": "2026-10-31",
+      "proved": "the Free plan needs an organization address and a credit card on file",
+      "capture": "sha256:e04f553ab7ed38fe36dce2571fa42d54916e068c356975ff8e473b473f53143d",
+      "quote": "Simply go to the Plan and billing page and enter your organization’s address and credit card information to complete your subscription."
+    },
+    {
+      "url": "https://www.mailersend.com/help/plans-features-and-limits",
+      "date": "2026-10-31",
+      "proved": "sending pauses at the limit until the 30-day period resets",
+      "capture": "sha256:e001c62342515d98999ec2419834e3feb3a51988a999648ea007d8052ade193e",
+      "quote": "If you reach this limit within the 30-day usage period, your sendings will be paused until a new period begins and your email limit is reset."
+    },
+    {
+      "url": "https://www.mailersend.com/help/sandbox-mode-and-the-professional-trial",
+      "date": "2026-10-31",
+      "proved": "Sandbox mode sends 100 emails a month with a cap of 100 API requests a day",
+      "capture": "sha256:b5ef3fb2b60bcdf994077330814f71bdd93114d9465c48877b6c306c51cea629",
+      "quote": "100 emails a month, with a cap of 100 API requests a day"
+    },
+    {
+      "url": "https://www.mailersend.com/help/sandbox-mode-and-the-professional-trial",
+      "date": "2026-10-31",
+      "proved": "the 14-day Professional trial needs a payment method and Sandbox mode is the alternative without one",
+      "capture": "sha256:b5ef3fb2b60bcdf994077330814f71bdd93114d9465c48877b6c306c51cea629",
+      "quote": "When you sign up, we'll offer you a choice: start your free 14-day Professional trial by adding a payment method, giving you full access to send to real recipients and Professional features, or skip this and try Sandbox mode instead."
+    },
+    {
+      "url": "https://www.mailersend.com/help/smtp-relay",
+      "date": "2026-11-02",
+      "proved": "the Free plan's daily quota is 100 requests, counted for the API and the SMTP relay",
+      "capture": "sha256:5cb41ee904ece1f1f4a4a58f3a42b83d2b73e3bfffcf97a594ad2eb6cbd8a326",
+      "quote": "Free plan: 100 requests per day"
+    },
+    {
+      "url": "https://www.mailersend.com/help/rate-limits-how-to-reduce-403-422-429-errors",
+      "date": "2026-11-02",
+      "proved": "every API or SMTP relay request counts against the daily request quota, which resets at midnight UTC",
+      "capture": "sha256:ac224243b6b8197354ea6b73567ad58b3dcced84e138e6817191df6747de92c3",
+      "quote": "MailerSend has a daily request quota for API and SMTP relay services, which varies depending on your subscription plan. Every request made counts against your daily quota, which is reset daily at midnight UTC"
+    },
+    {
+      "url": "https://www.mailersend.com/help/rate-limits-how-to-reduce-403-422-429-errors",
+      "date": "2026-11-02",
+      "proved": "the daily request quota table lists 100 requests a day for the Free plan",
+      "capture": "sha256:ac224243b6b8197354ea6b73567ad58b3dcced84e138e6817191df6747de92c3",
+      "quote": "| Free | 100 |"
+    },
+    {
+      "url": "https://www.mailersend.com/help/smtp-relay",
+      "date": "2026-11-02",
+      "proved": "every API or SMTP relay request counts against the daily quota, which resets at midnight UTC",
+      "capture": "sha256:5cb41ee904ece1f1f4a4a58f3a42b83d2b73e3bfffcf97a594ad2eb6cbd8a326",
+      "quote": "MailerSend has a daily request quota for API and SMTP relay services. Every request is counted against the quota and is reset daily at midnight UTC."
+    },
+    {
+      "url": "https://developers.mailersend.com/general.html",
+      "date": "2026-11-02",
+      "proved": "the developer documentation counts the daily quota in API and SMTP relay requests",
+      "capture": "sha256:fa3470eab9dbd9683a06b1c3ef8bc46ca9bf5c7769bc2b2494320b50f89e8261",
+      "quote": "MailerSend has a daily request quota for API and SMTP relay services. Every request is counted against the quota and is reset daily at midnight UTC."
+    },
+    {
+      "url": "https://www.mailersend.com/help/getting-started",
+      "date": "2026-11-02",
+      "proved": "signup is confirmed by a verification email sent to the address given",
+      "capture": "sha256:f87692e5dd76b55ec2b737a347ce0982f5d0928610860d736af658ee63de6318",
+      "quote": "Confirm your email address from the verification email sent to the address you signed up with."
+    },
+    {
+      "url": "https://www.mailersend.com/help/getting-started",
+      "date": "2026-11-02",
+      "proved": "account approval asks for details of the company or organization and the planned use",
+      "capture": "sha256:f87692e5dd76b55ec2b737a347ce0982f5d0928610860d736af658ee63de6318",
+      "quote": "This involves providing details about your company or organization and explaining how you plan to use MailerSend."
+    },
+    {
+      "url": "https://www.mailersend.com/help/getting-started",
+      "date": "2026-11-02",
+      "proved": "account approval can take up to 48 hours",
+      "capture": "sha256:f87692e5dd76b55ec2b737a347ce0982f5d0928610860d736af658ee63de6318",
+      "quote": "The approval process is usually very quick but can take up to 48 hours."
+    },
+    {
+      "url": "https://www.mailersend.com/help/getting-started",
+      "date": "2026-11-02",
+      "proved": "the payment method is asked only for the 14-day Professional trial, and skipping it leads to Sandbox mode",
+      "capture": "sha256:f87692e5dd76b55ec2b737a347ce0982f5d0928610860d736af658ee63de6318",
+      "quote": "start your free 14-day Professional trial by adding a payment method, giving you full access to send to real recipients and Professional features, or skip this and try Sandbox mode instead"
+    },
+    {
+      "url": "https://www.mailersend.com/help/getting-started",
+      "date": "2026-11-02",
+      "proved": "the getting-started guide was captured on 2026-11-02 and states the signup step the record cites",
+      "capture": "sha256:f87692e5dd76b55ec2b737a347ce0982f5d0928610860d736af658ee63de6318",
+      "quote": "Confirm your email address from the verification email sent to the address you signed up with."
+    },
+    {
+      "url": "https://www.mailersend.com/help/smtp-relay",
+      "date": "2026-11-02",
+      "proved": "the SMTP relay help page still lists a Free plan quota of 100 requests a day",
+      "capture": "sha256:5cb41ee904ece1f1f4a4a58f3a42b83d2b73e3bfffcf97a594ad2eb6cbd8a326",
+      "quote": "Free plan: 100 requests per day"
+    },
+    {
+      "url": "https://www.mailersend.com/pricing",
+      "date": "2026-11-04",
+      "proved": "the Free plan is 500 emails a month, unchanged",
+      "capture": "sha256:e04f553ab7ed38fe36dce2571fa42d54916e068c356975ff8e473b473f53143d",
+      "quote": "This plan lets you send up to 500 emails per month for free!"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-11-04T05:33:30.050Z",
+  "notes": "The 14-day Professional trial at the top of the pricing page needs a payment method and ends on the Free plan; Sandbox mode needs no payment method.",
+  "history": [],
+  "extras": {
+    "stale_after_days": 90,
+    "verified_at_basis": "first-party pages captured on 2026-10-30 and 2026-11-02 and an SMTP relay banner probed on 2026-10-31; evidence rows dated 2026-10-22 carry no capture"
+  },
+  "binding": "request-rate",
+  "interface_detail": "the MailerSend email API and SMTP relay",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "limits_note": "counts of things, not rates, so no vocabulary kind names them: 1 sending domain, 1 API token, 1 webhook, 1 template. The daily 100 is a quota of API and SMTP relay requests on the rate-limit, SMTP relay and developer pages and in the plans table (Daily API requests), and the plans help page prose calls it a daily limit of 100 emails; how many emails one request may carry on the Free plan is not stated"
+}

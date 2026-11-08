@@ -1,0 +1,105 @@
+{
+  "topic": "storage",
+  "slug": "data-gov-ua",
+  "provider": "data.gov.ua (Ukraine national portal)",
+  "url": "https://data.gov.ua/",
+  "category": "gov-ckan-portal",
+  "free_tier": {
+    "stated": "No published quota. Files self-hosted at /dataset/<uuid>/resource/<uuid>/download/<file>.",
+    "unit": "unlimited",
+    "metered_on": "unstated",
+    "source_url": "https://data.gov.ua/pages/pro-portal",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://data.gov.ua/pages/pro-portal",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://data.gov.ua/pages/pro-portal",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "unmetered public GET.",
+    "metered": false
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "CKAN 2.x action API (200 OK).",
+  "tooling": "curl + CKAN key; UI at /dataset/new.",
+  "chaining": "n/a — no individual write path.",
+  "limits": [],
+  "limits_note": "write-gated: registration is open (email + password form renders 200) but unauth organization_create returns 'У доступі відмовлено'. A 300-dataset sample contained ZERO datasets with an empty owner_org — every record belongs to a ministry, state enterprise or register authority. That is the structural proof that this is a publishers-only catalog.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "operational through wartime; stable API. Same consumer-vs-publisher split as every other national CKAN.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://data.gov.ua/api/3/action/package_search?rows=300",
+      "date": "2026-10-21",
+      "proved": "300 sampled, 0 with empty owner_org, 124 distinct organisations (Національна поліція України, ДП «СЕТАМ», etc.)"
+    },
+    {
+      "url": "https://data.gov.ua/api/3/action/organization_create",
+      "date": "2026-10-21",
+      "proved": "POST (unauthenticated) — success:false, access-denied message"
+    },
+    {
+      "url": "https://data.gov.ua/api/3/action/package_search?rows=1",
+      "date": "2026-10-21",
+      "proved": "resources at /dataset/.../download/licplatewanted.json, i.e. portal-hosted bytes"
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No published quota. Files self-hosted at /dataset/<uuid>/resource/<uuid>/download/<file>.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H15-gov-municipal-portals.json",
+    "seed_area": "H/H15",
+    "seed_verdict": [
+      {
+        "value": "fails-identity",
+        "area": "H/H15"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "No published quota. Files self-hosted at /dataset/<uuid>/resource/<uuid>/download/<file>.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H15"
+    },
+    "target_document": "docs/storage/free/government-portals.md",
+    "document_section": "Government and municipal portals",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No published quota. Files self-hosted at /dataset/<uuid>/resource/<uuid>/download/<file>.",
+    "limits_verbatim": "write-gated: registration is open (email + password form renders 200) but unauth organization_create returns 'У доступі відмовлено'. A 300-dataset sample contained ZERO datasets with an empty owner_org — every record belongs to a ministry, state enterprise or register authority. That is the structural proof that this is a publishers-only catalog.",
+    "egress_verbatim": "unmetered public GET.",
+    "chaining_verbatim": "n/a — no individual write path.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "curl + CKAN key; UI at /dataset/new.",
+    "interface_verbatim": "CKAN 2.x action API (200 OK).",
+    "agent_focus": "Government, municipal and public-sector hosting that accepts citizen deposits. Decisive axis: can an INDIVIDUAL (not an agency) publish, at what identity cost, at what per-file cap, and are published files anonymously retrievable afterwards. Probed CKAN write paths empirically (unauth organization_create, /user/register, owner_org distribution over 300-dataset samples) rather than trusting marketing copy."
+  },
+  "binding": "none",
+  "binding_note": "the quota is real and unreachable: identity is the binding constraint, and it is not one of the six limits kinds",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

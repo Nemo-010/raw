@@ -1,0 +1,111 @@
+{
+  "topic": "storage",
+  "slug": "keycdn-push-zone",
+  "provider": "KeyCDN Push Zone (CDN storage)",
+  "url": "https://www.keycdn.com/cdn-storage",
+  "category": "object-storage",
+  "free_tier": {
+    "stated": "Unlimited volume. Push Zone storage '$0.12/GB per month and charged on a daily basis' = **$120/TB/mo**. Tiered down to $0.04/GB above 1 TB/month of stored bytes.",
+    "unit": "TB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.keycdn.com/faq",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.keycdn.com/faq",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.keycdn.com/faq",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Interconnect from the storage cluster to the edge is free ('Interconnect traffic from our storage cluster to our edge servers is free'), but edge delivery is billed at $0.04/GB (= $40/TB) above the first 500 GB/month, and the 500 GB is itself priced at $0.12/GB. Pull Zone storage has no extra cost — you supply the origin.",
+    "metered": true,
+    "free_allowance": "500 GB per month",
+    "price_per_tb": "$40/TB"
+  },
+  "interface": [
+    "ftp",
+    "rsync",
+    "ssh"
+  ],
+  "interface_detail": "ftp + ssh",
+  "tooling": "FTP(S) and rsync-over-SSH for uploads; pull/push zones over HTTP. Free 14-day trial, no card.",
+  "chaining": "The free-interconnect-to-edge idea is right and the price is an order of magnitude wrong: $120/TB at rest versus $6 Telnyx. Only viable as a free 14-day trial. The genuinely useful configuration is a Pull Zone (free storage) pointed at one of the free origins above — then KeyCDN charges you $40/TB for delivery and nothing for storage.",
+  "limits": [],
+  "limits_note": "per-object-cap: none published. Trial is 14 days / 25 GB traffic. Log forwarding $1/day, image processing $0.40/1k ops.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "European DCs, TLS included. 14-day/25 GB trial is one of the weaker on-ramps in the sector.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.keycdn.com/faq",
+      "date": "2026-10-21",
+      "proved": "'How is storage billed? Pull Zone storage has no additional cost. Push Zone storage starts at $0.12/GB per month and is charged on a daily basis.' (read via read broker)"
+    },
+    {
+      "url": "https://www.keycdn.com/pricing",
+      "date": "2026-10-21",
+      "proved": "'First 500 GB per month $0.12/GB | Next 500 GB $0.08/GB | Above 1 TB $0.04/GB'; 'The first 3 Zones are included for free'"
+    },
+    {
+      "url": "https://www.keycdn.com/cdn-storage",
+      "date": "2026-10-21",
+      "proved": "'Accelerated uploads … FTP(S) or rsync over SSH'; 'Interconnect traffic from our storage cluster to our edge servers is free'"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$120/TB stored (Push Zone, $0.12/GB); $40/TB delivered ($0.04/GB above 1 TB); Pull Zone storage $0.",
+  "notes": "Unlimited volume. Push Zone storage '$0.12/GB per month and charged on a daily basis' = **$120/TB/mo**. Tiered down to $0.04/GB above 1 TB/month of stored bytes.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G9-edge-cdn-as-storage.json",
+    "seed_area": "G/G9",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "G/G9"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Unlimited volume. Push Zone storage '$0.12/GB per month and charged on a daily basis' = **$120/TB/mo**. Tiered down to $0.04/GB above 1 TB/month of stored bytes.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G9"
+    },
+    "target_document": "docs/storage/free/cloudflare-edge.md",
+    "document_section": "Edge CDN used as an object store",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Unlimited volume. Push Zone storage '$0.12/GB per month and charged on a daily basis' = **$120/TB/mo**. Tiered down to $0.04/GB above 1 TB/month of stored bytes.",
+    "limits_verbatim": "per-object-cap: none published. Trial is 14 days / 25 GB traffic. Log forwarding $1/day, image processing $0.40/1k ops.",
+    "egress_verbatim": "Interconnect from the storage cluster to the edge is free ('Interconnect traffic from our storage cluster to our edge servers is free'), but edge delivery is billed at $0.04/GB (= $40/TB) above the first 500 GB/month, and the 500 GB is itself priced at $0.12/GB. Pull Zone storage has no extra cost — you supply the origin.",
+    "chaining_verbatim": "The free-interconnect-to-edge idea is right and the price is an order of magnitude wrong: $120/TB at rest versus $6 Telnyx. Only viable as a free 14-day trial. The genuinely useful configuration is a Pull Zone (free storage) pointed at one of the free origins above — then KeyCDN charges you $40/TB for delivery and nothing for storage.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "FTP(S) and rsync-over-SSH for uploads; pull/push zones over HTTP. Free 14-day trial, no card.",
+    "interface_verbatim": "ftp + ssh",
+    "price_verbatim": "$120/TB stored (Push Zone, $0.12/GB); $40/TB delivered ($0.04/GB above 1 TB); Pull Zone storage $0.",
+    "agent_focus": "CDN / edge platforms as storage+egress: Fastly (free tier + Fast Forward OSS), Akamai/Linode, Bunny.net (storage + free origin->CDN transit), KeyCDN, CacheFly, Gcore, CDN77, StackPath status, Edgio/Limelight status, jsDelivr, unpkg, esm.sh, Statically, raw.githack, ghproxy mirrors. Question asked: which CDN gives free or near-free egress so a cheap origin becomes viable. Cloudflare R2 excluded per brief. Hard-probed every per-file cap with real GETs this session."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

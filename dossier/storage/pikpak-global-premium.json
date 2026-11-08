@@ -1,0 +1,126 @@
+{
+  "topic": "storage",
+  "slug": "pikpak-global-premium",
+  "provider": "PikPak Global Premium (10 TB)",
+  "url": "https://mypikpak.com/drive/payment",
+  "category": "cloud drive / BT saver",
+  "free_tier": {
+    "stated": "10 TB storage on Premium; additional storage purchasable",
+    "unit": "TB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://mypikpak.com/drive/payment",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://mypikpak.com/drive/payment",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://mypikpak.com/drive/payment",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "HARD METERED, and worse for programmatic use. Verbatim from help centre: base quotas are 'Cloud Download: 40 TB per month. Downstream: 4 TB per month, including playback, previews, and downloads. Upload: 1 TB per month.' And 'Connected Apps share a combined transfer quota limit equal to 25% of your monthly Transfer Quota, across all three traffic dimensions.' So rclone/WebDAV/CLI — the only programmatic paths — get 25% of 4 TB = 1 TB/month downstream.",
+    "metered": true,
+    "free_allowance": "40 TB per month"
+  },
+  "interface": [
+    "webdav",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "WebDAV (read-only, premium-only, 'experimental'), official CLI, rclone backend",
+  "tooling": "rclone 'pikpak' backend exists; WebDAV is read-only and flagged incomplete by the vendor",
+  "chaining": "rclone; CLI; NOT a general object store",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "20 GB/day",
+      "source": "https://mypikpak.com/drive/payment"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "33 GB/day",
+      "source": "https://mypikpak.com/drive/payment"
+    }
+  ],
+  "limits_note": "Connected-Apps cap = 25% of monthly quota; free accounts also have a 20 GB/day downstream limit",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "email + card (or App Store IAP)",
+    "country": null
+  },
+  "reliability_note": "1 TB/month downstream via connected apps is ~33 GB/day — roughly 30× short of the 500 GB-1 TiB/day serving band and ~30× short even for a single 20 TB restore. The storage price is a decoy; the product is a BT/magnet cache.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://mypikpak.com/en-US/help-center/play_and_download/transfer_quota/meaning",
+      "date": "2026-10-21",
+      "proved": "'Cloud Download: 40 TB per month. Downstream: 4 TB per month, including playback, previews, and downloads. Upload: 1 TB per month.'"
+    },
+    {
+      "url": "https://mypikpak.com/en-US/connect-apps-faq",
+      "date": "2026-10-21",
+      "proved": "'Connected Apps share a combined transfer quota limit equal to 25% of your monthly Transfer Quota, across all three traffic dimensions … When your Connected Apps reach this limit, their requests will be throttled'; 'Free PikPak accounts have a daily downstream limit of 20 GB'"
+    },
+    {
+      "url": "https://apppriceatlas.com/subscriptions/pikpak-cloud-storage-saver-global-premium-yearly-yearly/countries/us/",
+      "date": "2026-10-21",
+      "proved": "'Global Premium Yearly … $99.99 per year'"
+    },
+    {
+      "url": "https://blog.hentioe.dev/posts/pikpak-webdav-rclone.html",
+      "date": "2026-10-21",
+      "proved": "PikPak's WebDAV is read-only and premium-only"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$0.833/TB/mo at 10 TB ($99.99/yr Global Premium). Looks like the cheapest per-TB number in this dossier — and it is a trap. Usable programmatic egress is 1 TB/month (25% × 4 TB downstream). Effective cost per TB actually retrievable per month is fine, but the ceiling makes it unusable for serving o…",
+  "notes": "10 TB storage on Premium; additional storage purchasable",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-P8-paid-revisit-deadends.json",
+    "seed_area": "A/P8",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "A/P8"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "10 TB storage on Premium; additional storage purchasable",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/P8"
+    },
+    "target_document": "docs/storage/paid/lifetime-and-deals.md",
+    "document_section": "Paid revisit of the dead ends",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "10 TB storage on Premium; additional storage purchasable",
+    "limits_verbatim": "Connected-Apps cap = 25% of monthly quota; free accounts also have a 20 GB/day downstream limit",
+    "egress_verbatim": "HARD METERED, and worse for programmatic use. Verbatim from help centre: base quotas are 'Cloud Download: 40 TB per month. Downstream: 4 TB per month, including playback, previews, and downloads. Upload: 1 TB per month.' And 'Connected Apps share a combined transfer quota limit equal to 25% of your monthly Transfer Quota, across all three traffic dimensions.' So rclone/WebDAV/CLI — the only programmatic paths — get 25% of 4 TB = 1 TB/month downstream.",
+    "chaining_verbatim": "rclone; CLI; NOT a general object store",
+    "identity_verbatim": "email + card (or App Store IAP)",
+    "tooling_verbatim": "rclone 'pikpak' backend exists; WebDAV is read-only and flagged incomplete by the vendor",
+    "interface_verbatim": "WebDAV (read-only, premium-only, 'experimental'), official CLI, rclone backend",
+    "price_verbatim": "$0.833/TB/mo at 10 TB ($99.99/yr Global Premium). Looks like the cheapest per-TB number in this dossier — and it is a trap. Usable programmatic egress is 1 TB/month (25% × 4 TB downstream). Effective cost per TB actually retrievable per month is fine, but the ceiling makes it unusable for serving or bulk restore. Reject on egress, not on price.",
+    "agent_focus": "Cheap-PAID lane: revisit DEAD-ENDS.md and paid-rejected dossier verdicts (fails-quota / trial-only with a price) to recompute $/TB/month at 5 TB and 20 TB tiers. Egress policy is the deciding term. Excludes AWS/Azure/GCP/Alibaba/R2/B2/IDrive e2 per client."
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,118 @@
+{
+  "topic": "storage",
+  "slug": "freshdesk",
+  "provider": "Freshdesk (helpdesk attachments)",
+  "url": "https://www.freshdesk.com",
+  "category": "paas",
+  "free_tier": {
+    "stated": "Freshworks support states flatly: 'There is no storage limit on the Freshdesk platform. All the data is stored in Cloud.' Per-attachment 20 MB (15 MB on Sprout/trial).",
+    "unit": "MB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://support.freshdesk.com/support/solutions/articles/234965-hi-is-there-a-storage-limit-on-your-platform-",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap: 15 MB",
+    "bytes": 15000000,
+    "source_url": "https://support.freshdesk.com/support/solutions/articles/234965-hi-is-there-a-storage-limit-on-your-platform-",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://support.freshdesk.com/support/solutions/articles/234965-hi-is-there-a-storage-limit-on-your-platform-",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "No egress meter; attachments are served from `cdn.freshdesk.com` (S3-backed).",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Freshdesk REST API (multipart attachments), Python/PHP samples in `freshworks/fresh-samples` (`create_ticket_attachment.py`). No rclone backend.",
+  "chaining": "'No storage limit' x unlimited free-tier portals would be the best finding in the niche — but the free tier is a 6-month program, not a standing plan, so the realistic multiplier is 6 months x N portals.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap: 15 MB",
+      "source": "https://support.freshdesk.com/support/solutions/articles/234965-hi-is-there-a-storage-limit-on-your-platform-"
+    }
+  ],
+  "limits_note": "per-object-cap: 15 MB (Sprout/trial) to 20 MB per conversation. request-rate: Growth 100 req/min, Pro 400, Enterprise 700, with per-endpoint sub-limits (Ticket Create 50/min on Growth). Retention: 'no storage limit' is unqualified in the article, but the Free Program ends after 6 months.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "The 'no storage limit' claim is real and current, but it is a claim about a paid platform. Free access is a 6-month program with 2 agent seats; files >20 MB must be hotlinked from Dropbox/OneDrive, i.e. Freshdesk is not the store.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://support.freshdesk.com/support/solutions/articles/234965-hi-is-there-a-storage-limit-on-your-platform-",
+      "date": "2026-10-21",
+      "proved": "'There is no storage limit on the Freshdesk platform.'"
+    },
+    {
+      "url": "https://support.freshdesk.com/support/solutions/articles/196643-what-is-the-size-limit-for-attachments-to-a-ticket-reply-",
+      "date": "2026-10-21",
+      "proved": "'20 MB/conversation for accounts on the Blossom and above plans. For Sprout and trial accounts ... 15 MB'"
+    },
+    {
+      "url": "https://partnersupport.freshworks.com/support/solutions/articles/50000010099-explore-freshdesk-free-program-freshdesk-only-",
+      "date": "2026-10-21",
+      "proved": "'available for free for 6 months'"
+    },
+    {
+      "url": "https://developers.freshdesk.com/api/",
+      "date": "2026-10-21",
+      "proved": "rate limit tables (Growth 100/min; Enterprise 700/min)"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Freshworks support states flatly: 'There is no storage limit on the Freshdesk platform. All the data is stored in Cloud.' Per-attachment 20 MB (15 MB on Sprout/trial).",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C6-docs-wiki-kb.json",
+    "seed_area": "C/C6",
+    "seed_verdict": [
+      {
+        "value": "trial-only",
+        "area": "C/C6"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Freshworks support states flatly: 'There is no storage limit on the Freshdesk platform. All the data is stored in Cloud.' Per-attachment 20 MB (15 MB on Sprout/trial).",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area C/C6"
+    },
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "Docs, wiki and knowledge-base hosts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Freshworks support states flatly: 'There is no storage limit on the Freshdesk platform. All the data is stored in Cloud.' Per-attachment 20 MB (15 MB on Sprout/trial).",
+    "limits_verbatim": "per-object-cap: 15 MB (Sprout/trial) to 20 MB per conversation. request-rate: Growth 100 req/min, Pro 400, Enterprise 700, with per-endpoint sub-limits (Ticket Create 50/min on Growth). Retention: 'no storage limit' is unqualified in the article, but the Free Program ends after 6 months.",
+    "egress_verbatim": "No egress meter; attachments are served from `cdn.freshdesk.com` (S3-backed).",
+    "chaining_verbatim": "'No storage limit' x unlimited free-tier portals would be the best finding in the niche — but the free tier is a 6-month program, not a standing plan, so the realistic multiplier is 6 months x N portals.",
+    "tooling_verbatim": "Freshdesk REST API (multipart attachments), Python/PHP samples in `freshworks/fresh-samples` (`create_ticket_attachment.py`). No rclone backend.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Documentation and knowledge-base platforms with large attachment quotas — wiki farms, helpdesk KBs, docs hosts; whether per-workspace quotas multiply across free workspaces"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

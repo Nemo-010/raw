@@ -1,0 +1,197 @@
+{
+  "topic": "storage",
+  "slug": "smash-free-web-tier",
+  "provider": "Smash (fromsmash.com) — Free web tier",
+  "url": "https://fromsmash.com/discover-smash/everyone",
+  "category": "anonymous-dump",
+  "free_tier": {
+    "stated": "No file size limit and no limit on number of transfers on the free web tier; no account required. Transfers above 2 GB are queued behind paid traffic.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://fromsmash.com/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object behaviour beyond 2 GB",
+    "bytes": 2000000000,
+    "source_url": "https://fromsmash.com/pricing",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://fromsmash.com/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free and unmetered on the free tier (no per-GB line anywhere on the pricing page); free tier is ad-supported.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest (official API + SDKs, but gated behind an API key) / web for the anonymous path",
+  "tooling": "Official SDKs: @smash-sdk/uploader (npm), @smash-sdk/downloader, github.com/fromsmash/smash-uploader-js, smash-sdk-js, smash-downloader-js; docs api.fromsmash.com/docs/quick-start",
+  "chaining": "Per-transfer model caps multiplication: unlimited transfers but each dies in 7 days. As storage it is a 7-day rolling window — n transfers/day x (size) x 7 days, nothing retained past 7. The API path (100 GB trial key x free accounts) is a 14-day trial, not perpetual.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "retention 7 days",
+      "source": "https://fromsmash.com/pricing"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "deleted at 7 days",
+      "source": "https://fromsmash.com/pricing"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "per-object behaviour beyond 2 GB",
+      "source": "https://fromsmash.com/pricing"
+    }
+  ],
+  "limits_note": "retention 7 days on free (30 days paid) — this is the binding constraint; no per-object-cap on the anonymous web tier; per-object behaviour beyond 2 GB is queue+deprioritisation not rejection; API keys are '100 GB, 14-day free trial (No credit card required)' — trial, not free tier.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: nsfers/day x (size) x 7 days, nothing retained past 7. The API path (100 GB trial key x free accounts) is a 14-day trial, not perpetual. retention 7 days on free (30 days paid) — thi",
+    "country": null
+  },
+  "reliability_note": "Free transfers are queued when >2 GB with no SLA on queue time; files are 'stored temporarily' on AWS regions and deleted at 7 days.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://fromsmash.com/pricing",
+      "date": "2026-10-21",
+      "proved": "Free '$0.00 ... - 2 GB per transfer* - Transfers valid for 7 days; *Beyond 2 GB, transfers join a queue behind Pro transfers'"
+    },
+    {
+      "url": "https://fromsmash.com/help/articles/13885610-what-is-the-file-size-limit-on-smash",
+      "date": "2026-10-21",
+      "proved": "'With the free version, there is no file size limit for the files you send. However ... transfers larger than 2 GB are not prioritized and are placed in a waiting queue' (dated February 27, 2026)"
+    },
+    {
+      "url": "https://api.fromsmash.com/docs/quick-start",
+      "date": "2026-10-21",
+      "proved": "'You will have a 100 GB, 14-day free trial (No credit card required)'"
+    },
+    {
+      "url": "https://fetch.web.pkgforge.dev/https://api.fromsmash.com/",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200 (660,946 bytes); POST https://api.fromsmash.com/transfer -> 404 text/plain (endpoint path differs, no anonymous write path found); GET https://transfer.fromsmash.com/<zero-uuid> -> 404 (27,204 bytes, real 404 not a 200 error page)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No file size limit and no limit on number of transfers on the free web tier; no account required. Transfers above 2 GB are queued behind paid traffic.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E9-enterprise-mft.json",
+    "seed_area": "E/E9",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "E/E9"
+      },
+      {
+        "value": "fails-quota",
+        "area": "E/E8"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Smash (fromsmash.com) — Free web tier",
+      "Smash (fromsmash)"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area E/E9",
+            "evidence": "quota: No file size limit and no limit on number of transfers on the free web"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row, area E/E8",
+            "evidence": "quota: Free tier is 2 GB per transfer, 7 days. Above 2 GB the transfer still"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area E/E8) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "No file size limit and no limit on number of transfers on the free web",
+            "source": "table.md row, area E/E9",
+            "evidence": null
+          },
+          {
+            "value": "Free tier is 2 GB per transfer, 7 days. Above 2 GB the transfer still",
+            "source": "table.md row, area E/E8",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area E/E9)"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md (area E/E8)"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area E/E8) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "No file size limit and no limit on number of transfers on the free web",
+            "source": "table.md (area E/E9)"
+          },
+          {
+            "value": "Free tier is 2 GB per transfer, 7 days. Above 2 GB the transfer still",
+            "source": "table.md (area E/E8)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "No file size limit and no limit on number of transfers on the free web tier; no account required. Transfers above 2 GB are queued behind paid traffic.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E9"
+    },
+    "target_document": "docs/storage/free/transfer-services.md",
+    "document_section": "Enterprise MFT",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No file size limit and no limit on number of transfers on the free web tier; no account required. Transfers above 2 GB are queued behind paid traffic.",
+    "limits_verbatim": "retention 7 days on free (30 days paid) — this is the binding constraint; no per-object-cap on the anonymous web tier; per-object behaviour beyond 2 GB is queue+deprioritisation not rejection; API keys are '100 GB, 14-day free trial (No credit card required)' — trial, not free tier.",
+    "egress_verbatim": "Free and unmetered on the free tier (no per-GB line anywhere on the pricing page); free tier is ad-supported.",
+    "chaining_verbatim": "Per-transfer model caps multiplication: unlimited transfers but each dies in 7 days. As storage it is a 7-day rolling window — n transfers/day x (size) x 7 days, nothing retained past 7. The API path (100 GB trial key x free accounts) is a 14-day trial, not perpetual.",
+    "tooling_verbatim": "Official SDKs: @smash-sdk/uploader (npm), @smash-sdk/downloader, github.com/fromsmash/smash-uploader-js, smash-sdk-js, smash-downloader-js; docs api.fromsmash.com/docs/quick-start",
+    "interface_verbatim": "rest (official API + SDKs, but gated behind an API key) / web for the anonymous path",
+    "agent_focus": "enterprise managed-file-transfer and secure-share platforms with free tiers (MOVEit, GoAnywhere, Thru, Serv-U, WS_FTP, FileCatalyst, Raysync, MASV, Signiant, Aspera, Files.com, ExaVault, Smash, Jumpshare, Egnyte, ShareFile, Tresorit, Sync.com, Koofr, pCloud Transfer)"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

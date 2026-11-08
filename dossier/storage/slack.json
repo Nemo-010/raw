@@ -1,0 +1,117 @@
+{
+  "topic": "storage",
+  "slug": "slack",
+  "provider": "Slack (free plan)",
+  "url": "https://slack.com",
+  "category": "messaging",
+  "free_tier": {
+    "stated": "5 GB per free workspace (hard cap), 1 GB max per file, plus a 90-day visibility window and permanent deletion of anything over one year old",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://docs.slack.dev/reference/methods/files.getUploadURLExternal/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "1 GB max per file",
+    "bytes": 1000000000,
+    "source_url": "https://docs.slack.dev/reference/methods/files.getUploadURLExternal/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.slack.dev/reference/methods/files.getUploadURLExternal/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free; files served from files.slack.com -> files-origin.slack.com behind CloudFront",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Slack Web API (files.getUploadURLExternal + files.completeUploadExternal), 1 GB per file; jeremy46231/slackfs (FUSE mount, 6 stars) exists but only mounts, does not add capacity",
+  "chaining": "5 GB x N free workspaces, but the one-year deletion makes it useless as an archive and the 90-day hide makes it useless as storage. Only viable as a transient relay.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "1 GB per file",
+      "source": "https://docs.slack.dev/reference/methods/files.getUploadURLExternal/"
+    }
+  ],
+  "limits_note": "5 GB workspace total; 1 GB per file; 10 apps max; content older than 90 days is hidden, content older than 1 year is permanently deleted (rolling, since 2024-08-26); high-volume upload throttling is explicitly mentioned in the free-plan limits",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Data loss on deletion is by design, not accidental: Slack states it 'will not be possible to restore messages and files once deletion occurs'. Also explicitly throttles 'use for storage and spam'.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.slack.dev/reference/methods/files.getUploadURLExternal/",
+      "date": "2026-10-21",
+      "proved": "error table: 'storage_limit_reached - File storage limit has been reached. This occurs when free teams have uploaded 5GB of files.'"
+    },
+    {
+      "url": "https://slack.com/help/articles/115002422943-Usage-limits-for-free-workspaces",
+      "date": "2026-10-21",
+      "proved": "'You can view and search messages and files from the last 90 days... Messages and files more than one year old will be permanently deleted'"
+    },
+    {
+      "url": "https://slack.com/help/articles/201330736-Add-files-to-Slack",
+      "date": "2026-10-21",
+      "proved": "'Members and guests can add files up to 1GB in size.'"
+    },
+    {
+      "url": "https://slack.com/api/files.getUploadURLExternal",
+      "date": "2026-10-21",
+      "proved": "probe: POST -> HTTP 200 {\"ok\":false,\"error\":\"not_authed\"} (API live)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "5 GB per free workspace (hard cap), 1 GB max per file, plus a 90-day visibility window and permanent deletion of anything over one year old",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F3-team-chat.json",
+    "seed_area": "F/F3",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "F/F3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "5 GB per free workspace (hard cap), 1 GB max per file, plus a 90-day visibility window and permanent deletion of anything over one year old",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F3"
+    },
+    "target_document": "docs/storage/free/messaging.md",
+    "document_section": "Team chat",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "5 GB per free workspace (hard cap), 1 GB max per file, plus a 90-day visibility window and permanent deletion of anything over one year old",
+    "limits_verbatim": "5 GB workspace total; 1 GB per file; 10 apps max; content older than 90 days is hidden, content older than 1 year is permanently deleted (rolling, since 2024-08-26); high-volume upload throttling is explicitly mentioned in the free-plan limits",
+    "egress_verbatim": "Free; files served from files.slack.com -> files-origin.slack.com behind CloudFront",
+    "chaining_verbatim": "5 GB x N free workspaces, but the one-year deletion makes it useless as an archive and the 90-day hide makes it useless as storage. Only viable as a transient relay.",
+    "tooling_verbatim": "Slack Web API (files.getUploadURLExternal + files.completeUploadExternal), 1 GB per file; jeremy46231/slackfs (FUSE mount, 6 stars) exists but only mounts, does not add capacity",
+    "interface_verbatim": "rest",
+    "agent_focus": "Team collaboration suites: Slack free (files, retention), Microsoft Teams, Mattermost, Rocket.Chat, Zulip, Twist, Discourse, Basecamp, ClickUp, Notion, Coda, Airtable attachments"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

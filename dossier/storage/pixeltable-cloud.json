@@ -1,0 +1,97 @@
+{
+  "topic": "storage",
+  "slug": "pixeltable-cloud",
+  "provider": "Pixeltable Cloud",
+  "url": "https://www.pixeltable.com",
+  "category": "mlops-artifacts",
+  "free_tier": {
+    "stated": "50 GB Media Store per organization on the free tier, explicitly a HARD limit ('50 GB Media Store per organization (hard limit)'), plus 10 GB database storage per database. Pro raises Media Store to 250 GB then $0.05/GB-mo, database storage 10 GB then $0.80/GB-mo.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.pixeltable.com/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.pixeltable.com/pricing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.pixeltable.com/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Not separately metered; storage is the billed dimension. Serving via Deploy endpoints is capped by compute (up to 1 vCPU / 2 GB on free).",
+    "metered": true
+  },
+  "interface": [
+    "s3",
+    "rest",
+    "webdav"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Python-native: `pxt.create_dir`, `pxt.create_table`, insert of images/video/audio/documents; the SDK is the client. Open-source core, so self-hosting is possible. No S3/WebDAV surface on the cloud tier.",
+  "chaining": "Per ORGANIZATION, so org multiplication is the only route, and the docs frame 50 GB as a hard cap designed to stop exactly that. 10 TiB would need 205 orgs.",
+  "limits": [],
+  "limits_note": "50 GB hard per org, 10 GB per database, 1 vCPU / 2 GB per database/service on free. The word 'hard limit' means there is no overage path at all — uploads fail rather than bill.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email.",
+    "country": null
+  },
+  "reliability_note": "Small vendor; the product is really a declarative multimodal database rather than a blob store, so using it as bulk storage fights its data model (it wants typed columns, not opaque blobs).",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.pixeltable.com/pricing",
+      "date": "2026-10-21",
+      "proved": "read live: '50 GB Media Store per organization (hard limit)'; '10 GB database storage per database'; Pro '250 GB Media Store per organization, then $0.05 / GB-mo'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "50 GB Media Store per organization on the free tier, explicitly a HARD limit ('50 GB Media Store per organization (hard limit)'), plus 10 GB database storage per database. Pro raises Media Store to 250 GB then $0.05/GB-mo, database storage 10 GB then $0.80/GB-mo.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D9-hf-competitors.json",
+    "seed_area": "D/D9",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "D/D9"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "50 GB Media Store per organization on the free tier, explicitly a HARD limit ('50 GB Media Store per organization (hard limit)'), plus 10 GB database storage per database. Pro raises Media Store to 250 GB then $0.05/GB-mo, database storage 10 GB then $0.80/GB-mo.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area D/D9"
+    },
+    "target_document": "docs/storage/free/models-and-media.md",
+    "document_section": "Hugging Face competitors",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 1,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "50 GB Media Store per organization on the free tier, explicitly a HARD limit ('50 GB Media Store per organization (hard limit)'), plus 10 GB database storage per database. Pro raises Media Store to 250 GB then $0.05/GB-mo, database storage 10 GB then $0.80/GB-mo.",
+    "limits_verbatim": "50 GB hard per org, 10 GB per database, 1 vCPU / 2 GB per database/service on free. The word 'hard limit' means there is no overage path at all — uploads fail rather than bill.",
+    "egress_verbatim": "Not separately metered; storage is the billed dimension. Serving via Deploy endpoints is capped by compute (up to 1 vCPU / 2 GB on free).",
+    "chaining_verbatim": "Per ORGANIZATION, so org multiplication is the only route, and the docs frame 50 GB as a hard cap designed to stop exactly that. 10 TiB would need 205 orgs.",
+    "identity_verbatim": "email.",
+    "tooling_verbatim": "Python-native: `pxt.create_dir`, `pxt.create_table`, insert of images/video/audio/documents; the SDK is the client. Open-source core, so self-hosting is possible. No S3/WebDAV surface on the cloud tier.",
+    "interface_verbatim": "rest",
+    "agent_focus": "New and up-and-coming competitors to Hugging Face and ModelScope, judged on the hard test the brief sets: a credible HF competitor must permit multi-TB objects and generous per-account storage, because model weights and datasets routinely run to hundreds of GB / TiB. Split into three classes — Chinese domestic hubs (HF is blocked there, so a separate ecosystem exists), Western MLOps artifact stores (W&B/Comet/ClearML/Lightning/Deep Lake), and dataset-publishing startups (Source Cooperative, Oxen, OpenDataLab). Excluded and not re-reported: Hugging Face, ModelScope, Kaggle, Civitai, Ollama, Replicate, DagsHub, OpenML, fal.ai, Baseten, Modal."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

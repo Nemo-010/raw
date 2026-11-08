@@ -1,0 +1,103 @@
+{
+  "topic": "storage",
+  "slug": "panoramax-federation-25-instances-with-per-instance-regi",
+  "provider": "Panoramax federation — 25 instances with per-instance `registration_is_open` (ulm / osm-es / seespider / panoramax-ar / osm-hr / osm-be)",
+  "url": "https://api.panoramax.xyz/api/instances",
+  "category": "federated instance pool",
+  "free_tier": {
+    "stated": "No quota on any instance (same codebase, same absence of a quota mechanism). The federation catalog itself is the useful artifact: `GET /api/instances` returns all 25 instances WITH each one's live configuration, including `registration_is_open`.",
+    "unit": "unlimited",
+    "metered_on": "unstated",
+    "source_url": "https://api.panoramax.xyz/api/instances",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://api.panoramax.xyz/api/instances",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://api.panoramax.xyz/api/instances",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "each instance serves its own originals, unmetered, no auth",
+    "metered": false
+  },
+  "interface": [
+    "cli"
+  ],
+  "interface_detail": "one shared STAC/OGC API shape across every instance — the same client works against all of them",
+  "tooling": "panoramax_cli --api-url <instance>; `panoramax_cli transfer` moves a sequence between instances without re-uploading from disk",
+  "chaining": "Round-robin writes across the open instances; the federated meta-catalog at api.panoramax.xyz indexes all of them, so one search call sees every copy. Multiply capacity by instance count.",
+  "limits": [],
+  "limits_note": "geo_coverage is enforced socially, not technically. IGN instance demands French territory; panorama.wales demands Wales; pano.locus.sbs demands US-NW. `panoramax-ulm.jjbaur.de` is the outlier: its config says verbatim 'Worldwide — The picture can be sent from anywhere in the world.'",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email (OSM OAuth for most; Keycloak self-registration for seespider at auth.pycnogon.xyz; osm-es declares `user_profile.url = null`, i.e. its own local accounts)",
+    "country": null
+  },
+  "reliability_note": "open=False on 11 of 25 instances (multimodall, bikespace, nl-test, osm-fulda, vee, multimob, serenedeluge, burakonder, mapcomplete, osm-tw). Two instances (mahdi, kasik-gis) have auth disabled entirely — anonymous read, no upload path.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://api.panoramax.xyz/api/instances",
+      "date": "2026-10-21",
+      "proved": "25 instances enumerated, each with configuration.auth.registration_is_open"
+    },
+    {
+      "url": "https://panoramax-ulm.jjbaur.de/api/configuration",
+      "date": "2026-10-21",
+      "proved": "registration_is_open: true, geo_coverage 'Worldwide\\nThe picture can be sent from anywhere in the world.'"
+    },
+    {
+      "url": "https://panoramax.ign.fr/api/configuration",
+      "date": "2026-10-21",
+      "proved": "registration_is_open true, own Keycloak realm, 'Photos must be located in France'"
+    },
+    {
+      "url": "https://panoramax.openstreetmap.es/api/configuration",
+      "date": "2026-10-21",
+      "proved": "registration_is_open true, user_profile.url = null (instance-local accounts)"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No quota on any instance (same codebase, same absence of a quota mechanism). The federation catalog itself is the useful artifact: `GET /api/instances` returns all 25 instances WITH each one's live configuration, including `registration_is_open`.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H16-citizen-science-and-heritage.json",
+    "seed_area": "H/H16",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "H/H16"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Citizen science and heritage",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No quota on any instance (same codebase, same absence of a quota mechanism). The federation catalog itself is the useful artifact: `GET /api/instances` returns all 25 instances WITH each one's live configuration, including `registration_is_open`.",
+    "limits_verbatim": "geo_coverage is enforced socially, not technically. IGN instance demands French territory; panorama.wales demands Wales; pano.locus.sbs demands US-NW. `panoramax-ulm.jjbaur.de` is the outlier: its config says verbatim 'Worldwide — The picture can be sent from anywhere in the world.'",
+    "egress_verbatim": "each instance serves its own originals, unmetered, no auth",
+    "chaining_verbatim": "Round-robin writes across the open instances; the federated meta-catalog at api.panoramax.xyz indexes all of them, so one search call sees every copy. Multiply capacity by instance count.",
+    "identity_verbatim": "email (OSM OAuth for most; Keycloak self-registration for seespider at auth.pycnogon.xyz; osm-es declares `user_profile.url = null`, i.e. its own local accounts)",
+    "tooling_verbatim": "panoramax_cli --api-url <instance>; `panoramax_cli transfer` moves a sequence between instances without re-uploading from disk",
+    "interface_verbatim": "one shared STAC/OGC API shape across every instance — the same client works against all of them",
+    "agent_focus": "Citizen-science / heritage / crowdsourced-imagery platforms judged on three things: (a) does a quota even exist in the server code, (b) can the ORIGINAL bytes be pulled back out, (c) what identity does signup demand. Plus the relay/P2P half: signalling vs true relaying, and which free relays carry data."
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

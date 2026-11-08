@@ -1,0 +1,111 @@
+{
+  "topic": "storage",
+  "slug": "bitrix24-free",
+  "provider": "Bitrix24 Free (Drive)",
+  "url": "https://www.bitrix24.com",
+  "category": "paas",
+  "free_tier": {
+    "stated": "Free plan: '5 GB storage' with 'Unlimited users - no team size limits'. Portals are free and self-service.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.bitrix24.com/prices/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.bitrix24.com/prices/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "Retention: 'inactive Free accounts may be deleted after 40 days' — this is a documented data-loss clause and the binding constraint.",
+    "days": 40,
+    "source_url": "https://www.bitrix24.com/prices/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "No egress meter on any plan; Drive files served from the portal. Not part of the pricing table.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "webdav",
+    "rclone"
+  ],
+  "interface_detail": "webdav",
+  "tooling": "Bitrix24 Drive mounts as a WebDAV network drive (documented for Windows/macOS); REST API also exposes disk.* methods. Third-party mounts exist (rclone via WebDAV, or OS-native WebDAV).",
+  "chaining": "5 GB x unlimited free portals, each with unlimited users. 100 portals = 500 GB. WebDAV means a plain `rclone copy` per portal — the most scriptable of the free-workspace KBs.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "Retention: 'inactive Free accounts may be deleted after 40 days",
+      "source": "https://www.bitrix24.com/prices/"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "deleted after 40 days",
+      "source": "https://www.bitrix24.com/prices/"
+    }
+  ],
+  "limits_note": "per-object-cap: not published on the pricing page (Drive-specific cap unverified). Quota is per-portal, shared across Drive + CRM files + email attachments + call recordings — a mixed bucket. Retention: 'inactive Free accounts may be deleted after 40 days' — this is a documented data-loss clause and the binding constraint.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ed). Quota is per-portal, shared across Drive + CRM files + email attachments + call recordings — a mixed bucket. Retention: 'inactive Free accounts may be deleted after 40 days' — this",
+    "country": null
+  },
+  "reliability_note": "Inactive free portals are deleted after 40 days per Bitrix24's own blog, so an archive role requires periodic activity. Cannot attach external cloud storage to Drive.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.bitrix24.com/prices/",
+      "date": "2026-10-21",
+      "proved": "Free 'for 1–2 users', '5 GB storage'; Free 'unlimited users'"
+    },
+    {
+      "url": "https://www.bitrix24.com/about/blogs/bitrix24-free-plan-everything-you-need-to-start-and-scale.php",
+      "date": "2026-10-21",
+      "proved": "'5 GB cloud storage – shared space for files' and 'inactive Free accounts may be deleted after 40 days'"
+    },
+    {
+      "url": "https://helpdesk.bitrix24.com/open/25769143/",
+      "date": "2026-10-21",
+      "proved": "'It is not possible to connect external cloud storage to Bitrix24'; Drive usage shared with CRM files and call recordings"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Free plan: '5 GB storage' with 'Unlimited users - no team size limits'. Portals are free and self-service.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C6-docs-wiki-kb.json",
+    "seed_area": "C/C6",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "C/C6"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "Docs, wiki and knowledge-base hosts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Free plan: '5 GB storage' with 'Unlimited users - no team size limits'. Portals are free and self-service.",
+    "limits_verbatim": "per-object-cap: not published on the pricing page (Drive-specific cap unverified). Quota is per-portal, shared across Drive + CRM files + email attachments + call recordings — a mixed bucket. Retention: 'inactive Free accounts may be deleted after 40 days' — this is a documented data-loss clause and the binding constraint.",
+    "egress_verbatim": "No egress meter on any plan; Drive files served from the portal. Not part of the pricing table.",
+    "chaining_verbatim": "5 GB x unlimited free portals, each with unlimited users. 100 portals = 500 GB. WebDAV means a plain `rclone copy` per portal — the most scriptable of the free-workspace KBs.",
+    "tooling_verbatim": "Bitrix24 Drive mounts as a WebDAV network drive (documented for Windows/macOS); REST API also exposes disk.* methods. Third-party mounts exist (rclone via WebDAV, or OS-native WebDAV).",
+    "interface_verbatim": "webdav",
+    "agent_focus": "Documentation and knowledge-base platforms with large attachment quotas — wiki farms, helpdesk KBs, docs hosts; whether per-workspace quotas multiply across free workspaces"
+  },
+  "binding": "retention-clamped",
+  "binding_note": "a clock, not a quota: bytes leave whether or not the client is finished with them",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

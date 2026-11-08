@@ -1,0 +1,145 @@
+{
+  "topic": "storage",
+  "slug": "osf-per-component-quotas",
+  "provider": "OSF (Open Science Framework) — per-component quotas",
+  "url": "https://osf.io",
+  "category": "academic",
+  "free_tier": {
+    "stated": "50 GB per public project, 5 GB per private project, 5 GB per file — but 'Each Component on a project has its own 5GB/50GB storage limit' and, crucially, 'Currently, there is no applied overall cap on the amount of OSF Storage per user.' Component trees are unbounded, so this is per-unit quota, not per-account.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://help.osf.io/article/555-add-ons-storage-api-integration-faq-s",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "5 GB per file",
+    "bytes": 5000000000,
+    "source_url": "https://help.osf.io/article/555-add-ons-storage-api-integration-faq-s",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://help.osf.io/article/555-add-ons-storage-api-integration-faq-s",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Unmetered; downloads served from OSF Storage (US/Canada/Germany/Australia regions)",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "OSF open API v2 (api.osf.io/v2, JSON:API: nodes, files, waterbutler); official osfclient Python package; OSF is the canonical 'component = free bucket' multiplier",
+  "chaining": "50 GB x unlimited components x (optionally) unlimited projects. A project can nest components, each with its own 50 GB, and there is no overall per-user cap — so the structure is the same per-record multiplier as Zenodo but with a smaller unit (50 GB) and a much lower per-file ceiling (5 GB).",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "5 GB per file",
+      "source": "https://help.osf.io/article/555-add-ons-storage-api-integration-faq-s"
+    }
+  ],
+  "limits_note": "5 GB per file is the hard limit — worse than Zenodo's 50 GB and worse than Harvard's 2.5 GB only in being middling. 5 GB applies to private projects, so working storage is the expensive tier here; 50 GB requires making the project public.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "inferred from the category 'academic'; the source record states no identity cost, so this is a class assumption, not evidence",
+    "country": null
+  },
+  "reliability_note": "OSF is mid-'Project Transition' per its own help banner, which is a structural-change risk for a long-lived archive. Storage is regional and selectable only at project creation and cannot be moved afterwards.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://help.osf.io/article/555-add-ons-storage-api-integration-faq-s",
+      "date": "2026-10-21",
+      "proved": "read live: 'Currently, there is no applied overall cap on the amount of OSF Storage per user' and 'Individual files must be 5GB or less'"
+    },
+    {
+      "url": "https://help.osf.io/article/353-welcome-to-projects",
+      "date": "2026-10-21",
+      "proved": "read live: 'Private Projects: 5 GB ... Public Projects: 50 GB ... Max File Size: 5 GB per individual file ... Each Component on a project has its own 5GB/50GB storage limit'"
+    },
+    {
+      "url": "https://help.osf.io/article/353-welcome-to-projects",
+      "date": "2026-10-21",
+      "proved": "read live: storage add-ons 'do not count against these storage limits', i.e. add-ons are a second un-metered path"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "50 GB per public project, 5 GB per private project, 5 GB per file — but 'Each Component on a project has its own 5GB/50GB storage limit' and, crucially, 'Currently, there is no applied overall cap on the amount of OSF Storage per user.' Component trees are unbounded, so this is per-unit quota, not per-account.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D1-zenodo-cern.json",
+    "seed_area": "D/D1",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D1"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D2"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "OSF (Open Science Framework) — per-component quotas",
+      "OSF (Open Science Framework)"
+    ],
+    "conflicts": [
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "50 GB per public project, 5 GB per private project, 5 GB per file — bu",
+            "source": "table.md row, area D/D1",
+            "evidence": null
+          },
+          {
+            "value": "50 GB per public project or component, 5 GB per private project or com",
+            "source": "table.md row, area D/D2",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "50 GB per public project, 5 GB per private project, 5 GB per file — bu",
+            "source": "table.md (area D/D1)"
+          },
+          {
+            "value": "50 GB per public project or component, 5 GB per private project or com",
+            "source": "table.md (area D/D2)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/free/academic.md",
+    "document_section": "Zenodo and CERN",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "50 GB per public project, 5 GB per private project, 5 GB per file — but 'Each Component on a project has its own 5GB/50GB storage limit' and, crucially, 'Currently, there is no applied overall cap on the amount of OSF Storage per user.' Component trees are unbounded, so this is per-unit quota, not per-account.",
+    "limits_verbatim": "5 GB per file is the hard limit — worse than Zenodo's 50 GB and worse than Harvard's 2.5 GB only in being middling. 5 GB applies to private projects, so working storage is the expensive tier here; 50 GB requires making the project public.",
+    "egress_verbatim": "Unmetered; downloads served from OSF Storage (US/Canada/Germany/Australia regions)",
+    "chaining_verbatim": "50 GB x unlimited components x (optionally) unlimited projects. A project can nest components, each with its own 50 GB, and there is no overall per-user cap — so the structure is the same per-record multiplier as Zenodo but with a smaller unit (50 GB) and a much lower per-file ceiling (5 GB).",
+    "tooling_verbatim": "OSF open API v2 (api.osf.io/v2, JSON:API: nodes, files, waterbutler); official osfclient Python package; OSF is the canonical 'component = free bucket' multiplier",
+    "interface_verbatim": "rest",
+    "agent_focus": "Zenodo and the CERN/InvenioRDM academic-repository family: per-record (not per-account) quotas, whether records are unlimited, anonymous read speed, REST/deposition API and tooling, rate limits, and which institutional InvenioRDM/Dataverse deployments beat Zenodo's 50GB per record"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

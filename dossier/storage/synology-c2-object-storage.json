@@ -1,0 +1,133 @@
+{
+  "topic": "storage",
+  "slug": "synology-c2-object-storage",
+  "provider": "Synology C2 Object Storage",
+  "url": "https://c2.synology.com/en-us/object-storage/overview",
+  "category": "S3-compatible object storage, flat per-TB",
+  "free_tier": {
+    "stated": "Sold in whole-TB increments from 1 TB",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://c2.synology.com/en-us/object-storage/overview",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://c2.synology.com/en-us/object-storage/overview",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://c2.synology.com/en-us/object-storage/overview",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "'Free data retrieval — Retrieve all the data you have stored for free every month.' Plus 'No API request or data deletion fees'. Note the retrieval-included claim is bounded by 'every month', not stated as unlimited.",
+    "metered": false
+  },
+  "interface": [
+    "s3-compatible",
+    "rclone"
+  ],
+  "interface_detail": "S3-compatible",
+  "tooling": "any S3 client; Synology Hyper Backup, rclone generic S3",
+  "chaining": "S3 -> AList/rclone/Cloudflare",
+  "limits": [],
+  "limits_note": "Restructure risk: KB article states 'Effective June 22, 2026, the subscription model for C2 Object Storage will transition to C2 OneStorage' — pricing and capacity conversion applies. Verify current SKU before committing.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "the account is a Synology Account, reached by email and a password or by Google or Apple sign-in, and the vendor does not list the fields of that sign-up, so whether it asks a phone number is unverified. Every subscription needs a payment method, listed as credit or debit card, SEPA direct debit and ACH direct debit",
+    "country": null
+  },
+  "reliability_note": "Claims 99.999999999% durability, EU and US data centres. Synology is an established hardware vendor; no data-loss event.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://c2.synology.com/en-us/object-storage/overview",
+      "date": "2026-10-21",
+      "proved": "'At just $7.99/TB per month ... Free data retrieval ... No API request or data deletion fees'"
+    },
+    {
+      "url": "https://kb.synology.com/en-global/C2/tutorial/Plan_Change_2026_C2_Object_Storage",
+      "date": "2026-10-21",
+      "proved": "C2 OneStorage transition effective 2026-06-22"
+    },
+    {
+      "url": "https://kb.synology.com/en-us/C2/tutorial/Quick_Start_C2_Object_Storage",
+      "date": "2026-11-01",
+      "proved": "the account is a Synology Account, reached by email or by Google or Apple sign-in",
+      "capture": "sha256:2daad33baf52cfc71c9a9095666297f383fbd91794ec2b88ccff75c53aa44754",
+      "quote": "In your Synology Account, sign in using your Google, Apple, or Synology Account."
+    },
+    {
+      "url": "https://kb.synology.com/en-us/DSM/tutorial/what_can_i_do_Synology_Account_payment_shipment",
+      "date": "2026-11-01",
+      "proved": "the subscription needs a card, SEPA direct debit or ACH direct debit",
+      "capture": "sha256:0e96d9a3046ca9890f0b1ba91f84f2c548d52af3b2bb1f46fbcc83bd7fdf3a19",
+      "quote": "- Credit or debit card\n- SEPA direct debit (only for payments in USD or EUR)\n- ACH direct debit (only for payments in USD or EUR)"
+    },
+    {
+      "url": "https://kb.synology.com/en-us/C2/tutorial/Quick_Start_C2_Object_Storage",
+      "date": "2026-11-01",
+      "proved": "the object storage offer is entered through a Synology Account subscription",
+      "capture": "sha256:2daad33baf52cfc71c9a9095666297f383fbd91794ec2b88ccff75c53aa44754",
+      "quote": "Select C2 OneStorage and follow the wizard to complete the subscription."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-01T18:05:15.749Z",
+  "price_per_tb_month": "$7.99/TB flat at both 5 TB and 20 TB",
+  "notes": "Sold in whole-TB increments from 1 TB",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-P4-lifetime-deals-paid.json",
+    "seed_area": "A/P4",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "A/P4"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [
+      {
+        "field": "verdict",
+        "class": "same provider is both a table row and a dead end",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md"
+          },
+          {
+            "value": "dead-end: Product page 404s; the only figure available (flat $7.99/TB, free egress, 1 TB increments) comes from a third-party cata",
+            "source": "DEAD-ENDS.md"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/paid/lifetime-and-deals.md",
+    "document_section": "Lifetime deals",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Sold in whole-TB increments from 1 TB",
+    "limits_verbatim": "Restructure risk: KB article states 'Effective June 22, 2026, the subscription model for C2 Object Storage will transition to C2 OneStorage' — pricing and capacity conversion applies. Verify current SKU before committing.",
+    "egress_verbatim": "Verbatim: 'Free data retrieval — Retrieve all the data you have stored for free every month.' Plus 'No API request or data deletion fees'. Note the retrieval-included claim is bounded by 'every month', not stated as unlimited.",
+    "chaining_verbatim": "S3 -> AList/rclone/Cloudflare",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "any S3 client; Synology Hyper Backup, rclone generic S3",
+    "interface_verbatim": "S3-compatible",
+    "price_verbatim": "$7.99/TB flat at both 5 TB and 20 TB",
+    "agent_focus": "Cheap-PAID lane: lifetime/one-time-payment storage deals AND steady-state paid tiers, all current as of 2026-10-21. Every paid candidate carries price_per_tb_month computed at the 5 TB and 20 TB tiers. Egress policy quoted verbatim from the vendor page. Excluded per brief: AWS, Azure, GCP, Alibaba, Cloudflare R2, Backblaze B2, IDrive e2."
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

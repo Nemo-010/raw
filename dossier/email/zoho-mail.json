@@ -1,0 +1,100 @@
+{
+  "topic": "email",
+  "slug": "zoho-mail",
+  "provider": "Zoho Mail",
+  "url": "https://www.zoho.com/mail/zohomail-pricing.html",
+  "category": "mailbox",
+  "free_tier": {
+    "stated": "5 users, 5 GB each, 1 custom domain, 25 MB attachment limit",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.zoho.com/mail/zohomail-pricing.html",
+    "read_on": "2026-10-22",
+    "notes": ""
+  },
+  "per_object_cap": {
+    "stated": "25 MB attachment limit, 5 GB per mailbox",
+    "bytes": 26214400,
+    "notes": "",
+    "source_url": "https://www.zoho.com/mail/zohomail-pricing.html"
+  },
+  "retention": {
+    "stated": "5 GB per mailbox",
+    "days": null,
+    "notes": "",
+    "source_url": "https://www.zoho.com/mail/zohomail-pricing.html"
+  },
+  "egress": {
+    "terms": "not applicable",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.zoho.com/mail/zohomail-pricing.html"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "tooling": "none: no IMAP or POP on the free edition",
+  "chaining": "a real mailbox with a custom domain for five users, and it breaks the obvious chain because the free edition cannot be read over IMAP.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "no IMAP, POP or ActiveSync on the free edition, so no programmatic mailbox read",
+      "source": "https://www.zoho.com/mail/zohomail-pricing.html"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "25 MB per attachment",
+      "source": "https://www.zoho.com/mail/zohomail-pricing.html"
+    }
+  ],
+  "identity_cost": {
+    "kind": "email",
+    "detail": "an account with the domain's MX records pointed at Zoho",
+    "country": null
+  },
+  "reliability_note": "the free edition is region-limited; the page title reads 'Free for 5 Users in select regions'",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://www.zoho.com/mail/zohomail-pricing.html",
+      "date": "2026-10-22",
+      "proved": "the free edition is 5 users at 5 GB each with 1 custom domain, and the protocol support table excludes IMAP, POP and ActiveSync from the free edition"
+    },
+    {
+      "url": "https://www.zoho.com/mail/zohomail-pricing.html",
+      "date": "2026-11-02",
+      "proved": "the Mail Free plan is listed as email hosting for one domain, up to 5 users and 5 GB per user with no IMAP, POP or Active Sync, and the page names no WebDAV or other protocol, so no interface term fits its webmail and app access",
+      "capture": "sha256:d03c095d97ede4a458a5d3e10f18b9f48a7b5e1f887e459f6d06c4077bc2c283",
+      "quote": "Email hosting for one domain for up to 5 users 5 GB Mail storage per user IMAP/ POP/ Active Sync not included."
+    },
+    {
+      "url": "https://www.zoho.com/mail/zohomail-pricing.html",
+      "date": "2026-11-02",
+      "proved": "the pricing page was captured on 2026-11-02 and lists the Mail Free plan without IMAP, POP or Active Sync",
+      "capture": "sha256:d03c095d97ede4a458a5d3e10f18b9f48a7b5e1f887e459f6d06c4077bc2c283",
+      "quote": "Email hosting for one domain for up to 5 users 5 GB Mail storage per user IMAP/ POP/ Active Sync not included."
+    },
+    {
+      "url": "https://www.zoho.com/mail/zohomail-pricing.html",
+      "date": "2026-11-02",
+      "proved": "the Mail Free plan still excludes IMAP, POP and Active Sync, so the free edition has no programmatic mailbox read",
+      "capture": "sha256:d03c095d97ede4a458a5d3e10f18b9f48a7b5e1f887e459f6d06c4077bc2c283",
+      "quote": "Email hosting for one domain for up to 5 users 5 GB Mail storage per user IMAP/ POP/ Active Sync not included."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-02T10:00:29.727Z",
+  "notes": "This kills the obvious 'free mailbox plus IMAP fetch' chain, which is why it is recorded rather than skipped.",
+  "history": [],
+  "extras": {
+    "stale_after_days": 90,
+    "verified_at_basis": "pricing page read on 2026-10-22 with no capture; the Mail Free plan line of the pricing page captured on 2026-11-02"
+  },
+  "binding": "retention-clamped",
+  "binding_note": "a removed feature, not a capped volume; the hard filter is programmatic access.",
+  "interface_detail": "webmail and the mobile app only on the free edition; no IMAP, POP or ActiveSync",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "limits_note": "the 5 GB is a mailbox storage volume and not an object size, so no kind in the six-value vocabulary names it. The 25 MB attachment is a per-object cap and stays in limits. What binds the verdict is the removal of IMAP, POP and ActiveSync, which is recorded as retention-clamped because the server withholds the data rather than the bytes"
+}

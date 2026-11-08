@@ -1,0 +1,113 @@
+{
+  "topic": "storage",
+  "slug": "oxen-ai",
+  "provider": "Oxen.ai (Oxen Hub — dataset versioning for ML)",
+  "url": "https://www.oxen.ai",
+  "category": "dataset-hosting",
+  "free_tier": {
+    "stated": "Explorer (free forever): 50 GB data storage + 50 GB data transfer, unlimited public repos with unlimited collaborators, 5 private repos (max 3 collaborators). Hacker $30/mo: 100 GB storage / 100 GB transfer. Pro $60/mo: 500 GB / 500 GB.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://oxen.ai/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "No per-file cap published",
+    "source_url": "https://oxen.ai/pricing",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://oxen.ai/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Hard-capped rather than metered: 50 GB of data transfer per month on the free tier. That is the binding constraint for the 500 GB-1 TiB/day serving workload — you would exhaust a month of transfer in about an hour and a half.",
+    "metered": true
+  },
+  "interface": [
+    "rest",
+    "git",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Genuine: `oxen` CLI (oxen add/commit/push/pull, merkle-tree diffing), Python SDK, and a documented REST API. The oxen-server is open source and self-hostable (Oxen positions itself as 'git for data'). This is a real product with a real client, not a wrapper.",
+  "chaining": "50 GB x N free accounts, but the 50 GB/month transfer cap applies per account too, so chaining accounts multiplies egress but not storage usefulness. 10 TiB would need 205 accounts.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "transfer, unlimited public repos with unlimited collaborators, 5 private repos",
+      "source": "https://oxen.ai/pricing"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "No per-file cap published",
+      "source": "https://oxen.ai/pricing"
+    }
+  ],
+  "limits_note": "50 GB storage, 50 GB/month transfer, 5 private repos. No per-file cap published. Public repos are unlimited in COUNT, which is the only multiplier — but the 50 GB is account-level, so repo count does not add bytes.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email (self-service signup).",
+    "country": null
+  },
+  "reliability_note": "Mature, funded, stable. Data is content-addressed and versioned, so no silent expiry. The API host api.oxen.ai did not resolve from this network, which suggests the documented API endpoint has moved or is geo-restricted.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://oxen.ai/pricing",
+      "date": "2026-10-21",
+      "proved": "read live: 'Free Forever! ... Unlimited public repositories with unlimited collaborators · 5 private repositories · 50gb of data storage · 50gb of data transfer'; Hacker '100gb of data storage / 100gb of data transfer'; Pro '500gb'"
+    },
+    {
+      "url": "https://hub.oxen.ai/api/repos/ox/COCO-2017",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 404 (146 bytes); GET https://api.oxen.ai/api/repos/ox/COCO-2017 -> DNS resolution failure (Could not resolve host)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Explorer (free forever): 50 GB data storage + 50 GB data transfer, unlimited public repos with unlimited collaborators, 5 private repos (max 3 collaborators). Hacker $30/mo: 100 GB storage / 100 GB transfer. Pro $60/mo: 500 GB / 500 GB.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D9-hf-competitors.json",
+    "seed_area": "D/D9",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "D/D9"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Explorer (free forever): 50 GB data storage + 50 GB data transfer, unlimited public repos with unlimited collaborators, 5 private repos (max 3 collaborators). Hacker $30/mo: 100 GB storage / 100 GB transfer. Pro $60/mo: 500 GB / 500 GB.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area D/D9"
+    },
+    "target_document": "docs/storage/free/models-and-media.md",
+    "document_section": "Hugging Face competitors",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Explorer (free forever): 50 GB data storage + 50 GB data transfer, unlimited public repos with unlimited collaborators, 5 private repos (max 3 collaborators). Hacker $30/mo: 100 GB storage / 100 GB transfer. Pro $60/mo: 500 GB / 500 GB.",
+    "limits_verbatim": "50 GB storage, 50 GB/month transfer, 5 private repos. No per-file cap published. Public repos are unlimited in COUNT, which is the only multiplier — but the 50 GB is account-level, so repo count does not add bytes.",
+    "egress_verbatim": "Hard-capped rather than metered: 50 GB of data transfer per month on the free tier. That is the binding constraint for the 500 GB-1 TiB/day serving workload — you would exhaust a month of transfer in about an hour and a half.",
+    "chaining_verbatim": "50 GB x N free accounts, but the 50 GB/month transfer cap applies per account too, so chaining accounts multiplies egress but not storage usefulness. 10 TiB would need 205 accounts.",
+    "identity_verbatim": "email (self-service signup).",
+    "tooling_verbatim": "Genuine: `oxen` CLI (oxen add/commit/push/pull, merkle-tree diffing), Python SDK, and a documented REST API. The oxen-server is open source and self-hostable (Oxen positions itself as 'git for data'). This is a real product with a real client, not a wrapper.",
+    "interface_verbatim": "rest",
+    "agent_focus": "New and up-and-coming competitors to Hugging Face and ModelScope, judged on the hard test the brief sets: a credible HF competitor must permit multi-TB objects and generous per-account storage, because model weights and datasets routinely run to hundreds of GB / TiB. Split into three classes — Chinese domestic hubs (HF is blocked there, so a separate ecosystem exists), Western MLOps artifact stores (W&B/Comet/ClearML/Lightning/Deep Lake), and dataset-publishing startups (Source Cooperative, Oxen, OpenDataLab). Excluded and not re-reported: Hugging Face, ModelScope, Kaggle, Civitai, Ollama, Replicate, DagsHub, OpenML, fal.ai, Baseten, Modal."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,54 @@
+name: lock-fresh
+
+# Is scripts/fshy/public.lock behind the public Worker's rules? The pin names the commit of f-shy/fshy.ajam.dev
+# that the Python twins (fr.py, build.py) are tested against. When the public repository changes site/worker/guard.js,
+# rank.js, text.js or test/parity.json, the pin and the twins must move together (scripts/fshy/README.md, "Parity with
+# the public Worker"). This job asks the GitHub API for the newest public commit that touched each of those files and
+# fails when the pin does not contain it (scripts/fshy/check_lock_fresh.py; docs/maintenance.md says what to do).
+#
+# It is not a step of the gate or of the parity job on purpose. The pin exists so that a merge in the public repository
+# cannot turn an unrelated pull request here red, and every research pull request waits for every check here
+# (scripts/rq merge). So this runs every day on main, on a manual run, and on a pull request that moves the pin or
+# changes this check: the pull request that is meant to fix a stale pin proves it did.
+#
+# Two failures, told apart by the step's annotation and its exit code: 1 is "public.lock is stale" (the pin is behind
+# a public change of a watched file); 2 is "could not decide" (the network or the API failed, or the lock is
+# unreadable). A failure to ask is never reported as stale; it also fails, because a check that cannot run proves nothing.
+# Actions are pinned by commit; the tag is in the comment.
+
+# Manual only: this private repository spends no Actions minutes on a pull request or a schedule. The checks run in
+# the public repository's Actions (scripts/research/settings.json ci_repo, ci_workflow; scripts/research/ci.py and
+# scripts/research/ci-checks.sh), which `scripts/rq land` starts and `scripts/rq merge` waits for. This file stays
+# for a manual run.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lock-fresh-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lock-fresh:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: the check's own selftest, offline
+        run: python scripts/fshy/check_lock_fresh.py --selftest
+
+      - name: the pin contains the newest public change of the Worker rules
+        # the token only raises the API rate limit; the public repository needs none
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/fshy/check_lock_fresh.py

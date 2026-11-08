@@ -1,0 +1,14 @@
+{
+ "id": "20261101-1811-verify-crawler-scraper-efed-u18-q01",
+ "kind": "verify",
+ "topic": "crawler-scraper",
+ "question": "Should check C14 (source-not-in-evidence) count a probe: evidence row whose target is the record's free_tier.source_url? Recommended: yes. In scripts/research/checks.py, record_violations (the ev set at lines 199-203) and uncited_sources (cited, lines 259-261) keep only rows whose url starts with http; strip a leading probe: (and a GET, POST or HEAD after it) from a row's url and compare the target the way an http row's url is compared (host without www, path without trailing slash, query dropped); a probe: row that unreachable_row flags (its quote shows a status other than 2xx) would not count, as it does not re-date a record. The C14 row of scripts/research/README.md and the rule text in RULES describe the same set and change with it.",
+ "why": "SQL over the store at commit 0398f4dc, emulating that comparison: 171 records name an http free_tier.source_url that no http evidence row names, and 29 of them have a probe: row for exactly that target (23 debrid, 2 netdisk-pan, 1 each in crawler-scraper, databases-kv, domains-dns and storage); the other 142 have no row for it and stay flagged. Two of the 29 (crawler-scraper/urlscan, netdisk-pan/public-alist-fronting-139yun) rest on a stored probe record dated 2026-10-30; the other 27 rest on probe rows dated 2026-10-21 to 2026-10-23 that hold no capture, as an http row dated before 2026-10-28 holds none and still counts. The probe row of crawler-scraper/urlscan stores the 4,392-byte body of https://urlscan.io/api/v1/quotas, the page itself, and C21 already checks its quote. Capturing such an endpoint again as a page works only through broker.sh fetch --dump-headers and capture --from-file (the broker's page read answers HTTP 415, not-html:json), returns the same bytes, and its http row forces a confirm that re-dates the record. crawler-scraper/urlscan is given that page row now; the other 28 would each need a re-read unit and a re-dating for it.",
+ "scope": {
+  "rids": [
+   "crawler-scraper/urlscan"
+  ]
+ },
+ "origin": "20261101-1811-verify-crawler-scraper-efed/u18",
+ "created": "2026-11-02T01:02:38Z"
+}

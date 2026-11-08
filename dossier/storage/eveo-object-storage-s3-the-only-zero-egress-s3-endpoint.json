@@ -1,0 +1,101 @@
+{
+  "topic": "storage",
+  "slug": "eveo-object-storage-s3-the-only-zero-egress-s3-endpoint",
+  "provider": "EVEO Object Storage S3 (Brazil) — the only zero-egress S3 endpoint found in Latin America",
+  "url": "https://www.eveo.com.br/object-storage-s3/",
+  "category": "object-storage",
+  "free_tier": {
+    "stated": "R$0.05/GB/month, billed on stored GB only; buckets up to 5 PB, no provisioning. Positioned as «Armazenamento sem taxas de download (egress) ou API».",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.eveo.com.br/object-storage-s3/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.eveo.com.br/object-storage-s3/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.eveo.com.br/object-storage-s3/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "ZERO, stated as the product's entire pitch: «Zero Egress e API … a saída é gratuita, operações PUT, GET, LIST não pesam na fatura» (egress is free; PUT/GET/LIST operations do not weigh on the invoice). Also «paga apenas pelo GB armazenado … e acessa o que é seu sem taxas de pedágio». No retrieval fee. WORM immutability native.",
+    "metered": true
+  },
+  "interface": [
+    "s3-compatible",
+    "rclone"
+  ],
+  "interface_detail": "s3",
+  "tooling": "S3-compatible with SigV4 presigned URLs — so it can sit behind Cloudflare the same way as any S3 store. rclone `s3`, restic, Veeam. Two-region replication inside Brazil, Tier III datacentres.",
+  "chaining": "Pure per-GB, so 5 TB and 20 TB cost the same per TB. No bucket cap below 5 PB.",
+  "limits": [],
+  "limits_note": "Brazil-only geography — the same intercontinental-latency objection as Rollin Host for the hot set, though as an archive tier it is fine. The R$0.05/GB figure is the advertised rate and no volume staircase is published, so there may be no discount at 20 TB; ask. Enterprise sales motion («Simule seu Storage», «Solicite uma proposta») rather than self-serve checkout.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "Enterprise-oriented Brazilian provider with Tier III DCs and two-region replication; no independent price/performance benchmark located. The zero-egress claim is on the vendor's own page and uncontradicted, but there is no published price list PDF to cross-check the R$0.05 number against, so confidence on the exact rate is medium even though confidence on the egress policy is high.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.eveo.com.br/object-storage-s3/",
+      "date": "2026-10-21",
+      "proved": "read broker, upstream_status 200 (final_url redirected to /produtos/storage). «Armazene grandes volumes por apenas R$0,05/GB»; «Sem Taxas — Zero Egress e API … a saída é gratuita, operações PUT, GET, LIST não pesam na fatura»"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "same page — «suporte a buckets de até 5PB e sem necessidade de provisionamento»; «Replicação em duas regiões distintas»; «imutabilidade WORM nativa»"
+    },
+    {
+      "url": "https://search.web.pkgforge.dev",
+      "date": "2026-10-21",
+      "proved": "search snippet — «Object Storage S3 | R$ 0,05/GB Sem Egress Fee … 50 TB | R$ 16.» (the 50 TB row was truncated in the snippet and not recoverable from the page body)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$10.19/TB/mo at both 5 TB and 20 TB (strict per-GB, no tiers), egress $0. R$0.05/GB × 1024 GB/TB × 0.199082 USD/BRL = $10.19. Note this is per decimal GB on the vendor's wording; if billed per GiB the figure is $10.96/TB.",
+  "notes": "R$0.05/GB/month, billed on stored GB only; buckets up to 5 PB, no provisioning. Positioned as «Armazenamento sem taxas de download (egress) ou API».",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-P5-regional-cheap-paid.json",
+    "seed_area": "A/P5",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "A/P5"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "target_document": "docs/storage/paid/regional.md",
+    "document_section": "Regional cheap paid",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "R$0.05/GB/month, billed on stored GB only; buckets up to 5 PB, no provisioning. Positioned as «Armazenamento sem taxas de download (egress) ou API».",
+    "limits_verbatim": "Brazil-only geography — the same intercontinental-latency objection as Rollin Host for the hot set, though as an archive tier it is fine. The R$0.05/GB figure is the advertised rate and no volume staircase is published, so there may be no discount at 20 TB; ask. Enterprise sales motion («Simule seu Storage», «Solicite uma proposta») rather than self-serve checkout.",
+    "egress_verbatim": "ZERO, stated as the product's entire pitch: «Zero Egress e API … a saída é gratuita, operações PUT, GET, LIST não pesam na fatura» (egress is free; PUT/GET/LIST operations do not weigh on the invoice). Also «paga apenas pelo GB armazenado … e acessa o que é seu sem taxas de pedágio». No retrieval fee. WORM immutability native.",
+    "chaining_verbatim": "Pure per-GB, so 5 TB and 20 TB cost the same per TB. No bucket cap below 5 PB.",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "S3-compatible with SigV4 presigned URLs — so it can sit behind Cloudflare the same way as any S3 store. rclone `s3`, restic, Veeam. Two-region replication inside Brazil, Tier III datacentres.",
+    "interface_verbatim": "s3",
+    "price_verbatim": "$10.19/TB/mo at both 5 TB and 20 TB (strict per-GB, no tiers), egress $0. R$0.05/GB × 1024 GB/TB × 0.199082 USD/BRL = $10.19. Note this is per decimal GB on the vendor's wording; if billed per GiB the figure is $10.96/TB.",
+    "agent_focus": "Wave 7 cheap-PAID lane, regional angle: storage sold in RUB / CNY / BRL / INR / ZAR / TRY / PLN / UAH that never appears on Western price lists. Every paid candidate carries price_per_tb_month at USD-converted list price. FX fixed 2026-10-21 from open.er-api.com: RUB 82.5719/USD, CNY 6.6913, BRL 5.0231, INR 94.9952, ZAR 16.3972, TRY 49.5978, PLN 3.8923, UAH 45.0922, EUR 0.89075/USD. Excluded per brief: AWS, Azure, GCP, Alibaba Cloud, Cloudflare R2, Backblaze B2, IDrive e2. Headline result: the true regional floor with genuinely free egress is ~$2.00/TB/mo (Yandex 360 Profi 3 TB on a Russian card) rising to ~$4.17/TB/mo for the same product bought with a foreign card, and ~$5.95-7.56/TB/mo for flat-rate Western-facing file storage (TheHost, Rollin Host). Everything advertised below ~$2/TB/mo in this set is either capacity-capped, egress-metered, or unverifiable marketing."
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

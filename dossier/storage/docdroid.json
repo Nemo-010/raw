@@ -1,0 +1,122 @@
+{
+  "topic": "storage",
+  "slug": "docdroid",
+  "provider": "DocDroid",
+  "url": "https://www.docdroid.com",
+  "category": "document-hosting",
+  "free_tier": {
+    "stated": "Free/Standard account: 10 uploads per 24h, no document-count or storage figure published; Pro is \"Unlimited Documents\" for $19/month (3-day trial). Home page now flags free uploads as \"Restricted Demo Mode\" — only you can view them.",
+    "unit": "unlimited",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.docdroid.com/apidocs",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.docdroid.com/apidocs",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "60 requests/min; 10 uploads/24h standard (1,000/24h Pro); documents deleted after 60 days without views (third-party report); free sharing disabled.",
+    "days": 60,
+    "source_url": "https://www.docdroid.com/apidocs",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free tier cannot publish a public link at all: \"Restricted Demo Mode. Only you can view your uploaded documents. To share documents with others, your need a Pro subscription.\" Pro is metered by subscription, not by GB.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Real REST API (OpenAPI 3.0, v1.2.0) at https://www.docdroid.com/api with OAuth2 or personal access tokens: POST/GET/PUT/DELETE /document, webhooks, analytics. No rclone backend.",
+  "chaining": "Weak: 10 uploads/day x unlimited free accounts, but free documents are invisible to anyone else, so it only works as private storage and is capped by the 24h upload rate, not by bytes.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "deleted after 60 days",
+      "source": "https://www.docdroid.com/apidocs"
+    }
+  ],
+  "limits_note": "60 requests/min; 10 uploads/24h standard (1,000/24h Pro); documents deleted after 60 days without views (third-party report); free sharing disabled.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ts expire on inactivity and are never publicly served; the API is well-documented but the free tier is deliberately useless for serving. Weak: 10 uploads/day x unlimited free account",
+    "country": null
+  },
+  "reliability_note": "Free-tier documents expire on inactivity and are never publicly served; the API is well-documented but the free tier is deliberately useless for serving.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.docdroid.com/apidocs",
+      "date": "2026-10-21",
+      "proved": "'Standard accounts: 10 uploads per 24h'; 'There is general limit of 60 requests per minute'; '429 Too Many Requests'"
+    },
+    {
+      "url": "https://www.docdroid.com/",
+      "date": "2026-10-21",
+      "proved": "'Restricted Demo Mode. Only you can view your uploaded documents. To share documents with others, your need a Pro subscription.'"
+    },
+    {
+      "url": "https://www.docdroid.com/pricing",
+      "date": "2026-10-21",
+      "proved": "Pro: 'Unlimited Documents', 3 day free trial, $19/month"
+    },
+    {
+      "url": "https://listicler.com/tools/docdroid",
+      "date": "2026-10-21",
+      "proved": "'Free tier documents are deleted after 60 days without views'"
+    },
+    {
+      "url": "https://www.docdroid.com/upload",
+      "date": "2026-10-21",
+      "proved": "probe: POST -F file=@t.pdf -> 405 Method Not Allowed"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Free/Standard account: 10 uploads per 24h, no document-count or storage figure published; Pro is \"Unlimited Documents\" for $19/month (3-day trial). Home page now flags free uploads as \"Restricted Demo Mode\" — only you can view them.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H4-document-hosting.json",
+    "seed_area": "H/H4",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "H/H4"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Free/Standard account: 10 uploads per 24h, no document-count or storage figure published; Pro is \"Unlimited Documents\" for $19/month (3-day trial). Home page now flags free uploads as \"Restricted Demo Mode\" — only you can view them.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H4"
+    },
+    "target_document": "docs/storage/free/anonymous-hosts.md",
+    "document_section": "Document hosting",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Free/Standard account: 10 uploads per 24h, no document-count or storage figure published; Pro is \"Unlimited Documents\" for $19/month (3-day trial). Home page now flags free uploads as \"Restricted Demo Mode\" — only you can view them.",
+    "limits_verbatim": "60 requests/min; 10 uploads/24h standard (1,000/24h Pro); documents deleted after 60 days without views (third-party report); free sharing disabled.",
+    "egress_verbatim": "Free tier cannot publish a public link at all: \"Restricted Demo Mode. Only you can view your uploaded documents. To share documents with others, your need a Pro subscription.\" Pro is metered by subscription, not by GB.",
+    "chaining_verbatim": "Weak: 10 uploads/day x unlimited free accounts, but free documents are invisible to anyone else, so it only works as private storage and is capped by the 24h upload rate, not by bytes.",
+    "tooling_verbatim": "Real REST API (OpenAPI 3.0, v1.2.0) at https://www.docdroid.com/api with OAuth2 or personal access tokens: POST/GET/PUT/DELETE /document, webhooks, analytics. No rclone backend.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Document and ebook platforms: Internet Archive texts, Open Library, Scribd, Issuu, Calameo, Google Books, HathiTrust, Anna's Archive, Z-Library, DocDroid, SlideShare — upload limits and whether originals are retrievable"
+  },
+  "binding": "retention-clamped",
+  "binding_note": "a clock, not a quota: bytes leave whether or not the client is finished with them",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,117 @@
+{
+  "topic": "storage",
+  "slug": "scribd",
+  "provider": "Scribd",
+  "url": "https://www.scribd.com",
+  "category": "document-hosting",
+  "free_tier": {
+    "stated": "100 MB max per document; no published account-level document or storage cap (\"you can continue to upload more documents ... as often as you like\"). Effectively per-record 100 MB x unlimited records.",
+    "unit": "unlimited",
+    "metered_on": "stored-bytes",
+    "source_url": "https://support.scribd.com/hc/en-us/articles/210134586-Troubleshooting-uploads-and-conversions",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "100 MB/file",
+    "bytes": 100000000,
+    "source_url": "https://support.scribd.com/hc/en-us/articles/210134586-Troubleshooting-uploads-and-conversions",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://support.scribd.com/hc/en-us/articles/210134586-Troubleshooting-uploads-and-conversions",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Not free-at-scale and not scriptable: downloads are gated by the uploader's setting and often by a Scribd subscription; there is no public direct-file URL, and pages are served as HTML viewer assets.",
+    "metered": false
+  },
+  "interface": [
+    "rclone"
+  ],
+  "interface_detail": "wrapper-only",
+  "tooling": "No working public API — the official client github.com/scribd/rscribd was archived in Oct 2019; community libs (JSCRIBD, rscribd) are dead against the current site. No rclone backend.",
+  "chaining": "100 MB/record x unlimited records is the right shape, but the chain needs a browser-driven uploader and the download side is paywalled, so it can store but not serve.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "100 MB/file",
+      "source": "https://support.scribd.com/hc/en-us/articles/210134586-Troubleshooting-uploads-and-conversions"
+    }
+  ],
+  "limits_note": "100 MB/file; upload requires a registered, in-good-standing account; uploader agreement grants Scribd rights to restrict access/download and to \"train machine learning ... models\" on content; conversion failures on large or layered PDFs.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Uploaded documents get converted and can fail conversion; download availability is controlled by Scribd policy, not the uploader, so retrieval can be revoked unilaterally.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://support.scribd.com/hc/en-us/articles/210134786-Uploading-a-document-to-Scribd",
+      "date": "2026-10-21",
+      "proved": "'Scribd supports multiple file formats, with a maximum size of 100MB'"
+    },
+    {
+      "url": "https://support.scribd.com/hc/en-us/articles/210134586-Troubleshooting-uploads-and-conversions",
+      "date": "2026-10-21",
+      "proved": "'Scribd supports documents up to 100 megabytes in size'"
+    },
+    {
+      "url": "https://support.scribd.com/hc/en-us/articles/210129466-Uploader-Agreement-for-Scribd-and-Slideshare",
+      "date": "2026-10-21",
+      "proved": "'We reserve the right to restrict access to view or to download your Content'"
+    },
+    {
+      "url": "https://scraperly.com/scrape/scribd",
+      "date": "2026-10-21",
+      "proved": "'Scribd's official API client library (github.com/scribd/rscribd) was archived by the owner on October 24, 2019'"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "100 MB max per document; no published account-level document or storage cap (\"you can continue to upload more documents ... as often as you like\"). Effectively per-record 100 MB x unlimited records.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H4-document-hosting.json",
+    "seed_area": "H/H4",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "H/H4"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "100 MB max per document; no published account-level document or storage cap (\"you can continue to upload more documents ... as often as you like\"). Effectively per-record 100 MB x unlimited records.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H4"
+    },
+    "target_document": "docs/storage/free/anonymous-hosts.md",
+    "document_section": "Document hosting",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "100 MB max per document; no published account-level document or storage cap (\"you can continue to upload more documents ... as often as you like\"). Effectively per-record 100 MB x unlimited records.",
+    "limits_verbatim": "100 MB/file; upload requires a registered, in-good-standing account; uploader agreement grants Scribd rights to restrict access/download and to \"train machine learning ... models\" on content; conversion failures on large or layered PDFs.",
+    "egress_verbatim": "Not free-at-scale and not scriptable: downloads are gated by the uploader's setting and often by a Scribd subscription; there is no public direct-file URL, and pages are served as HTML viewer assets.",
+    "chaining_verbatim": "100 MB/record x unlimited records is the right shape, but the chain needs a browser-driven uploader and the download side is paywalled, so it can store but not serve.",
+    "tooling_verbatim": "No working public API — the official client github.com/scribd/rscribd was archived in Oct 2019; community libs (JSCRIBD, rscribd) are dead against the current site. No rclone backend.",
+    "interface_verbatim": "wrapper-only",
+    "agent_focus": "Document and ebook platforms: Internet Archive texts, Open Library, Scribd, Issuu, Calameo, Google Books, HathiTrust, Anna's Archive, Z-Library, DocDroid, SlideShare — upload limits and whether originals are retrievable"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

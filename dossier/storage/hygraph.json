@@ -1,0 +1,96 @@
+{
+  "topic": "storage",
+  "slug": "hygraph",
+  "provider": "Hygraph",
+  "url": "https://hygraph.com",
+  "category": "paas",
+  "free_tier": {
+    "stated": "Unlimited asset storage on Hobby (free) with a 50 MB per-asset cap; 100 GB asset traffic/month",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://hygraph.com/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "50 MB per asset",
+    "bytes": 50000000,
+    "source_url": "https://hygraph.com/pricing",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://hygraph.com/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "100 GB asset traffic/month on Hobby, served from a global CDN (media.graphassets.com) with image transforms.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "graphql"
+  ],
+  "interface_detail": "graphql",
+  "tooling": "GraphQL Management API + REST asset upload endpoint, `@hygraph/management-sdk`, asset CDN URLs are public and transformable",
+  "chaining": "Asset storage is declared UNLIMITED and the only per-unit cap is 50 MB/file — this is the 'per-record unlimited x unlimited records' shape the brief flags as qualifying. Bandwidth (100 GB/mo) becomes the binding meter. Projects per account not published; the Hobby plan is per-project.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "50 MB per asset",
+      "source": "https://hygraph.com/pricing"
+    }
+  ],
+  "limits_note": "50 MB per asset (Free/Hobby; 200 MB on Growth). 100 GB/month traffic. 2 locales, 3 seats, 10 components — content-model limits, not storage limits. 'Unlimited' is bounded in practice by the 100 GB traffic meter, not by bytes stored.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "CDN-served, no expiry; the traffic cap is the failure mode (assets stop serving at 100 GB until reset).",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://hygraph.com/pricing",
+      "date": "2026-10-21",
+      "proved": "'Hobby $0 always ... Unlimited asset storage | 50MB per asset upload size (maximum)'; 'Asset Traffic 100 GB'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Unlimited asset storage on Hobby (free) with a 50 MB per-asset cap; 100 GB asset traffic/month",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G3-baas-databases.json",
+    "seed_area": "G/G3",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "G/G3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Backend-as-a-service and databases",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 1,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Unlimited asset storage on Hobby (free) with a 50 MB per-asset cap; 100 GB asset traffic/month",
+    "limits_verbatim": "50 MB per asset (Free/Hobby; 200 MB on Growth). 100 GB/month traffic. 2 locales, 3 seats, 10 components — content-model limits, not storage limits. 'Unlimited' is bounded in practice by the 100 GB traffic meter, not by bytes stored.",
+    "egress_verbatim": "100 GB asset traffic/month on Hobby, served from a global CDN (media.graphassets.com) with image transforms.",
+    "chaining_verbatim": "Asset storage is declared UNLIMITED and the only per-unit cap is 50 MB/file — this is the 'per-record unlimited x unlimited records' shape the brief flags as qualifying. Bandwidth (100 GB/mo) becomes the binding meter. Projects per account not published; the Hobby plan is per-project.",
+    "tooling_verbatim": "GraphQL Management API + REST asset upload endpoint, `@hygraph/management-sdk`, asset CDN URLs are public and transformable",
+    "interface_verbatim": "graphql",
+    "agent_focus": "Backend-as-a-service and database platforms where free storage quota is expressed per PROJECT/DATASET/CLUSTER and the units may multiply with free orgs — plus the headless-CMS class, where assets are CDN-served at no egress cost"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,96 @@
+{
+  "topic": "storage",
+  "slug": "modal-volumes",
+  "provider": "Modal Volumes",
+  "url": "https://modal.com/docs/guide/volumes",
+  "category": "paas",
+  "free_tier": {
+    "stated": "1 TiB of Volume storage free per workspace on the Starter plan ('Volumes include up to 1 TiB free'; 'Volumes $0.09 / GiB / mo *includes 1 TiB / mo free'), plus 1 TiB/month free network egress. This is the single largest clean free-tier number found in this slot.",
+    "unit": "TiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://modal.com/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://modal.com/pricing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "Files must be < 1 TiB each; Volumes v1 capped at 500,000 inodes (v2 removes the inode cap); concurrent commits should stay under ~5; billing is a daily snapshot of total storage and deletions keep billing for up to 4 days.",
+    "days": 4,
+    "source_url": "https://modal.com/pricing",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "1 TiB/month free egress on Starter (10 TiB on Team, 100 TiB on Enterprise); beyond that $0.04/GiB. Not CDN'd for public download — egress is measured per workspace.",
+    "metered": true,
+    "free_allowance": "1 TiB per month"
+  },
+  "interface": [
+    "s3",
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "modal Python SDK (`modal.Volume`, `modal volume put/get/ls` CLI), a real distributed POSIX-ish filesystem mounted into containers, 25 MB chunking + caching. Not S3, and no public HTTP object URL — you must go through the CLI or a small deployed app. Frontend download UI caps at 16 MB/file, so bulk extraction is CLI-only.",
+  "chaining": "1 TiB x unlimited free workspaces (each a separate account/org with its own Starter plan). Also separate storage objects: multiple Volumes per workspace, and Volumes are independent of the $30/month compute credit — the 1 TiB is a storage allowance, not compute spend, so idling costs nothing.",
+  "limits": [],
+  "limits_note": "Files must be < 1 TiB each; Volumes v1 capped at 500,000 inodes (v2 removes the inode cap); concurrent commits should stay under ~5; billing is a daily snapshot of total storage and deletions keep billing for up to 4 days.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: Starter plan ('Volumes include up to 1 TiB free'; 'Volumes $0.09 / GiB / mo *includes 1 TiB / mo free'), plus 1 TiB/month free network egress. This is the single largest clean free-",
+    "country": null
+  },
+  "reliability_note": "Very stable; the awkward part is retrieval latency and the absence of a public URL — this is storage you must front with your own service, so it fits the 'cold archive' workload better than 'serving'.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://modal.com/pricing",
+      "date": "2026-10-21",
+      "proved": "'Volumes $0.09 / GiB / mo *includes 1 TiB / mo free'; FAQ: 'Included usage applies to compute ... Volumes include up to 1 TiB free.'; plan table 'Included network egress 1 TiB / month' (Starter)"
+    },
+    {
+      "url": "https://modal.com/docs/guide/volumes",
+      "date": "2026-10-21",
+      "proved": "'While there's no file size limit for individual files in a volume, the frontend only supports downloading files up to 16 MB. For larger files, please use the CLI'; 'Files must be less than 1 TiB'; 'hard limit of 500,000 inodes ... per Volume' (v1)"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "1 TiB of Volume storage free per workspace on the Starter plan ('Volumes include up to 1 TiB free'; 'Volumes $0.09 / GiB / mo *includes 1 TiB / mo free'), plus 1 TiB/month free network egress. This is the single largest clean free-tier number found in this slot.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D4-ml-platforms.json",
+    "seed_area": "D/D4",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "D/D4"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/models-and-media.md",
+    "document_section": "ML platform datasets",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "1 TiB of Volume storage free per workspace on the Starter plan ('Volumes include up to 1 TiB free'; 'Volumes $0.09 / GiB / mo *includes 1 TiB / mo free'), plus 1 TiB/month free network egress. This is the single largest clean free-tier number found in this slot.",
+    "limits_verbatim": "Files must be < 1 TiB each; Volumes v1 capped at 500,000 inodes (v2 removes the inode cap); concurrent commits should stay under ~5; billing is a daily snapshot of total storage and deletions keep billing for up to 4 days.",
+    "egress_verbatim": "1 TiB/month free egress on Starter (10 TiB on Team, 100 TiB on Enterprise); beyond that $0.04/GiB. Not CDN'd for public download — egress is measured per workspace.",
+    "chaining_verbatim": "1 TiB x unlimited free workspaces (each a separate account/org with its own Starter plan). Also separate storage objects: multiple Volumes per workspace, and Volumes are independent of the $30/month compute credit — the 1 TiB is a storage allowance, not compute spend, so idling costs nothing.",
+    "tooling_verbatim": "modal Python SDK (`modal.Volume`, `modal volume put/get/ls` CLI), a real distributed POSIX-ish filesystem mounted into containers, 25 MB chunking + caching. Not S3, and no public HTTP object URL — you must go through the CLI or a small deployed app. Frontend download UI caps at 16 MB/file, so bulk extraction is CLI-only.",
+    "interface_verbatim": "rest",
+    "agent_focus": "ML/model/data platforms that are not Hugging Face and not ModelScope — the second tier of model and dataset hubs, judged as free bulk storage"
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

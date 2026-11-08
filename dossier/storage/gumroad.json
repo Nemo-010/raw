@@ -1,0 +1,124 @@
+{
+  "topic": "storage",
+  "slug": "gumroad",
+  "provider": "Gumroad",
+  "url": "https://gumroad.com",
+  "category": "Digital-product fulfilment — largest per-file number in the group",
+  "free_tier": {
+    "stated": "Own help centre: 'If you price your product at any number greater than $0.99, the largest single file that you can upload to a product is 20 GB in size... you can add as many files as you want to each product.' Free/$0 products are capped at 250 MB cumulative.",
+    "unit": "MB",
+    "metered_on": "unstated",
+    "source_url": "https://gumroad.com/help/article/289-file-size-limits-on-gumroad",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "largest single file that you can upload to a product is 20 GB",
+    "bytes": 20000000000,
+    "source_url": "https://gumroad.com/help/article/289-file-size-limits-on-gumroad",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://gumroad.com/help/article/289-file-size-limits-on-gumroad",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "CloudFront in front of S3 (confirmed in their open-source repo: CLOUDFRONT_* + FILE_DOWNLOAD_DISTRIBUTION_URL_PROD). No per-download quota published.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "Web + documented REST API (products, product_files); the codebase is open source (antiwork/gumroad), so limits are inspectable.",
+  "tooling": "REST API with access token; the repo exposes /attachments/... presigned paths via SignedUrlHelper.",
+  "chaining": "The $0.99 pricing gate is the mechanism: price at $1, get 20 GB/file, unlimited files per product, unlimited products. A $1 product that never sells still costs the seller ~nothing after fees. 20 GB x N files.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "largest single file that you can upload to a product is 20 GB",
+      "source": "https://gumroad.com/help/article/289-file-size-limits-on-gumroad"
+    }
+  ],
+  "limits_note": "per-object-cap 20 GB (products >$0.99) / 250 MB cumulative (priced $0). 'Download all' button only appears under 500 MB total content, but a single ZIP sidesteps that. Repo shows MAX_EPUB_READER_ARCHIVE_SIZE = 32 MB and thumbnail cap 5 MB — those are feature caps, not the product-file cap.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "an email address and a password, or a Google or X sign-in, on the signup form. No card and no phone number appear on that form, and uploading files needs no payout profile; withdrawing sales runs a Stripe identity check that asks for a date of birth, phone number and possibly a government ID.",
+    "country": null
+  },
+  "reliability_note": "Purchases require a payment method on the seller side to withdraw, but uploading does not. Download URLs are presigned CloudFront/S3 and short-lived, so there is no stable hot-link — archive/delivery tier only.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://gumroad.com/help/article/289-file-size-limits-on-gumroad",
+      "date": "2026-10-21",
+      "proved": "'20 GB File size limit' and '250 MB limit' sections, verbatim"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "raw.githubusercontent.com/antiwork/gumroad/main/app/models/product_file.rb — confirms S3/CloudFront storage classes and that 20 GB is not enforced in this model, i.e. it is a policy cap at the uploader"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "config/initializers/aws.rb + .env.example in the same repo — CLOUDFRONT_DOWNLOAD_DISTRIBUTION_URL_PROD, FILE_DOWNLOAD_DISTRIBUTION_URL_PROD, S3_BUCKET production 'gumroad'"
+    },
+    {
+      "url": "https://gumroad.com/",
+      "date": "2026-10-21",
+      "proved": "200, 128,717 B (live, not a dead host)"
+    },
+    {
+      "url": "https://gumroad.com/signup",
+      "date": "2026-11-01",
+      "proved": "the signup form offers a Google or X sign-in, or an email address and a password, and asks for nothing else",
+      "capture": "sha256:8bad6bea609c0f745e7565609629ce67a9960fb50010b2c0507525d9f7416469",
+      "quote": "Google X or EmailPassword"
+    },
+    {
+      "url": "https://gumroad.com/help/article/289-file-size-limits-on-gumroad",
+      "date": "2026-11-01",
+      "proved": "the 20 GB per-file ceiling for a priced product is unchanged",
+      "capture": "sha256:5b79619742235a4fbd709d7feec6e809374e6250ac0510cb4e2621d0cd7b9d89",
+      "quote": "If you price your product at any number greater than $0.99, the largest single file that you can upload to a product is 20 GB in size."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-01T18:05:08.102Z",
+  "notes": "Own help centre: 'If you price your product at any number greater than $0.99, the largest single file that you can upload to a product is 20 GB in size... you can add as many files as you want to each product.' Free/$0 products are capped at 250 MB cumulative.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H14-print-and-media-fulfilment.json",
+    "seed_area": "H/H14",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H14"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Print and media fulfilment",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Own help centre: 'If you price your product at any number greater than $0.99, the largest single file that you can upload to a product is 20 GB in size... you can add as many files as you want to each product.' Free/$0 products are capped at 250 MB cumulative.",
+    "limits_verbatim": "per-object-cap 20 GB (products >$0.99) / 250 MB cumulative (priced $0). 'Download all' button only appears under 500 MB total content, but a single ZIP sidesteps that. Repo shows MAX_EPUB_READER_ARCHIVE_SIZE = 32 MB and thumbnail cap 5 MB — those are feature caps, not the product-file cap.",
+    "egress_verbatim": "CloudFront in front of S3 (confirmed in their open-source repo: CLOUDFRONT_* + FILE_DOWNLOAD_DISTRIBUTION_URL_PROD). No per-download quota published.",
+    "chaining_verbatim": "The $0.99 pricing gate is the mechanism: price at $1, get 20 GB/file, unlimited files per product, unlimited products. A $1 product that never sells still costs the seller ~nothing after fees. 20 GB x N files.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "REST API with access token; the repo exposes /attachments/... presigned paths via SignedUrlHelper.",
+    "interface_verbatim": "Web + documented REST API (products, product_files); the codebase is open source (antiwork/gumroad), so limits are inspectable.",
+    "agent_focus": "Print-on-demand, media and fulfilment platforms that host your uploads permanently and serve them cheaply. The question for every candidate was NOT 'can I upload' (all of them accept uploads) but: does the platform serve my ORIGINAL bytes back, unsigned, indefinitely, from a CDN I can hot-link? POD image hosts (Redbubble/Printful/Printify/Society6/Threadless/Zazzle/Etsy) all re-encode, cap at 20-300 MB and gate the write behind account setup — they are inverted (tiny ingress, no egress). The value in this niche is the DIGITAL-PRODUCT fulfilment layer and the 3D-model repositories, which are the two places where arbitrary file types survive ingest at GB scale."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

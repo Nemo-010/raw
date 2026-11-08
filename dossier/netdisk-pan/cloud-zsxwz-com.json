@@ -1,0 +1,103 @@
+{
+  "topic": "netdisk-pan",
+  "slug": "cloud-zsxwz-com",
+  "provider": "姿势网盘",
+  "url": "https://cloud.zsxwz.com/",
+  "category": "public-instance",
+  "free_tier": {
+    "stated": "anonymous guest read of 2 root entries; no account and no payment",
+    "unit": "unlimited",
+    "metered_on": "none",
+    "source_url": "https://cloud.zsxwz.com/",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "the upstream provider's cap; the instance publishes none",
+    "source_url": "https://cloud.zsxwz.com/"
+  },
+  "retention": {
+    "stated": "until the operator's account or tenant fails; no TTL and no notice",
+    "days": null,
+    "source_url": "https://cloud.zsxwz.com/"
+  },
+  "egress": {
+    "terms": "served through nginx/1.22.1; the reader pays nothing",
+    "metered": false,
+    "source_url": "https://cloud.zsxwz.com/"
+  },
+  "interface": [
+    "rest",
+    "webdav"
+  ],
+  "interface_detail": "rest",
+  "tooling": "the AList/OpenList REST surface (/api/fs/list, /api/fs/get, /api/fs/put) and the WebDAV endpoint at /dav; the rclone alist backend speaks the REST",
+  "chaining": "a fetch substrate: point a cache and two mirrors at it, never a write tier Read-only with negligible volume. Listed for completeness of the census rather than for anything it holds",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "PUT denied at the guest role",
+      "source": "probe:https://cloud.zsxwz.com/api/fs/put"
+    }
+  ],
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "no registration; /api/me returns a guest session",
+    "country": null
+  },
+  "reliability_note": "2 root entries on AList v4.1.7, built 2025-11. Small, alive, read-only.",
+  "confidence": "measured",
+  "evidence": [
+    {
+      "url": "probe:https://cloud.zsxwz.com/api/public/settings",
+      "date": "2026-10-22",
+      "proved": "HTTP 200, JSON carrying a code field, site_title '姿势网盘'"
+    },
+    {
+      "url": "probe:https://cloud.zsxwz.com/api/fs/list",
+      "date": "2026-10-22",
+      "proved": "anonymous POST /api/fs/list on / returned code 200 with 2 root entries; write:false, write_content_bypass:None, provider:unknown"
+    },
+    {
+      "url": "probe:https://cloud.zsxwz.com/api/fs/put",
+      "date": "2026-10-22",
+      "proved": "the zero-byte oracle (PUT at an existing directory with Overwrite:false) returned code 403 with message 'permission denied' inside HTTP 200, so the write permission failed and nothing was written"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-22T03:37:00.574Z",
+  "binding": "write-gated",
+  "notes": "2 root entries on AList v4.1.7, built 2025-11. Small, alive, read-only.",
+  "history": [],
+  "extras": {
+    "access_mode": "public-instance",
+    "read_capability": "full",
+    "write_capability": "permission-denied",
+    "upstream_provider": "unknown",
+    "fronting_cdn": "nginx/1.22.1",
+    "advertised_write_flag": false,
+    "write_content_bypass": null,
+    "permission_bitmask": "0",
+    "base_path": "/",
+    "listing_sha256": "c2e27863",
+    "first_seen": "2024-01-20",
+    "first_seen_source": "kuhehe.github.io/20240120224502, whose page was edited in place until 2025-06-17",
+    "last_verified_alive": "2026-10-22T03:37:00.574Z",
+    "last_verified_dead": null,
+    "consecutive_failures": 0,
+    "aliases": [
+      "姿势网盘 (cloud.zsxwz.com) — public AList, OneDrive-backed"
+    ],
+    "seed_facts": {
+      "quota_verbatim": "No stated quota. Two root directories only, a thin instance",
+      "per_object_cap_verbatim": "Not applicable",
+      "chaining_verbatim": "Read-only with negligible volume. Listed for completeness of the census rather than for anything it holds",
+      "reliability_verbatim": "Alive with minimal content. The listing reports write=false, which is the honest case and the minority in this population",
+      "tooling_verbatim": "the AList v4.1.7 REST API, anonymous",
+      "binding_note_verbatim": "Two directories and no write. Nothing here reaches any filter, and it is recorded so the census is complete rather than because it is useful.",
+      "deferred_name": "姿势网盘 (cloud.zsxwz.com) — public AList, OneDrive-backed",
+      "folded_from": "dossier/netdisk-pan/public-alist-onedrive-backed.json, written by this pass and folded here"
+    }
+  },
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

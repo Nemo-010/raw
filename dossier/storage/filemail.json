@@ -1,0 +1,122 @@
+{
+  "topic": "storage",
+  "slug": "filemail",
+  "provider": "Filemail",
+  "url": "https://www.filemail.com",
+  "category": "anonymous-dump",
+  "free_tier": {
+    "stated": "5 GB per transfer with no registration; 2 transfers per 24 hours; 7-day retention. Paid: Pro 250 GB/transfer, Business/Enterprise 'unlimited file size' — and only Business/Enterprise can pick 'Forever' retention.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://support.filemail.com/en/articles/4103694-free-file-sharing-service",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap: 5 GB",
+    "bytes": 5000000000,
+    "source_url": "https://support.filemail.com/en/articles/4103694-free-file-sharing-service",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "5 GB per transfer with no registration; 2 transfers per 24 hours; 7-day retention",
+    "days": 1,
+    "source_url": "https://support.filemail.com/en/articles/4103694-free-file-sharing-service",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "not metered on free; desktop apps recommended for speed.",
+    "metered": true
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Mature REST API 2.0 at api-public.filemail.com with x-api-key + x-api-version headers; real docs at docs.filemail.com. But 'only Personal, Pro, Business and Enterprise accounts have access to our API' — the free/no-account tier has NO API.",
+  "chaining": "5 GB x 2 transfers/day x unlimited identities — but no programmatic path on the free tier, so every unit needs a human and an account. The one genuinely interesting hook is 'Store Files Forever', which is Business/Enterprise only and consumes the account's paid storage.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "transfer, Business/Enterprise 'unlimited file size' — and only Business/Enterprise can pick 'Forever",
+      "source": "https://support.filemail.com/en/articles/4103694-free-file-sharing-service"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "Retention: 7 days",
+      "source": "https://support.filemail.com/en/articles/4103694-free-file-sharing-service"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap: 5 GB",
+      "source": "https://support.filemail.com/en/articles/4103694-free-file-sharing-service"
+    }
+  ],
+  "limits_note": "per-object-cap: 5 GB free / 250 GB Pro / unlimited Business. Retention: 7 days free; 'Forever' requires Business or Enterprise. request-rate: API is 20 requests per 10 seconds plus a per-plan daily leaky-bucket quota (429 on exceed). pull-count: not capped on free.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ; 'Forever' requires Business or Enterprise. request-rate: API is 20 requests per 10 seconds plus a per-plan daily leaky-bucket quota (429 on exceed). pull-count: not capped on free.",
+    "country": null
+  },
+  "reliability_note": "Two independent caps stack on the free tier — 5 GB AND 2 transfers/24h — and the service is geo-restricted ('the free service is not available in certain regions'). The free tier is not a storage candidate at all.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://support.filemail.com/en/articles/4103694-free-file-sharing-service",
+      "date": "2026-10-21",
+      "proved": "'5 GB ... 2 transfers within a 24-hour period ... stored for a maximum 7 days'"
+    },
+    {
+      "url": "https://docs.filemail.com/filemail-api-2.0/getting-started",
+      "date": "2026-10-21",
+      "proved": "'only Personal, Pro, Business and Enterprise accounts have access to our API'; '20 requests every 10 seconds'"
+    },
+    {
+      "url": "https://support.filemail.com/en/articles/1668572-store-files-forever",
+      "date": "2026-10-21",
+      "proved": "'When you have a Filemail Business or Enterprise account you can keep your files available forever'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "5 GB per transfer with no registration; 2 transfers per 24 hours; 7-day retention. Paid: Pro 250 GB/transfer, Business/Enterprise 'unlimited file size' — and only Business/Enterprise can pick 'Forever' retention.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E8-transfer-services.json",
+    "seed_area": "E/E8",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "E/E8"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "retention",
+      "why": "5 GB per transfer with no registration; 2 transfers per 24 hours; 7-day retention. Paid: Pro 250 GB/transfer, Business/Enterprise 'unlimited file size' — and only Business/Enterprise can pick 'Forever' retention.",
+      "retry_when": "if the retention model changes from a clock to indefinite",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E8"
+    },
+    "target_document": "docs/storage/free/transfer-services.md",
+    "document_section": "Transfer services",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "5 GB per transfer with no registration; 2 transfers per 24 hours; 7-day retention. Paid: Pro 250 GB/transfer, Business/Enterprise 'unlimited file size' — and only Business/Enterprise can pick 'Forever' retention.",
+    "limits_verbatim": "per-object-cap: 5 GB free / 250 GB Pro / unlimited Business. Retention: 7 days free; 'Forever' requires Business or Enterprise. request-rate: API is 20 requests per 10 seconds plus a per-plan daily leaky-bucket quota (429 on exceed). pull-count: not capped on free.",
+    "egress_verbatim": "not metered on free; desktop apps recommended for speed.",
+    "chaining_verbatim": "5 GB x 2 transfers/day x unlimited identities — but no programmatic path on the free tier, so every unit needs a human and an account. The one genuinely interesting hook is 'Store Files Forever', which is Business/Enterprise only and consumes the account's paid storage.",
+    "tooling_verbatim": "Mature REST API 2.0 at api-public.filemail.com with x-api-key + x-api-version headers; real docs at docs.filemail.com. But 'only Personal, Pro, Business and Enterprise accounts have access to our API' — the free/no-account tier has NO API.",
+    "interface_verbatim": "rest",
+    "agent_focus": "transfer services repurposed as storage — per-transfer caps, link persistence, plain-GET retrievability, and whether 'transfer' becomes 'store'"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

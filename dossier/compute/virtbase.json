@@ -1,0 +1,222 @@
+{
+  "topic": "compute",
+  "slug": "virtbase",
+  "provider": "Virtbase",
+  "url": "https://virtbase.com/",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "EUR 3.99/month for EPYC-01 in Eygelshoven, Netherlands: 1 vCore on an AMD EPYC with host CPU passthrough, 4 GB RAM, 50 GB NVMe, a routed IPv6 /64 plus one IPv4, unmetered traffic at 300 Mbit/s, no setup fee. EPYC-02 is EUR 7.99/month for 2 vCores, 8 GB and 100 GB at 600 Mbit/s; EPYC-03 is EUR 15.20 for 4 vCores, 16 GB and 150 GB at 1 Gbit/s; the range runs to EPYC-08 at EUR 53.90 for 12 vCores, 64 GB, 300 GB and a 10 Gbit/s port. Prices include VAT where it applies and are billed monthly in EUR.",
+    "unit": "GiB",
+    "metered_on": "wall-clock",
+    "source_url": "https://virtbase.com/",
+    "read_on": "2026-10-22",
+    "notes": "none"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://virtbase.com/",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://virtbase.com/",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "unmetered: no traffic limit; the uplink is provided according to the fair use principle and bandwidth may be temporarily throttled in the event of disproportionately high sustained usage",
+    "metered": false,
+    "free_allowance": "unmetered at 300 Mbit/s on EPYC-01",
+    "price_per_tb": null,
+    "source_url": "https://virtbase.com/"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "unusually well documented for this lane: a public REST API of 48 endpoints with scoped keys, a Discord bot for power actions, backups and firewall rules, an AGPL-3.0 control panel published at github.com/virtbase/virtbase, a public status page and a looking glass",
+  "chaining": "EUR 3.99 for 4 GB with no identity document and no phone number is the cheapest route in this lane to a machine that can actually be registered for, and the 48-endpoint API plus a Discord control plane makes it the one record here that a script can drive end to end without a browser; 300 Mbit/s caps what it can serve, so it is a control node or a small worker and not a mirror",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "traffic is unmetered: no monthly volume allowance and no overage billing; the listed port speed is a hard rate limit at the hypervisor NIC, and the FAQ adds that bandwidth may be temporarily throttled in the event of disproportionately high sustained usage. So 300 Mbit/s on the entry plan is the wall, and a byte counter is not.",
+      "source": "https://virtbase.com/"
+    }
+  ],
+  "limits_note": "traffic is unmetered: no monthly volume allowance and no overage billing; the listed port speed is a hard rate limit at the hypervisor NIC, and the FAQ adds that bandwidth may be temporarily throttled in the event of disproportionately high sustained usage. So 300 Mbit/s on the entry plan is the wall, and a byte counter is not.",
+  "binding": "per-ip-shaping",
+  "binding_note": "traffic is unmetered: no monthly volume allowance and no overage billing; the listed port speed is a hard rate limit at the hypervisor NIC, and the FAQ adds that bandwidth may be temporarily throttled in the event of disproportionately high sustained usage. So 300 Mbit/s on the entry plan is the wall, and a byte counter is not.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "the register page asks for an email address and nothing else; no card, phone or ID field",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://virtbase.com/",
+      "date": "2026-10-22",
+      "proved": "the fetch returned upstream_status 403 with a provider-side snapshot of the page, which quotes: 'EPYC-01', 'EUR 3.99 per month', '1 vCore', '4GB RAM', '50GB NVMe SSD', '1 IPv4 + IPv6 /64 Subnet', '0.3Gb/s Uplink', 'Unlimited traffic', 'SkyLink Data Center, NL'; the same block pattern repeats through 'EPYC-08' at 'EUR 53.90 per month'"
+    },
+    {
+      "url": "https://lowendbox.com/blog/virtbase-the-eu-provider-with-an-open-source-control-billing-panel-awesome-deals-for-eu-customers-only/",
+      "date": "2026-10-22",
+      "proved": "third-party offer post, published 2026-10-16, quoted from its table: 'EPYC-01 4 GB RAM 1 vCore AMD EPYC (host CPU passthrough) 50 GB NVMe SSD Unmetered traffic at 300 Mbit/s 1 x IPv4 + routed IPv6 /64 EUR 3.99/month'; provider quote: 'Traffic is unmetered: the listed port speed is a hard rate limit applied at the hypervisor NIC, so there is no monthly volume allowance, no overage billing and no post-quota throttle'; 'No KYC, no identity documents and no phone number at any point'"
+    },
+    {
+      "url": "https://lowendbox.com/blog/virtbase-the-eu-provider-with-an-open-source-control-billing-panel-awesome-deals-for-eu-customers-only/",
+      "date": "2026-10-22",
+      "proved": "the post states the eligibility wall in its own numbered list: 'They can currently only bill customers in the EU-27. Their checkout and invoicing are wired for EU VAT only, so a US, UK, Swiss or Canadian buyer cannot complete an order today'"
+    },
+    {
+      "url": "https://virtbase.com/en/checkout/pck_1KDXCGQDKT1MECV86BWER517A",
+      "date": "2026-11-07",
+      "proved": "the checkout cart prices EPYC-01 at EUR 3.99 per month",
+      "capture": "sha256:15b54729fc9f87853f50600f9c514ebf03c2971def654bb01fcfee5d9afa7208",
+      "quote": "€3.99per month"
+    },
+    {
+      "url": "https://virtbase.com/en/checkout/pck_1KDXCGQDKT1MECV86BWER517A",
+      "date": "2026-11-07",
+      "proved": "the cart prints only a per-month figure",
+      "capture": "sha256:15b54729fc9f87853f50600f9c514ebf03c2971def654bb01fcfee5d9afa7208",
+      "quote": "€3.99per month"
+    },
+    {
+      "url": "https://virtbase.com/en/checkout/pck_1KDXCGQDKT1MECV86BWER517A",
+      "date": "2026-11-07",
+      "proved": "the cart's price line carries no renewal figure",
+      "capture": "sha256:15b54729fc9f87853f50600f9c514ebf03c2971def654bb01fcfee5d9afa7208",
+      "quote": "€3.99per month"
+    },
+    {
+      "url": "https://virtbase.com/en/checkout/pck_1KDXCGQDKT1MECV86BWER517A",
+      "date": "2026-11-07",
+      "proved": "the cart states the VAT rule; the price line states the monthly term",
+      "capture": "sha256:15b54729fc9f87853f50600f9c514ebf03c2971def654bb01fcfee5d9afa7208",
+      "quote": "All prices include statutory VAT, if applicable."
+    },
+    {
+      "url": "https://virtbase.com/",
+      "date": "2026-11-07",
+      "proved": "the structured data marks the plans in stock",
+      "capture": "sha256:afeb8cfc593350318b22cc80ee5b428fd1bed73bcae48c5ebd6d23d5a9c3a678",
+      "quote": "\"availability\":\"https://schema.org/InStock\""
+    },
+    {
+      "url": "https://virtbase.com/en/checkout/pck_1KDXCGQDKT1MECV86BWER517A",
+      "date": "2026-11-07",
+      "proved": "the cart prints the price before authentication",
+      "capture": "sha256:15b54729fc9f87853f50600f9c514ebf03c2971def654bb01fcfee5d9afa7208",
+      "quote": "Authentication required"
+    },
+    {
+      "url": "https://virtbase.com/en/checkout/pck_1KDXCGQDKT1MECV86BWER517B",
+      "date": "2026-11-07",
+      "proved": "the checkout cart prices this plan per month before any account (read 2026-11-07)",
+      "capture": "sha256:e28f9fd281c98ca956fb6129dfda3090fdfb715de570db0a8ef86c55aa6f7fe5",
+      "quote": "€7.99per month"
+    },
+    {
+      "url": "https://virtbase.com/en/checkout/pck_1KDXCGQDKT1MECV86BWER517C",
+      "date": "2026-11-07",
+      "proved": "the checkout cart prices this plan per month before any account (read 2026-11-07)",
+      "capture": "sha256:fc5e4de02194c5429539bbeed7ec794314709efe587b25ddcfc6981886a95549",
+      "quote": "€15.20per month"
+    },
+    {
+      "url": "https://virtbase.com/en/checkout/pck_1KDXCGQDKT1MECV86BWER517D",
+      "date": "2026-11-07",
+      "proved": "the checkout cart prices this plan per month before any account (read 2026-11-07)",
+      "capture": "sha256:2c72ef3290f3ee9e097c6e711d0276456533dca70e12023feadd30ef83176ac1",
+      "quote": "€18.99per month"
+    },
+    {
+      "url": "https://virtbase.com/en/checkout/pck_1KDXCGQDKT1MECV86BWER517E",
+      "date": "2026-11-07",
+      "proved": "the checkout cart prices this plan per month before any account (read 2026-11-07)",
+      "capture": "sha256:41b2a0632160d4e2142ea0fa7fab81edef6963a17f316ce3f7312646e2038b0a",
+      "quote": "€30.30per month"
+    },
+    {
+      "url": "https://virtbase.com/en/checkout/pck_1KDXCGQDKT1MECV86BWER517F",
+      "date": "2026-11-07",
+      "proved": "the checkout cart prices this plan per month before any account (read 2026-11-07)",
+      "capture": "sha256:610750034b9e7335b40427217fa67b47e76a3bd080c24d76369fb34f45d3f071",
+      "quote": "€39.59per month"
+    },
+    {
+      "url": "https://virtbase.com/en/checkout/pck_1KDXCGQDKT1MECV86BWER517G",
+      "date": "2026-11-07",
+      "proved": "the checkout cart prices this plan per month before any account (read 2026-11-07)",
+      "capture": "sha256:536253a612f9c74748e75784eeef462df91cfcfa6338822176e570080ef99a0d",
+      "quote": "€46.79per month"
+    },
+    {
+      "url": "https://virtbase.com/en/checkout/pck_1KDXCGQDKT1MECV86BWER517H",
+      "date": "2026-11-07",
+      "proved": "the checkout cart prices this plan per month before any account (read 2026-11-07)",
+      "capture": "sha256:7c5f1a4f7e614a75b044d49ec800d32516027ea04e323df937a663145e3dbb62",
+      "quote": "€53.90per month"
+    },
+    {
+      "url": "https://app.virtbase.com/register",
+      "date": "2026-11-07",
+      "proved": "the register page's only field, read 2026-11-07",
+      "capture": "sha256:5b48c5dd8a6ce2cbeb7b3d98e608f6bb4f1862617505de661515fcd81cd003fd",
+      "quote": "Create your Virtbase account\n\nEmail\n\nor"
+    },
+    {
+      "url": "https://virtbase.com/",
+      "date": "2026-11-07",
+      "proved": "the FAQ states the fair-use throttle the record's terms did not have",
+      "capture": "sha256:efaaacfc5d78275b8b42e5be096d6305a6b2f5253f97bd320e52e4da673fedd6",
+      "quote": "No, there is no traffic limit for our servers. The uplink is provided according to the fair use principle. However, bandwidth may be temporarily throttled in the event of disproportionately high sustained usage."
+    },
+    {
+      "url": "https://virtbase.com/",
+      "date": "2026-11-07",
+      "proved": "the FAQ states the fair-use throttle",
+      "capture": "sha256:efaaacfc5d78275b8b42e5be096d6305a6b2f5253f97bd320e52e4da673fedd6",
+      "quote": "No, there is no traffic limit for our servers. The uplink is provided according to the fair use principle. However, bandwidth may be temporarily throttled in the event of disproportionately high sustained usage."
+    },
+    {
+      "url": "https://virtbase.com/",
+      "date": "2026-11-07",
+      "proved": "the homepage table's EPYC-01 row, unchanged on 2026-11-07",
+      "capture": "sha256:efaaacfc5d78275b8b42e5be096d6305a6b2f5253f97bd320e52e4da673fedd6",
+      "quote": "| EPYC-01 | 1 | 4GB | 50GB | €3.99 |"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-07T06:08:49.243Z",
+  "notes": "Not in dossier/compute (searched: virtbase, no record). The vendor page returned 403 to this lane; the plan figures quoted from it come from the provider-side snapshot the reader returned alongside the refusal, and they agree to the cent with the offer post's table, which is why the record is documented rather than reported. The 403 is recorded rather than retried: a second attempt at the same path would not establish anything the first did not. would-settle: whether EU-27-only billing is still true, because that single line decides whether a purchase is possible at all, and the record is the one in this lane whose reachability rests on a jurisdiction rather than on capacity.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "Virtbase",
+      "class": null,
+      "category_as_written": "cloud VM",
+      "free_tier_kind": "none",
+      "shape": {
+        "vcpu": 1,
+        "ram_gib": 4,
+        "disk_gib": 50,
+        "gpu_class": null,
+        "gpu_count": null
+      },
+      "seen_routes": null,
+      "agents": [
+        "lowendbox"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "monthly_price": "EUR 3.99 per month for EPYC-01, priced identically on the page and in the checkout cart",
+    "annual_price": "not published: the checkout prints only a monthly price",
+    "renewal_price": "not published: no page read prints a renewal price",
+    "billing_term": "monthly; 'All prices include statutory VAT, if applicable.'; cancellation takes effect at the end of the selected billing period",
+    "stock": "in stock: the homepage's structured data marks all eight plans 'https://schema.org/InStock' (16 occurrences, 0 OutOfStock) and every checkout renders",
+    "cart_price": "EUR 3.99 per month for EPYC-01 read from the checkout before any account; the cart asks for an account only to continue"
+  }
+}

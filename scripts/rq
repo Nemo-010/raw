@@ -1,0 +1,8 @@
+#!/bin/sh
+# rq: the research harness (docs/research-protocol.md). Plain commands; no model is called from here.
+# $PYTHON when it is set (scripts/rq capture passes its own), else python3 when the shell finds one that is not
+# the Windows Store stub, else python. No Python is started to test one: every start costs a process.
+d="$(dirname "$0")/research"
+if [ -n "${PYTHON:-}" ]; then exec "$PYTHON" "$d/rq.py" "$@"; fi
+p=$(command -v python3 2>/dev/null) && case "$p" in */WindowsApps/*) ;; *) exec python3 "$d/rq.py" "$@" ;; esac
+exec python "$d/rq.py" "$@"

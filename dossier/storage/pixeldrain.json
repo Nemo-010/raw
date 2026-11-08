@@ -1,0 +1,121 @@
+{
+  "topic": "storage",
+  "slug": "pixeldrain",
+  "provider": "Pixeldrain",
+  "url": "https://pixeldrain.com",
+  "category": "anonymous-dump",
+  "free_tier": {
+    "stated": "Free plan: storage 'No limit' for regular uploads (2 TB limit only on the paid filesystem product). Pro: no limit; Prepaid: EUR 4/TB/month metered.",
+    "unit": "TB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://pixeldrain.com/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://pixeldrain.com/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "Files expire 60 days after last download; a download only counts if >10% of the file was transferred in one request, and the timer only updates once per 24h",
+    "days": 60,
+    "source_url": "https://pixeldrain.com/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free egress capped at 6 GB/day per IP address (sliding 24h window, IP-bound even when logged in); over the cap the speed drops to 1 MiB/s and max 3 concurrent downloads. Pro: 4 TB per 30 days. Prepaid: EUR 1/TB metered. So free egress is metered, not unusable — 6 GB/day x N IPs.",
+    "metered": false,
+    "price_per_tb": "EUR 1/TB"
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Full REST API at /api with HTTP Basic (api key as password). rclone has no official backend; the API is simple enough that wrappers abound (Atlas electron/downloads/hosts/pixeldrain.js). PUT https://pixeldrain.com/api/file/ with -u :APIKEY.",
+  "chaining": "API keys are free and per-account, but the real multiplier is IP: the 6 GB/day download cap is per IP, so egress scales with egress IPs (proxies/CF Workers) not accounts. Storage itself is 'No limit' on free, which is the interesting half.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "6 GB/day",
+      "source": "https://pixeldrain.com/"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "1 MiB/s",
+      "source": "https://pixeldrain.com/"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "expire 60 days",
+      "source": "https://pixeldrain.com/"
+    }
+  ],
+  "limits_note": "Free uploads require an API key (anonymous server-side PUT returned 401 authentication_required). 6 GB/day/IP download cap; 1 MiB/s throttle and 3 concurrent downloads after that. Files expire 60 days after last download; a download only counts if >10% of the file was transferred in one request, and the timer only updates once per 24h. Hotlinking not supported on free.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: tier unless fronted by something that fans out across IPs. API keys are free and per-account, but the real multiplier is IP: the 6 GB/day download cap is per IP, so egress scales wit",
+    "country": null
+  },
+  "reliability_note": "Operator states plainly that free-plan 'unlimited' is not for storage: 'If you are (ab)using pixeldrain for free storage, you should not be surprised when the rules change at some point and all your stuff suddenly disappears.' The 6 GB/day free cap and 10%-of-file rule make this a poor serving tier unless fronted by something that fans out across IPs.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://pixeldrain.com/",
+      "date": "2026-10-21",
+      "proved": "pricing table: Free 'Storage: No limit'; 'Egress transfer limit - 6 GB per day ... linked to your IP address'; 'When the download limit is exceeded the download speed is reduced to 1 MiB/s. You can have at most three concurrent downloads'"
+    },
+    {
+      "url": "https://pixeldrain.com/about",
+      "date": "2026-10-21",
+      "proved": "'Files will be removed if they have not been accessed for 60 days ... This only happens when someone downloads more than 10% of the whole file in a single request'"
+    },
+    {
+      "url": "https://pixeldrain.com/api",
+      "date": "2026-10-21",
+      "proved": "'All methods which create, modify or delete a resource require an API key'; base URL /api, Basic auth"
+    },
+    {
+      "url": "https://pixeldrain.com/api/file/",
+      "date": "2026-10-21",
+      "proved": "probe: PUT (no key) -> 401 {\"success\":false,\"value\":\"authentication_required\"}"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Free plan: storage 'No limit' for regular uploads (2 TB limit only on the paid filesystem product). Pro: no limit; Prepaid: EUR 4/TB/month metered.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E2-anon-hosts.json",
+    "seed_area": "E/E2",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "E/E2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/anonymous-hosts.md",
+    "document_section": "Anonymous hosts with durable retention",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Free plan: storage 'No limit' for regular uploads (2 TB limit only on the paid filesystem product). Pro: no limit; Prepaid: EUR 4/TB/month metered.",
+    "limits_verbatim": "Free uploads require an API key (anonymous server-side PUT returned 401 authentication_required). 6 GB/day/IP download cap; 1 MiB/s throttle and 3 concurrent downloads after that. Files expire 60 days after last download; a download only counts if >10% of the file was transferred in one request, and the timer only updates once per 24h. Hotlinking not supported on free.",
+    "egress_verbatim": "Free egress capped at 6 GB/day per IP address (sliding 24h window, IP-bound even when logged in); over the cap the speed drops to 1 MiB/s and max 3 concurrent downloads. Pro: 4 TB per 30 days. Prepaid: EUR 1/TB metered. So free egress is metered, not unusable — 6 GB/day x N IPs.",
+    "chaining_verbatim": "API keys are free and per-account, but the real multiplier is IP: the 6 GB/day download cap is per IP, so egress scales with egress IPs (proxies/CF Workers) not accounts. Storage itself is 'No limit' on free, which is the interesting half.",
+    "tooling_verbatim": "Full REST API at /api with HTTP Basic (api key as password). rclone has no official backend; the API is simple enough that wrappers abound (Atlas electron/downloads/hosts/pixeldrain.js). PUT https://pixeldrain.com/api/file/ with -u :APIKEY.",
+    "interface_verbatim": "rest",
+    "agent_focus": "big anonymous file hosts, with mandatory Buzzheavier deep dive on its published free-tier-stacking architecture"
+  },
+  "binding": "retention-clamped",
+  "binding_note": "a clock, not a quota: bytes leave whether or not the client is finished with them",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,14 @@
+{
+ "id": "20261101-1811-verify-crawler-scraper-efed-u18-q02",
+ "kind": "verify",
+ "topic": "crawler-scraper",
+ "question": "How far back does the keyless search of crawler-scraper/urlscan reach? The API changelog at https://docs.urlscan.io/changelog (entry of October 1, 2026, Search history limit) says searches by unauthenticated requests and free users may be limited to recent scan history, and adds search_date_limit_days to the Search API response as the maximum number of days the search will go back. The record has no limits[] row of kind retention-clamped for it, and retention.days is null.",
+ "why": "The value of search_date_limit_days is unverified: it is in the body of a keyless search answer, which a probe of https://urlscan.io/api/v1/search/?q=domain:example.com&size=1 saved with --save-body would show, and a verify unit would add the row and weigh the chaining note (a stored scan for a page that no archive holds) against it. The keyless quotas answer of 2026-11-01 also carries maxRetentionPeriodDays 7; what that field bounds is unread (the pricing page ties private scan deletion to a scan retention period without a number).",
+ "scope": {
+  "rids": [
+   "crawler-scraper/urlscan"
+  ]
+ },
+ "origin": "20261101-1811-verify-crawler-scraper-efed/u18",
+ "created": "2026-11-02T01:02:38Z"
+}

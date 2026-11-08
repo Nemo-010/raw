@@ -1,0 +1,173 @@
+{
+  "topic": "compute",
+  "slug": "rarecloud",
+  "provider": "RareCloud",
+  "url": "https://rarecloud.io/kvm-vps/",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "The vendor's pricing feed lists Micro KVM at EUR 19.50 a year (EUR 1.63 a month by arithmetic), EUR 38.00 every two years and EUR 56.00 every three years (EUR 1.56 a month, the page's 'From EUR 1.56/mo on a 3-year plan'), with no monthly cycle: 1 vCPU, 768 MB RAM, 15 GB NVMe, 1 TB of bandwidth a month on a 1 Gbps port, 1x IPv4 and a /112 IPv6 subnet. The page lists 11 locations.",
+    "unit": "GiB",
+    "metered_on": "wall-clock",
+    "source_url": "https://rarecloud.io/kvm-vps/",
+    "read_on": "2026-10-22",
+    "notes": "none"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://rarecloud.io/kvm-vps/",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://rarecloud.io/kvm-vps/",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "1024 GB a month on the Micro KVM row and 4096 GB on the larger plans the tracker lists; no overage price was published on the pages read",
+    "metered": true,
+    "free_allowance": "1024 GB/month on the Micro KVM row",
+    "price_per_tb": null,
+    "source_url": "https://vpspricetracker.com/provider/RareCloud/vps"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "console at console.rarecloud.io with full root, custom ISO and instant activation; the site links to an API reference at console.rarecloud.io/docs/api/ and serves an llms.txt (link read, API contents not read); a custom-size deploy page lets CPU, RAM, storage and bandwidth be picked separately",
+  "chaining": "EUR 19.50 a year for a 768 MB KVM box in three US cities is the cheapest US presence in this lane, and the per-resource custom deploy page is the only one here that lets RAM be bought without disk. It is a DNS, monitoring or scheduler box: 1024 GB a month is roughly 34 GB a day, which is a narrow crawl and nothing like a serving path.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "1024 GB a month on the Micro KVM row, which is about 34 GB a day by arithmetic. On a 15 GB disk the transfer allowance is the tighter of the two limits.",
+      "source": "https://rarecloud.io/kvm-vps/"
+    }
+  ],
+  "limits_note": "1024 GB a month on the Micro KVM row, which is about 34 GB a day by arithmetic. On a 15 GB disk the transfer allowance is the tighter of the two limits.",
+  "binding": "volume-quota",
+  "binding_note": "1024 GB a month on the Micro KVM row, which is about 34 GB a day by arithmetic. On a 15 GB disk the transfer allowance is the tighter of the two limits.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "not read: the signup page was not fetched in this lane",
+    "country": null
+  },
+  "reliability_note": "the vendor terms guarantee 99.9 percent uptime with a partial refund of that month's fee claimable through a billing ticket, and a 14-day refund window, both quoted from the FAQ; no incident was observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://vpspricetracker.com/provider/RareCloud/vps",
+      "date": "2026-10-22",
+      "proved": "cheapest row: 'EUR 1.63 / month', 'yearly Service', '1 Intel Cores (shared)', '768 MB RAM', '15 GB NVMe', '1,024 GB/month bandwidth', '1 Gbps port speed', 'IPv4 + IPv6', Dallas Texas; header 'starting at EUR 19.50 per year'"
+    },
+    {
+      "url": "https://rarecloud.io/kvm-vps/",
+      "date": "2026-10-22",
+      "proved": "page quoted: 'From EUR 1.56/mo on a 3-year plan', 'full root and your own kernel', 'any Linux or your own ISO', 'instant activation'; the plan table itself showed only 'Loading pricing...'"
+    },
+    {
+      "url": "https://rarecloud.io/kvm-vps/",
+      "date": "2026-10-22",
+      "proved": "FAQ quoted: 'In 11 locations: New York, Dallas, Phoenix and Silicon Valley (US); London (UK); The Hague (NL); Frankfurt (DE); Timisoara and Constanta (RO); Hong Kong; Tokyo', and 'Our terms guarantee 99.9% uptime. If we fall below it, you can ask for a partial refund'"
+    },
+    {
+      "url": "https://rarecloud.io/data/whmcs-pricing.json",
+      "date": "2026-11-07",
+      "proved": "the vendor's WHMCS pricing feed lists Micro KVM (id 6) at EUR 19.50 annually, EUR 38.00 biennially and EUR 56.00 triennially, with no monthly cycle",
+      "capture": "sha256:8ae61f39e465b9e1fe5f2f04865f23bc895003fad8ff39c05c613411f41c18dc",
+      "quote": "\"id\": \"6\", \"name\": \"Micro KVM\""
+    },
+    {
+      "url": "https://rarecloud.io/data/whmcs-pricing.json",
+      "date": "2026-11-07",
+      "proved": "the vendor pricing feed prices Micro KVM at EUR 19.50 annually, EUR 38.00 biennially and EUR 56.00 triennially, and its cycles object holds no monthly key",
+      "capture": "sha256:6f4dddf531f2fe3c3b6c4abe3157bd8c41f455a408ee7c495b17ff180ca6e6c0",
+      "quote": "\"cycles\": { \"annually\": 19.5, \"biennially\": 38, \"triennially\": 56 }"
+    },
+    {
+      "url": "https://rarecloud.io/data/whmcs-pricing.json",
+      "date": "2026-11-07",
+      "proved": "the feed's cycles object for Micro KVM holds only annually, biennially and triennially",
+      "capture": "sha256:6f4dddf531f2fe3c3b6c4abe3157bd8c41f455a408ee7c495b17ff180ca6e6c0",
+      "quote": "\"cycles\": { \"annually\": 19.5, \"biennially\": 38, \"triennially\": 56 }"
+    },
+    {
+      "url": "https://rarecloud.io/data/whmcs-pricing.json",
+      "date": "2026-11-07",
+      "proved": "the feed's annually cycle for Micro KVM is 19.5",
+      "capture": "sha256:6f4dddf531f2fe3c3b6c4abe3157bd8c41f455a408ee7c495b17ff180ca6e6c0",
+      "quote": "\"cycles\": { \"annually\": 19.5, \"biennially\": 38, \"triennially\": 56 }"
+    },
+    {
+      "url": "https://rarecloud.io/data/whmcs-pricing.json",
+      "date": "2026-11-07",
+      "proved": "the feed's Micro KVM pricing block carries cycles, setup_fees and currency_info and no renewal price",
+      "capture": "sha256:6f4dddf531f2fe3c3b6c4abe3157bd8c41f455a408ee7c495b17ff180ca6e6c0",
+      "quote": "\"cycles\": { \"annually\": 19.5, \"biennially\": 38, \"triennially\": 56 }"
+    },
+    {
+      "url": "https://rarecloud.io/data/whmcs-pricing.json",
+      "date": "2026-11-07",
+      "proved": "the feed's Micro KVM block carries no stock field",
+      "capture": "sha256:6f4dddf531f2fe3c3b6c4abe3157bd8c41f455a408ee7c495b17ff180ca6e6c0",
+      "quote": "\"cycles\": { \"annually\": 19.5, \"biennially\": 38, \"triennially\": 56 }"
+    },
+    {
+      "url": "https://rarecloud.io/kvm-vps/",
+      "date": "2026-11-07",
+      "proved": "the order page prints the 3-year headline price and its plan table renders client-side ('Loading pricing...')",
+      "capture": "sha256:9d6f1ebc324f01d6b3449eef6183c68ed4dd64b55e769ccda14599a57c518474",
+      "quote": "From €1.56/mo on a 3-year plan"
+    },
+    {
+      "url": "https://rarecloud.io/data/whmcs-pricing.json",
+      "date": "2026-11-07",
+      "proved": "the cycles object names the three prepaid terms",
+      "capture": "sha256:6f4dddf531f2fe3c3b6c4abe3157bd8c41f455a408ee7c495b17ff180ca6e6c0",
+      "quote": "\"cycles\": { \"annually\": 19.5, \"biennially\": 38, \"triennially\": 56 }"
+    },
+    {
+      "url": "https://rarecloud.io/data/whmcs-pricing.json",
+      "date": "2026-11-07",
+      "proved": "the plan table the record lacked is published by the vendor's own pricing feed",
+      "capture": "sha256:6f4dddf531f2fe3c3b6c4abe3157bd8c41f455a408ee7c495b17ff180ca6e6c0",
+      "quote": "\"cycles\": { \"annually\": 19.5, \"biennially\": 38, \"triennially\": 56 }"
+    },
+    {
+      "url": "https://rarecloud.io/data/whmcs-pricing.json",
+      "date": "2026-11-07",
+      "proved": "the vendor pricing feed re-states the Micro KVM prices the record now carries",
+      "capture": "sha256:6f4dddf531f2fe3c3b6c4abe3157bd8c41f455a408ee7c495b17ff180ca6e6c0",
+      "quote": "\"cycles\": { \"annually\": 19.5, \"biennially\": 38, \"triennially\": 56 }"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-07T11:15:40.979Z",
+  "notes": "Not in dossier/compute or docs/ (searched both trees for rarecloud, no hit). Wall: the vendor plan table renders client-side and showed only 'Loading pricing...', so the Micro KVM numbers are the tracker's and the record is labelled reported. The vendor does document 'From EUR 1.56/mo on a 3-year plan', a lower monthly equivalent than the tracker's EUR 1.63 on an annual term, but attaches no plan to it, so it cannot be recorded as an offer. would-settle: the plan table through a rendering path, and the term behind the EUR 1.56 figure. Currency: the pages print a euro sign and it is written EUR throughout this file because the file is ASCII-only.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "RareCloud",
+      "class": null,
+      "category_as_written": "KVM VPS, US/EU/Asia",
+      "free_tier_kind": "none",
+      "shape": {
+        "vcpu": 1,
+        "ram_gib": 0.75,
+        "disk_gib": 15,
+        "gpu_class": null,
+        "gpu_count": null
+      },
+      "seen_routes": null,
+      "agents": [
+        "lane6-vps"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "monthly_eur": "not published: the vendor pricing feed prints no monthly cycle for Micro KVM",
+    "annual_eur": 19.5,
+    "renewal_eur": "not published: the vendor pricing feed holds no renewal price for Micro KVM",
+    "stock": "unverified: the pricing feed prints no stock field and the cart was not read",
+    "price_on_page": "the order page headline reads 'From EUR 1.56/mo on a 3-year plan'; the plan table renders client-side and the static page shows 'Loading pricing...'",
+    "term": "annual, biennial and triennial cycles in the vendor pricing feed; no monthly cycle"
+  }
+}

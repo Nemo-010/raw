@@ -1,0 +1,105 @@
+{
+  "topic": "storage",
+  "slug": "data-gov-il",
+  "provider": "data.gov.il (Israel, CKAN)",
+  "url": "https://data.gov.il/",
+  "category": "gov-ckan-portal",
+  "free_tier": {
+    "stated": "1,203 datasets, 61 organisations. Files self-hosted (/dataset/.../download/datafile.csv).",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://data.gov.il/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://data.gov.il/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://data.gov.il/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "public.",
+    "metered": false
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "CKAN 2.x action API (200 OK).",
+  "tooling": "curl.",
+  "chaining": "n/a.",
+  "limits": [],
+  "limits_note": "write-gated: /user/register returns CloudFront 'Request blocked' 403; organization_create POST falls through to the Hebrew HTML app shell rather than a JSON API, i.e. no exposed write endpoint.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "government-mandated publication by ministries; no individual channel.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://data.gov.il/api/3/action/package_search?rows=0",
+      "date": "2026-10-21",
+      "proved": "200, count 1203"
+    },
+    {
+      "url": "https://data.gov.il/api/3/action/organization_list",
+      "date": "2026-10-21",
+      "proved": "61 organisations"
+    },
+    {
+      "url": "https://data.gov.il/user/register",
+      "date": "2026-10-21",
+      "proved": "403 'The request could not be satisfied / Request blocked'"
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "1,203 datasets, 61 organisations. Files self-hosted (/dataset/.../download/datafile.csv).",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H15-gov-municipal-portals.json",
+    "seed_area": "H/H15",
+    "seed_verdict": [
+      {
+        "value": "fails-identity",
+        "area": "H/H15"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "1,203 datasets, 61 organisations. Files self-hosted (/dataset/.../download/datafile.csv).",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H15"
+    },
+    "target_document": "docs/storage/free/government-portals.md",
+    "document_section": "Government and municipal portals",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "1,203 datasets, 61 organisations. Files self-hosted (/dataset/.../download/datafile.csv).",
+    "limits_verbatim": "write-gated: /user/register returns CloudFront 'Request blocked' 403; organization_create POST falls through to the Hebrew HTML app shell rather than a JSON API, i.e. no exposed write endpoint.",
+    "egress_verbatim": "public.",
+    "chaining_verbatim": "n/a.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "curl.",
+    "interface_verbatim": "CKAN 2.x action API (200 OK).",
+    "agent_focus": "Government, municipal and public-sector hosting that accepts citizen deposits. Decisive axis: can an INDIVIDUAL (not an agency) publish, at what identity cost, at what per-file cap, and are published files anonymously retrievable afterwards. Probed CKAN write paths empirically (unauth organization_create, /user/register, owner_org distribution over 300-dataset samples) rather than trusting marketing copy."
+  },
+  "binding": "none",
+  "binding_note": "the quota is real and unreachable: identity is the binding constraint, and it is not one of the six limits kinds",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

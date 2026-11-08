@@ -1,0 +1,107 @@
+{
+  "topic": "storage",
+  "slug": "f-droid",
+  "provider": "F-Droid (f-droid.org/repo APK archive)",
+  "url": "https://f-droid.org",
+  "category": "paas",
+  "free_tier": {
+    "stated": "No published total or per-app byte quota. The archive is large and browsable: index-v2.json is 66,480,070 bytes and a single APK (org.fdroid.fdroid) is 12,426,276 bytes. Builds are produced by F-Droid's own build farm from source in fdroiddata; the 24-48 h publish latency is due to human keystore signing.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://f-droid.org/docs/Submitting_to_F-Droid_Quick_Start_Guide/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://f-droid.org/docs/Submitting_to_F-Droid_Quick_Start_Guide/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "per-object-cap: none documented for the published APK; the build environment is documented in GB terms (1000 MB container, 800 MB build, 4000 MB for the large path) which caps what can be built. retention: indefinite - F-Droid keeps all published versions",
+    "source_url": "https://f-droid.org/docs/Submitting_to_F-Droid_Quick_Start_Guide/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free. Mirrored via f-droid.org and third-party mirrors. No billing.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "`fdroid` CLI (fdroidserver), the repo is a plain signed index (index-v2.json / index-v2.jar) with APKs at /repo/<pkg>_<vc>.apk. Clients: `fdroid`, vanilla Android F-Droid client. No rclone backend.",
+  "chaining": "unlimited apps x unlimited versions (every published version stays in /repo, keyed by versionCode). Multiply by unlimited GitLab/Codeberg source repos and unlimited forks. But each app is reviewed and built by F-Droid's farm - so this is a per-app, human-gated store, not an arbitrary-blob host.",
+  "limits": [],
+  "limits_note": "per-object-cap: none documented for the published APK; the build environment is documented in GB terms (1000 MB container, 800 MB build, 4000 MB for the large path) which caps what can be built. retention: indefinite - F-Droid keeps all published versions. request-rate: not documented on the docs page read.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Fully programmatic on the read side (static index + APKs, range-capable in principle), but the write side is a merge request into fdroiddata built on F-Droid's farm with human keystore signing - 24-48 h latency. Cannot store arbitrary blobs; must be an Android app build.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://f-droid.org/repo/index-v2.json",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, 66,480,070 bytes (full repo index, anonymous)"
+    },
+    {
+      "url": "https://f-droid.org/repo/org.fdroid.fdroid_1023051.apk",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, 12,426,276 bytes"
+    },
+    {
+      "url": "https://f-droid.org/docs/Submitting_to_F-Droid_Quick_Start_Guide/",
+      "date": "2026-10-21",
+      "proved": "build environment sizes 60/75/1000/800/4000 MB; 'around 24 to 48 hours' from merge to appearance"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No published total or per-app byte quota. The archive is large and browsable: index-v2.json is 66,480,070 bytes and a single APK (org.fdroid.fdroid) is 12,426,276 bytes. Builds are produced by F-Droid's own build farm from source in fdroiddata; the 24-48 h publish latency is due to human keystore signing.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H7-software-archives.json",
+    "seed_area": "H/H7",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "H/H7"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "No published total or per-app byte quota. The archive is large and browsable: index-v2.json is 66,480,070 bytes and a single APK (org.fdroid.fdroid) is 12,426,276 bytes. Builds are produced by F-Droid's own build farm from source in fdroiddata; the 24-48 h publish latency is due to human keystore signing.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H7"
+    },
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Software archives",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "No published total or per-app byte quota. The archive is large and browsable: index-v2.json is 66,480,070 bytes and a single APK (org.fdroid.fdroid) is 12,426,276 bytes. Builds are produced by F-Droid's own build farm from source in fdroiddata; the 24-48 h publish latency is due to human keystore signing.",
+    "limits_verbatim": "per-object-cap: none documented for the published APK; the build environment is documented in GB terms (1000 MB container, 800 MB build, 4000 MB for the large path) which caps what can be built. retention: indefinite - F-Droid keeps all published versions. request-rate: not documented on the docs page read.",
+    "egress_verbatim": "Free. Mirrored via f-droid.org and third-party mirrors. No billing.",
+    "chaining_verbatim": "unlimited apps x unlimited versions (every published version stays in /repo, keyed by versionCode). Multiply by unlimited GitLab/Codeberg source repos and unlimited forks. But each app is reviewed and built by F-Droid's farm - so this is a per-app, human-gated store, not an arbitrary-blob host.",
+    "tooling_verbatim": "`fdroid` CLI (fdroidserver), the repo is a plain signed index (index-v2.json / index-v2.jar) with APKs at /repo/<pkg>_<vc>.apk. Clients: `fdroid`, vanilla Android F-Droid client. No rclone backend.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Software preservation + package-archive mirrors as free bulk storage: which ones accept arbitrary blobs at scale, and what the per-artifact / monthly / retention caps actually are. Sources limited to pages opened in this session; every quota below was read live or from a dated archive capture."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

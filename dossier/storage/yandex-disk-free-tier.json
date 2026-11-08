@@ -1,0 +1,107 @@
+{
+  "topic": "storage",
+  "slug": "yandex-disk-free-tier",
+  "provider": "Yandex Disk free tier (post-2026-06 change)",
+  "url": "https://disk.yandex.ru",
+  "category": "cloud-drive",
+  "free_tier": {
+    "stated": "5 GB by default for users without a plan: 'По умолчанию пользователям без тарифа доступно 5 ГБ места в хранилище'. Photo/video 'unlimited' auto-upload is a plan feature only — without a Yandex 360 plan, mobile uploads count against the 5 GB.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://yandex.ru/support/yandex-360/customers/disk/web/ru/enlarge/disk-space",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://yandex.ru/support/yandex-360/customers/disk/web/ru/enlarge/disk-space",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://yandex.ru/support/yandex-360/customers/disk/web/ru/enlarge/disk-space",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "No egress fee, but the free tier just lost desktop sync entirely.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "webdav",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "WebDAV + REST API + rclone backend exist, which is why this matters despite the quota.",
+  "chaining": "5 GB x N accounts is hopeless against a 500 GB floor. The old 'unlimited photos' loophole is now plan-gated.",
+  "limits": [],
+  "limits_note": "5 GB total shared with Mail. As of 2026-06-03, desktop sync for Windows/macOS requires a paid subscription — free users keep only local files in the client.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "This is the round's clearest negative finding: Yandex removed free desktop synchronisation in June 2026 citing 'files of large volume' load, and the 'unlimited photo auto-upload' that used to be a free loophole now requires a Yandex 360 tariff. Kommersant frames it as the first radical free-tier cut of its kind in Russia.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.kommersant.ru/doc/8673080",
+      "date": "2026-10-21",
+      "proved": "(2026-05-20) — 'с начала июня отключает возможность бесплатно использовать десктопную версию «Яндекс Диска»'; 'С 3 июня ... отключает облачную синхронизацию файлов ... для десктоп-пользователей, использующих его бесплатно'"
+    },
+    {
+      "url": "https://yandex.ru/support/yandex-360/customers/disk/web/ru/enlarge/disk-space",
+      "date": "2026-10-21",
+      "proved": "'По умолчанию пользователям без тарифа доступно 5 ГБ места в хранилище'"
+    },
+    {
+      "url": "https://yandex.ru/support/yandex-360/customers/disk/web/ru/media-upload.md",
+      "date": "2026-10-21",
+      "proved": "'Безлимитная автозагрузка — это одна из возможностей в тарифах Яндекс 360. Если у вас не подключен тариф ... фото и видео ... будут занимать место'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "5 GB by default for users without a plan: 'По умолчанию пользователям без тарифа доступно 5 ГБ места в хранилище'. Photo/video 'unlimited' auto-upload is a plan feature only — without a Yandex 360 plan, mobile uploads count against the 5 GB.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F10-intl-forums.json",
+    "seed_area": "F/F10",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "F/F10"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "5 GB by default for users without a plan: 'По умолчанию пользователям без тарифа доступно 5 ГБ места в хранилище'. Photo/video 'unlimited' auto-upload is a plan feature only — without a Yandex 360 plan, mobile uploads count against the 5 GB.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F10"
+    },
+    "target_document": "docs/storage/free/anonymous-hosts.md",
+    "document_section": "International forum finds",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "5 GB by default for users without a plan: 'По умолчанию пользователям без тарифа доступно 5 ГБ места в хранилище'. Photo/video 'unlimited' auto-upload is a plan feature only — without a Yandex 360 plan, mobile uploads count against the 5 GB.",
+    "limits_verbatim": "5 GB total shared with Mail. As of 2026-06-03, desktop sync for Windows/macOS requires a paid subscription — free users keep only local files in the client.",
+    "egress_verbatim": "No egress fee, but the free tier just lost desktop sync entirely.",
+    "chaining_verbatim": "5 GB x N accounts is hopeless against a 500 GB floor. The old 'unlimited photos' loophole is now plan-gated.",
+    "tooling_verbatim": "WebDAV + REST API + rclone backend exist, which is why this matters despite the quota.",
+    "interface_verbatim": "rest",
+    "agent_focus": "non-English, non-Chinese forums — Japanese / Korean / Russian / Brazilian / Vietnamese / Indonesian provider scenes"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

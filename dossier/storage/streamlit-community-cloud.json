@@ -1,0 +1,100 @@
+{
+  "topic": "storage",
+  "slug": "streamlit-community-cloud",
+  "provider": "Streamlit Community Cloud",
+  "url": "https://share.streamlit.io",
+  "category": "paas",
+  "free_tier": {
+    "stated": "'Storage: No minimum, 50GB maximum' per app — but the filesystem is the build container, not durable storage.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.streamlit.io/deploy/streamlit-community-cloud/manage-your-app",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.streamlit.io/deploy/streamlit-community-cloud/manage-your-app",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "until the instance is recycled; not persistent",
+    "source_url": "https://docs.streamlit.io/deploy/streamlit-community-cloud/manage-your-app",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free; apps are public by default with no transfer meter.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Apps deploy from a GitHub repo; the app process is an HTTP server, so anything it can read it can serve. No storage API.",
+  "chaining": "None. The 50 GB is a ceiling on what the container can hold, not an allocation you can write to and keep.",
+  "limits": [],
+  "limits_note": "690 MB min / 2.7 GB max RAM; 50 GB max storage; app code must come from GitHub; apps sleep when unused; 'these limits may change at any time without notice'.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Ephemeral build filesystem — any file written at runtime is lost on reboot/redeploy. Useful only as a free public egress proxy in front of someone else's storage.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.streamlit.io/deploy/streamlit-community-cloud/manage-your-app",
+      "date": "2026-10-21",
+      "proved": "'Memory: 690MB minimum, 2.7GBs maximum'; 'Storage: No minimum, 50GB maximum'"
+    },
+    {
+      "url": "https://docs.streamlit.io/knowledge-base/deploy/resource-limits",
+      "date": "2026-10-21",
+      "proved": "over-limit apps are throttled/stopped"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "'Storage: No minimum, 50GB maximum' per app — but the filesystem is the build container, not durable storage.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G5-notebooks-compute.json",
+    "seed_area": "G/G5",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "G/G5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "'Storage: No minimum, 50GB maximum' per app — but the filesystem is the build container, not durable storage.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G5"
+    },
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Notebook disks and compute-attached storage",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "'Storage: No minimum, 50GB maximum' per app — but the filesystem is the build container, not durable storage.",
+    "limits_verbatim": "690 MB min / 2.7 GB max RAM; 50 GB max storage; app code must come from GitHub; apps sleep when unused; 'these limits may change at any time without notice'.",
+    "egress_verbatim": "Free; apps are public by default with no transfer meter.",
+    "chaining_verbatim": "None. The 50 GB is a ceiling on what the container can hold, not an allocation you can write to and keep.",
+    "tooling_verbatim": "Apps deploy from a GitHub repo; the app process is an HTTP server, so anything it can read it can serve. No storage API.",
+    "interface_verbatim": "rest",
+    "agent_focus": "notebook/compute hosts and the persistent disk bundled with them — can a free compute box double as storage and as an HTTP origin"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

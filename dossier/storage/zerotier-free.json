@@ -1,0 +1,111 @@
+{
+  "topic": "storage",
+  "slug": "zerotier-free",
+  "provider": "ZeroTier free (Personal)",
+  "url": "https://www.zerotier.com/llms-full.txt",
+  "category": "mesh-control-plane",
+  "free_tier": {
+    "stated": "10 devices, 1 network, non-commercial use. Vendor table effective 20 Oct 2026: 'Personal | Free | 10 | Not available'.",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://www.zerotier.com/llms-full.txt",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.zerotier.com/llms-full.txt",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.zerotier.com/llms-full.txt",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "free, peer-to-peer; relaying only when the path fails.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "virtual L2/L3 overlay, REST API, Terraform provider, CLI.",
+  "tooling": "zerotier-one agent; central controller is now separately licensed (the default `make` build no longer includes it).",
+  "chaining": "10 devices is workable as a private mesh but not as a shard farm, and the controller is no longer in the open-source build by default.",
+  "limits": [],
+  "limits_note": "device count, not bandwidth. Data flows peer-to-peer so there is no byte meter.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "free tier has been cut twice (50 -> 25 -> 10 devices). Docs at docs.zerotier.com/start/ still say 'up to 25 devices' while the vendor's own llms-full.txt says 10 — trust the vendor table, not the docs page.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://read.web.pkgforge.dev/https://www.zerotier.com/llms-full.txt",
+      "date": "2026-10-21",
+      "proved": "'Prices below are in USD, billed monthly, effective 20 October 2026 ... | Personal | Free | 10 | Not available | Personal, non-commercial use'"
+    },
+    {
+      "url": "https://docs.zerotier.com/start/",
+      "date": "2026-10-21",
+      "proved": "'ZeroTier Central is free for personal and small business use (up to 25 devices across all networks)' — CONTRADICTS the vendor table; the docs page is stale"
+    },
+    {
+      "url": "https://www.hivebook.wiki/wiki/zerotier-global-peer-to-peer-virtual-ethernet-over-curve25519",
+      "date": "2026-10-21",
+      "proved": "'The default `make` build no longer includes the controller'"
+    },
+    {
+      "url": "https://web.archive.org/web/20230401122634/https:/www.zerotier.com/pricing/",
+      "date": "2026-10-21",
+      "proved": "historic '25 Nodes' basic tier"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "10 devices, 1 network, non-commercial use. Vendor table effective 20 Oct 2026: 'Personal | Free | 10 | Not available'.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A14-holepunch-relay-networks.json",
+    "seed_area": "A/A14",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "A/A14"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "10 devices, 1 network, non-commercial use. Vendor table effective 20 Oct 2026: 'Personal | Free | 10 | Not available'.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/A14"
+    },
+    "target_document": "docs/storage/free/relays-and-transports.md",
+    "document_section": "Hole-punch and relay networks",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "10 devices, 1 network, non-commercial use. Vendor table effective 20 Oct 2026: 'Personal | Free | 10 | Not available'.",
+    "limits_verbatim": "device count, not bandwidth. Data flows peer-to-peer so there is no byte meter.",
+    "egress_verbatim": "free, peer-to-peer; relaying only when the path fails.",
+    "chaining_verbatim": "10 devices is workable as a private mesh but not as a shard farm, and the controller is no longer in the open-source build by default.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "zerotier-one agent; central controller is now separately licensed (the default `make` build no longer includes it).",
+    "interface_verbatim": "virtual L2/L3 overlay, REST API, Terraform provider, CLI.",
+    "agent_focus": "Relay/P2P transport networks that could carry bulk data without a central provider. For each: is data ROUTED (a real path) or is it only SIGNALLING (relay coordinates, bytes go peer-to-peer)? Free bandwidth? Can it carry 1 TiB/day (= 12.7 MB/s = ~102 Mbit/s sustained)? Identity gate recorded as the primary ranking axis."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

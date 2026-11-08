@@ -1,0 +1,114 @@
+{
+  "topic": "storage",
+  "slug": "alphavps-storage-vps",
+  "provider": "AlphaVPS Storage VPS",
+  "url": "https://alphavps.com/storage-vps",
+  "category": "storage-vps",
+  "free_tier": {
+    "stated": "256 GB / 512 GB / 1 TB / 2 TB / 3 TB / 4 TB / 8 TB / 16 TB. 16 TB is the ceiling on a single VPS; the ladder is flat-priced, so €/TB does not improve above 1 TB.",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://alphavps.com/storage-vps",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://alphavps.com/storage-vps",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://alphavps.com/storage-vps",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Metered, not free. Plan transfer allowances: 1 TB plan = 3 TB/mo, 2 TB plan = 6 TB, 4 TB = 10 TB, 8 TB = 20 TB, 16 TB = 40 TB, all on ports 'up to 10 Gbit'. Overage is charged, not throttled: the published conditions, §Traffic Usage, read 'All account plans come with a predetermined monthly amount of traffic allowance. We charge 3.0EUR additional per TB over the allowance, unless otherwise agreed upon.' (https://alphavps.com/terms). The backup-storage landing page separately advertises 'No egress fees, no vendor lock-in' and 'EGRESS €0 - FLAT' — that is marketing copy contradicted by the published conditions, and the published conditions are the binding document. Treat egress as €3/TB metered.",
+    "metered": false,
+    "free_allowance": "3 TB per month",
+    "price_per_tb": "€3/TB",
+    "source_url": "https://alphavps.com/terms"
+  },
+  "interface": [
+    "s3",
+    "rest",
+    "webdav",
+    "sftp",
+    "rsync",
+    "nfs",
+    "rclone"
+  ],
+  "interface_detail": "sftp, rsync, nfs, rest (self-hosted: MinIO/SeaweedFS/Nextcloud on the VPS, or WebDAV)",
+  "tooling": "rclone over SFTP/WebDAV, BorgBackup, Restic, rsync. No native S3 — you host your own gateway.",
+  "chaining": "Best of the VPS class for the archive half: root KVM, so AList/OpenList or MinIO can be installed and fronted by Cloudflare for cache-covered egress. Not usable as a raw S3 origin without running MinIO.",
+  "limits": [],
+  "limits_note": "per-object-cap: none (block device). RAID-60 with NVMe read cache. 14-day money-back on FIRST order only, excludes promos, crypto, and orders from China.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "Bulgarian operator (DA International Group Ltd.), own AS203380 since 2013, 99.9% uptime SLA in the published SLA. Long-running positive sentiment on LowEndTalk; one 2022 thread documents a bad provisioning experience but not data loss.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://alphavps.com/storage-vps",
+      "date": "2026-10-21",
+      "proved": "full capacity ladder read this session: 256G €1.67, 512G €2.50, 1T €3.33, 2T €6.67, 3T €10.00, 4T €13.33, 8T €26.67, 16T €53.33 (annual per-month), each row showing a flat '€/TB/MO' of 3.33 from 1 TB up"
+    },
+    {
+      "url": "https://alphavps.com/terms",
+      "date": "2026-10-21",
+      "proved": "'We charge 3.0EUR additional per TB over the allowance'"
+    },
+    {
+      "url": "https://alphavps.com/solutions/backup-storage",
+      "date": "2026-10-21",
+      "proved": "'zero egress fees' / 'EGRESS €0 - FLAT' marketing claim, contradicted by the published conditions above"
+    },
+    {
+      "url": "https://alphavps.com/clients/cart.php?a=add&pid=521",
+      "date": "2026-10-21",
+      "proved": "order page for the 16 TB SKU, loads and configures"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$3.74/TB/mo (€3.33). At 5 TB: not a ladder rung — cheapest 5 TB shape is 4 TB + 2 TB = €20.00/mo = €3.33/TB = $3.74/TB. At 20 TB: exceeds the 16 TB per-VPS ceiling, so cheapest shape is 16 TB (€53.33) + 4 TB (€13.33) on a second VPS = €66.66/mo = €3.33/TB = $3.74/TB. Price is flat from 1 TB to 16 T…",
+  "notes": "256 GB / 512 GB / 1 TB / 2 TB / 3 TB / 4 TB / 8 TB / 16 TB. 16 TB is the ceiling on a single VPS; the ladder is flat-priced, so €/TB does not improve above 1 TB.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "P-P2-storage-vps-us-asia.json",
+    "seed_area": "P/P2",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "P/P2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/paid/storage-boxes.md",
+    "document_section": "US and Asia storage VPS",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "256 GB / 512 GB / 1 TB / 2 TB / 3 TB / 4 TB / 8 TB / 16 TB. 16 TB is the ceiling on a single VPS; the ladder is flat-priced, so €/TB does not improve above 1 TB.",
+    "limits_verbatim": "per-object-cap: none (block device). RAID-60 with NVMe read cache. 14-day money-back on FIRST order only, excludes promos, crypto, and orders from China.",
+    "egress_verbatim": "Metered, not free. Plan transfer allowances: 1 TB plan = 3 TB/mo, 2 TB plan = 6 TB, 4 TB = 10 TB, 8 TB = 20 TB, 16 TB = 40 TB, all on ports 'up to 10 Gbit'. Overage is charged, not throttled: the published conditions, §Traffic Usage, read 'All account plans come with a predetermined monthly amount of traffic allowance. We charge 3.0EUR additional per TB over the allowance, unless otherwise agreed upon.' (https://alphavps.com/terms). The backup-storage landing page separately advertises 'No egress fees, no vendor lock-in' and 'EGRESS €0 - FLAT' — that is marketing copy contradicted by the published conditions, and the published conditions are the binding document. Treat egress as €3/TB metered.",
+    "chaining_verbatim": "Best of the VPS class for the archive half: root KVM, so AList/OpenList or MinIO can be installed and fronted by Cloudflare for cache-covered egress. Not usable as a raw S3 origin without running MinIO.",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "rclone over SFTP/WebDAV, BorgBackup, Restic, rsync. No native S3 — you host your own gateway.",
+    "interface_verbatim": "sftp, rsync, nfs, rest (self-hosted: MinIO/SeaweedFS/Nextcloud on the VPS, or WebDAV)",
+    "price_verbatim": "$3.74/TB/mo (€3.33). At 5 TB: not a ladder rung — cheapest 5 TB shape is 4 TB + 2 TB = €20.00/mo = €3.33/TB = $3.74/TB. At 20 TB: exceeds the 16 TB per-VPS ceiling, so cheapest shape is 16 TB (€53.33) + 4 TB (€13.33) on a second VPS = €66.66/mo = €3.33/TB = $3.74/TB. Price is flat from 1 TB to 16 TB, so no volume discount exists.",
+    "agent_focus": "cheap-PAID lane — cheapest $/TB/month storage outside Europe for a self-funded buyer. Every candidate priced at the 5 TB and 20 TB tier as $ per TB per month, egress policy quoted verbatim, and payment friction for a non-US/non-EU buyer recorded. Deliberately excludes AWS/Azure/GCP/Alibaba/R2/B2/iDrive e2 (rejected). FX rates used throughout, taken 2026-10-21 from api.frankfurter.dev: EUR 0.89015, CAD 1.4046, INR 94.47, JPY 157.88, KRW 1325.57 per USD."
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

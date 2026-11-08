@@ -1,0 +1,109 @@
+{
+  "topic": "storage",
+  "slug": "gitlab-com-git-lfs",
+  "provider": "GitLab.com Git LFS",
+  "url": "https://gitlab.com",
+  "category": "registry",
+  "free_tier": {
+    "stated": "10 GiB free storage PER PROJECT on the Free tier, and that 10 GiB explicitly covers 'the project's repository and Large File Storage (LFS)'. Premium/Ultimate: 500 GiB per project. CONFIRMED: LFS is IN the quota while containers, packages, build artifacts, snippets, uploads and wikis are OUT.",
+    "unit": "GiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Unmetered — GitLab does not bill or publish any LFS bandwidth quota. The only transfer-side control is a rate limit: 'Git LFS requests are subject to authenticated web request rate limits ... 1000 requests per minute per user. Each Git LFS object uploaded or downloaded generates an HTTP request'.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "git"
+  ],
+  "interface_detail": "git",
+  "tooling": "git-lfs. Also Oras-style raw access is not available; LFS is protocol-only. GitLab REST API v4 for project/namespace management (useful for automating project-per-shard).",
+  "chaining": "10 GiB per PROJECT, and projects are free and unlimited within a namespace — GitLab's own excess-storage example totals 30 GiB across three projects with no namespace-level cap. 50 projects = 500 GiB, 100 = 1 TiB. This is the cleanest 'trivially repeatable' LFS case because each project is an independent 10 GiB bucket behind the same account, unlike GitHub where the 10 GiB is per account.",
+  "limits": [],
+  "limits_note": "At 10 GiB the project goes READ-ONLY: 'you can't push or add large files (LFS) to the project's repository.' Max push request 5 GiB (through Cloudflare) — this applies to git push; LFS object upload is a separate endpoint. Max attachment 100 MiB. Rate limit 1000 LFS req/min/user is the real throughput ceiling (~60k objects/hour, and one object = one request regardless of size).",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Read-only state is reversible only by purchasing storage, so a blown project is stuck. The 1000 req/min limit bites hard on many-small-files datasets during clone, and GitLab's own docs warn multi-file projects 'may encounter an HTTP rate limit error' in CI.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+      "date": "2026-10-21",
+      "proved": "'Only the project's repository and LFS are included in the storage limit. The container registry, package registry, and build artifacts are not included' + 'Each project in a Free tier namespace on GitLab.com has 10 GiB of free storage'"
+    },
+    {
+      "url": "https://docs.gitlab.com/administration/settings/account_and_limit_settings/",
+      "date": "2026-10-21",
+      "proved": "'It includes repository files and Git LFS objects (even when stored in external object storage), but does not include: Artifacts, Containers, Packages, Snippets, Uploads, Wikis'"
+    },
+    {
+      "url": "https://docs.gitlab.com/rate_limits/git/",
+      "date": "2026-10-21",
+      "proved": "'1000 requests per minute per user' for LFS"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/gitlab_com/",
+      "date": "2026-10-21",
+      "proved": "'Repository size including LFS | 10 GB'; 'Maximum push size | 5 GiB'"
+    },
+    {
+      "url": "https://gitlab.com/gitlab-org/gitlab.git/info/lfs/objects/batch",
+      "date": "2026-10-21",
+      "proved": "probe: POST -> HTTP 200"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "10 GiB free storage PER PROJECT on the Free tier, and that 10 GiB explicitly covers 'the project's repository and Large File Storage (LFS)'. Premium/Ultimate: 500 GiB per project. CONFIRMED: LFS is IN the quota while containers, packages, build artifacts, snippets, uploads and wikis are OUT.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C3-git-annex-lfs.json",
+    "seed_area": "C/C3",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "C/C3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "Git LFS and git-annex special remotes",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "10 GiB free storage PER PROJECT on the Free tier, and that 10 GiB explicitly covers 'the project's repository and Large File Storage (LFS)'. Premium/Ultimate: 500 GiB per project. CONFIRMED: LFS is IN the quota while containers, packages, build artifacts, snippets, uploads and wikis are OUT.",
+    "limits_verbatim": "At 10 GiB the project goes READ-ONLY: 'you can't push or add large files (LFS) to the project's repository.' Max push request 5 GiB (through Cloudflare) — this applies to git push; LFS object upload is a separate endpoint. Max attachment 100 MiB. Rate limit 1000 LFS req/min/user is the real throughput ceiling (~60k objects/hour, and one object = one request regardless of size).",
+    "egress_verbatim": "Unmetered — GitLab does not bill or publish any LFS bandwidth quota. The only transfer-side control is a rate limit: 'Git LFS requests are subject to authenticated web request rate limits ... 1000 requests per minute per user. Each Git LFS object uploaded or downloaded generates an HTTP request'.",
+    "chaining_verbatim": "10 GiB per PROJECT, and projects are free and unlimited within a namespace — GitLab's own excess-storage example totals 30 GiB across three projects with no namespace-level cap. 50 projects = 500 GiB, 100 = 1 TiB. This is the cleanest 'trivially repeatable' LFS case because each project is an independent 10 GiB bucket behind the same account, unlike GitHub where the 10 GiB is per account.",
+    "tooling_verbatim": "git-lfs. Also Oras-style raw access is not available; LFS is protocol-only. GitLab REST API v4 for project/namespace management (useful for automating project-per-shard).",
+    "interface_verbatim": "git",
+    "agent_focus": "Large-file versioning layer: git-annex special remotes, Git LFS hosts, DVC remotes, Perforce/SVN, and which free backends those layers can be pointed at"
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

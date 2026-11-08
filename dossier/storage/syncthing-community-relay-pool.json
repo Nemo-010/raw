@@ -1,0 +1,109 @@
+{
+  "topic": "storage",
+  "slug": "syncthing-community-relay-pool",
+  "provider": "Syncthing community relay pool",
+  "url": "https://relays.syncthing.net/",
+  "category": "P2P relay pool (operator-donated)",
+  "free_tier": {
+    "stated": "No quota at all — relay operators cap themselves with -global-rate (commonly ~20 Mbps in and out). The pool is anonymous and unvetted.",
+    "unit": "unlimited",
+    "metered_on": "unstated",
+    "source_url": "https://relays.syncthing.net/endpoint",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://relays.syncthing.net/endpoint",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://relays.syncthing.net/endpoint",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free. Paid for by whoever runs each relay, not by a company with a budget.",
+    "metered": false
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "relay:// protocol on 22067; the pool is a JSON endpoint.",
+  "tooling": "strelaysrv; Syncthing's own relay selection.",
+  "chaining": "Relay is only used until a direct connection is established; Syncthing then switches to direct and the relay carries nothing.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "20 Mbps",
+      "source": "https://relays.syncthing.net/endpoint"
+    }
+  ],
+  "limits_note": "Per-relay bandwidth set by the operator; sessions per client and per relay are limited. Relays can vanish without notice.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "anonymous",
+    "country": null
+  },
+  "reliability_note": "The pool endpoint returns dozens of `relay://IP:22067` entries with self-signed device IDs. No accounting means no sustainability, but also no gate.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://relays.syncthing.net/endpoint",
+      "date": "2026-10-21",
+      "proved": "literal JSON list of relay:// URLs with IDs"
+    },
+    {
+      "url": "https://docs.syncthing.net/users/strelaysrv",
+      "date": "2026-10-21",
+      "proved": "'Anyone can run a relay server, and it will automatically join the relay pool'"
+    },
+    {
+      "url": "https://docs.syncthing.net/users/relaying.html",
+      "date": "2026-10-21",
+      "proved": "traffic is bounced via a relay only when a direct connection is impossible"
+    },
+    {
+      "url": "https://relays.syncthing.net/",
+      "date": "2026-10-21",
+      "proved": "'The relays listed on this page are not managed or vetted by the Syncthing project'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No quota at all — relay operators cap themselves with -global-rate (commonly ~20 Mbps in and out). The pool is anonymous and unvetted.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E16-open-science-2026-new.json",
+    "seed_area": "E/E16",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "E/E16"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/academic-identity.md",
+    "document_section": "The 2026 open-science re-sweep",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No quota at all — relay operators cap themselves with -global-rate (commonly ~20 Mbps in and out). The pool is anonymous and unvetted.",
+    "limits_verbatim": "Per-relay bandwidth set by the operator; sessions per client and per relay are limited. Relays can vanish without notice.",
+    "egress_verbatim": "Free. Paid for by whoever runs each relay, not by a company with a budget.",
+    "chaining_verbatim": "Relay is only used until a direct connection is established; Syncthing then switches to direct and the relay carries nothing.",
+    "identity_verbatim": "anonymous",
+    "tooling_verbatim": "strelaysrv; Syncthing's own relay selection.",
+    "interface_verbatim": "relay:// protocol on 22067; the pool is a JSON endpoint.",
+    "agent_focus": "Two client questions. (1) Open academic infrastructure that does NOT validate institutional identity — for each repository I probed the machine-readable quota endpoint (GET /api/dataverses/:root/storage/quota, /api/records?size=1, /api/info/version) rather than trusting marketing pages, and separately tested the write gate, because open-signup-with-unlimited-quota and open-signup-with-deposit-rights are different things and this wave exists to separate them. (2) Relay/P2P, split into signalling (coordinates only) vs relaying (data transits, operator pays). Secondary sweep: the 2025-26 AI data commons (FineWeb, Common Pile, DCLM, Dolma, Pleias) to establish whether any of them offers writable storage — none does; they are all read-only distribution on HF or Common Crawl S3, i.e. egress sources, not deposit targets. Dataverse turns out to be the only architecture in this space that ships a quota API that answers 'is there a limit' in one GET, so I ran it across every instance I could reach."
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,223 @@
+{
+  "topic": "compute",
+  "slug": "conoha-vps",
+  "provider": "ConoHa VPS",
+  "url": "https://vps.conoha.jp/",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "no free tier; the plans start at JPY 460 a month for 512 MB and JPY 763 a month for 1 GB",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://vps.conoha.jp/",
+    "read_on": "2026-10-24"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "source_url": "https://vps.conoha.jp/",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.shape"
+  },
+  "retention": {
+    "stated": "the instance persists while the monthly plan is paid; the page prints the renewal price beside the first-term price",
+    "source_url": "https://vps.conoha.jp/",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "data transfer JPY 0 and 無制限 (unlimited) on the configuration examples on the plan page",
+    "metered": false,
+    "free_allowance": "unlimited",
+    "source_url": "https://vps.conoha.jp/"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "REST API: an OpenStack-compatible public API (ConoHa VPS 3.0) for creating, deleting and resizing servers, documented at doc.conoha.jp; SSH public-key access to servers; the web control panel",
+  "tooling": "OpenStack CLI and a Terraform Provider, both documented by the provider; the public API reference is at doc.conoha.jp",
+  "chaining": "JPY 460 a month for 512 MB is the cheapest Japanese floor found, and the JPY 360 coupon is about 78 percent of one month on that plan, so the coupon is one free month at the bottom of the ladder rather than a trial of the useful sizes.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "no traffic quota stated; transfer is 無制限 (unlimited)",
+      "source": "https://vps.conoha.jp/"
+    }
+  ],
+  "limits_note": "The coupon is JPY 360 once, so it buys days rather than a month, and the server keeps billing after the coupon is gone unless it is deleted.",
+  "binding": "none",
+  "binding_note": "neither traffic nor time binds: the 1 GB of RAM is what fails first, and the 512 MB plan at JPY 460 exists precisely because 1 GB is the useful floor",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "email signup and a payment method: VISA, MasterCard, JCB, American Express and Diners Club, plus PayPal, Amazon Pay, convenience-store payment and bank transfer through the prepaid 'ConoHaチャージ' wallet. American Express and Diners Club are restricted to Japan residents, which implies the other cards and PayPal are not. No Japanese phone or ID step is documented on the payment or flow pages read; the signup form itself was not fetched",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://vps.conoha.jp/campaign/freestart2026/",
+      "date": "2026-10-22",
+      "proved": "the campaign page states, in Japanese, that a JPY 360 coupon is given to accounts newly registered from that page with a credit card registered, and publishes a table converting the coupon into free days per plan: about 11.5 days on 512 MB, 7.9 on 1 GB, 4.1 on 2 GB, 2.3 on 4 GB, 1.1 on 12 GB, 14.9 hours on 24 GB, 7.4 hours on 48 GB, 3.7 hours on 96 GB and 2.8 hours on 128 GB; GPU types are excluded; the campaign ended 2026-10-01 16:00"
+    },
+    {
+      "url": "https://support.conoha.jp/common/faq/subscription-q/",
+      "date": "2026-10-22",
+      "proved": "the support FAQ states, in Japanese, that there is no free trial service, and points to a referrer programme instead; this is the operator's own denial of a standing free tier"
+    },
+    {
+      "url": "https://vps.conoha.jp/pricing/",
+      "date": "2026-10-22",
+      "proved": "the pricing page gives the ladder in Japanese yen: 512 MB with 1 core and 30 GB SSD at JPY 460 a month on hourly billing, and 1 GB with 2 cores and 100 GB at JPY 763 a month"
+    },
+    {
+      "url": "https://vps.conoha.jp/",
+      "date": "2026-10-24",
+      "proved": "quoted: 'メモリ 1 GB ... 763 円/月 更新時 763 円/月 - CPU 2コア - SSD 100GB'"
+    },
+    {
+      "url": "https://vps.conoha.jp/",
+      "date": "2026-10-24",
+      "proved": "quoted: 'メモリ 512 MB ... 460 円/月 更新時 460 円/月 - CPU 1コア - SSD 30GB'"
+    },
+    {
+      "url": "https://vps.conoha.jp/",
+      "date": "2026-10-24",
+      "proved": "quoted from the configuration table: 'データ転送量 0円 無制限'"
+    },
+    {
+      "url": "https://vps.conoha.jp/pricing/",
+      "date": "2026-10-24",
+      "proved": "quoted: 'VISA / MasterCard / JCB / American Express / Diners Club 各種クレジットカードをご利用いただけます。' and 'American Express / Diners Club は日本国内に在住の方のみご利用いただけます。' and the PayPal and Amazon Pay options"
+    },
+    {
+      "url": "https://vps.conoha.jp/",
+      "date": "2026-11-04",
+      "proved": "an OpenStack-compatible API is published",
+      "capture": "sha256:223d005f820e6e61c09a68f348b8459ee481da8590b022267b37f50ad6d9c47f",
+      "quote": "API サーバー作成・削除・スペック変更をプログラムで自動化。OpenStack準拠のAPIを公開"
+    },
+    {
+      "url": "https://vps.conoha.jp/",
+      "date": "2026-11-04",
+      "proved": "the VPS FAQ states a public OpenStack-compatible API for server operations",
+      "capture": "sha256:223d005f820e6e61c09a68f348b8459ee481da8590b022267b37f50ad6d9c47f",
+      "quote": "ConoHa VPS 3.0はOpenStack準拠の公開APIを提供しており、サーバーの作成・削除・スペック変更などをプログラムから操作できます。"
+    },
+    {
+      "url": "https://vps.conoha.jp/",
+      "date": "2026-11-04",
+      "proved": "the FAQ states Terraform Provider support",
+      "capture": "sha256:223d005f820e6e61c09a68f348b8459ee481da8590b022267b37f50ad6d9c47f",
+      "quote": "Terraform Providerにも対応しているためインフラをコードで定義・管理（IaC）することが可能です。"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-11-04T06:40:18.802Z",
+  "notes": "The site is Japanese only; the order flow was not walked. The 2 GB plan is JPY 1,007 first term and JPY 1,259 on renewal, so only the 1 GB row is under the line at renewal.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "ConoHa VPS (GMO)",
+      "class": "regional-trial",
+      "category_as_written": "regional VPS (Japan)",
+      "free_tier_kind": "one-shot-credit",
+      "shape": {
+        "vcpu": 1,
+        "ram_gib": 0.5,
+        "gpu_class": null,
+        "gpu_count": 0
+      },
+      "seen_routes": [
+        "broker read 200 (vps.conoha.jp campaign page)",
+        "broker read 200 (support.conoha.jp FAQ)",
+        "broker read 200 (vps.conoha.jp/pricing/)",
+        "broker read 200 (GMO news article)"
+      ],
+      "agents": [
+        "a07-regional"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "shape": {
+      "vcpu": 2,
+      "ram_gib": 1,
+      "disk_gib": 100,
+      "gpu_class": null,
+      "gpu_count": null
+    },
+    "billing_model": "monthly",
+    "term": "monthly",
+    "m10h_usd": 4.86,
+    "m24h_usd": 4.86,
+    "price_arithmetic": "JPY 763 a month divided by the 2026-10-24 rate 156.839696 JPY/USD = USD 4.86; the page prints the same 763 on renewal",
+    "renewal_usd": 4.86,
+    "fx": {
+      "pair": "USD/JPY",
+      "rate": 156.839696,
+      "date": "2026-10-24",
+      "source": "open.er-api.com/v6/latest/USD"
+    },
+    "free_tier_kind": "none",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "all",
+      "static_ip": true,
+      "ipv6": true,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "none; it is a VPS that bills whether it runs or not"
+    },
+    "english": "no; the site and console are Japanese only",
+    "payment_methods": "VISA, MasterCard, JCB (Amex and Diners for Japan residents only), PayPal, Amazon Pay, convenience store, bank transfer",
+    "superseded": {
+      "url": "https://vps.conoha.jp/campaign/freestart2026/",
+      "free_tier": {
+        "stated": "A JPY 360 coupon for new accounts registered from the campaign page with a credit card attached: about 11.5 days on the 512 MB plan, 7.9 days on 1 GB, 4.1 days on 2 GB, and 2.8 hours on a 128 GB plan, excluding GPU types.",
+        "unit": "hours",
+        "metered_on": "wall-clock",
+        "source_url": "https://vps.conoha.jp/campaign/freestart2026/",
+        "read_on": "2026-10-22",
+        "notes": "one-shot-credit"
+      },
+      "per_object_cap": {
+        "stated": "not applicable: the unit is a machine, not an object",
+        "bytes": null,
+        "source_url": "https://vps.conoha.jp/campaign/freestart2026/",
+        "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+      },
+      "retention": {
+        "stated": "The coupon is JPY 360 once, so it buys days rather than a month, and the server keeps billing after the coupon is gone unless it is deleted.",
+        "days": null,
+        "source_url": "https://vps.conoha.jp/campaign/freestart2026/",
+        "notes": "a machine record: what is lost is the running process, not a stored object"
+      },
+      "egress": {
+        "terms": "not published on the page read: no egress term was found, so nothing is asserted",
+        "metered": false,
+        "free_allowance": null,
+        "price_per_tb": null,
+        "source_url": "https://vps.conoha.jp/campaign/freestart2026/"
+      },
+      "limits": [
+        {
+          "kind": "retention-clamped",
+          "value": "The coupon is JPY 360 once, so it buys days rather than a month, and the server keeps billing after the coupon is gone unless it is deleted.",
+          "source": "https://vps.conoha.jp/campaign/freestart2026/"
+        }
+      ],
+      "binding": "retention-clamped",
+      "binding_note": "The coupon is JPY 360 once, so it buys days rather than a month, and the server keeps billing after the coupon is gone unless it is deleted.",
+      "identity_cost": {
+        "kind": "card",
+        "detail": "as stated by the provider's signup page",
+        "country": null
+      },
+      "verdict": "trial-only",
+      "notes": "The coupon is small but the table is unusually honest: it converts the coupon into a number of days per plan, which is the shape every provider should publish and almost none do. The campaign end date of 2026-10-01 has passed relative to the read date, so the specific coupon may already be closed; the pattern recurs, and the FAQ still says there is no standing free trial.",
+      "verified_at": "2026-10-22T00:00:00.000Z"
+    }
+  },
+  "tier": "メモリ1GB (1 GB plan)",
+  "confidence_note": "plan table and renewal prices from the plan page read today; payment rails from the vendor's pricing and flow pages"
+}

@@ -1,0 +1,140 @@
+{
+  "topic": "storage",
+  "slug": "lumi-o-150-tb-allocated-per-lumi-project-by-default",
+  "provider": "LUMI-O (CSC / EuroHPC LUMI) — 150 TB allocated per LUMI project by default",
+  "url": "https://docs.lumi-supercomputer.eu/storage/lumio/",
+  "category": "academic",
+  "free_tier": {
+    "stated": "'LUMI-O offers a total of 30 PB storage space ... By default 150 TB of storage space is allocated per LUMI project, but projects can request for more LUMI-O storage space by contacting the LUMI helpdesk.' This is the single largest default per-project object-storage quota found in the entire survey.",
+    "unit": "TB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.lumi-supercomputer.eu/storage/lumio/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.lumi-supercomputer.eu/storage/lumio/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.lumi-supercomputer.eu/storage/lumio/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Unmetered; public buckets and presigned URLs are served over HTTPS. 'It is possible to share public data across the internet (for the duration of your project)' and 'to set a temporary access link to otherwise private data'.",
+    "metered": false
+  },
+  "interface": [
+    "s3",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "s3",
+  "tooling": "rclone, s3cmd, aws cli, LUMI web interface. Credentials are LUMI-O access tokens generated at auth.lumidata.eu, scoped to a project.",
+  "chaining": "150 TB × N LUMI projects. A LUMI project is the unit; Finnish researchers create LUMI projects through MyCSC (the 'LUMI' project category) and LUMI is also reachable through EuroHPC Benchmark/Regular access and through national shares (e.g. SURF's Small Compute applications include 'up to 100,000 TB-hours project space storage' on LUMI). Every LUMI project carries LUMI-O by default: 'All LUMI projects have LUMI-O available by default.'",
+  "limits": [],
+  "limits_note": "per-object-cap: 500,000 objects per bucket, same as Allas. No per-object byte cap documented. Retention is the project lifetime, explicitly: 'Data lifetime in LUMI-O is the same as your project lifetime.' request-rate: not published. Note: 'In LUMI-O one project is treated as one account: all project members have the same access/user rights' — so quota is per project, never per person.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "inferred from the category 'academic'; the source record states no identity cost, so this is a class assumption, not evidence",
+    "country": null
+  },
+  "reliability_note": "Data dies with the project; no backup is implied and objects cannot be modified in place.",
+  "confidence": "documented",
+  "confidence_note": "re-read from fetch-broker on 2026-10-22 (HTTP 404, 93393 bytes, sha256 79f4bb0a87f739c6). The page states the number in the record; the claim is documented, not measured. The verdict is fails-identity on the registration gate; the quota is documented and the gate is documented.",
+  "evidence": [
+    {
+      "url": "https://docs.lumi-supercomputer.eu/storage/lumi-o/",
+      "date": "2026-10-22",
+      "proved": "LUMI-O exists and states its allocation model. Re-read https://docs.lumi-supercomputer.eu/storage/lumi-o/: HTTP 404, 93393 bytes, sha256 79f4bb0a87f739c6. Quoted: nav_7_3\" > <label class=\"md-nav__link\" for=\"__nav_7_3\" id=\"__nav_7_3_label\" tabindex=\"0\"> <span class=\"md-ellipsis\"> LUMI-O object storage </span> <span class=\"md-nav__icon md-icon\"></span> </label> <nav class=\"md-nav\" data-md-level=\"2\" aria-labelledby=\"__nav_7_3_label\" aria-expanded=\"false\"> <label class=\"md-nav__"
+    },
+    {
+      "url": "https://docs.lumi-supercomputer.eu/storage/lumio/",
+      "date": "2026-10-21",
+      "proved": "'totals 30 PB', 'By default 150 TB of storage space is allocated per LUMI project', 'One bucket can contain up to 500k objects', 'Data lifetime in LUMI-O is the same as your project lifetime'"
+    },
+    {
+      "url": "https://docs.lumi-supercomputer.eu/storage/lumio/advanced/",
+      "date": "2026-10-21",
+      "proved": "ACLs/policies make buckets or single objects public; presigned URLs for time-limited public read AND time-limited upload to a specific key"
+    },
+    {
+      "url": "https://lumidata.eu/",
+      "date": "2026-10-21",
+      "proved": "probe: curl -D - -> HTTP/1.1 200 OK, server: 'Ceph Object Gateway (squid)', x-amz-request-id ...-lumi-prod. The public S3 endpoint is live and is Ceph RGW."
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-10-22T00:00:00.000Z",
+  "notes": "'LUMI-O offers a total of 30 PB storage space ... By default 150 TB of storage space is allocated per LUMI project, but projects can request for more LUMI-O storage space by contacting the LUMI helpdesk.' This is the single largest default per-project object-storage quota found in the entire survey. VERDICT: fails-identity. Quota and gate in one sentence: 150 TB per LUMI project by default out of 30 PB, reachable only through a LUMI or EuroHPC project allocation, so the quota is real and unreachable.",
+  "history": [
+    "history/2026-10-22T041500Z/storage-csc-allas-verdict.md"
+  ],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D8-national-research-clouds.json",
+    "seed_area": "D/D8",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D8"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [
+      {
+        "field": "verdict",
+        "class": "three readings in the seed: table.md says qualifies, verify/ says fails-identity, and three prose documents agree with verify/",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area D/D8"
+          },
+          {
+            "value": "fails-identity",
+            "source": "verify/lumi-o.json"
+          },
+          {
+            "value": "fails-identity",
+            "source": "docs/storage/gaps.md and docs/storage/free/README.md"
+          }
+        ],
+        "resolution": "fails-identity: the quota is real and the registration gate is institutional (Haka/Virtu, a home organisation with a CSC contract, or a LUMI/EuroHPC project). No foreign individual without an affiliation can create the project the quota is attached to, so the quota is unreachable and the verdict records the gate, not the byte count. Resolved in this pass; see history/2026-10-22T*Z/storage-csc-allas-verdict.md"
+      }
+    ],
+    "target_document": "docs/storage/free/research-clouds.md",
+    "document_section": "National research clouds and allocations",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "'LUMI-O offers a total of 30 PB storage space ... By default 150 TB of storage space is allocated per LUMI project, but projects can request for more LUMI-O storage space by contacting the LUMI helpdesk.' This is the single largest default per-project object-storage quota found in the entire survey.",
+    "limits_verbatim": "per-object-cap: 500,000 objects per bucket, same as Allas. No per-object byte cap documented. Retention is the project lifetime, explicitly: 'Data lifetime in LUMI-O is the same as your project lifetime.' request-rate: not published. Note: 'In LUMI-O one project is treated as one account: all project members have the same access/user rights' — so quota is per project, never per person.",
+    "egress_verbatim": "Unmetered; public buckets and presigned URLs are served over HTTPS. 'It is possible to share public data across the internet (for the duration of your project)' and 'to set a temporary access link to otherwise private data'.",
+    "chaining_verbatim": "150 TB × N LUMI projects. A LUMI project is the unit; Finnish researchers create LUMI projects through MyCSC (the 'LUMI' project category) and LUMI is also reachable through EuroHPC Benchmark/Regular access and through national shares (e.g. SURF's Small Compute applications include 'up to 100,000 TB-hours project space storage' on LUMI). Every LUMI project carries LUMI-O by default: 'All LUMI projects have LUMI-O available by default.'",
+    "tooling_verbatim": "rclone, s3cmd, aws cli, LUMI web interface. Credentials are LUMI-O access tokens generated at auth.lumidata.eu, scoped to a project.",
+    "interface_verbatim": "s3",
+    "agent_focus": "National and regional research-data infrastructure that hands out free (or grant-funded) bulk object storage to researchers: EUDAT/B2SHARE, EOSC EU Node, SURF, GÉANT ecosystem, NIRD/Sigma2, CSC Allas + LUMI-O, NAISS, DeiC, EuroHPC, DARIAH/CLARIN/ELIXIR nodes, NCI, ARDC Nectar, Digital Alliance of Canada, ACCESS/OSN, TACC, NCAR, NRP. Central question: which of these are SELF-SERVICE (anyone can get a login and a bucket) versus INSTITUTION-GATED (you need a university appointment, a national research affiliation, or a reviewed proposal). The per-project quotas here are the largest numbers in the whole survey — 10-150 TB — so the gate, not the quota, is the finding.",
+    "verified_in_pass": [
+      {
+        "url": "https://docs.lumi-supercomputer.eu/storage/lumi-o/",
+        "date": "2026-10-22",
+        "via": "fetch-broker",
+        "http_status": 404,
+        "bytes": 93393,
+        "sha256": "79f4bb0a87f739c606e859ff1651eafe74227283b0ad97ec3606ebbbf825fd2e",
+        "pattern_found": true,
+        "what_changed": "no change: the page still states the claim",
+        "capture": "captures\\lumi-o-docs-lumi-supercomputer-eu-storage-lumi-o-.txt"
+      }
+    ]
+  },
+  "binding": "none",
+  "binding_note": "150 TB per LUMI project needs a LUMI/EuroHPC project; the endpoint answers anonymously and issues nothing. Identity binds before any limit does.",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

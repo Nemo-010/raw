@@ -1,0 +1,111 @@
+{
+  "topic": "storage",
+  "slug": "send-anywhere",
+  "provider": "Send Anywhere",
+  "url": "https://send-anywhere.com",
+  "category": "anonymous-dump",
+  "free_tier": {
+    "stated": "Free: 1:1 real-time transfer up to 50 GB; LINK creation capped at 10 GB. Lite $5.99/mo raises download data to 200 GB.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://send-anywhere.com/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap: 10 GB",
+    "bytes": 10000000000,
+    "source_url": "https://send-anywhere.com/pricing",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://send-anywhere.com/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "download-data metered on the recipient side (that is what the paid 'Download data' allowance buys).",
+    "metered": true
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "none",
+  "tooling": "The Open API Service was RETIRED — support article 'End of support for Open API Service (26.3.31)'. No SDK path remains.",
+  "chaining": "The 50 GB figure is real-time device-to-device, not stored. Stored links are 10 GB and die on expiry with no recovery ('all files are deleted from the server once a link expires').",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap: 10 GB",
+      "source": "https://send-anywhere.com/pricing"
+    }
+  ],
+  "limits_note": "per-object-cap: 10 GB stored link / 50 GB real-time. Retention: expires, and expired links are unrecoverable. pull-count: 'download data' is a metered allowance — this is the actual binding constraint on free, and exhausting it blocks further downloads from your own links.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: GB. Lite $5.99/mo raises download data to 200 GB. Dead API and metered read path. The 2023 policy change moved free users onto link-download quotas, which is exactly the pull-cou",
+    "country": null
+  },
+  "reliability_note": "Dead API and metered read path. The 2023 policy change moved free users onto link-download quotas, which is exactly the pull-count failure mode from round 1.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://send-anywhere.com/pricing",
+      "date": "2026-10-21",
+      "proved": "Free: '1:1 real-time file transfer up to 50GB', 'Link creation up to 10GB'"
+    },
+    {
+      "url": "https://support.send-anywhere.com/hc/en-us/articles/360003085053",
+      "date": "2026-10-21",
+      "proved": "'all files are deleted from the server once a link expires. After this point, they cannot be retrieved'"
+    },
+    {
+      "url": "https://support.send-anywhere.com/hc/en-us/articles/16479573128473",
+      "date": "2026-10-21",
+      "proved": "policy change moving free users to a link-download allowance"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Free: 1:1 real-time transfer up to 50 GB; LINK creation capped at 10 GB. Lite $5.99/mo raises download data to 200 GB.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E8-transfer-services.json",
+    "seed_area": "E/E8",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "E/E8"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Free: 1:1 real-time transfer up to 50 GB; LINK creation capped at 10 GB. Lite $5.99/mo raises download data to 200 GB.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E8"
+    },
+    "target_document": "docs/storage/free/transfer-services.md",
+    "document_section": "Transfer services",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Free: 1:1 real-time transfer up to 50 GB; LINK creation capped at 10 GB. Lite $5.99/mo raises download data to 200 GB.",
+    "limits_verbatim": "per-object-cap: 10 GB stored link / 50 GB real-time. Retention: expires, and expired links are unrecoverable. pull-count: 'download data' is a metered allowance — this is the actual binding constraint on free, and exhausting it blocks further downloads from your own links.",
+    "egress_verbatim": "download-data metered on the recipient side (that is what the paid 'Download data' allowance buys).",
+    "chaining_verbatim": "The 50 GB figure is real-time device-to-device, not stored. Stored links are 10 GB and die on expiry with no recovery ('all files are deleted from the server once a link expires').",
+    "tooling_verbatim": "The Open API Service was RETIRED — support article 'End of support for Open API Service (26.3.31)'. No SDK path remains.",
+    "interface_verbatim": "none",
+    "agent_focus": "transfer services repurposed as storage — per-transfer caps, link persistence, plain-GET retrievability, and whether 'transfer' becomes 'store'"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

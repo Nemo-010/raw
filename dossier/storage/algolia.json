@@ -1,0 +1,96 @@
+{
+  "topic": "storage",
+  "slug": "algolia",
+  "provider": "Algolia",
+  "url": "https://www.algolia.com/",
+  "category": "paas",
+  "free_tier": {
+    "stated": "50,000 records on the Free/Build plan (100K on the paid Grow tier); 10,000 search requests/month",
+    "unit": "objects",
+    "metered_on": "unstated",
+    "source_url": "https://www.algolia.com/pricing/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.algolia.com/pricing/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.algolia.com/pricing/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Search requests are the meter, not bytes. 10,000 search requests/month is ~333/day — the most op-limited of the storage providers compared.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "REST API, official SDKs for ~15 languages, `algolia` CLI, InstantSearch widgets; records are JSON only",
+  "chaining": "50K records x ~10 KB average = ~500 MB of usable payload per app. Several free apps would need several accounts. Record-size guidance is 'Avg 10KB/Record max 100KB', so the absolute ceiling is 50K x 100 KB = 5 GB, and that requires exceeding the size guidance.",
+  "limits": [],
+  "limits_note": "50K records; 10K search requests/month; avg 10 KB/record, max 100 KB/record; JSON only (no binary — base64 must be embedded in a string attribute and bloats the record); indexing operations are separately rate-limited",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Extremely reliable CDN-backed search, but it is a search index, not a store: records are tokenized and stored in an inverted index, so storing base64 blobs both inflates size ~33% and destroys index performance. Not usable as blob storage in practice.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.algolia.com/pricing/",
+      "date": "2026-10-21",
+      "proved": "'Free ... 50K records included'; '100K records included then $0.40 per additional 1K records' (Grow); '10K search requests/month'; 'Avg 10KB/Record max 100KB'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "50,000 records on the Free/Build plan (100K on the paid Grow tier); 10,000 search requests/month",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G6-db-kv-blobs.json",
+    "seed_area": "G/G6",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "G/G6"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "50,000 records on the Free/Build plan (100K on the paid Grow tier); 10,000 search requests/month",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G6"
+    },
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Database and KV blobs",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 1,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "50,000 records on the Free/Build plan (100K on the paid Grow tier); 10,000 search requests/month",
+    "limits_verbatim": "50K records; 10K search requests/month; avg 10 KB/record, max 100 KB/record; JSON only (no binary — base64 must be embedded in a string attribute and bloats the record); indexing operations are separately rate-limited",
+    "egress_verbatim": "Search requests are the meter, not bytes. 10,000 search requests/month is ~333/day — this is the most brutally op-limited store in the dossier.",
+    "chaining_verbatim": "50K records x ~10 KB average = ~500 MB of usable payload per app. Several free apps would need several accounts. Record-size guidance is 'Avg 10KB/Record max 100KB', so the absolute ceiling is 50K x 100 KB = 5 GB, and that requires exceeding the size guidance.",
+    "tooling_verbatim": "REST API, official SDKs for ~15 languages, `algolia` CLI, InstantSearch widgets; records are JSON only",
+    "interface_verbatim": "rest",
+    "agent_focus": "Structured stores (SQL/NoSQL/KV/queue/search) repurposed as blob storage by encoding bytes into rows, values and documents — free bytes, per-item caps, op quotas, and the bytes-per-operation arithmetic that decides whether any of them can carry 500 GB"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

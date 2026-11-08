@@ -1,0 +1,156 @@
+{
+  "topic": "compute",
+  "slug": "nebius",
+  "provider": "Nebius",
+  "url": "https://docs.nebius.com/compute/resources/pricing",
+  "category": "GPU cloud",
+  "free_tier": {
+    "stated": "no free tier: computing resources bill per second of running time only, with a B300 NVLink GPU at $9.50 a GPU-hour on demand, an H100 NVLink at $4.50 a GPU-hour on demand (eu-north1 only) and from $0.79 a GPU-hour preemptible, an L40S at $1.35 a GPU-hour on demand and $0.65 preemptible (CPU and RAM billed separately by the hour), and a stopped VM not charged for compute. The page lists no A100, RTX 4090 or L4 and states no minimum bill.",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://docs.nebius.com/compute/resources/pricing",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://docs.nebius.com/compute/resources/pricing",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://docs.nebius.com/compute/resources/pricing",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "not published on the source card",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://docs.nebius.com/compute/resources/pricing"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "the source card states no access interface",
+  "tooling": "not stated in the source card",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "$9.50 a GPU-hour for a B300 NVLink on demand; billed per second with a one-hour pricing unit",
+      "source": "https://docs.nebius.com/compute/resources/pricing"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "a stopped VM is not charged for compute but its storage volumes are; preemptible pricing for the newest GPU platforms switched to dynamic spot pricing on 2026-10-08",
+      "source": "https://docs.nebius.com/compute/resources/pricing"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the GPU pricing page was read on 2026-10-22 and states the billing and pricing units, the stopped-VM rule and the B300 rates. There is no free tier, so the verdict moves to paid-only",
+  "evidence": [
+    {
+      "url": "https://docs.nebius.com/compute/resources/pricing",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://docs.nebius.com/compute/resources/pricing",
+      "date": "2026-10-22",
+      "proved": "'You are charged for computing resources (GPUs, vCPUs, RAM) of running virtual machines (VMs). Computing resources of stopped VMs are not charged (this does not apply to storage volumes)' with 'Billing unit: 1 second' and 'Pricing unit: 1 hour', and B300 NVLink at $9.50 a GPU-hour or $7.85 on a different term, quoted"
+    },
+    {
+      "url": "https://docs.nebius.com/compute/resources/pricing",
+      "date": "2026-11-03",
+      "proved": "H100 NVLink on demand is USD 4.50 per GPU hour",
+      "capture": "sha256:620ff54ba512ea324f0d3d15d6d69862ba900ab62c732b76404445c43bf62206",
+      "quote": "> | NVIDIA® H100 NVLink | \\$4.50 | 1 GPU hour |"
+    },
+    {
+      "url": "https://docs.nebius.com/compute/resources/pricing",
+      "date": "2026-11-03",
+      "proved": "preemptible H100 NVLink is priced from USD 0.79 per GPU hour",
+      "capture": "sha256:620ff54ba512ea324f0d3d15d6d69862ba900ab62c732b76404445c43bf62206",
+      "quote": "> | Preemptible NVIDIA® H100 NVLink | [From \\$0.79](https://docs.nebius.com/signup-billing/pricing-policy.md) | 1 GPU hour |"
+    },
+    {
+      "url": "https://docs.nebius.com/compute/resources/pricing",
+      "date": "2026-11-03",
+      "proved": "L40S on demand is USD 1.35 per GPU hour",
+      "capture": "sha256:620ff54ba512ea324f0d3d15d6d69862ba900ab62c732b76404445c43bf62206",
+      "quote": "> | NVIDIA® L40S Intel. GPU | \\$1.35 | 1 GPU hour |"
+    },
+    {
+      "url": "https://docs.nebius.com/compute/resources/pricing",
+      "date": "2026-11-03",
+      "proved": "preemptible L40S is USD 0.65 per GPU hour",
+      "capture": "sha256:620ff54ba512ea324f0d3d15d6d69862ba900ab62c732b76404445c43bf62206",
+      "quote": "> | Preemptible NVIDIA® L40S Intel. GPU | \\$0.65 | 1 GPU hour |"
+    },
+    {
+      "url": "https://docs.nebius.com/compute/resources/pricing",
+      "date": "2026-11-03",
+      "proved": "GPU billing unit is 1 second and the pricing unit is 1 hour",
+      "capture": "sha256:620ff54ba512ea324f0d3d15d6d69862ba900ab62c732b76404445c43bf62206",
+      "quote": "For example, for GPUs on running VMs, the **billing unit** is 1 second, and the **pricing unit** is 1 hour (3600 seconds)."
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-03T08:50:29.736Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 11.04,
+    "talaria_m24h_usd": 26.5,
+    "nemo_m10h_usd": 15.46,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "unclassified",
+    "shape": {
+      "vcpu": null,
+      "ram": null,
+      "disk": null,
+      "gpu_class": "NVIDIA B300 NVLink",
+      "gpu_count": 8,
+      "note": "the gpu-b300-sxm platform; preemptible B300 starts from $0.99 a GPU-hour under dynamic spot pricing"
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "a stopped VM stops the compute charge; the page states no automatic reap"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "none",
+    "burst_x": 1.0,
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": {
+      "gib": null,
+      "price": "volumes and shared filesystems bill separately, running or stopped",
+      "durability": "volume",
+      "on_stop": true,
+      "on_destroy": false,
+      "retention": "while the volume exists"
+    },
+    "net": null
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "request-rate",
+  "history": [
+    "history/2026-10-22T053000Z/seventy-three-free-tiers-were-not-on-the-page.md"
+  ]
+}

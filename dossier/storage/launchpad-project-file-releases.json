@@ -1,0 +1,111 @@
+{
+  "topic": "storage",
+  "slug": "launchpad-project-file-releases",
+  "provider": "Launchpad project file releases (+download area)",
+  "url": "https://launchpad.net",
+  "category": "paas",
+  "free_tier": {
+    "stated": "1 GiB PER FILE in the project *file release* area - a separate, much smaller surface than the PPA. The manual says: 'Each individual file must be no more than 1 GiB and you must be the: project maintainer / project driver / or the series release manager.' There is no published total-per-project cap; the unit of accounting is the individual release file. (The 8 GiB figure widely quoted for Launchpad is the PPA disk quota - it does not govern file releases.)",
+    "unit": "GiB",
+    "metered_on": "unstated",
+    "source_url": "https://documentation.ubuntu.com/launchpad/user/explanation/projects/publishing-files/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "1 GiB PER FILE",
+    "bytes": 1073741824,
+    "source_url": "https://documentation.ubuntu.com/launchpad/user/explanation/projects/publishing-files/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://documentation.ubuntu.com/launchpad/user/explanation/projects/publishing-files/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free, no billing. Files are served from launchpadlibrarian.net behind a 303 redirect. No published transfer cap; a measured ~70 KB/s single-stream on a PPA .deb is a throughput problem rather than a quota one.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "sftp",
+    "rsync"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Web upload per release ('Add download file') is the documented path - no SFTP/rsync equivalent to Savannah or SourceForge for the release area. Automation goes through the Launchpad web service API: `launchpadlib` (Python), the `+download` URL shape, and hardware-bound API tokens. Consumer side is plain HTTPS GET with an MD5 and optional GPG signature per file.",
+  "chaining": "unlimited projects x unlimited series x unlimited releases x 1 GiB per file. At 1 GiB granularity 500 GB is 500 files - feasible but operationally noisy, and every upload is a web action unless scripted via launchpadlib. Distinct from the PPA path (8 GiB/PPA, .deb-only, dput/rsync upload).",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "1 GiB PER FILE",
+      "source": "https://documentation.ubuntu.com/launchpad/user/explanation/projects/publishing-files/"
+    }
+  ],
+  "limits_note": "per-object-cap: 1 GiB hard per release file. Also content-typed: files must fall into 'code release tarball / installer files / README or other documentation / changelog file / release notes' - arbitrary blobs are off-spec. retention: indefinite per release. request-rate: not documented for the file area; the docs page itself is flagged 'migrated from help.launchpad.net as is, and has not yet been revised'.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: padlibrarian.net -> 200, 419,427 bytes). Write path is web/API only with no bulk transport, so it is a worse fit than a forge with SFTP. The docs being stale-and-unrevised is a real",
+    "country": null
+  },
+  "reliability_note": "Read path verified working end-to-end (303 -> launchpadlibrarian.net -> 200, 419,427 bytes). Write path is web/API only with no bulk transport, so it is a worse fit than a forge with SFTP. The docs being stale-and-unrevised is a real risk: the 1 GiB number is from a migrated page, not a maintained limits table.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://documentation.ubuntu.com/launchpad/user/explanation/projects/publishing-files/",
+      "date": "2026-10-21",
+      "proved": "'Each individual file must be no more than 1 GiB'; file must be one of code release tarball / installer / README / changelog / release notes"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "same page - 'This document has been migrated from help.launchpad.net as is, and has not yet been revised.'"
+    },
+    {
+      "url": "https://launchpad.net/libeatmydata/trunk/release-105/+download/libeatmydata-105.tar.gz",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 303 to https://launchpadlibrarian.net/188644793/libeatmydata-105.tar.gz -> 200, Content-Length 419427"
+    },
+    {
+      "url": "https://launchpad-help.readthedocs.io/en/latest/how-to/distribute-ubuntu-software.html",
+      "date": "2026-10-21",
+      "proved": "round-2 cross-check: PPA quota is 8 GiB/PPA with GPG-signed source packages only ()"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "1 GiB PER FILE in the project *file release* area - a separate, much smaller surface than the PPA. The manual says: 'Each individual file must be no more than 1 GiB and you must be the: project maintainer / project driver / or the series release manager.' There is no published total-per-project cap; the unit of accounting is the individual release file. (The 8 GiB figure widely quoted for Launchpad is the PPA disk quota - it does not govern file releases.)",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H11-code-forges.json",
+    "seed_area": "H/H11",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H11"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "Code forges",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "1 GiB PER FILE in the project *file release* area - a separate, much smaller surface than the PPA. The manual says: 'Each individual file must be no more than 1 GiB and you must be the: project maintainer / project driver / or the series release manager.' There is no published total-per-project cap; the unit of accounting is the individual release file. (The 8 GiB figure widely quoted for Launchpad is the PPA disk quota, verified in round 2 - it does not govern file releases.)",
+    "limits_verbatim": "per-object-cap: 1 GiB hard per release file. Also content-typed: files must fall into 'code release tarball / installer files / README or other documentation / changelog file / release notes' - arbitrary blobs are off-spec. retention: indefinite per release. request-rate: not documented for the file area; the docs page itself is flagged 'migrated from help.launchpad.net as is, and has not yet been revised'.",
+    "egress_verbatim": "Free, no billing. Files are served from launchpadlibrarian.net behind a 303 redirect. No published transfer cap; round 2 measured ~70 KB/s single-stream on a PPA .deb, which is a throughput problem rather than a quota one.",
+    "chaining_verbatim": "unlimited projects x unlimited series x unlimited releases x 1 GiB per file. At 1 GiB granularity 500 GB is 500 files - feasible but operationally noisy, and every upload is a web action unless scripted via launchpadlib. Distinct from the PPA path (8 GiB/PPA, .deb-only, dput/rsync upload).",
+    "tooling_verbatim": "Web upload per release ('Add download file') is the documented path - no SFTP/rsync equivalent to Savannah or SourceForge for the release area. Automation goes through the Launchpad web service API: `launchpadlib` (Python), the `+download` URL shape, and hardware-bound API tokens. Consumer side is plain HTTPS GET with an MD5 and optional GPG signature per file.",
+    "interface_verbatim": "rest",
+    "agent_focus": "The code-forge seam: OSS project hosts, software-download directories, game/mod distribution and mirror services. Question for each: (a) any published byte quota, (b) is upload possible over SFTP/rsync/SCP/SSH rather than a web form, (c) is there a public download CDN, (d) does it need an approved project or can any account create one, (e) per-file cap. Round 2 flagged that SourceForge has no published quota and serves over plain SFTP with a global mirror CDN, and that an rclone-backend enumerator would score the niche as empty. This slot tests that class systematically. Every number below was read live or from a dated archive capture this session."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

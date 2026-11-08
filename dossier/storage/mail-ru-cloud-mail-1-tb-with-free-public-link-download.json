@@ -1,0 +1,150 @@
+{
+  "topic": "storage",
+  "slug": "mail-ru-cloud-mail-1-tb-with-free-public-link-download",
+  "provider": "Mail.ru Cloud / Облако Mail (VK) — 1 TB with free public-link download",
+  "url": "https://cloud.mail.ru/",
+  "category": "consumer-cloud-drive",
+  "free_tier": {
+    "stated": "Free tier 8 GB with uploads up to 1 GB per file; a Mail Space subscription raises the per-file limit to 100 GB. Purchase page tiers: +256 GB, +512 GB, +1 TB and +2 TB (2.01 TB total).",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://cloud.mail.ru/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://cloud.mail.ru/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://cloud.mail.ru/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "unverified: no download-volume or egress term appears on the purchase page or the help pages read.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "webdav",
+    "rclone",
+    "webdav-proxy"
+  ],
+  "interface_detail": "webdav + rest",
+  "tooling": "WebDAV endpoint live (`https://webdav.cloud.mail.ru/` -> 302 to auth). rclone `mailru` backend, alist/OpenList `mailru` driver, desktop sync client, official REST API. Upload up to 100 GB/file on paid tiers.",
+  "chaining": "One account = one Cloud; the largest tier listed totals 2.01 TB, so the stored need takes several accounts; no documented route for that.",
+  "limits": [],
+  "limits_note": "The unlimited feature on the purchase page is unlimited auto-upload of phone photos and videos, which do not count against the space; it is not unlimited storage. The largest purchasable tier listed totals 2.01 TB. Free tier is 8 GB with a 1 GB per-file ceiling.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "A bank card is bound in the tariff payment window to buy a subscription (promotion terms); the sign-up form was not readable (shell page): unverified.",
+    "country": null
+  },
+  "reliability_note": "VK-owned, so politically exposed for a foreign user but technically stable for a decade. The ₽1,560 first-year price IS a trial price — steady state from year two is ₽3,000, a 92 % increase, and must be budgeted at ₽3,000. Plan maximum 4 TB means it cannot host 20 TiB at any price.",
+  "confidence": "documented",
+  "confidence_note": "documented: the 8 GB free tier, the 1 GB per-file limit and the 100 GB limit with a subscription are quoted from https://help.mail.ru/cloud/files/upload/; the 2.01 TB largest tier total and the 224 rubles per month price from https://cloud.mail.ru/promo/quota/; the bank card requirement of the promotion from https://blog.mail.ru/terms_cloud_autumn_26/ (vendor pages read 2026-11-03); egress and the sign-up form were not read",
+  "evidence": [
+    {
+      "url": "https://cloud.mail.ru/",
+      "date": "2026-10-21",
+      "proved": "read broker, upstream_status 200: «Акция: 15.10.26 — 19.11.26 … Цена за первый год — 1 560 ₽, со второго года — 3 000 ₽»; «1 терабайт пригодится для других файлов»; «С безлимитной автозагрузкой все файлы загрузятся, а в Облаке у вас по-прежнему будет 217 ГБ для любых других файлов»"
+    },
+    {
+      "url": "https://hl.ru/shops/cloud-mail",
+      "date": "2026-10-21",
+      "proved": "«Бесплатный объём — 8 ГБ. Максимальный размер одного файла в бесплатной версии — 2 ГБ. Платные тарифы: от 1 до 4 ТБ»"
+    },
+    {
+      "url": "https://webdav.cloud.mail.ru/",
+      "date": "2026-10-21",
+      "proved": "probe: curl -o /dev/null -w '%{http_code}' -> 302"
+    },
+    {
+      "url": "https://cloud.mail.ru/promo/quota/",
+      "date": "2026-10-21",
+      "proved": "«Купить 1 ТБ … Загрузка файлов до 100 Г»"
+    },
+    {
+      "url": "https://cloud.mail.ru/promo/quota/",
+      "date": "2026-11-03",
+      "proved": "the +2 TB tier is 224 rubles per month when bought for a year",
+      "capture": "sha256:584e9e8284815838d7ea3e049c90698b0f28c8b6d6c15c374da9cd075ccc5e39",
+      "quote": "224 ₽ в месяц при покупке на год"
+    },
+    {
+      "url": "https://help.mail.ru/cloud/files/upload/",
+      "date": "2026-11-03",
+      "proved": "the free tier is 8 GB with 1 GB per file; a Mail Space subscription raises the file limit to 100 GB",
+      "capture": "sha256:b59d3c78cd97171aec47aa7fd510cfb13726ca25c953d8daf360fe2e87b4a7cc",
+      "quote": "В Облаке Mail вам бесплатно доступно 8 ГБ и вы можете загружать файлы объёмом до 1 ГБ. Увеличить место и загружать файлы объёмом до 100 ГБ можно с подпиской Mail Space."
+    },
+    {
+      "url": "https://cloud.mail.ru/promo/quota/",
+      "date": "2026-11-03",
+      "proved": "the largest tier on the purchase page totals 2.01 TB, below the 10 TiB stored need",
+      "capture": "sha256:584e9e8284815838d7ea3e049c90698b0f28c8b6d6c15c374da9cd075ccc5e39",
+      "quote": "Общий объём составит 2.01 ТБ"
+    },
+    {
+      "url": "https://blog.mail.ru/terms_cloud_autumn_26/",
+      "date": "2026-11-03",
+      "proved": "the promotion terms require a bank card bound in the tariff payment window",
+      "capture": "sha256:550b76f45aa983a6accbf3d15c74196b06460c822dcefd01ae0facdb8f589a00",
+      "quote": "Участнику необходимо привязать данные своей банковской карты в окне оплаты тарифов в Сервисе"
+    },
+    {
+      "url": "https://cloud.mail.ru/promo/quota/",
+      "date": "2026-11-03",
+      "proved": "the vendor page was read and quoted on 2026-11-03: the +2 TB tier is 224 rubles per month when bought for a year",
+      "capture": "sha256:584e9e8284815838d7ea3e049c90698b0f28c8b6d6c15c374da9cd075ccc5e39",
+      "quote": "224 ₽ в месяц при покупке на год"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-11-03T15:03:47.540Z",
+  "price_per_tb_month": "224 RUB per month for the +2 TB tier (2.01 TB total with the free space) bought for a year = 112 RUB per TB-month; the +1 TB tier is 133 RUB per month bought for a year = 133 RUB per TB-month. The largest tier listed totals 2.01 TB, so 10 TiB is not reachable on one account. No USD figure was computed.",
+  "notes": "1 TB plan. Landing promo (2026-10-15 to 2026-11-19): first year ₽1,560, from the second year ₽3,000 («Цена за первый год — 1 560 ₽, со второго года — 3 000 ₽»). Free tier 8 GB, 2 GB max file. Paid 1-4 TB.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-P5-regional-cheap-paid.json",
+    "seed_area": "A/P5",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "A/P5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "1 TB plan. Landing promo (2026-10-15 to 2026-11-19): first year ₽1,560, from the second year ₽3,000 («Цена за первый год — 1 560 ₽, со второго года — 3 000 ₽»). Free tier 8 GB, 2 GB max file. Paid 1-4 TB.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/P5"
+    },
+    "target_document": "docs/storage/paid/regional.md",
+    "document_section": "Regional cheap paid",
+    "conversion": "mechanical",
+    "verified_at_basis": "re-read on 2026-11-03: https://cloud.mail.ru/promo/quota/, https://help.mail.ru/cloud/files/upload/ and https://blog.mail.ru/terms_cloud_autumn_26/ were captured and quoted",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "1 TB plan. Landing promo (2026-10-15 to 2026-11-19): first year ₽1,560, from the second year ₽3,000 («Цена за первый год — 1 560 ₽, со второго года — 3 000 ₽»). Free tier 8 GB, 2 GB max file. Paid 1-4 TB.",
+    "limits_verbatim": "The «unlimited» in the marketing is 无限制 auto-upload of phone photos («безлимитная автозагрузка», files moved from the phone do not count against quota) — that is a photo-backup perk, NOT unlimited storage, and it is exactly the trial-vs-steady-state confusion to avoid. Actual paid capacity tops out at 4 TB. Free tier is 8 GB with a 2 GB per-file ceiling.",
+    "egress_verbatim": "No egress meter or per-GB download product is published anywhere in the consumer Cloud UI — public links are «unlimited» in the same sense as Yandex's, confirmed indirectly by the fact that no traffic pack appears in any of the plan descriptions. Treated as free with medium confidence (no explicit verbatim unlimited-traffic claim was found on the pricing surface).",
+    "chaining_verbatim": "One account = one Cloud; 1 TB max per plan, so 20 TB needs 20 accounts — not a real path.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "WebDAV endpoint live (`https://webdav.cloud.mail.ru/` -> 302 to auth). rclone `mailru` backend, alist/OpenList `mailru` driver, desktop sync client, official REST API. Upload up to 100 GB/file on paid tiers.",
+    "interface_verbatim": "webdav + rest",
+    "price_verbatim": "$3.03/TB/mo at 1 TB steady state (₽3,000/yr = $36.33/yr). Trial year: $1.58/TB/mo (₽1,560 = $18.89). At 5 TB and 20 TB: NOT AVAILABLE — the product ceiling is 4 TB, so no 5 TB or 20 TB price exists. Egress free.",
+    "agent_focus": "Wave 7 cheap-PAID lane, regional angle: storage sold in RUB / CNY / BRL / INR / ZAR / TRY / PLN / UAH that never appears on Western price lists. Every paid candidate carries price_per_tb_month at USD-converted list price. FX fixed 2026-10-21 from open.er-api.com: RUB 82.5719/USD, CNY 6.6913, BRL 5.0231, INR 94.9952, ZAR 16.3972, TRY 49.5978, PLN 3.8923, UAH 45.0922, EUR 0.89075/USD. Excluded per brief: AWS, Azure, GCP, Alibaba Cloud, Cloudflare R2, Backblaze B2, IDrive e2. Headline result: the true regional floor with genuinely free egress is ~$2.00/TB/mo (Yandex 360 Profi 3 TB on a Russian card) rising to ~$4.17/TB/mo for the same product bought with a foreign card, and ~$5.95-7.56/TB/mo for flat-rate Western-facing file storage (TheHost, Rollin Host). Everything advertised below ~$2/TB/mo in this set is either capacity-capped, egress-metered, or unverifiable marketing."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

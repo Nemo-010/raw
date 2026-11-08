@@ -1,0 +1,293 @@
+{
+  "topic": "storage",
+  "slug": "buyvm-block-storage-slabs",
+  "provider": "BuyVM Block Storage Slabs",
+  "url": "https://buyvm.net/block-storage-slabs/",
+  "category": "block-storage",
+  "free_tier": {
+    "stated": "Sold in 256 GB chunks at $1.25/mo. Max 10 TB per Slab, max 8 Slabs per KVM Slice = 80 TB theoretical. Requires an accompanying KVM slice in the same facility. Available Las Vegas, New York, Miami, Luxembourg.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://buyvm.net/block-storage-slabs/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "10 TB hard cap per",
+    "bytes": 10000000000000,
+    "source_url": "https://buyvm.net/block-storage-slabs/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://buyvm.net/block-storage-slabs/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Every KVM Slice plan on the vendor page is listed 'Unmetered Bandwidth' and the High Volume plans 'Unlim. 1000 Mbps'; no numeric transfer cap is published on the vendor pages read. No fair-use rule tied to the memory of the slice is stated on the vendor pages read.",
+    "metered": false,
+    "free_allowance": "unmetered; no numeric transfer cap is published on the vendor pages read"
+  },
+  "interface": [
+    "sftp",
+    "rsync",
+    "nfs"
+  ],
+  "interface_detail": "block (attach as disk), then sftp/rsync/nfs from the slice",
+  "tooling": "anything — it is a raw block device on a KVM slice",
+  "chaining": "Hot-pluggable between slices in the same facility with no reboot, which makes it easy to re-front with a different server. No object API at all ('We may consider an Object Store product down the line, but not at this time').",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "10 TB hard cap per",
+      "source": "https://buyvm.net/block-storage-slabs/"
+    }
+  ],
+  "limits_note": "per-object-cap: none. Downgrade impossible — you must order a new slab and migrate. 10 TB hard cap per slab. Requires a base slice, so the true entry cost is a slice plus a slab.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "Registration needs a legitimate name and surname and a residential address, placed from a residential ISP; a phone number is not required; payment by PayPal, credit card, cryptocurrency (Coinpayments) or Alipay, with account details matching the payment method.",
+    "country": null
+  },
+  "reliability_note": "Frantech, operating since 2010, the most consistently recommended block-storage product on LET for a decade. Known friction: signup must come from a residential ISP and is refused from VPN/Tor/datacenter IPs, P.O. boxes rejected — a real obstacle for a privacy-conscious buyer but not an identity-document requirement. Storage is 'enterprise 7200RPM hard drives with an NVME cache and a 40Gbit+ InfiniBand'.",
+  "confidence": "documented",
+  "confidence_note": "Re-read on 2026-11-03 from vendor pages: https://buyvm.net/block-storage-slabs/ (1TB slab $5.00/month, 10TB slab $50.00/month, 10TB maximum, a KVM Slice in the same facility is required), https://buyvm.net/kvm-dedicated-server-slices/ (4096 MB slice $15.00/month, Unmetered Bandwidth; 8 GB High Volume Unlim. 1000 Mbps $30.00/month) and https://buyvm.net/terms-of-service/ (3,1,1 legitimate name, surname and residential address; 3,1,4 registration and order placement from a residential ISP; 3,1,3 no phone number required). The third-party forum rows on bandwidth rules stay unverified: the vendor pages state no such rule.",
+  "evidence": [
+    {
+      "url": "https://buyvm.net/block-storage-slabs/",
+      "date": "2026-10-21",
+      "proved": "'Block Storage Slabs are sold in chunks of 256GB for $1.25/month. A 1TB Block Storage Slab is $5.00/month, with a 10TB Block Storage Slab being just $50.00/month', max 10 TB/slab, max 8 slabs, four locations"
+    },
+    {
+      "url": "https://buyvm.net/kvm-dedicated-server-slices/",
+      "date": "2026-10-21",
+      "proved": "cheapest slice $24.00/yr (512 MB), $3.50/mo (1 GB), all 'Unmetered Bandwidth'"
+    },
+    {
+      "url": "https://lowendtalk.com/discussion/171839/",
+      "date": "2026-10-21",
+      "proved": "BuyVM's quoted bandwidth rule: '100Mbit/s of 24/7 usage per every 4GB of memory'"
+    },
+    {
+      "url": "https://lowendtalk.com/discussion/186157/",
+      "date": "2026-10-21",
+      "proved": "'FUP is 25 Mbps per 1GB of RAM for the 95th percentile'"
+    },
+    {
+      "url": "https://nokyc.host/provider/buyvm",
+      "date": "2026-10-21",
+      "proved": "'Registration and ordering must come from the client's residential ISP ... P.O. boxes and mail-forwarding addresses are refused'"
+    },
+    {
+      "url": "https://buyvm.net/block-storage-slabs/",
+      "date": "2026-11-03",
+      "proved": "a 10TB slab is $50.00/month and a 1TB slab $5.00/month, so $5.00 per TB-month for the slab alone",
+      "capture": "sha256:8964031c70ef7c54abf4e6c6de6eae2374e2fabd416f99d085d8bda4a6d981da",
+      "quote": "A 1TB Block Storage Slab is $5.00/month, with a 10TB Block Storage Slab being just $50.00/month."
+    },
+    {
+      "url": "https://buyvm.net/kvm-dedicated-server-slices/",
+      "date": "2026-11-03",
+      "proved": "the 8 GB High Volume plan is listed Unlim. 1000 Mbps at $30.00/month",
+      "capture": "sha256:f27f93a2f4e2d8834f47e23442c95373c215ad10d3aa3b20bf230806b37cfcc5",
+      "quote": "| **2 Cores** @ 3.50+ GHz | **8 GB** Memory | **160 GB** SSD | **Unlim.** 1000 Mbps | **$30.00** / month | ORDER NOW |"
+    },
+    {
+      "url": "https://buyvm.net/kvm-dedicated-server-slices/",
+      "date": "2026-11-03",
+      "proved": "the 4096 MB KVM Slice, which a slab must be attached to, is $15.00/month with Unmetered Bandwidth",
+      "capture": "sha256:f27f93a2f4e2d8834f47e23442c95373c215ad10d3aa3b20bf230806b37cfcc5",
+      "quote": "**4096 MB** Memory - **80 GB** SSD Storage - **Unmetered** Bandwidth - **1** IPv4 Address - **$15.00** per month"
+    },
+    {
+      "url": "https://buyvm.net/terms-of-service/",
+      "date": "2026-11-03",
+      "proved": "registration needs a legitimate name and surname and a residential address",
+      "capture": "sha256:3f9c60a76cdf8917b36629dc20e7247fad320d05fcf7971929d473a450390cb7",
+      "quote": "3,1,1 - Clients must provide their legitimate name and surname and residential address when registering an account."
+    },
+    {
+      "url": "https://buyvm.net/block-storage-slabs/",
+      "date": "2026-11-03",
+      "proved": "a slab cannot be bought alone; it needs a KVM Slice in the same facility",
+      "capture": "sha256:8964031c70ef7c54abf4e6c6de6eae2374e2fabd416f99d085d8bda4a6d981da",
+      "quote": "you must have an accompanying [KVM Dedicated Server Slice](https://buyvm.net/kvm-dedicated-server-slices/) in the same facility"
+    },
+    {
+      "url": "https://buyvm.net/block-storage-slabs/",
+      "date": "2026-11-03",
+      "proved": "a slab is at most 10TB",
+      "capture": "sha256:8964031c70ef7c54abf4e6c6de6eae2374e2fabd416f99d085d8bda4a6d981da",
+      "quote": "Block Storage Slabs can be a maximum of 10TB in size."
+    },
+    {
+      "url": "https://buyvm.net/terms-of-service/",
+      "date": "2026-11-03",
+      "proved": "registration and ordering must take place from the client's residential ISP",
+      "capture": "sha256:3f9c60a76cdf8917b36629dc20e7247fad320d05fcf7971929d473a450390cb7",
+      "quote": "3,1,4 - Registration and Order Placement must take place from the client's residential ISP."
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-03T15:03:47.538Z",
+  "price_per_tb_month": "$5.00/TB-month for the slab ($50.00/month for a 10TB slab). A slab needs a KVM Slice in the same facility: 10TB on the 4096 MB slice ($15.00/month) is $65.00/month = $6.50/TB-month all-in; on the 8 GB High Volume slice ($30.00/month, Unlim. 1000 Mbps) it is $80.00/month = $8.00/TB-month. The page does not say whether the TB in slab sizes is binary: unverified.",
+  "notes": "Sold in 256 GB chunks at $1.25/mo. Max 10 TB per Slab, max 8 Slabs per KVM Slice = 80 TB theoretical. Requires an accompanying KVM slice in the same facility. Available Las Vegas, New York, Miami, Luxembourg.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "P-P2-storage-vps-us-asia.json",
+    "seed_area": "P/P2",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "P/P2"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "A/P8"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "P/P1"
+      },
+      {
+        "value": "fails-quota",
+        "area": "F/F9"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "BuyVM Block Storage Slabs",
+      "BuyVM Block Storage Slabs (10 TB)",
+      "BuyVM Block Storage Slabs (Luxembourg + US)",
+      "BuyVM Block Storage Slabs — $5/TB/mo, attached to a $7 KVM slice"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area P/P2",
+            "evidence": "quota: Sold in 256 GB chunks at $1.25/mo. Max 10 TB per Slab, max 8 Slabs per"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area A/P8",
+            "evidence": "quota: 256 GB chunks at $1.25/mo; 1 TB $5.00; 10 TB $50.00. Max 10 TB per sla"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area P/P1",
+            "evidence": "quota: 256 GB chunks, 10 TB max per slab, 8 slabs per server"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row, area F/F9",
+            "evidence": "quota: Storage slabs at $5 per TB per month, sold in 256 GB units at $1.25. R"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area F/F9) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "Sold in 256 GB chunks at $1.25/mo. Max 10 TB per Slab, max 8 Slabs per",
+            "source": "table.md row, area P/P2",
+            "evidence": null
+          },
+          {
+            "value": "256 GB chunks at $1.25/mo; 1 TB $5.00; 10 TB $50.00. Max 10 TB per sla",
+            "source": "table.md row, area A/P8",
+            "evidence": null
+          },
+          {
+            "value": "256 GB chunks, 10 TB max per slab, 8 slabs per server",
+            "source": "table.md row, area P/P1",
+            "evidence": null
+          },
+          {
+            "value": "Storage slabs at $5 per TB per month, sold in 256 GB units at $1.25. R",
+            "source": "table.md row, area F/F9",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area P/P2)"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area A/P8)"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area P/P1)"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md (area F/F9)"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area F/F9) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "Sold in 256 GB chunks at $1.25/mo. Max 10 TB per Slab, max 8 Slabs per",
+            "source": "table.md (area P/P2)"
+          },
+          {
+            "value": "256 GB chunks at $1.25/mo; 1 TB $5.00; 10 TB $50.00. Max 10 TB per sla",
+            "source": "table.md (area A/P8)"
+          },
+          {
+            "value": "256 GB chunks, 10 TB max per slab, 8 slabs per server",
+            "source": "table.md (area P/P1)"
+          },
+          {
+            "value": "Storage slabs at $5 per TB per month, sold in 256 GB units at $1.25. R",
+            "source": "table.md (area F/F9)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Sold in 256 GB chunks at $1.25/mo. Max 10 TB per Slab, max 8 Slabs per KVM Slice = 80 TB theoretical. Requires an accompanying KVM slice in the same facility. Available Las Vegas, New York, Miami, Luxembourg.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area P/P2"
+    },
+    "target_document": "docs/storage/paid/storage-boxes.md",
+    "document_section": "US and Asia storage VPS",
+    "conversion": "mechanical",
+    "verified_at_basis": "re-read on 2026-11-03 against https://buyvm.net/block-storage-slabs/, https://buyvm.net/kvm-dedicated-server-slices/ and https://buyvm.net/terms-of-service/ (which states the residential-ISP registration rule); the third-party forum rows on bandwidth rules stay unverified: the vendor pages state no such rule",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Sold in 256 GB chunks at $1.25/mo. Max 10 TB per Slab, max 8 Slabs per KVM Slice = 80 TB theoretical. Requires an accompanying KVM slice in the same facility. Available Las Vegas, New York, Miami, Luxembourg.",
+    "limits_verbatim": "per-object-cap: none. Downgrade impossible — you must order a new slab and migrate. 10 TB hard cap per slab. Requires a base slice, so the true entry cost is a slice plus a slab.",
+    "egress_verbatim": "'Unmetered Bandwidth' on every slice, governed by a fair-use rule the company states publicly on LET: 'The rule-of-thumb for WAN (internet-facing connections) is 100Mbit/s of 24/7 usage per every 4GB of memory with a purchased slice. We do, however, allow our customers to burst their usage up to 1Gbit/s during times of lower network use.' A second formulation from a customer cites 'FUP is 25 Mbps per 1GB of RAM for the 95th percentile'. So the storage is metered-free but the sustained rate is tied to how much RAM you bought — on the $3.50/mo 1 GB slice that is ~25 Mbps sustained, i.e. ~8 TB/mo. Internal traffic between services in the same location is genuinely unmetered and unbilled.",
+    "chaining_verbatim": "Hot-pluggable between slices in the same facility with no reboot, which makes it easy to re-front with a different server. No object API at all ('We may consider an Object Store product down the line, but not at this time').",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "anything — it is a raw block device on a KVM slice",
+    "interface_verbatim": "block (attach as disk), then sftp/rsync/nfs from the slice",
+    "price_verbatim": "$5.00/TB/mo flat, plus the base slice. At 5 TB: $25/mo slab + $3.50 slice = $28.50/mo = $5.70/TB all-in. At 20 TB: 2x 10 TB slabs = $100/mo + $3.50 = $103.50/mo = $5.18/TB. The all-in figure is what matters and it is worse than the headline because the slice is mandatory overhead.",
+    "agent_focus": "cheap-PAID lane — cheapest $/TB/month storage outside Europe for a self-funded buyer. Every candidate priced at the 5 TB and 20 TB tier as $ per TB per month, egress policy quoted verbatim, and payment friction for a non-US/non-EU buyer recorded. Deliberately excludes AWS/Azure/GCP/Alibaba/R2/B2/iDrive e2 (rejected). FX rates used throughout, taken 2026-10-21 from api.frankfurter.dev: EUR 0.89015, CAD 1.4046, INR 94.47, JPY 157.88, KRW 1325.57 per USD."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

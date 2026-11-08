@@ -1,0 +1,155 @@
+{
+  "topic": "storage",
+  "slug": "item-metadata-api-as-free-key-value-json-store",
+  "provider": "Item Metadata API (MDAPI) as free key-value/JSON store",
+  "url": "https://archive.org/developers/metadata.html",
+  "category": "academic",
+  "free_tier": {
+    "stated": "No per-item metadata size is published; unlimited items x one JSON doc each, transaction-safe, free.",
+    "unit": "unlimited",
+    "metered_on": "unstated",
+    "source_url": "https://archive.org/developers/metadata.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://archive.org/developers/metadata.html",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://archive.org/developers/metadata.html",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free reads (public items), gzip/deflate supported",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "ia metadata -m / Python MDAPI; auth via the same IAS3 keys (Authorization: LOW)",
+  "chaining": "Side-car index for the 20TiB: one small JSON doc per item holding checksums, shard maps, source URLs — solves IAS3's 'cannot list all my items' problem without running your own database.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "unverified: writes are tasks limited per user over a period, HTTP 429 Too Many Requests at the threshold; the threshold is not published",
+      "source": "https://archive.org/developers/md-write.html"
+    }
+  ],
+  "limits_note": "One item per call, no wildcarding; custom fields must follow XML naming; writes are queued like any other item transaction; not intended for bulk blob data.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "Internet Archive account (email address, screen name, password); the S3 keys used for MDAPI writes come from that account.",
+    "country": null
+  },
+  "reliability_note": "Safe for bookkeeping, useless for bytes; concurrent writers need the documented concurrency pattern or they clobber metadata.",
+  "confidence": "reported",
+  "confidence_note": "reported: vendor pages read on 2026-11-03 show the sign-up fields (https://archive.org/account/signup), the per-user write task limit (https://archive.org/developers/md-write.html) and the one-item-per-call rule (https://archive.org/developers/metadata.html). The free allowance and the write threshold are not stated there; retention and per-object cap were not read.",
+  "evidence": [
+    {
+      "url": "https://archive.org/developers/metadata.html",
+      "date": "2026-10-21",
+      "proved": "(snapshot 2026-02-04) — 'may even store ad hoc JSON data in a transaction-safe manner', 'MDAPI cannot operate on more than one item at a time. There is no wildcarding'"
+    },
+    {
+      "url": "https://archive.org/developers/ias3.html",
+      "date": "2026-10-21",
+      "proved": "S3 keys sent with 'Authorization: LOW' are accepted by MDAPI write"
+    },
+    {
+      "url": "https://archive.org/account/signup",
+      "date": "2026-11-03",
+      "proved": "the Internet Archive sign-up asks for an email address, a screen name and a password",
+      "capture": "sha256:4b8b71aa7dd07a92b006c16919f3bc85576963d0e7852ea30ce4dd5b0a6cafee",
+      "quote": "Enter your email address"
+    },
+    {
+      "url": "https://archive.org/developers/md-write.html",
+      "date": "2026-11-03",
+      "proved": "metadata writes are rate limited per user; the threshold is not given",
+      "capture": "sha256:12173a1463a5c31c1f168dd4b704d4605bf21270762c3acdb5e82c0ba0522405",
+      "quote": "Users are limited in the number of tasks they may submit over a period of time."
+    },
+    {
+      "url": "https://archive.org/developers/metadata.html",
+      "date": "2026-11-03",
+      "proved": "one item per call, no wildcarding",
+      "capture": "sha256:7f8c886c76904cef1f82cfd19f9414ab36249fcfbe8572a03651904efc284daa",
+      "quote": "MDAPI cannot operate on more than one item at a time."
+    },
+    {
+      "url": "https://archive.org/developers/metadata.html",
+      "date": "2026-11-03",
+      "proved": "S3 keys authorize MDAPI calls with Authorization: LOW",
+      "capture": "sha256:7f8c886c76904cef1f82cfd19f9414ab36249fcfbe8572a03651904efc284daa",
+      "quote": "Internet Archive’s S3 keys can be sent using the `Authorization: LOW` header."
+    },
+    {
+      "url": "https://archive.org/developers/md-write.html",
+      "date": "2026-11-04",
+      "proved": "metadata writes are rate limited per user; the threshold is not given",
+      "capture": "sha256:12173a1463a5c31c1f168dd4b704d4605bf21270762c3acdb5e82c0ba0522405",
+      "quote": "Users are limited in the number of tasks they may submit over a period of time."
+    },
+    {
+      "url": "https://archive.org/developers/metadata.html",
+      "date": "2026-11-04",
+      "proved": "one item per call, no wildcarding",
+      "capture": "sha256:7f8c886c76904cef1f82cfd19f9414ab36249fcfbe8572a03651904efc284daa",
+      "quote": "MDAPI cannot operate on more than one item at a time."
+    },
+    {
+      "url": "https://archive.org/account/signup",
+      "date": "2026-11-04",
+      "proved": "the sign-up asks for an email address",
+      "capture": "sha256:4b8b71aa7dd07a92b006c16919f3bc85576963d0e7852ea30ce4dd5b0a6cafee",
+      "quote": "Enter your email address"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-11-04T01:24:26.502Z",
+  "notes": "No per-item metadata size is published; unlimited items x one JSON doc each, transaction-safe, free.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H5-internet-archive.json",
+    "seed_area": "H/H5",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "H/H5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "No per-item metadata size is published; unlimited items x one JSON doc each, transaction-safe, free.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H5"
+    },
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Internet Archive",
+    "conversion": "mechanical",
+    "verified_at_basis": "vendor pages read on 2026-11-03: https://archive.org/account/signup, https://archive.org/developers/md-write.html and https://archive.org/developers/metadata.html; the free allowance, retention and per-object cap were not read",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "No per-item metadata size is published; unlimited items x one JSON doc each, transaction-safe, free.",
+    "limits_verbatim": "One item per call, no wildcarding; custom fields must follow XML naming; writes are queued like any other item transaction; not intended for bulk blob data.",
+    "egress_verbatim": "Free reads (public items), gzip/deflate supported",
+    "chaining_verbatim": "Side-car index for the 20TiB: one small JSON doc per item holding checksums, shard maps, source URLs — solves IAS3's 'cannot list all my items' problem without running your own database.",
+    "tooling_verbatim": "ia metadata -m / Python MDAPI; auth via the same IAS3 keys (Authorization: LOW)",
+    "interface_verbatim": "rest",
+    "agent_focus": "Internet Archive deep dive: IAS3 S3-like API, per-item unlimited size, upload API, metadata, derivatives, CDX, the web archive as a CDN, practical throughput/rate limits for 20TB"
+  },
+  "binding": "request-rate",
+  "binding_note": "writes are tasks limited per user over a period (HTTP 429); the threshold is not published",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

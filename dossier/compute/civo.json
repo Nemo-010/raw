@@ -1,0 +1,169 @@
+{
+  "topic": "compute",
+  "slug": "civo",
+  "provider": "Civo Compute",
+  "url": "https://www.civo.com/pricing",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "USD 250 in credits on signup: 'You are entitled to a Free Trial of the Services to a value of $250 for a period of thirty-one (31) calendar days'. The trial is limited to one per customer. The Kubernetes control plane is free on every cluster; worker nodes bill from USD 0.007440 an hour for 1 core, 1 GB and 30 GB of NVMe.",
+    "unit": "mixed",
+    "metered_on": "wall-clock",
+    "source_url": "https://www.civo.com/legal/terms",
+    "read_on": "2026-10-23"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://www.civo.com/pricing",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://www.civo.com/pricing",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "egress and ingress fees are free and unlimited, so there is no overage price",
+    "metered": false,
+    "free_allowance": "unlimited",
+    "price_per_tb": null,
+    "source_url": "https://www.civo.com/pricing"
+  },
+  "interface": [
+    "cli"
+  ],
+  "interface_detail": "the Civo CLI is documented; a documented API for the Civo cloud platform authenticated by an API key is also published",
+  "tooling": "not stated in the source card",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "USD 250 of credit over 31 calendar days, one trial per customer",
+      "source": "https://www.civo.com/legal/terms"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "the managed control plane costs nothing; workers bill from $0.007440 an hour at 1 core and 1 GB",
+      "source": "https://www.civo.com/pricing"
+    }
+  ],
+  "limits_note": "the trial is 31 days and one per customer; instance quota is published only as an image and a default of 8 vCPU is reported, not documented",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "a card is required and must be verified before any instance or cluster exists: 'you need a valid payment method on file at all times, and won't be able to create Kubernetes clusters or instances before your card is verified'. The signup form itself asks only for a name, an email address and a password, and virtual or prepaid cards are refused",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the signup page and the Service Terms were read on 2026-10-23: the signup page states USD 250 and the terms state the 31-day window and the one-trial limit. The control plane being free is the recurring half and no record carried it",
+  "evidence": [
+    {
+      "url": "https://www.civo.com/legal/terms",
+      "date": "2026-10-23",
+      "proved": "quoted: 'You are entitled to a Free Trial of the Services to a value of $250 for a period of thirty-one (31) calendar days'"
+    },
+    {
+      "url": "https://www.civo.com/pricing",
+      "date": "2026-10-23",
+      "proved": "quoted hourly: xSmall 1 GB/1 core/25 GB $0.007440, Small 2 GB/1 core/25 GB $0.014881, Medium 4 GB/2 cores/50 GB $0.029762, Large 8 GB/4 cores/100 GB $0.059524, Extra Large 16 GB/6 cores/150 GB $0.119048, 2X Large 32 GB/8 cores/200 GB $0.238095"
+    },
+    {
+      "url": "https://www.civo.com/pricing",
+      "date": "2026-10-23",
+      "proved": "quoted: 'At Civo, we offer our new customers $250 of free credit for the first month you sign up.' and 'calculated hourly, rounding up to the next full hour'"
+    },
+    {
+      "url": "https://www.civo.com/pricing",
+      "date": "2026-11-04",
+      "proved": "egress is free and unlimited",
+      "capture": "sha256:bbc2f2e8fa434568565a2a7188d0de4d0f0f6dc5bdedfb57005f6d2b639cefbf",
+      "quote": "Egress and Ingress fees - Free & unlimited."
+    },
+    {
+      "url": "https://github.com/civo/cli",
+      "date": "2026-11-04",
+      "proved": "a CLI exists",
+      "capture": "sha256:0b795b47a0abfd465b08d6a3aa60418676b2ceb1a7a3548ec8822d5ec1982f19",
+      "quote": "Civo CLI is a tool to manage your Civo.com account from the terminal."
+    },
+    {
+      "url": "https://www.civo.com/api",
+      "date": "2026-11-04",
+      "proved": "a documented API exists",
+      "capture": "sha256:09c3e0d8274e930345b6e6c758b3ddc127027ba3ed8d42308071432e4fcf3dd0",
+      "quote": "This is the entire API for the Civo cloud platform."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T06:27:28.371Z",
+  "price_per_tb_month": null,
+  "notes": "The compute rate card is not linear in cores: Extra Large is 6 cores for $0.119048 while 2X Large is 8 cores for $0.238095, so two Extra Large instances cost the same as one 2X Large and carry 12 cores against 8. Billing rounds up to the full hour and a stopped instance still bills.",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 8.93,
+    "talaria_m24h_usd": 21.43,
+    "nemo_m10h_usd": 8.93,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "flat-pool",
+    "shape": {
+      "vcpu": 1,
+      "ram": 1,
+      "disk": 30,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "Extra Small; $250 covers 33,600 hours of it, which is 4.6 years at one node always on"
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "no session cap; a cluster bills per worker hour until the cluster is deleted"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a VPS bills by the month with an hourly rate capped at the monthly figure, so the two columns answer two questions: destroying the box between runs versus keeping it up.",
+    "free_tier_kind": "one-time-credit",
+    "m10h_usd": 8.93,
+    "m24h_usd": 21.43,
+    "price_basis": "10 h/day column = 300 h at the hourly rate, which is what a server destroyed between runs costs; 24/7 column = the monthly cap, because a VPS kept up all month stops at the cap. Rates re-read on the vendor pricing page on 2026-10-23.",
+    "granularity": {
+      "min_billed_s": 3600,
+      "rounding_s": null
+    },
+    "seed_min_bill": "min 1 h",
+    "burst_x": 2.0,
+    "burst_bill": "min 1 h",
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": {
+      "gib": 30,
+      "price": "included in the worker size, NVMe",
+      "durability": "NVMe on the node",
+      "on_stop": false,
+      "on_destroy": false,
+      "retention": "the node's lifetime; a volume survives separately"
+    },
+    "net": {
+      "out": true,
+      "in": true,
+      "ports": "any",
+      "static_ip": true,
+      "ipv6": null,
+      "allowance": null
+    },
+    "hourly_usd": {
+      "xSmall": 0.00744,
+      "Small": 0.014881,
+      "Medium": 0.029762,
+      "Large": 0.059524,
+      "Extra Large": 0.119048,
+      "2X Large": 0.238095
+    }
+  },
+  "stale": false,
+  "stale_checked_at": "2026-10-23T11:10:48.000Z",
+  "binding": "volume-quota",
+  "binding_note": "the 31-day trial window and its USD 250 ceiling end the lane before any per-hour rate limit is reached"
+}

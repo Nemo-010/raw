@@ -1,0 +1,107 @@
+{
+  "topic": "storage",
+  "slug": "india-digilocker",
+  "provider": "India DigiLocker",
+  "url": "https://www.digilocker.gov.in/",
+  "category": "gov-citizen-wallet",
+  "free_tier": {
+    "stated": "1 GB per account for citizen-uploaded documents (was 100 MB at launch).",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://en.wikipedia.org/wiki/DigiLocker",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "10 MB/file",
+    "bytes": 10000000,
+    "source_url": "https://en.wikipedia.org/wiki/DigiLocker",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://en.wikipedia.org/wiki/DigiLocker",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "not applicable — documents are private to the account holder and to requesting agencies via consent; there is no public/anonymous retrieval URL. That alone disqualifies it as a serving or archive tier.",
+    "metered": false
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "No public upload API. Partner agencies integrate via DigiLocker APIs; individuals use the app/web UI only.",
+  "tooling": "none for bulk; UI-only for citizens.",
+  "chaining": "none — private namespace, consent-gated sharing, no direct link model.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "10 MB/file",
+      "source": "https://en.wikipedia.org/wiki/DigiLocker"
+    }
+  ],
+  "limits_note": "per-object-cap 10 MB/file, per-account 1 GB. identity_cost is the hard stop: Aadhaar number + OTP to the Aadhaar-linked Indian mobile. A non-resident without an Aadhaar-linked +91 number cannot register at all.",
+  "identity_cost": {
+    "kind": "national-id",
+    "detail": "national-id",
+    "country": null
+  },
+  "reliability_note": "ISO 27001 state service, very reliable, but 1 GB total and no public URLs mean it fails two of the four filters simultaneously.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://en.wikipedia.org/wiki/DigiLocker",
+      "date": "2026-10-21",
+      "proved": "'It also provides 1 GB storage space to each account to upload scanned copies of legacy documents'; 'Users need to possess an Aadhaar number... identity is verified using a one-time password (OTP) sent to the linked mobile number'; 'Individual files are limited to 10 MB.'"
+    },
+    {
+      "url": "https://www.digilocker.gov.in/web/about",
+      "date": "2026-10-21",
+      "proved": "live, official NeGD/MeitY operator page (no consumer quota or API published there)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "1 GB per account for citizen-uploaded documents (was 100 MB at launch).",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H15-gov-municipal-portals.json",
+    "seed_area": "H/H15",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "H/H15"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "1 GB per account for citizen-uploaded documents (was 100 MB at launch).",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H15"
+    },
+    "target_document": "docs/storage/free/government-portals.md",
+    "document_section": "Government and municipal portals",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "1 GB per account for citizen-uploaded documents (was 100 MB at launch).",
+    "limits_verbatim": "per-object-cap 10 MB/file, per-account 1 GB. identity_cost is the hard stop: Aadhaar number + OTP to the Aadhaar-linked Indian mobile. A non-resident without an Aadhaar-linked +91 number cannot register at all.",
+    "egress_verbatim": "not applicable — documents are private to the account holder and to requesting agencies via consent; there is no public/anonymous retrieval URL. That alone disqualifies it as a serving or archive tier.",
+    "chaining_verbatim": "none — private namespace, consent-gated sharing, no direct link model.",
+    "identity_verbatim": "national-id",
+    "tooling_verbatim": "none for bulk; UI-only for citizens.",
+    "interface_verbatim": "No public upload API. Partner agencies integrate via DigiLocker APIs; individuals use the app/web UI only.",
+    "agent_focus": "Government, municipal and public-sector hosting that accepts citizen deposits. Decisive axis: can an INDIVIDUAL (not an agency) publish, at what identity cost, at what per-file cap, and are published files anonymously retrievable afterwards. Probed CKAN write paths empirically (unauth organization_create, /user/register, owner_org distribution over 300-dataset samples) rather than trusting marketing copy."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

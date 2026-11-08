@@ -1,0 +1,181 @@
+{
+  "topic": "storage",
+  "slug": "borgbase-medium-large",
+  "provider": "BorgBase — Medium / Large",
+  "url": "https://www.borgbase.com/",
+  "category": "storage-only (Borg/restic repository host)",
+  "free_tier": {
+    "stated": "10 GB free forever; Small 250 GB, Medium 1 TB, Large 2 TB; flexible quota up to 3x plan",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://docs.borgbase.com/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.borgbase.com/pricing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "10 GB free forever; Small 250 GB, Medium 1 TB, Large 2 TB; flexible quota up to 3x plan | Plan size + 3x flexible quota; append-only mode; no S3",
+    "source_url": "https://docs.borgbase.com/pricing",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Verbatim from docs: \"We don't charge upload, download or API calls.\" Unmetered, fair-use policed by a human.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "sftp",
+    "ssh",
+    "rclone"
+  ],
+  "interface_detail": "SSH (borg/restic), web UI, REST API",
+  "tooling": "borg, borgmatic, restic, Vorta; rclone only via SFTP",
+  "chaining": "Append-only repository — a backup tier, not a mountable serving tier",
+  "limits": [],
+  "limits_note": "Plan size + 3x flexible quota; append-only mode; no S3",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "EU or US region choice; 30-day refund on annual. Small operator — the 2 TB ceiling means 20 TB would need a custom plan.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.borgbase.com/pricing",
+      "date": "2026-10-21",
+      "proved": "verbatim 'We don't charge upload, download or API calls', 3x flexible quota, custom plans by email"
+    },
+    {
+      "url": "https://www.borgbase.com/",
+      "date": "2026-10-21",
+      "proved": "homepage meta: 10 GB free, $2.50/mo floor; 'No API- or data transfer charges'"
+    },
+    {
+      "url": "https://freetier.co/directory/products/borgbase",
+      "date": "2026-10-21",
+      "proved": "+ https://saaspartout.com/marketplace/borgbase/ — Medium 1TB $90/yr ($7.50/TB), Large 2TB $165/yr, additional usage $6/TB"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "2TB: $165/yr -> $6.88/TB/mo. 1TB: $90/yr -> $7.50/TB/mo. Marginal beyond plan: $6.00/TB/mo",
+  "notes": "10 GB free forever; Small 250 GB, Medium 1 TB, Large 2 TB; flexible quota up to 3x plan",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-P6-seedbox-storage-hosts.json",
+    "seed_area": "A/P6",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "A/P6"
+      },
+      {
+        "value": "fails-quota",
+        "area": "H/H9"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "BorgBase — Medium / Large",
+      "BorgBase — free 10 GB Borg/restic repository"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area A/P6",
+            "evidence": "quota: 10 GB free forever; Small 250 GB, Medium 1 TB, Large 2 TB; flexible qu"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row, area H/H9",
+            "evidence": "quota: 10 GB free forever (third-party report of the current plan; the 10 GB"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area H/H9) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "10 GB free forever; Small 250 GB, Medium 1 TB, Large 2 TB; flexible qu",
+            "source": "table.md row, area A/P6",
+            "evidence": null
+          },
+          {
+            "value": "10 GB free forever (third-party report of the current plan; the 10 GB",
+            "source": "table.md row, area H/H9",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area A/P6)"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md (area H/H9)"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area H/H9) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "10 GB free forever; Small 250 GB, Medium 1 TB, Large 2 TB; flexible qu",
+            "source": "table.md (area A/P6)"
+          },
+          {
+            "value": "10 GB free forever (third-party report of the current plan; the 10 GB",
+            "source": "table.md (area H/H9)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "10 GB free forever; Small 250 GB, Medium 1 TB, Large 2 TB; flexible quota up to 3x plan",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/P6"
+    },
+    "target_document": "docs/storage/paid/storage-boxes.md",
+    "document_section": "Seedbox and storage hosts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "10 GB free forever; Small 250 GB, Medium 1 TB, Large 2 TB; flexible quota up to 3x plan",
+    "limits_verbatim": "Plan size + 3x flexible quota; append-only mode; no S3",
+    "egress_verbatim": "Verbatim from docs: \"We don't charge upload, download or API calls.\" Unmetered, fair-use policed by a human.",
+    "chaining_verbatim": "Append-only repository — a backup tier, not a mountable serving tier",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "borg, borgmatic, restic, Vorta; rclone only via SFTP",
+    "interface_verbatim": "SSH (borg/restic), web UI, REST API",
+    "price_verbatim": "2TB: $165/yr -> $6.88/TB/mo. 1TB: $90/yr -> $7.50/TB/mo. Marginal beyond plan: $6.00/TB/mo",
+    "agent_focus": "Wave 7 cheap-paid lane: seedboxes and storage-specific hosts as bulk storage (not seeding). Price floor per TB-month with free/unmetered egress. Feral, Ultra.cc, Whatbox, PulsedMedia, SeedHost.eu, Bytesized, Seedbox.io/HostingByDesign, Hostsailor, RapidSeedbox, Dediseedbox, Xirvik, plus storage-only rsync.net, BorgBase, Tuxis, Greenhost, Njalla, Hetzner Storage Share/Box, Icedrive, FileLu."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

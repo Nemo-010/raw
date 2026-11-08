@@ -1,0 +1,155 @@
+{
+  "topic": "compute",
+  "slug": "orkestr",
+  "provider": "orkestr Sandboxes",
+  "url": "https://orkestr.eu/sandboxes",
+  "category": "container and VM sandbox",
+  "free_tier": {
+    "stated": "free to start with no credit card, on per-second CPU and memory billing with no minimums and no platform fee; a sandbox's rootfs is dropped on terminate",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://orkestr.eu/sandboxes",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://orkestr.eu/sandboxes",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://orkestr.eu/sandboxes",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "Three per-sandbox network modes: off (default, no outbound), restricted (allowlist) and open (full egress, paid tier with verified billing); no egress allowance or overage price is published on the sandbox pages.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://orkestr.eu/sandboxes"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "REST API at https://api.orkestr.eu/v1 with a Bearer token minted in the orkestr console, documented at orkestr.eu/docs/sandboxes/api-reference; Python and JS SDKs wrap it.",
+  "tooling": "the orkestr Python SDK and JS SDK (docs at orkestr.eu/docs/sandboxes/python-sdk and /js-sdk), or the REST API directly from any language.",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "per-second CPU and memory, with no minimums, no per-request charge and no platform fee",
+      "source": "https://orkestr.eu/sandboxes"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "terminating drops the rootfs; snapshot storage is billed on the same invoice",
+      "source": "https://orkestr.eu/sandboxes"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "each sandbox gets its own kernel and rootfs, with hardware-virtualised isolation",
+      "source": "https://orkestr.eu/sandboxes"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "'Free to start, no credit card', quoted from orkestr.eu/sandboxes read 2026-10-22",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the sandboxes page was read on 2026-10-22 and states the no-card start, the per-second model and what terminate does. The free amount is not published, so the record does not invent one",
+  "evidence": [
+    {
+      "url": "https://orkestr.eu/sandboxes",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://orkestr.eu/sandboxes",
+      "date": "2026-10-22",
+      "proved": "'Free to start, no credit card. Spin up your first sandbox in seconds.' with 'Per-second pricing, no minimums. Pay for the CPU and memory you use, by the second. No charge per request, no monthly platform fee. Snapshot storage is on the same bill.' and 'each sandbox gets its own kernel and rootfs, dropped on terminate', quoted"
+    },
+    {
+      "url": "https://orkestr.eu/docs/sandboxes/api-reference",
+      "date": "2026-11-03",
+      "proved": "a REST API exists",
+      "capture": "sha256:a72f684c2eee4ba10497f775de25f08f039f98dcf8a2f993f9ebb6db3f10e1f4",
+      "quote": "- `POST /v1/sandboxes` - create a sandbox"
+    },
+    {
+      "url": "https://orkestr.eu/sandboxes",
+      "date": "2026-11-03",
+      "proved": "open egress is a paid-tier mode; no price",
+      "capture": "sha256:b151c62423b71b5e031e5f953c5baa43d676a8184d7e6e1a025cb0809f726227",
+      "quote": "open (full egress, paid tier with verified billing)"
+    },
+    {
+      "url": "https://orkestr.eu/docs/sandboxes/api-reference",
+      "date": "2026-11-04",
+      "proved": "the provider documents a REST API at api.orkestr.eu/v1",
+      "capture": "sha256:a72f684c2eee4ba10497f775de25f08f039f98dcf8a2f993f9ebb6db3f10e1f4",
+      "quote": "The sandbox REST API lives at `https://api.orkestr.eu/v1`."
+    },
+    {
+      "url": "https://orkestr.eu/docs/sandboxes/api-reference",
+      "date": "2026-11-04",
+      "proved": "the provider documents Python and JS SDKs",
+      "capture": "sha256:a72f684c2eee4ba10497f775de25f08f039f98dcf8a2f993f9ebb6db3f10e1f4",
+      "quote": "Use it directly from any language, or pick the [Python](https://orkestr.eu/docs/sandboxes/python-sdk) or [JS](https://orkestr.eu/docs/sandboxes/js-sdk) SDK"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T06:40:26.616Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 51.2,
+    "talaria_m24h_usd": 122.88,
+    "nemo_m10h_usd": 25.6,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "unclassified",
+    "shape": null,
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "cold boot in roughly 150 ms and under 30 ms from a warm pool; the page states no idle reap, and a terminated sandbox loses its rootfs"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "allowance",
+    "granularity": {
+      "min_billed_s": 0,
+      "rounding_s": null
+    },
+    "burst_x": 1.0,
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": {
+      "gib": null,
+      "price": "snapshot storage billed per second on the same bill",
+      "durability": "rootfs, dropped on terminate; a snapshot survives",
+      "on_stop": true,
+      "on_destroy": false,
+      "retention": "until the snapshot is deleted"
+    },
+    "net": {
+      "out": true,
+      "in": true,
+      "ports": "port previews; the page states none",
+      "static_ip": false,
+      "ipv6": null,
+      "allowance": null
+    }
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "retention-clamped"
+}

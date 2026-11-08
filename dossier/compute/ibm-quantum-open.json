@@ -1,0 +1,113 @@
+{
+  "topic": "compute",
+  "slug": "ibm-quantum-open",
+  "provider": "IBM Quantum Open",
+  "url": "https://quantum.cloud.ibm.com/docs/en/guides/plans-overview",
+  "category": "quantum compute",
+  "free_tier": {
+    "stated": "Batch 1 recorded the Open Plan at 10 minutes of QPU runtime per 28-day rolling window. IBM's documentation confirms it and adds a time box and a constraint batch 1 did not carry, quoted: 'Run your quantum circuits on the world's leading QPUs for free (up to 10 minutes per 28-day rolling window)' and 'Open Plan instances can only be created in the us-east region'. The promotion is quoted: 'As of 16 March 2026, active Open Plan users can opt in to an additional 180 minutes over the next 12 months', and the blog states the precondition: 'Use 20 minutes of runtime within any 12-month period' and that the plan 'reverts back to 10 minutes/month once 12-month period ends'.",
+    "unit": "minutes",
+    "metered_on": "wall-clock",
+    "source_url": "https://quantum.cloud.ibm.com/docs/en/guides/plans-overview",
+    "read_on": "2026-10-22",
+    "notes": "monthly-allowance"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://quantum.cloud.ibm.com/docs/en/guides/plans-overview",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://quantum.cloud.ibm.com/docs/en/guides/plans-overview",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "not published on the page read: no egress term was found, so nothing is asserted",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://quantum.cloud.ibm.com/docs/en/guides/plans-overview"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "qiskit_ibm_runtime Python package (QiskitRuntimeService); the REST API is also called with curl or Python requests",
+  "chaining": "A 10-minute-a-month QPU allowance composes with a simulator on a free CPU runner, because most of the work in a variational loop can be done on a simulator and only the final evaluation needs the hardware.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "The allowance is 10 minutes in 28 days and every circuit execution plus its transpile and queue overhead spends it, so a single variational loop exhausts a month, and the 180-minute promotion cannot be reached in under two months because it requires 20 minutes of prior runtime.",
+      "source": "https://quantum.cloud.ibm.com/docs/en/guides/plans-overview"
+    }
+  ],
+  "limits_note": "The allowance is 10 minutes in 28 days and every circuit execution plus its transpile and queue overhead spends it, so a single variational loop exhausts a month, and the 180-minute promotion cannot be reached in under two months because it requires 20 minutes of prior runtime.",
+  "binding": "volume-quota",
+  "binding_note": "The allowance is 10 minutes in 28 days and every circuit execution plus its transpile and queue overhead spends it, so a single variational loop exhausts a month, and the 180-minute promotion cannot be reached in under two months because it requires 20 minutes of prior runtime.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "as stated by the provider's signup page",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://quantum.cloud.ibm.com/docs/en/guides/plans-overview",
+      "date": "2026-10-22",
+      "proved": "quoted: 'up to 10 minutes per 28-day rolling window'; 'Open Plan instances can only be created in the us-east region'; 'active Open Plan users can opt in to an additional 180 minutes over the next 12 months'"
+    },
+    {
+      "url": "https://www.ibm.com/quantum/pricing",
+      "date": "2026-10-22",
+      "proved": "Open Plan: 'Access quantum computers for up to 10 minutes of runtime per month. Active users may be eligible to request additional time.' Price: Free, quoted"
+    },
+    {
+      "url": "https://quantum.cloud.ibm.com/docs/en/guides/plans-overview",
+      "date": "2026-10-22",
+      "proved": "'Run your quantum circuits on the world's best QPUs for free (up to 10 minutes per 28-day rolling window)'; Open Plan instances can only be created in the us-east region, quoted"
+    },
+    {
+      "url": "https://www.ibm.com/quantum/blog/open-plan-updates",
+      "date": "2026-10-22",
+      "proved": "quoted: 'users who use 20 minutes of runtime within any 12-month period can opt in to a special one-time promotion and get 180 minutes of runtime for the next 12 months'; 'Plan reverts back to 10 minutes/month once 12-month period ends'; pre-req 'Non-trial account' [re-read 2026-10-22]"
+    },
+    {
+      "url": "https://quantumcomputing.stackexchange.com/questions/46432/do-paid-pay-as-you-go-minutes-count-toward-the-20-minutes-needed-for-ibms-180-m",
+      "date": "2026-10-22",
+      "proved": "a user who spent the whole 10-minute allowance reports being 10 minutes short of the promotion, and quotes the pay-as-you-go rate as USD 96 a minute, with no documented answer on whether paid minutes count [date precision: year precision] [re-read 2026-10-22]"
+    },
+    {
+      "url": "https://quantum.cloud.ibm.com/docs/en/guides/plans-overview",
+      "date": "2026-11-04",
+      "proved": "the documented Python client is qiskit_ibm_runtime",
+      "capture": "sha256:9348a864167e7c103c3be430442de37103d555776c311d4f6750dccf8ebe5000",
+      "quote": "from qiskit_ibm_runtime import QiskitRuntimeService"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T11:19:14.181Z",
+  "notes": "The promotion is the interesting term: 180 minutes for 12 months is 18 times the base allowance, and it is reachable because the only preconditions are a non-trial account and 20 minutes of prior use. The failure is the price beyond the line: one user cites USD 96 a minute on the pay-as-you-go meter, so an overrun is not a soft stop and the 10-minute window has to be watched rather than delegated. Batch 1's figure is confirmed; the region restriction and the promotion are additions.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "IBM Quantum Open Plan - the 10-minute window, the one-time 180-minute promotion, and the price of a minute over the line",
+      "class": "verification",
+      "category_as_written": "quantum",
+      "free_tier_kind": "monthly-allowance",
+      "shape": null,
+      "seen_routes": [
+        "broker read 200 quantum.cloud.ibm.com docs",
+        "broker read 200 ibm.com/quantum/blog",
+        "broker search 200"
+      ],
+      "agents": [
+        "a10-repos",
+        "b09-inverse-search"
+      ],
+      "promoted_from": ".tmp/wave2"
+    }
+  }
+}

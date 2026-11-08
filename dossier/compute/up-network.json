@@ -1,0 +1,127 @@
+{
+  "topic": "compute",
+  "slug": "up-network",
+  "provider": "up_network",
+  "url": "https://up-network.ch/services/vps-hosting",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "The vendor's page prices VPS Basic Intel S at CHF 2.78 a month in its configuration data (CHF 33.33 billed annually), the same price the tracker's cheapest row carries for the same shape (2 shared vCPU, 4 GB of RAM, a 20 GB disk, IPv6, Gland, Switzerland). The vendor's documentation lists BASIC Intel S as '2 partages / 4 Go ECC / 20 Go / 100 Mb/s' guaranteed with burst to 10 Gb/s, and describes the Intel disk as SSD on a SAN accelerated by an NVMe cache, so the tracker's 'NVMe' label is imprecise. The pricing page's entry line is 'Dès CHF 2.50/mois, paiement annuel'. Locations are Gland in the canton of Vaud, with interconnection at Zurich.",
+    "unit": "GiB",
+    "metered_on": "wall-clock",
+    "source_url": "https://up-network.ch/services/vps-hosting",
+    "read_on": "2026-10-22",
+    "notes": "none"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://up-network.ch/services/vps-hosting",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://up-network.ch/services/vps-hosting",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "the vendor states unlimited traffic subject to a fair-use policy it does not quantify on the pages read, at a guaranteed rate of 100 Mb/s on BASIC Intel S with a burst ceiling of 10 Gb/s; the tracker instead lists 50,000 GB/month; no per-TB price is published",
+    "metered": false,
+    "free_allowance": "unlimited per the vendor, subject to fair use, at 100 Mb/s guaranteed and 10 Gb/s burst; the tracker lists 50,000 GB a month",
+    "price_per_tb": null,
+    "source_url": "https://up-network.ch/services/vps-hosting"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "the vendor names VMmanager 6, Proxmox VE and KVM as its platforms and offers a BGP session as a plan option; no API was read",
+  "chaining": "A Swiss location and an independent AS213929 at the lowest price among the providers compared, with unlimited traffic that is shaped rather than metered. That combination suits a small always-on node whose location matters more than its throughput, and the 20 GB disk keeps it a control point rather than a store.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "The vendor states no monthly byte allowance: it says 'Trafic illimite' and its documentation adds that unlimited traffic 'reste soumis au fair use'. The tracker instead prints 50,000 GB/month, a figure no vendor page read repeats, so it is recorded here as the tracker's and not as the plan's. The real published wall is the rate, 100 Mb/s guaranteed on BASIC Intel S with a burst to 10 Gb/s, so a sustained transfer is shaped rather than cut off. A second gate is IPv4: the vendor documents IPv4 as an option on every BASIC plan, with a /64 IPv6 included by default.",
+      "source": "https://up-network.ch/services/vps-hosting"
+    }
+  ],
+  "limits_note": "The vendor states no monthly byte allowance: it says 'Trafic illimite' and its documentation adds that unlimited traffic 'reste soumis au fair use'. The tracker instead prints 50,000 GB/month, a figure no vendor page read repeats, so it is recorded here as the tracker's and not as the plan's. The real published wall is the rate, 100 Mb/s guaranteed on BASIC Intel S with a burst to 10 Gb/s, so a sustained transfer is shaped rather than cut off. A second gate is IPv4: the vendor documents IPv4 as an option on every BASIC plan, with a /64 IPv6 included by default.",
+  "binding": "per-ip-shaping",
+  "binding_note": "The vendor states no monthly byte allowance: it says 'Trafic illimite' and its documentation adds that unlimited traffic 'reste soumis au fair use'. The tracker instead prints 50,000 GB/month, a figure no vendor page read repeats, so it is recorded here as the tracker's and not as the plan's. The real published wall is the rate, 100 Mb/s guaranteed on BASIC Intel S with a burst to 10 Gb/s, so a sustained transfer is shaped rather than cut off. A second gate is IPv4: the vendor documents IPv4 as an option on every BASIC plan, with a /64 IPv6 included by default.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "not read: the signup page was not fetched in this lane",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed; the vendor states BASIC and PRO carry no stated availability percentage, best effort only",
+  "confidence": "reported",
+  "evidence": [
+    {
+      "url": "https://vpspricetracker.com/provider/up_network/vps",
+      "date": "2026-10-22",
+      "proved": "cheapest row, cells in page order: '2 Intel Cores (shared)', '4,096 MB RAM', '20 GB NVMe', '50,000 GB/month bandwidth', '10 Gbps port speed', 'IPv6', 'Gland Switzerland', price 'CHF2.78 / month', under the lead 'These are the cheapest VPSs currently offered by up-network, starting at CHF2.78 per month'"
+    },
+    {
+      "url": "https://docs.up-network.ch/documentation/vps/vps",
+      "date": "2026-10-22",
+      "proved": "the vendor's own configuration table, quoted from the Markdown row 'BASIC Intel S | 2 partages | 4 Go ECC | 20 Go | 100 Mb/s'; on rate, 'Le burst peut atteindre 10 Gb/s sur BASIC et 20 Gb/s sur PRO; il ne remplace pas le debit garanti'; on addressing, two separate sentences, 'Un IPv6 /64 est inclus par defaut' and 'L'IPv4 principale est en option sur BASIC'; the table is dated 'relevees dans le catalogue public le 3 octobre 2026'. French accents are stripped for ASCII; the page is French"
+    },
+    {
+      "url": "https://up-network.ch/services/vps-hosting",
+      "date": "2026-10-22",
+      "proved": "the pricing page's entry line, quoted with accents stripped for ASCII: 'Des CHF 2.50/mois, paiement annuel', with PRO Intel S at 'CHF 29.00/mois' billed 'CHF 348.00 tous les 12 mois' and 'Trafic illimite' on every PRO plan"
+    },
+    {
+      "url": "https://up-network.ch/services/vps-hosting",
+      "date": "2026-11-07",
+      "proved": "the pricing page's embedded configuration data prices VPS Basic Intel S at CHF 2.78 a month: the basic-s object's periods list the monthly period at totalNet 2.78, currency CHF",
+      "capture": "sha256:3158650c24c668b4fdc148e67ca4cdd62c5341e65ffb7fa736bf899fbcfa5eb8",
+      "quote": "\\\"slug\\\":\\\"basic-s\\\",\\\"id\\\":412,\\\"name\\\":\\\"VPS Basic Intel S\\\",\\\"projectId\\\":2,\\\"datacenterId\\\":1,\\\"tier\\\":\\\"BASIC\\\",\\\"currency\\\":\\\"CHF\\\",\\\"periods\\\":[{\\\"value\\\":-50,\\\"label\\\":\\\"day\\\",\\\"kind\\\":\\\"day\\\",\\\"totalNet\\\":0.19},{\\\"value\\\":1,\\\"label\\\":\\\"monthly\\\",\\\"kind\\\":\\\"month\\\",\\\"totalNet\\\":2.78}"
+    },
+    {
+      "url": "https://up-network.ch/services/vps-hosting",
+      "date": "2026-11-07",
+      "proved": "the billing-conditions section lists five billing periods; no renewal price appears on the page",
+      "capture": "sha256:4439a1ee70a90f8cda02b4b968c8b9831661f56eaba130ab14db9f08b3d5ad69",
+      "quote": "Cinq périodes: quotidien, mensuel, trimestriel, semestriel et annuel"
+    },
+    {
+      "url": "https://up-network.ch/services/vps-hosting",
+      "date": "2026-11-07",
+      "proved": "the page's configuration data marks ipv4 included 0 on VPS Basic Intel S, purchasable to 16 at CHF 3.33 on the monthly period",
+      "capture": "sha256:3158650c24c668b4fdc148e67ca4cdd62c5341e65ffb7fa736bf899fbcfa5eb8",
+      "quote": "\\\"ipv4\\\":{\\\"kind\\\":\\\"integer\\\",\\\"addonId\\\":416,\\\"included\\\":0,\\\"min\\\":0,\\\"max\\\":16,\\\"step\\\":1,\\\"measure\\\":\\\"pcs.\\\",\\\"stepNetByPeriod\\\":{\\\"1\\\":3.33,\\\"3\\\":10,\\\"6\\\":20,\\\"12\\\":40,\\\"-50\\\":0.22}"
+    },
+    {
+      "url": "https://up-network.ch/services/vps-hosting",
+      "date": "2026-11-07",
+      "proved": "the page's configuration data prices VPS Basic Intel Micro only annually, CHF 13.33 for twelve months",
+      "capture": "sha256:3158650c24c668b4fdc148e67ca4cdd62c5341e65ffb7fa736bf899fbcfa5eb8",
+      "quote": "\\\"slug\\\":\\\"basic-micro\\\",\\\"id\\\":502,\\\"name\\\":\\\"VPS Basic Intel Micro\\\",\\\"projectId\\\":2,\\\"datacenterId\\\":1,\\\"tier\\\":\\\"BASIC\\\",\\\"currency\\\":\\\"CHF\\\",\\\"periods\\\":[{\\\"value\\\":12,\\\"label\\\":\\\"annually\\\",\\\"kind\\\":\\\"month\\\",\\\"totalNet\\\":13.33}"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-07T17:40:47.140Z",
+  "notes": "Every quote in the first read came from French pages and is reproduced with accents stripped for ASCII. The vendor page's configuration data, read 2026-11-07, prices VPS Basic Intel S at CHF 2.78 a month (CHF 33.33 billed annually) and prices VPS Basic Intel Micro only annually, at CHF 13.33 a year, so the tracker's CHF 2.78 row and the vendor's own price agree; the pricing page's entry line still reads 'Dès CHF 2.50/mois, paiement annuel', which matches no SKU's monthly price in the page's data. IPv4 is an add-on on Basic Intel S (none included, the add-on priced CHF 3.33 a month on the monthly period) where the PRO plans include one. The documentation lists the BASIC Intel Micro at 1 shared vCPU, 512 Mo and 10 Go with a 50 Mb/s guaranteed rate. The tracker's 10 Gbps port is the burst ceiling, not the guaranteed rate, and is recorded as such here. Wall: a raw fetch of up-network.ch failed on the first read (nothing established about the target) and the text reader returned the page; the read of 2026-11-07 is a registered raw fetch of the same page.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "up_network",
+      "class": null,
+      "category_as_written": "KVM VPS, Switzerland",
+      "free_tier_kind": "none",
+      "shape": {
+        "vcpu": 2,
+        "ram_gib": 4,
+        "disk_gib": 20,
+        "gpu_class": null,
+        "gpu_count": null
+      },
+      "seen_routes": null,
+      "agents": [
+        "LANE10"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "price_on_page": "CHF 2.78/month for VPS Basic Intel S",
+    "renewal_chf": "not published: the pricing page prices five billing periods (daily, monthly, quarterly, semi-annual, annual) with period discounts and prints no renewal price"
+  }
+}

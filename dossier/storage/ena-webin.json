@@ -1,0 +1,117 @@
+{
+  "topic": "storage",
+  "slug": "ena-webin",
+  "provider": "ENA (European Nucleotide Archive) — Webin",
+  "url": "https://www.ebi.ac.uk/ena",
+  "category": "academic",
+  "free_tier": {
+    "stated": "No fixed quota. Own fair-use policy: 'We place no absolute limit within the 2-month period on the total volume of user data that may exist in a data upload area at any one time' and 'we ... expect that volumes would not exceed 10 Terabytes under normal circumstances.'",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://ena-docs.readthedocs.io/en/latest/submit/fileprep/upload.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://ena-docs.readthedocs.io/en/latest/submit/fileprep/upload.html",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "Retention: transit area purged after 2 months if not submitted; once submitted, ENA is permanent",
+    "days": 60,
+    "source_url": "https://ena-docs.readthedocs.io/en/latest/submit/fileprep/upload.html",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Unmetered and anonymous. ftp.sra.ebi.ac.uk is CORS-open (`Access-Control-Allow-Origin: *`) and already served through Cloudflare (`Server: cloudflare`), so CF is in front by default.",
+    "metered": false
+  },
+  "interface": [
+    "sftp",
+    "ftp",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "sftp",
+  "tooling": "Webin-CLI (github.com/enasequence/webin-cli), plus plain FTP/Aspera. Read side is plain HTTPS/FTP with HTTP range support — works with rclone's http/`sftp` remotes and curl.",
+  "chaining": "One Webin account = unlimited studies. The upload area is a transit buffer (10 TB documented expectation), while *published* accessions are permanent and unmetered on the read side. Multiply across accounts/centres; read side needs no account at all, so the fetch workload is uncapped regardless of how many deposit accounts exist.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "45 KB/s",
+      "source": "https://ena-docs.readthedocs.io/en/latest/submit/fileprep/upload.html"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "430 KB/s",
+      "source": "https://ena-docs.readthedocs.io/en/latest/submit/fileprep/upload.html"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "Retention: transit area purged after 2 months",
+      "source": "https://ena-docs.readthedocs.io/en/latest/submit/fileprep/upload.html"
+    }
+  ],
+  "limits_note": "per-object-cap: none documented per file; per-request volume soft-capped at ~10 TB per 2-month window per upload area, and upload areas are not backed up. Retention: transit area purged after 2 months if not submitted; once submitted, ENA is permanent. Binding constraint on READ is per-ip-shaping: single stream 45 KB/s, 8 parallel ranged GETs 430 KB/s (9.6x).",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ead side. Multiply across accounts/centres; read side needs no account at all, so the fetch workload is uncapped regardless of how many deposit accounts exist. per-object-cap: none documente",
+    "country": null
+  },
+  "reliability_note": "Upload path is the weak side — FTP sessions drop out, Aspera recommended; upload area is explicitly 'not backed up'.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://ena-docs.readthedocs.io/en/latest/submit/fileprep/upload.html",
+      "date": "2026-10-21",
+      "proved": "quotes 'no absolute limit within the 2-month period', 'would not exceed 10 Terabytes under normal circumstances', 'temporary transit area which is not backed up'"
+    },
+    {
+      "url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR000/SRR000001/SRR000001_1.fastq.gz",
+      "date": "2026-10-21",
+      "proved": "probe: GET -r 0-1023 -> 206 Partial Content, Content-Range: bytes 0-1023/23319983, body starts 1f 8b 08 00 (real gzip magic), Server: cloudflare"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: 8 parallel ranged GETs -> 8,000,000 bytes in 18.6s (430 KB/s) vs 1 connection 1,001,024 bytes in 22.2s (45 KB/s)"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No fixed quota. Own fair-use policy: 'We place no absolute limit within the 2-month period on the total volume of user data that may exist in a data upload area at any one time' and 'we ... expect that volumes would not exceed 10 Terabytes under normal circumstances.'",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D7-domain-science-repos.json",
+    "seed_area": "D/D7",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "D/D7"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/academic.md",
+    "document_section": "Domain science repositories",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No fixed quota. Own fair-use policy: 'We place no absolute limit within the 2-month period on the total volume of user data that may exist in a data upload area at any one time' and 'we ... expect that volumes would not exceed 10 Terabytes under normal circumstances.'",
+    "limits_verbatim": "per-object-cap: none documented per file; per-request volume soft-capped at ~10 TB per 2-month window per upload area, and upload areas are not backed up. Retention: transit area purged after 2 months if not submitted; once submitted, ENA is permanent. Binding constraint on READ is per-ip-shaping: single stream 45 KB/s, 8 parallel ranged GETs 430 KB/s (9.6x).",
+    "egress_verbatim": "Unmetered and anonymous. ftp.sra.ebi.ac.uk is CORS-open (`Access-Control-Allow-Origin: *`) and already served through Cloudflare (`Server: cloudflare`), so CF is in front by default.",
+    "chaining_verbatim": "One Webin account = unlimited studies. The upload area is a transit buffer (10 TB documented expectation), while *published* accessions are permanent and unmetered on the read side. Multiply across accounts/centres; read side needs no account at all, so the fetch workload is uncapped regardless of how many deposit accounts exist.",
+    "tooling_verbatim": "Webin-CLI (github.com/enasequence/webin-cli), plus plain FTP/Aspera. Read side is plain HTTPS/FTP with HTTP range support — works with rclone's http/`sftp` remotes and curl.",
+    "interface_verbatim": "sftp",
+    "agent_focus": "domain-specific scientific data repositories with large free quotas (not generalist: Zenodo/OSF/Dataverse excluded as already done)"
+  },
+  "binding": "retention-clamped",
+  "binding_note": "a clock, not a quota: bytes leave whether or not the client is finished with them",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}
