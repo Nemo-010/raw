@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """check_lock_fresh.py: is scripts/fshy/public.lock behind the public Worker's rules?
 
-public.lock pins the commit of Azathothas/fshy.ajam.dev that the Python twins (fr.py, build.py) are tested
+public.lock pins the commit of f-shy/fshy.ajam.dev that the Python twins (fr.py, build.py) are tested
 against. When the public repository changes a rule file of the Worker or the parity fixture, the twins and the
 pin move together (scripts/fshy/README.md, "Parity with the public Worker"). This asks the GitHub API for the
 newest commit on the default branch of the public repository that touched each of those files, and fails when
 the pin does not contain it. It decides by ancestry (the compare endpoint), never by date.
 
-It needs the network, so the offline gate (scripts/gate.sh) does not run it; the job lock-fresh of the workflow
-f-research-ci in Azathothas/fshy.ajam.dev does (scripts/research/ci-checks.sh lock).
+It needs the network, so the offline gate (scripts/gate.sh) does not run it; the gate job's linux script of f-shy/raw
+runs it when the head moves the pin (scripts/research/ci-checks.sh linux), and the daily run is
+f-research-ci.yml's lock-fresh job in f-shy/fshy.ajam.dev.
 
 usage:
   python scripts/fshy/check_lock_fresh.py              check the pin against the public repository

@@ -97,10 +97,11 @@ A keepalive that pings the wrong endpoint does not keep the app awake.
 
 ## The clocks that are described and not stated
 
-Thirty-nine sandbox records say something about time and carry no number. Across the
-whole topic, 98 records carry a note and no numeric clock. They are the topic's largest
-evidentiary gap, and the shapes are worth naming because each one is a different
-problem.
+Fifty of the 142 sandbox-category records carry a `session_cap` note that names a time — a
+second, minute, hour, day, an idle window, a timeout, a reap, a TTL, an expiry — and no
+number in either numeric field. Across the whole topic the same reading finds 167 records.
+They are the topic's largest evidentiary gap, and the shapes are worth naming because each
+one is a different problem.
 
 **A cap the customer sets.** `ainclave` quotes the vendor: "We do not bound how long a
 session may run." `alibaba-agentrun` states no vendor wall-clock cap and that the customer
@@ -130,12 +131,12 @@ worked in a test dies in production.
 provisioned resources and bills a lagging tick at most 90 seconds. That is a rounding
 rule, not a deadline.
 
-⚠ **Eleven records carry a number and a time unit inside a prose note while their
-numeric field is empty**, and three of the eleven state a real cap: `archil` at 30
-minutes of sandbox compute, `lizard` at a 300-second default, and `boat` at a 30-second
-command. The other eight name a billing floor, a trial clock or an example session, and
-none of them is a deadline. ⚠ The distinction matters because a reader scanning the
-notes for a number will find eleven and only three are caps.
+⚠ **Twenty records carry a number and a time unit inside the `session_cap` note while
+both numeric fields are empty**, and one states a real session cap: `archil`, at 30
+minutes of sandbox compute in total on the free tier. The other nineteen name a billing
+floor, a trial clock, an expiry, a login-based reclaim or an example session, and none of
+them is a per-session deadline. ⚠ The distinction matters because a reader scanning the
+notes for a number will find twenty and only one is a cap.
 
 ## The login clocks, which are a third mechanism
 
@@ -190,7 +191,7 @@ count over the notes disagree and a reader should see both.
 That distinction decides whether a keepalive works, and no record in this topic states
 which kind its clock is.
 
-**The 370 records with no clock statement are not all clockless.** Some providers
+**The 1,344 records with no numeric clock are not all clockless.** Some providers
 publish no deadline because there is none, and some because the page does not say. The
 records distinguish those in prose and the field cannot, which is why the field is
 empty on both.

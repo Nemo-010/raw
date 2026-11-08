@@ -1,8 +1,9 @@
 """rq land: bring the run branch level with main in git objects, render the tables of the topics the run touched with
 the render.py of the tree it writes, check the records it touched, write the run manifest, push the branch and open
 the pull request, then stop. Under a minute: there is no worktree, no copy of the tree, no store and no local gate.
-CI runs the heavy checks on the pushed head in the public repository's Actions (ci.py), which land starts; the merge
-session waits for them (AGENTS.md section 0 step 8 and section 2 rule 14).
+CI runs the heavy checks on the pushed head in this repository's Actions (ci.py): a push starts the run, and land
+only notes it; the merge
+session waits for them (AGENTS.md section 0 and section 2 rule 14).
 
 rq merge (a merge session) brings the branch level with main again, runs the light checks and waits for the remote
 CI on the head it pushes, merges that
@@ -817,10 +818,10 @@ def ticks(body):
     return sum(1 for x in t if x == "x"), len(t)
 
 
-CI_LINE = ("The heavy checks (the gate comparison against main, the render check, the selftests and the parity check) run "
-           "in the Actions of %s on the pushed head, workflow %s (`scripts/rq ci RUN` shows the run); `scripts/rq merge` "
-           "runs the text and baseline checks itself and merges only a head whose remote run is green."
-           % (SETTINGS.get("ci_repo"), SETTINGS.get("ci_workflow")))
+CI_LINE = ("The heavy checks (the gate comparison against its base, the render check, the selftests and the parity "
+           "check) run in the Actions of %s on the pushed head, workflow %s (`scripts/rq ci RUN` shows the run); "
+           "`scripts/rq merge` runs the text and baseline checks itself and merges only a head whose remote run is "
+           "green." % (SETTINGS.get("ci_repo"), SETTINGS.get("ci_workflow")))
 
 
 def land(run, repo=REPO, meets=()):
@@ -976,10 +977,16 @@ def land(run, repo=REPO, meets=()):
             head = rev(repo, ref_of(run))
             try:
                 base_now = git(repo, "merge-base", rev(repo, upstream(repo)), head).strip()
-                notes.append(ci.describe(head, base_now, repo) if ci.find(head, base_now, repo) else (
-                    "remote CI started on %s (%s); scripts/rq ci %s shows it" % (head[:10], ci.runs_url(), run)
-                    if ci.dispatch(head, base_now, repo) else
-                    "remote CI was not started on %s; scripts/rq merge starts it" % head[:10]))
+                if ci.pushed_to_ci(repo):
+                    notes.append("the push started the gate on %s; scripts/rq ci %s shows it"
+                                 % (head[:10], run))
+                elif ci.find(head, repo):
+                    notes.append(ci.describe(head, repo))
+                elif ci.dispatch(head, base_now, r["branch"], repo):
+                    notes.append("remote CI started on %s (%s); scripts/rq ci %s shows it"
+                                 % (head[:10], ci.runs_url(), run))
+                else:
+                    notes.append("remote CI was not started on %s; scripts/rq merge starts it" % head[:10])
             except Fail as e:
                 notes.append("remote CI: %s; scripts/rq merge starts it" % e)
         return rep + notes + [took, "pull request %s is open for review. This run stops here: the run folder and the leases "
@@ -1231,13 +1238,13 @@ def merge(run, repo=REPO, wait_ci=True):
                 push_branch(r, repo, "merge")
             head = rev(repo, ref_of(run))
             if ci.remote():
-                # the light checks here, always (they cost nothing); the heavy ones in the public repository's Actions
+                # the light checks here, always (they cost nothing); the heavy ones in this repository's Actions
                 # on this head against the main it holds (ci.py), unless --no-ci
                 base_now = git(repo, "merge-base", rev(repo, upstream(repo)), head).strip()
                 rep = rep + ci.light(r.get("pr") or r["branch"], base_now, head, repo)
                 if wait_ci:
-                    done = ci.wait(head, base_now, repo)
-                    rep = rep + ["remote CI green on %s against %s: %s" % (head[:10], base_now[:10], done.get("url"))]
+                    done = ci.wait(head, base_now, r["branch"], repo)
+                    rep = rep + ["remote CI green on %s: %s" % (head[:10], done.get("url"))]
             elif wait_ci:
                 wait_checks(r["branch"], repo, head=head)
             # main can move during the wait: merge only a head that holds main, rendered against it (G-12); a fetch

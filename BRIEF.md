@@ -343,7 +343,7 @@ touch the check exists to catch. ⚠ A record flagged `evidence-past-topic` does
 oldest evidence row is older than the topic allows, and rows are only added. Three compute
 records are of that kind. Whether a newer row of the same URL retires the old one is undecided (#58).
 Issue #26 holds the re-run of the compute records, and issue #21 the storage re-check.
-CI tests each pull request with `scripts/rq gatecmp --base origin/main`.
+CI tests each pushed head with `scripts/rq gatecmp` against the base it resolves; a pull request from a fork starts nothing.
 
 ⚠ **The count grows with the as-of date.** In an own clone, `sh scripts/gate.sh --root . --check staleness --as-of DATE` gives 2
 records on 2026-10-28, 5 on 2026-11-04 and 1,688 on 2026-11-05. Issue #21 holds the re-check of the
