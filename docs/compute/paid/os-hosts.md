@@ -1,6 +1,6 @@
 # macOS and Windows hosts: what a non-Linux machine costs, and who gives one away
 
-Thirty-seven records in this topic price a machine that is not Linux: 24 macOS
+Thirty-six records in this topic price a machine that is not Linux: 23 macOS
 hosts and 13 Windows ones. Both classes share one structure and not one
 market. **The macOS class is decided by a licence, and the Windows class is
 decided by a surcharge on an ordinary VM.** The 13 Windows records are cloud
@@ -12,7 +12,7 @@ lanes: the floor is **USD 8.11 a month on Layer7's annual cycle** for 4 cores,
 read and nothing below USD 8.11 was found.
 
 The answer, in one paragraph. **No record in either class gives a free machine
-that a reader can log into and keep.** Ten of the 24 macOS records are
+that a reader can log into and keep.** Ten of the 23 macOS records are
 continuous-integration products with a macOS lane rather than Mac hosts. The
 free capacity in that lane is build minutes, and eight of the ten macOS
 `qualifies*` rows are CI. The two macOS rows that are not CI are a
@@ -44,7 +44,7 @@ so every number below is a page read and no boot was observed.
 
 ## The macOS lane is mostly CI, and that is the answer to most of it
 
-Ten of the 24 macOS records sell a build service. Each one is a way to run a job on a
+Ten of the 23 macOS records sell a build service. Each one is a way to run a job on a
 machine that is destroyed afterwards, and none of them is a Mac a reader can log into.
 The prices belong to [`ci-cd-runners`](../../ci-cd-runners/README.md), so this document
 does not reprice them.

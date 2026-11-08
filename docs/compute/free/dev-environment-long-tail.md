@@ -1,26 +1,26 @@
-# The dev-environment long tail: 24 more, and the axis that is empty
+# The dev-environment long tail: 33 more, and the axis that is empty
 
 `free/dev-environments.md` answers the central question in this topic: which free devbox
-gives a disk that is still there tomorrow. It covers thirteen providers. Thirty-seven
-records carry `category: dev environment`, so twenty-four are in this page, and the
+gives a disk that is still there tomorrow. It covers ten providers. Fifty-three
+records carry `category: dev environment`, so thirty-three are in this page, and the
 topic's largest unpopulated axis is durability.
 
 ⛔ **`extras.persistent_storage.durability` is set on 77 of the 1,411 records, and on 4 of
 the 53 dev-environment ones.** State durability is one of the
 seven axes a compute record must answer, and it is the axis that decides whether a stop is
 a pause or a loss. It is empty almost everywhere, and in this class, where the question is
-the whole subject, it is empty on 33 of 37.
+the whole subject, it is empty on 49 of 53.
 
 ## The class by kind
 
 | kind | records | what it means |
 | --- | --- | --- |
-| allowance | 25 | a monthly quota on a shared or self-hosted environment |
-| one-time credit | 3 | Daytona, Prized, and the credits that never renew |
-| trial | 5 | a clock with a stated end |
-| none | 4 | paid-only, of which one is dead |
+| allowance | 19 | a quota on a shared, self-hosted or metered environment |
+| one-time credit | 2 | a credit that never renews |
+| trial | 6 | a clock with a stated end |
+| none | 26 | no free tier, of which three are dead |
 
-⚠ **Five of the 37 are not dev environments at all.** `kaggle` is a duplicate slug for
+⚠ **Six of the 53 are not dev environments at all.** `kaggle` is a duplicate slug for
 `kaggle-notebooks`, and the record says so in its own `free_tier.stated`. `dagger` is an
 open-source engine that runs locally. `lapdev` and `signadot` install into an existing
 Kubernetes cluster. `webapp-io` and `webcontainers` run in a browser tab or a
@@ -139,7 +139,7 @@ emulators are not, and it is the one row here where the "machine" is the reader'
 
 ## What this class does not establish
 
-⛔ **What happens to the disk on stop, for 33 of 37 records.** That is the class's own
+⛔ **What happens to the disk on stop, for 49 of 53 records.** That is the class's own
 question and the field is empty. Every answer in this page is prose inside a vendor
 sentence, and the field a count would read is null.
 
@@ -156,7 +156,7 @@ the corpus assumes no machine to deploy it on.
 ## What did not work
 
 - **Filtering this class for a machine**: 6 of 25 allowances run on self-managed infrastructure.
-- **Reading the class as one product**: 5 of 37 are not dev environments.
+- **Reading the class as one product**: 6 of 53 are not dev environments.
 - **Codespaces as a 24/7 host**: 120 core-hours is two hours a day of two cores.
 - **A placeholder row as a finding**: 4 here and 7 more in three other classes.
 - **Webcontainers as remote capacity**: the machine is the browser tab.
