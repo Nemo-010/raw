@@ -118,7 +118,7 @@ was filled. The refusal shape, which is the number a reader needs, is unobserved
 records whether the card is obtainable. A marketplace rate is an offer, not stock, and
 `vast-ai` is the row where that distinction is largest.
 
-**Whether the macOS and Windows lanes are usable at all.** 24 macOS records and 13
+**Whether the macOS and Windows lanes are usable at all.** 23 macOS records and 13
 Windows cloud and desktop records price a host and none was booted. The cheap Windows VPS
 market is priced separately in [`paid/windows-vps.md`](paid/windows-vps.md), and its eleven
 qualifying rows are page reads too. The macOS lane additionally needs a signed build to be
@@ -142,7 +142,7 @@ recorded, and neither was exercised. A "free GPU hour" in this corpus is an allo
 that a vendor publishes.
 
 **No CI lane is priced here on purpose.** `paid/ci-adjacent.md` states the boundary and
-`ci-cd-runners` owns the numbers. The 24 macOS records include runners, and their rates
+`ci-cd-runners` owns the numbers. The 23 macOS records include runners, and their rates
 live there.
 
 **No serverless billing curve.** `free/runtimes-serverless.md` states the CPU wall and

@@ -276,6 +276,9 @@ def fake_gh(prs=None, log=None, merged_comment=False):
         if args[:2] == ["pr", "create"]:
             prs["state"] = "OPEN"
             return prs["url"]
+        if args[:2] == ["pr", "list"]:
+            # gh pr list --head BRANCH --state open --json url --jq ".[0].url // empty"
+            return prs["url"] if prs["state"] == "OPEN" else ""
         if args[:2] == ["pr", "view"]:
             if "title,body,labels" in args:
                 # the light checks of rq merge (ci.light): the pull request's text and labels
@@ -343,13 +346,12 @@ def wait_cases(land):
         track.gh, track.gh_run = real
 
 def ci_cases():
-    """ci.py with gh stubbed: the remote run on a head against a base, its dispatch, its jobs, and every end a merge
-    can meet."""
+    """ci.py with gh stubbed: the run on a head, its dispatch, its jobs, and every end a merge can meet."""
     import ci
     import track
     real = (track.gh, track.gh_run, ci.CI_REPO, ci.CI_WORKFLOW, ci.CI_REF, ci.CI_JOBS)
-    ci.CI_REPO, ci.CI_WORKFLOW, ci.CI_REF, ci.CI_JOBS = "o/public", "f-research-ci.yml", "main", ("gate", "parity")
-    H, B = "a" * 40, "b" * 40
+    ci.CI_REPO, ci.CI_WORKFLOW, ci.CI_REF, ci.CI_JOBS = "o/public", "gate.yml", "main", ("gate", "parity")
+    H, B, BR = "a" * 40, "b" * 40, "rq/test"
     GREEN = {"jobs": [{"name": "gate", "conclusion": "success", "steps": []},
                       {"name": "parity", "conclusion": "success", "steps": []}]}
 
@@ -370,15 +372,14 @@ def ci_cases():
             return 0, ""
         track.gh_run = gh_run
 
-    def row(status, conclusion=None, head=H, base=B, at="2026-10-31T00:00:00Z", i=1, event="workflow_dispatch",
+    def row(status, conclusion=None, head=H, at="2026-10-31T00:00:00Z", i=1, event="workflow_dispatch",
             branch="main"):
-        return {"databaseId": i, "displayTitle": "f-research %s %s" % (head, base), "status": status,
-                "conclusion": conclusion, "url": "https://x/%d" % i, "createdAt": at, "event": event,
-                "headBranch": branch}
+        return {"databaseId": i, "headSha": head, "status": status, "conclusion": conclusion, "url": "https://x/%d" % i,
+                "createdAt": at, "event": event, "headBranch": branch}
 
     def wait(**kw):
         try:
-            return ci.wait(H, B, ".", poll=0, **kw).get("url")
+            return ci.wait(H, B, BR, ".", poll=0, **kw).get("url")
         except ci.Fail as e:
             return "FAIL " + str(e)
     try:
@@ -386,11 +387,11 @@ def ci_cases():
         ok(wait() == "https://x/1", "ci.wait: a green run with every required job green passes")
         log = []
         stub([[], [row("queued")], [row("in_progress")], [row("completed", "success")]], log=log)
-        ok(wait() == "https://x/1" and any(a[:2] == ["workflow", "run"] and "sha=%s" % H in a and "base=%s" % B in a
-                                           and "mode=pr" in a for a in log),
-           "ci.wait: no run on the head dispatches one with mode pr, sha and base")
-        ok(any(a[:2] == ["run", "list"] and "workflow_dispatch" in a and "main" in a for a in log),
-           "ci.wait: the run list asks only for dispatched runs on the workflow's branch")
+        ok(wait() == "https://x/1" and any(a[:2] == ["workflow", "run"] and "--ref" in a and BR in a
+                                           and "base=%s" % B in a for a in log),
+           "ci.wait: no run on the head dispatches one on the branch with its base")
+        ok(any(a[:2] == ["run", "list"] and "--commit" in a and H in a for a in log),
+           "ci.wait: the run list asks for the runs of the head commit")
         stub([[row("completed", "success")]], view={"jobs": [{"name": "gate", "conclusion": "skipped"},
                                                               {"name": "parity", "conclusion": "skipped"}]})
         got = wait()
@@ -403,11 +404,8 @@ def ci_cases():
         got = wait()
         ok(got.startswith("FAIL") and "gate: the checks" in got and "parity" not in got and "gh run rerun 1" in got,
            "ci.wait: a failed run names the failed job and step, only those, and how to run it again")
-        stub([[row("completed", "success", event="push"), row("completed", "success", branch="dev", i=2)], [], []],
-             dispatch_rc=1)
-        ok("not started" in wait(), "ci.wait: a run of another event or branch with the same name is not this one")
-        stub([[row("completed", "success", base="c" * 40)], [], []], dispatch_rc=1)
-        ok("not started" in wait(), "ci.wait: a run on the head against another base is not this one")
+        stub([[row("completed", "success", head="c" * 40)], [], []], dispatch_rc=1)
+        ok("not started" in wait(), "ci.wait: a run of another head is not this one")
         stub([[], [], []])
         ok("no run registered" in wait(register=0), "ci.wait: a dispatch that never registers is not green")
         stub([[row("in_progress")]])
@@ -432,7 +430,25 @@ def ci_cases():
                 os.environ.pop("RQ_NO_GITHUB", None)
             else:
                 os.environ["RQ_NO_GITHUB"] = old
-        ok(ci.title(H, B) == "f-research %s %s" % (H, B), "ci: a run is named by the head it tests and its base")
+        # the push of a run branch lands in the CI repository: the push starts the run and nothing is dispatched
+        log = []
+        real_push = ci.pushed_to_ci
+        ci.pushed_to_ci = lambda repo=None: True
+        stub([[], [], []], log=log)
+        got = wait(register=0)
+        ok(("push did not start" in got or "was cancelled" in got) and
+           not any(a[:2] == ["workflow", "run"] for a in log),
+           "ci.wait: a push in the CI repository starts the run, and nothing is dispatched")
+        # a cancelled run is never retried by a dispatch in the CI repository: GitHub cancelled it, a new push runs it
+        stub([[row("completed", "cancelled")]], log=log)
+        ok("cancel" in wait(), "ci.wait: a cancelled run in the CI repository says to push again, and dispatches nothing")
+        # a clone that pushes to a fork: the same repository is the CI, and the dispatch is asked for
+        log = []
+        ci.pushed_to_ci = lambda repo=None: False
+        stub([[], [row("in_progress")], [row("completed", "success")]], log=log)
+        ok(wait() == "https://x/1" and any(a[:2] == ["workflow", "run"] for a in log),
+           "ci.wait: a push to a fork starts nothing, so the run is dispatched")
+        ci.pushed_to_ci = real_push
         import land
         real_added, real_commits = land.baseline_added, ci.commits
         land.baseline_added = lambda base, head, repo=None: ["storage/x\tC20\t$.notes"]
@@ -5637,7 +5653,7 @@ def main(argv=None):
                             text=True).stdout.strip().lower()
     if marker == "true" and os.environ.get("RQ_SELFTEST_IN_CHECKOUT") != "1":
         print("test_rq: this is the research checkout (git config rq.researchCheckout is true). The selftest makes "
-              "clones and runs for minutes, so it runs in CI on the pull request or in an own clone, never here "
+              "clones and runs for minutes, so it runs in CI on the pushed head or in an own clone, never here "
               "(AGENTS.md section 2 rule 14). RQ_SELFTEST_IN_CHECKOUT=1 overrides this.", file=sys.stderr)
         return 2
     sys.path.insert(0, HERE)

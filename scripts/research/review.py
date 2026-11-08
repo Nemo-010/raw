@@ -6,7 +6,7 @@ re-examines (a draft merged into an existing record as corroboration, a new reco
 another tier of the same provider, a value an undo could not restore, an open conflict), and a few claims it
 re-checks itself against fresh captures. It needs no file of the research clone: without the run folder it reads
 the run manifest the branch carries. The procedure is docs/merge-protocol.md in the public repository
-Azathothas/fshy.ajam.dev; docs/research-protocol.md section 13 has its commands.
+f-shy/fshy.ajam.dev; docs/research-protocol.md section 13 has its commands.
 """
 import json
 import os

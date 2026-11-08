@@ -1,14 +1,17 @@
-"""The checks of a pull request, run in the public repository's Actions.
+"""The checks of a pull request, run in this repository's Actions.
 
 The heavy checks (the gate comparison, the full render check, the selftests, the harness selftest on Linux and on
-Windows, the parity check) run in the Actions of the public repository named by settings.json `ci_repo`, whose
-workflow `ci_workflow` fetches this repository quietly at one commit with a read-only deploy key and prints only a
-PASS, FAIL or SKIP line per check, never a check's output: the log of a public repository is public. A run of that
-workflow is dispatched on `ci_ref` and named "f-research <sha> <base>", so the head it tested and the main it was
-compared with are read from its title; a run of another event or branch is never read. It is green only when its
-jobs `ci_jobs` (gate, harness-windows, parity) all succeeded: a run whose jobs were skipped reports success too, and
-proves nothing. `rq land` asks for a run on the head it pushed; `rq merge` waits for the run on the head it merges. The light checks (the text of the commits and of the pull
-request, and the baseline rows) run here, in the merge session's process: a few git calls and one hook per commit.
+Windows, the parity check) run in the Actions of the repository named by settings.json `ci_repo`, whose workflow
+`ci_workflow` runs `scripts/research/ci-checks.sh` and prints only a PASS, FAIL or SKIP line per check, never a
+check's output: the log of a public repository is public. The workflow runs on a push by a collaborator and on a
+manual dispatch; it has no pull_request trigger, so a pull request opened by anyone outside the team starts nothing.
+A push starts the run on the head it pushed; a dispatch names the branch (`--ref`) and the base (`-f base=...`).
+A run is found by its head commit (`gh run list --commit`), never by its title: the workflow sets no run-name, and a
+run of another event on the same head is the same head. It is green only when its jobs `ci_jobs` (gate,
+harness-windows, parity) all succeeded: a run whose jobs were skipped reports success too, and proves nothing.
+`rq land` notes the run a push started; `rq merge` waits for the run on the head it merges. The light checks (the
+text of the commits and of the pull request, and the baseline rows) run here, in the merge session's process: a few
+git calls and one hook per commit.
 
 A failed check names itself; its output is in no log. The merge session reproduces that one check in its own clone
 (never in the research checkout, AGENTS.md section 2 rule 14), for the gate `scripts/rq gatecmp --base origin/main`.
@@ -32,13 +35,27 @@ LABEL_BASELINE = "rq:baseline"
 
 
 def remote():
-    """True when the heavy checks run in the public repository (settings.json names it)."""
+    """True when the heavy checks run in a repository's Actions (settings.json names it)."""
     return bool(CI_REPO and CI_WORKFLOW)
 
 
-def title(head, base):
-    """The name of the run of head compared with base: a run on the same head against another main is another run."""
-    return "f-research %s %s" % (head, base)
+def pushed_to_ci(repo=REPO):
+    """True when a push of a run branch lands in the CI repository, which starts the run by itself. A push to a fork
+    starts nothing. The remote's URL is reduced to owner/name first, so a fork whose name merely contains the CI
+    repository's name is not mistaken for it."""
+    from common import REMOTE
+    url = (git(repo, "remote", "get-url", REMOTE, check=False) or "").strip().replace("\\", "/")
+    if not url or not CI_REPO:
+        return False
+    if "://" in url:
+        url = url.split("://", 1)[1].split("/", 1)[-1]          # strip scheme and host
+    elif ":" in url.split("/", 1)[0]:
+        url = url.split(":", 1)[1]                              # git@host:owner/name
+    url = url.rstrip("/")
+    url = url[:-4] if url.endswith(".git") else url
+    owner, _, name = url.rpartition("/")
+    owner = owner.rsplit("/", 1)[-1]
+    return bool(owner) and ("%s/%s" % (owner, name)).lower() == CI_REPO.lower()
 
 
 def runs_url():
@@ -49,13 +66,13 @@ class Unanswered(Fail):
     """gh did not answer (a timeout, the network, an error status): the caller may ask again."""
 
 
-def find(head, base, repo=REPO):
-    """The newest run of the workflow on head against base, dispatched on CI_REF: a run of another event or branch
-    with the same name is never this one. -> dict(id, status, conclusion, url) or None. Fail without gh; Unanswered
-    when gh did not answer, so a silent CI is never read as no run."""
-    rc, out = track.gh_run(["run", "list", "--repo", CI_REPO, "--workflow", CI_WORKFLOW, "--event", "workflow_dispatch",
-                            "--branch", CI_REF, "--limit", "100", "--json",
-                            "databaseId,displayTitle,status,conclusion,url,createdAt,event,headBranch"], repo)
+def find(head, repo=REPO):
+    """The newest run of the workflow on head: a run of another head is never this one. -> dict(id, status,
+    conclusion, url) or None. Fail without gh; Unanswered when gh did not answer, so a silent CI is never read as no
+    run."""
+    rc, out = track.gh_run(["run", "list", "--repo", CI_REPO, "--workflow", CI_WORKFLOW, "--commit", head,
+                            "--limit", "100", "--json",
+                            "databaseId,headSha,status,conclusion,url,createdAt,event,headBranch"], repo)
     if rc is None and not out and (os.environ.get("RQ_NO_GITHUB") or not shutil.which("gh")):
         raise Fail("the remote CI cannot be read: gh is missing or RQ_NO_GITHUB is set (%s)" % runs_url(), 1)
     try:
@@ -64,18 +81,22 @@ def find(head, base, repo=REPO):
         rows = None
     if rows is None:
         raise Unanswered("gh could not list the runs of %s in %s (exit %s)" % (CI_WORKFLOW, CI_REPO, rc), 1)
-    mine = [x for x in rows if (x.get("displayTitle") or "").strip() == title(head, base)
-            and x.get("event", "workflow_dispatch") == "workflow_dispatch" and x.get("headBranch", CI_REF) == CI_REF]
+    mine = [x for x in rows if x.get("headSha") == head]
     if not mine:
         return None
-    x = max(mine, key=lambda y: y.get("createdAt") or "")
+    # a cancelled run is the answer only when it is the only one: a run of the same head that finished is newer news
+    done = [x for x in mine if x.get("conclusion") != "cancelled"]
+    x = max(done or mine, key=lambda y: y.get("createdAt") or "")
     return {"id": x.get("databaseId"), "status": x.get("status"), "conclusion": x.get("conclusion"), "url": x.get("url")}
 
 
-def dispatch(head, base, repo=REPO):
-    """Ask the public repository for a run of mode pr on head against base. -> True when GitHub took the request."""
-    rc, _ = track.gh_run(["workflow", "run", CI_WORKFLOW, "--repo", CI_REPO, "--ref", CI_REF, "-f", "mode=pr",
-                          "-f", "sha=%s" % head, "-f", "base=%s" % base], repo)
+def dispatch(head, base, branch, repo=REPO):
+    """Ask the CI repository for a run of branch against base. -> True when GitHub took the request. A push that
+    lands in the CI repository starts the run, so nothing is dispatched for a run branch."""
+    if pushed_to_ci(repo):
+        return False
+    rc, _ = track.gh_run(["workflow", "run", CI_WORKFLOW, "--repo", CI_REPO, "--ref", branch or CI_REF,
+                          "-f", "base=%s" % base], repo)
     return rc == 0
 
 
@@ -124,19 +145,26 @@ def failed_lines(run_id, repo=REPO):
     return got
 
 
-def ensure(head, base, repo=REPO, register=120, poll=10):
-    """The run on head against base: the one that exists (a failed one too: its failure is the answer), or a new one
-    when there is none or the last was cancelled. -> the run dict; Fail when none registers."""
-    got = find(head, base, repo)
+def ensure(head, base, branch, repo=REPO, register=120, poll=10):
+    """The run on head: the one that exists (a failed one too: its failure is the answer), or a new one when there is
+    none. -> the run dict; Fail when none registers. A cancelled run stays the answer: GitHub cancelled it, and a
+    head that is pushed again gets a new run."""
+    got = find(head, repo)
     if got and got.get("conclusion") != "cancelled":
         return got
-    if not dispatch(head, base, repo):
-        raise Fail("the remote CI was not started: gh workflow run %s --repo %s failed (the network, the gh login, or "
-                   "a workflow that is not on %s's %s)" % (CI_WORKFLOW, CI_REPO, CI_REPO, CI_REF), 1)
+    if pushed_to_ci(repo):
+        if got:
+            raise Fail("the run of %s was cancelled and the push that started it is spent: push the branch again, and "
+                       "the push starts the next run (%s)" % (head[:10], runs_url()), 1)
+        raise Fail("no run of %s exists in %s, and nothing is dispatched there: the push did not start a run - the "
+                   "workflow has no push trigger, or Actions is off (%s)" % (head[:10], CI_REPO, runs_url()), 1)
+    if not dispatch(head, base, branch, repo):
+        raise Fail("the remote CI was not started: gh workflow run %s --repo %s --ref %s failed (the network, the gh "
+                   "login, or a workflow that is not on %s)" % (CI_WORKFLOW, CI_REPO, branch, CI_REPO), 1)
     t0 = time.time()
     while True:
         try:
-            got = find(head, base, repo)
+            got = find(head, repo)
         except Unanswered:
             got = None
         if got and got.get("conclusion") != "cancelled":
@@ -144,17 +172,17 @@ def ensure(head, base, repo=REPO, register=120, poll=10):
         if time.time() - t0 > register:
             raise Fail("the remote CI took the request for %s but no run registered within %d s (%s)"
                        % (head[:10], register, runs_url()), 1)
-        time.sleep(poll)  # wait: poll, GitHub registers a dispatched run after a few seconds
+        time.sleep(poll)  # wait: poll, GitHub registers a pushed or dispatched run after a few seconds
 
 
-def wait(head, base, repo=REPO, timeout=3600, poll=20, register=120, tries=6):
-    """Wait for the run on head against base (started when there is none) and pass only when verdict() is green. A
-    failure names the failed jobs, steps and checks; a cancelled run, a skipped or missing job, gh that does not answer
-    `tries` times in a row, or no end within timeout, is not green."""
+def wait(head, base, branch, repo=REPO, timeout=3600, poll=20, register=120, tries=6):
+    """Wait for the run on head (started when there is none) and pass only when verdict() is green. A failure names
+    the failed jobs, steps and checks; a cancelled run, a skipped or missing job, gh that does not answer `tries`
+    times in a row, or no end within timeout, is not green."""
     t0, errors = time.time(), 0
     while True:
         try:
-            got = ensure(head, base, repo, register=register, poll=min(poll, 10))
+            got = ensure(head, base, branch, repo, register=register, poll=min(poll, 10))
             break
         except Unanswered as e:
             errors += 1
@@ -184,7 +212,7 @@ def wait(head, base, repo=REPO, timeout=3600, poll=20, register=120, tries=6):
             raise Fail("the remote CI on %s did not finish within %d s: %s" % (head[:10], timeout, got.get("url")), 1)
         time.sleep(poll)  # wait: poll, the remote run is queued or running, or gh did not answer
         try:
-            got = find(head, base, repo) or got
+            got = find(head, repo) or got
             errors = 0
         except Unanswered as e:
             errors += 1
@@ -192,13 +220,12 @@ def wait(head, base, repo=REPO, timeout=3600, poll=20, register=120, tries=6):
                 raise Fail("%s, %d times in a row; the merge stops (%s)" % (e, errors, got.get("url")), 1)
 
 
-def describe(head, base, repo=REPO):
-    """One line on the run of head against base, for rq ci and for the land notes."""
-    got = find(head, base, repo)
+def describe(head, repo=REPO):
+    """One line on the run of head, for rq ci and for the land notes."""
+    got = find(head, repo)
     if not got:
-        return "remote CI: no run on %s against %s yet (%s)" % (head[:10], base[:10], runs_url())
-    line = "remote CI on %s against %s: %s (%s)" % (head[:10], base[:10], got.get("conclusion") or got.get("status"),
-                                                    got.get("url"))
+        return "remote CI: no run on %s yet (%s)" % (head[:10], runs_url())
+    line = "remote CI on %s: %s (%s)" % (head[:10], got.get("conclusion") or got.get("status"), got.get("url"))
     if got.get("status") == "completed":
         green, problems = verdict(got, jobs(got.get("id"), repo))
         line += "; green" if green else "; not green: %s" % "; ".join(problems + failed_lines(got.get("id"), repo))

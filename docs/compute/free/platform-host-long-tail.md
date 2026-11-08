@@ -139,10 +139,11 @@ has a shape. Only Hugging Face Jobs carries both.
 it omits are in the table above. Each one's `free_tier.stated` names the mechanism, and the
 sentence is the vendor's own.
 
-**`platform-hosts.md` counts three free-tier kinds and the records hold five.** Its three
-counts are 20 allowances, 24 with no free tier, and 4 recurring credits. They sum to 48 of
-the 83 records the category holds.
-The records also hold 2 `trial` and 1 `one-time-credit`.
+**`platform-hosts.md` counts three free-tier kinds and the records name eleven.** Its three
+counts are 20 allowances, 24 with no free tier, and 4 recurring credits, against 17, 24 and 2
+in the canonical `extras.free_tier_kind` strings; they sum to 48 of the 83 records the
+category holds. The records also hold 3 `trial`, 2 `trial-only` and 1 `one-time-credit`, plus
+ten spellings used once each that no census groups.
 
 ⚠ **`paid/minimum-bill.md` has an arithmetic defect in the column that decides its own
 section.** The section prices a 30-minute workload. Its `Penalty` column reads 4x on every
@@ -205,10 +206,11 @@ the same topic.
 page repeats that. Every number is a vendor page read on the date the evidence entry gives.
 Eleven of the 15 are `documented`, three are `reported` and one is `unverified`.
 
-**Whether any of these stays awake. None of the 15 states a clock.** Only 6 of the class's 52
-records carry a numeric sleep window or session cap, and all six are in `platform-hosts.md` and
-`the-clock.md`. The long tail contributes no clock at all. So the class's central question has
-an answer on 11 per cent of its rows.
+**Whether any of these stays awake. None of the 15 states a clock.** Seven of the class's 83
+records carry a numeric sleep window or session cap — Azure App Service F1, Bitbucket Pipelines,
+Koyeb, Modal, Render, Vercel and Yepcode — and none of them is in this page. The long tail
+contributes no clock at all, so the class's central question has an answer on 8 per cent of its
+records.
 
 **Whether 10 of the 15 were read on the date the evidence gives.** Their
 `free_tier.read_on` is 2026-10-02, inherited from the catalogue card. All 15 carry an evidence
