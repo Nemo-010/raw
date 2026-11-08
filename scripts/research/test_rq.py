@@ -435,8 +435,13 @@ def ci_cases():
         real_push = ci.pushed_to_ci
         ci.pushed_to_ci = lambda repo=None: True
         stub([[], [], []], log=log)
-        ok("the push did not start" in wait(register=0) and not any(a[:2] == ["workflow", "run"] for a in log),
+        got = wait(register=0)
+        ok(("the push did not start" in got or "was cancelled" in got) and
+           not any(a[:2] == ["workflow", "run"] for a in log),
            "ci.wait: a push in the CI repository starts the run, and nothing is dispatched")
+        # a cancelled run is never retried by a dispatch in the CI repository: GitHub cancelled it, a new push runs it
+        stub([[row("completed", "cancelled")]], log=log)
+        ok("cancel" in wait(), "ci.wait: a cancelled run in the CI repository says to push again, and dispatches nothing")
         # a clone that pushes to a fork: the same repository is the CI, and the dispatch is asked for
         log = []
         ci.pushed_to_ci = lambda repo=None: False
@@ -5648,7 +5653,7 @@ def main(argv=None):
                             text=True).stdout.strip().lower()
     if marker == "true" and os.environ.get("RQ_SELFTEST_IN_CHECKOUT") != "1":
         print("test_rq: this is the research checkout (git config rq.researchCheckout is true). The selftest makes "
-              "clones and runs for minutes, so it runs in CI on the pull request or in an own clone, never here "
+              "clones and runs for minutes, so it runs in CI on the pushed head or in an own clone, never here "
               "(AGENTS.md section 2 rule 14). RQ_SELFTEST_IN_CHECKOUT=1 overrides this.", file=sys.stderr)
         return 2
     sys.path.insert(0, HERE)

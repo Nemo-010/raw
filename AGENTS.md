@@ -19,8 +19,11 @@ Read this file, then work. The work queue is the open issues labelled `rq:resear
 them, and `scripts/rq open KIND TOPIC "DETAILS" --issue N` claims one. A request to research, expand, verify or
 amend is a run: follow [`docs/research-protocol.md`](docs/research-protocol.md).
 
-The heavy checks run in CI on a pushed head. A research session does not run the gate, the selftest or the gate
-comparison in the research checkout. The light trio runs at merge:
+The heavy checks (the gate comparison, the render check, the selftests and the parity check) run in this
+repository's Actions, workflow `.github/workflows/gate.yml`, on a pushed head and on a manual dispatch. A
+research session does not run them: it does not run the gate, the selftest or the gate comparison in the research
+checkout. A push of a run branch starts them; `scripts/rq ci RUN` shows the run, and `scripts/rq merge` waits for
+it. The light trio runs at merge:
 
 ```bash
 python scripts/dossier/validate.py --schema scripts/dossier/schema.json dossier/
@@ -199,7 +202,7 @@ design makes that rot visible and cheap to repair.
     - never copies the tree, never builds a store of its own and never runs the
       gate. One store is built for each commit of the checkout and shared. The
       heavy checks run once per pushed head in this repository's Actions
-      (section 0 step 8), never on this machine, and the light ones inside
+      (section 0), never on this machine, and the light ones inside
       `scripts/rq merge`;
     - never runs `scripts/rq wipe` or `scripts/rq sync`: they belong to the merge
       session.
@@ -320,7 +323,7 @@ run with one unit (section 2 rule 14).
    records it touched and opens the pull request, in under a minute. A push of
    the run branch starts the heavy checks on that head in this repository's
    Actions (a fork's push starts nothing, so `land` asks for a run);
-   `scripts/rq ci RUN` shows them (section 0 step 8).
+   `scripts/rq ci RUN` shows them (section 0).
 
 ⛔ **A run ends at its pull request; the session does not.** After `scripts/rq land`,
 the session takes the next open issue as a new run. It does not wait for the merge,

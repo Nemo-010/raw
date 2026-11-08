@@ -46,7 +46,9 @@ jobs:
         env:
           INPUT_BASE: ${{ inputs.base }}
           BEFORE: ${{ github.event.before }}
-        run: echo "ref=$(sh .github/base-commit.sh)" >> "$GITHUB_OUTPUT"
+        run: |
+          ref=$(sh .github/base-commit.sh) || exit 1
+          echo "ref=$ref" >> "$GITHUB_OUTPUT"
 
       - name: the gate comparison, the render check and the selftests
         env:
@@ -80,7 +82,9 @@ jobs:
         env:
           INPUT_BASE: ${{ inputs.base }}
           BEFORE: ${{ github.event.before }}
-        run: echo "ref=$(sh .github/base-commit.sh)" >> "$GITHUB_OUTPUT"
+        run: |
+          ref=$(sh .github/base-commit.sh) || exit 1
+          echo "ref=$ref" >> "$GITHUB_OUTPUT"
 
       - name: the harness's Windows cases and the load test
         shell: bash

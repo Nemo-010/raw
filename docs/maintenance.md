@@ -91,7 +91,8 @@ a check that passes on `main`, or on a skipped check.
 `scripts/fshy/check_lock_fresh.py` is its check, and the job `lock-fresh` of the workflow `f-research-ci` in
 `f-shy/fshy.ajam.dev` runs it on `main` every day at 06:40 UTC and on a manual run
 (`gh workflow run f-research-ci.yml --repo f-shy/fshy.ajam.dev -f mode=lock`). A pull request that moves the pin
-runs it with `sh scripts/research/ci-checks.sh lock`; it is a network check, not a heavy one. The `parity` job does not run it. The pin exists so that a merge in the public repository cannot turn an
+runs it inside the `gate` job of this repository's workflow (`scripts/research/ci-checks.sh linux`); a clone that
+moves the pin runs `sh scripts/research/ci-checks.sh lock` itself. It is a network check, not a heavy one. The `parity` job does not run it. The pin exists so that a merge in the public repository cannot turn an
 unrelated pull request here red, and every research pull request waits for every check.
 
 **What it checks.** `public.lock` pins a commit of `f-shy/fshy.ajam.dev`, and the twins `fr.py` and `build.py`

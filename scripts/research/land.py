@@ -1,8 +1,9 @@
 """rq land: bring the run branch level with main in git objects, render the tables of the topics the run touched with
 the render.py of the tree it writes, check the records it touched, write the run manifest, push the branch and open
 the pull request, then stop. Under a minute: there is no worktree, no copy of the tree, no store and no local gate.
-CI runs the heavy checks on the pushed head in the public repository's Actions (ci.py), which land starts; the merge
-session waits for them (AGENTS.md section 0 step 8 and section 2 rule 14).
+CI runs the heavy checks on the pushed head in this repository's Actions (ci.py): a push starts the run, and land
+only notes it; the merge
+session waits for them (AGENTS.md section 0 and section 2 rule 14).
 
 rq merge (a merge session) brings the branch level with main again, runs the light checks and waits for the remote
 CI on the head it pushes, merges that
@@ -1237,7 +1238,7 @@ def merge(run, repo=REPO, wait_ci=True):
                 push_branch(r, repo, "merge")
             head = rev(repo, ref_of(run))
             if ci.remote():
-                # the light checks here, always (they cost nothing); the heavy ones in the public repository's Actions
+                # the light checks here, always (they cost nothing); the heavy ones in this repository's Actions
                 # on this head against the main it holds (ci.py), unless --no-ci
                 base_now = git(repo, "merge-base", rev(repo, upstream(repo)), head).strip()
                 rep = rep + ci.light(r.get("pr") or r["branch"], base_now, head, repo)

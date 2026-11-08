@@ -618,7 +618,7 @@ def cmd_import_bundle(a):
 
 def cmd_gatecmp(a):
     if research_checkout(REPO):
-        raise Fail("the gate comparison runs in CI (the public repository's Actions, scripts/rq ci RUN), or in an own "
+        raise Fail("the gate comparison runs in CI (this repository's Actions, scripts/rq ci RUN), or in an own "
                    "clone, never in the research checkout (AGENTS.md section 2 rule 14)", 2)
     head = os.path.abspath(a.head or REPO)
     green, new_fail, lines, bsha = land.gatecmp(head, a.base or upstream(REPO))

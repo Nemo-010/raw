@@ -158,7 +158,7 @@ report it, and do not set them yourself. `scripts/rq status` prints the marker, 
 is not in `origin/main` (a feature branch, where `open` refuses).
 
 ⛔ Do not run the gate, `scripts/rq gatecmp` or the selftest: CI runs them on the pushed head, in the public
-repository's Actions (AGENTS.md section 0 step 8), and `scripts/rq ci RUN` shows the result. Do not write git
+repository's Actions (AGENTS.md section 0), and `scripts/rq ci RUN` shows the result. Do not write git
 configuration. The checkout stays on the branch it is on, and no run makes a worktree: the run branch is a git ref
 that `scripts/rq` writes. ⚠ CI's gate can be red on a clean `main`: `staleness` and `sources` depend on the
 clock. `BRIEF.md` section 5 "Known red checks" names what is red today, the issue that owns each red check, and what
@@ -437,7 +437,7 @@ commits the render and the run manifest (section 1) on the branch, pushes the br
 labelled `rq:review`, which closes the run's issue when it merges. After the push it deletes the copies of captures
 and probe records in the unit folders that the pushed branch holds.
 
-⚠ `land` takes under a minute. It runs no gate: it starts the heavy checks (the gate comparison, the render check,
+⚠ `land` takes under a minute. It runs no gate: a push starts the heavy checks (the gate comparison, the render check,
 the selftests, the parity check) on the pushed head in the Actions of the repository that
 `scripts/research/settings.json` names (`ci_repo`, workflow `ci_workflow`), and `scripts/rq merge` runs the light
 ones (the text of the commits and of the pull request, the baseline rows) and waits for the remote run. That log is

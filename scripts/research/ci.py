@@ -41,10 +41,21 @@ def remote():
 
 def pushed_to_ci(repo=REPO):
     """True when a push of a run branch lands in the CI repository, which starts the run by itself. A push to a fork
-    starts nothing."""
+    starts nothing. The remote's URL is reduced to owner/name first, so a fork whose name merely contains the CI
+    repository's name is not mistaken for it."""
     from common import REMOTE
-    url = git(repo, "remote", "get-url", REMOTE, check=False)
-    return bool(url) and bool(CI_REPO) and CI_REPO.lower() in url.lower()
+    url = (git(repo, "remote", "get-url", REMOTE, check=False) or "").strip().replace("\\", "/")
+    if not url or not CI_REPO:
+        return False
+    if "://" in url:
+        url = url.split("://", 1)[1].split("/", 1)[-1]          # strip scheme and host
+    elif ":" in url.split("/", 1)[0]:
+        url = url.split(":", 1)[1]                              # git@host:owner/name
+    url = url.rstrip("/")
+    url = url[:-4] if url.endswith(".git") else url
+    owner, _, name = url.rpartition("/")
+    owner = owner.rsplit("/", 1)[-1]
+    return bool(owner) and ("%s/%s" % (owner, name)).lower() == CI_REPO.lower()
 
 
 def runs_url():
@@ -73,7 +84,9 @@ def find(head, repo=REPO):
     mine = [x for x in rows if x.get("headSha") == head]
     if not mine:
         return None
-    x = max(mine, key=lambda y: y.get("createdAt") or "")
+    # a cancelled run is the answer only when it is the only one: a run of the same head that finished is newer news
+    done = [x for x in mine if x.get("conclusion") != "cancelled"]
+    x = max(done or mine, key=lambda y: y.get("createdAt") or "")
     return {"id": x.get("databaseId"), "status": x.get("status"), "conclusion": x.get("conclusion"), "url": x.get("url")}
 
 
@@ -134,12 +147,16 @@ def failed_lines(run_id, repo=REPO):
 
 def ensure(head, base, branch, repo=REPO, register=120, poll=10):
     """The run on head: the one that exists (a failed one too: its failure is the answer), or a new one when there is
-    none or the last was cancelled. -> the run dict; Fail when none registers."""
+    none. -> the run dict; Fail when none registers. A cancelled run stays the answer: GitHub cancelled it, and a
+    head that is pushed again gets a new run."""
     got = find(head, repo)
     if got and got.get("conclusion") != "cancelled":
         return got
     own = pushed_to_ci(repo)
-    if not dispatch(head, base, branch, repo) and not own:
+    if own:
+        raise Fail("the run of %s was cancelled and the push that started it is spent: push the branch again, and the "
+                   "push starts the next run (%s)" % (head[:10], runs_url()), 1)
+    if not dispatch(head, base, branch, repo):
         raise Fail("the remote CI was not started: gh workflow run %s --repo %s --ref %s failed (the network, the gh "
                    "login, or a workflow that is not on %s)" % (CI_WORKFLOW, CI_REPO, branch, CI_REPO), 1)
     t0 = time.time()
@@ -151,9 +168,6 @@ def ensure(head, base, branch, repo=REPO, register=120, poll=10):
         if got and got.get("conclusion") != "cancelled":
             return got
         if time.time() - t0 > register:
-            if own:
-                raise Fail("the push did not start a run of %s on %s within %d s (%s): the workflow has no push "
-                           "trigger, or Actions is off" % (CI_WORKFLOW, head[:10], register, runs_url()), 1)
             raise Fail("the remote CI took the request for %s but no run registered within %d s (%s)"
                        % (head[:10], register, runs_url()), 1)
         time.sleep(poll)  # wait: poll, GitHub registers a pushed or dispatched run after a few seconds
