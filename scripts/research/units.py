@@ -159,6 +159,8 @@ def open_run(kind, topic, details, repo=REPO, no_issue=False, research_issue=Non
         r["research_issue"] = int(research_issue)
         r.pop("claiming", None)
         r["claim"] = msg
+        if info.get("claim_unlabelled"):
+            r["claim_unlabelled"] = True
         if "per_topic" in info:
             r["per_topic_issue"] = bool(info["per_topic"])
     r["phase"] = "open"
