@@ -436,7 +436,7 @@ def ci_cases():
         ci.pushed_to_ci = lambda repo=None: True
         stub([[], [], []], log=log)
         got = wait(register=0)
-        ok(("the push did not start" in got or "was cancelled" in got) and
+        ok(("push did not start" in got or "was cancelled" in got) and
            not any(a[:2] == ["workflow", "run"] for a in log),
            "ci.wait: a push in the CI repository starts the run, and nothing is dispatched")
         # a cancelled run is never retried by a dispatch in the CI repository: GitHub cancelled it, a new push runs it

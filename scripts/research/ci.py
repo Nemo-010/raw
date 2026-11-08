@@ -152,10 +152,12 @@ def ensure(head, base, branch, repo=REPO, register=120, poll=10):
     got = find(head, repo)
     if got and got.get("conclusion") != "cancelled":
         return got
-    own = pushed_to_ci(repo)
-    if own:
-        raise Fail("the run of %s was cancelled and the push that started it is spent: push the branch again, and the "
-                   "push starts the next run (%s)" % (head[:10], runs_url()), 1)
+    if pushed_to_ci(repo):
+        if got:
+            raise Fail("the run of %s was cancelled and the push that started it is spent: push the branch again, and "
+                       "the push starts the next run (%s)" % (head[:10], runs_url()), 1)
+        raise Fail("no run of %s exists in %s, and nothing is dispatched there: the push did not start a run - the "
+                   "workflow has no push trigger, or Actions is off (%s)" % (head[:10], CI_REPO, runs_url()), 1)
     if not dispatch(head, base, branch, repo):
         raise Fail("the remote CI was not started: gh workflow run %s --repo %s --ref %s failed (the network, the gh "
                    "login, or a workflow that is not on %s)" % (CI_WORKFLOW, CI_REPO, branch, CI_REPO), 1)
