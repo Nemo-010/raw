@@ -1,0 +1,107 @@
+{
+  "topic": "storage",
+  "slug": "convex",
+  "provider": "Convex",
+  "url": "https://www.convex.dev",
+  "category": "paas",
+  "free_tier": {
+    "stated": "1 GB file storage on Free; 1 GB/month file egress; 0.5 GB database; 40 deployments",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.convex.dev/production/state/limits",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.convex.dev/production/state/limits",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.convex.dev/production/state/limits",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "1 GB/month data egress total on Free (serving user files, accessing files in functions, backups) — equal to the storage size, so a full store can be fetched exactly once per month.",
+    "metered": false,
+    "free_allowance": "1 GB per month"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Convex client SDKs (JS/Python/Rust), HTTP actions, `npx convex` CLI, `storage.getUrl()` bearer URLs — 'anyone with the URL can access the file' (public, no auth)",
+  "chaining": "Free/Starter is per TEAM; 40 deployments per team on Free. But file storage is 1 GB total per team, not per deployment — so deployments do not multiply storage. Multiple teams/accounts is the only axis. Upload URLs are one-time and short-lived, which makes external tools awkward.",
+  "limits": [],
+  "limits_note": "1 GB storage AND 1 GB egress; HTTP action responses capped at 100 MiB so you cannot proxy large files; file URLs are unrevocable except by deleting the file.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Free has hard resource caps (Starter can exceed with usage-based billing). Well-behaved, no data loss reported; 100 MiB response cap breaks large-file serving via custom routes.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.convex.dev/production/state/limits",
+      "date": "2026-10-21",
+      "proved": "'File Storage | Storage: Free: 1 GB total', 'Data egress: Free: 1 GB/month total'"
+    },
+    {
+      "url": "https://docs.convex.dev/production/state/limits",
+      "date": "2026-10-21",
+      "proved": "'Deployments | 40' on Free/Starter (per team)"
+    },
+    {
+      "url": "https://docs.convex.dev/file-storage/overview",
+      "date": "2026-10-21",
+      "proved": "'anyone with the URL can access the file without another app-level authorization check'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "1 GB file storage on Free; 1 GB/month file egress; 0.5 GB database; 40 deployments",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G3-baas-databases.json",
+    "seed_area": "G/G3",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "G/G3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "egress",
+      "why": "1 GB file storage on Free; 1 GB/month file egress; 0.5 GB database; 40 deployments",
+      "retry_when": "if the egress meter is removed or a Cloudflare path is added",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G3"
+    },
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Backend-as-a-service and databases",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "1 GB file storage on Free; 1 GB/month file egress; 0.5 GB database; 40 deployments",
+    "limits_verbatim": "1 GB storage AND 1 GB egress; HTTP action responses capped at 100 MiB so you cannot proxy large files; file URLs are unrevocable except by deleting the file.",
+    "egress_verbatim": "1 GB/month data egress total on Free (serving user files, accessing files in functions, backups) — equal to the storage size, so a full store can be fetched exactly once per month.",
+    "chaining_verbatim": "Free/Starter is per TEAM; 40 deployments per team on Free. But file storage is 1 GB total per team, not per deployment — so deployments do not multiply storage. Multiple teams/accounts is the only axis. Upload URLs are one-time and short-lived, which makes external tools awkward.",
+    "tooling_verbatim": "Convex client SDKs (JS/Python/Rust), HTTP actions, `npx convex` CLI, `storage.getUrl()` bearer URLs — 'anyone with the URL can access the file' (public, no auth)",
+    "interface_verbatim": "rest",
+    "agent_focus": "Backend-as-a-service and database platforms where free storage quota is expressed per PROJECT/DATASET/CLUSTER and the units may multiply with free orgs — plus the headless-CMS class, where assets are CDN-served at no egress cost"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

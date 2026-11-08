@@ -1,0 +1,118 @@
+{
+  "topic": "storage",
+  "slug": "nuget-org",
+  "provider": "NuGet.org",
+  "url": "https://www.nuget.org",
+  "category": "registry",
+  "free_tier": {
+    "stated": "250 MB per package. No documented total-storage quota and no documented cap on package count per account; organizations are free. Over 500k packages / petabytes-scale gallery in practice.",
+    "unit": "MB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://learn.microsoft.com/en-us/nuget/nuget-org/publish-a-package",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://learn.microsoft.com/en-us/nuget/nuget-org/publish-a-package",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://learn.microsoft.com/en-us/nuget/nuget-org/publish-a-package",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free and unmetered, Cloudflare-fronted, CORS-open. Probe: api.nuget.org v3-flatcontainer .nupkg GET -> 200, Server: cloudflare, Access-Control-Allow-Origin: *, Cache-Control: max-age=86400.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Push via PUT/POST to the v2 endpoint (nuget.exe / dotnet nuget push); pull via the v3 flat-container URL pattern api.nuget.org/v3-flatcontainer/{id}/{version}/{id}.{version}.nupkg. First-class clients, anonymous read.",
+  "chaining": "UNBOUNDED in principle: unlimited packages x 250 MB. 10 TiB = ~44,000 packages. Rate limits are the binding constraint (HTTP 429 with Retry-After). Package IDs are globally unique per version and cannot be reused, so name-sharding has to be planned up front.",
+  "limits": [],
+  "limits_note": "250 MB per package (hard 413). API rate limited (429 + Retry-After). Deleting a package is strongly discouraged and effectively unsupported ('In general, we do not support deleting a package published to NuGet.org'); unlisting is the normal path. Signed packages are immutable including the nuspec.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: has to be planned up front. 250 MB per package (hard 413). API rate limited (429 + Retry-After). Deleting a package is strongly discouraged and effectively unsupported ('In general,",
+    "country": null
+  },
+  "reliability_note": "No deletion path means data does not vanish — good for archive. No total quota documented means no hard ceiling appears anywhere, but also no documented guarantee; a bulk workload has no stated allowance to point at. 429s on sustained pushes.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://learn.microsoft.com/en-us/nuget/nuget-org/publish-a-package",
+      "date": "2026-10-21",
+      "proved": "'Nuget.org has a package size limit of about 250 MB' + the 413 error text"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/nuget/nuget-org/nuget-org-faq",
+      "date": "2026-10-21",
+      "proved": "'NuGet.org allows packages up to 250MB'; 'In general, we do not support deleting a package published to NuGet.org'"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/nuget/api/rate-limits",
+      "date": "2026-10-21",
+      "proved": "429 with 'Rate limit is exceeded. Try again in N seconds.'"
+    },
+    {
+      "url": "https://api.nuget.org/v3-flatcontainer/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, Content-Length: 2441966, Server: cloudflare"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "250 MB per package. No documented total-storage quota and no documented cap on package count per account; organizations are free. Over 500k packages / petabytes-scale gallery in practice.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C2-package-ecosystems.json",
+    "seed_area": "C/C2",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "C/C2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [
+      {
+        "field": "verdict",
+        "class": "same provider is both a table row and a dead end",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md"
+          },
+          {
+            "value": "dead-end: Already covered by the package-registries agent; also 250 MB per package historically and a gallery designed for librari",
+            "source": "DEAD-ENDS.md"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "Language package ecosystems",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "250 MB per package. No documented total-storage quota and no documented cap on package count per account; organizations are free. Over 500k packages / petabytes-scale gallery in practice.",
+    "limits_verbatim": "250 MB per package (hard 413). API rate limited (429 + Retry-After). Deleting a package is strongly discouraged and effectively unsupported ('In general, we do not support deleting a package published to NuGet.org'); unlisting is the normal path. Signed packages are immutable including the nuspec.",
+    "egress_verbatim": "Free and unmetered, Cloudflare-fronted, CORS-open. Probe: api.nuget.org v3-flatcontainer .nupkg GET -> 200, Server: cloudflare, Access-Control-Allow-Origin: *, Cache-Control: max-age=86400.",
+    "chaining_verbatim": "UNBOUNDED in principle: unlimited packages x 250 MB. 10 TiB = ~44,000 packages. Rate limits are the binding constraint (HTTP 429 with Retry-After). Package IDs are globally unique per version and cannot be reused, so name-sharding has to be planned up front.",
+    "tooling_verbatim": "Push via PUT/POST to the v2 endpoint (nuget.exe / dotnet nuget push); pull via the v3 flat-container URL pattern api.nuget.org/v3-flatcontainer/{id}/{version}/{id}.{version}.nupkg. First-class clients, anonymous read.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Package ecosystems as blob stores: npm, PyPI, crates.io, Maven Central, NuGet, RubyGems, Packagist, Conda/conda-forge, Hex, Pub.dev, CocoaPods, R, CPAN, Hackage — per-artifact caps, version-unlimited behaviour, retention/deletion policy"
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

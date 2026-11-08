@@ -1,0 +1,209 @@
+{
+  "topic": "storage",
+  "slug": "borealis",
+  "provider": "Borealis (Canadian Dataverse Repository, University of Toronto / Scholars Portal)",
+  "url": "https://borealisdata.ca",
+  "category": "academic repository / Dataverse 6.8.4-SP",
+  "free_tier": {
+    "stated": "No quota object. Not a policy number either — nothing published. 24,727 datasets across 1,858 collections, all unmetered by the platform.",
+    "unit": "unlimited",
+    "metered_on": "unstated",
+    "source_url": "https://borealisdata.ca/api/dataverses/:root/storage/quota?showInherited=true",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://borealisdata.ca/api/dataverses/:root/storage/quota?showInherited=true",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://borealisdata.ca/api/dataverses/:root/storage/quota?showInherited=true",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Cloudflare-fronted; answered the version API in 0.77 s, the fastest of the six majors tested.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "REST (native Dataverse API v1), SWORD",
+  "tooling": "curl against /api/; same client code as Harvard",
+  "chaining": "Best combination found in this slot: no quota object AND a working native email signup AND the largest live dataset base outside Harvard. A single account is not byte-bounded by any number the service can report.",
+  "limits": [],
+  "limits_note": "No per-file or per-account figure published; no quota endpoint returns a number. Platform default applies (unlimited unless :MaxFileUploadSizeInBytes is set).",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "Scheduled upgrade to 6.12.1 with 7h downtime announced on the signup page itself — reads may be affected during maintenance windows.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://borealisdata.ca/api/info/version",
+      "date": "2026-10-21",
+      "proved": "{\"status\":\"OK\",\"data\":{\"version\":\"v6.8.4-SP\",\"build\":null}}"
+    },
+    {
+      "url": "https://borealisdata.ca/api/dataverses/:root/storage/quota?showInherited=true",
+      "date": "2026-10-21",
+      "proved": "{\"status\":\"OK\",\"data\":{\"message\":\"No quota defined for this collection\"}}"
+    },
+    {
+      "url": "https://borealisdata.ca/dataverseuser.xhtml?editMode=CREATE",
+      "date": "2026-10-21",
+      "proved": "HTTP 200, form served; fields dataverseUserForm:accountInfoView:{email,affiliation,userName,password}; none carry a required or aria-required attribute"
+    },
+    {
+      "url": "https://borealisdata.ca/technology/",
+      "date": "2026-10-21",
+      "proved": "'Users who wish to create collections and/or datasets and upload data and metadata must have a user acco...' (account required, no affiliation stated)"
+    },
+    {
+      "url": "https://borealisdata.ca/api/search?q=*&type=dataset&per_page=1",
+      "date": "2026-10-21",
+      "proved": "24,727 datasets; type=dataverse — 1,858"
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No quota object. Not a policy number either — nothing published. 24,727 datasets across 1,858 collections, all unmetered by the platform.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D11-dataverse-and-dspace-sweep.json",
+    "seed_area": "D/D11",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "D/D11"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D2"
+      },
+      {
+        "value": "fails-identity",
+        "area": "E/E16"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Borealis (Canadian Dataverse Repository, University of Toronto / Scholars Portal)",
+      "Borealis (Canadian Dataverse Repository)",
+      "Borealis — Canadian Dataverse Repository"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md row, area D/D11",
+            "evidence": "quota: No quota object. Not a policy number either — nothing published. 24,72"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area D/D2",
+            "evidence": "quota: No enforced quota. GET /api/dataverses/:root/storage/quota?showInherit"
+          },
+          {
+            "value": "fails-identity",
+            "source": "table.md row, area E/E16",
+            "evidence": "quota: No quota defined: GET /api/dataverses/:root/storage/quota returns 'No"
+          }
+        ],
+        "resolution": "fails-identity: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies and qualifies-with-caveat. The table.md (area E/E16) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "No quota object. Not a policy number either — nothing published. 24,72",
+            "source": "table.md row, area D/D11",
+            "evidence": null
+          },
+          {
+            "value": "No enforced quota. GET /api/dataverses/:root/storage/quota?showInherit",
+            "source": "table.md row, area D/D2",
+            "evidence": null
+          },
+          {
+            "value": "No quota defined: GET /api/dataverses/:root/storage/quota returns 'No",
+            "source": "table.md row, area E/E16",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md (area D/D11)"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area D/D2)"
+          },
+          {
+            "value": "fails-identity",
+            "source": "table.md (area E/E16)"
+          }
+        ],
+        "resolution": "fails-identity: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies and qualifies-with-caveat. The table.md (area E/E16) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "No quota object. Not a policy number either — nothing published. 24,72",
+            "source": "table.md (area D/D11)"
+          },
+          {
+            "value": "No enforced quota. GET /api/dataverses/:root/storage/quota?showInherit",
+            "source": "table.md (area D/D2)"
+          },
+          {
+            "value": "No quota defined: GET /api/dataverses/:root/storage/quota returns 'No",
+            "source": "table.md (area E/E16)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "egress",
+      "why": "No quota object. Not a policy number either — nothing published. 24,727 datasets across 1,858 collections, all unmetered by the platform.",
+      "retry_when": "if the egress meter is removed or a Cloudflare path is added",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area D/D11"
+    },
+    "target_document": "docs/storage/free/academic-identity.md",
+    "document_section": "The Dataverse and DSpace sweep",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No quota object. Not a policy number either — nothing published. 24,727 datasets across 1,858 collections, all unmetered by the platform.",
+    "limits_verbatim": "No per-file or per-account figure published; no quota endpoint returns a number. Platform default applies (unlimited unless :MaxFileUploadSizeInBytes is set).",
+    "egress_verbatim": "Cloudflare-fronted; answered the version API in 0.77 s, the fastest of the six majors tested.",
+    "chaining_verbatim": "Best combination found in this slot: no quota object AND a working native email signup AND the largest live dataset base outside Harvard. A single account is not byte-bounded by any number the service can report.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "curl against /api/; same client code as Harvard",
+    "interface_verbatim": "REST (native Dataverse API v1), SWORD",
+    "agent_focus": "Systematic sweep of self-hosted academic repository software (Dataverse, DSpace, InvenioRDM, EPrints, Fedora/Islandora) scored on the four client questions: institutional-email requirement, per-file cap, per-collection/dataset cap, and whether the install enforces a quota object at all. Primary method was machine probing, not page reading: /api/info/version and /api/dataverses/:root/storage/quota?showInherited=true against the full official Dataverse installation registry (150 hostnames), the native-signup form probe /dataverseuser.xhtml?editMode=CREATE against all 83 no-quota hosts, and the platform source defaults read out of the upstream config files for DSpace, InvenioRDM, EPrints, libp2p and iroh. Secondary coverage of the relay/P2P half of the slot."
+  },
+  "binding": "none",
+  "binding_note": "the quota is real and unreachable: identity is the binding constraint, and it is not one of the six limits kinds",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

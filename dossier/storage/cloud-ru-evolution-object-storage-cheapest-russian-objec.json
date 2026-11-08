@@ -1,0 +1,180 @@
+{
+  "topic": "storage",
+  "slug": "cloud-ru-evolution-object-storage-cheapest-russian-objec",
+  "provider": "Cloud.ru Evolution Object Storage (ex-SberCloud) — cheapest Russian object rate, VAT-inclusive",
+  "url": "https://cloud.ru/documents/tariffs/evolution/object-storage",
+  "category": "object-storage",
+  "free_tier": {
+    "stated": "Single-zone S3 object storage ₽1.1346 per GB per month including 22 % VAT (₽0.93 ex-VAT). Tariff document takes effect 2026-09-28. No volume published.",
+    "unit": "objects",
+    "metered_on": "stored-bytes",
+    "source_url": "https://cloud.ru/documents/tariffs/evolution/object-storage",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://cloud.ru/documents/tariffs/evolution/object-storage",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://cloud.ru/documents/tariffs/evolution/object-storage",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Not stated in the tariff fragment that was retrievable (the document's traffic annex was truncated at the point of reading). A prior wave (A-A4) recorded Evolution Object Storage's free tier as «первые не тарифицируются» for a small monthly allowance and marked the paid service as metered. Treat egress as UNVERIFIED — do not assume free.",
+    "metered": true
+  },
+  "interface": [
+    "s3-compatible",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "s3",
+  "tooling": "S3-compatible; endpoint class obs.ru-moscow-1.hc.sbercloud.ru answered 403 to an anonymous list (expected for a private bucket API). rclone `s3`, aws-cli.",
+  "chaining": "Per-GB, so 5 TB and 20 TB share the rate.",
+  "limits": [],
+  "limits_note": "The ₽1.1346/GB rate is only for the single-zone class; multi-zone and the cold classes are separately priced and were not captured. Enterprise onboarding (legal entity or individual with Russian card).",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "Cloud.ru is the rebranded SberCloud and is the largest non-hyperscaler Russian cloud; the technical reliability is not in question. The commercial blocker is that tariff documents are PDFs behind a Russian-language portal, prices are VAT-inclusive for Russian entities, and the egress annex could not be read — so the total cost of ownership is unknown even though the storage line is the cheapest Russian object rate found.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://cloud.ru/documents/tariffs/evolution/object-storage",
+      "date": "2026-10-21",
+      "proved": "search result captured the table: «Объектное хранилище S3 Однозонное | ГБ | месяц | 1,1346 | 0,…» with «Вступление в силу: 28 сентября 2026 г.» and «НДС (22%)»"
+    },
+    {
+      "url": "https://obs.ru-moscow-1.hc.sbercloud.ru/",
+      "date": "2026-10-21",
+      "proved": "probe: curl -o /dev/null -w '%{http_code}' -> 403 (S3 API live, anonymous access refused)"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "dossiers/A-A4-cis-drives.json — prior wave's finding that Evolution Object Storage's FREE tier is a small monthly non-billed allowance, which is why the paid rate was re-quoted here"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$14.07/TB/mo at both 5 TB and 20 TB (₽1.1346/GiB × 1024 × 0.012111), storage only, egress unpriced/unknown. If egress turns out metered at the Selectel-like ₽1.96/GB this becomes $38/TB/mo total and fails; the figure above is storage-only.",
+  "notes": "Single-zone S3 object storage ₽1.1346 per GB per month including 22 % VAT (₽0.93 ex-VAT). Tariff document takes effect 2026-09-28. No volume published.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-P5-regional-cheap-paid.json",
+    "seed_area": "A/P5",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "A/P5"
+      },
+      {
+        "value": "fails-quota",
+        "area": "A/A4"
+      }
+    ],
+    "seed_confidence": "medium",
+    "merged_spellings": [
+      "Cloud.ru Evolution Object Storage (ex-SberCloud) — cheapest Russian object rate, VAT-inclusive",
+      "Cloud.ru Evolution Object Storage (free tier)"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area A/P5",
+            "evidence": "quota: Single-zone S3 object storage ₽1.1346 per GB per month including 22 %"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row, area A/A4",
+            "evidence": "quota: 15 GB perpetual free (standard class) + 10 TB/month egress untariffed;"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area A/A4) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "Single-zone S3 object storage ₽1.1346 per GB per month including 22 %",
+            "source": "table.md row, area A/P5",
+            "evidence": null
+          },
+          {
+            "value": "15 GB perpetual free (standard class) + 10 TB/month egress untariffed;",
+            "source": "table.md row, area A/A4",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area A/P5)"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md (area A/A4)"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area A/A4) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "Single-zone S3 object storage ₽1.1346 per GB per month including 22 %",
+            "source": "table.md (area A/P5)"
+          },
+          {
+            "value": "15 GB perpetual free (standard class) + 10 TB/month egress untariffed;",
+            "source": "table.md (area A/A4)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Single-zone S3 object storage ₽1.1346 per GB per month including 22 % VAT (₽0.93 ex-VAT). Tariff document takes effect 2026-09-28. No volume published.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/P5"
+    },
+    "target_document": "docs/storage/paid/regional.md",
+    "document_section": "Regional cheap paid",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Single-zone S3 object storage ₽1.1346 per GB per month including 22 % VAT (₽0.93 ex-VAT). Tariff document takes effect 2026-09-28. No volume published.",
+    "limits_verbatim": "The ₽1.1346/GB rate is only for the single-zone class; multi-zone and the cold classes are separately priced and were not captured. Enterprise onboarding (legal entity or individual with Russian card).",
+    "egress_verbatim": "Not stated in the tariff fragment that was retrievable (the document's traffic annex was truncated at the point of reading). A prior wave (A-A4) recorded Evolution Object Storage's free tier as «первые не тарифицируются» for a small monthly allowance and marked the paid service as metered. Treat egress as UNVERIFIED — do not assume free.",
+    "chaining_verbatim": "Per-GB, so 5 TB and 20 TB share the rate.",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "S3-compatible; endpoint class obs.ru-moscow-1.hc.sbercloud.ru answered 403 to an anonymous list (expected for a private bucket API). rclone `s3`, aws-cli.",
+    "interface_verbatim": "s3",
+    "price_verbatim": "$14.07/TB/mo at both 5 TB and 20 TB (₽1.1346/GiB × 1024 × 0.012111), storage only, egress unpriced/unknown. If egress turns out metered at the Selectel-like ₽1.96/GB this becomes $38/TB/mo total and fails; the figure above is storage-only.",
+    "agent_focus": "Wave 7 cheap-PAID lane, regional angle: storage sold in RUB / CNY / BRL / INR / ZAR / TRY / PLN / UAH that never appears on Western price lists. Every paid candidate carries price_per_tb_month at USD-converted list price. FX fixed 2026-10-21 from open.er-api.com: RUB 82.5719/USD, CNY 6.6913, BRL 5.0231, INR 94.9952, ZAR 16.3972, TRY 49.5978, PLN 3.8923, UAH 45.0922, EUR 0.89075/USD. Excluded per brief: AWS, Azure, GCP, Alibaba Cloud, Cloudflare R2, Backblaze B2, IDrive e2. Headline result: the true regional floor with genuinely free egress is ~$2.00/TB/mo (Yandex 360 Profi 3 TB on a Russian card) rising to ~$4.17/TB/mo for the same product bought with a foreign card, and ~$5.95-7.56/TB/mo for flat-rate Western-facing file storage (TheHost, Rollin Host). Everything advertised below ~$2/TB/mo in this set is either capacity-capped, egress-metered, or unverifiable marketing."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

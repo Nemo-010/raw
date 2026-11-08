@@ -1,0 +1,172 @@
+{
+  "topic": "storage",
+  "slug": "imgur",
+  "provider": "Imgur (anonymous + account uploads)",
+  "url": "https://imgur.com",
+  "category": "media",
+  "free_tier": {
+    "stated": "50 MB per non-animated image, 200 MB per GIF/video; 'no upload limit per account'; 50 images/hour",
+    "unit": "MB",
+    "metered_on": "unstated",
+    "source_url": "https://help.imgur.com/hc/en-us/articles/26511665959579-What-files-can-I-upload-Is-there-a-size-limit",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://help.imgur.com/hc/en-us/articles/26511665959579-What-files-can-I-upload-Is-there-a-size-limit",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://help.imgur.com/hc/en-us/articles/26511665959579-What-files-can-I-upload-Is-there-a-size-limit",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "free, direct i.imgur.com links, Fastly/Cloudflare CDN, no per-IP shaping observed; hotlinking is the product",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "documented Imgur API v3 with Client-ID-only anonymous upload (POST /3/image); many CLI wrappers (imgur-screenshot, sharex, rclone has no backend but community scripts do)",
+  "chaining": "50 images/hour x 50 MB = 2.5 GB/hour per IP, x multiple Client-IDs x multiple accounts. ~1.2 TB/month/IP at the hourly cap if you actually sustain it",
+  "limits": [],
+  "limits_note": "50 images/hour; PNGs over 5 MB get converted to JPEG (destroys byte-exactness); images over 1 MB anonymous / 5 MB account are lossily recompressed; 'it's not possible to replace an image while keeping the same URL'",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: r account'; 50 images/hour the big one: Imgur has purged anonymous/unviewed content in past cleanup rounds and the 50-per-hour cap is enforced per IP; recompression means you cannot trea",
+    "country": null
+  },
+  "reliability_note": "the big one: Imgur has purged anonymous/unviewed content in past cleanup rounds and the 50-per-hour cap is enforced per IP; recompression means you cannot treat it as a byte store at all",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://help.imgur.com/hc/en-us/articles/26511665959579-What-files-can-I-upload-Is-there-a-size-limit",
+      "date": "2026-10-21",
+      "proved": "'50MB' non-animated, '200MB' gif/video, 'There is an upload limit of 50 images per hour. There is no upload limit per account'"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "same page — 'PNG files over 5MB will be converted to JPEGs'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "50 MB per non-animated image, 200 MB per GIF/video; 'no upload limit per account'; 50 images/hour",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F5-social-forums.json",
+    "seed_area": "F/F5",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "F/F5"
+      },
+      {
+        "value": "fails-quota",
+        "area": "H/H2"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Imgur (anonymous + account uploads)",
+      "Imgur"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area F/F5",
+            "evidence": "quota: 50 MB per non-animated image, 200 MB per GIF/video; 'no upload limit p"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row, area H/H2",
+            "evidence": "quota: No per-account upload cap ('There is no upload limit per account, so u"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area H/H2) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "50 MB per non-animated image, 200 MB per GIF/video; 'no upload limit p",
+            "source": "table.md row, area F/F5",
+            "evidence": null
+          },
+          {
+            "value": "No per-account upload cap ('There is no upload limit per account, so u",
+            "source": "table.md row, area H/H2",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area F/F5)"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md (area H/H2)"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area H/H2) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "50 MB per non-animated image, 200 MB per GIF/video; 'no upload limit p",
+            "source": "table.md (area F/F5)"
+          },
+          {
+            "value": "No per-account upload cap ('There is no upload limit per account, so u",
+            "source": "table.md (area H/H2)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "50 MB per non-animated image, 200 MB per GIF/video; 'no upload limit per account'; 50 images/hour",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F5"
+    },
+    "target_document": "docs/storage/free/social-and-fediverse.md",
+    "document_section": "Social and forum platforms",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "50 MB per non-animated image, 200 MB per GIF/video; 'no upload limit per account'; 50 images/hour",
+    "limits_verbatim": "50 images/hour; PNGs over 5 MB get converted to JPEG (destroys byte-exactness); images over 1 MB anonymous / 5 MB account are lossily recompressed; 'it's not possible to replace an image while keeping the same URL'",
+    "egress_verbatim": "free, direct i.imgur.com links, Fastly/Cloudflare CDN, no per-IP shaping observed; hotlinking is the product",
+    "chaining_verbatim": "50 images/hour x 50 MB = 2.5 GB/hour per IP, x multiple Client-IDs x multiple accounts. ~1.2 TB/month/IP at the hourly cap if you actually sustain it",
+    "tooling_verbatim": "documented Imgur API v3 with Client-ID-only anonymous upload (POST /3/image); many CLI wrappers (imgur-screenshot, sharex, rclone has no backend but community scripts do)",
+    "interface_verbatim": "rest",
+    "agent_focus": "social platforms and forums as attachment storage — permanent attachment URLs, CDN serving, API path"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

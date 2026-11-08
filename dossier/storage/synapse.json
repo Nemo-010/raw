@@ -1,0 +1,110 @@
+{
+  "topic": "storage",
+  "slug": "synapse",
+  "provider": "Synapse (Sage Bionetworks)",
+  "url": "https://www.synapse.org",
+  "category": "academic",
+  "free_tier": {
+    "stated": "No clear public storage cap found. Platform is free SaaS on S3; documented pain point is a '1GB per day' quota on modelState (compute artifacts), not on file storage.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.synapse.org/synapse-docs/uploading-and-organizing-data",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.synapse.org/synapse-docs/uploading-and-organizing-data",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "per-object-cap: none documented for plain files; 1 GB/day on modelState. Retention: indefinite for public content",
+    "source_url": "https://docs.synapse.org/synapse-docs/uploading-and-organizing-data",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free to download for public projects; anonymous download of public entities is supported.",
+    "metered": false
+  },
+  "interface": [
+    "s3",
+    "rest",
+    "oci"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Python/Java/R clients (`synapseclient`), REST API, and a built-in Docker registry. Also supports custom storage locations (your own S3/GCS) — which makes it a metadata layer over someone else's bucket rather than storage itself.",
+  "chaining": "Unlimited projects per certified user. The interesting chain is the inverse: point Synapse at a custom S3/GCS location and you get a free DOI-style sharing and permissions layer over any bucket you already have.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "1GB per day",
+      "source": "https://docs.synapse.org/synapse-docs/uploading-and-organizing-data"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "1 GB/day",
+      "source": "https://docs.synapse.org/synapse-docs/uploading-and-organizing-data"
+    }
+  ],
+  "limits_note": "per-object-cap: none documented for plain files; 1 GB/day on modelState. Retention: indefinite for public content. Gate: upload requires 'certified user' status (a quiz), so no anonymous write path exists.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: te: upload requires 'certified user' status (a quiz), so no anonymous write path exists. academic",
+    "country": null
+  },
+  "reliability_note": "Certification gate plus no published quota means capacity is discretionary; large uploads are known to be throttled/queued without a documented ceiling. Treat quota as unverified.",
+  "confidence": "inferred",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.synapse.org/synapse-docs/uploading-and-organizing-data",
+      "date": "2026-10-21",
+      "proved": "'you need to be a certified user', S3-backed, no quota stated"
+    },
+    {
+      "url": "https://docs.synapse.org/synapse-docs/custom-storage-locations",
+      "date": "2026-10-21",
+      "proved": "files can live in your own S3/GCS bucket, Synapse keeps metadata"
+    },
+    {
+      "url": "https://www.synapse.org/Synapse:syn4224222/discussion/threadId=1648",
+      "date": "2026-10-21",
+      "proved": "'Model State exceeded 1GB per day quota'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No clear public storage cap found. Platform is free SaaS on S3; documented pain point is a '1GB per day' quota on modelState (compute artifacts), not on file storage.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D7-domain-science-repos.json",
+    "seed_area": "D/D7",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D7"
+      }
+    ],
+    "seed_confidence": "low",
+    "conflicts": [],
+    "target_document": "docs/storage/free/academic.md",
+    "document_section": "Domain science repositories",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No clear public storage cap found. Platform is free SaaS on S3; documented pain point is a '1GB per day' quota on modelState (compute artifacts), not on file storage.",
+    "limits_verbatim": "per-object-cap: none documented for plain files; 1 GB/day on modelState. Retention: indefinite for public content. Gate: upload requires 'certified user' status (a quiz), so no anonymous write path exists.",
+    "egress_verbatim": "Free to download for public projects; anonymous download of public entities is supported.",
+    "chaining_verbatim": "Unlimited projects per certified user. The interesting chain is the inverse: point Synapse at a custom S3/GCS location and you get a free DOI-style sharing and permissions layer over any bucket you already have.",
+    "tooling_verbatim": "Python/Java/R clients (`synapseclient`), REST API, and a built-in Docker registry. Also supports custom storage locations (your own S3/GCS) — which makes it a metadata layer over someone else's bucket rather than storage itself.",
+    "interface_verbatim": "rest",
+    "agent_focus": "domain-specific scientific data repositories with large free quotas (not generalist: Zenodo/OSF/Dataverse excluded as already done)"
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

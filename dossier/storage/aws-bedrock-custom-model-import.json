@@ -1,0 +1,96 @@
+{
+  "topic": "storage",
+  "slug": "aws-bedrock-custom-model-import",
+  "provider": "AWS Bedrock — custom model import",
+  "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html",
+  "category": "hyperscaler-model-catalog",
+  "free_tier": {
+    "stated": "Hard per-object cap: 'The size of the imported model weights must be less than 100GB for multimodal models and 200GB for text models.' No free storage at all — the source must already live in your own S3 bucket, which you pay for.",
+    "unit": "none",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Paid S3 egress from your own bucket. Bedrock's catalog is a deployment target, not a host.",
+    "metered": false
+  },
+  "interface": [
+    "s3",
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "A real API for model import jobs, then InvokeModel. The import job reads from an S3 URI you supply.",
+  "chaining": "None for storage — this is a consumer of S3 capacity, not a provider of it. Chaining it to the requirement would require owning the S3 bucket first, which is a paid resource.",
+  "limits": [],
+  "limits_note": "fails-quota and fails the model: the catalog does not host third-party bytes. Also architecturally constrained (transformer 4.51.3, <128K context, no embedding models).",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "Not a storage provider. Included because the brief named it; the answer is that the 'model catalog' is a deployment registry over storage you already pay for.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html",
+      "date": "2026-10-21",
+      "proved": "opened: 'The size of the imported model weights must be less than 100GB for multimodal models and 200GB for text models'; 'you specify the Amazon S3 URI for the source of the model files'; 'Amazon Bedrock supports transformer version 4.51.3'; 'Custom Model Import does not support embedding models.'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Hard per-object cap: 'The size of the imported model weights must be less than 100GB for multimodal models and 200GB for text models.' No free storage at all — the source must already live in your own S3 bucket, which you pay for.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D10-preprint-and-data-2026.json",
+    "seed_area": "D/D10",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "D/D10"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "paid",
+      "why": "Hard per-object cap: 'The size of the imported model weights must be less than 100GB for multimodal models and 200GB for text models.' No free storage at all — the source must already live in your own S3 bucket, which you pay for.",
+      "retry_when": "if the price drops below the paid-lane floor",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area D/D10"
+    },
+    "target_document": "docs/storage/free/academic.md",
+    "document_section": "Preprint and data repositories, 2026",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 1,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Hard per-object cap: 'The size of the imported model weights must be less than 100GB for multimodal models and 200GB for text models.' No free storage at all — the source must already live in your own S3 bucket, which you pay for.",
+    "limits_verbatim": "fails-quota and fails the model: the catalog does not host third-party bytes. Also architecturally constrained (transformer 4.51.3, <128K context, no embedding models).",
+    "egress_verbatim": "Paid S3 egress from your own bucket. Bedrock's catalog is a deployment target, not a host.",
+    "chaining_verbatim": "None for storage — this is a consumer of S3 capacity, not a provider of it. Chaining it to the requirement would require owning the S3 bucket first, which is a paid resource.",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "A real API for model import jobs, then InvokeModel. The import job reads from an S3 URI you supply.",
+    "interface_verbatim": "rest",
+    "agent_focus": "2026-era research-data and data-marketplace platforms, deliberately judged on the BINDING constraint (does a person with only an email get past the write gate?) rather than on the marketing quota. Coverage: IEEE DataPort (the wave-7 discovery this slot confirms and extends), Mozilla Data Collective (2025 launch, the only new ≥100 GB-per-file free host found), Source Cooperative re-probed at the byte level, the French national Dataverse (Recherche Data Gouv) as the one genuinely EU-funded space with a self-serve email account, plus the 2026 data-marketplace entrants (Snowflake, Databricks Free Edition, data.world, Datarade, Tableland, Spice.ai, DataChain), the EU Data Spaces (Gaia-X / Catena-X / EOSC EU Node / DICE) and ResearchGate/Academia.edu data upload. Two structural results dominate: (a) the 'data marketplace' category is uniformly not storage — they are catalogues, and every one of them fails on per-object size by two to three orders of magnitude; (b) the EU Data Spaces are real and large but gated on eduGAIN/eIDAS identity, so they are closed on identity exactly like CSC Allas and LUMI-O before them."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

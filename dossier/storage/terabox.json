@@ -1,0 +1,111 @@
+{
+  "topic": "storage",
+  "slug": "terabox",
+  "provider": "TeraBox (Baidu / Flextech)",
+  "url": "https://www.terabox.com",
+  "category": "cloud-drive",
+  "free_tier": {
+    "stated": "1024 GB free ('Network disk capacity limited to 1024GB' on the free column; '1TB Free Cloud Storage for Basic & 2TB Storage for Pro'); Premium/Pro 2048 GB",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.terabox.com/cloud-storage-pricing-plans",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "4 GB/file",
+    "bytes": 4000000000,
+    "source_url": "https://www.terabox.com/cloud-storage-pricing-plans",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "~4 GB/file free; ~7-day share-link life; one concurrent download; first-party web login carries a jsToken automated-traffic filter layer",
+    "days": 7,
+    "source_url": "https://www.terabox.com/cloud-storage-pricing-plans",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Direct share links, no per-GB fee; free accounts throttled (~2-5 GB/day measured by third parties) and one download at a time",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Unofficial web API (app_id=250528, jsToken) + rclone fork bclone / gulp79/rclone-extra (upstream PR #8508 still open); official Open Platform OAuth is partner-gated",
+  "chaining": "1 TB per account, and a second account carries a second allowance; email/SSO signup keeps identity cost low, but the 4 GB/file free cap forces splitting",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "4 GB/file",
+      "source": "https://www.terabox.com/cloud-storage-pricing-plans"
+    }
+  ],
+  "limits_note": "~4 GB/file free; ~7-day share-link life; one concurrent download; first-party web login carries a jsToken automated-traffic filter layer",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ng the surrounding table text) jsToken automated-traffic filter on the web API + Cloudflare in front; the account API answers errno -6 'user not login' / 400141 'need verify' to unauthenticated call",
+    "country": null
+  },
+  "reliability_note": "no official rclone backend; free-tier daily download cap makes it archive-shaped, and the web API breaks when the client changes",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.terabox.com/cloud-storage-pricing-plans",
+      "date": "2026-10-21",
+      "proved": "'Network disk capacity limited to 1024GB' free column; title '1TB Free Cloud Storage for Basic & 2TB Storage for Pro'"
+    },
+    {
+      "url": "https://www.terabox.com/portuguese/cloud-storage-pricing-plans",
+      "date": "2026-10-21",
+      "proved": "and /thai/ and /vietnamese/ and /indonesian/ — all show '1024 GB' free, 2048 GB paid; the '5GB ... gratuito' strings belong to the OneDrive/Google Drive comparison rows"
+    },
+    {
+      "url": "https://www.terabox.com/login",
+      "date": "2026-10-21",
+      "proved": "crawl render shows 'Sign in with Google', 'Phone or Email', 'Registered with phone No.?'; raw HTML carries thirdLoginSdk {apple, kakao, google, line, facebook} and a dial-code phone widget"
+    },
+    {
+      "url": "https://dm.1024terabox.com/api/quota?...&app_id=250528",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> {\"errmsg\":\"user not login\",\"errno\":-6}"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "1024 GB free ('Network disk capacity limited to 1024GB' on the free column; '1TB Free Cloud Storage for Basic & 2TB Storage for Pro'); Premium/Pro 2048 GB",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A9-foreign-signup.json",
+    "seed_area": "A/A9",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "A/A9"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "Registration open to a foreign individual",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "1024 GB free ('Network disk capacity limited to 1024GB' on the free column; '1TB Free Cloud Storage for Basic & 2TB Storage for Pro'); Premium/Pro 2048 GB",
+    "limits_verbatim": "~4 GB/file free; ~7-day share-link life; one concurrent download; first-party web login carries a jsToken automated-traffic filter layer",
+    "egress_verbatim": "Direct share links, no per-GB fee; free accounts throttled (~2-5 GB/day measured by third parties) and one download at a time",
+    "chaining_verbatim": "1 TB per account, and a second account carries a second allowance; email/SSO signup keeps identity cost low, but the 4 GB/file free cap forces splitting",
+    "tooling_verbatim": "Unofficial web API (app_id=250528, jsToken) + rclone fork bclone / gulp79/rclone-extra (upstream PR #8508 still open); official Open Platform OAuth is partner-gated",
+    "interface_verbatim": "rest",
+    "agent_focus": "registration friction for a signup with no local identity in China, the US or the EU: which free providers accept a foreign identity (email or any international number, no local ID, no local card), which geo-fence or IP-classify the signup, and whether the foreign signup gets the advertised quota"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

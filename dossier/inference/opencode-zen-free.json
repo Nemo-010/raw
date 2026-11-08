@@ -1,0 +1,162 @@
+{
+  "topic": "inference",
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "tooling": "any OpenAI-compatible client; curl against POST {base}/chat/completions",
+  "chaining": "no chain exists for a script: the free tier answers only inside the OpenCode client, so the client is the scarce link and it cannot be substituted",
+  "limits": [],
+  "history": [],
+  "slug": "opencode-zen-free",
+  "provider": "OpenCode Zen free models",
+  "url": "https://opencode.ai/zen/v1",
+  "category": "inference endpoint, access-gated",
+  "free_tier": {
+    "stated": "the Zen pricing table lists 11 model ids at Free for input and output; 10 of them are also Free for cached read (Big Pickle, Pulse Alpha Free, GLM-5.3-Flash Free, DeepSeek V4.1 Flash Free, Beam Free, Flint 40B Free, MiMo-V2.6-Flash Free, Nemotron 3 Ultra Free, Nemotron 3.5 Lightning Free, Nemotron 3.5 Super VL Free) and Jev 1.13 Free has no cached read price",
+    "unit": "unlimited",
+    "metered_on": "request-count",
+    "source_url": "https://opencode.ai/docs/zen",
+    "read_on": "2026-10-22",
+    "notes": "'Free' in the price column is not 'reachable': the free tier is restricted to the OpenCode client"
+  },
+  "endpoint": "https://opencode.ai/zen/v1/chat/completions",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "an OpenCode account, and the request must originate from the OpenCode client. The 403 body names the restriction: 'OpenCode's free tier can only be used from within OpenCode'",
+    "country": null
+  },
+  "reliability_note": "the restriction is enforced on the request path, not the account, so no header or key makes an external call succeed",
+  "confidence": "measured",
+  "confidence_note": "four calls across two sessions with two User-Agents. The 403 is a named policy gate and not an outage, and the body says so.",
+  "probe": {
+    "records": [
+      {
+        "probe_id": "opencode-spacebunny",
+        "requested_model": "space-bunny-free",
+        "http_run1": 403,
+        "http_run2": 400,
+        "answered_run1": "no",
+        "answered_run2": "no",
+        "model_echoed": "",
+        "echo_match": "yes",
+        "latency_ms_run1": 860,
+        "latency_ms_run2": 1066,
+        "ttft_ms_run1": "",
+        "completion_tokens_run1": 0,
+        "tps_run1": "",
+        "tps_run2": "",
+        "tps_basis": "streamed chars/4 / (time_total - time_starttransfer) on a second, streaming call",
+        "needle_echoed_run1": "no",
+        "body_bytes_run1": 701,
+        "body_sha256_16_run1": "f45bbd157c6d06d8",
+        "reasoning_only": "no",
+        "error_run1": "{\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/\",\"title\":\"Error 1010: Access denied\",\"status\":403,\"detail\":\"The site owner has b",
+        "error_run2": "{\"type\": \"server_error\", \"message\": \"Upstream request failed: Model is unavailable.\"}"
+      },
+      {
+        "probe_id": "opencode-longcat",
+        "requested_model": "longcat-2.5-preview-free",
+        "http_run1": 403,
+        "http_run2": 403,
+        "answered_run1": "no",
+        "answered_run2": "no",
+        "model_echoed": "",
+        "echo_match": "yes",
+        "latency_ms_run1": 799,
+        "latency_ms_run2": 811,
+        "ttft_ms_run1": "",
+        "completion_tokens_run1": 0,
+        "tps_run1": "",
+        "tps_run2": "",
+        "tps_basis": "streamed chars/4 / (time_total - time_starttransfer) on a second, streaming call",
+        "needle_echoed_run1": "no",
+        "body_bytes_run1": 701,
+        "body_sha256_16_run1": "615fa2152362733d",
+        "reasoning_only": "no",
+        "error_run1": "{\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/\",\"title\":\"Error 1010: Access denied\",\"status\":403,\"detail\":\"The site owner has b",
+        "error_run2": "{\"type\": \"FreeTierError\", \"message\": \"OpenCode's free tier can only be used from within OpenCode. Download it at https://opencode.ai and keep building.\"}"
+      }
+    ],
+    "runs": [
+      "probes-w.json",
+      "probes-w-run2.json"
+    ],
+    "instrument": "probe2.py in .tmp/work/w-coding-inference"
+  },
+  "evidence": [
+    {
+      "url": "probe:https://opencode.ai/zen/v1/chat/completions",
+      "date": "2026-10-22",
+      "proved": "longcat-2.5-preview-free returned 403 FreeTierError 'OpenCode's free tier can only be used from within OpenCode' in both runs, and with both a curl and a Python User-Agent"
+    },
+    {
+      "url": "probe:https://opencode.ai/zen/v1/chat/completions",
+      "date": "2026-10-22",
+      "proved": "space-bunny-free returned 400 'Upstream request failed: Model is unavailable' in the second run, against a 400 with the same body in the recon run and after the seed measured it answering on 2026-10-02"
+    },
+    {
+      "url": "https://opencode.ai/docs/zen",
+      "date": "2026-10-22",
+      "proved": "14 model ids priced Free for input, output and cached read, including Big Pickle, GLM-5.3-Flash Free, DeepSeek V4.1 Flash Free and LongCat 2.5 Preview Free"
+    },
+    {
+      "url": "https://opencode.ai/docs/zen",
+      "date": "2026-10-28",
+      "proved": "the pricing source page is still the same URL and still says free-tier chat models require the OpenCode client",
+      "capture": "sha256:da634c9ea813aac8e7bad961c98ca4ce42c77f0a1bec32e9644ea50e0fc7d579",
+      "quote": "Free-tier chat models require OpenCode; use paid models or [Go](/console/go) from other clients."
+    },
+    {
+      "url": "https://opencode.ai/docs/zen",
+      "date": "2026-11-04",
+      "proved": "the pricing table was re-read on 2026-11-04",
+      "capture": "sha256:326792aff60749c6ec2f8891374ca98b9eff1dcf7bfe0a3ada1fd9188cd360c2",
+      "quote": "| Pulse Alpha Free                  | Free            | Free            | Free            | -            |"
+    },
+    {
+      "url": "probe:https://opencode.ai/docs/zen",
+      "date": "2026-11-04",
+      "proved": "the pricing table row format: Free for input, output and cached read; 11 such rows with Jev 1.13 Free lacking the cached read price",
+      "capture": "sha256:a69a6f1a251d829845409164cf1931f115bfebb91cea7697528262fa66da787a",
+      "quote": "<td>Pulse Alpha Free</td><td>Free</td><td>Free</td><td>Free</td><td>-</td>"
+    },
+    {
+      "url": "probe:https://opencode.ai/docs/zen",
+      "date": "2026-11-04",
+      "proved": "Pulse Alpha Free carries a regional exclusion list",
+      "capture": "sha256:a69a6f1a251d829845409164cf1931f115bfebb91cea7697528262fa66da787a",
+      "quote": "It’s not available in the European Union, Iceland, Liechtenstein, Norway, Cuba, Iran, North Korea, Russia, Ukraine, or Venezuela."
+    },
+    {
+      "url": "probe:https://opencode.ai/docs/zen",
+      "date": "2026-11-04",
+      "proved": "the pricing source page still lists the free models",
+      "capture": "sha256:a69a6f1a251d829845409164cf1931f115bfebb91cea7697528262fa66da787a",
+      "quote": "<td>Pulse Alpha Free</td><td>Free</td><td>Free</td><td>Free</td><td>-</td>"
+    },
+    {
+      "url": "https://opencode.ai/docs/zen",
+      "date": "2026-11-04",
+      "proved": "the pricing table the free-tier text rests on was read on 2026-11-04",
+      "capture": "sha256:326792aff60749c6ec2f8891374ca98b9eff1dcf7bfe0a3ada1fd9188cd360c2",
+      "quote": "| Pulse Alpha Free                  | Free            | Free            | Free            | -            |"
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-11-04T10:56:11.137Z",
+  "notes": "The seed's single anonymous survivor, space-bunny-free, died within 20 days of being measured. longcat-2.5-preview-free is a policy gate rather than an outage, and the distinction is in the response body, so it must never be reported as down.",
+  "binding": "none",
+  "limits_note": "no rate or quota is published: the gate is access, not allowance; some free models are excluded by region (Pulse Alpha Free is not available in the European Union, Iceland, Liechtenstein, Norway, Cuba, Iran, North Korea, Russia, Ukraine or Venezuela)",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

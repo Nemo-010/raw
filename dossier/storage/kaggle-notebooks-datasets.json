@@ -1,0 +1,105 @@
+{
+  "topic": "storage",
+  "slug": "kaggle-notebooks-datasets",
+  "provider": "Kaggle Notebooks + Datasets",
+  "url": "https://www.kaggle.com",
+  "category": "iaas",
+  "free_tier": {
+    "stated": "Notebooks: '20 Gigabytes of auto-saved disk space (/kaggle/working)' per notebook version. Datasets: '200GB per dataset limit', '200GB max private datasets' — the 200 GB private cap is the only account-level storage number published; public datasets are capped per-dataset, not per-account.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.kaggle.com/docs/notebooks",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.kaggle.com/docs/notebooks",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "Notebook output survives session end as a versioned artifact — the closest thing here to real object storage — but it is write-once per version, and you cannot run a listener (no inbound ports, no server).",
+    "source_url": "https://www.kaggle.com/docs/notebooks",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Public dataset/notebook downloads are served without auth and without a published egress meter.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "`kaggle` CLI + REST API (`/api/v1/datasets/download/...`, `/api/v1/kernels/output/...`); `kagglehub` Python client. No rclone backend, but the CLI is scriptable and gsutil-style uploads work through the API.",
+  "chaining": "20 GB per notebook output x unlimited notebook versions (each version is an immutable snapshot, addressable and re-mountable as 'Input' in another notebook) => effectively hundreds of GB per account. Plus unlimited public datasets at 200 GB each. Both layers multiply by N free accounts.",
+  "limits": [],
+  "limits_note": "12 h session for CPU/GPU notebooks, 9 h for TPU; output only auto-saves to /kaggle/working when you 'Save & Run All'; scratch space outside /kaggle/working dies with the session; 50 top-level files per dataset.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "inferred from the category 'iaas'; the source record states no identity cost, so this is a class assumption, not evidence",
+    "country": null
+  },
+  "reliability_note": "Notebook output survives session end as a versioned artifact — the closest thing here to real object storage — but it is write-once per version, and you cannot run a listener (no inbound ports, no server).",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.kaggle.com/docs/notebooks",
+      "date": "2026-10-21",
+      "proved": "'20 Gigabytes of auto-saved disk space (/kaggle/working)'; '12 hours execution time for CPU and GPU notebook sessions and 9 hours for TPU'"
+    },
+    {
+      "url": "https://www.kaggle.com/docs/datasets",
+      "date": "2026-10-21",
+      "proved": "'200GB per dataset limit'; '200GB max private datasets'"
+    },
+    {
+      "url": "https://www.kaggle.com/product-announcements/512322",
+      "date": "2026-10-21",
+      "proved": "'limit of 200GB for private models and 200GB for private datasets'; public upload size doubled to 200GB"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET /api/v1/datasets/download/uciml/iris?datasetVersionNumber=2 -> 302 then 200, Content-Type: application/zip, Content-Length: 3687 (anonymous, no auth)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Notebooks: '20 Gigabytes of auto-saved disk space (/kaggle/working)' per notebook version. Datasets: '200GB per dataset limit', '200GB max private datasets' — the 200 GB private cap is the only account-level storage number published; public datasets are capped per-dataset, not per-account.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G5-notebooks-compute.json",
+    "seed_area": "G/G5",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "G/G5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Notebook disks and compute-attached storage",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Notebooks: '20 Gigabytes of auto-saved disk space (/kaggle/working)' per notebook version. Datasets: '200GB per dataset limit', '200GB max private datasets' — the 200 GB private cap is the only account-level storage number published; public datasets are capped per-dataset, not per-account.",
+    "limits_verbatim": "12 h session for CPU/GPU notebooks, 9 h for TPU; output only auto-saves to /kaggle/working when you 'Save & Run All'; scratch space outside /kaggle/working dies with the session; 50 top-level files per dataset.",
+    "egress_verbatim": "Public dataset/notebook downloads are served without auth and without a published egress meter.",
+    "chaining_verbatim": "20 GB per notebook output x unlimited notebook versions (each version is an immutable snapshot, addressable and re-mountable as 'Input' in another notebook) => effectively hundreds of GB per account. Plus unlimited public datasets at 200 GB each. Both layers multiply by N free accounts.",
+    "tooling_verbatim": "`kaggle` CLI + REST API (`/api/v1/datasets/download/...`, `/api/v1/kernels/output/...`); `kagglehub` Python client. No rclone backend, but the CLI is scriptable and gsutil-style uploads work through the API.",
+    "interface_verbatim": "rest",
+    "agent_focus": "notebook/compute hosts and the persistent disk bundled with them — can a free compute box double as storage and as an HTTP origin"
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

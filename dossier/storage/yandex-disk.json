@@ -1,0 +1,153 @@
+{
+  "topic": "storage",
+  "slug": "yandex-disk",
+  "provider": "Yandex Disk (+ Yandex 360)",
+  "url": "https://disk.yandex.com",
+  "category": "cloud-drive",
+  "free_tier": {
+    "stated": "5 GB free per account (shared with Yandex Mail attachments); paid 200 GB-2 TB from 319-699 RUB/mo",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://yandex.com/support/yandex-360/customers/disk/web/en/enlarge/disk-space",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://yandex.com/support/yandex-360/customers/disk/web/en/enlarge/disk-space",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "Enforcement tightened in 2026: desktop sync became paid on 3 June 2026, over-quota disks are restricted after 44 days and files deleted 90 days after that; data loss risk is real for over-quota free accounts.",
+    "days": 44,
+    "source_url": "https://yandex.com/support/yandex-360/customers/disk/web/en/enlarge/disk-space",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "free — download links and public share URLs are unmetered, no per-GB egress line in the pricing",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "rclone backend 'yandex' (rclone/rclone backend/yandex/yandex.go, in core); REST API at cloud-api.yandex.net/v1/disk; official REST docs",
+  "chaining": "5 GB x unlimited free Yandex accounts = 100 accounts for 500 GB. Weak per-identity yield, and 2026 policy tightening makes mass-account use the failure mode.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "deleted 90 days",
+      "source": "https://yandex.com/support/yandex-360/customers/disk/web/en/enlarge/disk-space"
+    }
+  ],
+  "limits_note": "monthly upload limit = 2x plan capacity (3x on Pro); free tier is now browser/mobile only",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Enforcement tightened in 2026: desktop sync became paid on 3 June 2026, over-quota disks are restricted after 44 days and files deleted 90 days after that; data loss risk is real for over-quota free accounts.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://yandex.com/support/yandex-360/customers/disk/web/en/enlarge/disk-space",
+      "date": "2026-10-21",
+      "proved": "'By default, users without a plan get 5 GB of storage space'"
+    },
+    {
+      "url": "https://www.fontanka.ru/2026/05/20/76431223/",
+      "date": "2026-10-21",
+      "proved": "'с 3 июня отключает облачную синхронизацию файлов ... для пользователей версий для компьютеров, использующих сервис бесплатно'; 'через 44 дня он будет заблокирован, а еще через 90 дней все файлы ... удалены'"
+    },
+    {
+      "url": "https://cloud-api.yandex.net/v1/disk/",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 401 with 'access-control-allow-headers: ... X-Yandex360-Token' (token API live); GET /v1/disk/public/resources?public_key=... -> {\"error\":\"DiskNotFoundError\"} (public REST path live)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "5 GB free per account (shared with Yandex Mail attachments); paid 200 GB-2 TB from 319-699 RUB/mo",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A4-cis-drives.json",
+    "seed_area": "A/A4",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "A/A4"
+      },
+      {
+        "value": "fails-quota",
+        "area": "A/A9"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Yandex Disk (+ Yandex 360)",
+      "Yandex Disk"
+    ],
+    "conflicts": [
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "5 GB free per account (shared with Yandex Mail attachments); paid 200",
+            "source": "table.md row, area A/A4",
+            "evidence": null
+          },
+          {
+            "value": "5 GB free ('You get 5 GB of free storage when you create a Yandex Disk",
+            "source": "table.md row, area A/A9",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "5 GB free per account (shared with Yandex Mail attachments); paid 200",
+            "source": "table.md (area A/A4)"
+          },
+          {
+            "value": "5 GB free ('You get 5 GB of free storage when you create a Yandex Disk",
+            "source": "table.md (area A/A9)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "5 GB free per account (shared with Yandex Mail attachments); paid 200 GB-2 TB from 319-699 RUB/mo",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/A4"
+    },
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "CIS drives",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "5 GB free per account (shared with Yandex Mail attachments); paid 200 GB-2 TB from 319-699 RUB/mo",
+    "limits_verbatim": "monthly upload limit = 2x plan capacity (3x on Pro); free tier is now browser/mobile only",
+    "egress_verbatim": "free — download links and public share URLs are unmetered, no per-GB egress line in the pricing",
+    "chaining_verbatim": "5 GB x unlimited free Yandex accounts = 100 accounts for 500 GB. Weak per-identity yield, and 2026 policy tightening makes mass-account use the failure mode.",
+    "tooling_verbatim": "rclone backend 'yandex' (rclone/rclone backend/yandex/yandex.go, in core); REST API at cloud-api.yandex.net/v1/disk; official REST docs",
+    "interface_verbatim": "rest",
+    "agent_focus": "Russian/CIS drives and clouds: Yandex Disk, Mail.ru Cloud, VK Cloud, Cloud.ru, Selectel, SberCloud, Disk-O, 1TB+ free promos"
+  },
+  "binding": "retention-clamped",
+  "binding_note": "a clock, not a quota: bytes leave whether or not the client is finished with them",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

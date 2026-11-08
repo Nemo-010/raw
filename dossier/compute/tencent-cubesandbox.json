@@ -1,0 +1,124 @@
+{
+  "topic": "compute",
+  "slug": "tencent-cubesandbox",
+  "provider": "Tencent Cloud CubeSandbox",
+  "url": "https://github.com/TencentCloud/CubeSandbox",
+  "category": "container and VM sandbox",
+  "free_tier": {
+    "stated": "no hosted tier: the project is self-hosted software for x86_64 Linux with KVM, so there is no capacity to buy; it ships a compatible API gateway and an egress filter",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://github.com/TencentCloud/CubeSandbox",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://github.com/TencentCloud/CubeSandbox",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://github.com/TencentCloud/CubeSandbox",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "not published on the source card",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://github.com/TencentCloud/CubeSandbox"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "the source card states no access interface",
+  "tooling": "not stated in the source card",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "self-hosted software: the client must supply x86_64 Linux with KVM, so there is no hosted capacity",
+      "source": "https://github.com/TencentCloud/CubeSandbox"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "CubeEgress filters egress by L7 domain and audits it, with kernel policies so traffic cannot skip inspection",
+      "source": "https://github.com/TencentCloud/CubeSandbox"
+    },
+    {
+      "kind": "request-rate",
+      "value": "cold start is 60 ms at single concurrency and the P99 is 137 ms under 50 concurrent creations",
+      "source": "https://github.com/TencentCloud/CubeSandbox"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field; excluded as no-rate",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the repository was read on 2026-10-22 and states the KVM requirement, the benchmarked cold start and the egress gateway. There is no hosted product, so the verdict stays paid-only with a better reason: it is software the client runs",
+  "evidence": [
+    {
+      "url": "https://github.com/TencentCloud/CubeSandbox",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://github.com/TencentCloud/CubeSandbox",
+      "date": "2026-10-22",
+      "proved": "'Cube Sandbox requires an x86_64 Linux environment with KVM support' and 'Cold start benchmarked on bare-metal. 60ms at single concurrency; under 50 concurrent creations, avg 67ms, P95 90ms, P99 137ms' with 'CubeEgress  -  OpenResty-based egress security gateway: L7 domain filtering, credential injection, and access auditing', quoted"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-10-22T04:48:09.894Z",
+  "price_per_tb_month": null,
+  "notes": " Reclassified: no free tier on the catalogue card is a paid-only product, not a closed one. `dead` is reserved for a product that is withdrawn or unreachable.",
+  "extras": {
+    "seed_status": "no-rate",
+    "talaria_m10h_usd": null,
+    "talaria_m24h_usd": null,
+    "nemo_m10h_usd": null,
+    "keep_rate": null,
+    "keep_rate_basis": "no field in the source",
+    "billing_model": "unclassified",
+    "shape": null,
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "a sandbox starts in 60 ms and pause/resume is supported across nodes; the client's own host sets the clocks"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "none",
+    "reclassified_from": "dead",
+    "reclassify_reason": "no free tier recorded on the card is not evidence that the product is gone",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": {
+      "gib": null,
+      "price": "the client's own host and S3",
+      "durability": "snapshots to S3, resumable across nodes",
+      "on_stop": true,
+      "on_destroy": false,
+      "max_retention": "as long as the client keeps the snapshot"
+    },
+    "net": {
+      "out": true,
+      "in": false,
+      "ports": "egress through CubeEgress with L7 domain filtering",
+      "static_ip": false,
+      "ipv6": null,
+      "allowance": null
+    }
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "write-gated",
+  "self_hosted": true
+}

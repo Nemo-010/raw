@@ -1,0 +1,130 @@
+{
+  "$comment": "Staleness policy. Data, not code: changing a threshold is an edit to this file and needs no review of the script. Two windows bind every record. A class window (classes[confidence].days) says how fast a rung rots. A topic window (topics[<topic>].verified_after_days) says how fast a market rots. The shorter of the two is the record's limit, because it is the conservative one and it is checkable. evidence_after_days is a third, independent rule about one cited source, and it is applied to the oldest evidence row.",
+
+  "default": {
+    "verified_after_days": 90,
+    "evidence_after_days": 365,
+    "why": "A record in a topic with no entry here is a topic nobody has priced. A quarter is the loose default and the gate prints it whenever it is used."
+  },
+
+  "classes": {
+    "measured": {
+      "days": 90,
+      "why": "The host still exists and the path still works. A measurement is the most durable rung and still not permanent."
+    },
+    "documented": {
+      "days": 30,
+      "why": "A vendor page changes without notice. The ladder allows 90 days for a protocol fact and 30 for a price or a quota; a record cannot say which kind it is, so the shorter binds, which is the conservative direction."
+    },
+    "reported": {
+      "days": 14,
+      "why": "A forum post describes a moment, and the operator may have fixed it."
+    },
+    "inferred": {
+      "days": 30,
+      "why": "The inference is only as fresh as its oldest premise."
+    },
+    "unverified": {
+      "days": 14,
+      "why": "The point of the label is that it gets checked."
+    }
+  },
+
+  "topics": {
+    "storage": {
+      "verified_after_days": 45,
+      "evidence_after_days": 180,
+      "why": "Prices and per-object caps move monthly; the seed needed ten waves in a year."
+    },
+    "netdisk-pan": {
+      "verified_after_days": 21,
+      "evidence_after_days": 90,
+      "why": "Public instances appear and vanish in weeks, and per-instance policy is set by whoever runs it that month."
+    },
+    "compute": {
+      "verified_after_days": 45,
+      "evidence_after_days": 180,
+      "why": "Free tiers are withdrawn without notice and sandbox reaping policies change."
+    },
+    "coding-subs": {
+      "verified_after_days": 30,
+      "evidence_after_days": 90,
+      "why": "Subscription price, included model and quota are the most volatile numbers in the corpus."
+    },
+    "inference": {
+      "verified_after_days": 30,
+      "evidence_after_days": 90,
+      "why": "Guest endpoints close and free tiers are rate-limited out of existence. The class window for a reported endpoint is 14 days and it binds; that is the honest number, not this one."
+    },
+    "crawler-scraper": {
+      "verified_after_days": 60,
+      "evidence_after_days": 180,
+      "why": "Provider catalogues are stable; their free allowances are not."
+    },
+    "egress": {
+      "verified_after_days": 60,
+      "evidence_after_days": 365,
+      "why": "Tunnel and CDN terms are contractual and slow-moving; IP ranges move faster."
+    },
+    "email": {
+      "verified_after_days": 90,
+      "evidence_after_days": 365,
+      "why": "SMTP limits are stable; free-sender allowances are not."
+    },
+    "databases-kv": {
+      "verified_after_days": 60,
+      "evidence_after_days": 180,
+      "why": "Free-tier row and connection caps change with each pricing revision."
+    },
+    "domains-dns": {
+      "verified_after_days": 120,
+      "evidence_after_days": 365,
+      "why": "Registrar pricing and TLD availability move on an annual cycle."
+    },
+    "ci-cd-runners": {
+      "verified_after_days": 45,
+      "evidence_after_days": 180,
+      "why": "Runner minutes and artifact retention are the two numbers that decide it, and both are revised."
+    },
+    "debrid": {
+      "verified_after_days": 30,
+      "evidence_after_days": 90,
+      "why": "Multi-hoster prices, host coverage and free tiers move monthly, and public instances vanish without notice. The class window for a reported figure is 14 days and it binds."
+    },
+    "ip-proxy": {
+      "verified_after_days": 30,
+      "evidence_after_days": 90,
+      "why": "Exit identity is the fastest-rotting fact in this corpus: a proxy vendor is re-registered, a prefix is re-announced, and a VPN moves its exits without announcement. Free proxy lists decay in minutes, so a list-derived record is reported at best."
+    },
+    "dev-services": {
+      "verified_after_days": 45,
+      "evidence_after_days": 180,
+      "why": "Monitoring, analytics, job, queue and authentication free tiers are revised with each pricing page change, about as often as compute free tiers. Set by the operator ruling of 2026-10-28 (issue #31)."
+    },
+    "data-apis": {
+      "verified_after_days": 60,
+      "evidence_after_days": 180,
+      "why": "Free call quotas and rate limits of data APIs change with pricing revisions; bulk dumps and their licences move more slowly. Set by the operator ruling of 2026-10-28 (issue #43)."
+    }
+  },
+
+  "bulk_touch_tolerance_days": 3,
+
+  "bands": [
+    {"name": "fresh", "max_days": 7},
+    {"name": "current", "max_days": 30},
+    {"name": "aging", "max_days": 45},
+    {"name": "stale", "max_days": 90},
+    {"name": "rotten", "max_days": 180},
+    {"name": "dead", "max_days": null}
+  ],
+
+  "severity": {
+    "$comment": "Which condition fails the gate. A record is past its policy when any test below fires. 'bulk_touch' is the one that catches verified_at moving without the evidence moving with it, and it is the lie METHODOLOGY.md section 10.1 forbids by name. The 'bands' above are a reporting scale only: nothing gates on them, because a band is a description of age and the limit is the decision. An earlier version of this file carried a 'fail_on_bucket' list that no code read, which is the defect this repository refuses in records and should refuse in its own config.",
+    "hard_ceiling_days": 365,
+    "fail_on_undated_evidence": true,
+    "fail_on_missing_verified_at": true,
+    "fail_on_bulk_touch": true,
+    "fail_on_unknown_class": true
+  }
+}

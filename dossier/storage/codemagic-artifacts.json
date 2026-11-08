@@ -1,0 +1,110 @@
+{
+  "topic": "storage",
+  "slug": "codemagic-artifacts",
+  "provider": "Codemagic artifacts",
+  "url": "https://codemagic.io",
+  "category": "paas",
+  "free_tier": {
+    "stated": "500 free build minutes/month on macOS M2 (individuals). No free storage allowance advertised. Artifact retention is per-team policy; Enterprise default is 1 year.",
+    "unit": "none",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.codemagic.io/billing/pricing/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.codemagic.io/billing/pricing/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.codemagic.io/billing/pricing/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free via api.codemagic.io artifact URLs; 'No expiration' download links are a documented option.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "POST /artifacts/:secureFilename/public-url with expiresAt, returning a public URL; GET /artifacts/:secureFilename. API token required (`x-auth-token`).",
+  "chaining": "Unlimited accounts x 500 free minutes; artifact volume is bounded by what you can build in 500 min/month. 'No expiration' links mean the URL outlives nothing — the artifact is still deleted by team retention policy.",
+  "limits": [],
+  "limits_note": "500 min/month free. 'No expiration' applies to the LINK, not the artifact — retention policy still deletes the file (explicit in their KB). Build dashboards give only 24-hour artifact links.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "'No expiration' is a misleading label: the link persists but the artifact is removed by retention policy, so links rot. 500 min/month is a hard build ceiling.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://help.codemagic.io/articles/1948706793-how-does-the-no-expiration-artifact-download-link-option-work",
+      "date": "2026-10-21",
+      "proved": "'the artifact itself is still subject to your team's artifact retention policy ... Enterprise plan users have a default artifact retention period of 1 year'"
+    },
+    {
+      "url": "https://docs.codemagic.io/rest-api/artifacts/",
+      "date": "2026-10-21",
+      "proved": "public-url creation API"
+    },
+    {
+      "url": "https://docs.codemagic.io/billing/pricing/",
+      "date": "2026-10-21",
+      "proved": "'500 free minutes per month on macOS M2'"
+    },
+    {
+      "url": "https://api.codemagic.io/artifacts/",
+      "date": "2026-10-21",
+      "proved": "probe: curl -> 404; random artifact path -> 401 (no anonymous enumeration)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "500 free build minutes/month on macOS M2 (individuals). No free storage allowance advertised. Artifact retention is per-team policy; Enterprise default is 1 year.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C4-build-caches.json",
+    "seed_area": "C/C4",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "C/C4"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "retention",
+      "why": "500 free build minutes/month on macOS M2 (individuals). No free storage allowance advertised. Artifact retention is per-team policy; Enterprise default is 1 year.",
+      "retry_when": "if the retention model changes from a clock to indefinite",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area C/C4"
+    },
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "Build caches and CI artifacts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "500 free build minutes/month on macOS M2 (individuals). No free storage allowance advertised. Artifact retention is per-team policy; Enterprise default is 1 year.",
+    "limits_verbatim": "500 min/month free. 'No expiration' applies to the LINK, not the artifact — retention policy still deletes the file (explicit in their KB). Build dashboards give only 24-hour artifact links.",
+    "egress_verbatim": "Free via api.codemagic.io artifact URLs; 'No expiration' download links are a documented option.",
+    "chaining_verbatim": "Unlimited accounts x 500 free minutes; artifact volume is bounded by what you can build in 500 min/month. 'No expiration' links mean the URL outlives nothing — the artifact is still deleted by team retention policy.",
+    "tooling_verbatim": "POST /artifacts/:secureFilename/public-url with expiresAt, returning a public URL; GET /artifacts/:secureFilename. API token required (`x-auth-token`).",
+    "interface_verbatim": "rest",
+    "agent_focus": "CI/CD build caches and artifacts as storage: GitHub Actions artifacts+cache (per-repo caps, retention days), CircleCI, Travis, AppVeyor, Azure Pipelines, Buildkite, Codemagic, Bitrise, Drone — retention windows and whether artifacts are publicly retrievable"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

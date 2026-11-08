@@ -1,0 +1,176 @@
+{
+  "topic": "storage",
+  "slug": "weights-biases-coreweave-forge",
+  "provider": "Weights & Biases / CoreWeave Forge (academic free tier)",
+  "url": "https://wandb.ai/site/pricing",
+  "category": "ml-hub",
+  "free_tier": {
+    "stated": "Free plan: 5 GB/month of storage. Pro: 100 GB/month. 'Free forever for academic research' tier: 200 GB of cloud storage, unlimited tracked hours, up to 25 GB/month Weave ingestion, up to 100 seats — requires an active academic email address.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://wandb.ai/site/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://wandb.ai/site/pricing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://wandb.ai/site/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Not metered separately for artifact reads; storage is billed as a rolling 30-day consumption average in GB-days, so churn does not help you.",
+    "metered": true
+  },
+  "interface": [
+    "s3",
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "wandb Python SDK, `wandb artifact` API, artifacts pull via `wandb artifact get`; W&B also accepts 'reference artifacts' pointing at an external bucket (S3/GCS) which do NOT count against quota — that is the real trick here.",
+  "chaining": "200 GB per academic account x up to 100 seats in one academic org = 20 TB of *quota*, but the seats clause is about people, not storage pools — storage is per-entity and would need to be checked. The clean multiplier is reference artifacts: unlimited pointers to external storage at zero quota cost (useful as an index layer over Kaggle/Modal bytes, not as storage itself).",
+  "limits": [],
+  "limits_note": "5 GB on the ordinary free tier is the number that bites; academic tier requires a .edu-affiliated active email; the 30-day rolling average means a short burst still costs you; artifact TTL features exist but do not raise the cap.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: month Weave ingestion, up to 100 seats — requires an active academic email address. Migrated from wandb.ai branding to CoreWeave Forge (the pricing page 301s to coreweave.com/forge-pricing) —",
+    "country": null
+  },
+  "reliability_note": "Migrated from wandb.ai branding to CoreWeave Forge (the pricing page 301s to coreweave.com/forge-pricing) — product continuity is fine, but as an academic user you are now depending on a GPU-cloud vendor's free tier.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://wandb.ai/site/pricing",
+      "date": "2026-10-21",
+      "proved": "> https://coreweave.com/forge-pricing — plan table: 'Storage Free 5 GB/mo, Pro 100 GB/mo, Additional storage $0.03/GB'"
+    },
+    {
+      "url": "https://coreweave.com/forge-pricing",
+      "date": "2026-10-21",
+      "proved": "'Free forever for academic research ... 200GB free cloud storage ... up to 25 GB per month of Weave data ingestion, and up to 100 seats. An active academic email address is required.'"
+    },
+    {
+      "url": "https://coreweave.com/forge-pricing",
+      "date": "2026-10-21",
+      "proved": "'Does tracked data stored on an external server count against my storage quota? No. ... Reference artifacts and data stored in an external storage bucket will not count.'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Free plan: 5 GB/month of storage. Pro: 100 GB/month. 'Free forever for academic research' tier: 200 GB of cloud storage, unlimited tracked hours, up to 25 GB/month Weave ingestion, up to 100 seats — requires an active academic email address.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D4-ml-platforms.json",
+    "seed_area": "D/D4",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D4"
+      },
+      {
+        "value": "fails-quota",
+        "area": "D/D9"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Weights & Biases / CoreWeave Forge (academic free tier)",
+      "Weights & Biases / CoreWeave Forge — Artifacts"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area D/D4",
+            "evidence": "quota: Free plan: 5 GB/month of storage. Pro: 100 GB/month. 'Free forever for"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row, area D/D9",
+            "evidence": "quota: Free: 5 GB/mo. Pro ($60/mo): 100 GB/mo, then $0.03/GB. Academic: 200 G"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area D/D9) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "Free plan: 5 GB/month of storage. Pro: 100 GB/month. 'Free forever for",
+            "source": "table.md row, area D/D4",
+            "evidence": null
+          },
+          {
+            "value": "Free: 5 GB/mo. Pro ($60/mo): 100 GB/mo, then $0.03/GB. Academic: 200 G",
+            "source": "table.md row, area D/D9",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area D/D4)"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md (area D/D9)"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area D/D9) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "Free plan: 5 GB/month of storage. Pro: 100 GB/month. 'Free forever for",
+            "source": "table.md (area D/D4)"
+          },
+          {
+            "value": "Free: 5 GB/mo. Pro ($60/mo): 100 GB/mo, then $0.03/GB. Academic: 200 G",
+            "source": "table.md (area D/D9)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Free plan: 5 GB/month of storage. Pro: 100 GB/month. 'Free forever for academic research' tier: 200 GB of cloud storage, unlimited tracked hours, up to 25 GB/month Weave ingestion, up to 100 seats — requires an active academic email address.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area D/D4"
+    },
+    "target_document": "docs/storage/free/models-and-media.md",
+    "document_section": "ML platform datasets",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Free plan: 5 GB/month of storage. Pro: 100 GB/month. 'Free forever for academic research' tier: 200 GB of cloud storage, unlimited tracked hours, up to 25 GB/month Weave ingestion, up to 100 seats — requires an active academic email address.",
+    "limits_verbatim": "5 GB on the ordinary free tier is the number that bites; academic tier requires a .edu-affiliated active email; the 30-day rolling average means a short burst still costs you; artifact TTL features exist but do not raise the cap.",
+    "egress_verbatim": "Not metered separately for artifact reads; storage is billed as a rolling 30-day consumption average in GB-days, so churn does not help you.",
+    "chaining_verbatim": "200 GB per academic account x up to 100 seats in one academic org = 20 TB of *quota*, but the seats clause is about people, not storage pools — storage is per-entity and would need to be checked. The clean multiplier is reference artifacts: unlimited pointers to external storage at zero quota cost (useful as an index layer over Kaggle/Modal bytes, not as storage itself).",
+    "tooling_verbatim": "wandb Python SDK, `wandb artifact` API, artifacts pull via `wandb artifact get`; W&B also accepts 'reference artifacts' pointing at an external bucket (S3/GCS) which do NOT count against quota — that is the real trick here.",
+    "interface_verbatim": "rest",
+    "agent_focus": "ML/model/data platforms that are not Hugging Face and not ModelScope — the second tier of model and dataset hubs, judged as free bulk storage"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

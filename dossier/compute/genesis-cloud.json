@@ -1,0 +1,148 @@
+{
+  "topic": "compute",
+  "slug": "genesis-cloud",
+  "provider": "Genesis Cloud",
+  "url": "https://support.genesiscloud.com/support/solutions/articles/47001101437-quotas-and-instances",
+  "category": "GPU cloud",
+  "free_tier": {
+    "stated": "trial credits exist and the amount is not published. The vendor's own billing article states 'Once your trial credits are used up, any additional charges will be billed to the card attached to your account', and the onboarding articles require an SSH public key, a verified phone number and a valid credit card before an instance launches.",
+    "unit": "none",
+    "metered_on": "wall-clock",
+    "source_url": "https://support.genesiscloud.com/support/solutions/articles/47001101437-quotas-and-instances",
+    "read_on": "2026-10-22",
+    "notes": "trial-credit"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://support.genesiscloud.com/support/solutions/articles/47001101437-quotas-and-instances",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://support.genesiscloud.com/support/solutions/articles/47001101437-quotas-and-instances",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "not published on the page read: no egress term was found, so nothing is asserted",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://support.genesiscloud.com/support/solutions/articles/47001101437-quotas-and-instances"
+  },
+  "interface": [
+    "ssh"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "not stated in the finding; the provider documents no client",
+  "chaining": "the prepaid balance lasts up to three years, which makes Genesis a place to park a balance rather than a credit to spend quickly; the trial credit itself is short-lived and unquantified.",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "the onboarding wall binds before any credit is spent: phone verification, an SSH key and a card on file are all required, and a quota request follows for GPU classes.",
+      "source": "https://support.genesiscloud.com/support/solutions/articles/47001101437-quotas-and-instances"
+    }
+  ],
+  "limits_note": "the onboarding wall binds before any credit is spent: phone verification, an SSH key and a card on file are all required, and a quota request follows for GPU classes.",
+  "binding": "write-gated",
+  "binding_note": "the onboarding wall binds before any credit is spent: phone verification, an SSH key and a card on file are all required, and a quota request follows for GPU classes.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card plus phone plus an SSH key: 'Make sure to upload an SSH key, besides verifying your phone number and adding a valid credit card. Once this is done, your basic setup is done'. The card must be 3D Secure and a card already attached to another Genesis Cloud account is refused by default; Genesis places a temporary USD 1 hold that 'is not a charge and will be automatically released after 7 days', and refuses prepaid cards by default. Charges after the trial are 'billed to the card attached to your account on the first of each month'. SEPA Direct Debit in EUR is accepted 'alongside cards and wire transfers'.",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://support.genesiscloud.com/support/solutions/articles/47001101437-quotas-and-instances",
+      "date": "2026-10-22",
+      "proved": "'Once your trial credits are used up, any additional charges will be billed to the card attached to your account on the first of each month', quoted"
+    },
+    {
+      "url": "https://support.genesiscloud.com/support/solutions/articles/47001101437",
+      "date": "2026-10-22",
+      "proved": "'Make sure to upload an SSH key, besides verifying your phone number and adding a valid credit card. Once this is done, your basic setup is done', quoted"
+    },
+    {
+      "url": "https://www.genesiscloud.com/blog/tos-privacy-update-may-2025",
+      "date": "2026-10-22",
+      "proved": "'Your account can be funded in advance in USD (other currencies are available upon request). It's flexible, valid for up to 3 years'; SEPA Direct Debit (EUR) accepted alongside cards and wire transfers, quoted"
+    },
+    {
+      "url": "https://support.genesiscloud.com/support/solutions/articles/47001108985-payment-methods",
+      "date": "2026-11-02",
+      "proved": "the hold is USD 1, is not a charge, and is released after 7 days",
+      "capture": "sha256:6f3de062c884bdf95bc029a79e3c815b7980f9910e5cfcf1b221e979d71ee0e4",
+      "quote": "To verify that your card is valid, we place a temporary $1 hold on the card. This is not a charge and will be automatically released after 7 days."
+    },
+    {
+      "url": "https://support.genesiscloud.com/support/solutions/articles/47001108985-payment-methods",
+      "date": "2026-11-02",
+      "proved": "prepaid cards, cards without 3D Secure and cards used on another account are refused by default",
+      "capture": "sha256:6f3de062c884bdf95bc029a79e3c815b7980f9910e5cfcf1b221e979d71ee0e4",
+      "quote": "Payment Methods Not Accepted by Default: Prepaid cards Cards without 3D Secure authentication Cards already associated with another Genesis Cloud account"
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20250316133337/https://support.genesiscloud.com/support/solutions/articles/47001108985-payment-methods?provider=wayback",
+      "date": "2026-11-02",
+      "proved": "the same hold text is in the 2025-03-16 archived copy of the article",
+      "capture": "sha256:211bb173ff73419a22b536842cc57f4403a0c8c79dc1dc2ad91c67898fab0213",
+      "quote": "In order to verify cards are valid, we place a 1USD hold on the card that will release after 7 days."
+    },
+    {
+      "url": "https://support.genesiscloud.com/support/solutions/articles/47001108985-payment-methods",
+      "date": "2026-11-02",
+      "proved": "the card requirement is a 3D Secure secured credit card",
+      "capture": "sha256:6f3de062c884bdf95bc029a79e3c815b7980f9910e5cfcf1b221e979d71ee0e4",
+      "quote": "we only accept credit cards secured with 3D Secure authentication"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-02T02:17:36.633Z",
+  "notes": "The amount is the open question and it is left null rather than guessed. A vendor blog post from 2022 states USD 15 on signup; referral sites in 2026 advertise USD 100 through a referral link. Neither is a current vendor page, so neither is recorded as the amount. The GPU rate table on genesiscloud.com/pricing did not render through two extraction routes, so no rate is recorded and no GPU-hours are derivable. What would settle it: one signup, or the console's billing page.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "Genesis Cloud",
+      "class": "trial-credit",
+      "category_as_written": "GPU cloud",
+      "free_tier_kind": "trial-credit",
+      "shape": {
+        "vcpu": null,
+        "ram_gib": null,
+        "gpu_class": null,
+        "gpu_count": null
+      },
+      "seen_routes": [
+        "broker read 200 support.genesiscloud.com billing article",
+        "broker read 200 support.genesiscloud.com onboarding article",
+        "broker read 200 genesiscloud.com/pricing (CPU rows only, GPU table empty)",
+        "broker crawl genesiscloud.com (0 pages)",
+        "broker search 8 results"
+      ],
+      "agents": [
+        "ai-inference"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "superseded": {
+      "identity_cost": {
+        "kind": "card",
+        "detail": "as stated by the provider's signup page",
+        "country": null
+      }
+    },
+    "payment_methods": {
+      "card_at_signup": "yes",
+      "debit": "not published: https://support.genesiscloud.com/support/solutions/articles/47001108985-payment-methods",
+      "prepaid": "refused",
+      "virtual": "not published: https://support.genesiscloud.com/support/solutions/articles/47001108985-payment-methods",
+      "hold_amount": "USD 1",
+      "hold_detail": "'To verify that your card is valid, we place a temporary $1 hold on the card. This is not a charge and will be automatically released after 7 days.' Cards without 3D Secure, prepaid cards and cards already attached to another Genesis Cloud account are refused by default, and a card in one of those classes can be whitelisted on request.",
+      "identity": "a card, a verified phone number and an SSH key",
+      "source_url": "https://support.genesiscloud.com/support/solutions/articles/47001108985-payment-methods",
+      "read_on": "2026-11-02"
+    }
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "topic": "storage",
+  "slug": "file-io",
+  "provider": "File.io",
+  "url": "https://file.io",
+  "category": "anonymous-dump",
+  "free_tier": {
+    "stated": "no account; 4 GB per transfer ('file transfers are limited to a total of 4 GB')",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://www.file.io/about",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.file.io/about",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "4 GB/transfer; default 14-day expiry, override with ?expires=N[day|w|M|y]; file is DELETED after the first download ('after it is downloaded, the file is completely deleted').",
+    "days": 14,
+    "source_url": "https://www.file.io/about",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "unmetered direct link, but files self-destruct on first download",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "documented REST: curl -F 'file=@x' https://file.io/?expires=1w -> {\"success\":true,\"link\":...,\"expiry\":\"7 days\"}",
+  "chaining": "none — one-download-then-delete semantics make it anti-storage by design.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "transfer ('file transfers are limited to a total of 4 GB') 4 GB/transfer",
+      "source": "https://www.file.io/about"
+    }
+  ],
+  "limits_note": "4 GB/transfer; default 14-day expiry, override with ?expires=N[day|w|M|y]; file is DELETED after the first download ('after it is downloaded, the file is completely deleted').",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ited to a total of 4 GB') Docs still describe a working API, but both the apex and www return 301/405 today. The 405 comes from an object-store front end, so the API has been re-p",
+    "country": null
+  },
+  "reliability_note": "Docs still describe a working API, but both the apex and www return 301/405 today. The 405 comes from an object-store front end, so the API has been re-plumbed and the documented POST is stale. Would need browser/session cookies to find the new path.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.file.io/about",
+      "date": "2026-10-21",
+      "proved": "'file transfers are limited to a total of 4 GB', expires syntax, sample JSON responses"
+    },
+    {
+      "url": "https://file.io/",
+      "date": "2026-10-21",
+      "proved": "probe: POST -> 301; POST https://www.file.io/ -> 405 MethodNotAllowed (ResourceType: OBJECT)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "no account; 4 GB per transfer ('file transfers are limited to a total of 4 GB')",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E1-ephemeral-dumps.json",
+    "seed_area": "E/E1",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "E/E1"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [
+      {
+        "field": "verdict",
+        "class": "same provider is both a table row and a dead end",
+        "claims": [
+          {
+            "value": "fails-quota",
+            "source": "table.md"
+          },
+          {
+            "value": "dead-end: Files self-destruct on first download — structurally the opposite of storage. 4 GB per file is irrelevant when the objec",
+            "source": "DEAD-ENDS.md"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "no account; 4 GB per transfer ('file transfers are limited to a total of 4 GB')",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E1"
+    },
+    "target_document": "docs/storage/free/ephemeral-hosts.md",
+    "document_section": "Ephemeral dump hosts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "no account; 4 GB per transfer ('file transfers are limited to a total of 4 GB')",
+    "limits_verbatim": "4 GB/transfer; default 14-day expiry, override with ?expires=N[day|w|M|y]; file is DELETED after the first download ('after it is downloaded, the file is completely deleted').",
+    "egress_verbatim": "unmetered direct link, but files self-destruct on first download",
+    "chaining_verbatim": "none — one-download-then-delete semantics make it anti-storage by design.",
+    "tooling_verbatim": "documented REST: curl -F 'file=@x' https://file.io/?expires=1w -> {\"success\":true,\"link\":...,\"expiry\":\"7 days\"}",
+    "interface_verbatim": "rest",
+    "probe_in_seed": "POST https://file.io/ -> 301 to https://www.file.io/; POST https://www.file.io/ -> 405 MethodNotAllowed from an S3-style backend ('ResourceType: OBJECT'). The documented endpoint no longer accepts uploads. Upload path FAILED.",
+    "agent_focus": "anonymous/ephemeral file dumps — hand-probed (upload a 32 KiB random file, download it back, compare sha256)"
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

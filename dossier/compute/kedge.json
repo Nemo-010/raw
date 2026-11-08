@@ -1,0 +1,164 @@
+{
+  "topic": "compute",
+  "slug": "kedge",
+  "provider": "Kedge",
+  "url": "https://kedge.dev/docs/billing",
+  "category": "container and VM sandbox",
+  "free_tier": {
+    "stated": "$5 of usage a month, recurring, consumed before paid credit; compute bills per second at $0.0205 a vCPU-hour on measured use, not on the configured limit",
+    "unit": "mixed",
+    "metered_on": "wall-clock",
+    "source_url": "https://kedge.dev/docs/billing",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://kedge.dev/docs/billing",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://kedge.dev/docs/billing",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "egress is metered at $0.01 / GiB; no byte allowance is published, and the account's $5 of monthly usage is consumed first",
+    "metered": true,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://kedge.dev/docs/billing"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "ssh"
+  ],
+  "interface_detail": "REST API at https://kedge.dev/api (OpenAPI 3.1), the kedge CLI and SSH commands",
+  "tooling": "not stated in the source card",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "$0.0205 a vCPU-hour measured on scheduled CPU time, and $5 a GiB-month of memory on resident pages",
+      "source": "https://kedge.dev/docs/billing"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "storage bills bytes written, not the logical volume size",
+      "source": "https://kedge.dev/docs/billing"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "a scaled-to-zero or idle-suspended app accrues only its stored-data cost",
+      "source": "https://kedge.dev/docs/billing"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the billing page was read on 2026-10-22. The $5 recurs monthly, which makes it a tier rather than the one-time credit the record implied, and the page calls the rates estimates because the service is in public preview",
+  "evidence": [
+    {
+      "url": "https://kedge.dev/docs/billing",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://kedge.dev/docs/billing",
+      "date": "2026-10-22",
+      "proved": "'Every account includes $5 of monthly usage, consumed before paid credit.' with 'CPU $15 / vCPU-month ($0.0205 / vCPU-hour)', 'Memory $5 / GiB-month', and 'A scaled-to-zero app has no running CPU or memory usage, so it accrues only its stored-data cost.' quoted"
+    },
+    {
+      "url": "https://kedge.dev/docs/billing",
+      "date": "2026-11-03",
+      "proved": "egress is metered at $0.01 per GiB",
+      "capture": "sha256:fd7622a4df173cd579ec5ef541d1746ba48a78bbb2f0697b2fec28f3e0640708",
+      "quote": "| Egress | $0.01 / GiB |"
+    },
+    {
+      "url": "https://kedge.dev/docs/billing",
+      "date": "2026-11-03",
+      "proved": "the free allowance is a dollar amount, not a byte volume",
+      "capture": "sha256:fd7622a4df173cd579ec5ef541d1746ba48a78bbb2f0697b2fec28f3e0640708",
+      "quote": "Every account includes $5 of monthly usage, consumed before paid credit."
+    },
+    {
+      "url": "https://kedge.dev/docs/api",
+      "date": "2026-11-03",
+      "proved": "a REST API and SSH commands exist",
+      "capture": "sha256:757adab170c4e07542d59b20a897dd93288c1abb2ce9b4dd53479331c7886a0d",
+      "quote": "The REST API backs the web console and SSH commands."
+    },
+    {
+      "url": "https://kedge.dev/docs/api",
+      "date": "2026-11-03",
+      "proved": "a kedge CLI exists",
+      "capture": "sha256:757adab170c4e07542d59b20a897dd93288c1abb2ce9b4dd53479331c7886a0d",
+      "quote": "Mint a token with `kedge token`, then send it as a Bearer token:"
+    },
+    {
+      "url": "https://kedge.dev/docs/api",
+      "date": "2026-11-04",
+      "proved": "the service exposes a REST API and SSH commands, supporting interface rest and ssh",
+      "capture": "sha256:757adab170c4e07542d59b20a897dd93288c1abb2ce9b4dd53479331c7886a0d",
+      "quote": "The REST API backs the web console and SSH commands."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T02:24:12.146Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 15.55,
+    "talaria_m24h_usd": 44.32,
+    "nemo_m10h_usd": 5.68,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "unclassified",
+    "shape": null,
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "`idle-suspend` pauses a machine and leaves it accruing storage only; scale-to-zero does the same"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "recurring-credit",
+    "granularity": {
+      "min_billed_s": 0,
+      "rounding_s": null
+    },
+    "burst_x": 1.0,
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": {
+      "gib": null,
+      "price": "$0.05 a GiB-month, billed on written bytes",
+      "durability": "volume",
+      "on_stop": true,
+      "on_destroy": false,
+      "retention": "until deleted"
+    },
+    "net": {
+      "out": true,
+      "in": true,
+      "ports": null,
+      "static_ip": null,
+      "ipv6": null,
+      "allowance": "$0.01 a GiB egress"
+    }
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "request-rate"
+}

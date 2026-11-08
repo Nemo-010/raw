@@ -1,0 +1,119 @@
+{
+  "topic": "storage",
+  "slug": "azure-blob-storage-always-free-tier",
+  "provider": "Azure Blob Storage always-free tier",
+  "url": "https://azure.microsoft.com/en-gb/pricing/free-services",
+  "category": "iaas",
+  "free_tier": {
+    "stated": "5 GB LRS hot block storage, with 20,000 read and 10,000 write operations per month, free for 12 months. Azure Files: 100 GB LRS hot/cool/transaction-optimized, 12 months. Archive Storage: 10 GB LRS, 12 months.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://azure.microsoft.com/en-gb/pricing/free-services",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "5 GB cap",
+    "bytes": 5000000000,
+    "source_url": "https://azure.microsoft.com/en-gb/pricing/free-services",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://azure.microsoft.com/en-gb/pricing/free-services",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Metered. 'First 100 GB/Month' egress free, then $0.087/GB from North America/Europe. 1 TiB/day of serving would be ~$80/day. Fails the egress filter hard unless fronted by a CDN with an origin-pull exemption.",
+    "metered": true,
+    "free_allowance": "100 GB per month"
+  },
+  "interface": [
+    "s3-compatible",
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "s3",
+  "tooling": "rclone backend 'azureblob' (Tier 1, md5, R/W); any S3-compatible SDK is NOT usable - it's the native Blob REST API; AzCopy, Azure Storage Explorer, azure-storage-blob Python SDK",
+  "chaining": "Per-account 5 GB and accounts require a credit card for verification; the always-free grant is per Azure subscription. N subscriptions x 5 GB is not a serious multiplier and each needs billing verification.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "10,000 write operations per month",
+      "source": "https://azure.microsoft.com/en-gb/pricing/free-services"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "5 GB cap",
+      "source": "https://azure.microsoft.com/en-gb/pricing/free-services"
+    }
+  ],
+  "limits_note": "5 GB cap; 12-month expiry on the Blob allotment (Azure's page labels Blob '12 months' despite the 'always free' framing elsewhere - treat as trial); 5 PiB max per storage account is irrelevant at 5 GB.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: mized, 12 months. Archive Storage: 10 GB LRS, 12 months. Card required; overage silently bills at pay-go rates once the 12-month window lapses because the account is not auto-suspended. Per-",
+    "country": null
+  },
+  "reliability_note": "Card required; overage silently bills at pay-go rates once the 12-month window lapses because the account is not auto-suspended.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://azure.microsoft.com/en-gb/pricing/free-services",
+      "date": "2026-10-21",
+      "proved": "'Blob Storage ... 5 GB locally redundant storage (LRS) hot block with 20,000 read and 10,000 write operations' / '12 months'; 'Azure Files ... 100 GB of LRS transaction optimised, hot, and cool files' / '12 months'; 'Archive Storage ... 10 GB LRS storage' / '12 months'"
+    },
+    {
+      "url": "https://azure.microsoft.com/en-us/pricing/details/bandwidth/",
+      "date": "2026-10-21",
+      "proved": "'First 100 GB/Month' free, then '$0.087 per GB' from North America/Europe; 'Azure already offers the first 100 GB/month of egressed data for free'"
+    },
+    {
+      "url": "https://rclone.org/overview/",
+      "date": "2026-10-21",
+      "proved": "Azure Blob listed as a Tier 1 rclone backend, md5, R/W"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "5 GB LRS hot block storage, with 20,000 read and 10,000 write operations per month, free for 12 months. Azure Files: 100 GB LRS hot/cool/transaction-optimized, 12 months. Archive Storage: 10 GB LRS, 12 months.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A2-onedrive-sharepoint.json",
+    "seed_area": "A/A2",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "A/A2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "5 GB LRS hot block storage, with 20,000 read and 10,000 write operations per month, free for 12 months. Azure Files: 100 GB LRS hot/cool/transaction-optimized, 12 months. Archive Storage: 10 GB LRS, 12 months.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/A2"
+    },
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "OneDrive, SharePoint and the M365 tenant",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "5 GB LRS hot block storage, with 20,000 read and 10,000 write operations per month, free for 12 months. Azure Files: 100 GB LRS hot/cool/transaction-optimized, 12 months. Archive Storage: 10 GB LRS, 12 months.",
+    "limits_verbatim": "5 GB cap; 12-month expiry on the Blob allotment (Azure's page labels Blob '12 months' despite the 'always free' framing elsewhere - treat as trial); 5 PiB max per storage account is irrelevant at 5 GB.",
+    "egress_verbatim": "Metered. 'First 100 GB/Month' egress free, then $0.087/GB from North America/Europe. 1 TiB/day of serving would be ~$80/day. Fails the egress filter hard unless fronted by a CDN with an origin-pull exemption.",
+    "chaining_verbatim": "Per-account 5 GB and accounts require a credit card for verification; the always-free grant is per Azure subscription. N subscriptions x 5 GB is not a serious multiplier and each needs billing verification.",
+    "tooling_verbatim": "rclone backend 'azureblob' (Tier 1, md5, R/W); any S3-compatible SDK is NOT usable - it's the native Blob REST API; AzCopy, Azure Storage Explorer, azure-storage-blob Python SDK",
+    "interface_verbatim": "s3",
+    "agent_focus": "Microsoft ecosystem: OneDrive, SharePoint, Office 365 dev/E5, Azure Blob free tier, Azure DevOps, Teams files"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

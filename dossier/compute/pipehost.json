@@ -1,0 +1,127 @@
+{
+  "topic": "compute",
+  "slug": "pipehost",
+  "provider": "PipeHost",
+  "url": "https://pipehost.net/cloud",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "The vendor store's Vienna category prices the XS plan at EUR 5.90 'Starting from · Monthly': 1 core, 3 GB DDR4 RAM, 35 GB NVMe SSD, 1 IPv4 + /64 IPv6, a 10 Gbit/s port under a fair-use policy, in Vienna, with an Order Now button and no sold-out badge, while the XL and XXL plans on the same page carry Sold out badges. The store exposes no other billing term: the product URL and the cart-add URL both serve the category page, whose HTML prints only 'Monthly', so the annual price and the renewal price are not published. The tracker's cheapest row, the record's original source for the shape, is the same plan at EUR 5.90; the tracker page also lists two more EUR 5.90 rows, one with an Epyc core and more storage in Vienna and one with the same shape in Amsterdam.",
+    "unit": "GiB",
+    "metered_on": "wall-clock",
+    "source_url": "https://pipehost.net/cloud",
+    "read_on": "2026-10-22",
+    "notes": "none"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://pipehost.net/cloud",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://pipehost.net/cloud",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "the store page prints '10 Gbit/s Port (Fair Use)' with no byte allowance; the plan API's bandwidth field reads 10 with the unit unstated; no overage price is published",
+    "metered": true,
+    "free_allowance": "fair use on a 10 Gbit/s port; no byte allowance published",
+    "price_per_tb": null,
+    "source_url": "https://panel.pipehost.net/index.php/store/vps-xeon-vienna"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "the vendor page states 'REST API & CLI'; panel at panel.pipehost.net; OS templates plus custom ISO; daily backups included on every plan per the page; regions selected per order with live latency measurement in the browser",
+  "chaining": "EUR 5.90 for 3 GB of RAM and 35 GB of NVMe with 2.5 TB on a 10 Gbps port in Vienna is the fastest port per euro in this lane, and with the REST API and CLI it is the easiest to automate of the small hosts here. The 2.5 TB cap, not the port, is what stops it being a transfer host.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "the vendor publishes no byte allowance: the store page prints '10 Gbit/s Port (Fair Use)' and the plan API's bandwidth field reads 10 with the unit unstated; no overage price is published. A 10 Gbit/s port under a fair-use policy is a burst shape whatever the cap is; the cap is not published.",
+      "source": "https://pipehost.net/cloud"
+    }
+  ],
+  "limits_note": "the vendor publishes no byte allowance: the store page prints '10 Gbit/s Port (Fair Use)' and the plan API's bandwidth field reads 10 with the unit unstated; no overage price is published. A 10 Gbit/s port under a fair-use policy is a burst shape whatever the cap is; the cap is not published.",
+  "binding": "volume-quota",
+  "binding_note": "the vendor publishes no byte allowance: the store page prints '10 Gbit/s Port (Fair Use)' and the plan API's bandwidth field reads 10 with the unit unstated; no overage price is published. A 10 Gbit/s port under a fair-use policy is a burst shape whatever the cap is; the cap is not published.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "not read: the signup page was not fetched in this lane",
+    "country": null
+  },
+  "reliability_note": "the vendor page states a 99.99 percent network SLA and daily backups on every plan; no incident was observed in this session",
+  "confidence": "reported",
+  "evidence": [
+    {
+      "url": "https://vpspricetracker.com/provider/PipeHost/vps",
+      "date": "2026-10-22",
+      "proved": "cheapest row: 'EUR 5.90 / month', '1 Intel Cores (shared)', '3,072 MB RAM', '35 GB NVMe', '2,560 GB/month bandwidth', '10 Gbps port speed', 'IPv4 + IPv6', Vienna Austria; header 'starting at EUR 5.90 per month'"
+    },
+    {
+      "url": "https://vpspricetracker.com/provider/PipeHost/vps",
+      "date": "2026-10-22",
+      "proved": "largest-storage row: 'EUR 84.90 / month', '20 Epyc Cores (shared)', '61,440 MB RAM', '650 GB NVMe', '76,800 GB/month bandwidth', '10 Gbps port speed', Vienna"
+    },
+    {
+      "url": "https://pipehost.net/cloud",
+      "date": "2026-10-22",
+      "proved": "page quoted: 'Every plan has dedicated vCPU cores, NVMe storage, IPv4, IPv6 and daily backups' and 'REST API & CLI', '99.99% network SLA', six European locations: Vienna, Amsterdam, Frankfurt, Eygelshoven, Maribor, Stockholm"
+    },
+    {
+      "url": "https://panel.pipehost.net/index.php/store/vps-xeon-vienna",
+      "date": "2026-11-07",
+      "proved": "the store page prices the Vienna Xeon XS at EUR 5.90, monthly term, with a 10 Gbit/s fair-use port and no byte allowance, and shows no stock badge (Order Now)",
+      "capture": "sha256:68cb1f8087adb713ccfc829ca7abde66bd017aab81a99ec7e41aa8d65cf3dc11",
+      "quote": "01 / XS €5.90 Starting from · Monthly 1 Core 3GB DDR4 RAM 35GB NVME SSD 1 IPv4 + /64 IPV6 10 Gbit/s Port (Fair Use)"
+    },
+    {
+      "url": "https://panel.pipehost.net/index.php/store/vps-xeon-vienna",
+      "date": "2026-11-07",
+      "proved": "the store's Vienna category prices the XS plan at 5.90 EUR on a monthly term",
+      "capture": "sha256:30dc83d962910a44eaa3bb50cfcd00e73000570a457424b85d46ed8b10b7fd74",
+      "quote": "€5.90  Starting from · Monthly"
+    },
+    {
+      "url": "https://panel.pipehost.net/index.php?rp=/store/vps-xeon-vienna/xs",
+      "date": "2026-11-07",
+      "proved": "the cart-add URL serves the same category page; the XS card carries an Order Now button with no Sold out badge while the XL and XXL cards carry Sold out badges, and the page HTML prints only Monthly as a billing term",
+      "capture": "sha256:875dc4a35163e24c073f7839ffa5f06c4689a86fbda0ad2152206cebb95fc0df",
+      "quote": "Sold out"
+    },
+    {
+      "url": "https://panel.pipehost.net/index.php/store/vps-xeon-vienna",
+      "date": "2026-11-07",
+      "proved": "the store's Vienna category prices the XS plan at 5.90 EUR on a monthly term",
+      "capture": "sha256:68cb1f8087adb713ccfc829ca7abde66bd017aab81a99ec7e41aa8d65cf3dc11",
+      "quote": "01 / XS €5.90 Starting from · Monthly 1 Core 3GB DDR4 RAM 35GB NVME SSD 1 IPv4 + /64 IPV6 10 Gbit/s Port (Fair Use)"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-07T14:16:58.955Z",
+  "notes": "Not in dossier/compute or docs/ (searched both trees for pipehost, no hit). Wall: the plan configurator is client-side and rendered as '0 plans, prices in EUR' to both the raw fetch and the text extractor, and pipehost.net/pricing returned 404, so every plan number here is the tracker's and the record is labelled reported. Conflicting labels: the vendor page says every plan has 'dedicated vCPU cores' while the tracker labels the cores '(shared)'. would-settle: one rendered read of the configurator with a region and processor selected, which would also settle the dedicated-versus-shared question. Currency: the pages print a euro sign and it is written EUR throughout this file because the file is ASCII-only.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "PipeHost",
+      "class": null,
+      "category_as_written": "KVM VPS, Europe",
+      "free_tier_kind": "none",
+      "shape": {
+        "vcpu": 1,
+        "ram_gib": 3,
+        "disk_gib": 35,
+        "gpu_class": null,
+        "gpu_count": null
+      },
+      "seen_routes": null,
+      "agents": [
+        "lane6-vps"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "price_on_page": "EUR 5.90/month for XS in Vienna; renewal: not published"
+  }
+}

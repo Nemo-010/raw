@@ -1,0 +1,113 @@
+{
+  "topic": "storage",
+  "slug": "git-lfs",
+  "provider": "Git LFS",
+  "url": "https://git-lfs.com",
+  "category": "paas",
+  "free_tier": {
+    "stated": "Free: 10 GiB storage AND 10 GiB bandwidth per month; per-file 2 GB on Free/Pro, 4 GB Team, 5 GB Enterprise.",
+    "unit": "GiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.github.com/en/billing/concepts/product-billing/git-lfs",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "2 GB per file",
+    "bytes": 2000000000,
+    "source_url": "https://docs.github.com/en/billing/concepts/product-billing/git-lfs",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.github.com/en/billing/concepts/product-billing/git-lfs",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "10 GiB/month free bandwidth, metered beyond that — a single day of the 500 GB-1 TiB fetch workload exhausts 50-100 months of allowance.",
+    "metered": true,
+    "free_allowance": "10 GiB per month"
+  },
+  "interface": [
+    "rest",
+    "git"
+  ],
+  "interface_detail": "rest",
+  "tooling": "git-lfs client, batch API at /info/lfs/objects/batch (probed: 200).",
+  "chaining": "10 GiB x unlimited accounts is the only path, and each account needs a payment method to go beyond — without one, LFS is disabled until the next month.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "2 GB per file",
+      "source": "https://docs.github.com/en/billing/concepts/product-billing/git-lfs"
+    }
+  ],
+  "limits_note": "10 GiB storage, 10 GiB/month bandwidth, 2 GB per file on Free; 300 req/min unauthenticated LFS API, 3000 authenticated.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: th, 2 GB per file on Free; 300 req/min unauthenticated LFS API, 3000 authenticated. paas",
+    "country": null
+  },
+  "reliability_note": "Exceeding free bandwidth without a payment method disables Git LFS entirely until the next month — a hard stop, not a throttle.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.github.com/en/billing/concepts/product-billing/git-lfs",
+      "date": "2026-10-21",
+      "proved": "table: 'GitHub Free | 10 GiB | 10 GiB' (Bandwidth | Storage); 'Git LFS support is disabled on your account until the next month'"
+    },
+    {
+      "url": "https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage",
+      "date": "2026-10-21",
+      "proved": "'GitHub Free | 2 GB' max file size"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: POST github.com/git-lfs/git-lfs.git/info/lfs/objects/batch -> 200, per-object error 404 'Object does not exist on the server' (anonymous batch endpoint is live)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Free: 10 GiB storage AND 10 GiB bandwidth per month; per-file 2 GB on Free/Pro, 4 GB Team, 5 GB Enterprise.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B1-github-packages.json",
+    "seed_area": "B/B1",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "B/B1"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "egress",
+      "why": "Free: 10 GiB storage AND 10 GiB bandwidth per month; per-file 2 GB on Free/Pro, 4 GB Team, 5 GB Enterprise.",
+      "retry_when": "if the egress meter is removed or a Cloudflare path is added",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area B/B1"
+    },
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "GitHub Packages and GHCR",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Free: 10 GiB storage AND 10 GiB bandwidth per month; per-file 2 GB on Free/Pro, 4 GB Team, 5 GB Enterprise.",
+    "limits_verbatim": "10 GiB storage, 10 GiB/month bandwidth, 2 GB per file on Free; 300 req/min unauthenticated LFS API, 3000 authenticated.",
+    "egress_verbatim": "10 GiB/month free bandwidth, metered beyond that — a single day of the 500 GB-1 TiB fetch workload exhausts 50-100 months of allowance.",
+    "chaining_verbatim": "10 GiB x unlimited accounts is the only path, and each account needs a payment method to go beyond — without one, LFS is disabled until the next month.",
+    "tooling_verbatim": "git-lfs client, batch API at /info/lfs/objects/batch (probed: 200).",
+    "interface_verbatim": "rest",
+    "agent_focus": "GitHub as storage — quantitative ceilings (per-file / per-release / per-repo / per-account), multiplication model, and the automation layer (gh, oras, softprops, gh-large-releases, cf-github-releases, jsDelivr)"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

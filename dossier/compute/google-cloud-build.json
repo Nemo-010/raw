@@ -1,0 +1,213 @@
+{
+  "topic": "compute",
+  "slug": "google-cloud-build",
+  "provider": "Google Cloud Build",
+  "url": "https://cloud.google.com/build/pricing",
+  "category": "platform host",
+  "free_tier": {
+    "stated": "2,500 build-minutes a month per billing account on e2-standard-2 (2 vCPU, 8 GB memory) in the default pool, stated as a promotional free tier whose limit is subject to change; the first 100 GB of worker SSD is free",
+    "unit": "minutes",
+    "metered_on": "wall-clock",
+    "source_url": "https://cloud.google.com/build/pricing",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://cloud.google.com/build/pricing",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://cloud.google.com/build/pricing",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "network egress from builds is charged at standard Google Cloud rates; no egress allowance is stated for Cloud Build",
+    "metered": true,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://cloud.google.com/build/pricing"
+  },
+  "interface": [
+    "cli",
+    "rest"
+  ],
+  "interface_detail": "gcloud builds submit (the Google Cloud CLI) and the Cloud Build REST API at cloudbuild.googleapis.com; no SSH into build workers is documented on the pages read",
+  "tooling": "the gcloud CLI (gcloud builds submit) and the REST API",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "2,500 build-minutes a month per billing account on e2-standard-2 in the default pool, promotional and subject to change; beyond it e2-standard-2 costs $0.006 a minute",
+      "source": "https://cloud.google.com/build/pricing"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "the first 100 GB of worker SSD is free; up to 4,000 GB can be attached",
+      "source": "https://cloud.google.com/build/pricing"
+    }
+  ],
+  "limits_note": "the default pool allows 10 to 30 concurrent builds (global) and 5 to 100 concurrent E2 CPUs per region as project quotas",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "a Google Cloud billing account is required for the Free Tier, including the Cloud Build minutes; the Free Trial sign-up that creates one requires a credit card or other payment method, and in some countries a bank-account verification",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "documented from the Cloud Build pricing page and the Google Cloud free-features page; the pricing page calls the build-minute allowance promotional and subject to change, which is a weaker commitment than a tier",
+  "evidence": [
+    {
+      "url": "https://cloud.google.com/build/pricing",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://cloud.google.com/build/pricing",
+      "date": "2026-10-22",
+      "proved": "'Each billing account comes with 2,500 free build-minutes per month' and 'This promotional free tier is for e2-standard-2 machine types in the default pool, and the limit is subject to change' and 'The first 100GB is free' of worker SSD, quoted"
+    },
+    {
+      "url": "https://cloud.google.com/build/pricing",
+      "date": "2026-10-30",
+      "proved": "the allowance is 2,500 build-minutes a month, counted per billing account",
+      "capture": "sha256:7606d69f0fb1a11e08be624910f73c1d37fadb201940584eb1a6e1379d060e27",
+      "quote": "Each billing account comes with 2,500 free build-minutes per month."
+    },
+    {
+      "url": "https://cloud.google.com/build/pricing",
+      "date": "2026-10-30",
+      "proved": "the free minutes apply only to e2-standard-2 in the default pool and are promotional",
+      "capture": "sha256:7606d69f0fb1a11e08be624910f73c1d37fadb201940584eb1a6e1379d060e27",
+      "quote": "This promotional free tier is for e2-standard-2 machine types in the default pool, and the limit is subject to change."
+    },
+    {
+      "url": "https://docs.cloud.google.com/free/docs/free-cloud-features",
+      "date": "2026-10-30",
+      "proved": "the sign-up that creates a billing account asks for a credit card or other payment method",
+      "capture": "sha256:885a38c2b738a7e9ac34bffbae919db1163c80786856ff5f689da3a3bfe0b095",
+      "quote": "During the sign up, you must provide a credit card or other payment method that is valid for the period of the Free Trial."
+    },
+    {
+      "url": "https://docs.cloud.google.com/free/docs/free-cloud-features",
+      "date": "2026-10-30",
+      "proved": "the Free Tier, which lists the Cloud Build minutes, is reached only through a billing account",
+      "capture": "sha256:885a38c2b738a7e9ac34bffbae919db1163c80786856ff5f689da3a3bfe0b095",
+      "quote": "A Google Cloud billing account is required to access the Google Cloud Free Tier."
+    },
+    {
+      "url": "https://cloud.google.com/build/pricing",
+      "date": "2026-10-30",
+      "proved": "Cloud Build egress is billed at standard network rates",
+      "capture": "sha256:7606d69f0fb1a11e08be624910f73c1d37fadb201940584eb1a6e1379d060e27",
+      "quote": "Network egress will be charged according to standard rates."
+    },
+    {
+      "url": "https://cloud.google.com/build/pricing",
+      "date": "2026-10-30",
+      "proved": "Cloud Build egress is metered and billed",
+      "capture": "sha256:7606d69f0fb1a11e08be624910f73c1d37fadb201940584eb1a6e1379d060e27",
+      "quote": "Network egress will be charged according to standard rates."
+    },
+    {
+      "url": "https://cloud.google.com/build/quotas",
+      "date": "2026-10-30",
+      "proved": "the default pool caps concurrent builds at 10 to 30",
+      "capture": "sha256:ec46b786c1ae9a8ffa8cb9436740273bbe6c9614dbca4568d17e1f80df506200",
+      "quote": "| Default pool | Build | Number of concurrent builds | 10 - 30 |"
+    },
+    {
+      "url": "https://cloud.google.com/build/pricing",
+      "date": "2026-10-30",
+      "proved": "the allowance is promotional and subject to change",
+      "capture": "sha256:7606d69f0fb1a11e08be624910f73c1d37fadb201940584eb1a6e1379d060e27",
+      "quote": "This promotional free tier is for e2-standard-2 machine types in the default pool, and the limit is subject to change."
+    },
+    {
+      "url": "https://docs.cloud.google.com/free/docs/free-cloud-features",
+      "date": "2026-10-30",
+      "proved": "the Free Tier table lists the same 2,500 build-minutes on e2-standard-2",
+      "capture": "sha256:885a38c2b738a7e9ac34bffbae919db1163c80786856ff5f689da3a3bfe0b095",
+      "quote": "2,500 build-minutes per month for machine type e2-standard-2"
+    },
+    {
+      "url": "https://cloud.google.com/build/pricing",
+      "date": "2026-10-30",
+      "proved": "e2-standard-2 has 2 vCPUs and 8 GB of memory, at $0.006 a minute",
+      "capture": "sha256:7606d69f0fb1a11e08be624910f73c1d37fadb201940584eb1a6e1379d060e27",
+      "quote": "| e2-standard-2 | 2 | 8 | Yes | $0.006 |"
+    },
+    {
+      "url": "https://cloud.google.com/build/pricing",
+      "date": "2026-10-30",
+      "proved": "the first 100 GB of worker SSD is free, up to 4,000 GB in all",
+      "capture": "sha256:7606d69f0fb1a11e08be624910f73c1d37fadb201940584eb1a6e1379d060e27",
+      "quote": "The first 100GB is free, and you can request up to 4000GB."
+    },
+    {
+      "url": "https://cloud.google.com/build/docs/running-builds/submit-build-via-cli-api",
+      "date": "2026-11-03",
+      "proved": "builds start from the gcloud CLI and the Cloud Build API",
+      "capture": "sha256:51e73c4c9532c5b9fe4483a006fce83cc6ef28e5d254442b5baf8f577379ba25",
+      "quote": "Google Cloud CLI and the Cloud Build API."
+    },
+    {
+      "url": "https://cloud.google.com/build/docs/api/reference/rest",
+      "date": "2026-11-03",
+      "proved": "the Cloud Build API is a REST API",
+      "capture": "sha256:c7267d8a86b43fb2a99aa8b8c882052bd8542feee6b8206439ba93de011f29e6",
+      "quote": "## REST Resource: [v1.projects.builds](https://docs.cloud.google.com/build/docs/api/reference/rest/v1/projects.builds)"
+    },
+    {
+      "url": "https://cloud.google.com/build/pricing",
+      "date": "2026-11-03",
+      "proved": "egress from builds is billed at standard Google Cloud rates with no Cloud Build allowance or own price stated",
+      "capture": "sha256:7606d69f0fb1a11e08be624910f73c1d37fadb201940584eb1a6e1379d060e27",
+      "quote": "Network egress will be charged according to standard rates."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T02:24:32.965Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 108.0,
+    "talaria_m24h_usd": 259.2,
+    "nemo_m10h_usd": 93.0,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "unclassified",
+    "shape": {
+      "vcpu": 2,
+      "ram": 8,
+      "disk": 100,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "e2-standard-2 with up to 100 GB of free worker SSD"
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "a build runs to completion; the allowance is minutes a month, and partial minutes are billed at the actual number of seconds"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "allowance",
+    "granularity": {
+      "min_billed_s": 0,
+      "rounding_s": null
+    },
+    "burst_x": 1.0,
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "net": null
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "request-rate"
+}

@@ -1,0 +1,132 @@
+{
+  "topic": "compute",
+  "slug": "galaxy-main",
+  "provider": "Galaxy Main",
+  "url": "https://galaxyproject.org/main/",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "\"The main Galaxy site at https://usegalaxy.org [...] has been available since 2007 for anyone to analyze their data free of charge.\" \"Anyone can use the public servers, with or without an account\" and registration is \"email, password, user name and go\". A registered account gets 250 GB of storage and 6 concurrent jobs; an unregistered one gets 5 GB and 1 job. The hardware is not Galaxy's own: most jobs take 1 core and 8 GB on the dedicated Galaxy cluster at TACC, multi-core tools take 6 cores and 30 GB there or 10 cores and 30 GB on Jetstream m1.xlarge, and assembly jobs are routed to PSC Bridges (240 GB to 960 GB of memory, 5 to 20 cores, 24 to 96 hours) or TACC Stampede2 SKX (48 cores, 192 GB, 48 hours).",
+    "unit": "hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://galaxyproject.org/main/",
+    "read_on": "2026-10-22",
+    "notes": "perpetual-open-registration"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://galaxyproject.org/main/",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://galaxyproject.org/main/",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "not published on the page read: no egress term was found, so nothing is asserted",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://galaxyproject.org/main/"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "REST API (Galaxy API), documented: the API documentation is at /api/docs or /api/redoc under the server base URL; the web interface is the other way in.",
+  "tooling": "BioBlend, the Python library for the Galaxy API (also blend4php, blend4j and a TypeScript schema); the REST API directly otherwise.",
+  "chaining": "This is the strongest composition in the lane: an email account reaches TACC, Jetstream and PSC Bridges hardware that every other route in this file gates behind a US institutional appointment, and the qualification is that you reach it through Galaxy tool wrappers rather than a shell, so a workload must be expressible as Galaxy tools or a packaged tool in a workflow.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "250 GB of stored data per account is the wall that stops work: reaching it halts new jobs until data is purged, and the 6-concurrent-job cap and the 36 to 48 hour walltime sit behind it.",
+      "source": "https://galaxyproject.org/main/"
+    }
+  ],
+  "limits_note": "250 GB of stored data per account is the wall that stops work: reaching it halts new jobs until data is purged, and the 6-concurrent-job cap and the 36 to 48 hour walltime sit behind it.",
+  "binding": "volume-quota",
+  "binding_note": "250 GB of stored data per account is the wall that stops work: reaching it halts new jobs until data is purged, and the 6-concurrent-job cap and the 36 to 48 hour walltime sit behind it.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "as stated by the provider's signup page",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://galaxyproject.org/main/",
+      "date": "2026-10-22",
+      "proved": "\"this site has been available since 2007 for anyone to analyze their data free of charge\"; \"Anyone can use the public servers, with or without an account\", quoted"
+    },
+    {
+      "url": "https://galaxyproject.org/main/",
+      "date": "2026-10-22",
+      "proved": "\"It is sustained by Texas Advanced Computing Center (TACC) hardware using allocation generously provided by the CyVerse project\", quoted"
+    },
+    {
+      "url": "https://galaxyproject.org/main/",
+      "date": "2026-10-22",
+      "proved": "quota table: 250GB registered and 5GB unregistered, 6 concurrent jobs registered and 1 unregistered, quoted"
+    },
+    {
+      "url": "https://galaxyproject.org/main/",
+      "date": "2026-10-22",
+      "proved": "compute resource table: Jetstream 36 hour walltime, 10 cores, 30 GB; TACC Stampede2 SKX 48 hour walltime, 48 cores, 192 GB; PSC Bridges 240 GB to 960 GB and 5 to 20 cores, quoted"
+    },
+    {
+      "url": "https://galaxyproject.org/support/account-quotas/",
+      "date": "2026-10-22",
+      "proved": "\"each registered account is granted 250 GB of quota space\" at Galaxy Main, quoted"
+    },
+    {
+      "url": "https://docs.galaxyproject.org/en/master/api_doc.html",
+      "date": "2026-11-03",
+      "proved": "every Galaxy server exposes a REST API documented at its /api/docs path",
+      "capture": "sha256:315b5f5c6f09dc7b9bf743f9413eab352f2d8b5f2336d9b70adedbbe05fe6179",
+      "quote": "The up-to-date Galaxy API documentation can be accessed by appending `/api/docs` or `/api/redoc` to the base URL of a Galaxy server"
+    },
+    {
+      "url": "https://docs.galaxyproject.org/en/master/api_doc.html",
+      "date": "2026-11-04",
+      "proved": "the Galaxy REST API documentation lives under each server base URL",
+      "capture": "sha256:315b5f5c6f09dc7b9bf743f9413eab352f2d8b5f2336d9b70adedbbe05fe6179",
+      "quote": "The up-to-date Galaxy API documentation can be accessed by appending `/api/docs` or `/api/redoc` to the base URL of a Galaxy server"
+    },
+    {
+      "url": "https://bioblend.readthedocs.io/en/latest/",
+      "date": "2026-11-04",
+      "proved": "BioBlend is the documented Python client for the Galaxy API",
+      "capture": "sha256:9e170edbc1055deb78880e9c0ccd1f1cd14277c0066f155bbf2d9782c2c605ac",
+      "quote": "BioBlend is a Python library for interacting with the Galaxy API."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T05:24:45.575Z",
+  "notes": "The reachable identity is the point. Every other record in this lane fails on institution; Galaxy Main, Galaxy Europe and the Australian and African servers each issue an account to an email address, and the server operators are separate institutions carrying separate hardware allocations, so the capacity is genuinely multi-institutional while the identity is one address. The caveat that would refute 'qualifies' is an unstated enforcement step: registration is automated and the page states no review, but this session did not create an account, so the rung is documented. Galaxy is not a general-purpose VM: no root, no arbitrary binaries unless uploaded as a tool, no inbound network, so it is the wrong shape for a server and the right shape for a batch analysis. The corpus holds no Galaxy record.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "Galaxy Main (usegalaxy.org)",
+      "class": "open-science-platform",
+      "category_as_written": "open science web platform",
+      "free_tier_kind": "perpetual-open-registration",
+      "shape": {
+        "vcpu": 10,
+        "ram_gib": 30,
+        "gpu_class": null,
+        "gpu_count": null
+      },
+      "seen_routes": [
+        "broker read 200 usegalaxy.org",
+        "broker read 200 galaxyproject.org/main",
+        "broker read 200 galaxyproject.org/support/account-quotas",
+        "broker search tsv usegalaxy quota"
+      ],
+      "agents": [
+        "university-labs"
+      ],
+      "promoted_from": ".tmp/wave2"
+    }
+  }
+}

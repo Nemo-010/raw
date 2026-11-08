@@ -1,0 +1,230 @@
+{
+  "topic": "compute",
+  "slug": "tenki",
+  "provider": "Tenki Sandbox",
+  "url": "https://tenki.cloud/pricing",
+  "category": "container and VM sandbox",
+  "free_tier": {
+    "stated": "USD 100 in free credits on a new account: USD 50 at signup and USD 50 the first time a payment method is added. Starter itself is a free plan.",
+    "unit": "mixed",
+    "metered_on": "wall-clock",
+    "source_url": "https://tenki.cloud/pricing",
+    "read_on": "2026-10-24",
+    "notes": "credit"
+  },
+  "per_object_cap": {
+    "stated": "Starter caps a machine at 4 cores / 8 GB with 5 concurrent sessions; Team (USD 250/month, or USD 200 billed yearly) raises it to 16 cores / 64 GB and 100 sessions"
+  },
+  "retention": {
+    "stated": "A paused sandbox stops charging and keeps its files and memory; first 5 GiB of disk is free, storage beyond it is metered.",
+    "source_url": "https://tenki.cloud/pricing"
+  },
+  "egress": {
+    "terms": "not published: the pricing page's sandbox rate table lists vCPU, memory and disk only, with no transfer allowance or per-GB price; the docs index puts its egress page under Runners, not Sandbox",
+    "metered": false,
+    "free_allowance": "not stated",
+    "source_url": "https://tenki.cloud/pricing"
+  },
+  "interface": [
+    "cli",
+    "ssh"
+  ],
+  "interface_detail": "`tenki` CLI, TypeScript, Python and Go SDKs, and SSH into a session with authorized keys; no REST reference read",
+  "tooling": "not stated in the source card",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "Starter machines cap at 4 cores / 8 GB; 5 GiB of sandbox disk free",
+      "source": "https://tenki.cloud/pricing"
+    }
+  ],
+  "limits_note": "A sticky session has no duration cap, which is unusual in this lane: 'A sticky session runs until you terminate it.'",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "USD 50 of the USD 100 credit is released only when a payment method is added; top-up minimum USD 20. Card type and hold are not stated.",
+    "country": null
+  },
+  "reliability_note": "Usage is metered by the second with no minimums; when the balance runs out Tenki stops starting new jobs and sessions until a top-up or auto-reload.",
+  "confidence": "documented",
+  "confidence_note": "All four sandbox rates, the credit split, the plan ceilings and the per-second metering are quoted from the vendor's pricing page read today.",
+  "evidence": [
+    {
+      "url": "https://tenki.cloud/pricing",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://tenki.cloud/pricing",
+      "date": "2026-10-22",
+      "proved": "'Every plan includes free credits and limits. Go beyond them and you only pay for what you run.' with '\\+ Usage beyond free credits', '$100 one-time credit', 'Up to 5 concurrent sessions' and '$100 monthly credits' on the paid tier, quoted"
+    },
+    {
+      "url": "https://tenki.cloud/pricing",
+      "date": "2026-10-24",
+      "proved": "quoted: '$100 one-time credit', 'Up to 5 concurrent sessions', 'Up to 4 cores and 8 GB RAM', and from the FAQ: 'New accounts get $100 in free credits: $50 when you sign up, applied to your first workspace, and $50 the first time you add a payment method.'"
+    },
+    {
+      "url": "https://tenki.cloud/pricing",
+      "date": "2026-10-24",
+      "proved": "quoted rate table: 'Sandbox vCPU $0.000014 per second', 'Sandbox Memory $0.0000045 per GiB/second', 'Sandbox Disk $0.00000003 per GiB/second Free 5 GiB'."
+    },
+    {
+      "url": "https://tenki.cloud/docs/sandbox/sessions.md",
+      "date": "2026-10-24",
+      "proved": "quoted: 'A sticky session runs until you terminate it.'; 'Unset options fall back to service defaults of 2 vCPU, 4096 MB, and a 5 GiB root disk.'; 'Pause and resume preserve the VM's memory and durable filesystem state'."
+    },
+    {
+      "url": "https://tenki.cloud/pricing",
+      "date": "2026-10-24",
+      "proved": "quoted: 'Sandbox vCPU | $0.000014per second'; 'Sandbox Memory | $0.0000045per GiB/second'; 'Sandbox Disk | $0.00000003per GiB/second Free 5 GiB'"
+    },
+    {
+      "url": "https://tenki.cloud/pricing",
+      "date": "2026-10-24",
+      "proved": "quoted FAQ: 'New accounts get $100 in free credits: $50 when you sign up ... and $50 the first time you add a payment method' and 'Starter is free ... up to 5 concurrent sessions and machines up to 4 cores / 8 GB'"
+    },
+    {
+      "url": "https://tenki.cloud/pricing",
+      "date": "2026-11-03",
+      "proved": "the sandbox rate table lists vCPU, memory and disk and no transfer line",
+      "capture": "sha256:c72e4ae713d97dadf763eba128fde49de5d7de3495b6a0037546c488cccd70a1",
+      "quote": "| Sandbox Disk | $0.00000003per GiB/second Free 5 GiB |"
+    },
+    {
+      "url": "https://tenki.cloud/llms.txt",
+      "date": "2026-11-03",
+      "proved": "a CLI with SSH support exists",
+      "capture": "sha256:36ddf3c1097471b61e8e79c621c8b40eea8cdca4f3cf72a0fc3e4db051309805",
+      "quote": "Command reference for the `tenki` CLI covering authentication, session lifecycle, command execution, file transfer, port exposure, SSH, persistent volumes, and snapshots."
+    },
+    {
+      "url": "https://tenki.cloud/docs/sandbox/sessions.md",
+      "date": "2026-11-03",
+      "proved": "SSH keys are set at session creation in the SDKs and CLI",
+      "capture": "sha256:6947920edd85ac294f839230b01eedc95436a88012db23d9ed917c9436a3b18c",
+      "quote": "| SSH keys         | `sshAuthorizedKeys`                  | `ssh_authorized_keys`             | `WithSSHKeys`                           | `--authorized-key`, `--authorized-keys-file` |"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T02:24:18.818Z",
+  "price_per_tb_month": null,
+  "notes": "Arithmetic: 0.000014 x 3600 = USD 0.0504/vCPU-hour and 0.0000045 x 3600 = USD 0.0162/GiB-hour; 1 vCPU + 1 GiB = USD 0.0666/hour, x 730 = USD 48.62. At a 2 vCPU / 4 GiB shape the same rate gives (2 x 0.0504 + 4 x 0.0162) x 730 = USD 120.89 a month. Modelled at 200 hours a month instead of 730, the same shape would be USD 13.32.",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 299.68,
+    "talaria_m24h_usd": 369.23,
+    "nemo_m10h_usd": 50.17,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "per-second",
+    "shape": {
+      "vcpu": 1,
+      "ram_gib": 1,
+      "disk_gib": 5,
+      "gpu_class": null,
+      "gpu_count": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "no wall-clock cap stated; pausing stops the meter"
+    },
+    "persistent_storage": null,
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": null,
+      "ports": "not stated on the pricing page",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "credit",
+    "granularity": {
+      "min_billed_s": 0,
+      "rounding_s": null
+    },
+    "burst_x": 1.0,
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": null,
+    "net": null,
+    "shape_max": {
+      "vcpu": 4,
+      "ram_gib": 8,
+      "disk_gib": 100
+    },
+    "term": "monthly plan plus usage",
+    "m10h_usd": 19.98,
+    "m24h_usd": 48.62,
+    "price_arithmetic": "(0.0504 + 0.0162) = USD 0.0666/hour x 730 h = USD 48.62; x 300 h (10 h/day) = USD 19.98. Disk beyond the free 5 GiB adds 0.000108/GiB-hour.",
+    "credit_usd": 50,
+    "credit_usd_with_card": 100,
+    "credit_months_at_shape": 0.41,
+    "credit_hours_at_shape": 302,
+    "credit_expiry": "not stated for free credits; purchased credits never expire",
+    "superseded": {
+      "free_tier": {
+        "stated": "Starter is USD 0 with '$100 one-time credit', 'Up to 5 concurrent sessions', 'Up to 100 GiB storage', 'Up to 4 cores and 8 GB RAM'. The FAQ splits the credit: 'New accounts get $100 in free credits: $50 when you sign up, applied to your first workspace, and $50 the first time you add a payment method.'",
+        "unit": "mixed",
+        "metered_on": "wall-clock",
+        "source_url": "https://tenki.cloud/pricing",
+        "read_on": "2026-10-24",
+        "notes": "Half the advertised credit needs a payment method, so the no-card balance is USD 50, not USD 100."
+      },
+      "per_object_cap": {
+        "stated": "Machines up to 4 cores / 8 GB on Starter; unset options fall back to 'service defaults of 2 vCPU, 4096 MB, and a 5 GiB root disk'.",
+        "bytes": null,
+        "source_url": "https://tenki.cloud/docs/sandbox/sessions.md",
+        "notes": "Storage up to 100 GiB on Starter."
+      },
+      "retention": {
+        "stated": "Pause and resume preserve the VM's memory and durable filesystem state; `/tmp` is cleared across a pause. Persistent Volumes survive session termination. No deletion timer is published.",
+        "days": null,
+        "source_url": "https://tenki.cloud/docs/sandbox/sessions.md"
+      },
+      "egress": {
+        "terms": "No egress charge or allowance is stated on the pricing page, which prices sandbox vCPU, memory, disk and storage only.",
+        "metered": false,
+        "free_allowance": null,
+        "price_per_tb": null,
+        "source_url": "https://tenki.cloud/pricing"
+      },
+      "limits": [
+        {
+          "kind": "volume-quota",
+          "value": "USD 50 on signup plus USD 50 on adding a payment method",
+          "source": "https://tenki.cloud/pricing"
+        },
+        {
+          "kind": "volume-quota",
+          "value": "5 concurrent sessions and machines up to 4 cores / 8 GB on Starter",
+          "source": "https://tenki.cloud/pricing"
+        },
+        {
+          "kind": "volume-quota",
+          "value": "sandbox USD 0.000014 per vCPU-second, USD 0.0000045 per GiB-second of memory, USD 0.00000003 per GiB-second of disk with 5 GiB free",
+          "source": "https://tenki.cloud/pricing"
+        }
+      ],
+      "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+      "binding": "request-rate",
+      "identity_cost": {
+        "kind": "email",
+        "detail": "USD 50 is granted on signup with no card. The second USD 50 requires adding a payment method, so the full USD 100 is a card-gated number and the no-card number is USD 50. No hold amount is stated.",
+        "country": null
+      },
+      "reliability_note": "Sessions are destroyed when a non-sticky max duration elapses; a session that reaches RUNNING after its wait expired 'keeps running, and billing, until its max duration'.",
+      "confidence_note": "The split credit, the Starter limits, the rate card and the sticky-session rule are all first-party and read today.",
+      "verified_at": "2026-10-24T01:52:56.000Z",
+      "tier": "Starter",
+      "binding_note": "The credit, not the runtime, is what runs out: the platform will hold a 2 vCPU machine up for as long as asked, for about 302 hours on USD 50.",
+      "notes": "The corpus record for Tenki said '$100 of one-time credit ... email'. The FAQ on the same page says half of it is released only when a payment method is added, so the card-free figure is USD 50. At 2 vCPU / 4 GiB / 5 GiB the hour is USD 0.1656 and a 730-hour month is USD 120.89; USD 50 buys 302 hours, USD 100 buys 604. The rates are identical to E2B's and Daytona's to the last decimal, which suggests a shared upstream price book rather than three independent offers."
+    }
+  },
+  "binding": "volume-quota",
+  "tier": "Sandbox, Starter plan, 1 vCPU / 1 GiB / 5 GiB disk",
+  "binding_note": "The hourly rate is the wall: USD 0.0504 per vCPU-hour is 45x Krova's per-vCPU rate, so a month of 24/7 costs what a year of Krova costs."
+}

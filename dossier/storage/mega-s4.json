@@ -1,0 +1,136 @@
+{
+  "topic": "storage",
+  "slug": "mega-s4",
+  "provider": "MEGA S4 (object storage)",
+  "url": "https://mega.io/objectstorage",
+  "category": "S3-compatible object storage, pay-as-you-grow",
+  "free_tier": {
+    "stated": "No upper limit. Base 3 TB included from EUR 15/mo; EUR 3.50 per additional TB.",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://mega.io/objectstorage",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://mega.io/objectstorage",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://mega.io/objectstorage",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Verbatim: '5x free egress, no API charges and no minimum storage period.' Vendor clarifies elsewhere: 'MEGA S4 allows up to 5x of the average monthly stored data as free egress.' At 20 TB stored that is ~100 TB/mo of free egress — covers the 1 TB/day serving load 3x over.",
+    "metered": false,
+    "free_allowance": "100 TB per month"
+  },
+  "interface": [
+    "s3-compatible",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "S3-compatible (SigV4). Endpoint probed live: https://s3.eu-amsterdam-1.megas4.com/ returns HTTP 400 with {Code:InvalidRequest, Message:'Please use AWS Signature Version 4 for authentication'} — a real, correctly-implemented S3 endpoint, not a marketing page.",
+  "tooling": "rclone (first-party guide), AWS CLI, Synology Hyper Backup, TrueNAS, Duplicacy, MSP360, Cyberduck, Terraform",
+  "chaining": "Native S3 -> any S3 client; first-party Cloudflare CDN guide documented at help.mega.io/megas4/setup-guides/cloudflare-setup-guide-for-mega-s4",
+  "limits": [],
+  "limits_note": "None on object size published. Egress beyond 5x stored is metered and charged.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "the MEGA account is created with an email address and a password, confirmed by a link MEGA emails, and the vendor's guide lists no phone field, so whether the form asks a phone number is unverified. MEGA S4 is sold on the Pro Flexi plan, and the upgrade takes Visa or Mastercard, Google Pay, Bitcoin or a UnionPay bank card",
+    "country": null
+  },
+  "reliability_note": "MEGA has run since 2013; S4 is a newer product line (2025) so the durability record on S4 itself is short. Brand-level: no mass data-loss event. Note the 2013 MEGA breach was credential/architecture, not storage loss.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://mega.io/objectstorage",
+      "date": "2026-10-21",
+      "proved": "'EUR 3.50 per TB a month on our pay-as-you-grow plan, with 3 TB included from EUR 15. 5x free egress, no API charges and no minimum storage period.'"
+    },
+    {
+      "url": "https://s3.eu-amsterdam-1.megas4.com/",
+      "date": "2026-10-21",
+      "proved": "HTTP 400 SigV4 error, endpoint live"
+    },
+    {
+      "url": "https://help.mega.io/megas4/setup-guides/rclone-setup-guide-for-mega-s4",
+      "date": "2026-10-21",
+      "proved": "first-party rclone guide"
+    },
+    {
+      "url": "https://mega.io/objectstorage/developer-automation-storage",
+      "date": "2026-10-21",
+      "proved": "'MEGA S4 allows up to 5x of the average monthly stored data as free egress'"
+    },
+    {
+      "url": "https://help.mega.io/plans-storage/payments-billing/how-to-upgrade",
+      "date": "2026-11-01",
+      "proved": "the paid plan is bought with a Visa or Mastercard, whatever the free account needs",
+      "capture": "sha256:fea7a7fa62c0b74d0d838ae3df770839e9019458757221ffc0486f6670d7520b",
+      "quote": "- Visa and Mastercard (If you don’t see this option, then it is not available in your country)"
+    },
+    {
+      "url": "https://help.mega.io/accounts/create-account/how-to-create-a-mega-account",
+      "date": "2026-11-01",
+      "proved": "the MEGA account is created with an email address and a confirmation link",
+      "capture": "sha256:dc2bc16ed134c8cb045193a0d35d62e36f8257f8ef9335a1c1a2085219e9dd56",
+      "quote": "Please use an email address where you can receive our confirmation link"
+    },
+    {
+      "url": "https://mega.io/objectstorage",
+      "date": "2026-11-01",
+      "proved": "S4 is sold on the Pro Flexi plan, so the paid rail is the identity cost",
+      "capture": "sha256:5c85afe545e831793d950dc6c3eea690a10ff0f845d23c85e43cadd33a1cda66",
+      "quote": "€3.50 per TB a month on our pay-as-you-grow plan, with 3 TB included from €15."
+    },
+    {
+      "url": "https://mega.io/objectstorage",
+      "date": "2026-11-01",
+      "proved": "MEGA S4 is a paid plan, so a card is needed",
+      "capture": "sha256:5c85afe545e831793d950dc6c3eea690a10ff0f845d23c85e43cadd33a1cda66",
+      "quote": "€3.50 per TB a month on our pay-as-you-grow plan, with 3 TB included from €15."
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-11-01T18:05:15.752Z",
+  "price_per_tb_month": "$4.94/TB at 5 TB (EUR 22.00 = $24.71); $4.18/TB at 20 TB (EUR 74.50 = $83.69)",
+  "notes": "No upper limit. Base 3 TB included from EUR 15/mo; EUR 3.50 per additional TB.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-P4-lifetime-deals-paid.json",
+    "seed_area": "A/P4",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "A/P4"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/paid/lifetime-and-deals.md",
+    "document_section": "Lifetime deals",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No upper limit. Base 3 TB included from EUR 15/mo; EUR 3.50 per additional TB.",
+    "limits_verbatim": "None on object size published. Egress beyond 5x stored is metered and charged.",
+    "egress_verbatim": "Verbatim: '5x free egress, no API charges and no minimum storage period.' Vendor clarifies elsewhere: 'MEGA S4 allows up to 5x of the average monthly stored data as free egress.' At 20 TB stored that is ~100 TB/mo of free egress — covers the 1 TB/day serving load 3x over.",
+    "chaining_verbatim": "Native S3 -> any S3 client; first-party Cloudflare CDN guide documented at help.mega.io/megas4/setup-guides/cloudflare-setup-guide-for-mega-s4",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "rclone (first-party guide), AWS CLI, Synology Hyper Backup, TrueNAS, Duplicacy, MSP360, Cyberduck, Terraform",
+    "interface_verbatim": "S3-compatible (SigV4). Endpoint probed live: https://s3.eu-amsterdam-1.megas4.com/ returns HTTP 400 with {Code:InvalidRequest, Message:'Please use AWS Signature Version 4 for authentication'} — a real, correctly-implemented S3 endpoint, not a marketing page.",
+    "price_verbatim": "$4.94/TB at 5 TB (EUR 22.00 = $24.71); $4.18/TB at 20 TB (EUR 74.50 = $83.69)",
+    "agent_focus": "Cheap-PAID lane: lifetime/one-time-payment storage deals AND steady-state paid tiers, all current as of 2026-10-21. Every paid candidate carries price_per_tb_month computed at the 5 TB and 20 TB tiers. Egress policy quoted verbatim from the vendor page. Excluded per brief: AWS, Azure, GCP, Alibaba, Cloudflare R2, Backblaze B2, IDrive e2."
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

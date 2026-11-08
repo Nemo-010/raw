@@ -1,0 +1,158 @@
+{
+  "topic": "storage",
+  "slug": "pulsedmedia-m10g-storage-box-16tb",
+  "provider": "PulsedMedia — M10G Storage Box 16TB",
+  "url": "https://pulsedmedia.com/storage-boxes.php",
+  "category": "seedbox/storage-box hosting",
+  "free_tier": {
+    "stated": "16 TB HDD RAID5 (4/8/16/32 TB tiers)",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://pulsedmedia.com/storage-boxes.php",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://pulsedmedia.com/storage-boxes.php",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://pulsedmedia.com/storage-boxes.php",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "\"Internet egress: Unlimited@100Mbps (~30TB/Month / ~1TB/Day)\" + \"Burst egress: 10Gbps 500GiB/month\" + \"Ingress: Unlimited at 10Gbps\". Genuinely unmetered, rate-shaped at 100 Mbps sustained (~1 TiB/day). Not a byte cap.",
+    "metered": false,
+    "free_allowance": "30TB per month"
+  },
+  "interface": [
+    "s3",
+    "sftp",
+    "ftp",
+    "scp",
+    "rsync",
+    "ssh",
+    "rclone"
+  ],
+  "interface_detail": "SSH, SCP, SFTP, FTP(S), HTTPS, public HTTP(S), SSHFS, Rsync, Rclone, Restic, Borg, Docker (rootless), WireGuard/OpenVPN",
+  "tooling": "rclone native, restic/borg native, plain SSHFS mount — no S3 endpoint",
+  "chaining": "SSHFS/rclone mount -> AList/OpenList -> Cloudflare in front for the fetch workload. 100 Mbps sustained suits 500 GB-1 TiB/day serving.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "100 Mbps",
+      "source": "https://pulsedmedia.com/storage-boxes.php"
+    }
+  ],
+  "limits_note": "100 Mbps sustained egress; 500 MB RAM on storage boxes; RAID5 single-parity",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "Own DC in Finland, 15+ yrs operating; storage-box tier is 500 MB RAM so Nextcloud-on-box is impractical — use it as a filesystem only.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://pulsedmedia.com/storage-boxes.php",
+      "date": "2026-10-21",
+      "proved": "full tier table + verbatim egress lines, opened this session"
+    },
+    {
+      "url": "https://pulsedmedia.com/m10g-seedbox.php",
+      "date": "2026-10-21",
+      "proved": "M10G seedbox ladder for comparison (2TB 8.99€ ... 12TB 24.99€)"
+    },
+    {
+      "url": "https://lowendspirit.com/discussion/10922/",
+      "date": "2026-10-21",
+      "proved": "... — provider states \"Payments are Paypal and Crypto\", 14-day moneyback (campaign thread)"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "16TB: €26.99 -> €1.69/TB/mo (~$1.94). 32TB: €63.99 -> €2.00/TB. 8TB: €14.99 -> €1.87/TB. 4TB: €8.99 -> €2.25/TB",
+  "notes": "16 TB HDD RAID5 (4/8/16/32 TB tiers). This is the same 16 TB tier of the same M10G STORAGE BOX product line as pulsedmedia-m10g-storage-box, recorded a second time from a different seed spelling; see extras.duplicate_of.",
+  "history": [
+    "history/2026-10-22T050000Z/storage-pulsedmedia-duplicate-record.md"
+  ],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-P6-seedbox-storage-hosts.json",
+    "seed_area": "A/P6",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "A/P6"
+      },
+      {
+        "value": "qualifies",
+        "area": "A/P6"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "PulsedMedia — M10G Storage Box 16TB",
+      "PulsedMedia — M10G Seedbox 12TB (XL)"
+    ],
+    "conflicts": [
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "16 TB HDD RAID5 (4/8/16/32 TB tiers)",
+            "source": "table.md row, area A/P6",
+            "evidence": null
+          },
+          {
+            "value": "12 TB HDD RAID5 (2/4/8/12 TB)",
+            "source": "table.md row, area A/P6",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "16 TB HDD RAID5 (4/8/16/32 TB tiers)",
+            "source": "table.md (area A/P6)"
+          },
+          {
+            "value": "12 TB HDD RAID5 (2/4/8/12 TB)",
+            "source": "table.md (area A/P6)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/paid/storage-boxes.md",
+    "document_section": "Seedbox and storage hosts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "16 TB HDD RAID5 (4/8/16/32 TB tiers)",
+    "limits_verbatim": "100 Mbps sustained egress; 500 MB RAM on storage boxes; RAID5 single-parity",
+    "egress_verbatim": "Verbatim: \"Internet egress: Unlimited@100Mbps (~30TB/Month / ~1TB/Day)\" + \"Burst egress: 10Gbps 500GiB/month\" + \"Ingress: Unlimited at 10Gbps\". Genuinely unmetered, rate-shaped at 100 Mbps sustained (~1 TiB/day). Not a byte cap.",
+    "chaining_verbatim": "SSHFS/rclone mount -> AList/OpenList -> Cloudflare in front for the fetch workload. 100 Mbps sustained suits 500 GB-1 TiB/day serving.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "rclone native, restic/borg native, plain SSHFS mount — no S3 endpoint",
+    "interface_verbatim": "SSH, SCP, SFTP, FTP(S), HTTPS, public HTTP(S), SSHFS, Rsync, Rclone, Restic, Borg, Docker (rootless), WireGuard/OpenVPN",
+    "price_verbatim": "16TB: €26.99 -> €1.69/TB/mo (~$1.94). 32TB: €63.99 -> €2.00/TB. 8TB: €14.99 -> €1.87/TB. 4TB: €8.99 -> €2.25/TB",
+    "agent_focus": "Wave 7 cheap-paid lane: seedboxes and storage-specific hosts as bulk storage (not seeding). Price floor per TB-month with free/unmetered egress. Feral, Ultra.cc, Whatbox, PulsedMedia, SeedHost.eu, Bytesized, Seedbox.io/HostingByDesign, Hostsailor, RapidSeedbox, Dediseedbox, Xirvik, plus storage-only rsync.net, BorgBase, Tuxis, Greenhost, Njalla, Hetzner Storage Share/Box, Icedrive, FileLu.",
+    "duplicate_of": "pulsedmedia-m10g-storage-box",
+    "duplicate_note": "The same 16 TB tier of one product line. The vendor page read 2026-10-22 lists four tiers under one name, 'M10G STORAGE BOX 4TB / 8TB / 16TB / 32TB', at EUR 8.99 / 14.99 / 26.99 / 63.99, all on the same 500 MB RAM, 10 Gbps, RAID5 platform. There is no second 16 TB SKU and no non-16 TB record of this product. The canonical record is pulsedmedia-m10g-storage-box: same product, rung documented rather than reported, and it carries the port limit this record also names. Kept rather than deleted because the dossier rule forbids deletion, and every fact in it is preserved and readable.",
+    "count_note": "this record duplicates pulsedmedia-m10g-storage-box; a count over the directory includes the one offer twice"
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,129 @@
+{
+  "topic": "compute",
+  "slug": "azure-functions",
+  "provider": "Azure Functions",
+  "url": "https://azure.microsoft.com/en-us/pricing/details/functions/",
+  "category": "serverless runtime",
+  "free_tier": {
+    "stated": "\"Consumption plan pricing includes a monthly free grant of 1 million requests and 400,000 GB-s of resource consumption per month per subscription in pay-as-you-go pricing across all function apps in that subscription.\" Footnote on the same page: \"Free grants apply to the on-demand meters on paid, consumption subscriptions only.\"",
+    "unit": "GiB",
+    "metered_on": "wall-clock",
+    "source_url": "https://azure.microsoft.com/en-us/pricing/details/functions/",
+    "read_on": "2026-10-22",
+    "notes": "perpetual-allowance"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://azure.microsoft.com/en-us/pricing/details/functions/",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://azure.microsoft.com/en-us/pricing/details/functions/",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "Internet egress is metered by the Azure bandwidth meter, separate from the Functions free grant: first 100 GB per month free, then $0.087 per GB for the next 10 TB from North America or Europe via the Microsoft Premium Global Network; inbound is free.",
+    "metered": true,
+    "free_allowance": "100 GB per month",
+    "price_per_tb": "USD 87 (from North America or Europe, next 10 TB, Premium Global Network)",
+    "source_url": "https://azure.microsoft.com/en-us/pricing/details/functions/"
+  },
+  "interface": [
+    "cli",
+    "rest"
+  ],
+  "interface_detail": "Azure CLI, Azure PowerShell, ARM templates or Bicep files, per the Functions reference: \"Programmatically using Azure CLI, Azure PowerShell, ARM templates, or Bicep files\"",
+  "tooling": "Azure CLI and Azure PowerShell, per the Functions reference: \"Programmatically using Azure CLI, Azure PowerShell, ARM templates, or Bicep files\"",
+  "chaining": "3,200,000 instance-seconds is the largest perpetual serverless budget found in this wave and it needs no IPv4 front, so it composes with an IPv6-only VPS as the scheduler that renews and health-checks it, or as the worker for jobs the 10 minute limit can divide.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "400,000 GB-s a month is 3,200,000 instance-seconds at the minimum 128 MB allocation, which is 37.0 days of one always-resident 128 MB worker, so the grant is slightly larger than a month but a single function execution is capped at 10 minutes on the consumption plan and cannot stay resident.",
+      "source": "https://azure.microsoft.com/en-us/pricing/details/functions/"
+    }
+  ],
+  "limits_note": "400,000 GB-s a month is 3,200,000 instance-seconds at the minimum 128 MB allocation, which is 37.0 days of one always-resident 128 MB worker, so the grant is slightly larger than a month but a single function execution is capped at 10 minutes on the consumption plan and cannot stay resident.",
+  "binding": "request-rate",
+  "binding_note": "400,000 GB-s a month is 3,200,000 instance-seconds at the minimum 128 MB allocation, which is 37.0 days of one always-resident 128 MB worker, so the grant is slightly larger than a month but a single function execution is capped at 10 minutes on the consumption plan and cannot stay resident.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "as stated by the provider's signup page",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://azure.microsoft.com/en-us/pricing/details/functions/",
+      "date": "2026-10-22",
+      "proved": "monthly free grant of 1 million executions and 400,000 GB-s per subscription, with the footnote that grants apply to paid consumption subscriptions only, quoted"
+    },
+    {
+      "url": "https://azure.microsoft.com/en-us/pricing/free-services",
+      "date": "2026-10-22",
+      "proved": "Azure lists 65 or more always-free services that persist for as long as the account exists, separate from the 12-month list"
+    },
+    {
+      "url": "https://azure.microsoft.com/en-us/free/virtual-machines",
+      "date": "2026-10-22",
+      "proved": "the always-free table lists Functions at 1 million requests, distinct from the 12-month-only VM allowances"
+    },
+    {
+      "url": "https://azure.microsoft.com/en-us/pricing/details/bandwidth/",
+      "date": "2026-11-04",
+      "proved": "first 100 GB per month of internet egress is free, then $0.087 per GB for the next 10 TB",
+      "capture": "sha256:17b0834dc9bfb334d1ea1d89035316e3d5c65a5b6fe295104b858e261f5491e6",
+      "quote": "| From North America, Europe to any destination | Free | $0.087 per GB | $0.083 per GB | $0.07 per GB | $0.05 per GB |"
+    },
+    {
+      "url": "https://azure.microsoft.com/en-us/pricing/details/bandwidth/",
+      "date": "2026-11-04",
+      "proved": "first 100 GB per month of internet egress is free",
+      "capture": "sha256:17b0834dc9bfb334d1ea1d89035316e3d5c65a5b6fe295104b858e261f5491e6",
+      "quote": "Azure already offers the first 100 GB/month of egressed data for free to all customers in all Azure regions around the world"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference",
+      "date": "2026-11-04",
+      "proved": "function apps are created with the Azure CLI, PowerShell, ARM or Bicep, besides the portal",
+      "capture": "sha256:c51e6a97a6208336fc314a22f296fc9df2c2c5482a27f00577717fd5cedf0804",
+      "quote": "Programmatically using [Azure CLI](scripts/functions-cli-create-serverless), [Azure PowerShell](create-resources-azure-powershell#create-a-serverless-function-app-for-c), [ARM templates](functions-create-first-function-resource-manager), or [Bicep files](functions-create-first-function-bicep)"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference",
+      "date": "2026-11-04",
+      "proved": "the reference names Azure CLI, Azure PowerShell, ARM templates and Bicep files",
+      "capture": "sha256:c51e6a97a6208336fc314a22f296fc9df2c2c5482a27f00577717fd5cedf0804",
+      "quote": "Programmatically using Azure CLI, Azure PowerShell, ARM templates, or Bicep files"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T11:01:15.544Z",
+  "notes": "The 400,000 GB-s figure is a memory-time budget, not a wall-clock one: the same 400,000 buys 37 days at 128 MB, 18.5 days at 256 MB, or 9.3 days at 512 MB. The 'paid consumption subscriptions only' footnote is the unresolved part, because it may exclude the free trial subscription a new account would start with; the portal quota page on a fresh subscription is the test. Azure App Service F1 is the separate always-free web lane and is already recorded in the corpus.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "Azure Functions (consumption plan)",
+      "class": "perpetual-allowance",
+      "category_as_written": "serverless compute",
+      "free_tier_kind": "perpetual-allowance",
+      "shape": {
+        "vcpu": null,
+        "ram_gib": 1.5,
+        "gpu_class": null,
+        "gpu_count": null
+      },
+      "seen_routes": [
+        "broker read 200 on azure.microsoft.com pricing/details/functions",
+        "broker read 200 on azure free-services list",
+        "broker read 200 on azure free virtual-machines page"
+      ],
+      "agents": [
+        "b08-perpetual-free-vm"
+      ],
+      "promoted_from": ".tmp/wave2"
+    }
+  }
+}

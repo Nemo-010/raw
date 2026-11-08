@@ -1,0 +1,286 @@
+{
+  "topic": "compute",
+  "slug": "netlify",
+  "provider": "Netlify",
+  "url": "https://www.netlify.com/pricing/",
+  "category": "platform host",
+  "free_tier": {
+    "stated": "Free at USD 0 forever with a 300-credit monthly limit and a credit hard limit; credits are spent by deploys, compute, bandwidth and requests from one pool.",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://www.netlify.com/pricing/",
+    "read_on": "2026-10-24"
+  },
+  "per_object_cap": {
+    "stated": "not stated on the pricing page; the pool is total credits, not a per-object size"
+  },
+  "retention": {
+    "stated": "not stated on the pricing page read today"
+  },
+  "egress": {
+    "terms": "bandwidth costs 20 credits per GB from the 300-credit pool",
+    "metered": true,
+    "free_allowance": "300 credits, about 15 GB of bandwidth",
+    "source_url": "https://www.netlify.com/pricing/"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "not stated in the finding; the provider documents no client",
+  "chaining": "300 credits a month is 30 GB-hours, which is 30 hours of a 1 GiB function, or about an hour a day across a month; Netlify Database and Blob storage draw from the same pool, so a storage backend must live elsewhere.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "300 credits a month, one pool for deploys, compute, bandwidth and requests",
+      "source": "https://www.netlify.com/pricing/"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "compute 10 credits per GB-hour, bandwidth 20 credits per GB, requests 2 credits per 10k, production deploys 15 credits each",
+      "source": "https://www.netlify.com/pricing/"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "15 minutes per build by default, plus up to 5 more minutes for post-processing; a build that runs past the limit is stopped. A longer limit is not self-service in the web UI: the API accepts build_timelimit up to 1800 seconds (30 minutes) and Netlify Support sets longer ones (3600 seconds, one hour). Support replies disagree on who qualifies: a card on file, the Pro tier, or a Starter team raised to 30 minutes with no stated condition; for a credit-plan Free team it is unverified",
+      "source": "https://answers.netlify.com/t/support-guide-how-to-use-the-api-to-increase-your-sites-build-time-limit/52805"
+    },
+    {
+      "kind": "request-rate",
+      "value": "1 concurrent build on Free, counted across the whole team",
+      "source": "https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/credit-based-pricing-plans"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "no monthly build-minute allowance on the credit plans: build minutes are not metered, each production deploy costs 15 credits, and deploy previews and branch deploys cost 0 credits",
+      "source": "https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/how-credits-work"
+    }
+  ],
+  "limits_note": "one 300-credit monthly pool is shared by deploys, compute, bandwidth and requests, and the free plan has a hard limit with no recharge, so a site that serves 15 GB of bandwidth in a month has spent its whole allowance and then pauses.",
+  "binding": "volume-quota",
+  "binding_note": "300 credits is 30 GB-hours of compute or 15 GB of bandwidth, and both come out of the same 300.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "a Netlify account; no card on the Free plan, and the plan has a hard credit limit rather than an overage",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://www.netlify.com/pricing/",
+      "date": "2026-10-22",
+      "proved": "Free plan: 300 credit limit; rates 15 credits per production deploy, 10 credits per GB-hour compute, 20 credits per GB bandwidth, 2 credits per 10k requests, quoted"
+    },
+    {
+      "url": "https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/credit-based-pricing-plans",
+      "date": "2026-10-22",
+      "proved": "Free plan is 300 credits/month with a credit hard limit and no auto recharge; monthly credits reset at the start of each cycle and do not roll over; accounts created from 2025-09-04 use credit plans, quoted"
+    },
+    {
+      "url": "https://www.netlify.com/pricing/pro-vs-free/",
+      "date": "2026-10-22",
+      "proved": "Free includes 300 credits per month and 1 concurrent build; when credits run out, projects pause until the next billing cycle, quoted"
+    },
+    {
+      "url": "https://www.netlify.com/pricing/",
+      "date": "2026-10-24",
+      "proved": "quoted: 'Free — $0 forever ... Credits: 300 credit limit'"
+    },
+    {
+      "url": "https://www.netlify.com/pricing/",
+      "date": "2026-10-24",
+      "proved": "quoted usage credit costs: 'Production deploys 15 credits each', 'Compute 10 credits per GB-hour', 'Bandwidth 20 credits per GB', 'Web requests 2 credits per 10k requests'"
+    },
+    {
+      "url": "https://answers.netlify.com/t/support-guide-how-to-use-the-api-to-increase-your-sites-build-time-limit/52805",
+      "date": "2026-10-30",
+      "proved": "the default build time limit is 15 minutes plus 5 minutes of post-processing, in a Netlify support guide last reviewed by Netlify Support Staff in November 2024",
+      "capture": "sha256:240f8bb48d8faf74477ecadb088cf45d1bcfe89a59a6a06ad9e027b3ab750b29",
+      "quote": "The default build time limit for all sites at Netlify is 15 minutes with 5 additional minutes allowed for any post-processing being done by the build system."
+    },
+    {
+      "url": "https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/credit-based-pricing-plans",
+      "date": "2026-10-30",
+      "proved": "the Free credit plan allows 1 concurrent build for the entire team",
+      "capture": "sha256:56ebe6d5a1de8088460cf80dc7bc2e1e1a3a3c8f5dac42182ecf87c8080219ec",
+      "quote": "1 concurrent build means that you can only run one build at a time for your entire Netlify team."
+    },
+    {
+      "url": "https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/how-credits-work",
+      "date": "2026-10-30",
+      "proved": "credit plans meter a production deploy at 15 credits and no longer count build minutes; the same table prices deploy previews and branch deploys at 0 credits",
+      "capture": "sha256:f393f12cc32635bd9d946c936379dc3516c835bf947e620b9283bdc185c37f52",
+      "quote": "| [Production deploys](#credit-usage-for-production-deploys) | 15 credits each | Deploying your project to production, build minutes no longer calculated |"
+    },
+    {
+      "url": "https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-legacy-plans/legacy-pricing-plans",
+      "date": "2026-10-30",
+      "proved": "the legacy Free and Starter plans held 300 build minutes a month, a hard limit on Free; the credit plans that replaced them for new accounts no longer meter build minutes",
+      "capture": "sha256:7e6044039b308749e48fbe1747264efcc954cd93e5d9fabe05649f5e4ae3112d",
+      "quote": "| Build minutes | 300 minutes/month <br /> <br /> (If Free plan, hard limit) <br /> <br /> (If Starter plan, $7 per 500 when exceeded) | 25,000 minutes/month <br /> <br /> (then $7 per 500) | Custom |"
+    },
+    {
+      "url": "https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/billing-faq-for-credit-based-plans/",
+      "date": "2026-10-30",
+      "proved": "the credit plans have no build-minute meter",
+      "capture": "sha256:6ec3964c3cc182b49443c725824e0225d1b8915b30b7334ad94b993b5aaa0042",
+      "quote": "Build minutes are not calculated as their own metric in our Credit-based pricing plans."
+    },
+    {
+      "url": "https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/credit-based-pricing-plans",
+      "date": "2026-10-30",
+      "proved": "the Free plan is 300 credits a month with a credit hard limit",
+      "capture": "sha256:56ebe6d5a1de8088460cf80dc7bc2e1e1a3a3c8f5dac42182ecf87c8080219ec",
+      "quote": "| Monthly credits | 300 credits/month with credit hard limit | 1,000 credits/month with auto recharge option | 3,000 credits/month with auto recharge option |"
+    },
+    {
+      "url": "https://answers.netlify.com/t/support-guide-how-to-use-the-api-to-increase-your-sites-build-time-limit/52805",
+      "date": "2026-11-02",
+      "proved": "the API accepts a build time limit up to 1800 seconds (30 minutes); Netlify Support can set longer ones",
+      "capture": "sha256:db24c67c958c7746d99b8c17a5f470368d440ca81c836327b8a34fae9c812331",
+      "quote": "1800 is 30 minutes and that is currently the maximum time that can be set via the API."
+    },
+    {
+      "url": "https://answers.netlify.com/t/support-guide-how-to-use-the-api-to-increase-your-sites-build-time-limit/52805/53",
+      "date": "2026-11-02",
+      "proved": "a Netlify Support reply of 2023-11-16 makes the Pro tier a condition for a longer build timeout",
+      "capture": "sha256:619afb379518798bd39371a60cafc8bba707a7227c04043797906ac9c87c7b57",
+      "quote": "We can definitely bump your build timeout, but you’ll need to be on the Pro tier for us to make that change - that’s a requirement that applies to everyone who wants a bigger timeout."
+    },
+    {
+      "url": "https://answers.netlify.com/t/increase-build-limit-to-40-mins-please/128327",
+      "date": "2026-11-02",
+      "proved": "a later Netlify Support reply (2024-10-28) raised a Starter (legacy Free) team's build limit to 30 minutes with no Pro requirement",
+      "capture": "sha256:0d035a6a8f41d30dfa0693f2dd1540728e4379bfb42a2043cf29a304a8324459",
+      "quote": "For a Starter account, I’ve increased the build time limit to 30 minutes."
+    },
+    {
+      "url": "https://answers.netlify.com/t/support-guide-how-to-use-the-api-to-increase-your-sites-build-time-limit/52805.md?page=2",
+      "date": "2026-11-02",
+      "proved": "a Netlify Support reply of 2023-09-26 asked a Starter team for a payment method on file before raising the build timeout",
+      "capture": "sha256:f91a0edc6f9a350550d3286a3167e182d5a60e7067d074c04dd403308801dd4e",
+      "quote": "Hi, in order to do this as you are on a starter account. Can you please add a payment method on file?"
+    },
+    {
+      "url": "https://answers.netlify.com/t/support-guide-how-to-use-the-api-to-increase-your-sites-build-time-limit/52805",
+      "date": "2026-11-02",
+      "proved": "the API answers Unprocessable Entity to build_timelimit values above 1800",
+      "capture": "sha256:db24c67c958c7746d99b8c17a5f470368d440ca81c836327b8a34fae9c812331",
+      "quote": "You will get the ` › JSONHTTPError: Unprocessable Entity` response if you try to use a value greater than 1800."
+    },
+    {
+      "url": "https://answers.netlify.com/t/request-to-increase-build-time-limit-to-30-mins/164854",
+      "date": "2026-11-02",
+      "proved": "a forum post of 2026-07-07 shows the API call for build_timelimit 1800 answering Unprocessable Entity and asks Support for 30 minutes; the captured page holds no reply",
+      "capture": "sha256:6d237f15436cebd7ff89fe26d40746df871d8df860c0a18f6927f21253edc110",
+      "quote": "can you increase my limit to 30mins on site"
+    },
+    {
+      "url": "https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/credit-based-pricing-plans",
+      "date": "2026-11-04",
+      "proved": "Free allows one concurrent build per team",
+      "capture": "sha256:214bf48c7910a9761991ccde9896167d0961fc4759e11e1dab9d7bc8f52f448e",
+      "quote": "1 concurrent build means that you can only run one build at a time for your entire Netlify team."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T06:00:44.691Z",
+  "notes": "Confirms the corpus row; the legacy 100 GB bandwidth and 125k invocation figures do not appear on this page. Netlify functions are request-scoped like Vercel's, so it is not an always-on row either.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "Netlify",
+      "class": "perpetual-allowance",
+      "category_as_written": "platform host",
+      "free_tier_kind": "monthly-credit",
+      "shape": {
+        "vcpu": null,
+        "ram_gib": null,
+        "gpu_class": null,
+        "gpu_count": null
+      },
+      "seen_routes": [
+        "broker read 200 https://www.netlify.com/pricing/",
+        "broker read 200 docs credit-based-pricing-plans",
+        "broker search: netlify credit based billing free plan"
+      ],
+      "agents": [
+        "paas"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "shape": {
+      "vcpu": null,
+      "ram_gib": null,
+      "disk_gib": null,
+      "gpu_class": null,
+      "gpu_count": null
+    },
+    "billing_model": "free",
+    "term": "none",
+    "m10h_usd": 0.0,
+    "m24h_usd": 0.0,
+    "price_arithmetic": "no charge inside 300 credits",
+    "free_tier_kind": "credit-pool",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": false,
+      "ports": "HTTP only",
+      "static_ip": false,
+      "ipv6": false,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "functions are request-scoped; no resident process"
+    },
+    "superseded": {
+      "free_tier": {
+        "stated": "Free plan is USD 0 forever with 300 credits a month and a credit hard limit; the pricing page lists the consumption rates: production deploys 15 credits each, compute 10 credits per GB-hour, bandwidth 20 credits per GB, web requests 2 credits per 10k. The 300 credits are 30 GB-hours of compute, or 15 GB of bandwidth, or 1.5 million web requests, or 20 production deploys, and all four are spent from one pool.",
+        "unit": "GiB",
+        "metered_on": "wall-clock",
+        "source_url": "https://www.netlify.com/pricing/",
+        "read_on": "2026-10-22",
+        "notes": "monthly-credit"
+      },
+      "per_object_cap": {
+        "stated": "not applicable: the unit is a machine, not an object",
+        "bytes": null,
+        "source_url": "https://www.netlify.com/pricing/",
+        "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+      },
+      "retention": {
+        "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+        "days": null,
+        "source_url": "https://www.netlify.com/pricing/",
+        "notes": "a machine record: what is lost is the running process, not a stored object"
+      },
+      "egress": {
+        "terms": "Free plan: 300 credit limit; rates 15 credits per production deploy, 10 credits per GB-hour compute, 20 credits per GB bandwidth, 2 credits per 10k requests, quoted",
+        "metered": false,
+        "free_allowance": null,
+        "price_per_tb": null,
+        "source_url": "https://www.netlify.com/pricing/"
+      },
+      "limits": [
+        {
+          "kind": "volume-quota",
+          "value": "one 300-credit monthly pool is shared by deploys, compute, bandwidth and requests, and the free plan has a hard limit with no recharge, so a site that serves 15 GB of bandwidth in a month has spent its whole allowance and then pauses.",
+          "source": "https://www.netlify.com/pricing/"
+        }
+      ],
+      "binding_note": "one 300-credit monthly pool is shared by deploys, compute, bandwidth and requests, and the free plan has a hard limit with no recharge, so a site that serves 15 GB of bandwidth in a month has spent its whole allowance and then pauses.",
+      "identity_cost": {
+        "kind": "email",
+        "detail": "as stated by the provider's signup page",
+        "country": null
+      },
+      "notes": "This refutes the widely repeated 100 GB bandwidth and 125k function invocation figure: that is the legacy Free plan, kept only for accounts opened before 2025-09-04. A new account gets credits. Candidates tested: (a) the credit plan is only a billing presentation of the same allowance; refuted, 300 credits at 20 per GB divides to 15 GB of bandwidth, not 100 GB. (b) The legacy plan is still reachable; refuted, the docs say switching to credits is irreversible. Open: whether a free account can attach a card to lift the hard limit without moving to Personal at USD 9.",
+      "verified_at": "2026-10-22T00:00:00.000Z"
+    }
+  },
+  "tier": "Free",
+  "confidence_note": "the Free plan line and the credit cost table were read on the pricing page today"
+}

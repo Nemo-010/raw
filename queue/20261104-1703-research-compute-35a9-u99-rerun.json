@@ -1,0 +1,20 @@
+{
+ "id": "20261104-1703-research-compute-35a9-u99-rerun",
+ "kind": "verify",
+ "topic": "compute",
+ "question": "Each record in your scope already carries its price somewhere in its own text or evidence (an earlier lane read the page, captured it, and an audit checked it); what it lacks is the structured field the store derives usd_month from. For each record: find the price in the record's free_tier.stated, its extras, or its evidence rows' quotes. When the source states a monthly price, set $.extras.price_on_page to that price exactly as the source states it (with its currency, e.g. 'EUR 8.30/month for VPS Entry'). When the source states only an annual or multi-month price, set $.extras.monthly_usd to the monthly equivalent and put the arithmetic in 'derived'. When the currency has no dated rate in the corpus, price_on_page keeps the currency as stated; never convert without a rate and never guess one. When the record's evidence shows no price exists at all (dead domain, walled page, no price published), set $.extras.price_note to 'not published: ' plus what the evidence shows. Cite the record's own evidence rows (their url, capture hash and quote) as the evidence of each op; add a new capture only when no existing row carries the price. Write 'not published' for a renewal no page prints. Reuse the existing capture hash exactly as the record holds it; do not re-read the web. Rewrite any free text of the record that the new values contradict.\nAn audit of the first attempt judged these claims unsupported by their sources; settle each one first:\n- compute/kuroit $.free_tier.stated: The billing-cycle options carry the price of that cycle, as WHMCS prints them ('12 Month Price - £3.00 GBP'), and the order summary prints the cycle total 'Monthly: £3.00 GBP'. The page therefore prices a 12-month cycle at GBP 3.00 in total, not GBP 3.00 a month, so 'no prepay discount' and 'the 12-\n- compute/landvps $.free_tier.stated: The vendor-page half is verbatim right: RU-0 at 90 roubles a month, 1 vCore Intel Gold @ 2.20GHz, 768 MB RAM, 10 GB SSD, 100 Mbps network, 1 IPv4, Moscow, with no traffic figure. The tracker half is not. The tracker today lists the RUB 90 card in Ufa only, at 5,500 GB a month, and Saint Petersburg a",
+ "scope": {
+  "rids": [
+   "compute/justhosting",
+   "compute/khanwebhost",
+   "compute/kuroit",
+   "compute/landvps",
+   "compute/layer-ae",
+   "compute/layer7",
+   "compute/leapswitch",
+   "compute/linveo"
+  ]
+ },
+ "origin": "audit u115 of 20261104-1703-research-compute-35a9/u99 failed: 2 of 16 unsupported",
+ "created": "2026-11-07T17:41:05Z"
+}

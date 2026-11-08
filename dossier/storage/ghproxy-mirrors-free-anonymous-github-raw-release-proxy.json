@@ -1,0 +1,115 @@
+{
+  "topic": "storage",
+  "slug": "ghproxy-mirrors-free-anonymous-github-raw-release-proxy",
+  "provider": "ghproxy mirrors (ghproxy.net, ghfast.top) — free anonymous GitHub raw/release proxy",
+  "url": "https://ghproxy.net/",
+  "category": "cdn",
+  "free_tier": {
+    "stated": "No quota; it proxies raw.githubusercontent.com and release assets, so the ceiling is GitHub's own (100 MiB/repo file, ~1.95 TiB/release). Probed a 50,901,339-byte GitHub file through ghproxy.net: HTTP 200, correct Content-Length.",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://ghproxy.net/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://ghproxy.net/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://ghproxy.net/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free, anonymous, no key. These are community-run mirrors of the GitHub CDN, funded by volunteers — hence the polyculture of hostnames (gh-proxy.com, ghproxy.net, ghfast.top, gh.api.99988866.xyz) and the constant churn.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Prefix form: https://ghproxy.net/https://raw.githubusercontent.com/<owner>/<repo>/<ref>/<path> and .../https://github.com/<owner>/<repo>/releases/download/<tag>/<asset>. Nothing else to install.",
+  "chaining": "A fourth free mirror for the same GitHub origin, and the only one that also carries *release assets* (which jsDelivr cannot see and raw.githack cannot serve). For a 20 TiB archive of 2 GiB release assets, rotating across ghproxy.net / ghfast.top / raw.githack / jsDelivr / Fastly's release-asset CDN gives five independent read paths over one storage bill.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "128 KB/s",
+      "source": "https://ghproxy.net/"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "11.3 MB/s",
+      "source": "https://ghproxy.net/"
+    }
+  ],
+  "limits_note": "per-ip-shaping is the real constraint — measured ~128 KB/s (7.1 MB in 55 s) on a 50 MB fetch, versus 11.3 MB/s from hop.js and 6.4 MB/s from jsDelivr. Rule 6 applies: measure a baseline before blaming the origin.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "anonymous",
+    "country": null
+  },
+  "reliability_note": "Volunteer infrastructure, high churn — of four mirrors tested this session, gh-proxy.com and cdn.gitmirror.com failed to resolve/connect while ghproxy.net and ghfast.top both returned the full file. Treat as a bandwidth multiplier for large files, never as an availability guarantee. Their own issue trackers document the churn (hunshcn/gh-proxy#116 mirror list, 'ghproxy.com 打不开了').",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://ghproxy.net/https://raw.githubusercontent.com/P3TERX/GeoLite.mmdb/download/GeoLite2-City.mmdb",
+      "date": "2026-10-21",
+      "proved": "HTTP 200, Content-Length 50,901,339, correct prefix bytes; throughput ~128 KB/s (probed)"
+    },
+    {
+      "url": "https://ghfast.top/https://raw.githubusercontent.com/P3TERX/GeoLite.mmdb/download/GeoLite2-City.mmdb",
+      "date": "2026-10-21",
+      "proved": "HTTP 200, 50,901,339 bytes (probed)"
+    },
+    {
+      "url": "https://gh-proxy.com/…",
+      "date": "2026-10-21",
+      "proved": "and https://cdn.gitmirror.com/gh/… — connection failed / 0 bytes (probed, dead)"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "github.com/hunshcn/gh-proxy#116 — '镜像站点搜集' thread, a live census of which hostnames still work"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No quota; it proxies raw.githubusercontent.com and release assets, so the ceiling is GitHub's own (100 MiB/repo file, ~1.95 TiB/release). Probed a 50,901,339-byte GitHub file through ghproxy.net: HTTP 200, correct Content-Length.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G9-edge-cdn-as-storage.json",
+    "seed_area": "G/G9",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "G/G9"
+      }
+    ],
+    "seed_confidence": "medium",
+    "unit_note": "free_tier.unit is 'mixed' because the headline is denominated in MiB or KiB, which the schema enum does not carry; the verbatim free_tier.stated keeps the true unit. See the storage-dossier handover.",
+    "conflicts": [],
+    "target_document": "docs/storage/free/cloudflare-edge.md",
+    "document_section": "Edge CDN used as an object store",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No quota; it proxies raw.githubusercontent.com and release assets, so the ceiling is GitHub's own (100 MiB/repo file, ~1.95 TiB/release). Probed a 50,901,339-byte GitHub file through ghproxy.net: HTTP 200, correct Content-Length.",
+    "limits_verbatim": "per-ip-shaping is the real constraint — measured ~128 KB/s (7.1 MB in 55 s) on a 50 MB fetch, versus 11.3 MB/s from hop.js and 6.4 MB/s from jsDelivr. Rule 6 applies: measure a baseline before blaming the origin.",
+    "egress_verbatim": "Free, anonymous, no key. These are community-run mirrors of the GitHub CDN, funded by volunteers — hence the polyculture of hostnames (gh-proxy.com, ghproxy.net, ghfast.top, gh.api.99988866.xyz) and the constant churn.",
+    "chaining_verbatim": "A fourth free mirror for the same GitHub origin, and the only one that also carries *release assets* (which jsDelivr cannot see and raw.githack cannot serve). For a 20 TiB archive of 2 GiB release assets, rotating across ghproxy.net / ghfast.top / raw.githack / jsDelivr / Fastly's release-asset CDN gives five independent read paths over one storage bill.",
+    "identity_verbatim": "anonymous",
+    "tooling_verbatim": "Prefix form: https://ghproxy.net/https://raw.githubusercontent.com/<owner>/<repo>/<ref>/<path> and .../https://github.com/<owner>/<repo>/releases/download/<tag>/<asset>. Nothing else to install.",
+    "interface_verbatim": "rest",
+    "agent_focus": "CDN / edge platforms as storage+egress: Fastly (free tier + Fast Forward OSS), Akamai/Linode, Bunny.net (storage + free origin->CDN transit), KeyCDN, CacheFly, Gcore, CDN77, StackPath status, Edgio/Limelight status, jsDelivr, unpkg, esm.sh, Statically, raw.githack, ghproxy mirrors. Question asked: which CDN gives free or near-free egress so a cheap origin becomes viable. Cloudflare R2 excluded per brief. Hard-probed every per-file cap with real GETs this session."
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

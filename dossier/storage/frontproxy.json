@@ -1,0 +1,108 @@
+{
+  "topic": "storage",
+  "slug": "frontproxy",
+  "provider": "Frontproxy (unlimited residential, speed-tiered)",
+  "url": "https://frontproxy.com/pricing/",
+  "category": "contributed bandwidth - unmetered, speed-capped",
+  "free_tier": {
+    "stated": "$10 for a 3-day 25 Mbps unlimited trial; Pro from $375/day at 400 Mbps unlimited, stated max transfer 4.3 TB/day at sustained full speed, 'effective cost $0.058 per GB'; scales to 2 Gbps",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://frontproxy.com/pricing/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://frontproxy.com/pricing/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://frontproxy.com/pricing/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "unmetered - 'No per-GB fees, ever'; 'No data caps'",
+    "metered": false
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "HTTP(S) proxy, rotating and sticky sessions, 195+ countries",
+  "tooling": "curl -x, any HTTP client",
+  "chaining": "the speed cap IS the meter: 25 Mbps = 270 GB/day, 400 Mbps = 4.3 TB/day. That maps cleanly onto the 1 TiB/day target - you need roughly 100 Mbps, i.e. a mid tier.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "25 Mbps",
+      "source": "https://frontproxy.com/pricing/"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "400 Mbps",
+      "source": "https://frontproxy.com/pricing/"
+    }
+  ],
+  "limits_note": "Priced per day, which is hostile to a steady 1 TiB/day: $375/day at 400 Mbps is $11,250/month, and even the $0.058/GB effective rate is worse than Proxyrack's $5/TB equivalent at the same volume. The $10/3-day 25 Mbps entry is a trial, not a product tier (no auto-renew, 3 days only). Speed caps make this predictable but expensive.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "Day-rate billing with no volume discount path; guaranteed throughput is per-session, not aggregate across threads.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://frontproxy.com/pricing/",
+      "date": "2026-10-21",
+      "proved": "'3-day trial for $10 · Scale up to 2 Gbps'; 'No data caps, no per-GB fees'; trial: '$10 / 3 days ... 25 Mbps Guaranteed throughput ... Unlimited bandwidth'; Pro: '$375 / day ... 400 Mbps · Unlimited bandwidth, Max transfer 4.3 TB at sustained full speed, Effective cost $0.058 per GB transferred'"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$0.058/GB = $59/TB (egress)",
+  "notes": "$10 for a 3-day 25 Mbps unlimited trial; Pro from $375/day at 400 Mbps unlimited, stated max transfer 4.3 TB/day at sustained full speed, 'effective cost $0.058 per GB'; scales to 2 Gbps",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A15-contributed-infra.json",
+    "seed_area": "A/A15",
+    "seed_verdict": [
+      {
+        "value": "trial-only",
+        "area": "A/A15"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "$10 for a 3-day 25 Mbps unlimited trial; Pro from $375/day at 400 Mbps unlimited, stated max transfer 4.3 TB/day at sustained full speed, 'effective cost $0.058 per GB'; scales to 2 Gbps",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/A15"
+    },
+    "target_document": "docs/storage/free/relays-and-transports.md",
+    "document_section": "Contributed infrastructure",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 1,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "$10 for a 3-day 25 Mbps unlimited trial; Pro from $375/day at 400 Mbps unlimited, stated max transfer 4.3 TB/day at sustained full speed, 'effective cost $0.058 per GB'; scales to 2 Gbps",
+    "limits_verbatim": "Priced per day, which is hostile to a steady 1 TiB/day: $375/day at 400 Mbps is $11,250/month, and even the $0.058/GB effective rate is worse than Proxyrack's $5/TB equivalent at the same volume. The $10/3-day 25 Mbps entry is a trial, not a product tier (no auto-renew, 3 days only). Speed caps make this predictable but expensive.",
+    "egress_verbatim": "unmetered - 'No per-GB fees, ever'; 'No data caps'",
+    "chaining_verbatim": "the speed cap IS the meter: 25 Mbps = 270 GB/day, 400 Mbps = 4.3 TB/day. That maps cleanly onto the 1 TiB/day target - you need roughly 100 Mbps, i.e. a mid tier.",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "curl -x, any HTTP client",
+    "interface_verbatim": "HTTP(S) proxy, rotating and sticky sessions, 195+ countries",
+    "price_verbatim": "$0.058/GB = $59/TB (egress)",
+    "agent_focus": "Marketplaces and networks where storage or bandwidth is contributed by third parties for free or near-free. Two directions probed: (1) BUY side - can you consume contributed bandwidth/storage cheaply; (2) SUPPLY side - the arbitrage question, whether contributing a disk earns storage credit at better than the retail rate. Also research testbeds that hand out whole physical nodes with multi-TB local disk (CloudLab, Chameleon, FABRIC, Emulab) and community mesh networks (Guifi, Freifunk, NYC Mesh). Decided per candidate by computing 20 TiB stored + 1 TiB/day egress against that path's actual tariff."
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,104 @@
+{
+  "topic": "storage",
+  "slug": "microsoft-365-office-365-a1-education-tenant",
+  "provider": "Microsoft 365 / Office 365 A1 Education tenant (100 TB pooled)",
+  "url": "https://www.microsoft.com/en-us/education/products/office",
+  "category": "cloud-drive",
+  "free_tier": {
+    "stated": "100 TB (102,400 GB) free pooled storage per education tenant, spanning OneDrive + SharePoint + Exchange; pooled capacity = 100 TB base + per-license contributions. Office 365 A1 licenses contribute 0 GB but consume from the pool.",
+    "unit": "TB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://learn.microsoft.com/en-us/office365/servicedescriptions/office-365-platform-service-description/office-365-education",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://learn.microsoft.com/en-us/office365/servicedescriptions/office-365-platform-service-description/office-365-education",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://learn.microsoft.com/en-us/office365/servicedescriptions/office-365-platform-service-description/office-365-education",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Not metered. Microsoft 365 is a subscription service with no per-GB egress meter; Microsoft support states 'if the user has the related license, there is no charge for uploading and downloading files'. SharePoint/OneDrive downloads are direct HTTPS URLs.",
+    "metered": true
+  },
+  "interface": [
+    "rest",
+    "graph",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Microsoft Graph driveItem API (whole-tenant app-only auth: Files.ReadWrite.All + Sites.Read.All); rclone backend 'onedrive' with drive_type=business or drive_type=documentLibrary, and a SharePoint remote type; office365-rest-python-client (vgrem) for list/library operations",
+  "chaining": "100 TB is per TENANT and tenants are per institution, not per user: N schools x 100 TB. Inside one tenant the ceiling is much higher than the pool in principle - 2,000,000 site collections per org at up to 25 TB per site - but the 100 TB pool is the binding limit. Add unlimited free A1 user licenses (which add 0 GB but give each user a 100 GB or 1 TB OneDrive ceiling), and paid A3/A5 at 50/100 GB per license. Multiply across tenants for archival shards.",
+  "limits": [],
+  "limits_note": "Office 365 A1 OneDrive = 100 GB/user hard max (set Feb 2024); Microsoft 365 A1 OneDrive = up to 1 TB/user, capped by the same 100 TB pool. 250 GB max single file upload. 50,000 major versions / 511 minor per file - versioning silently duplicates storage on overwrite, so use a Communication site with versioning disabled. 25 TB max per site collection. Tenant goes read-only when over pool.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: no migration path. 100 TB is per TENANT and tenants are per institution, not per user: N schools x 100 TB. Inside one tenant the ceiling is much higher than the pool in principle - 2,000,000",
+    "country": null
+  },
+  "reliability_note": "Storage is enforced at the tenant pool level and tenants get flipped to read-only on overage - data survives but writes fail; per-user OneDrive caps were cut (5 TB -> 100 GB for A1) in 2024 with no migration path.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://learn.microsoft.com/en-us/office365/servicedescriptions/office-365-platform-service-description/office-365-education",
+      "date": "2026-10-21",
+      "proved": "'All Education tenants with Pooled Storage are granted an initial and free 100 TB of storage to their pool'; 'Storage for site collections: Up to 25 TB per site collection or group'; 'Site collections per tenant: 500,000'"
+    },
+    {
+      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/final/en-us/microsoft-product-and-services/microsoft-education/downloadables/M365-Education-Storage-FAQ.pdf",
+      "date": "2026-10-21",
+      "proved": "'100TB of free pooled storage across OneDrive, SharePoint, and Exchange'; 'Office 365 A1 ... maximum OneDrive limit of 100GB'; '100 TB Default Limit (102,400 GB)'"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/sharepoint/sharepoint-limits",
+      "date": "2026-10-21",
+      "proved": "(via /office365/servicedescriptions/sharepoint-online-service-description/sharepoint-online-limits) - '250 GB - File upload limit', '1 TB + 10GB per license purchased'"
+    },
+    {
+      "url": "https://www.microsoft.com/en-us/education/products/office",
+      "date": "2026-10-21",
+      "proved": "'Educators and students with an eligible education email address can get Office 365 A1 for free'"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "100 TB (102,400 GB) free pooled storage per education tenant, spanning OneDrive + SharePoint + Exchange; pooled capacity = 100 TB base + per-license contributions. Office 365 A1 licenses contribute 0 GB but consume from the pool.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A2-onedrive-sharepoint.json",
+    "seed_area": "A/A2",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "A/A2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "OneDrive, SharePoint and the M365 tenant",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "100 TB (102,400 GB) free pooled storage per education tenant, spanning OneDrive + SharePoint + Exchange; pooled capacity = 100 TB base + per-license contributions. Office 365 A1 licenses contribute 0 GB but consume from the pool.",
+    "limits_verbatim": "Office 365 A1 OneDrive = 100 GB/user hard max (set Feb 2024); Microsoft 365 A1 OneDrive = up to 1 TB/user, capped by the same 100 TB pool. 250 GB max single file upload. 50,000 major versions / 511 minor per file - versioning silently duplicates storage on overwrite, so use a Communication site with versioning disabled. 25 TB max per site collection. Tenant goes read-only when over pool.",
+    "egress_verbatim": "Not metered. Microsoft 365 is a subscription service with no per-GB egress meter; Microsoft support states 'if the user has the related license, there is no charge for uploading and downloading files'. SharePoint/OneDrive downloads are direct HTTPS URLs.",
+    "chaining_verbatim": "100 TB is per TENANT and tenants are per institution, not per user: N schools x 100 TB. Inside one tenant the ceiling is much higher than the pool in principle - 2,000,000 site collections per org at up to 25 TB per site - but the 100 TB pool is the binding limit. Add unlimited free A1 user licenses (which add 0 GB but give each user a 100 GB or 1 TB OneDrive ceiling), and paid A3/A5 at 50/100 GB per license. Multiply across tenants for archival shards.",
+    "tooling_verbatim": "Microsoft Graph driveItem API (whole-tenant app-only auth: Files.ReadWrite.All + Sites.Read.All); rclone backend 'onedrive' with drive_type=business or drive_type=documentLibrary, and a SharePoint remote type; office365-rest-python-client (vgrem) for list/library operations",
+    "interface_verbatim": "rest",
+    "agent_focus": "Microsoft ecosystem: OneDrive, SharePoint, Office 365 dev/E5, Azure Blob free tier, Azure DevOps, Teams files"
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

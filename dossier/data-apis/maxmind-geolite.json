@@ -1,0 +1,276 @@
+{
+  "topic": "data-apis",
+  "slug": "maxmind-geolite",
+  "provider": "MaxMind GeoLite",
+  "url": "https://www.maxmind.com/en/geolite-free-ip-geolocation-data",
+  "category": "IP geolocation database download and web service",
+  "tier": "GeoLite (free)",
+  "free_tier": {
+    "stated": "GeoLite Country, City and ASN databases in MMDB and CSV with up to 30 database downloads a day, and GeoLite Country and City web services at 1,000 lookups a day per service, free with a MaxMind account",
+    "unit": "mixed",
+    "metered_on": "request-count",
+    "source_url": "https://www.maxmind.com/en/geolite-free-ip-geolocation-data",
+    "read_on": "2026-10-30",
+    "notes": "two meters: database downloads a day and web-service lookups a day; lookups against a downloaded database are not metered"
+  },
+  "per_object_cap": {
+    "stated": "MMDB files since the release of 2026-10-07: GeoLite ASN 8.5 MB, GeoLite City 50 MB, GeoLite Country 3 MB",
+    "bytes": null,
+    "source_url": "https://dev.maxmind.com/geoip/release-notes/2026-10-07-significantly-smaller-file-sizes-for-geolite-databases/",
+    "notes": "unverified: behind a sign-up: the CSV file sizes, and the byte size of each file as the account portal shows it"
+  },
+  "retention": {
+    "stated": "a downloaded GeoLite database must be replaced and the old copy deleted within 30 days of each new release; attribution to MaxMind is required (CC BY-SA 4.0)",
+    "days": 30,
+    "source_url": "https://dev.maxmind.com/geoip/geolite2-free-geolocation-data/"
+  },
+  "egress": {
+    "terms": "not applicable: a lookup API and data download, not metered in bytes",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.maxmind.com/en/geolite-free-ip-geolocation-data"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "database permalinks at download.maxmind.com/geoip/databases/{edition}/download?suffix=... with HTTP basic auth (account ID and license key), redirected to presigned Cloudflare R2 URLs; geoipupdate reads the same credentials from GeoIP.conf; the GeoLite web services take the same account ID and license key",
+  "endpoint": "https://download.maxmind.com/geoip/databases/",
+  "tooling": "MaxMind's geoipupdate program (also a Docker image), curl or wget with basic auth, MaxMind client APIs, any MMDB reader",
+  "chaining": "one account and license key give the City, Country and ASN databases for unmetered local lookups, refreshed by geoipupdate within the 30-day replacement window; the web service adds 1,000 remote lookups a day per service. Bulk path: the full GeoLite database downloads",
+  "limits": [
+    {
+      "kind": "pull-count",
+      "value": "30 database downloads a day",
+      "source": "https://dev.maxmind.com/geoip/geolite2-free-geolocation-data/"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "1,000 web-service lookups a day per service",
+      "source": "https://dev.maxmind.com/geoip/geolite2-free-geolocation-data/"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "old database versions deleted within 30 days of a new release",
+      "source": "https://www.maxmind.com/en/geolite2/eula"
+    }
+  ],
+  "binding": "none",
+  "binding_note": "lookups against the downloaded databases are unmetered and 30 downloads a day is far more than the release cadence needs; only the web service carries a daily quota",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "a MaxMind account: the sign-up form has five required fields, full name, company, industry, country and an email address that becomes the username, and no field after the email address except its Submit button",
+    "country": null
+  },
+  "reliability_note": "MaxMind may stop offering GeoLite free of charge and charge for future updates; GeoLite City is less accurate than the paid GeoIP City data",
+  "confidence": "documented",
+  "confidence_note": "the GeoLite product page, the developer page, the update guide, the EULA and the account-creation form were quoted on 2026-10-30. No account was opened, so no database was downloaded; a keyed download would move it to measured.",
+  "evidence": [
+    {
+      "url": "https://www.maxmind.com/en/geolite-free-ip-geolocation-data",
+      "date": "2026-10-30",
+      "proved": "the GeoLite web service allows 1,000 queries a day",
+      "capture": "sha256:ad43bb09a2ab6add162bca30fa0a1346235cdd4fd7f3b2d74fc2618b3670687b",
+      "quote": "| Web Service | 1,000 queries per day | Unlimited queries |"
+    },
+    {
+      "url": "https://www.maxmind.com/en/geolite-free-ip-geolocation-data",
+      "date": "2026-10-30",
+      "proved": "GeoLite City allows 30 downloads a day",
+      "capture": "sha256:ad43bb09a2ab6add162bca30fa0a1346235cdd4fd7f3b2d74fc2618b3670687b",
+      "quote": "| City database | 30 downloads per day | 1,000 downloads per day |"
+    },
+    {
+      "url": "https://dev.maxmind.com/geoip/geolite2-free-geolocation-data",
+      "date": "2026-10-30",
+      "proved": "GeoLite offers free databases and web services",
+      "capture": "sha256:d1bc6e905efb6cd560ae2085b365bcd6c1ebc43f99b403fc6d61596446b66356",
+      "quote": "MaxMind offers free geolocation and ASN data in downloadable database and web service formats."
+    },
+    {
+      "url": "https://dev.maxmind.com/geoip/geolite2-free-geolocation-data",
+      "date": "2026-10-30",
+      "proved": "GeoLite downloads are limited to 30 a day",
+      "capture": "sha256:d1bc6e905efb6cd560ae2085b365bcd6c1ebc43f99b403fc6d61596446b66356",
+      "quote": "Please note that GeoLite users are limited to 30 database downloads per day."
+    },
+    {
+      "url": "https://dev.maxmind.com/geoip/geolite2-free-geolocation-data",
+      "date": "2026-10-30",
+      "proved": "GeoLite web services are limited to 1,000 lookups a day per service",
+      "capture": "sha256:d1bc6e905efb6cd560ae2085b365bcd6c1ebc43f99b403fc6d61596446b66356",
+      "quote": "Please note that GeoLite web service users are limited to 1000 lookups per day per service."
+    },
+    {
+      "url": "https://dev.maxmind.com/geoip/geolite2-free-geolocation-data",
+      "date": "2026-10-30",
+      "proved": "old databases must be deleted within 30 days of a release",
+      "capture": "sha256:d1bc6e905efb6cd560ae2085b365bcd6c1ebc43f99b403fc6d61596446b66356",
+      "quote": "This means you must delete GeoLite databases within 30 days of a new release."
+    },
+    {
+      "url": "https://dev.maxmind.com/geoip/geolite2-free-geolocation-data",
+      "date": "2026-10-30",
+      "proved": "the databases come as MMDB",
+      "capture": "sha256:d1bc6e905efb6cd560ae2085b365bcd6c1ebc43f99b403fc6d61596446b66356",
+      "quote": "a binary (.mmdb) format optimized for fast lookups at scale"
+    },
+    {
+      "url": "https://dev.maxmind.com/geoip/geolite2-free-geolocation-data",
+      "date": "2026-10-30",
+      "proved": "the databases come as CSV",
+      "capture": "sha256:d1bc6e905efb6cd560ae2085b365bcd6c1ebc43f99b403fc6d61596446b66356",
+      "quote": "a comma separated values (.csv) format that’s good for manipulating, joining, and transforming the data"
+    },
+    {
+      "url": "https://dev.maxmind.com/geoip/geolite2-free-geolocation-data",
+      "date": "2026-10-30",
+      "proved": "GeoLite City is less accurate than paid GeoIP City",
+      "capture": "sha256:d1bc6e905efb6cd560ae2085b365bcd6c1ebc43f99b403fc6d61596446b66356",
+      "quote": "The free GeoLite City is considerably less accurate than the paid GeoIP City data, and is not recommended for commercial use cases."
+    },
+    {
+      "url": "https://dev.maxmind.com/geoip/updating-databases/",
+      "date": "2026-10-30",
+      "proved": "downloads are redirected to presigned R2 URLs",
+      "capture": "sha256:2cb1756f253eb12fea108b2a98d2270b2e38696884bda60907019c571817a005",
+      "quote": "In January 2024, we began using R2 presigned URLs for all database downloads."
+    },
+    {
+      "url": "https://dev.maxmind.com/geoip/updating-databases/",
+      "date": "2026-10-30",
+      "proved": "the database permalink form",
+      "capture": "sha256:2cb1756f253eb12fea108b2a98d2270b2e38696884bda60907019c571817a005",
+      "quote": "https://download.maxmind.com/geoip/databases/GeoIP2-City-CSV/download?suffix=zip"
+    },
+    {
+      "url": "https://dev.maxmind.com/geoip/updating-databases/",
+      "date": "2026-10-30",
+      "proved": "permalinks take the account ID and license key as basic auth",
+      "capture": "sha256:2cb1756f253eb12fea108b2a98d2270b2e38696884bda60907019c571817a005",
+      "quote": "curl -I -L -u YOUR_ACCOUNT_ID:YOUR_LICENSE_KEY"
+    },
+    {
+      "url": "https://dev.maxmind.com/geoip/updating-databases/",
+      "date": "2026-10-30",
+      "proved": "geoipupdate is the update program",
+      "capture": "sha256:2cb1756f253eb12fea108b2a98d2270b2e38696884bda60907019c571817a005",
+      "quote": "Install GeoIP Update."
+    },
+    {
+      "url": "https://www.maxmind.com/en/geolite2/signup",
+      "date": "2026-10-30",
+      "proved": "the account form asks an email address that becomes the username",
+      "capture": "sha256:b568d95036afef2546888882777f35212839743d33339d053d375e239d59abc7",
+      "quote": "Please provide a valid email address. This will become your username."
+    },
+    {
+      "url": "https://www.maxmind.com/en/geolite2/signup",
+      "date": "2026-10-30",
+      "proved": "the account form asks a full name",
+      "capture": "sha256:b568d95036afef2546888882777f35212839743d33339d053d375e239d59abc7",
+      "quote": "Full Name"
+    },
+    {
+      "url": "https://www.maxmind.com/en/geolite2/signup",
+      "date": "2026-10-30",
+      "proved": "the account form asks an industry",
+      "capture": "sha256:b568d95036afef2546888882777f35212839743d33339d053d375e239d59abc7",
+      "quote": "Industry \\* Choose one Ad-serving"
+    },
+    {
+      "url": "https://www.maxmind.com/en/geolite2/eula",
+      "date": "2026-10-30",
+      "proved": "GeoLite is free and the free offer can be withdrawn",
+      "capture": "sha256:c487952439d2816558fb51b6ed9aaf9f81c7cf92c22ea886b82b8d16adb7f87f",
+      "quote": "The Services are made available to you free of charge. MaxMind reserves the right to stop offering the Services free of charge at any time, and charge for future updates to the Services."
+    },
+    {
+      "url": "https://www.maxmind.com/en/geolite2/eula",
+      "date": "2026-10-30",
+      "proved": "attribution to MaxMind is required",
+      "capture": "sha256:c487952439d2816558fb51b6ed9aaf9f81c7cf92c22ea886b82b8d16adb7f87f",
+      "quote": "You must provide attribution of your use to MaxMind"
+    },
+    {
+      "url": "https://www.maxmind.com/en/geolite2/eula",
+      "date": "2026-10-30",
+      "proved": "old versions are destroyed within 30 days of an update",
+      "capture": "sha256:c487952439d2816558fb51b6ed9aaf9f81c7cf92c22ea886b82b8d16adb7f87f",
+      "quote": "You shall cease use of and destroy (i) any old versions of the Services within thirty (30) days following the release of the updated GeoLite Databases"
+    },
+    {
+      "url": "https://dev.maxmind.com/geoip/release-notes/2026-10-07-significantly-smaller-file-sizes-for-geolite-databases/",
+      "date": "2026-11-02",
+      "proved": "the release note of 2026-10-07 lists the reduced MMDB file size of GeoLite City as 50 MB, with GeoLite ASN at 8.5 MB and GeoLite Country at 3 MB",
+      "capture": "sha256:81d510897322c58f21c9474e4b7241332aecadb8aa84496489f6ab4c6231d611",
+      "quote": "| GeoLite City database | 62 MB | 50 MB | 20 % |"
+    },
+    {
+      "url": "https://dev.maxmind.com/geoip/release-notes/2026-10-07-significantly-smaller-file-sizes-for-geolite-databases/",
+      "date": "2026-11-02",
+      "proved": "the release note is the source of the GeoLite MMDB file sizes",
+      "capture": "sha256:81d510897322c58f21c9474e4b7241332aecadb8aa84496489f6ab4c6231d611",
+      "quote": "| GeoLite City database | 62 MB | 50 MB | 20 % |"
+    },
+    {
+      "url": "probe:https://download.maxmind.com/geoip/databases/GeoLite2-City/download?suffix=tar.gz",
+      "date": "2026-11-02",
+      "proved": "a database permalink with no account ID and license key answered HTTP 401 with Basic realm geoip-download, so a download needs an account",
+      "capture": "sha256:7421b7a54fb7863c9884bed9e8b3e55eb3a499c8d242cc09c6b6cfbd3c89d9f2",
+      "quote": "\"status\": 401"
+    },
+    {
+      "url": "https://www.maxmind.com/en/geolite2/signup",
+      "date": "2026-11-02",
+      "proved": "the sign-up form posts five required fields, full name, company, industry, country and email address, and ends with a Submit button",
+      "capture": "sha256:542ca0ae88bbe7c64b2408a4b0b1622e8bfbc88f8532b950e04218f709b2c807",
+      "quote": "Please provide a valid email address. This will become your username."
+    },
+    {
+      "url": "probe:https://download.maxmind.com/geoip/databases/GeoLite2-City/download?suffix=tar.gz",
+      "date": "2026-11-02",
+      "proved": "a database permalink with no account ID and license key answered HTTP 401, so a keyed answer and its headers show only after sign-up",
+      "capture": "sha256:7421b7a54fb7863c9884bed9e8b3e55eb3a499c8d242cc09c6b6cfbd3c89d9f2",
+      "quote": "\"status\": 401"
+    },
+    {
+      "url": "https://support.maxmind.com/knowledge-base/articles/create-a-maxmind-account",
+      "date": "2026-11-02",
+      "proved": "sign-up refuses a disposable email address and a VPN or proxy connection",
+      "capture": "sha256:2583861cb32fcfefc9d713bd3929eded170893fd8752c36610c29708ec3ffb17",
+      "quote": "disposable email or a VPN/Proxy, this means that we detected an anonymizer of some kind."
+    },
+    {
+      "url": "https://support.maxmind.com/knowledge-base/articles/set-your-maxmind-password",
+      "date": "2026-11-02",
+      "proved": "after sign-up an email carries the username and a one-time link to set the password",
+      "capture": "sha256:b38f16468c4dc07a867f2eb9a2962ff0bf8d05924ab33a021f29bb5f753dde86",
+      "quote": "This email includes your username and a one-time-use link to set your password."
+    },
+    {
+      "url": "https://support.maxmind.com/knowledge-base/articles/two-factor-authentication-2fa",
+      "date": "2026-11-02",
+      "proved": "every account needs two-factor authentication at login, by a one-time code sent by email unless a security key is set",
+      "capture": "sha256:30662a89c545e322abdf9a9e1593dac35b0e5bbc962467d1143dd1c6da14e385",
+      "quote": "All MaxMind accounts and users are required to use 2FA."
+    },
+    {
+      "url": "https://dev.maxmind.com/geoip/geolite2-free-geolocation-data",
+      "date": "2026-11-02",
+      "proved": "GeoLite users are limited to 30 database downloads a day and to 1000 web service lookups a day per service",
+      "capture": "sha256:d1bc6e905efb6cd560ae2085b365bcd6c1ebc43f99b403fc6d61596446b66356",
+      "quote": "Please note that GeoLite users are limited to 30 database downloads per day."
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-11-03T00:27:33.113Z",
+  "notes": "Free requests: unmetered local lookups against the downloaded databases, 30 database downloads a day, and 1,000 web-service lookups a day per service. Rate limit: none published beyond those daily counts. Results storable: yes, with attribution, but each database copy is replaced within 30 days of a new release. Bulk path: the GeoLite Country, City and ASN database downloads (MMDB and CSV).",
+  "history": [],
+  "extras": {
+    "bulk_path": "GeoLite Country, City and ASN databases (MMDB, CSV) via permalinks or geoipupdate",
+    "results_storable": "yes, with attribution; database copies replaced within 30 days of a release",
+    "free_requests": "1,000 web-service lookups a day per service; 30 database downloads a day"
+  },
+  "limits_note": "unverified: behind a sign-up: the response headers of a GeoLite web service lookup and of a database download with a license key"
+}

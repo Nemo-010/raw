@@ -1,0 +1,187 @@
+{
+  "topic": "storage",
+  "slug": "kaggle-models",
+  "provider": "Kaggle Models (distinct from Kaggle Datasets)",
+  "url": "https://www.kaggle.com/models",
+  "category": "model-hub",
+  "free_tier": {
+    "stated": "200 GB for private models, alongside 200 GB for private datasets — from Kaggle's own product announcement 'Doubling of Private Quota and Public File Size Limit': 'Users now have a limit of 200GB for private models and 200GB for private datasets. Kaggle has also doubled the maximum upload size of public models and datasets from 100GB to 200GB.' Public models and public datasets have a 200 GB per-item ceiling and no published aggregate cap.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://www.kaggle.com/product-announcements/512322",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "File Size Limit': 'Users now have a limit of 200GB",
+    "bytes": 200000000000,
+    "source_url": "https://www.kaggle.com/product-announcements/512322",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.kaggle.com/product-announcements/512322",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free — files come from Kaggle's Google-hosted CDN (storage.googleapis.com) with no egress meter. Downloads require a Kaggle API token.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "git"
+  ],
+  "interface_detail": "rest + git",
+  "tooling": "kagglehub and the Kaggle API. Verified live this session: GET /api/v1/models/list?search=bert and ?search=qwen both returned 200 with real model records (ref, title, author, vote counts); GET /api/v1/models/google/bert/get returned 200, 72,158 bytes. Datasets: /api/v1/datasets/list returns 200 JSON with totalBytesNullable per dataset. Note the upload side is narrower than the read side — 'The ability to upload models via the Kaggle API was introduced to a select group of Kaggle accounts starting in version 1.5.18', and kagglehub caps at 50 files per repo and auto-zips beyond that.",
+  "chaining": "Models and datasets are separate quota pools, so the ceiling is 200 GB private models + 200 GB private datasets + 200 GB per public model × N public models + 200 GB per public dataset × N public datasets. Public items are the real multiplier. Each model can carry multiple variations and frameworks, but they share the model's 200 GB.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "File Size Limit': 'Users now have a limit of 200GB",
+      "source": "https://www.kaggle.com/product-announcements/512322"
+    }
+  ],
+  "limits_note": "per-object-cap 200 GB and 50 top-level files per dataset — 'A max of 50 top-level files (if you have more, use a directory structure and upload an archive)'. Uploading via the API is write-gated for most accounts. Practical caveat from the docs: archives are uncompressed server-side so their contents are usable in Notebooks, which means the 200 GB is measured on the expanded tree.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "Kaggle is Google-owned and long-lived; the risk is policy drift on public storage, not disappearance. The 200 GB private pool is enforced hard ('if you exceed this, either make your datasets public or delete unused datasets').",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.kaggle.com/product-announcements/512322",
+      "date": "2026-10-21",
+      "proved": "opened: 'Users now have a limit of 200GB for private models and 200GB for private datasets. Kaggle has also doubled the maximum upload size of public models and datasets from 100GB to 200GB.' Both numbers on one page."
+    },
+    {
+      "url": "https://www.kaggle.com/docs/datasets",
+      "date": "2026-10-21",
+      "proved": "opened, Technical Specifications: '200GB per dataset limit'; '200GB max private datasets (if you exceed this, either make your datasets public or delete unused datasets)'; 'A max of 50 top-level files'; archives are uncompressed on their side."
+    },
+    {
+      "url": "https://www.kaggle.com/api/v1/models-onboarding-packet",
+      "date": "2026-10-21",
+      "proved": "surfaced: 'The ability to upload models via the Kaggle API was introduced to a select group of Kaggle accounts starting in version 1.5.18'. Read path is open, write path is not — rule 2 in reverse."
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "PROBED: curl '/api/v1/models/list?search=bert&pageSize=1' -> 200, 184,016 bytes, real model objects. curl '/api/v1/models/google/bert/get' -> 200, 72,158 bytes. curl '/api/v1/datasets/list?search=titanic&pageSize=2' -> 200 with totalBytesNullable present."
+    },
+    {
+      "url": "https://github.com/Kaggle/kagglehub/issues/116",
+      "date": "2026-10-21",
+      "proved": "opened: 'We have increased the limit on our backend to 50 files. If you are uploading more than 50 files, than kagglehub will automatically create a zip for you.' Confirms the 50-file ceiling is live."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "200 GB for private models, alongside 200 GB for private datasets — from Kaggle's own product announcement 'Doubling of Private Quota and Public File Size Limit': 'Users now have a limit of 200GB for private models and 200GB for private datasets. Kaggle has also doubled the maximum upload size of public models and datasets from 100GB to 200GB.' Public models and public datasets have a 200 GB per-item ceiling and no published aggregate cap.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D10-preprint-and-data-2026.json",
+    "seed_area": "D/D10",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "D/D10"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D4"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Kaggle Models (distinct from Kaggle Datasets)",
+      "Kaggle Models"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md row, area D/D10",
+            "evidence": "quota: 200 GB for private models, alongside 200 GB for private datasets — fro"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area D/D4",
+            "evidence": "quota: 200 GB total for private models per account; 200 GB maximum upload siz"
+          }
+        ],
+        "resolution": "qualifies-with-caveat: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies. The table.md (area D/D4) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "200 GB for private models, alongside 200 GB for private datasets — fro",
+            "source": "table.md row, area D/D10",
+            "evidence": null
+          },
+          {
+            "value": "200 GB total for private models per account; 200 GB maximum upload siz",
+            "source": "table.md row, area D/D4",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md (area D/D10)"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area D/D4)"
+          }
+        ],
+        "resolution": "qualifies-with-caveat: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies. The table.md (area D/D4) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "200 GB for private models, alongside 200 GB for private datasets — fro",
+            "source": "table.md (area D/D10)"
+          },
+          {
+            "value": "200 GB total for private models per account; 200 GB maximum upload siz",
+            "source": "table.md (area D/D4)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/free/academic.md",
+    "document_section": "Preprint and data repositories, 2026",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "200 GB for private models, alongside 200 GB for private datasets — from Kaggle's own product announcement 'Doubling of Private Quota and Public File Size Limit': 'Users now have a limit of 200GB for private models and 200GB for private datasets. Kaggle has also doubled the maximum upload size of public models and datasets from 100GB to 200GB.' Public models and public datasets have a 200 GB per-item ceiling and no published aggregate cap.",
+    "limits_verbatim": "per-object-cap 200 GB and 50 top-level files per dataset — 'A max of 50 top-level files (if you have more, use a directory structure and upload an archive)'. Uploading via the API is write-gated for most accounts. Practical caveat from the docs: archives are uncompressed server-side so their contents are usable in Notebooks, which means the 200 GB is measured on the expanded tree.",
+    "egress_verbatim": "Free — files come from Kaggle's Google-hosted CDN (storage.googleapis.com) with no egress meter. Downloads require a Kaggle API token.",
+    "chaining_verbatim": "Models and datasets are separate quota pools, so the ceiling is 200 GB private models + 200 GB private datasets + 200 GB per public model × N public models + 200 GB per public dataset × N public datasets. Public items are the real multiplier. Each model can carry multiple variations and frameworks, but they share the model's 200 GB.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "kagglehub and the Kaggle API. Verified live this session: GET /api/v1/models/list?search=bert and ?search=qwen both returned 200 with real model records (ref, title, author, vote counts); GET /api/v1/models/google/bert/get returned 200, 72,158 bytes. Datasets: /api/v1/datasets/list returns 200 JSON with totalBytesNullable per dataset. Note the upload side is narrower than the read side — 'The ability to upload models via the Kaggle API was introduced to a select group of Kaggle accounts starting in version 1.5.18', and kagglehub caps at 50 files per repo and auto-zips beyond that.",
+    "interface_verbatim": "rest + git",
+    "agent_focus": "2026-era research-data and data-marketplace platforms, deliberately judged on the BINDING constraint (does a person with only an email get past the write gate?) rather than on the marketing quota. Coverage: IEEE DataPort (the wave-7 discovery this slot confirms and extends), Mozilla Data Collective (2025 launch, the only new ≥100 GB-per-file free host found), Source Cooperative re-probed at the byte level, the French national Dataverse (Recherche Data Gouv) as the one genuinely EU-funded space with a self-serve email account, plus the 2026 data-marketplace entrants (Snowflake, Databricks Free Edition, data.world, Datarade, Tableland, Spice.ai, DataChain), the EU Data Spaces (Gaia-X / Catena-X / EOSC EU Node / DICE) and ResearchGate/Academia.edu data upload. Two structural results dominate: (a) the 'data marketplace' category is uniformly not storage — they are catalogues, and every one of them fails on per-object size by two to three orders of magnitude; (b) the EU Data Spaces are real and large but gated on eduGAIN/eIDAS identity, so they are closed on identity exactly like CSC Allas and LUMI-O before them."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

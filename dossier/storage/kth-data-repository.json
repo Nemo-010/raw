@@ -1,0 +1,120 @@
+{
+  "topic": "storage",
+  "slug": "kth-data-repository",
+  "provider": "KTH Data Repository (launched 2025-01-29)",
+  "url": "https://datarepository.kth.se",
+  "category": "newly launched institutional repository (InvenioRDM 14, KTH Royal Institute of Technology)",
+  "free_tier": {
+    "stated": "50 GB and 100 files per record by default; 10 GB per file. Quota increase is granted on email request to researchdata@kth.se. Not a hard wall — a record with a 70.4 GB single object exists in the public API, i.e. increases are real and granted.",
+    "unit": "objects",
+    "metered_on": "unstated",
+    "source_url": "https://docs.datarepository.kth.se/deposit/manage_files/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "10 GB per file",
+    "bytes": 10000000000,
+    "source_url": "https://docs.datarepository.kth.se/deposit/manage_files/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.datarepository.kth.se/deposit/manage_files/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free and anonymous. Downloads 302 to presigned.s3.cloud.kth.se with X-Amz-Expires=60 — sixty seconds, so rule 8 applies hard: re-resolve per request or watch every parallel GET return an empty 302.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "InvenioRDM REST (/api/records), OAI-PMH, GitHub integration.",
+  "tooling": "curl; the InvenioRDM python client.",
+  "chaining": "Mountable via any InvenioRDM wrapper; the 60-second presign makes it a poor CDN origin unless fronted by Cloudflare with a re-resolving shim.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "10 GB per file",
+      "source": "https://docs.datarepository.kth.se/deposit/manage_files/"
+    }
+  ],
+  "limits_note": "100 files per record by default. 'For data governance reasons ... all data must belong to at least one community.' Files immutable after publication; one-month grace period.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "institution",
+    "country": null
+  },
+  "reliability_note": "Login is ORCID / GitHub / KTH SSO — genuinely open — but deposit requires membership of a KTH community, and the quota-increase email asks which 'organisation, project, or grant' the data belongs to.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://datarepository.kth.se/api/records?size=50",
+      "date": "2026-10-21",
+      "proved": "58 records; largest file 70,402,901,125 bytes (sensor_data.zip), then 11.86 GB and 10.89 GB"
+    },
+    {
+      "url": "https://datarepository.kth.se/api/records/xme8h-jc618/files/sensor_data.zip/content",
+      "date": "2026-10-21",
+      "proved": "302 to presigned.s3.cloud.kth.se, X-Amz-Expires=60"
+    },
+    {
+      "url": "https://docs.datarepository.kth.se/deposit/manage_files/",
+      "date": "2026-10-21",
+      "proved": "'up to 100 files with a total volume of 50GB'; 'file uploads up to 10GB'; 'contact support to request an increase at researchdata@kth.se'"
+    },
+    {
+      "url": "https://docs.datarepository.kth.se/get_started/create_account/",
+      "date": "2026-10-21",
+      "proved": "KTH SSO, ORCID, GitHub"
+    },
+    {
+      "url": "https://inveniosoftware.org/blog/2025-03-11-march-KTH-data-repository/",
+      "date": "2026-10-21",
+      "proved": "launched 29 January 2025; 'we needed to customize InvenioRDM so that all data must belong to at least one community'"
+    },
+    {
+      "url": "https://datarepository.kth.se/login/",
+      "date": "2026-10-21",
+      "proved": "offers GitHub, ORCID, SSO, email"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "50 GB and 100 files per record by default; 10 GB per file. Quota increase is granted on email request to researchdata@kth.se. Not a hard wall — a record with a 70.4 GB single object exists in the public API, i.e. increases are real and granted.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E16-open-science-2026-new.json",
+    "seed_area": "E/E16",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "E/E16"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/academic-identity.md",
+    "document_section": "The 2026 open-science re-sweep",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 6,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "50 GB and 100 files per record by default; 10 GB per file. Quota increase is granted on email request to researchdata@kth.se. Not a hard wall — a record with a 70.4 GB single object exists in the public API, i.e. increases are real and granted.",
+    "limits_verbatim": "100 files per record by default. 'For data governance reasons ... all data must belong to at least one community.' Files immutable after publication; one-month grace period.",
+    "egress_verbatim": "Free and anonymous. Downloads 302 to presigned.s3.cloud.kth.se with X-Amz-Expires=60 — sixty seconds, so rule 8 applies hard: re-resolve per request or watch every parallel GET return an empty 302.",
+    "chaining_verbatim": "Mountable via any InvenioRDM wrapper; the 60-second presign makes it a poor CDN origin unless fronted by Cloudflare with a re-resolving shim.",
+    "identity_verbatim": "institution",
+    "tooling_verbatim": "curl; the InvenioRDM python client.",
+    "interface_verbatim": "InvenioRDM REST (/api/records), OAI-PMH, GitHub integration.",
+    "agent_focus": "Two client questions. (1) Open academic infrastructure that does NOT validate institutional identity — for each repository I probed the machine-readable quota endpoint (GET /api/dataverses/:root/storage/quota, /api/records?size=1, /api/info/version) rather than trusting marketing pages, and separately tested the write gate, because open-signup-with-unlimited-quota and open-signup-with-deposit-rights are different things and this wave exists to separate them. (2) Relay/P2P, split into signalling (coordinates only) vs relaying (data transits, operator pays). Secondary sweep: the 2025-26 AI data commons (FineWeb, Common Pile, DCLM, Dolma, Pleias) to establish whether any of them offers writable storage — none does; they are all read-only distribution on HF or Common Crawl S3, i.e. egress sources, not deposit targets. Dataverse turns out to be the only architecture in this space that ships a quota API that answers 'is there a limit' in one GET, so I ran it across every instance I could reach."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

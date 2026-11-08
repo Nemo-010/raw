@@ -1,0 +1,131 @@
+{
+  "topic": "storage",
+  "slug": "digital-research-alliance-of-canada-1-tb-default-object",
+  "provider": "Digital Research Alliance of Canada — 1 TB default object storage per project, up to 40 TB project / 100 TB nearline via Rapid Access Service",
+  "url": "https://docs.alliancecan.ca/wiki/Arbutus_object_storage",
+  "category": "academic",
+  "free_tier": {
+    "stated": "'All Arbutus projects are allocated a default 1TB of object storage. If more is required, you can either request an additional 9TB available through our Rapid Access Service. More than 10TB must be requested and allocated under the annual Resource Allocation Competition.' The RAS policy adds: PIs 'can request additional storage resources in any General Purpose cluster without submitting a RAC application, up to a maximum of 40 TB of project storage and 100 TB of nearline storage', with the total across all clusters capped at those numbers.",
+    "unit": "TB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.alliancecan.ca/wiki/Arbutus_object_storage",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.alliancecan.ca/wiki/Arbutus_object_storage",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.alliancecan.ca/wiki/Arbutus_object_storage",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Not metered in any doc I read; OpenStack Swift/S3 serve objects over HTTPS and buckets can be made public.",
+    "metered": true
+  },
+  "interface": [
+    "s3",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "s3",
+  "tooling": "OpenStack Swift or S3 against the Arbutus object store; rclone/swift/s3cmd all work. 'We offer access to the OpenStack Object Store via two different protocols: Swift or Amazon Simple Storage Service (S3). ... object storage containers and objects created with Swift or S3 can be accessed using both protocols.'",
+  "chaining": "1 TB automatic + 9 TB RAS + up to 40 TB project storage per PI by email request. Multiple PIs/institutions each get their own; there is also a separate nearline (HPSS/tape) ceiling of 100 TB. This is the strongest nearline number in the survey after NCAR.",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "application, up to a maximum of 40 TB of project storage and 100 TB of nearline storage', w",
+      "source": "https://docs.alliancecan.ca/wiki/Arbutus_object_storage"
+    }
+  ],
+  "limits_note": "per-object-cap: not documented for Arbutus. Retention: object storage is not backed up — 'management of a project's object storage containers is self-service. This includes operations such as backups because the object store itself is not backed up.' request-rate: not published. Gate: CCDB account (institutional), and storage above 10 TB requires an email to support@tech.alliancecan.ca from a PI.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "an account is registered on the CCDB portal. The Principal Investigator role that requests the storage is an academic PI: a full- or part-time faculty member, an adjunct faculty member, or a librarian at a Canadian university, college or research hospital eligible to hold Canada Foundation for Innovation grants; a lead researcher at an eligible Canadian research institute is the second route, and industry, non-profit and government researchers apply for paid access through a regional organisation. A sponsored user needs no affiliation of their own but 'require a sponsor to create an account on CCDB'. No card and no phone number is asked for.",
+    "country": null
+  },
+  "reliability_note": "Not backed up and self-managed; the docs are Anubis-protected (proof-of-work challenge) which also means scraping the current page fails and you must read the archived copy.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.alliancecan.ca/wiki/Arbutus_object_storage",
+      "date": "2026-10-21",
+      "proved": "captured 2024-09-14 via Wayback: 'All Arbutus projects are allocated a default 1TB of object storage... request an additional 9TB available through our Rapid Access Service. More than 10TB must be requested and allocated under the annual Resource Allocation Competition.'"
+    },
+    {
+      "url": "https://ualberta-rcg.github.io/ragflow-wiki-data/base/policies/rapid_access_service/",
+      "date": "2026-10-21",
+      "proved": "'up to a maximum of 40 TB of project storage and 100 TB of nearline storage. These resources can be requested all in one cluster or split across multiple ones, but the total amount across all clusters must not exceed 40 TB of project storage or 100 TB of nearline storage.'"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: read.web.pkgforge.dev on the live docs.alliancecan.ca page -> returns the Anubis 'Making sure you're not a bot!' interstitial; firecrawl provider -> returns the Wikipedia language-list boilerplate; Wayback capture of the same URL -> also Anubis 'Sad Anubis / Access Denied'. Documented as a challenge-walled host; numbers above come from the 2024-09-14 capture, which predates the wall."
+    },
+    {
+      "url": "https://arbutus.cloud.computecanada.ca/",
+      "date": "2026-10-21",
+      "proved": "probe: curl -> 302 (host alive, redirects to auth)"
+    },
+    {
+      "url": "https://docs.alliancecan.ca/wiki/User_roles_to_access_resources_and_services_of_the_Alliance_Federation",
+      "date": "2026-11-01",
+      "proved": "an account outside that affiliation exists only as a sponsored user of a PI, so the identity is still an institution",
+      "capture": "sha256:9b826889e75e19a67059789e738e1c8bf14939c1b7ad94e1579d9f3947861f40",
+      "quote": "**Sponsored User:** any individual whom a Principal Investigator has identified and approved for access to resources and services."
+    },
+    {
+      "url": "https://alliancecan.ca/en/services/advanced-research-computing/accessing-resources/rapid-access-service",
+      "date": "2026-11-01",
+      "proved": "access to a system is a separate request after the account, by the PI and each sponsored user",
+      "capture": "sha256:3e0148c4cca366044c9ca1899637b88a5716042b711eec17d1fdbde2a54f5272",
+      "quote": "To use any computational resource offered by the Alliance, the PI and any sponsored user that needs those resources must first request access to the desired system(s) in this page"
+    },
+    {
+      "url": "https://ccdb.alliancecan.ca/account_application",
+      "date": "2026-11-01",
+      "proved": "the CCDB registration form is an agreements screen, and the allocation is a separate request",
+      "capture": "sha256:0461ffd074fd063584614ebfe32015ad3e7d0340ba02baca6f277d93d2bcb7ef",
+      "quote": "I have read, understood, and agree that my use of Alliance Federation Systems and Services will be consistent with the Policies, Standards, Terms, and Procedures of the Alliance Federation"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-01T18:05:17.595Z",
+  "notes": "'All Arbutus projects are allocated a default 1TB of object storage. If more is required, you can either request an additional 9TB available through our Rapid Access Service. More than 10TB must be requested and allocated under the annual Resource Allocation Competition.' The RAS policy adds: PIs 'can request additional storage resources in any General Purpose cluster without submitting a RAC application, up to a maximum of 40 TB of project storage and 100 TB of nearline storage', with the total across all clusters capped at those numbers.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D8-national-research-clouds.json",
+    "seed_area": "D/D8",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D8"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/research-clouds.md",
+    "document_section": "National research clouds and allocations",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 1,
+    "quota_verbatim": "'All Arbutus projects are allocated a default 1TB of object storage. If more is required, you can either request an additional 9TB available through our Rapid Access Service. More than 10TB must be requested and allocated under the annual Resource Allocation Competition.' The RAS policy adds: PIs 'can request additional storage resources in any General Purpose cluster without submitting a RAC application, up to a maximum of 40 TB of project storage and 100 TB of nearline storage', with the total across all clusters capped at those numbers.",
+    "limits_verbatim": "per-object-cap: not documented for Arbutus. Retention: object storage is not backed up — 'management of a project's object storage containers is self-service. This includes operations such as backups because the object store itself is not backed up.' request-rate: not published. Gate: CCDB account (institutional), and storage above 10 TB requires an email to support@tech.alliancecan.ca from a PI.",
+    "egress_verbatim": "Not metered in any doc I read; OpenStack Swift/S3 serve objects over HTTPS and buckets can be made public.",
+    "chaining_verbatim": "1 TB automatic + 9 TB RAS + up to 40 TB project storage per PI by email request. Multiple PIs/institutions each get their own; there is also a separate nearline (HPSS/tape) ceiling of 100 TB. This is the strongest nearline number in the survey after NCAR.",
+    "tooling_verbatim": "OpenStack Swift or S3 against the Arbutus object store; rclone/swift/s3cmd all work. 'We offer access to the OpenStack Object Store via two different protocols: Swift or Amazon Simple Storage Service (S3). ... object storage containers and objects created with Swift or S3 can be accessed using both protocols.'",
+    "interface_verbatim": "s3",
+    "agent_focus": "National and regional research-data infrastructure that hands out free (or grant-funded) bulk object storage to researchers: EUDAT/B2SHARE, EOSC EU Node, SURF, GÉANT ecosystem, NIRD/Sigma2, CSC Allas + LUMI-O, NAISS, DeiC, EuroHPC, DARIAH/CLARIN/ELIXIR nodes, NCI, ARDC Nectar, Digital Alliance of Canada, ACCESS/OSN, TACC, NCAR, NRP. Central question: which of these are SELF-SERVICE (anyone can get a login and a bucket) versus INSTITUTION-GATED (you need a university appointment, a national research affiliation, or a reviewed proposal). The per-project quotas here are the largest numbers in the whole survey — 10-150 TB — so the gate, not the quota, is the finding."
+  },
+  "binding": "write-gated",
+  "binding_note": "the write is a queue with a person or a rule in it, so the upload rate is set by somebody else",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

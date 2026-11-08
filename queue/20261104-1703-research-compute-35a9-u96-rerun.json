@@ -1,0 +1,20 @@
+{
+ "id": "20261104-1703-research-compute-35a9-u96-rerun",
+ "kind": "verify",
+ "topic": "compute",
+ "question": "Each record in your scope already carries its price somewhere in its own text or evidence (an earlier lane read the page, captured it, and an audit checked it); what it lacks is the structured field the store derives usd_month from. For each record: find the price in the record's free_tier.stated, its extras, or its evidence rows' quotes. When the source states a monthly price, set $.extras.price_on_page to that price exactly as the source states it (with its currency, e.g. 'EUR 8.30/month for VPS Entry'). When the source states only an annual or multi-month price, set $.extras.monthly_usd to the monthly equivalent and put the arithmetic in 'derived'. When the currency has no dated rate in the corpus, price_on_page keeps the currency as stated; never convert without a rate and never guess one. When the record's evidence shows no price exists at all (dead domain, walled page, no price published), set $.extras.price_note to 'not published: ' plus what the evidence shows. Cite the record's own evidence rows (their url, capture hash and quote) as the evidence of each op; add a new capture only when no existing row carries the price. Write 'not published' for a renewal no page prints. Reuse the existing capture hash exactly as the record holds it; do not re-read the web. Rewrite any free text of the record that the new values contradict.\nAn audit of the first attempt judged these claims unsupported by their sources; settle each one first:\n- compute/cloud-mu $.extras.price_on_page: The page does not print Rs299 struck through. Its HTML (this registered raw fetch) prints two CSS-toggled figures per row, shown in the quote; the pricing section is served with class 'country monthly' and its Mauritius/South-Africa location switcher is commented out, while styles.min.css (registere\n- compute/cloud-mu $.free_tier.stated: Same defect as c05: the pairs are CSS-toggled figures (mauritius-price rendered in the section's fixed 'monthly' mode, south-africa-price hidden), not a struck list price — no strikethrough exists in the page's HTML, CSS or JS. The rendered prices are the mauritius-price figures (Rs299, Rs569, Rs839",
+ "scope": {
+  "rids": [
+   "compute/bullethost",
+   "compute/chunkserve",
+   "compute/cloud-mu",
+   "compute/cloudblast",
+   "compute/clouding-io",
+   "compute/dasabo",
+   "compute/deluxhost",
+   "compute/digirdp"
+  ]
+ },
+ "origin": "audit u112 of 20261104-1703-research-compute-35a9/u96 failed: 2 of 17 unsupported",
+ "created": "2026-11-07T17:41:03Z"
+}

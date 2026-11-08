@@ -1,0 +1,108 @@
+{
+  "topic": "storage",
+  "slug": "mk-absturztau-be-sharkey-50-gb-drive-per-user",
+  "provider": "mk.absturztau.be — Sharkey, 50 GB drive per user",
+  "url": "https://mk.absturztau.be",
+  "category": "fediverse-sharkey",
+  "free_tier": {
+    "stated": "50000 MB = 50 GB per user drive; maxFileSize 262144000 bytes (250 MiB) per object.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://mk.absturztau.be/api/meta",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap 250 MiB",
+    "bytes": 262144000,
+    "source_url": "https://mk.absturztau.be/api/meta",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://mk.absturztau.be/api/meta",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free, CDN-served, no meter.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Sharkey/IceShark is Misskey-API-compatible: same POST /api/drive/files/create, same MiAuth. A single client works across Misskey, Sharkey, Firefish and Iceshrimp.NET.",
+  "chaining": "Open registration (`openRegistrations: true`, 916 users). 50 GB x N accounts. Best tier-2 host of the family: bigger than most, still sane per-file.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap 250 MiB",
+      "source": "https://mk.absturztau.be/api/meta"
+    }
+  ],
+  "limits_note": "per-object-cap 250 MiB; per-user 50 GB; request-rate: Sharkey enforces per-IP 429 on drive writes.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "916-user German hobby instance, 1.7 M local posts — active and healthy, but single-operator. Sharkey 2025.5.2-dev, self-described non-stable branch.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://mk.absturztau.be/api/meta",
+      "date": "2026-10-21",
+      "proved": "probe: POST -> 200, policies.driveCapacityMb=50000, maxFileSize=262144000, disableRegistration=false"
+    },
+    {
+      "url": "https://mk.absturztau.be/nodeinfo/2.1",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, software sharkey 2025.5.2-dev+g8e80ed6771, openRegistrations=true, users.total=916, localPosts=1708820"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "50000 MB = 50 GB per user drive; maxFileSize 262144000 bytes (250 MiB) per object.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F7-fediverse.json",
+    "seed_area": "F/F7",
+    "seed_verdict": [
+      {
+        "value": "?",
+        "area": "F/F7"
+      }
+    ],
+    "seed_confidence": "high",
+    "verdict_note": "the seed left this row with verdict '?'; PLAN.md §3.2 rules fails-quota by default, because no row in this set clears 500 GiB per unit. A writer's judgement, not the seed's, and flagged as such",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "50000 MB = 50 GB per user drive; maxFileSize 262144000 bytes (250 MiB) per object.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F7"
+    },
+    "target_document": "docs/storage/free/social-and-fediverse.md",
+    "document_section": "Fediverse instances",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "50000 MB = 50 GB per user drive; maxFileSize 262144000 bytes (250 MiB) per object.",
+    "limits_verbatim": "per-object-cap 250 MiB; per-user 50 GB; request-rate: Sharkey enforces per-IP 429 on drive writes.",
+    "egress_verbatim": "Free, CDN-served, no meter.",
+    "chaining_verbatim": "Open registration (`openRegistrations: true`, 916 users). 50 GB x N accounts. Best tier-2 host of the family: bigger than most, still sane per-file.",
+    "tooling_verbatim": "Sharkey/IceShark is Misskey-API-compatible: same POST /api/drive/files/create, same MiAuth. A single client works across Misskey, Sharkey, Firefish and Iceshrimp.NET.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Fediverse / decentralised social instances as media storage: Mastodon, Misskey/Sharkey/IceShark, Pleroma/Akkoma, Pixelfed, Lemmy/pict-rs, Bluesky AT Protocol PDS, Nostr relays + Blossom, Farcaster hubs/Snapchain. Per-user media quotas, per-file caps, media-URL permanence, and the 'unlimited instances x modest quota' multiplication."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

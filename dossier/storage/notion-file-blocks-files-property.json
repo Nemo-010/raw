@@ -1,0 +1,115 @@
+{
+  "topic": "storage",
+  "slug": "notion-file-blocks-files-property",
+  "provider": "Notion (free plan) - file blocks & Files property",
+  "url": "https://www.notion.com",
+  "category": "cloud-drive",
+  "free_tier": {
+    "stated": "No total storage cap: 'Unlimited file uploads' on Free, but each file is capped at 5 MiB on Free (5 GiB on paid). Block limit is unlimited for a single-member Free workspace.",
+    "unit": "GiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://developers.notion.com/guides/data-apis/working-with-files-and-media",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "5 MiB per file",
+    "bytes": 5242880,
+    "source_url": "https://developers.notion.com/guides/data-apis/working-with-files-and-media",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://developers.notion.com/guides/data-apis/working-with-files-and-media",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free; Notion serves via S3/presigned URLs on Cloudflare-fronted notion.com. File objects return 'An authenticated HTTP GET URL... valid for one hour', so links must be re-minted - no CDN you can pin a cache to without re-signing.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Official Notion API file-upload endpoints (single-part <=20 MiB, multi-part above with 5-20 MiB parts) + PlakarKorp/integration-notion and many notion-backup repos for bulk extraction; no rclone backend",
+  "chaining": "Per-record unlimited: 5 MiB x unlimited files x unlimited blocks x unlimited free workspaces. A 20 TiB archive sharded into 5 MiB objects = ~4.2M objects - feasible at 600 req/min but ~5 days of continuous upload. This is the clearest 'unlimited count, tiny per-file cap' in the niche.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "1 TB/day",
+      "source": "https://developers.notion.com/guides/data-apis/working-with-files-and-media"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "5 MiB per file",
+      "source": "https://developers.notion.com/guides/data-apis/working-with-files-and-media"
+    }
+  ],
+  "limits_note": "5 MiB per file on Free (hard, enforced by API); 20 MiB per single-part API upload; parts must be 5-20 MiB; 600 requests/min per workspace (avg 10/s) shared across all connections; only whitelisted MIME types (audio/document/image/video/CAD) - arbitrary binary is rejected",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: p' in the niche. 5 MiB per file on Free (hard, enforced by API); 20 MiB per single-part API upload; parts must be 5-20 MiB; 600 requests/min per workspace (avg 10/s) shared across al",
+    "country": null
+  },
+  "reliability_note": "The MIME whitelist is the killer: no generic octet-stream blobs, so archival datasets must be packed as .zip/.7z/.tar which Notion does accept. Signed URLs expire in one hour, so serving 1 TB/day out of Notion means re-minting continuously.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://developers.notion.com/guides/data-apis/working-with-files-and-media",
+      "date": "2026-10-21",
+      "proved": "'Free workspaces are limited to 5 MiB (binary megabytes) per file'; 'Files larger than 20 MiB must be split into parts'; supported-types table lists .zip, .7z, .tar, .bz2, .rar"
+    },
+    {
+      "url": "https://www.notion.com/pricing",
+      "date": "2026-10-21",
+      "proved": "'Unlimited file uploads'; 'On the Free plan, you can upload images, videos and file attachments up to 5MB each. Upgrade to a paid plan for unlimited file uploads with a ~5GB max per file.'"
+    },
+    {
+      "url": "https://developers.notion.com/reference/file-object",
+      "date": "2026-10-21",
+      "proved": "'An authenticated HTTP GET URL to the file. The URL is valid for one hour.'"
+    },
+    {
+      "url": "https://api.notion.com/v1/users",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> HTTP 401 (API live, auth-gated)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No total storage cap: 'Unlimited file uploads' on Free, but each file is capped at 5 MiB on Free (5 GiB on paid). Block limit is unlimited for a single-member Free workspace.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F3-team-chat.json",
+    "seed_area": "F/F3",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "F/F3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/messaging.md",
+    "document_section": "Team chat",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No total storage cap: 'Unlimited file uploads' on Free, but each file is capped at 5 MiB on Free (5 GiB on paid). Block limit is unlimited for a single-member Free workspace.",
+    "limits_verbatim": "5 MiB per file on Free (hard, enforced by API); 20 MiB per single-part API upload; parts must be 5-20 MiB; 600 requests/min per workspace (avg 10/s) shared across all connections; only whitelisted MIME types (audio/document/image/video/CAD) - arbitrary binary is rejected",
+    "egress_verbatim": "Free; Notion serves via S3/presigned URLs on Cloudflare-fronted notion.com. File objects return 'An authenticated HTTP GET URL... valid for one hour', so links must be re-minted - no CDN you can pin a cache to without re-signing.",
+    "chaining_verbatim": "Per-record unlimited: 5 MiB x unlimited files x unlimited blocks x unlimited free workspaces. A 20 TiB archive sharded into 5 MiB objects = ~4.2M objects - feasible at 600 req/min but ~5 days of continuous upload. This is the clearest 'unlimited count, tiny per-file cap' in the niche.",
+    "tooling_verbatim": "Official Notion API file-upload endpoints (single-part <=20 MiB, multi-part above with 5-20 MiB parts) + PlakarKorp/integration-notion and many notion-backup repos for bulk extraction; no rclone backend",
+    "interface_verbatim": "rest",
+    "agent_focus": "Team collaboration suites: Slack free (files, retention), Microsoft Teams, Mattermost, Rocket.Chat, Zulip, Twist, Discourse, Basecamp, ClickUp, Notion, Coda, Airtable attachments"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

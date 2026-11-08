@@ -1,0 +1,136 @@
+{
+  "topic": "storage",
+  "slug": "pixelfed-de-pixelfed-15-mb-per-object-unlimited-per-acco",
+  "provider": "pixelfed.de — Pixelfed, 15 MB per object, unlimited per account",
+  "url": "https://pixelfed.de",
+  "category": "fediverse-pixelfed",
+  "free_tier": {
+    "stated": "Per-account unlimited (Pixelfed has no per-user storage counter). Per-file image_size_limit = video_size_limit = 15360000 bytes (14.6 MiB); 12 attachments per status; image_matrix_limit 2,073,600 px (1920x1080).",
+    "unit": "unlimited",
+    "metered_on": "stored-bytes",
+    "source_url": "https://pixelfed.de/api/v1/instance",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "Per-file image_size_limit = video_size_limit = 15360000 bytes (about 14.65 MiB)",
+    "bytes": 15360000,
+    "source_url": "https://pixelfed.de/api/v1/instance",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://pixelfed.de/api/v1/instance",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free, plain CDN path, no meter.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Pixelfed is a Mastodon-API derivative: POST /api/v1/media (multipart) then POST /api/v1/statuses with media_ids[]. OAuth2 via /api/v1/apps. Any Mastodon client library mostly works.",
+  "chaining": "Worst per-object cap in this slot (14.6 MiB, and photos-only MIME list: jpeg/png/gif/webp/mp4). The multiplier is broad: hundreds of Pixelfed instances, most open. Useful only as a fan-out target, never as primary.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "Per-file image_size_limit = video_size_limit = 15360000 bytes (about 14.65 MiB)",
+      "source": "https://pixelfed.de/api/v1/instance"
+    }
+  ],
+  "limits_note": "per-object-cap 14.6 MiB; per-account unlimited; supported MIME restricted to image/jpeg,png,gif,webp + video/mp4 — no arbitrary blobs (PNG/JPEG wrapper needed).",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "the registration form asks name, username, email, password and a box confirming the user is at least 16 years old; no phone or card field",
+    "country": null
+  },
+  "reliability_note": "pixelfed.social itself returned HTTP 521 (origin down) throughout this probe; pixelfed.art also 521. The software is fine, the flagship host was not.",
+  "confidence": "reported",
+  "confidence_note": "reported: the pages read on 2026-11-03 are https://pixelfed.de/api/v1/instance, which states registrations true with approval_required false, image_size_limit and video_size_limit of 15360000, the MIME types image/jpeg, image/png, image/gif, image/webp and video/mp4, and max_media_attachments 12, and https://pixelfed.de/register, which shows a form with an age-confirmation box. Neither page states a per-account storage quota, so the 'unlimited per account' value of free_tier.stated is not confirmed by them and the rung stays reported.",
+  "evidence": [
+    {
+      "url": "https://pixelfed.de/api/v1/instance",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, configuration.media_attachments.image_size_limit=15360000, video_size_limit=15360000, image_matrix_limit=2073600, statuses.max_media_attachments=12, registrations=true, version 3.5.3 (Pixelfed 0.15.1)"
+    },
+    {
+      "url": "https://pixelfed.social/api/v1/instance",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 521 (Cloudflare origin down); pixelfed.art -> 521"
+    },
+    {
+      "url": "https://pixelfed.de/api/v1/instance",
+      "date": "2026-11-03",
+      "proved": "image and video per-file limits are both 15360000 bytes",
+      "capture": "sha256:14ad22a43be72916f3ac1b14b8677bc571da4ab4815a58a01076af512ba7afbc",
+      "quote": "\"image_size_limit\":15360000,\"supported_mime_types\":[\"image/jpeg\",\"image/png\",\"image/gif\",\"image/webp\",\"video/mp4\"],\"video_frame_rate_limit\":120,\"video_matrix_limit\":2073600,\"video_size_limit\":15360000"
+    },
+    {
+      "url": "https://pixelfed.de/register",
+      "date": "2026-11-03",
+      "proved": "the registration form carries a 16-years-old box after the name, username, email and password fields",
+      "capture": "sha256:8cac50b5f8d0e4862ed0cb20ee61b741f1593f893bd6e7ea4b990d943a8fbea7",
+      "quote": "I am at least 16 years old"
+    },
+    {
+      "url": "https://pixelfed.de/api/v1/instance",
+      "date": "2026-11-03",
+      "proved": "registrations are open and need no approval",
+      "capture": "sha256:14ad22a43be72916f3ac1b14b8677bc571da4ab4815a58a01076af512ba7afbc",
+      "quote": "registrations\":true,\"approval_required\":false,\"contact_account\""
+    },
+    {
+      "url": "https://pixelfed.de/api/v1/instance",
+      "date": "2026-11-04",
+      "proved": "the instance JSON states the per-file image limit of 15360000 bytes",
+      "capture": "sha256:11b7fd45263b79799ced3671a3867c9f6794640eb664c37d1199685b589981be",
+      "quote": "\"image_size_limit\":15360000"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-11-04T02:22:32.526Z",
+  "notes": "Per-account unlimited (Pixelfed has no per-user storage counter). Per-file image_size_limit = video_size_limit = 15360000 bytes (14.6 MiB); 12 attachments per status; image_matrix_limit 2,073,600 px (1920x1080).",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F7-fediverse.json",
+    "seed_area": "F/F7",
+    "seed_verdict": [
+      {
+        "value": "?",
+        "area": "F/F7"
+      }
+    ],
+    "seed_confidence": "high",
+    "verdict_note": "the seed left this row with verdict '?'; PLAN.md §3.2 rules fails-quota by default, because no row in this set clears 500 GiB per unit. A writer's judgement, not the seed's, and flagged as such",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Per-account unlimited (Pixelfed has no per-user storage counter). Per-file image_size_limit = video_size_limit = 15360000 bytes (14.6 MiB); 12 attachments per status; image_matrix_limit 2,073,600 px (1920x1080).",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F7"
+    },
+    "target_document": "docs/storage/free/social-and-fediverse.md",
+    "document_section": "Fediverse instances",
+    "conversion": "mechanical",
+    "verified_at_basis": "2026-11-03 read of https://pixelfed.de/api/v1/instance and https://pixelfed.de/register; egress, retention and a per-account quota are not stated on them",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Per-account unlimited (Pixelfed has no per-user storage counter). Per-file image_size_limit = video_size_limit = 15360000 bytes (14.6 MiB); 12 attachments per status; image_matrix_limit 2,073,600 px (1920x1080).",
+    "limits_verbatim": "per-object-cap 14.6 MiB; per-account unlimited; supported MIME restricted to image/jpeg,png,gif,webp + video/mp4 — no arbitrary blobs (PNG/JPEG wrapper needed).",
+    "egress_verbatim": "Free, plain CDN path, no meter.",
+    "chaining_verbatim": "Worst per-object cap in this slot (14.6 MiB, and photos-only MIME list: jpeg/png/gif/webp/mp4). The multiplier is broad: hundreds of Pixelfed instances, most open. Useful only as a fan-out target, never as primary.",
+    "tooling_verbatim": "Pixelfed is a Mastodon-API derivative: POST /api/v1/media (multipart) then POST /api/v1/statuses with media_ids[]. OAuth2 via /api/v1/apps. Any Mastodon client library mostly works.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Fediverse / decentralised social instances as media storage: Mastodon, Misskey/Sharkey/IceShark, Pleroma/Akkoma, Pixelfed, Lemmy/pict-rs, Bluesky AT Protocol PDS, Nostr relays + Blossom, Farcaster hubs/Snapchain. Per-user media quotas, per-file caps, media-URL permanence, and the 'unlimited instances x modest quota' multiplication."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

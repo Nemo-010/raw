@@ -1,0 +1,106 @@
+{
+  "topic": "storage",
+  "slug": "github-git-lfs",
+  "provider": "GitHub Git LFS",
+  "url": "https://github.com/pricing",
+  "category": "registry",
+  "free_tier": {
+    "stated": "10 GiB storage AND 10 GiB/month bandwidth on GitHub Free (also 10/10 on Pro and Free-for-orgs; 250 GiB each on Team/Enterprise Cloud). This is UP from the old 1 GiB/1 GiB — the docs now show a 10 GiB table. Pre-paid data packs are gone; it is metered with a budget setting.",
+    "unit": "GiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.github.com/en/billing/concepts/product-billing/git-lfs",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "Per-file: 2 GB",
+    "bytes": 2000000000,
+    "source_url": "https://docs.github.com/en/billing/concepts/product-billing/git-lfs",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.github.com/en/billing/concepts/product-billing/git-lfs",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Metered but included up to 10 GiB/month. Over quota with no payment method, 'Git LFS support is disabled on your account until the next month'. With a $0 budget, usage is blocked for the rest of the calendar month. No free CDN in front of LFS.",
+    "metered": true,
+    "free_allowance": "10 GiB per month"
+  },
+  "interface": [
+    "rest",
+    "git"
+  ],
+  "interface_detail": "git",
+  "tooling": "git-lfs (git-lfs/git-lfs, ~10k stars). git-annex can also use GitHub LFS as a special-remote backend (see the git-lfs remote entry). REST API for repo management.",
+  "chaining": "10 GiB per account x unlimited free accounts. Note the ownership trick in GitHub's own docs: 'Anyone with write access to a repository can push files to Git LFS without increasing their personal bandwidth and storage use' — usage lands on the REPO OWNER. So a collaborator-heavy layout concentrates the bill on one account, which is the opposite of what you want; the shardable axis is accounts-as-repo-owners.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "Per-file: 2 GB",
+      "source": "https://docs.github.com/en/billing/concepts/product-billing/git-lfs"
+    }
+  ],
+  "limits_note": "Per-file: 2 GB on Free/Pro, 4 GB on Team, 5 GB on Enterprise Cloud. Storage is billed on all LFS objects ever associated with a repo, hourly-averaged, and 'If you delete Git LFS objects partway through a calendar month, the storage usage for that month is not recalculated'. Re-pushing a 1-byte change to a 500 MB file consumes another 500 MB. Actions pulling LFS counts against the repo owner's bandwidth.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: th a budget setting. Hard-blocked (not billed) without a payment method, so it degrades safely. The monthly non-recalculation on delete means a big upload you remove still burns the month. 10",
+    "country": null
+  },
+  "reliability_note": "Hard-blocked (not billed) without a payment method, so it degrades safely. The monthly non-recalculation on delete means a big upload you remove still burns the month.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.github.com/en/billing/concepts/product-billing/git-lfs",
+      "date": "2026-10-21",
+      "proved": "table: 'GitHub Free | 10 GiB | 10 GiB' (bandwidth | storage)"
+    },
+    {
+      "url": "https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage",
+      "date": "2026-10-21",
+      "proved": "'GitHub Free | 2 GB' maximum file size"
+    },
+    {
+      "url": "https://github.com/git-lfs/git-lfs.git/info/lfs/objects/batch",
+      "date": "2026-10-21",
+      "proved": "probe: POST (download, bogus oid) -> HTTP 200 (LFS endpoint live, anonymous batch accepted)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "10 GiB storage AND 10 GiB/month bandwidth on GitHub Free (also 10/10 on Pro and Free-for-orgs; 250 GiB each on Team/Enterprise Cloud). This is UP from the old 1 GiB/1 GiB — the docs now show a 10 GiB table. Pre-paid data packs are gone; it is metered with a budget setting.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C3-git-annex-lfs.json",
+    "seed_area": "C/C3",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "C/C3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "Git LFS and git-annex special remotes",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "10 GiB storage AND 10 GiB/month bandwidth on GitHub Free (also 10/10 on Pro and Free-for-orgs; 250 GiB each on Team/Enterprise Cloud). This is UP from the old 1 GiB/1 GiB — the docs now show a 10 GiB table. Pre-paid data packs are gone; it is metered with a budget setting.",
+    "limits_verbatim": "Per-file: 2 GB on Free/Pro, 4 GB on Team, 5 GB on Enterprise Cloud. Storage is billed on all LFS objects ever associated with a repo, hourly-averaged, and 'If you delete Git LFS objects partway through a calendar month, the storage usage for that month is not recalculated'. Re-pushing a 1-byte change to a 500 MB file consumes another 500 MB. Actions pulling LFS counts against the repo owner's bandwidth.",
+    "egress_verbatim": "Metered but included up to 10 GiB/month. Over quota with no payment method, 'Git LFS support is disabled on your account until the next month'. With a $0 budget, usage is blocked for the rest of the calendar month. No free CDN in front of LFS.",
+    "chaining_verbatim": "10 GiB per account x unlimited free accounts. Note the ownership trick in GitHub's own docs: 'Anyone with write access to a repository can push files to Git LFS without increasing their personal bandwidth and storage use' — usage lands on the REPO OWNER. So a collaborator-heavy layout concentrates the bill on one account, which is the opposite of what you want; the shardable axis is accounts-as-repo-owners.",
+    "tooling_verbatim": "git-lfs (git-lfs/git-lfs, ~10k stars). git-annex can also use GitHub LFS as a special-remote backend (see the git-lfs remote entry). REST API for repo management.",
+    "interface_verbatim": "git",
+    "agent_focus": "Large-file versioning layer: git-annex special remotes, Git LFS hosts, DVC remotes, Perforce/SVN, and which free backends those layers can be pointed at"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,264 @@
+{
+  "topic": "compute",
+  "slug": "firecrawl",
+  "provider": "Firecrawl Interact / Browser Sandbox",
+  "url": "https://www.firecrawl.dev/pricing",
+  "category": "browser host",
+  "free_tier": {
+    "stated": "Free plan: 1,000 credits every month, no credit card required; the allotment resets each monthly cycle and unused credits do not roll over. Interact bills 2 credits per browser minute for code-only sessions and 7 with a prompt, with a one-minute minimum, so the free pool is 500 code-only browser minutes a month",
+    "unit": "requests",
+    "metered_on": "request-count",
+    "source_url": "https://www.firecrawl.dev/pricing",
+    "read_on": "2026-10-22",
+    "notes": "credits are shared across search, scrape, crawl and interact; 1 credit is 1 page on a basic scrape"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://www.firecrawl.dev/pricing",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://www.firecrawl.dev/pricing",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "not published: https://www.firecrawl.dev/pricing and https://docs.firecrawl.dev/billing price credits per call and list no data-transfer allowance or price; static egress IPs are Enterprise only",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.firecrawl.dev/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "a REST API, Python and Node SDKs, a CLI (npm firecrawl-cli) and an MCP server",
+  "tooling": "not stated in the source card",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "1,000 credits a month on Free; one credit is one page on a basic scrape",
+      "source": "https://www.firecrawl.dev/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "Interact costs 2 credits per browser minute for code-only sessions and 7 with a prompt, with a one-minute minimum; the 1,000-credit pool is 500 code-only browser minutes a month",
+      "source": "https://www.firecrawl.dev/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "Free plan: 10 requests a minute on /scrape, /map and /search and 2 requests a minute on /crawl, /agent and /interact; 2 concurrent browsers",
+      "source": "https://docs.firecrawl.dev/billing"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "keyless tier: a maximum number of requests per IP address per day, value not published; exceeding it returns 429",
+      "source": "https://docs.firecrawl.dev/rate-limits"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "keyless tier: a maximum number of credits per IP address per day, value not published; operations that cost more credits reach the cap sooner",
+      "source": "https://docs.firecrawl.dev/rate-limits"
+    }
+  ],
+  "limits_note": "Interact sessions expire after a default TTL of 10 minutes or a default inactivity timeout of 5 minutes",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "Account created with an email address and a password, or with GitHub or Google sign-in, with the email verified if prompted; no card required on the free plan; Search, Scrape and Interact also work with no API key through a keyless tier capped per IP address per day",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "Documented on the vendor's billing page: 1,000 credits a month, no card required, 10 requests a minute on /scrape, /map and /search and 2 on /crawl, /agent and /interact.",
+  "evidence": [
+    {
+      "url": "https://www.firecrawl.dev/pricing",
+      "date": "2026-10-22",
+      "proved": "'1,000 credits every month, refreshed monthly, no credit card required'; 'Interact costs 2 credits per browser minute'"
+    },
+    {
+      "url": "https://docs.firecrawl.dev/billing",
+      "date": "2026-10-28",
+      "proved": "the Free plan has 1,000 credits a month with no rollover; Interact costs 2 credits per minute code-only and 7 with a prompt, one-minute minimum",
+      "capture": "sha256:1f5e2656ae543c6f5331e279597fbeb580947ec52021ec1197badf8034ed7351",
+      "quote": "1,000 credits per month. ... Unused free credits do not roll over. ... billed per browser minute with a one-minute minimum. Sessions that use a `prompt` bill at 7 credits / browser minute; sessions without a prompt (Playwright `code` only) bill at 2 credits / browser minute."
+    },
+    {
+      "url": "https://docs.firecrawl.dev/billing",
+      "date": "2026-10-28",
+      "proved": "the free plan costs nothing and does not need a card",
+      "capture": "sha256:1f5e2656ae543c6f5331e279597fbeb580947ec52021ec1197badf8034ed7351",
+      "quote": "New accounts start on the free plan. It costs nothing and does not need a card."
+    },
+    {
+      "url": "https://docs.firecrawl.dev/billing",
+      "date": "2026-10-28",
+      "proved": "the row is a pool of metered browser minutes drawn from the monthly credits, not the size of one object",
+      "capture": "sha256:1f5e2656ae543c6f5331e279597fbeb580947ec52021ec1197badf8034ed7351",
+      "quote": "1,000 credits per month. ... Unused free credits do not roll over. ... billed per browser minute with a one-minute minimum. Sessions that use a `prompt` bill at 7 credits / browser minute; sessions without a prompt (Playwright `code` only) bill at 2 credits / browser minute."
+    },
+    {
+      "url": "https://docs.firecrawl.dev/billing",
+      "date": "2026-10-28",
+      "proved": "Interact bills 2 credits per minute code-only and 7 with a prompt, one-minute minimum, from a 1,000-credit monthly pool",
+      "capture": "sha256:1f5e2656ae543c6f5331e279597fbeb580947ec52021ec1197badf8034ed7351",
+      "quote": "1,000 credits per month. ... Unused free credits do not roll over. ... billed per browser minute with a one-minute minimum. Sessions that use a `prompt` bill at 7 credits / browser minute; sessions without a prompt (Playwright `code` only) bill at 2 credits / browser minute."
+    },
+    {
+      "url": "https://docs.firecrawl.dev/billing",
+      "date": "2026-10-28",
+      "proved": "the Free plan is limited to 10 requests a minute on scrape, map and search, 2 on crawl, agent and interact, and 2 concurrent browsers",
+      "capture": "sha256:1f5e2656ae543c6f5331e279597fbeb580947ec52021ec1197badf8034ed7351",
+      "quote": "Rate limits of 10 requests per minute on `/scrape`, `/map` and `/search`, and 2 requests per minute on `/crawl`, `/agent` and `/interact`. ... 2 concurrent browsers, with the same 50,000 maximum queued jobs as the paid self-serve plans."
+    },
+    {
+      "url": "https://docs.firecrawl.dev/rate-limits",
+      "date": "2026-10-28",
+      "proved": "the rate-limits page gives the Free plan 2 concurrent browsers and a 50,000 queued-job maximum",
+      "capture": "sha256:6867c1561cc51e8baee2be6a360f73e7bc4cfeff7ffec16ca2b438b06e5d2d82",
+      "quote": "| Free | 2 | 50,000 |"
+    },
+    {
+      "url": "https://docs.firecrawl.dev/features/interact",
+      "date": "2026-10-28",
+      "proved": "Interact sessions expire after a default 10-minute TTL or a default 5-minute inactivity timeout",
+      "capture": "sha256:2f1e5107ed6267aacab82d7b4c05ecf4d2d0367b416623325fd8ea1015d7f4f3",
+      "quote": "Sessions also expire automatically based on TTL (default: 10 minutes) or inactivity timeout (default: 5 minutes)."
+    },
+    {
+      "url": "https://docs.firecrawl.dev/developer-guides/workflow-automation/n8n",
+      "date": "2026-10-28",
+      "proved": "registration takes an email address or GitHub login, with email verification if prompted",
+      "capture": "sha256:635b697ca02e9c0b0c4e53845acfd9290bc8a5724b16b3cf70934855fd16d627",
+      "quote": "Create an account using your email address or GitHub login 4. Verify your email if prompted"
+    },
+    {
+      "url": "https://docs.firecrawl.dev/rate-limits",
+      "date": "2026-10-28",
+      "proved": "keyless usage needs no API key and is capped per IP address per day",
+      "capture": "sha256:6867c1561cc51e8baee2be6a360f73e7bc4cfeff7ffec16ca2b438b06e5d2d82",
+      "quote": "Keyless usage is free and capped per IP address per day by **two limits**, and exceeding either returns a `429`"
+    },
+    {
+      "url": "https://docs.firecrawl.dev/billing",
+      "date": "2026-10-28",
+      "proved": "the billing page states the Free plan's monthly credits and its per-minute rate limits",
+      "capture": "sha256:1f5e2656ae543c6f5331e279597fbeb580947ec52021ec1197badf8034ed7351",
+      "quote": "1,000 credits per month. ... Rate limits of 10 requests per minute on `/scrape`, `/map` and `/search`, and 2 requests per minute on `/crawl`, `/agent` and `/interact`."
+    },
+    {
+      "url": "https://www.firecrawl.dev/pricing",
+      "date": "2026-10-28",
+      "proved": "the Free plan is 1,000 credits a month, about 1,000 pages, with no card; unchanged",
+      "capture": "sha256:ed238da867bd812a98e93e266059e528ff249aa8a9ba3dde72961f8c9e81e71e",
+      "quote": "1,000 free credits every month, which covers about 1,000 pages, and no card is required"
+    },
+    {
+      "url": "https://www.firecrawl.dev/pricing",
+      "date": "2026-11-03",
+      "proved": "the only egress item is static IPs, Enterprise only; no transfer allowance or price is listed",
+      "capture": "sha256:e1af9e2b0b5ac4ed1969a29306bfb1d9fa8b57ea7981f713850e5c0a0287a0e8",
+      "quote": "| Static egress IPs | Not available | Not available | Not available | Not available | Not available | Included |"
+    },
+    {
+      "url": "https://docs.firecrawl.dev/rate-limits",
+      "date": "2026-11-03",
+      "proved": "a REST API, SDKs and a CLI exist",
+      "capture": "sha256:80f845e22951dd68ec0d41e8e57add42e4a8965bbd5ae76390243af588382a65",
+      "quote": "For official Firecrawl clients, the CLI, SDKs, and REST API, keyless access also includes **Interact**."
+    },
+    {
+      "url": "https://docs.firecrawl.dev/sdks/cli.md",
+      "date": "2026-11-03",
+      "proved": "a CLI exists",
+      "capture": "sha256:8df418114745271491139b23c603826fae321ce3fffa0493a47dbbe4464b3de7",
+      "quote": "Search, scrape, parse, crawl, map, interact, run agent jobs, and monitor changes directly from the terminal."
+    },
+    {
+      "url": "https://docs.firecrawl.dev/rate-limits",
+      "date": "2026-11-06",
+      "proved": "the keyless tier carries a per-IP daily cap on requests and a per-IP daily cap on credits, and exceeding either returns 429; the page gives no value for either",
+      "capture": "sha256:91b799ecb7b8a147c955062d4fd1080a7f0050417794be79589edae31245bcb2",
+      "quote": "Keyless usage is free and capped per IP address per day by **two limits**, and exceeding either returns a `429`:"
+    },
+    {
+      "url": "https://docs.firecrawl.dev/rate-limits",
+      "date": "2026-11-06",
+      "proved": "the keyless tier has a per-IP daily credit cap, and an operation that costs more credits reaches it sooner; the page gives no value",
+      "capture": "sha256:91b799ecb7b8a147c955062d4fd1080a7f0050417794be79589edae31245bcb2",
+      "quote": "- A maximum number of **credits** per day. Operations cost different amounts of credits (for example, Interact and JSON extraction cost more than a basic scrape), so heavier usage reaches the credit cap sooner."
+    },
+    {
+      "url": "https://www.firecrawl.dev/signup",
+      "date": "2026-11-06",
+      "proved": "the sign-up form asks for an email address, beside a password field and GitHub and Google sign-in",
+      "capture": "sha256:4462769e3c1137049e061177128f26fdbe8ae784d6e8596ab93a3b3d2eff7182",
+      "quote": "placeholder=\"name@example.com\" type=\"email\" autoCapitalize=\"none\" autoComplete=\"email\" autoCorrect=\"off\" name=\"email\" value=\"\""
+    },
+    {
+      "url": "https://www.firecrawl.dev/signup",
+      "date": "2026-11-06",
+      "proved": "the sign-up form has a password field, so the account is created with an email address and a password",
+      "capture": "sha256:4462769e3c1137049e061177128f26fdbe8ae784d6e8596ab93a3b3d2eff7182",
+      "quote": "type=\"password\" autoComplete=\"new-password\" name=\"password\" value=\"\""
+    },
+    {
+      "url": "https://www.firecrawl.dev/signup",
+      "date": "2026-11-06",
+      "proved": "the sign-up form offers GitHub sign-in",
+      "capture": "sha256:4462769e3c1137049e061177128f26fdbe8ae784d6e8596ab93a3b3d2eff7182",
+      "quote": "<span>Continue with <!-- -->GitHub</span>"
+    },
+    {
+      "url": "https://www.firecrawl.dev/signup",
+      "date": "2026-11-06",
+      "proved": "the sign-up form offers Google sign-in",
+      "capture": "sha256:4462769e3c1137049e061177128f26fdbe8ae784d6e8596ab93a3b3d2eff7182",
+      "quote": "<input type=\"hidden\" name=\"provider\" value=\"google\"/>"
+    },
+    {
+      "url": "https://docs.firecrawl.dev/billing",
+      "date": "2026-11-06",
+      "proved": "the free plan costs nothing and needs no card; unchanged",
+      "capture": "sha256:d1def2716aa685ebae0e3a57d5709fe10deb10103e8f2f140d2a295ed60a2dd2",
+      "quote": "New accounts start on the free plan. It costs nothing and does not need a card."
+    },
+    {
+      "url": "https://www.firecrawl.dev/signup",
+      "date": "2026-11-06",
+      "proved": "registration takes an email address or a GitHub or Google login, so the identity cost is an email address",
+      "capture": "sha256:4462769e3c1137049e061177128f26fdbe8ae784d6e8596ab93a3b3d2eff7182",
+      "quote": "<span>Continue with <!-- -->GitHub</span>"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-06T18:37:39.729Z",
+  "price_per_tb_month": null,
+  "notes": "Re-read on 2026-10-22: the free plan is 1,000 monthly credits with no card. An earlier table row called this paid-only and the browser document said it had no free tier; neither was right.",
+  "extras": {
+    "seed_status": "off-category",
+    "talaria_m10h_usd": null,
+    "talaria_m24h_usd": null,
+    "nemo_m10h_usd": 749.0,
+    "keep_rate": null,
+    "keep_rate_basis": "no field in the source",
+    "billing_model": "unclassified",
+    "shape": null,
+    "session_cap": null,
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "allowance",
+    "free_tier_kind_basis": "derived from the catalogue card's free_monthly_credit, free_one_time_credit and has_genuine_free_tier; no page was read",
+    "burst_x": 1.0,
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22"
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "request-rate",
+  "binding_note": "the monthly credit pool binds before any concurrency limit, because the pool is spent by ordinary crawling"
+}

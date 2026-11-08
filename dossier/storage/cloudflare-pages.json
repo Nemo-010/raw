@@ -1,0 +1,217 @@
+{
+  "topic": "storage",
+  "slug": "cloudflare-pages",
+  "provider": "Cloudflare Pages (Direct Upload / Wrangler)",
+  "url": "https://pages.cloudflare.com",
+  "category": "paas",
+  "free_tier": {
+    "stated": "20,000 files per site on the Free plan, 25 MiB maximum per file, 100 projects per account: 100 projects x 20,000 files x 25 MiB = 48,828.125 GiB = 47.68 TiB per account. No stated total-bytes cap.",
+    "unit": "objects",
+    "metered_on": "unstated",
+    "source_url": "https://developers.cloudflare.com/pages/platform/limits/",
+    "read_on": "2026-11-01",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "25 MiB max per file",
+    "bytes": 26214400,
+    "source_url": "https://developers.cloudflare.com/pages/platform/limits/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://developers.cloudflare.com/pages/platform/limits/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Unlimited requests and unlimited bandwidth: 'Static asset requests ... are free and unlimited' (pages/functions/pricing) and 'Unlimited bandwidth ... no extra cost to you' (blog.cloudflare.com/big-ideas-on-pages).",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "git",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "wrangler pages deploy (official CLI, direct upload of a folder, no Git required); Cloudflare API v4 /accounts/:id/pages/projects/:name/deployments does multipart upload; rclone has no native 'pages' backend but can be driven via 'rclone serve http' + wrangler or a custom remote.",
+  "chaining": "100 projects per account (docs: 'limit of 100 projects per account. This limit is not routinely increased') x 20,000 files x 25 MiB. Unlimited free Cloudflare accounts x 100 projects. Workers Static Assets (100 Workers free, 20,000 files each) is a second, independent pool on the same account. Sharding is by file: any 10 TiB working set = ~420k shards of 25 MiB spread over ~21 projects.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "25 MiB max per file",
+      "source": "https://developers.cloudflare.com/pages/platform/limits/"
+    }
+  ],
+  "limits_note": "25 MiB hard per file (no override on Free); 20,000 files per site on Free; 500 builds/month and 20-min build timeout if Git-driven; new-project creation throttled for the first 48h of a new account ('Cloudflare limits the number of new Pages projects you can create within your first 48 hours'); Functions requests draw from the 100k/day Workers quota, but pure static requests do not.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "A Cloudflare account is created with an email address and a password, and the address is verified by email. An additional Free account needs a user at least seven days old holding the Super Administrator role on an existing account, and up to five additional Free accounts may be created.",
+    "country": null
+  },
+  "reliability_note": "Assets stay cached on the CDN until the next deployment, so re-upload churn is the only real risk; no data-vanishing mechanism observed, and static serving is not rate-limited or billed.",
+  "confidence": "documented",
+  "confidence_note": "re-read from read-broker on 2026-10-22 (HTTP 200, 3777 bytes, sha256 c163cd6d9d46f7fd). The page states the number in the record; the claim is documented, not measured. | re-read from read-broker on 2026-10-22 (HTTP 200, 7360 bytes, sha256 77e09b369ce18a37). The page states the number in the record; the claim is documented, not measured.",
+  "evidence": [
+    {
+      "url": "https://developers.cloudflare.com/pages/platform/limits/",
+      "date": "2026-10-22",
+      "proved": "Pages Free plan allows 20,000 files per site, 25 MiB per file. Re-read https://developers.cloudflare.com/pages/platform/limits/: HTTP 200, 7360 bytes, sha256 77e09b369ce18a37. Quoted: ch file on your site to Cloudflare's globally distributed network to deliver a low latency experience to every user that visits your site. Cloudflare Pages sites can contain up to 20,000 files on the Free plan. Paid plans (such as Pro, Business, and Enterprise plans) can have up to 100,000 files per site. To enable this increased limit, set the environment variable `PAGES_WRANGLER_MAJOR_VERSION=4` in your Pages project settings. ## File size The"
+    },
+    {
+      "url": "https://developers.cloudflare.com/pages/functions/pricing/",
+      "date": "2026-10-22",
+      "proved": "requests to static assets are free and unlimited on Free and paid plans. Re-read https://developers.cloudflare.com/pages/functions/pricing/: HTTP 200, 3777 bytes, sha256 c163cd6d9d46f7fd. Quoted: [change usage models](https://developers.cloudflare.com/workers/platform/pricing/#how-to-switch-usage-models). ### Static asset requests On both free and paid plans, requests to static assets are free and unlimited. A request is considered static when it does not invoke Functions. Refer to [Functions invocation routes](https://developers.cloudflare.com/pages/functions/routing/#functions-invocation-routes) to learn more about when Functions are invoked. ## Free Plan Re"
+    },
+    {
+      "url": "https://developers.cloudflare.com/pages/platform/limits/",
+      "date": "2026-10-21",
+      "proved": "'Cloudflare Pages sites can contain up to 20,000 files on the Free plan', 'maximum file size for a single Cloudflare Pages site asset is 25 MiB', 'limit of 100 projects per account' (page last updated Sep 5, 2026)"
+    },
+    {
+      "url": "https://developers.cloudflare.com/pages/functions/pricing/",
+      "date": "2026-10-21",
+      "proved": "'On both free and paid plans, requests to static assets are free and unlimited'"
+    },
+    {
+      "url": "https://blog.cloudflare.com/big-ideas-on-pages/",
+      "date": "2026-10-21",
+      "proved": "'Unlimited requests ... Unlimited bandwidth ... for free'"
+    },
+    {
+      "url": "https://vite.pages.dev/",
+      "date": "2026-10-21",
+      "proved": "probe: curl -D - -> HTTP/1.1 200, Server: cloudflare, x-server: Cloudflare Pages"
+    },
+    {
+      "url": "https://vite.pages.dev/assets/index.37d2ad0a.js",
+      "date": "2026-10-21",
+      "proved": "probe: curl -D - -> 200, Content-Type: application/javascript, Content-Length: 1555, Cache-Control: public, max-age=0, must-revalidate (direct binary asset served off pages.dev)"
+    },
+    {
+      "url": "https://developers.cloudflare.com/pages/platform/limits/",
+      "date": "2026-11-01",
+      "proved": "the Free plan holds 20,000 files per site; the same page states 25 MiB per asset and 100 projects per account",
+      "capture": "sha256:7f4078e143d1dd096866771c0468b0d3334be8bd1008840fbb5479ad9d67a818",
+      "quote": "Cloudflare Pages sites can contain up to 20,000 files on the Free plan."
+    },
+    {
+      "url": "https://developers.cloudflare.com/pages/platform/limits/",
+      "date": "2026-11-01",
+      "proved": "the limits page as served on 2026-11-01 still states the Free plan file caps",
+      "capture": "sha256:7f4078e143d1dd096866771c0468b0d3334be8bd1008840fbb5479ad9d67a818",
+      "quote": "The maximum file size for a single Cloudflare Pages site asset is 25 MiB."
+    },
+    {
+      "url": "https://developers.cloudflare.com/fundamentals/account/create-account/",
+      "date": "2026-11-01",
+      "proved": "the account page states the sign-up fields (email and password), the email verification, the seven-day age and Super Administrator requirements, and the five-account cap",
+      "capture": "sha256:0165fdf250cc1338d7e7a94dd78c7adc2df6f592133ad72dfcf0651a080c5543",
+      "quote": "You can create up to five additional Free accounts."
+    },
+    {
+      "url": "https://developers.cloudflare.com/pages/functions/pricing/",
+      "date": "2026-11-01",
+      "proved": "requests to static assets stay free and unlimited on both plans, so egress stays unmetered for static assets",
+      "capture": "sha256:04df31b1ccc13435ac7e7a0a2b85e5ec3c3abe1d503e0fe70d3ed5dd5f8e1582",
+      "quote": "On both free and paid plans, requests to static assets are free and unlimited."
+    },
+    {
+      "url": "https://developers.cloudflare.com/pages/platform/limits/",
+      "date": "2026-11-01",
+      "proved": "the per-asset cap the per-account total is derived from; the same page states 20,000 files per site and 100 projects per account",
+      "capture": "sha256:7f4078e143d1dd096866771c0468b0d3334be8bd1008840fbb5479ad9d67a818",
+      "quote": "The maximum file size for a single Cloudflare Pages site asset is 25 MiB."
+    },
+    {
+      "url": "https://developers.cloudflare.com/fundamentals/account/create-account/",
+      "date": "2026-11-04",
+      "proved": "account sign-up asks for an email and a password only",
+      "capture": "sha256:0165fdf250cc1338d7e7a94dd78c7adc2df6f592133ad72dfcf0651a080c5543",
+      "quote": "2. Enter your **Email** and **Password**."
+    },
+    {
+      "url": "https://developers.cloudflare.com/pages/platform/limits/",
+      "date": "2026-11-04",
+      "proved": "the Free plan file cap is unchanged, so verdict qualifies stands",
+      "capture": "sha256:7f4078e143d1dd096866771c0468b0d3334be8bd1008840fbb5479ad9d67a818",
+      "quote": "Cloudflare Pages sites can contain up to 20,000 files on the Free plan."
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-11-04T00:49:32.326Z",
+  "notes": "20,000 files per site on the Free plan, 25 MiB maximum per file, 100 projects per account: 100 projects x 20,000 files x 25 MiB = 48,828.125 GiB = 47.68 TiB per account. No stated total-bytes cap.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C5-static-hosts.json",
+    "seed_area": "C/C5",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "C/C5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [
+      {
+        "field": "verdict",
+        "class": "verify/ verdict differs from table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "verify/cloudflare-pages.json"
+          },
+          {
+            "value": "qualifies",
+            "source": "table.md"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/free/cloudflare-edge.md",
+    "document_section": "Cloudflare Pages and Workers static assets",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "20,000 files per site on Free; 25 MiB max per file; 100 projects per account => ~488 GiB per project, ~48.8 TiB per account. No stated total-bytes cap.",
+    "limits_verbatim": "25 MiB hard per file (no override on Free); 20,000 files per site on Free; 500 builds/month and 20-min build timeout if Git-driven; new-project creation throttled for the first 48h of a new account ('Cloudflare limits the number of new Pages projects you can create within your first 48 hours'); Functions requests draw from the 100k/day Workers quota, but pure static requests do not.",
+    "egress_verbatim": "Unlimited requests and unlimited bandwidth: 'Static asset requests ... are free and unlimited' (pages/functions/pricing) and 'Unlimited bandwidth ... no extra cost to you' (blog.cloudflare.com/big-ideas-on-pages).",
+    "chaining_verbatim": "100 projects per account (docs: 'limit of 100 projects per account. This limit is not routinely increased') x 20,000 files x 25 MiB. Unlimited free Cloudflare accounts x 100 projects. Workers Static Assets (100 Workers free, 20,000 files each) is a second, independent pool on the same account. Sharding is by file: any 10 TiB working set = ~420k shards of 25 MiB spread over ~21 projects.",
+    "tooling_verbatim": "wrangler pages deploy (official CLI, direct upload of a folder, no Git required); Cloudflare API v4 /accounts/:id/pages/projects/:name/deployments does multipart upload; rclone has no native 'pages' backend but can be driven via 'rclone serve http' + wrangler or a custom remote.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Static/docs/wiki hosts with big free limits: GitHub Pages, GitLab Pages, Cloudflare Pages, Netlify, Vercel, Surge, Neocities, ReadTheDocs, GitBook, Notion, Outline, Confluence free, MkDocs hosts, per-site caps",
+    "verified_in_pass": [
+      {
+        "url": "https://developers.cloudflare.com/pages/functions/pricing/",
+        "date": "2026-10-22",
+        "via": "read-broker",
+        "http_status": 200,
+        "bytes": 3777,
+        "sha256": "c163cd6d9d46f7fd46095c5a8ce78102090d9cb7a37c9e9b215f35f8e7615727",
+        "pattern_found": true,
+        "what_changed": "no change: the page still states the claim",
+        "capture": "captures\\cloudflare-pages-developers-cloudflare-com-pages-functions-pricing-.txt"
+      },
+      {
+        "url": "https://developers.cloudflare.com/pages/platform/limits/",
+        "date": "2026-10-22",
+        "via": "read-broker",
+        "http_status": 200,
+        "bytes": 7360,
+        "sha256": "77e09b369ce18a373420038b357e2d023518e2c8875292ac8291036c5f68dd2a",
+        "pattern_found": true,
+        "what_changed": "no change: the page still states the claim",
+        "capture": "captures\\cloudflare-pages-developers-cloudflare-com-pages-platform-limits-.txt"
+      }
+    ]
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

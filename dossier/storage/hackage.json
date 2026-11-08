@@ -1,0 +1,97 @@
+{
+  "topic": "storage",
+  "slug": "hackage",
+  "provider": "Hackage (hackage.haskell.org)",
+  "url": "https://hackage.haskell.org",
+  "category": "registry",
+  "free_tier": {
+    "stated": "No published per-package or total quota found on the upload page or the server API. Uploads are permanent: 'Upload and publish a package permanently' and 'You can only upload a package version once and this cannot be undone'. Real large package verified: pandoc-3.5.tar.gz is 7,483,625 bytes. Packages must be `cabal sdist` output (gzipped tar with package.cabal).",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://hackage.haskell.org/upload",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://hackage.haskell.org/upload",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "No published per-package or total quota found on the upload page or the server API. Uploads are permanent: 'Upload and publish a package permanently' and 'You can only upload a package version once and this cannot be undone'",
+    "source_url": "https://hackage.haskell.org/upload",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free. Content is served from hackage.haskell.org and the hackage-content.haskell.org CDN. No billing, no bandwidth meter.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "`cabal upload` / `stack upload` (write), `hup` (a dedicated upload client, hackage.haskell.org/package/hup), Hackage server API at hackage-origin.haskell.org/api (open, 62,403-byte route listing), plain HTTPS tarball GET (read).",
+  "chaining": "unlimited packages x unlimited versions per package (versions are never deleted and the index keeps all of them) x unlimited free Hackage accounts. Content must be a Cabal sdist, but the sdist can contain arbitrary files declared in extra-source-files - so a multi-GB blob can be shipped as a package's data. Multiply: N accounts x M packages x K versions.",
+  "limits": [],
+  "limits_note": "per-object-cap: none documented; 7.4 MB verified, and the 100 MB-class limits seen in other ecosystems are not stated here - likely a server-side request size limit that is undocumented. IMPORTANT retention property: uploads are immutable and permanent (no delete, no re-upload of the same version), which is exactly what an archive workload wants. request-rate: not documented.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: kage or total quota found on the upload page or the server API. Uploads are permanent: 'Upload and publish a package permanently' and 'You can only upload a package version once and",
+    "country": null
+  },
+  "reliability_note": "Immutable by design - a bad upload cannot be deleted, which is irreversibility risk in the other direction. No documented byte ceiling means the ceiling is empirical and could change without notice. Read path is plain static files and reliable.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://hackage.haskell.org/package/pandoc-3.5/pandoc-3.5.tar.gz",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, 7,483,625 bytes"
+    },
+    {
+      "url": "https://hackage-origin.haskell.org/api",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, 62,403 bytes (open route listing)"
+    },
+    {
+      "url": "https://hackage.haskell.org/upload",
+      "date": "2026-10-21",
+      "proved": "'Upload and publish a package permanently ... You can only upload a package version once and this cannot be undone'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No published per-package or total quota found on the upload page or the server API. Uploads are permanent: 'Upload and publish a package permanently' and 'You can only upload a package version once and this cannot be undone'. Real large package verified: pandoc-3.5.tar.gz is 7,483,625 bytes. Packages must be `cabal sdist` output (gzipped tar with package.cabal).",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H7-software-archives.json",
+    "seed_area": "H/H7",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H7"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Software archives",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No published per-package or total quota found on the upload page or the server API. Uploads are permanent: 'Upload and publish a package permanently' and 'You can only upload a package version once and this cannot be undone'. Real large package verified: pandoc-3.5.tar.gz is 7,483,625 bytes. Packages must be `cabal sdist` output (gzipped tar with package.cabal).",
+    "limits_verbatim": "per-object-cap: none documented; 7.4 MB verified, and the 100 MB-class limits seen in other ecosystems are not stated here - likely a server-side request size limit that is undocumented. IMPORTANT retention property: uploads are immutable and permanent (no delete, no re-upload of the same version), which is exactly what an archive workload wants. request-rate: not documented.",
+    "egress_verbatim": "Free. Content is served from hackage.haskell.org and the hackage-content.haskell.org CDN. No billing, no bandwidth meter.",
+    "chaining_verbatim": "unlimited packages x unlimited versions per package (versions are never deleted and the index keeps all of them) x unlimited free Hackage accounts. Content must be a Cabal sdist, but the sdist can contain arbitrary files declared in extra-source-files - so a multi-GB blob can be shipped as a package's data. Multiply: N accounts x M packages x K versions.",
+    "tooling_verbatim": "`cabal upload` / `stack upload` (write), `hup` (a dedicated upload client, hackage.haskell.org/package/hup), Hackage server API at hackage-origin.haskell.org/api (open, 62,403-byte route listing), plain HTTPS tarball GET (read).",
+    "interface_verbatim": "rest",
+    "agent_focus": "Software preservation + package-archive mirrors as free bulk storage: which ones accept arbitrary blobs at scale, and what the per-artifact / monthly / retention caps actually are. Sources limited to pages opened in this session; every quota below was read live or from a dated archive capture."
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

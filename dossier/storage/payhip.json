@@ -1,0 +1,120 @@
+{
+  "topic": "storage",
+  "slug": "payhip",
+  "provider": "Payhip",
+  "url": "https://payhip.com",
+  "category": "Digital-product fulfilment (sell any file)",
+  "free_tier": {
+    "stated": "Explicit, from their own page: 'No, we have no storage or bandwidth limits. We only have a 5GB per file limit.' Help centre repeats: 'Payhip supports a maximum file size of 5GB per digital product.'",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://payhip.com/features/sell-digital-downloads",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "5GB per file",
+    "bytes": 5000000000,
+    "source_url": "https://payhip.com/features/sell-digital-downloads",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://payhip.com/features/sell-digital-downloads",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "No bandwidth limit stated (their words: 'no storage or bandwidth limits'). Free plan is 'Free Forever' with a 5% transaction fee — no monthly fee, so an unpriced/cheap product costs ~nothing.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "Web upload. REST API + webhooks on paid plans; the digital-product upload itself is form-based.",
+  "tooling": "curl/browser; no first-class CLI.",
+  "chaining": "5 GB/file x unlimited files per product x unlimited products = unbounded account. Every listing is a shard with its own 5 GB ceiling — the cleanest 'shard into 5 GB pieces' target found.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "5GB per file",
+      "source": "https://payhip.com/features/sell-digital-downloads"
+    }
+  ],
+  "limits_note": "per-object-cap 5 GB — the only limit they publish. Extension blocklist is a hard gate on ingress: EXE, ISO, DMG, VBS, SCR refused unless inside a ZIP. No aggregate quota.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "a first name, last name, email address and password on the free-account form. No card is asked for: the help centre adds card details only to upgrade a paid plan. No phone field is on the form.",
+    "country": null
+  },
+  "reliability_note": "Serving path is fine; the operational risk is that a 'digital product' must be a listed product, and free products still sit behind a checkout page. Buyer link is emailed, not a stable public URL — so it is an archive/delivery tier, not a hot-link CDN.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://payhip.com/features/sell-digital-downloads",
+      "date": "2026-10-21",
+      "proved": "raw HTML contains 'Is there a storage limit?' / 'no storage or bandwidth limits. We only have a 5GB per file limit.' (the read broker truncated this FAQ block; fetch.web.pkgforge.dev returned it verbatim)"
+    },
+    {
+      "url": "https://help.payhip.com/article/375-cannot-upload-file-or-image",
+      "date": "2026-10-21",
+      "proved": "5GB per digital product; EXE/ISO/DMG/VBS/SCR blocked unless zipped"
+    },
+    {
+      "url": "https://payhip.com/pricing",
+      "date": "2026-10-21",
+      "proved": "'Free Forever' + 5% transaction fee, no monthly fee"
+    },
+    {
+      "url": "https://payhip.com/auth/register",
+      "date": "2026-11-01",
+      "proved": "the free-account form asks for a first name, last name, email address and password only",
+      "capture": "sha256:59140e5be20faa292153c27bdd6f75b527fc1cc63290f090479b762a8294dd56",
+      "quote": "Setup a free Payhip account to create a store. ... First Name ... Last Name ... Email Address ... Password"
+    },
+    {
+      "url": "https://payhip.com/features/sell-digital-downloads",
+      "date": "2026-11-01",
+      "proved": "the no-storage-limit statement and the 5 GB per-file ceiling are unchanged",
+      "capture": "sha256:d3470891a7f805a500ff4c378581961db517462f8d3b7a90cf399e270ea5a0d1",
+      "quote": "No, we have no storage or bandwidth limits. We only have a 5GB per file limit."
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-11-01T18:05:08.102Z",
+  "notes": "Explicit, from their own page: 'No, we have no storage or bandwidth limits. We only have a 5GB per file limit.' Help centre repeats: 'Payhip supports a maximum file size of 5GB per digital product.'",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H14-print-and-media-fulfilment.json",
+    "seed_area": "H/H14",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "H/H14"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Print and media fulfilment",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Explicit, from their own page: 'No, we have no storage or bandwidth limits. We only have a 5GB per file limit.' Help centre repeats: 'Payhip supports a maximum file size of 5GB per digital product.'",
+    "limits_verbatim": "per-object-cap 5 GB — the only limit they publish. Extension blocklist is a hard gate on ingress: EXE, ISO, DMG, VBS, SCR refused unless inside a ZIP. No aggregate quota.",
+    "egress_verbatim": "No bandwidth limit stated (their words: 'no storage or bandwidth limits'). Free plan is 'Free Forever' with a 5% transaction fee — no monthly fee, so an unpriced/cheap product costs ~nothing.",
+    "chaining_verbatim": "5 GB/file x unlimited files per product x unlimited products = unbounded account. Every listing is a shard with its own 5 GB ceiling — the cleanest 'shard into 5 GB pieces' target found.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "curl/browser; no first-class CLI.",
+    "interface_verbatim": "Web upload. REST API + webhooks on paid plans; the digital-product upload itself is form-based.",
+    "agent_focus": "Print-on-demand, media and fulfilment platforms that host your uploads permanently and serve them cheaply. The question for every candidate was NOT 'can I upload' (all of them accept uploads) but: does the platform serve my ORIGINAL bytes back, unsigned, indefinitely, from a CDN I can hot-link? POD image hosts (Redbubble/Printful/Printify/Society6/Threadless/Zazzle/Etsy) all re-encode, cap at 20-300 MB and gate the write behind account setup — they are inverted (tiny ingress, no egress). The value in this niche is the DIGITAL-PRODUCT fulfilment layer and the 3D-model repositories, which are the two places where arbitrary file types survive ingest at GB scale."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

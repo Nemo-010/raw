@@ -1,0 +1,104 @@
+{
+  "topic": "storage",
+  "slug": "anaconda-org",
+  "provider": "Anaconda.org (public conda channels)",
+  "url": "https://anaconda.org",
+  "category": "registry",
+  "free_tier": {
+    "stated": "3 GB per free personal account. Anaconda staff on the official forum: 'You'll hit a hard limit at 10 GB with the default storage settings. If you need a large amount of storage (>100GB), you'll need to contact sales.' Team plan is 50 GB.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://forum.anaconda.com/t/anaconda-packages-storage-size-limits/92903",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://forum.anaconda.com/t/anaconda-packages-storage-size-limits/92903",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://forum.anaconda.com/t/anaconda-packages-storage-size-limits/92903",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free and unmetered for public packages. CDN-fronted (Cloudflare). conda-forge serves multi-GB packages anonymously with no auth.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "anaconda-client (`anaconda upload`, `anaconda copy`, `anaconda remove`); REST at api.anaconda.org; conda itself is the client for download. Public channel listing is anonymous JSON.",
+  "chaining": "Multiply by free orgs/accounts: 3 GB personal, 10 GB default cap, 50 GB Team. Even chained aggressively this is the smallest unit in the field — 10 TiB would need ~340 personal accounts at 3 GB. Not worth the operational cost against npm's 200 MB x unlimited.",
+  "limits": [],
+  "limits_note": "3 GB personal free / 10 GB default hard limit / 50 GB Team. Per-package size not separately capped. Free accounts are public-only. Package versions can be removed but not edited.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: e ceiling is the smallest of the registries and there is no anonymous-way around it. Multiply by free orgs/accounts: 3 GB personal, 10 GB default cap, 50 GB Team. Even chained aggressively",
+    "country": null
+  },
+  "reliability_note": "Hard-limit enforcement is a real upload block, not a warning, and Anaconda's own forum answer routes anyone above 10 GB to sales. Storage ceiling is the smallest of the registries and there is no anonymous-way around it.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://forum.anaconda.com/t/anaconda-packages-storage-size-limits/92903",
+      "date": "2026-10-21",
+      "proved": "'the personal storage limit is only 3GB'; staff reply: 'You'll hit a hard limit at 10 GB with the default storage settings. If you need a large amount of storage (>100GB), you'll need to contact sales'"
+    },
+    {
+      "url": "https://continuumio-docs.readthedocs-hosted.com/anacondaorg/faq/",
+      "date": "2026-10-21",
+      "proved": "'The free plan allows you to search for, create and host public packages, and provides up to 3 GB storage space'"
+    },
+    {
+      "url": "https://api.anaconda.org/package/conda-forge/numpy",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, 3,868 files, 25.6 GB total for one package name (shows the platform itself carries far more than the free-tier limit — the limit is per publisher account, not per package)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "3 GB per free personal account. Anaconda staff on the official forum: 'You'll hit a hard limit at 10 GB with the default storage settings. If you need a large amount of storage (>100GB), you'll need to contact sales.' Team plan is 50 GB.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C2-package-ecosystems.json",
+    "seed_area": "C/C2",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "C/C2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "3 GB per free personal account. Anaconda staff on the official forum: 'You'll hit a hard limit at 10 GB with the default storage settings. If you need a large amount of storage (>100GB), you'll need to contact sales.' Team plan is 50 GB.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area C/C2"
+    },
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "Language package ecosystems",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "3 GB per free personal account. Anaconda staff on the official forum: 'You'll hit a hard limit at 10 GB with the default storage settings. If you need a large amount of storage (>100GB), you'll need to contact sales.' Team plan is 50 GB.",
+    "limits_verbatim": "3 GB personal free / 10 GB default hard limit / 50 GB Team. Per-package size not separately capped. Free accounts are public-only. Package versions can be removed but not edited.",
+    "egress_verbatim": "Free and unmetered for public packages. CDN-fronted (Cloudflare). conda-forge serves multi-GB packages anonymously with no auth.",
+    "chaining_verbatim": "Multiply by free orgs/accounts: 3 GB personal, 10 GB default cap, 50 GB Team. Even chained aggressively this is the smallest unit in the field — 10 TiB would need ~340 personal accounts at 3 GB. Not worth the operational cost against npm's 200 MB x unlimited.",
+    "tooling_verbatim": "anaconda-client (`anaconda upload`, `anaconda copy`, `anaconda remove`); REST at api.anaconda.org; conda itself is the client for download. Public channel listing is anonymous JSON.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Package ecosystems as blob stores: npm, PyPI, crates.io, Maven Central, NuGet, RubyGems, Packagist, Conda/conda-forge, Hex, Pub.dev, CocoaPods, R, CPAN, Hackage — per-artifact caps, version-unlimited behaviour, retention/deletion policy"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

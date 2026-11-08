@@ -1,0 +1,104 @@
+{
+  "topic": "storage",
+  "slug": "mail-bg-50-gb-free-mailbox-with-free-imap-pop-bulgarian",
+  "provider": "Mail.bg — 50 GB free mailbox with free IMAP/POP, Bulgarian",
+  "url": "https://mail.bg",
+  "category": "cloud-drive",
+  "free_tier": {
+    "stated": "Signup page, Waybacks capture 2026-02-23: \"50 GB пощенска кутия\", \"20 MB приложения (атачмънти)\", \"1 GB файл до всяка поща по света\". = 50 GB mailbox, 20 MB attachment cap, 1 GB file to any mailbox worldwide.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://mail.bg/signup",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap 20 MB",
+    "bytes": 20000000,
+    "source_url": "https://mail.bg/signup",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://mail.bg/signup",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Unmetered; mailbox service, no transfer billing.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "IMAP probe-verified live: `imap.mail.bg:993` -> `* OK IMAP4 ready` / `* CAPABILITY IMAP4 IMAP4rev1 QUOTA UIDPLUS MULTIAPPEND BINARY IDLE AUTH=PLAIN`. QUOTA and MULTIAPPEND support is notable — you can read remaining bytes in-band and append several messages per round trip.",
+  "chaining": "50 GB × N free accounts. Also offers free mail hosting on a user-owned domain, which means many mailboxes per domain rather than per signup — the multiplier is domains, not accounts.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap 20 MB",
+      "source": "https://mail.bg/signup"
+    }
+  ],
+  "limits_note": "per-object-cap 20 MB per attachment (the binding constraint — 50 GB / 20 MB = ~2,500 messages to fill). No published daily upload meter. IMAP QUOTA extension present so the real byte ceiling is readable before you fill it.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: я (атачмънти)\", \"1 GB файл до всяка поща по света\". = 50 GB mailbox, 20 MB attachment cap, 1 GB file to any mailbox worldwide. Small national provider; homepage 302s and the apex signu",
+    "country": null
+  },
+  "reliability_note": "Small national provider; homepage 302s and the apex signup page 504'd repeatedly through the proxy, so the live signup flow is fragile even though the IMAP server is healthy.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://archive.web.pkgforge.dev/closest?url=mail.bg/signup&at=2026-03",
+      "date": "2026-10-21",
+      "proved": "> capture 20260223024603, read via read.web.pkgforge.dev — \"50 GB пощенска кутия\""
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: openssl s_client -connect imap.mail.bg:993 -> * OK IMAP4 ready + CAPABILITY incl. QUOTA, MULTIAPPEND, BINARY"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET mail.bg/ -> 302 (0 bytes); GET mail.bg/help -> 200 (17 bytes)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Signup page, Waybacks capture 2026-02-23: \"50 GB пощенска кутия\", \"20 MB приложения (атачмънти)\", \"1 GB файл до всяка поща по света\". = 50 GB mailbox, 20 MB attachment cap, 1 GB file to any mailbox worldwide.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H8-email-as-storage.json",
+    "seed_area": "H/H8",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H8"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Email as storage",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Signup page, Waybacks capture 2026-02-23: \"50 GB пощенска кутия\", \"20 MB приложения (атачмънти)\", \"1 GB файл до всяка поща по света\". = 50 GB mailbox, 20 MB attachment cap, 1 GB file to any mailbox worldwide.",
+    "limits_verbatim": "per-object-cap 20 MB per attachment (the binding constraint — 50 GB / 20 MB = ~2,500 messages to fill). No published daily upload meter. IMAP QUOTA extension present so the real byte ceiling is readable before you fill it.",
+    "egress_verbatim": "Unmetered; mailbox service, no transfer billing.",
+    "chaining_verbatim": "50 GB × N free accounts. Also offers free mail hosting on a user-owned domain, which means many mailboxes per domain rather than per signup — the multiplier is domains, not accounts.",
+    "tooling_verbatim": "IMAP probe-verified live: `imap.mail.bg:993` -> `* OK IMAP4 ready` / `* CAPABILITY IMAP4 IMAP4rev1 QUOTA UIDPLUS MULTIAPPEND BINARY IDLE AUTH=PLAIN`. QUOTA and MULTIAPPEND support is notable — you can read remaining bytes in-band and append several messages per round trip.",
+    "interface_verbatim": "rest",
+    "agent_focus": "email and mail-adjacent storage: webmail quotas, IMAP-as-block-device, mailing-list archives, newsletter attachment hosts"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

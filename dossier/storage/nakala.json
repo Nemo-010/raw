@@ -1,0 +1,98 @@
+{
+  "topic": "storage",
+  "slug": "nakala",
+  "provider": "NAKALA (IR* Huma-Num, CNRS / French national HSS data repository)",
+  "url": "https://nakala.fr",
+  "category": "academic",
+  "free_tier": {
+    "stated": "Public deposits are explicitly uncapped: 'Il n'existe aucune limite pour les dépôts publics' (there is no limit for public deposits), and 'Un accès à vos données sans limite de volumétrie, ni de temps' (access to your data with no volume or time limit). The only quota is on PRIVATE staging: 10,000 private deposits or 100 GB equivalent.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://documentation.huma-num.fr/nakala/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://documentation.huma-num.fr/nakala/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "Publication mints a DOI via DataCite and is irreversible — deletion requires a request to Huma-Num, so this is a permanent archive, not scratch space",
+    "source_url": "https://documentation.huma-num.fr/nakala/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free. Files are served from Huma-Num/IN2P3-hosted infrastructure in France with no metering and no egress charge; public deposits are downloadable by any visitor and IIIF image endpoints are exposed for tif/tiff/jpg/jpeg/jp2.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Documented REST API split into search / datas / collections / groups / users / vocabularies, with a per-account API key ('Certaines opérations nécessitent ... sa clé d'API disponible dans son compte personnel'); swagger at api.nakala.fr/doc, separate test instance apitest.nakala.fr. Also OAI-PMH (api.nakala.fr/oai2?verb=Identify), a SPARQL triplestore, IIIF Image API, and a published notebook at gitlab.huma-num.fr/huma-num-public/notebook-api-nakala. No rclone backend.",
+  "chaining": "Unlimited public deposits per account, no volume cap per deposit — so the account is the only unit and it does not need multiplying for 500 GB. Groups feature shares deposit rights across a project team, so a lab can pour many researchers' output into one quota-free surface.",
+  "limits": [],
+  "limits_note": "Private staging capped at 10,000 deposits / 100 GB; public deposits uncapped. Publication mints a DOI via DataCite and is irreversible — deletion requires a request to Huma-Num, so this is a permanent archive, not scratch space. Eligibility is the real limit: the depositor must belong to the French academic world, or be part of a project whose lead team is French-academic.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: 00 GB equivalent. CRITICAL liveness flag: nakala.fr and api.nakala.fr both returned HTTP 503 on 6 consecutive probes across ~25 minutes (site and API, direct and through the proxy",
+    "country": null
+  },
+  "reliability_note": "CRITICAL liveness flag: nakala.fr and api.nakala.fr both returned HTTP 503 on 6 consecutive probes across ~25 minutes (site and API, direct and through the proxy), so the quota is docs-verified but the service was NOT live at probe time. Budget-stable (CNRS-funded national infrastructure) but treat availability as unconfirmed.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://documentation.huma-num.fr/nakala/",
+      "date": "2026-10-21",
+      "proved": "'Il n'existe aucune limite pour les dépôts publics' and 'Le nombre de dépôts privés par déposant est limité à 10 000 (ou l'équivalent de 100 Go)'"
+    },
+    {
+      "url": "https://documentation.huma-num.fr/nakala-API/",
+      "date": "2026-10-21",
+      "proved": "REST API endpoint list, api.nakala.fr/doc, OAI-PMH, SPARQL, IIIF"
+    },
+    {
+      "url": "https://nakala.fr/",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 503 six times; GET https://api.nakala.fr/oai2?verb=Identify -> 503 (service down at probe time)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Public deposits are explicitly uncapped: 'Il n'existe aucune limite pour les dépôts publics' (there is no limit for public deposits), and 'Un accès à vos données sans limite de volumétrie, ni de temps' (access to your data with no volume or time limit). The only quota is on PRIVATE staging: 10,000 private deposits or 100 GB equivalent.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H12-institutional-repos.json",
+    "seed_area": "H/H12",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H12"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "target_document": "docs/storage/free/academic-identity.md",
+    "document_section": "Institutional repositories",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Public deposits are explicitly uncapped: 'Il n'existe aucune limite pour les dépôts publics' (there is no limit for public deposits), and 'Un accès à vos données sans limite de volumétrie, ni de temps' (access to your data with no volume or time limit). The only quota is on PRIVATE staging: 10,000 private deposits or 100 GB equivalent.",
+    "limits_verbatim": "Private staging capped at 10,000 deposits / 100 GB; public deposits uncapped. Publication mints a DOI via DataCite and is irreversible — deletion requires a request to Huma-Num, so this is a permanent archive, not scratch space. Eligibility is the real limit: the depositor must belong to the French academic world, or be part of a project whose lead team is French-academic.",
+    "egress_verbatim": "Free. Files are served from Huma-Num/IN2P3-hosted infrastructure in France with no metering and no egress charge; public deposits are downloadable by any visitor and IIIF image endpoints are exposed for tif/tiff/jpg/jpeg/jp2.",
+    "chaining_verbatim": "Unlimited public deposits per account, no volume cap per deposit — so the account is the only unit and it does not need multiplying for 500 GB. Groups feature shares deposit rights across a project team, so a lab can pour many researchers' output into one quota-free surface.",
+    "tooling_verbatim": "Documented REST API split into search / datas / collections / groups / users / vocabularies, with a per-account API key ('Certaines opérations nécessitent ... sa clé d'API disponible dans son compte personnel'); swagger at api.nakala.fr/doc, separate test instance apitest.nakala.fr. Also OAI-PMH (api.nakala.fr/oai2?verb=Identify), a SPARQL triplestore, IIIF Image API, and a published notebook at gitlab.huma-num.fr/huma-num-public/notebook-api-nakala. No rclone backend.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Exotic and institutional surfaces: national libraries/archives, museum and heritage platforms, genomics/biobank consortia, audiovisual archives, government open-data portals, institutional repositories (DSpace/EPrints/Dataverse/Invenio) that accept EXTERNAL depositors, publishing platforms, religious/cultural bulk corpora. Priority seam: a university or national repository whose deposit door is open to anyone and whose write path is an API."
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

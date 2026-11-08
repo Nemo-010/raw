@@ -1,0 +1,93 @@
+{
+  "topic": "storage",
+  "slug": "catbox-moe",
+  "provider": "catbox.moe (permanent)",
+  "url": "https://fetch.web.pkgforge.dev/https://catbox.moe/",
+  "category": "rejected-provider",
+  "free_tier": {
+    "stated": "No account required. The origin answered HTTP 200 on 2026-10-23; a 6,585,929-byte object was read back twice with a matching digest at 0.315 MiB/s sustained.",
+    "unit": "unlimited",
+    "metered_on": "none",
+    "source_url": "https://catbox.moe/",
+    "read_on": "2026-10-23",
+    "notes": "the per-file cap and the retention were not re-read in this change"
+  },
+  "per_object_cap": {
+    "stated": "not re-read on 2026-10-23; the record carries no verified number",
+    "bytes": null,
+    "source_url": "https://catbox.moe/",
+    "notes": "a cap exists and was recorded elsewhere as 200 MiB; it is not restated here without a read"
+  },
+  "retention": {
+    "stated": "not re-read on 2026-10-23; loli.la and catbox differ and the difference was not checked here",
+    "days": null,
+    "source_url": "https://catbox.moe/",
+    "notes": ""
+  },
+  "egress": {
+    "terms": "Unmetered; the measured sustained rate was 0.315 MiB/s, which is per-ip-shaping rather than a byte cap.",
+    "metered": false,
+    "free_allowance": "none published",
+    "price_per_tb": null,
+    "source_url": "https://catbox.moe/"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "not recorded in the dead-end row",
+  "tooling": "plain HTTPS GET; the upload endpoint takes a multipart form",
+  "chaining": "a free anonymous object host that needs no account; it composes as a relay or a small-object store, not as an archive",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "0.315 MiB/s sustained on one connection; 32 connections moved less than one",
+      "source": "probe:https://catbox.moe/"
+    }
+  ],
+  "limits_note": "",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "no account for an upload or a download",
+    "country": null
+  },
+  "reliability_note": "the origin answered 521 on 2026-10-21 and 200 on 2026-10-23; an earlier verdict treated the outage as a failed quota",
+  "confidence": "documented",
+  "confidence_note": "the origin and the read path were checked today; the cap and the retention were not",
+  "evidence": [
+    {
+      "url": "https://catbox.moe/",
+      "date": "2026-10-23",
+      "proved": "HTTP 200 with Cloudflare headers; the site serves"
+    },
+    {
+      "url": "probe:https://catbox.moe/",
+      "date": "2026-10-23",
+      "proved": "6,585,929 bytes read back twice with a matching digest; 0.315 MiB/s sustained"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-23T03:45:00.000Z",
+  "notes": "Corrected from fails-quota to qualifies-with-caveat on 2026-10-23: the earlier record treated a Cloudflare 521 as a quota failure. The cap and retention fields were left unread rather than restated.",
+  "history": [
+    "history/2026-10-23T034500Z/two-false-dead-verdicts.md"
+  ],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E1-ephemeral-dumps.json",
+    "seed_area": "E/E1",
+    "conversion": "mechanical",
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Origin is DOWN/behind Cloudflare 521. Direct connection to its resolved IP 108.181.20.35 times out on :443 from here; fetch.web.pkgforge.dev returns HTTP 521 three times with Retry-After: 12",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "DEAD-ENDS.md + the dossier wave that recorded it"
+    },
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this rejection was not re-checked against the live service"
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "the sustained rate, not a byte counter, is what a large retrieval meets first",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

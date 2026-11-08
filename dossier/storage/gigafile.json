@@ -1,0 +1,202 @@
+{
+  "topic": "storage",
+  "slug": "gigafile",
+  "provider": "GigaFile (ギガファイル便)",
+  "url": "https://gigafile.nu",
+  "category": "anonymous-dump",
+  "free_tier": {
+    "stated": "300 GB per file, unlimited number of files, no account required ('1ファイル300Gまで、個数無制限')",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://gigafile.nu/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "300 GB per file",
+    "bytes": 300000000000,
+    "source_url": "https://gigafile.nu/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "300 GB/file; retention selectable 3/5/7/14/30/60/100 days (default 5); 2 GB/day download per file per IP; optional 4-char download key and email notification; files expire hard after retention, no inactivity reset",
+    "days": 100,
+    "source_url": "https://gigafile.nu/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "free direct download via /download.php?file=<id>; no metering page exists, no bandwidth cap published; per-IP daily cap = 2 GB per file (5 downloads/day of the same file)",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "no rclone backend; plain multipart POST to https://<nn>.gigafile.nu/upload_chunk.php (id, name, chunk, chunks, lifetime, file); chunk_size=100mb, max_size=300gb are published as JS vars in the page source; own client is ~40 lines of python/curl",
+  "chaining": "quota is per record, not per account — 10 TiB = 35 uploads of 300 GB, 20 TiB = ~70; no account, no identity, so nothing to register and nothing to shard around. Only the 100-day retention forces a re-upload cycle.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "2 GB/day",
+      "source": "https://gigafile.nu/"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "300 GB per file",
+      "source": "https://gigafile.nu/"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "300 GB/file",
+      "source": "https://gigafile.nu/"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "retention selectable 3/5/7/14/30/60/100 days",
+      "source": "https://gigafile.nu/"
+    }
+  ],
+  "limits_note": "300 GB/file; retention selectable 3/5/7/14/30/60/100 days (default 5); 2 GB/day download per file per IP; optional 4-char download key and email notification; files expire hard after retention, no inactivity reset",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: 300 GB per file, unlimited number of files, no account required ('1ファイル300Gまで、個数無制限') Download endpoint only serves when called with the referer/cookie chain from the file",
+    "country": null
+  },
+  "reliability_note": "Download endpoint only serves when called with the referer/cookie chain from the file page (a bare GET returns an 'open the proper download screen' interstitial); datacenter IPs are ad-walled but the byte path itself worked",
+  "confidence": "documented",
+  "confidence_note": "The per-object cap and the retention band are stated on the page as re-read in this session. Was reported; now documented.",
+  "evidence": [
+    {
+      "url": "https://gigafile.nu/",
+      "date": "2026-10-21",
+      "proved": "'1ファイル300Gまで、個数無制限' (up to 300G per file, unlimited count), retention 3–100 days"
+    },
+    {
+      "url": "https://gigafile.nu/",
+      "date": "2026-10-21",
+      "proved": "page source of — var max_size = \"300gb\"; var chunk_size = \"100mb\"; var server = \"10.gigafile.nu\""
+    },
+    {
+      "url": "https://10.gigafile.nu/upload_chunk.php",
+      "date": "2026-10-21",
+      "proved": "probe: POST (id,name,chunk=0,chunks=1,lifetime=7,file=probe.bin) -> 200 {\"status\":0,\"url\":\"https://10.gigafile.nu/1029-b775394042aa285673c0da77eb508b1b5\",\"delkey\":\"62fb\"}"
+    },
+    {
+      "url": "https://10.gigafile.nu/download.php?file=1029-b77",
+      "date": "2026-10-21",
+      "proved": "probe: GET ... with referer+session cookie -> 200, application/octet-stream, 2048 bytes, byte-identical to uploaded file"
+    },
+    {
+      "url": "https://gigafile.nu/",
+      "date": "2026-10-22",
+      "proved": "200, 48,407 B on 2026-10-22; page description: '3 days to 100 days, seven selectable retention periods' and '300G per file'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-22T00:00:00.000Z",
+  "notes": "300 GB per file, unlimited number of files, no account required ('1ファイル300Gまで、個数無制限')",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E4-upload-apis.json",
+    "seed_area": "E/E4",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "E/E4"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "E/E6"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "GigaFile (ギガファイル便)",
+      "GigaFile (ギガファイル便, gigafile.nu)"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md row, area E/E4",
+            "evidence": "quota: 300 GB per file, unlimited number of files, no account required ('1ファイ"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area E/E6",
+            "evidence": "quota: Free, no registration: capacity stated as unlimited ('容量無制限'), files u"
+          }
+        ],
+        "resolution": "qualifies-with-caveat: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies. The table.md (area E/E6) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "300 GB per file, unlimited number of files, no account required ('1ファイ",
+            "source": "table.md row, area E/E4",
+            "evidence": null
+          },
+          {
+            "value": "Free, no registration: capacity stated as unlimited ('容量無制限'), files u",
+            "source": "table.md row, area E/E6",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md (area E/E4)"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area E/E6)"
+          }
+        ],
+        "resolution": "qualifies-with-caveat: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies. The table.md (area E/E6) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "300 GB per file, unlimited number of files, no account required ('1ファイ",
+            "source": "table.md (area E/E4)"
+          },
+          {
+            "value": "Free, no registration: capacity stated as unlimited ('容量無制限'), files u",
+            "source": "table.md (area E/E6)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/free/transfer-services.md",
+    "document_section": "Upload APIs",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "300 GB per file, unlimited number of files, no account required ('1ファイル300Gまで、個数無制限')",
+    "limits_verbatim": "300 GB/file; retention selectable 3/5/7/14/30/60/100 days (default 5); 2 GB/day download per file per IP; optional 4-char download key and email notification; files expire hard after retention, no inactivity reset",
+    "egress_verbatim": "free direct download via /download.php?file=<id>; no metering page exists, no bandwidth cap published; per-IP daily cap = 2 GB per file (5 downloads/day of the same file)",
+    "chaining_verbatim": "quota is per record, not per account — 10 TiB = 35 uploads of 300 GB, 20 TiB = ~70; no account, no identity, so nothing to register and nothing to shard around. Only the 100-day retention forces a re-upload cycle.",
+    "tooling_verbatim": "no rclone backend; plain multipart POST to https://<nn>.gigafile.nu/upload_chunk.php (id, name, chunk, chunks, lifetime, file); chunk_size=100mb, max_size=300gb are published as JS vars in the page source; own client is ~40 lines of python/curl",
+    "interface_verbatim": "rest",
+    "agent_focus": "Upload-as-a-service APIs with generous free tiers: Uploadcare, Filestack, Uploadthing, Bytescale, Cloudinary, ImageKit, Gumlet, Transloadit, Uppy companions, Bunny Stream — free bandwidth/storage numbers and whether files stay downloadable"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

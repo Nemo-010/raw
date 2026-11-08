@@ -1,0 +1,167 @@
+{
+  "topic": "storage",
+  "slug": "figshare",
+  "provider": "figshare (figshare.com free accounts)",
+  "url": "https://figshare.com",
+  "category": "academic",
+  "free_tier": {
+    "stated": "20 GB storage quota per account. Note: the brief's '5 GB per file' is stale — the current limit is 20 GB per individual file. Items 500, files per item 500, collections 100, projects 100.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://info.figshare.com/user-guide/account-limits/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "5 GB per file",
+    "bytes": 5000000000,
+    "source_url": "https://info.figshare.com/user-guide/account-limits/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "Stable commercial service (Digital Science); the binding constraint is the 20 GB pool, and published items are permanent/citable, so it behaves more like a publication endpoint than a bucket.",
+    "source_url": "https://info.figshare.com/user-guide/account-limits/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free and CDN-friendly. Download path: ndownloader.figshare.com -> 302 -> S3 object (Server: AmazonS3), with Accept-Ranges/Content-Range exposed. No egress metering on free accounts.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "figshare REST API v2 (live: GET api.figshare.com/v2/articles -> 200 JSON; per-file download_url at ndownloader.figshare.com). OAI-PMH available. figshare Python client (official, github.com/figshare/figshare-python). No rclone backend.",
+  "chaining": "20 GB x unlimited free accounts. Weak multiplication *within* an account: the 20 GB is a single pool and the 500-item cap binds long before the bytes do at 20 GB/item.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "5 GB per file",
+      "source": "https://info.figshare.com/user-guide/account-limits/"
+    }
+  ],
+  "limits_note": "20 GB total storage and 20 GB max single file; 500 items, 500 files per item, 50 versions; virus scan only up to 10 MB. Exceeding 20 GB requires figshare+ (paid) or an institutional subscription.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: p to 10 MB. Exceeding 20 GB requires figshare+ (paid) or an institutional subscription. academic",
+    "country": null
+  },
+  "reliability_note": "Stable commercial service (Digital Science); the binding constraint is the 20 GB pool, and published items are permanent/citable, so it behaves more like a publication endpoint than a bucket.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://info.figshare.com/user-guide/account-limits/",
+      "date": "2026-10-21",
+      "proved": "'storage quota: 20GB', 'max individual file size: 20GB', 'max number of items: 500'"
+    },
+    {
+      "url": "https://info.figshare.com/user-guide/file-size-limits-and-storage/",
+      "date": "2026-10-21",
+      "proved": "'All figshare.com accounts are provided with 20GB of private storage and are able to upload individual files up to 20GB'"
+    },
+    {
+      "url": "https://ndownloader.figshare.com/files/69259858",
+      "date": "2026-10-21",
+      "proved": "probe: GET -L -> 302 then 200, 1512608 bytes, Server: AmazonS3"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "20 GB storage quota per account. Note: the brief's '5 GB per file' is stale — the current limit is 20 GB per individual file. Items 500, files per item 500, collections 100, projects 100.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D2-open-science.json",
+    "seed_area": "D/D2",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "D/D2"
+      },
+      {
+        "value": "fails-quota",
+        "area": "E/E15"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "figshare (figshare.com free accounts)",
+      "Figshare (figshare.com free tier)"
+    ],
+    "conflicts": [
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "20 GB storage quota per account. Note: the brief's '5 GB per file' is",
+            "source": "table.md row, area D/D2",
+            "evidence": null
+          },
+          {
+            "value": "20 GB total private storage; 20 GB max single file; 500 items; 500 fil",
+            "source": "table.md row, area E/E15",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "20 GB storage quota per account. Note: the brief's '5 GB per file' is",
+            "source": "table.md (area D/D2)"
+          },
+          {
+            "value": "20 GB total private storage; 20 GB max single file; 500 items; 500 fil",
+            "source": "table.md (area E/E15)"
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider is both a table row and a dead end",
+        "claims": [
+          {
+            "value": "fails-quota",
+            "source": "table.md"
+          },
+          {
+            "value": "dead-end: 20 GB storage quota and 500 items — an order of magnitude below the bar and the quota is per ACCOUNT, not per item, so r",
+            "source": "DEAD-ENDS.md"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "20 GB storage quota per account. Note: the brief's '5 GB per file' is stale — the current limit is 20 GB per individual file. Items 500, files per item 500, collections 100, projects 100.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area D/D2"
+    },
+    "target_document": "docs/storage/free/academic.md",
+    "document_section": "Generalist open-science repositories",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "20 GB storage quota per account. Note: the brief's '5 GB per file' is stale — the current limit is 20 GB per individual file. Items 500, files per item 500, collections 100, projects 100.",
+    "limits_verbatim": "20 GB total storage and 20 GB max single file; 500 items, 500 files per item, 50 versions; virus scan only up to 10 MB. Exceeding 20 GB requires figshare+ (paid) or an institutional subscription.",
+    "egress_verbatim": "Free and CDN-friendly. Download path: ndownloader.figshare.com -> 302 -> S3 object (Server: AmazonS3), with Accept-Ranges/Content-Range exposed. No egress metering on free accounts.",
+    "chaining_verbatim": "20 GB x unlimited free accounts. Weak multiplication *within* an account: the 20 GB is a single pool and the 500-item cap binds long before the bytes do at 20 GB/item.",
+    "tooling_verbatim": "figshare REST API v2 (live: GET api.figshare.com/v2/articles -> 200 JSON; per-file download_url at ndownloader.figshare.com). OAI-PMH available. figshare Python client (official, github.com/figshare/figshare-python). No rclone backend.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Open-science repositories with per-project/per-file quotas (excluding Zenodo, owned by another agent). Central question: is 20 TiB of non-research data technically placeable, and does private/unpublished staging count against quota (i.e. is the repo usable as working storage, not just as a publish target)."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

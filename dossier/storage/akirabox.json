@@ -1,0 +1,118 @@
+{
+  "topic": "storage",
+  "slug": "akirabox",
+  "provider": "AkiraBox",
+  "url": "https://akirabox.to",
+  "category": "anonymous-dump",
+  "free_tier": {
+    "stated": "unlimited storage advertised; 5 GB/file anonymous, 20 GB/file with a free account",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://akirabox.to/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "5 GB/file",
+    "bytes": 5000000000,
+    "source_url": "https://akirabox.to/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "5 GB/file anonymous (7 days after last download), 20 GB/file free account (30 days after last download)",
+    "days": 7,
+    "source_url": "https://akirabox.to/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "unmetered, but free downloads carry an explicit human-verification step",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "documented REST API; GET /api/files?url={fileUrl} for status. Upload-via-API docs are Premium-only ('Docs for the upload steps are Premium only').",
+  "chaining": "free accounts are free and email-only; 20 GB/file x N accounts. Storage advertised as unlimited per account.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "5 GB/file",
+      "source": "https://akirabox.to/"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "20 GB/file",
+      "source": "https://akirabox.to/"
+    }
+  ],
+  "limits_note": "5 GB/file anonymous (7 days after last download), 20 GB/file free account (30 days after last download). Premium removes the human check and the size limit; premium is granted only to partner sites with 200k+ visits/month, not sold.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: unlimited storage advertised; 5 GB/file anonymous, 20 GB/file with a free account Its own FAQ says premium 'removes the ads and the \"verify you are human\" check on do",
+    "country": null
+  },
+  "reliability_note": "Its own FAQ says premium 'removes the ads and the \"verify you are human\" check on downloads' — i.e. free downloads require human verification by design. That alone disqualifies it for automated fetch. It also ships a download manager because 'browser downloads stall on big files'.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://akirabox.to/",
+      "date": "2026-10-21",
+      "proved": "(read via read.web.pkgforge.dev) — '5 GB per file without an account · 20 GB with a free account', 'Without an account ... 7 days after their last download'"
+    },
+    {
+      "url": "https://akirabox.to/developers",
+      "date": "2026-10-21",
+      "proved": "'Docs for the upload steps are Premium only'"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: POST /upload -> 404 'Server action not found.'"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "unlimited storage advertised; 5 GB/file anonymous, 20 GB/file with a free account",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E1-ephemeral-dumps.json",
+    "seed_area": "E/E1",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "E/E1"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "unlimited storage advertised; 5 GB/file anonymous, 20 GB/file with a free account",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E1"
+    },
+    "target_document": "docs/storage/free/ephemeral-hosts.md",
+    "document_section": "Ephemeral dump hosts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "unlimited storage advertised; 5 GB/file anonymous, 20 GB/file with a free account",
+    "limits_verbatim": "5 GB/file anonymous (7 days after last download), 20 GB/file free account (30 days after last download). Premium removes the human check and the size limit; premium is granted only to partner sites with 200k+ visits/month, not sold.",
+    "egress_verbatim": "unmetered, but free downloads carry an explicit human-verification step",
+    "chaining_verbatim": "free accounts are free and email-only; 20 GB/file x N accounts. Storage advertised as unlimited per account.",
+    "tooling_verbatim": "documented REST API; GET /api/files?url={fileUrl} for status. Upload-via-API docs are Premium-only ('Docs for the upload steps are Premium only').",
+    "interface_verbatim": "rest",
+    "probe_in_seed": "POST https://akirabox.com/upload -> 404 'Server action not found.' (Next.js server action, needs browser-issued action id). Page-level facts read via read.web.pkgforge.dev. Upload path NOT scriptable from curl.",
+    "agent_focus": "anonymous/ephemeral file dumps — hand-probed (upload a 32 KiB random file, download it back, compare sha256)"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

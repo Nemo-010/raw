@@ -1,0 +1,117 @@
+{
+  "topic": "storage",
+  "slug": "ruvds-russian-flat-rate-disk-vps-with-unlimited-traffic",
+  "provider": "RUVDS \"Большой диск\" / СХД — Russian flat-rate disk VPS with unlimited traffic",
+  "url": "https://ruvds.com/ru/huge-disk/",
+  "category": "storage-vps",
+  "free_tier": {
+    "stated": "СХД Старт 1,023 ₽/mo for 1,024 GB; СХД Стандарт 1,899 ₽/mo for 2,048 GB; СХД Премиум 3,798 ₽/mo for 4,096 GB. Line advertised «от 1 до 18 Терабайт». Landing headline: «всего 500₽ за 1 Тб/мес».",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://ruvds.com/ru/huge-disk/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://ruvds.com/ru/huge-disk/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://ruvds.com/ru/huge-disk/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Unlimited — every СХД configuration lists its channel (up to 100 Mbit/s on the entry tiers) with no traffic meter, and the service is sold as a VPS so the rail is the VPS's own port. No per-GB charge exists.",
+    "metered": false
+  },
+  "interface": [
+    "s3",
+    "sftp",
+    "rsync",
+    "smb",
+    "nfs",
+    "ssh",
+    "rclone"
+  ],
+  "interface_detail": "ssh + sftp",
+  "tooling": "Full KVM VPS: SSH, SFTP, rsync, rclone, MinIO/Nextcloud self-hosted, NFS/Samba. This is the most flexible option in the dossier because you control the software stack (so you can run MinIO and get an S3 endpoint yourself).",
+  "chaining": "Config-doubling ladder up to 18 TB; 20 TB requires two units or a different product. Each 1 TB step costs the same per TB from 2 TB upward.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "100 Mbit/s",
+      "source": "https://ruvds.com/ru/huge-disk/"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "1 TB/day",
+      "source": "https://ruvds.com/ru/huge-disk/"
+    }
+  ],
+  "limits_note": "The «500 ₽ per 1 TB/mo» headline is NOT the price of the СХД plans — the cheapest actual 1 TB plan is 1,023 ₽. The 500 ₽ figure refers to a base VPS plus a per-TB disk add-on in the order configurator, and reproducing it requires assembling that configuration. 100 Mbit/s on the entry tier caps the serving workload at ~1 TB/day theoretical, ~32 TB/month, which is just enough for 1 TiB/day but with no headroom. Russian jurisdiction and card.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "Long-established Russian host (ruvds.com), KVM, own DCs. No independent benchmark of the СХД disk subsystem was found; these are HDD-backed large-disk plans and random-read performance will be poor — fine for archive, wrong for the 10 TiB hot set. The gap between the advertised 500 ₽/TB and the actual 1,023 ₽/TB entry plan is the single biggest pricing-presentation discrepancy in this dossier and should be re-quoted at order time.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://ruvds.com/ru/huge-disk/",
+      "date": "2026-10-21",
+      "proved": "read broker, upstream_status 200. «Классический VPS с облачным хранилищем всего 500₽ за 1 Тб/мес»; «СХД Старт 1 023 ₽ в месяц» with «hugeDriveCapacity=1024»; «СХД Стандарт 1 899 ₽» (2048); «СХД Премиум 3 798 ₽» (4096)"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "same page — «полноценное хранилище (СХД) размером от 1 до 18 Терабайт со всем привычным функционалом VPS-сервера»"
+    },
+    {
+      "url": "https://www.ovhcloud.com/pl/public-cloud/prices/",
+      "date": "2026-10-21",
+      "proved": "used only as the FX/units sanity check; RUVDS figures converted at 0.012111 USD/RUB"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$11.50/TB/mo at 2 TB ($23.00/mo) and 4 TB ($46.00/mo); $12.39/TB/mo at 1 TB ($12.39/mo). At 20 TB: ~$11.50/TB/mo if two 10 TB-class configs are assembled ($230/mo), derived not quoted. Unlimited traffic, $0 egress.",
+  "notes": "СХД Старт 1,023 ₽/mo for 1,024 GB; СХД Стандарт 1,899 ₽/mo for 2,048 GB; СХД Премиум 3,798 ₽/mo for 4,096 GB. Line advertised «от 1 до 18 Терабайт». Landing headline: «всего 500₽ за 1 Тб/мес».",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-P5-regional-cheap-paid.json",
+    "seed_area": "A/P5",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "A/P5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/paid/regional.md",
+    "document_section": "Regional cheap paid",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "СХД Старт 1,023 ₽/mo for 1,024 GB; СХД Стандарт 1,899 ₽/mo for 2,048 GB; СХД Премиум 3,798 ₽/mo for 4,096 GB. Line advertised «от 1 до 18 Терабайт». Landing headline: «всего 500₽ за 1 Тб/мес».",
+    "limits_verbatim": "The «500 ₽ per 1 TB/mo» headline is NOT the price of the СХД plans — the cheapest actual 1 TB plan is 1,023 ₽. The 500 ₽ figure refers to a base VPS plus a per-TB disk add-on in the order configurator, and reproducing it requires assembling that configuration. 100 Mbit/s on the entry tier caps the serving workload at ~1 TB/day theoretical, ~32 TB/month, which is just enough for 1 TiB/day but with no headroom. Russian jurisdiction and card.",
+    "egress_verbatim": "Unlimited — every СХД configuration lists its channel (up to 100 Mbit/s on the entry tiers) with no traffic meter, and the service is sold as a VPS so the rail is the VPS's own port. No per-GB charge exists.",
+    "chaining_verbatim": "Config-doubling ladder up to 18 TB; 20 TB requires two units or a different product. Each 1 TB step costs the same per TB from 2 TB upward.",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "Full KVM VPS: SSH, SFTP, rsync, rclone, MinIO/Nextcloud self-hosted, NFS/Samba. This is the most flexible option in the dossier because you control the software stack (so you can run MinIO and get an S3 endpoint yourself).",
+    "interface_verbatim": "ssh + sftp",
+    "price_verbatim": "$11.50/TB/mo at 2 TB ($23.00/mo) and 4 TB ($46.00/mo); $12.39/TB/mo at 1 TB ($12.39/mo). At 20 TB: ~$11.50/TB/mo if two 10 TB-class configs are assembled ($230/mo), derived not quoted. Unlimited traffic, $0 egress.",
+    "agent_focus": "Wave 7 cheap-PAID lane, regional angle: storage sold in RUB / CNY / BRL / INR / ZAR / TRY / PLN / UAH that never appears on Western price lists. Every paid candidate carries price_per_tb_month at USD-converted list price. FX fixed 2026-10-21 from open.er-api.com: RUB 82.5719/USD, CNY 6.6913, BRL 5.0231, INR 94.9952, ZAR 16.3972, TRY 49.5978, PLN 3.8923, UAH 45.0922, EUR 0.89075/USD. Excluded per brief: AWS, Azure, GCP, Alibaba Cloud, Cloudflare R2, Backblaze B2, IDrive e2. Headline result: the true regional floor with genuinely free egress is ~$2.00/TB/mo (Yandex 360 Profi 3 TB on a Russian card) rising to ~$4.17/TB/mo for the same product bought with a foreign card, and ~$5.95-7.56/TB/mo for flat-rate Western-facing file storage (TheHost, Rollin Host). Everything advertised below ~$2/TB/mo in this set is either capacity-capped, egress-metered, or unverifiable marketing."
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

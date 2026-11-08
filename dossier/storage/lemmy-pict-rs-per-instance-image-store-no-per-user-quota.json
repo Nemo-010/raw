@@ -1,0 +1,107 @@
+{
+  "topic": "storage",
+  "slug": "lemmy-pict-rs-per-instance-image-store-no-per-user-quota",
+  "provider": "Lemmy + pict-rs — per-instance image store, no per-user quota",
+  "url": "https://join-lemmy.org/docs/administration/configuration.html",
+  "category": "fediverse-lemmy",
+  "free_tier": {
+    "stated": "No per-user quota in Lemmy's own schema — the bound is pict-rs (the separate Rust image server) and the instance's disk. Upload is gated per-instance by the `image_upload` / `image_mode` local-site flag rather than by bytes.",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://join-lemmy.org/docs/administration/configuration.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap set by pict-rs (`max_file_size`, commonly 40 MB",
+    "bytes": 40000000,
+    "source_url": "https://join-lemmy.org/docs/administration/configuration.html",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://join-lemmy.org/docs/administration/configuration.html",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Lemmy API v3: POST /api/v3/pictrs/image (multipart) or /api/v3/upload; needs a JWT from POST /api/v3/user/login. pict-rs itself exposes POST /image on its own port (often 8080) — on instances that expose it, that is a cleaner upload path than the Lemmy API.",
+  "chaining": "Lemmy is the weakest of the family: most large instances now REQUIRE an application (lemmy.world registration_mode = 'RequireApplication'), and `image_mode` is frequently set to block uploads entirely or to proxy-only. Multiplier depends entirely on finding a permissive instance.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap set by pict-rs (`max_file_size`, commonly 40 MB",
+      "source": "https://join-lemmy.org/docs/administration/configuration.html"
+    }
+  ],
+  "limits_note": "per-object-cap set by pict-rs (`max_file_size`, commonly 40 MB); no per-user byte quota; per-instance disk.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: stration gated on the big instances. Also note Lemmy stores federated/remote images too, so operator disk fills from other people's content, which is why uploads get turned off. Lemmy is th",
+    "country": null
+  },
+  "reliability_note": "Registration gated on the big instances. Also note Lemmy stores federated/remote images too, so operator disk fills from other people's content, which is why uploads get turned off.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://lemmy.world/api/v3/site",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, local_site.registration_mode='RequireApplication', version 0.19.19-9-gc55dd1b1a; local_site carries NO image upload size field (only image_mode/enable_nsfw-style flags) — confirms the quota lives in pict-rs, not Lemmy"
+    },
+    {
+      "url": "https://join-lemmy.org/docs/administration/configuration.html",
+      "date": "2026-10-21",
+      "proved": "pict-rs is a separate service; 'Generate thumbnails for external post urls and store them persistently in pict-rs. This also increases storage usage.'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No per-user quota in Lemmy's own schema — the bound is pict-rs (the separate Rust image server) and the instance's disk. Upload is gated per-instance by the `image_upload` / `image_mode` local-site flag rather than by bytes.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F7-fediverse.json",
+    "seed_area": "F/F7",
+    "seed_verdict": [
+      {
+        "value": "?",
+        "area": "F/F7"
+      }
+    ],
+    "seed_confidence": "medium",
+    "verdict_note": "the seed left this row with verdict '?'; PLAN.md §3.2 rules fails-quota by default, because no row in this set clears 500 GiB per unit. A writer's judgement, not the seed's, and flagged as such",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "No per-user quota in Lemmy's own schema — the bound is pict-rs (the separate Rust image server) and the instance's disk. Upload is gated per-instance by the `image_upload` / `image_mode` local-site flag rather than by bytes.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F7"
+    },
+    "target_document": "docs/storage/free/social-and-fediverse.md",
+    "document_section": "Fediverse instances",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No per-user quota in Lemmy's own schema — the bound is pict-rs (the separate Rust image server) and the instance's disk. Upload is gated per-instance by the `image_upload` / `image_mode` local-site flag rather than by bytes.",
+    "limits_verbatim": "per-object-cap set by pict-rs (`max_file_size`, commonly 40 MB); no per-user byte quota; per-instance disk.",
+    "egress_verbatim": "Free.",
+    "chaining_verbatim": "Lemmy is the weakest of the family: most large instances now REQUIRE an application (lemmy.world registration_mode = 'RequireApplication'), and `image_mode` is frequently set to block uploads entirely or to proxy-only. Multiplier depends entirely on finding a permissive instance.",
+    "tooling_verbatim": "Lemmy API v3: POST /api/v3/pictrs/image (multipart) or /api/v3/upload; needs a JWT from POST /api/v3/user/login. pict-rs itself exposes POST /image on its own port (often 8080) — on instances that expose it, that is a cleaner upload path than the Lemmy API.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Fediverse / decentralised social instances as media storage: Mastodon, Misskey/Sharkey/IceShark, Pleroma/Akkoma, Pixelfed, Lemmy/pict-rs, Bluesky AT Protocol PDS, Nostr relays + Blossom, Farcaster hubs/Snapchain. Per-user media quotas, per-file caps, media-URL permanence, and the 'unlimited instances x modest quota' multiplication."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

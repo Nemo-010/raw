@@ -1,0 +1,149 @@
+{
+  "topic": "storage",
+  "slug": "azure-artifacts",
+  "provider": "Azure Artifacts",
+  "url": "https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/",
+  "category": "registry",
+  "free_tier": {
+    "stated": "2 GiB free per ORGANIZATION (not per project, not per feed), then tiered per-GiB: 2–10 GiB $2/GiB, 10–100 GiB $1/GiB, 100–1,000 GiB $0.50/GiB, 1,000+ GiB $0.25/GiB.",
+    "unit": "GiB",
+    "metered_on": "unstated",
+    "source_url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/artifact-storage?view=azure-devops",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/artifact-storage?view=azure-devops",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "| 2 GiB total across all feeds in the org; exceeding it makes the org read-only for publishing until you delete data or add billing; Public feeds only exist inside 'public projects', and Microsoft is retiring public projects — 'Starting in 2027, existing public projects will automatically convert to private, and public feeds will no longer be publicly accessible.'",
+    "source_url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/artifact-storage?view=azure-devops",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "No separate egress SKU for Azure Artifacts; downloads are folded into the DevOps service. The metered dimension is storage only, which is unusual and mildly favourable — but 2 GiB is the binding constraint long before bandwidth.",
+    "metered": true
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest (Azure DevOps Artifacts API), NuGet/npm/Maven/Python/Cargo/Universal Package clients, `az artifacts universal`",
+  "tooling": "`nuget push`, `npm publish`, `twine upload`, `mvn deploy`, `az artifacts universal publish`; documented upstream-source proxying for public registries.",
+  "chaining": "Per-org 2 GiB × unlimited free Azure DevOps organizations (each needs a Microsoft account and an org). Note the free tier is per org and pools across all projects in it — you cannot multiply by adding projects or feeds.",
+  "limits": [],
+  "limits_note": "2 GiB total across all feeds in the org; exceeding it makes the org read-only for publishing until you delete data or add billing; Public feeds only exist inside 'public projects', and Microsoft is retiring public projects — 'Starting in 2027, existing public projects will automatically convert to private, and public feeds will no longer be publicly accessible.'",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: t per project, not per feed), then tiered per-GiB: 2–10 GiB $2/GiB, 10–100 GiB $1/GiB, 100–1,000 GiB $0.50/GiB, 1,000+ GiB $0.25/GiB. Rock solid technically, but the public-feed c",
+    "country": null
+  },
+  "reliability_note": "Rock solid technically, but the public-feed capability has a published 2027 end date, which kills the anonymous-fetch use case.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/",
+      "date": "2026-10-21",
+      "proved": "read live: 'First 2 GiB free'; rate card '0 - 2 GiB = Free / 2 - 10 GiB = $2 per GiB / 10 - 100 GiB = $1 per GiB / 100 - 1,000 GiB = $0.5 per GiB / 1,000+ GiB = $0.25 per GiB'; 'Azure Artifacts: 2 GiB free per organization'"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/artifact-storage?view=azure-devops",
+      "date": "2026-10-21",
+      "proved": "read live: 'Azure Artifacts provides 2 GiB of free storage for each organization'; 'Once your organization reaches the storage limit, you won't be able to publish new artifacts'; 'Removing your Azure Subscription ... limits your access to the free tier'"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/concepts/feeds?view=azure-devops",
+      "date": "2026-10-21",
+      "proved": "read live: 'Starting in 2027, existing public projects will automatically convert to private, and public feeds will no longer be publicly accessible'"
+    },
+    {
+      "url": "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-public/nuget/v3/index.json",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, full service index (anonymous public feed works today)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "2 GiB free per ORGANIZATION (not per project, not per feed), then tiered per-GiB: 2–10 GiB $2/GiB, 10–100 GiB $1/GiB, 100–1,000 GiB $0.50/GiB, 1,000+ GiB $0.25/GiB.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B5-artifact-managers.json",
+    "seed_area": "B/B5",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "B/B5"
+      },
+      {
+        "value": "fails-quota",
+        "area": "C/C4"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Azure Artifacts",
+      "Azure Artifacts (public feeds)"
+    ],
+    "conflicts": [
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "2 GiB free per ORGANIZATION (not per project, not per feed), then tier",
+            "source": "table.md row, area B/B5",
+            "evidence": null
+          },
+          {
+            "value": "2 GiB free per organization, then $2/GiB. This is the plan-level free",
+            "source": "table.md row, area C/C4",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "2 GiB free per ORGANIZATION (not per project, not per feed), then tier",
+            "source": "table.md (area B/B5)"
+          },
+          {
+            "value": "2 GiB free per organization, then $2/GiB. This is the plan-level free",
+            "source": "table.md (area C/C4)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "2 GiB free per ORGANIZATION (not per project, not per feed), then tiered per-GiB: 2–10 GiB $2/GiB, 10–100 GiB $1/GiB, 100–1,000 GiB $0.50/GiB, 1,000+ GiB $0.25/GiB.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area B/B5"
+    },
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "Artifact managers",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "2 GiB free per ORGANIZATION (not per project, not per feed), then tiered per-GiB: 2–10 GiB $2/GiB, 10–100 GiB $1/GiB, 100–1,000 GiB $0.50/GiB, 1,000+ GiB $0.25/GiB.",
+    "limits_verbatim": "2 GiB total across all feeds in the org; exceeding it makes the org read-only for publishing until you delete data or add billing; Public feeds only exist inside 'public projects', and Microsoft is retiring public projects — 'Starting in 2027, existing public projects will automatically convert to private, and public feeds will no longer be publicly accessible.'",
+    "egress_verbatim": "No separate egress SKU for Azure Artifacts; downloads are folded into the DevOps service. The metered dimension is storage only, which is unusual and mildly favourable — but 2 GiB is the binding constraint long before bandwidth.",
+    "chaining_verbatim": "Per-org 2 GiB × unlimited free Azure DevOps organizations (each needs a Microsoft account and an org). Note the free tier is per org and pools across all projects in it — you cannot multiply by adding projects or feeds.",
+    "tooling_verbatim": "`nuget push`, `npm publish`, `twine upload`, `mvn deploy`, `az artifacts universal publish`; documented upstream-source proxying for public registries.",
+    "interface_verbatim": "rest (Azure DevOps Artifacts API), NuGet/npm/Maven/Python/Cargo/Universal Package clients, `az artifacts universal`",
+    "agent_focus": "artifact/package *managers* (self-hosted repo managers and hosted artifact services) as bulk storage — distinct from public package registries (C2) and OCI/ORAS registries (B6)"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

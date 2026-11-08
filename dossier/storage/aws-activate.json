@@ -1,0 +1,152 @@
+{
+  "topic": "storage",
+  "slug": "aws-activate",
+  "provider": "AWS Activate (Founders / Portfolio)",
+  "url": "https://aws.amazon.com/startups/learn/everything-you-need-to-know-about-aws-activate-credits",
+  "category": "iaas",
+  "free_tier": {
+    "stated": "Founders tier: '$1,000 in AWS Activate Credits ... Select startups may qualify for up to $5,000 over time'. Portfolio tier: 'up to $200,000 in AWS Activate Credits' for provider-backed (accelerator/VC) startups. Credits cover 'over 200 eligible AWS services' explicitly including 'Storage: ... Amazon S3'.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://aws.amazon.com/startups/learn/everything-you-need-to-know-about-aws-activate-credits",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap: S3 single PUT 5 GiB",
+    "bytes": 5368709120,
+    "source_url": "https://aws.amazon.com/startups/learn/everything-you-need-to-know-about-aws-activate-credits",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "retention: 'Credits usually expire within 1-2 years depending on the package.'",
+    "days": 730,
+    "source_url": "https://aws.amazon.com/startups/learn/everything-you-need-to-know-about-aws-activate-credits",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "S3 egress is metered and billed from the same credit balance — this is an archive-only play unless fronted by Cloudflare (AWS is a Bandwidth Alliance partner).",
+    "metered": true
+  },
+  "interface": [
+    "s3-compatible",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "s3",
+  "tooling": "Native S3 API; rclone backend 's3'; aws-cli; s5cmd for high-concurrency transfers.",
+  "chaining": "Credits are per AWS account and per organisation ('Have not previously received AWS Activate Credits of equal or greater value'). Portfolio requires an Activate Provider affiliation. The useful multiplier is credit size x expiry window, not account count.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "retention: 'Credits usually expire within 1-2 years",
+      "source": "https://aws.amazon.com/startups/learn/everything-you-need-to-know-about-aws-activate-credits"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap: S3 single PUT 5 GiB",
+      "source": "https://aws.amazon.com/startups/learn/everything-you-need-to-know-about-aws-activate-credits"
+    }
+  ],
+  "limits_note": "per-object-cap: S3 single PUT 5 GiB / multipart 5 TiB — not binding. request-rate: S3 request rates are effectively unlimited at this scale but each PUT/GET is billed and drains the credit. retention: 'Credits usually expire within 1-2 years depending on the package.'",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: or greater value'). Portfolio requires an Activate Provider affiliation. The useful multiplier is credit size x expiry window, not account count. per-object-cap: S3 single PUT 5 GiB / multipa",
+    "country": null
+  },
+  "reliability_note": "Purely a spend credit: once exhausted, S3 reverts to paid and will bill the card on file. No data-loss mechanism, just an expiry cliff.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://aws.amazon.com/startups/learn/everything-you-need-to-know-about-aws-activate-credits",
+      "date": "2026-10-21",
+      "proved": "'$1,000 ... up to $5,000 over time' (Founders), 'up to $200,000' (Portfolio), 'Credits usually expire within 1-2 years'"
+    },
+    {
+      "url": "https://aws.amazon.com/startups/learn/everything-you-need-to-know-about-aws-activate-credits",
+      "date": "2026-10-21",
+      "proved": "'Storage: Lets you store large datasets ... in Amazon S3 without ballooning costs'"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET aws.amazon.com/startups/learn/everything-you-need-to-know-about-aws-activate-credits -> 200"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Founders tier: '$1,000 in AWS Activate Credits ... Select startups may qualify for up to $5,000 over time'. Portfolio tier: 'up to $200,000 in AWS Activate Credits' for provider-backed (accelerator/VC) startups. Credits cover 'over 200 eligible AWS services' explicitly including 'Storage: ... Amazon S3'.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G7-education-startup-nonprofit.json",
+    "seed_area": "G/G7",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "G/G7"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "G/G4"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "AWS Activate (Founders / Portfolio)",
+      "AWS Activate — credits"
+    ],
+    "conflicts": [
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "Founders tier: '$1,000 in AWS Activate Credits ... Select startups may",
+            "source": "table.md row, area G/G7",
+            "evidence": null
+          },
+          {
+            "value": "Credit grant, not storage: '$1,000 to $200,000 in AWS Activate Credits",
+            "source": "table.md row, area G/G4",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "Founders tier: '$1,000 in AWS Activate Credits ... Select startups may",
+            "source": "table.md (area G/G7)"
+          },
+          {
+            "value": "Credit grant, not storage: '$1,000 to $200,000 in AWS Activate Credits",
+            "source": "table.md (area G/G4)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "Education, startup and nonprofit tenants",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Founders tier: '$1,000 in AWS Activate Credits ... Select startups may qualify for up to $5,000 over time'. Portfolio tier: 'up to $200,000 in AWS Activate Credits' for provider-backed (accelerator/VC) startups. Credits cover 'over 200 eligible AWS services' explicitly including 'Storage: ... Amazon S3'.",
+    "limits_verbatim": "per-object-cap: S3 single PUT 5 GiB / multipart 5 TiB — not binding. request-rate: S3 request rates are effectively unlimited at this scale but each PUT/GET is billed and drains the credit. retention: 'Credits usually expire within 1-2 years depending on the package.'",
+    "egress_verbatim": "S3 egress is metered and billed from the same credit balance — this is an archive-only play unless fronted by Cloudflare (AWS is a Bandwidth Alliance partner).",
+    "chaining_verbatim": "Credits are per AWS account and per organisation ('Have not previously received AWS Activate Credits of equal or greater value'). Portfolio requires an Activate Provider affiliation. The useful multiplier is credit size x expiry window, not account count.",
+    "tooling_verbatim": "Native S3 API; rclone backend 's3'; aws-cli; s5cmd for high-concurrency transfers.",
+    "interface_verbatim": "s3",
+    "agent_focus": "Programmes that give free storage as a benefit: student / education / nonprofit / startup-benefit bundles. Which ones bundle durable, programmatically-accessible bulk storage, and does it renew?"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

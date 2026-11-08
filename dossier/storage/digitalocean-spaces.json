@@ -1,0 +1,106 @@
+{
+  "topic": "storage",
+  "slug": "digitalocean-spaces",
+  "provider": "DigitalOcean Spaces",
+  "url": "https://www.digitalocean.com/pricing/spaces-object-storage",
+  "category": "S3-compatible object storage + CDN",
+  "free_tier": {
+    "stated": "$5.00/mo base subscription includes 250 GiB across all buckets; +$0.02/GiB beyond",
+    "unit": "GiB",
+    "metered_on": "unstated",
+    "source_url": "https://docs.digitalocean.com/products/spaces/details/pricing/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.digitalocean.com/products/spaces/details/pricing/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.digitalocean.com/products/spaces/details/pricing/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "1,024 GiB/month outbound included and shared across buckets, then $0.01/GiB (= $10.24/TB). Free only between Spaces and Droplets in the same metro.",
+    "metered": true,
+    "free_allowance": "1,024 GiB per month",
+    "price_per_tb": "$10.24/TB"
+  },
+  "interface": [
+    "s3-compatible",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "S3 API + built-in CDN",
+  "tooling": "AWS CLI, rclone, s3cmd",
+  "chaining": "Built-in CDN is the mitigation: serve through Spaces CDN so origin egress does not accrue.",
+  "limits": [],
+  "limits_note": "The 250 GiB included storage is trivial; the $0.02/GiB marginal rate makes this ~$20/TB, i.e. 4.5x Datalix. Bandwidth allowance is per account, not per bucket.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "Mature and reliable; simply not competitively priced above a few hundred GB.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.digitalocean.com/products/spaces/details/pricing/",
+      "date": "2026-10-21",
+      "proved": "\"base price of a Spaces Standard Storage subscription is $5.00 per month\", \"includes 250 GiB of storage\", \"Additional storage beyond this allotment costs $0.02 per GiB per month\", \"include 1,024 GiB of outbound data transfer... Additional outbound transfer is $0.01 per GiB\""
+    },
+    {
+      "url": "https://www.digitalocean.com/pricing/spaces-object-storage",
+      "date": "2026-10-21",
+      "proved": "accepted payment methods incl. Visa/Mastercard/Amex/Discover/PayPal/Google Pay/Apple Pay"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$20.48/TB at 5 TB ($102.40) and $20.48/TB at 20 TB ($409.60), plus $10.24/TB on egress beyond 1 TiB.",
+  "notes": "$5.00/mo base subscription includes 250 GiB across all buckets; +$0.02/GiB beyond",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-P3-object-storage-nonbig3.json",
+    "seed_area": "A/P3",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "A/P3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "$5.00/mo base subscription includes 250 GiB across all buckets; +$0.02/GiB beyond",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/P3"
+    },
+    "target_document": "docs/storage/paid/object-storage.md",
+    "document_section": "S3-compatible object storage below the big three",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "$5.00/mo base subscription includes 250 GiB across all buckets; +$0.02/GiB beyond",
+    "limits_verbatim": "The 250 GiB included storage is trivial; the $0.02/GiB marginal rate makes this ~$20/TB, i.e. 4.5x Datalix. Bandwidth allowance is per account, not per bucket.",
+    "egress_verbatim": "1,024 GiB/month outbound included and shared across buckets, then $0.01/GiB (= $10.24/TB). Free only between Spaces and Droplets in the same metro.",
+    "chaining_verbatim": "Built-in CDN is the mitigation: serve through Spaces CDN so origin egress does not accrue.",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "AWS CLI, rclone, s3cmd",
+    "interface_verbatim": "S3 API + built-in CDN",
+    "price_verbatim": "$20.48/TB at 5 TB ($102.40) and $20.48/TB at 20 TB ($409.60), plus $10.24/TB on egress beyond 1 TiB.",
+    "agent_focus": "Cheap-paid lane: S3-compatible object storage outside AWS/Azure/GCP/Alibaba/Cloudflare/B2/IDrive-e2. Target = true $/TB/month floor with free-or-generous egress, computed at the 5 TB and 20 TB tiers. EUR->USD at 1.1234 (frankfurter.app, 2026-10-21)."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

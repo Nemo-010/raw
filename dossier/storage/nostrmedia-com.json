@@ -1,0 +1,106 @@
+{
+  "topic": "storage",
+  "slug": "nostrmedia-com",
+  "provider": "nostrmedia.com (NIP-96 file host)",
+  "url": "https://nostrmedia.com/",
+  "category": "p2p-blob-storage",
+  "free_tier": {
+    "stated": "free plan max_byte_size 26,214,400 (25 MiB); paid 'purple'/'onyx' 104,857,600 (100 MiB). `file_expiration: [0,0]` on every plan = never expires.",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://nostrmedia.com/.well-known/nostr/nip96.json",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap 25 MiB",
+    "bytes": 26214400,
+    "source_url": "https://nostrmedia.com/.well-known/nostr/nip96.json",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://nostrmedia.com/.well-known/nostr/nip96.json",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "unmetered, Cloudflare-fronted (Server: cloudflare, Cache-Control public max-age=14400).",
+    "metered": false
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "NIP-96 HTTP file storage. Discoverable at /.well-known/nostr/nip96.json; POST /upload; /presigned 'handles up to 5 GB'.",
+  "tooling": "curl; NIP-98 Authorization header (signed event). The llms.txt documents the /presigned path for large objects.",
+  "chaining": "machine-readable plan manifest means the cap is queryable rather than scraped — one GET tells you the size ceiling per plan.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap 25 MiB",
+      "source": "https://nostrmedia.com/.well-known/nostr/nip96.json"
+    }
+  ],
+  "limits_note": "per-object-cap 25 MiB free. 125 MB on the direct /upload, 5 GB via /presigned (per llms.txt) — the /presigned path is the one that matters and it is far above the free plan's advertised 25 MiB.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "anonymous",
+    "country": null
+  },
+  "reliability_note": "transforms media at ingest on some paths (resizing, format_conversion, compression, metadata_stripping are all listed in the manifest) — verify that originals come back byte-identical.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://nostrmedia.com/.well-known/nostr/nip96.json",
+      "date": "2026-10-21",
+      "proved": "literal body: api_url https://nostrmedia.com/upload, download_url https://file.nostrmedia.com, supported_nips [94,96,98], plans.free.max_byte_size 26214400, file_expiration [0,0], media_transformations image [resizing, format_conversion, compression, metadata_stripping]"
+    },
+    {
+      "url": "https://nostrmedia.com/llms.txt",
+      "date": "2026-10-21",
+      "proved": "'A single POST to /upload accepts files up to 125 MB; /presigned handles up to 5 GB', 'Uploads never expire while the subscription is active'"
+    },
+    {
+      "url": "https://nostrmedia.com/docs/api.md",
+      "date": "2026-10-21",
+      "proved": "'/upload answers 413 above 125 MB because the request would outlive the worker'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "free plan max_byte_size 26,214,400 (25 MiB); paid 'purple'/'onyx' 104,857,600 (100 MiB). `file_expiration: [0,0]` on every plan = never expires.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A14-holepunch-relay-networks.json",
+    "seed_area": "A/A14",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "A/A14"
+      }
+    ],
+    "seed_confidence": "high",
+    "unit_note": "free_tier.unit is 'mixed' because the headline is denominated in MiB or KiB, which the schema enum does not carry; the verbatim free_tier.stated keeps the true unit. See the storage-dossier handover.",
+    "conflicts": [],
+    "target_document": "docs/storage/free/relays-and-transports.md",
+    "document_section": "Hole-punch and relay networks",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "free plan max_byte_size 26,214,400 (25 MiB); paid 'purple'/'onyx' 104,857,600 (100 MiB). `file_expiration: [0,0]` on every plan = never expires.",
+    "limits_verbatim": "per-object-cap 25 MiB free. 125 MB on the direct /upload, 5 GB via /presigned (per llms.txt) — the /presigned path is the one that matters and it is far above the free plan's advertised 25 MiB.",
+    "egress_verbatim": "unmetered, Cloudflare-fronted (Server: cloudflare, Cache-Control public max-age=14400).",
+    "chaining_verbatim": "machine-readable plan manifest means the cap is queryable rather than scraped — one GET tells you the size ceiling per plan.",
+    "identity_verbatim": "anonymous",
+    "tooling_verbatim": "curl; NIP-98 Authorization header (signed event). The llms.txt documents the /presigned path for large objects.",
+    "interface_verbatim": "NIP-96 HTTP file storage. Discoverable at /.well-known/nostr/nip96.json; POST /upload; /presigned 'handles up to 5 GB'.",
+    "agent_focus": "Relay/P2P transport networks that could carry bulk data without a central provider. For each: is data ROUTED (a real path) or is it only SIGNALLING (relay coordinates, bytes go peer-to-peer)? Free bandwidth? Can it carry 1 TiB/day (= 12.7 MB/s = ~102 Mbit/s sustained)? Identity gate recorded as the primary ranking axis."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

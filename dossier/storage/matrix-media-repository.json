@@ -1,0 +1,110 @@
+{
+  "topic": "storage",
+  "slug": "matrix-media-repository",
+  "provider": "Matrix media repository (matrix.org homeserver)",
+  "url": "https://matrix.org/homeserver/pricing/",
+  "category": "messaging",
+  "free_tier": {
+    "stated": "Free plan: 10 MB maximum per attachment, 100 MB of attachments per 24 hours, up to 500 MB per 28 days. Premium: 100 MB per attachment, 1 GB/24h, 5 GB/28d. Accounts not on any plan get 500 MB/24h up to 2 GB/28d. So the total is a few GB per month — not a storage provider at all.",
+    "unit": "MB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://matrix.org/homeserver/pricing/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://matrix.org/homeserver/pricing/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://matrix.org/homeserver/pricing/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Egress itself is free ('the HTTPS data transfer to/from the matrix.org homeserver' does not count towards limits), but that is irrelevant at a 500 MB/28-day ingest rate.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Excellent — the Content Repository API is a real spec, mxc:// URIs, every Matrix client library implements it. Self-hosted Synapse has no such caps (only max_upload_size, default 10M historically).",
+  "chaining": "Any federation of homeservers multiplies it, but you are then running the homeservers yourself, which is just 'buy a server'. On the public homeserver there is no chaining path: limits are per-account and the 28-day cap is the binding one.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "1 GB/24h",
+      "source": "https://matrix.org/homeserver/pricing/"
+    }
+  ],
+  "limits_note": "Unauthenticated media download is deprecated and already frozen: the spec says servers SHOULD 'freeze' the old /_matrix/media/* endpoints so post-freeze uploads are only reachable via authenticated endpoints. Probed: matrix.org /_matrix/client/v1/media/config -> 401 M_MISSING_TOKEN, unauthenticated /_matrix/media/v3/download/... -> 404. So no anonymous CDN reads.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ee users 'may be changed to a free plan in the future'. Any federation of homeservers multiplies it, but you are then running the homeservers yourself, which is just 'buy a server'. On the p",
+    "country": null
+  },
+  "reliability_note": "Stable, but the 28-day rolling cap means an upload-heavy workload simply stops. matrix.org also states pricing is not final and free users 'may be changed to a free plan in the future'.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://matrix.org/homeserver/pricing/",
+      "date": "2026-10-21",
+      "proved": "'Size of attachment that can be sent | 10MB maximum per attachment ... Total size of attachments | 100MB per 24 hours, up to 500MB per 28 days'"
+    },
+    {
+      "url": "https://spec.matrix.org/latest/client-server-api/#content-repository",
+      "date": "2026-10-21",
+      "proved": "'The unauthenticated download endpoints have been deprecated ... servers SHOULD freeze'"
+    },
+    {
+      "url": "https://matrix.org/_matrix/client/v1/media/config",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 401 M_MISSING_TOKEN; unauth media download -> 404"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Free plan: 10 MB maximum per attachment, 100 MB of attachments per 24 hours, up to 500 MB per 28 days. Premium: 100 MB per attachment, 1 GB/24h, 5 GB/28d. Accounts not on any plan get 500 MB/24h up to 2 GB/28d. So the total is a few GB per month — not a storage provider at all.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F1-telegram.json",
+    "seed_area": "F/F1",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "F/F1"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Free plan: 10 MB maximum per attachment, 100 MB of attachments per 24 hours, up to 500 MB per 28 days. Premium: 100 MB per attachment, 1 GB/24h, 5 GB/28d. Accounts not on any plan get 500 MB/24h up to 2 GB/28d. So the total is a few GB per month — not a storage provider at all.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F1"
+    },
+    "target_document": "docs/storage/free/messaging.md",
+    "document_section": "Telegram",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Free plan: 10 MB maximum per attachment, 100 MB of attachments per 24 hours, up to 500 MB per 28 days. Premium: 100 MB per attachment, 1 GB/24h, 5 GB/28d. Accounts not on any plan get 500 MB/24h up to 2 GB/28d. So the total is a few GB per month — not a storage provider at all.",
+    "limits_verbatim": "Unauthenticated media download is deprecated and already frozen: the spec says servers SHOULD 'freeze' the old /_matrix/media/* endpoints so post-freeze uploads are only reachable via authenticated endpoints. Probed: matrix.org /_matrix/client/v1/media/config -> 401 M_MISSING_TOKEN, unauthenticated /_matrix/media/v3/download/... -> 404. So no anonymous CDN reads.",
+    "egress_verbatim": "Egress itself is free ('the HTTPS data transfer to/from the matrix.org homeserver' does not count towards limits), but that is irrelevant at a 500 MB/28-day ingest rate.",
+    "chaining_verbatim": "Any federation of homeservers multiplies it, but you are then running the homeservers yourself, which is just 'buy a server'. On the public homeserver there is no chaining path: limits are per-account and the 28-day cap is the binding one.",
+    "tooling_verbatim": "Excellent — the Content Repository API is a real spec, mxc:// URIs, every Matrix client library implements it. Self-hosted Synapse has no such caps (only max_upload_size, default 10M historically).",
+    "interface_verbatim": "rest",
+    "agent_focus": "Telegram and messaging-platform storage: unlimited channels as a file store, anonymous public-channel read paths, MTProto vs Bot API limits, and the download-speed shaping that decides whether 500GB-1TiB/day of reads is actually reachable"
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

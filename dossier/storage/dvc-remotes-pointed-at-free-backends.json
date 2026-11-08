@@ -1,0 +1,101 @@
+{
+  "topic": "storage",
+  "slug": "dvc-remotes-pointed-at-free-backends",
+  "provider": "DVC remotes (S3 / WebDAV / SSH / HTTP / Drive) pointed at free backends",
+  "url": "https://doc.dvc.org/user-guide/data-management/remote-storage",
+  "category": "registry",
+  "free_tier": {
+    "stated": "N/A — DVC ships no storage; the remote is whatever free store you configure. Free-tier bytes = the backing store's bytes. Supports Amazon S3 + S3-compatible (MinIO etc. via `endpointurl`), Azure Blob, GCS, Google Drive, Aliyun OSS, SSH/SFTP, HDFS/WebHDFS, HTTP, WebDAV.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://doc.dvc.org/user-guide/data-management/remote-storage",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://doc.dvc.org/user-guide/data-management/remote-storage",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://doc.dvc.org/user-guide/data-management/remote-storage",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Inherited. The HTTP remote is read-only and can sit behind any CDN, which is the only path where DVC itself doesn't add egress cost.",
+    "metered": false
+  },
+  "interface": [
+    "s3",
+    "git",
+    "cli"
+  ],
+  "interface_detail": "s3",
+  "tooling": "`dvc` CLI + dvcfilesystem (fsspec). `dvc remote add s3://bucket && dvc remote modify myremote endpointurl https://s3.hf.co/<ns>` works. Native read-only Git-LFS support means `dvc get`/`dvc import` can pull straight from a Hugging Face repo without installing git-lfs.",
+  "chaining": "One repo, many remotes (`dvc remote add` x N), plus `dvc push -r <remote>` to pick. Any S3-compatible free endpoint multiplies: HF buckets, IA's IAS3, MinIO on a free VM, an Oracle/Cloudflare-adjacent free tier. DVC's content-addressed cache means the same 20 TiB corpus can be pushed to N stores and only the missing blobs transfer.",
+  "limits": [],
+  "limits_note": "No per-file logic of its own; the backend's limits apply. WebDAV is the weakest link (DVC's WebDAV support is newer and less battle-tested than S3). HTTP remote is read-only, so it cannot be a primary. No built-in retry-sharding across remotes — you script it.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "DVC is an ML-tooling project (treeverse); remote support quality varies by backend. S3-compatible endpoints need `endpointurl` + often `use_ssl`/path-style tweaks. Reliability is effectively the backend's.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://doc.dvc.org/user-guide/data-management/remote-storage",
+      "date": "2026-10-21",
+      "proved": "supported storage list and 'DVC does not provide or recommend a specific storage service'"
+    },
+    {
+      "url": "https://doc.dvc.org/user-guide/data-management/remote-storage/amazon-s3",
+      "date": "2026-10-21",
+      "proved": "'Set the endpointurl parameter with the URL to connect to the S3-compatible service (e.g. Nebius, MinIO, IBM COS)'"
+    },
+    {
+      "url": "https://doc.dvc.org/user-guide/integrations/huggingface",
+      "date": "2026-10-21",
+      "proved": "native HF/Git-LFS import without git-lfs installed"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "N/A — DVC ships no storage; the remote is whatever free store you configure. Free-tier bytes = the backing store's bytes. Supports Amazon S3 + S3-compatible (MinIO etc. via `endpointurl`), Azure Blob, GCS, Google Drive, Aliyun OSS, SSH/SFTP, HDFS/WebHDFS, HTTP, WebDAV.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C3-git-annex-lfs.json",
+    "seed_area": "C/C3",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "C/C3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "Git LFS and git-annex special remotes",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "N/A — DVC ships no storage; the remote is whatever free store you configure. Free-tier bytes = the backing store's bytes. Supports Amazon S3 + S3-compatible (MinIO etc. via `endpointurl`), Azure Blob, GCS, Google Drive, Aliyun OSS, SSH/SFTP, HDFS/WebHDFS, HTTP, WebDAV.",
+    "limits_verbatim": "No per-file logic of its own; the backend's limits apply. WebDAV is the weakest link (DVC's WebDAV support is newer and less battle-tested than S3). HTTP remote is read-only, so it cannot be a primary. No built-in retry-sharding across remotes — you script it.",
+    "egress_verbatim": "Inherited. The HTTP remote is read-only and can sit behind any CDN, which is the only path where DVC itself doesn't add egress cost.",
+    "chaining_verbatim": "One repo, many remotes (`dvc remote add` x N), plus `dvc push -r <remote>` to pick. Any S3-compatible free endpoint multiplies: HF buckets, IA's IAS3, MinIO on a free VM, an Oracle/Cloudflare-adjacent free tier. DVC's content-addressed cache means the same 20 TiB corpus can be pushed to N stores and only the missing blobs transfer.",
+    "tooling_verbatim": "`dvc` CLI + dvcfilesystem (fsspec). `dvc remote add s3://bucket && dvc remote modify myremote endpointurl https://s3.hf.co/<ns>` works. Native read-only Git-LFS support means `dvc get`/`dvc import` can pull straight from a Hugging Face repo without installing git-lfs.",
+    "interface_verbatim": "s3",
+    "agent_focus": "Large-file versioning layer: git-annex special remotes, Git LFS hosts, DVC remotes, Perforce/SVN, and which free backends those layers can be pointed at"
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "self_hosted": true
+}

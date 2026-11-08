@@ -1,0 +1,102 @@
+{
+  "topic": "storage",
+  "slug": "neptune-ai",
+  "provider": "Neptune.ai",
+  "url": "https://neptune.ai",
+  "category": "mlops-artifacts",
+  "free_tier": {
+    "stated": "No storage allowance published, and the pricing page I fetched contained no GB figure at all — the metered dimensions are experiment/run counts and seats. Artifact storage is not offered as a free pool.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://neptune.ai/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap documented because bulk object storage is not the product",
+    "source_url": "https://neptune.ai/pricing",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://neptune.ai/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Not applicable.",
+    "metered": false
+  },
+  "interface": [
+    "s3-compatible",
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "neptune Python client (run[...] logging, artifact tracking). Mature but narrower than W&B; no S3-compatible surface.",
+  "chaining": "None — no free byte allowance to multiply.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "no per-object cap documented because bulk object storage is not the product",
+      "source": "https://neptune.ai/pricing"
+    }
+  ],
+  "limits_note": "Metered by tracked runs/months and users rather than bytes; no per-object cap documented because bulk object storage is not the product.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email.",
+    "country": null
+  },
+  "reliability_note": "Stable. Not a storage provider in any sense relevant to this survey.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://neptune.ai/pricing",
+      "date": "2026-10-21",
+      "proved": "read live: the page returned no GB/storage figure (grep for GB|TB|storage returned nothing), i.e. storage is not a priced or granted dimension"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No storage allowance published, and the pricing page I fetched contained no GB figure at all — the metered dimensions are experiment/run counts and seats. Artifact storage is not offered as a free pool.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D9-hf-competitors.json",
+    "seed_area": "D/D9",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "D/D9"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "egress",
+      "why": "No storage allowance published, and the pricing page I fetched contained no GB figure at all — the metered dimensions are experiment/run counts and seats. Artifact storage is not offered as a free pool.",
+      "retry_when": "if the egress meter is removed or a Cloudflare path is added",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area D/D9"
+    },
+    "target_document": "docs/storage/free/models-and-media.md",
+    "document_section": "Hugging Face competitors",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 1,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No storage allowance published, and the pricing page I fetched contained no GB figure at all — the metered dimensions are experiment/run counts and seats. Artifact storage is not offered as a free pool.",
+    "limits_verbatim": "Metered by tracked runs/months and users rather than bytes; no per-object cap documented because bulk object storage is not the product.",
+    "egress_verbatim": "Not applicable.",
+    "chaining_verbatim": "None — no free byte allowance to multiply.",
+    "identity_verbatim": "email.",
+    "tooling_verbatim": "neptune Python client (run[...] logging, artifact tracking). Mature but narrower than W&B; no S3-compatible surface.",
+    "interface_verbatim": "rest",
+    "agent_focus": "New and up-and-coming competitors to Hugging Face and ModelScope, judged on the hard test the brief sets: a credible HF competitor must permit multi-TB objects and generous per-account storage, because model weights and datasets routinely run to hundreds of GB / TiB. Split into three classes — Chinese domestic hubs (HF is blocked there, so a separate ecosystem exists), Western MLOps artifact stores (W&B/Comet/ClearML/Lightning/Deep Lake), and dataset-publishing startups (Source Cooperative, Oxen, OpenDataLab). Excluded and not re-reported: Hugging Face, ModelScope, Kaggle, Civitai, Ollama, Replicate, DagsHub, OpenML, fal.ai, Baseten, Modal."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

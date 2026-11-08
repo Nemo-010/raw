@@ -1,0 +1,2032 @@
+{
+ "version": 1,
+ "about": "The public projection of dossier/. Applied in order: exclude_records, derive, drop_paths, URL rules, templates, clause rules. Every change is logged with its rule id in the local store (strip_log). The source JSON is never edited by this file.",
+ "exclude_records": {
+  "rids": [
+   "egress/ajam-ssh-relay",
+   "crawler-scraper/web-pkgforge"
+  ],
+  "re": "pkgforge|ajam\\.dev|\\bajam-",
+  "why": "operator-owned infrastructure is not a public finding; matched on slug and provider only, because third-party records may carry a broker URL that is rewritten instead"
+ },
+ "derive": {
+  "inherited_re": "not re-checked|no page was read|inherit|not verified|not re-established|seed research pass",
+  "identity_defaulted_re": "defaulted|assumed value|flagged, not evidence|not recorded in the|^unverified|not read:|not stated in the source",
+  "identity_inferred_re": "^derived from the record's prose|inferred from the category|class assumption"
+ },
+ "drop_paths": [
+  {
+   "id": "K01",
+   "glob": "history",
+   "why": "pointer to history files; history attaches through its own table"
+  },
+  {
+   "id": "K02",
+   "glob": "stale",
+   "why": "derived value; freshness is computed"
+  },
+  {
+   "id": "K03",
+   "glob": "stale_checked_at",
+   "why": "derived value; freshness is computed"
+  },
+  {
+   "id": "K04",
+   "glob": "confidence_legacy",
+   "why": "migration residue"
+  },
+  {
+   "id": "K05",
+   "glob": "extras.verified_at_basis",
+   "why": "session stamp; derived into verified_basis"
+  },
+  {
+   "id": "K06",
+   "glob": "extras.seed_*",
+   "why": "migration lineage"
+  },
+  {
+   "id": "K07",
+   "glob": "extras.conversion",
+   "why": "migration lineage"
+  },
+  {
+   "id": "K08",
+   "glob": "extras.promoted_from",
+   "why": "pointer into uncommitted scratch"
+  },
+  {
+   "id": "K09",
+   "glob": "extras.wave2.promoted_from",
+   "why": "pointer into uncommitted scratch"
+  },
+  {
+   "id": "K10",
+   "glob": "extras.wave2.agents",
+   "why": "who-did-what"
+  },
+  {
+   "id": "K11",
+   "glob": "extras.wave2.seen_routes",
+   "why": "process trace"
+  },
+  {
+   "id": "K12",
+   "glob": "extras.wave2.provider_as_written",
+   "why": "migration lineage"
+  },
+  {
+   "id": "K13",
+   "glob": "extras.wave2.category_as_written",
+   "why": "migration lineage"
+  },
+  {
+   "id": "K14",
+   "glob": "extras.target_document",
+   "why": "document routing of the migration"
+  },
+  {
+   "id": "K15",
+   "glob": "extras.document_section",
+   "why": "document routing of the migration"
+  },
+  {
+   "id": "K16",
+   "glob": "extras.agent_focus",
+   "why": "research brief, quoted"
+  },
+  {
+   "id": "K17",
+   "glob": "extras.evidence_dated_*",
+   "why": "process counter"
+  },
+  {
+   "id": "K18",
+   "glob": "extras.evidence_carrying_a_source_date",
+   "why": "process counter"
+  },
+  {
+   "id": "K19",
+   "glob": "extras.identity_cost_defaulted",
+   "why": "derived into identity_basis"
+  },
+  {
+   "id": "K20",
+   "glob": "extras.*_verbatim",
+   "why": "migration wording that duplicates typed fields",
+   "except": [
+    "extras.price_verbatim"
+   ]
+  },
+  {
+   "id": "K21",
+   "glob": "extras.merged_*",
+   "why": "merge trace"
+  },
+  {
+   "id": "K22",
+   "glob": "extras.record_count_merged",
+   "why": "merge trace"
+  },
+  {
+   "id": "K23",
+   "glob": "extras.corrects",
+   "why": "correction trace"
+  },
+  {
+   "id": "K24",
+   "glob": "extras.corpus_correction",
+   "why": "correction trace"
+  },
+  {
+   "id": "K25",
+   "glob": "extras.conflicts",
+   "why": "migration reconciliation; sources are not in the repository"
+  },
+  {
+   "id": "K26",
+   "glob": "extras.decisions",
+   "why": "reconciler decisions"
+  },
+  {
+   "id": "K27",
+   "glob": "extras.recheck",
+   "why": "process record of a re-check"
+  },
+  {
+   "id": "K28",
+   "glob": "extras.reclassify_reason",
+   "why": "process note"
+  },
+  {
+   "id": "K29",
+   "glob": "extras.dead_end.source",
+   "why": "points at a migration file, not in the repository"
+  },
+  {
+   "id": "K30",
+   "glob": "extras.superseded",
+   "why": "audit trail of corrected values; kept in the local store and git"
+  },
+  {
+   "id": "K31",
+   "glob": "extras.minimum_bill_source",
+   "why": "pointer into uncommitted scratch"
+  },
+  {
+   "id": "K32",
+   "glob": "extras.free_tier_kind_basis",
+   "why": "session stamp"
+  },
+  {
+   "id": "K33",
+   "glob": "extras.first_seen_source",
+   "why": "provenance trace"
+  },
+  {
+   "id": "K34",
+   "glob": "extras.takedown_path",
+   "why": "legal process"
+  },
+  {
+   "id": "K35",
+   "glob": "extras.jurisdiction",
+   "why": "legality framing"
+  },
+  {
+   "id": "K36",
+   "glob": "extras.contact",
+   "why": "third-party personal contact"
+  },
+  {
+   "id": "K37",
+   "glob": "extras.operator",
+   "why": "vendor legal entity, addresses and named people"
+  },
+  {
+   "id": "K38",
+   "glob": "extras.operator_*",
+   "why": "vendor legal entity and channels"
+  },
+  {
+   "id": "K39",
+   "glob": "extras.entity_check",
+   "why": "legal-entity investigation"
+  },
+  {
+   "id": "K40",
+   "glob": "extras.entity_finding",
+   "why": "legal-entity investigation"
+  },
+  {
+   "id": "K41",
+   "glob": "extras.legal_entity",
+   "why": "legal entity"
+  },
+  {
+   "id": "K42",
+   "glob": "extras.terms_page",
+   "why": "terms page pointer"
+  },
+  {
+   "id": "K43",
+   "glob": "extras.agents",
+   "why": "who-did-what"
+  },
+  {
+   "id": "K44",
+   "glob": "probe.instrument",
+   "why": "local tool path"
+  },
+  {
+   "id": "K45",
+   "glob": "extras.enforcement",
+   "why": "terms enforcement narrative"
+  },
+  {
+   "id": "K46",
+   "glob": "extras.wave2.merged_*",
+   "why": "merge bookkeeping of an earlier wave (issue #20)"
+  },
+  {
+   "id": "K47",
+   "glob": "extras.wave2.verdict_change",
+   "why": "process trace of a verdict change"
+  },
+  {
+   "id": "K48",
+   "glob": "probe.file",
+   "why": "the path of a private probe file"
+  },
+  {
+   "id": "K49",
+   "glob": "extras.verify_file",
+   "why": "the path of a private verification file"
+  },
+  {
+   "id": "K50",
+   "glob": "extras.matrix_ref",
+   "why": "a private document name"
+  },
+  {
+   "id": "K51",
+   "glob": "extras.census_rows",
+   "why": "the row ids of the corpus's own census"
+  },
+  {
+   "id": "K52",
+   "glob": "extras.census_rows_*",
+   "why": "the row ids of the corpus's own census"
+  },
+  {
+   "id": "K53",
+   "glob": "extras.r[0-9][0-9]_*",
+   "why": "a research run's before and after state"
+  },
+  {
+   "id": "K54",
+   "glob": "extras.talaria_*",
+   "why": "a figure attributed to a seed source"
+  },
+  {
+   "id": "K55",
+   "glob": "extras.nemo_*",
+   "why": "a figure attributed to a seed source"
+  },
+  {
+   "id": "K56",
+   "glob": "extras.wave2.restored_original_quote",
+   "why": "a note on how a quote was repaired"
+  },
+  {
+   "id": "K57",
+   "glob": "extras.wave3.corrected",
+   "why": "a correction note of a research wave"
+  },
+  {
+   "id": "K58",
+   "glob": "extras.client_scale_fit",
+   "why": "a fit against the client's workload"
+  },
+  {
+   "id": "K59",
+   "glob": "extras.changed_since_dossier",
+   "why": "a comparison with an earlier record"
+  },
+  {
+   "id": "K60",
+   "glob": "extras.data_licence",
+   "why": "the licence of returned data: terms text"
+  },
+  {
+   "id": "K61",
+   "glob": "extras.results_storage",
+   "why": "the right to store returned data: terms text"
+  },
+  {
+   "id": "K62",
+   "glob": "extras.results_storable",
+   "why": "the right to store returned data: terms text"
+  },
+  {
+   "id": "K63",
+   "glob": "extras.sharing",
+   "why": "whether an account may be shared: terms text"
+  },
+  {
+   "id": "K64",
+   "glob": "extras.sharing_and_class_separated",
+   "why": "whether an account may be shared: terms text"
+  }
+ ],
+ "url_rewrite": [
+  {
+   "id": "U01",
+   "re": "^https?://archive\\.web\\.pkgforge\\.dev/capture/(\\d{4,14})/(https?://.+)$",
+   "to": "https://web.archive.org/web/\\1/\\2"
+  },
+  {
+   "id": "U02",
+   "re": "^https?://archive\\.web\\.pkgforge\\.dev/closest\\?url=([^&]+)&at=([0-9-]+).*$",
+   "to": "https://web.archive.org/web/\\2/\\1",
+   "strip_dash_in_group": 2
+  },
+  {
+   "id": "U03",
+   "re": "^https?://archive\\.web\\.pkgforge\\.dev/captures\\?url=([^&]+).*$",
+   "to": "https://web.archive.org/web/*/\\1"
+  },
+  {
+   "id": "U04",
+   "re": "^https?://(?:fetch|read)\\.web\\.pkgforge\\.dev/\\?url=(https?://.+)$",
+   "to": "\\1"
+  },
+  {
+   "id": "U05",
+   "re": "^https?://(?:fetch|read)\\.web\\.pkgforge\\.dev/(https?://.+)$",
+   "to": "\\1"
+  },
+  {
+   "id": "U06",
+   "re": "^https?://api\\.gh\\.pkgforge\\.dev/(.+)$",
+   "to": "https://api.github.com/\\1"
+  },
+  {
+   "id": "U07",
+   "re": "^probe:sources/p/[0-9a-f]{2}/[0-9a-f]{64}[\\w.]*$",
+   "to": "probe:kept-privately",
+   "why": "a stored copy in this repository's sources/p/; the public data cannot resolve the path"
+  },
+  {
+   "id": "U08",
+   "re": "^probe:broker-(?:read|fetch|crawl|archive|search)\\s+(https?://\\S+).*$",
+   "to": "\\1",
+   "why": "a page read through the corpus's page reader: the origin URL is the evidence"
+  },
+  {
+   "id": "U09",
+   "re": "^probe:(.*?)-?lane\\d+-?(.*)$",
+   "to": "probe:\\1-\\2",
+   "why": "a research lane label inside a probe name"
+  },
+  {"id": "U10", "re": "^(https?://[^?#]*)\\?__provider=[A-Za-z0-9_-]+&(.*)$", "to": "\\1?\\2", "why": "the reader the page was fetched through is process, not part of the address (round 4)"},
+  {"id": "U11", "re": "^(https?://[^#]*?)&__provider=[A-Za-z0-9_-]+&(.*)$", "to": "\\1&\\2", "why": "the reader the page was fetched through is process, not part of the address (round 4)"},
+  {"id": "U12", "re": "^(https?://[^#]*?)[?&]__provider=[A-Za-z0-9_-]+$", "to": "\\1", "why": "the reader the page was fetched through is process, not part of the address (round 4)"}
+ ],
+ "url_drop": [
+  {
+   "id": "U10",
+   "re": "(?:^|[/.@])(?:[a-z0-9-]+\\.)*(?:pkgforge\\.dev|ajam\\.dev)(?:[/:?#]|$)",
+   "why": "operator-owned host with no recoverable origin"
+  },
+  {
+   "id": "U11",
+   "re": "^probe:seed/",
+   "why": "migration file pointer"
+  },
+  {
+   "id": "U12",
+   "re": "^probe:unspecified$",
+   "why": "migration placeholder"
+  },
+  {
+   "id": "U13",
+   "re": "(?:^|[^A-Za-z])(?:[A-Za-z]:\\\\|[/\\\\]Users[/\\\\]|[/\\\\]home[/\\\\])|\\.tmp[/\\\\]",
+   "why": "local path, with a forward or a backward slash"
+  }
+ ],
+ "templates": {
+  "min_count": 25,
+  "skip_paths_prefix": [
+   "evidence[].url",
+   "free_tier.source_url",
+   "per_object_cap.source_url",
+   "retention.source_url",
+   "egress.source_url",
+   "history",
+   "url",
+   "limits[].source",
+   "provider",
+   "category",
+   "tier",
+   "slug",
+   "topic",
+   "verdict",
+   "confidence",
+   "binding",
+   "verified_at",
+   "interface"
+  ],
+  "classes": [
+   [
+    "not-applicable",
+    "^not applicable"
+   ],
+   [
+    "defaulted",
+    "defaulted|assumed value|flagged, not evidence"
+   ],
+   [
+    "not-recorded",
+    "^not (?:recorded|assessed)|was rejected before|never sharded|did not turn on|rejected:"
+   ],
+   [
+    "not-extracted",
+    "extract|conversion|not a field in either"
+   ],
+   [
+    "none-observed",
+    "^no reliability event"
+   ],
+   [
+    "not-stated",
+    "^not (?:stated|published|established|read)|states no|records no|carries no|no identity|documents no"
+   ]
+  ],
+  "default_class": "process",
+  "public_text": {
+   "not-applicable": "not applicable",
+   "defaulted": null,
+   "not-recorded": "not recorded",
+   "not-extracted": "not stated",
+   "none-observed": "no reliability event recorded",
+   "not-stated": "not stated",
+   "process": null
+  },
+  "meaning": {
+   "not-applicable": "the field does not apply to this kind of offer",
+   "defaulted": "a placeholder value, not evidence",
+   "not-recorded": "no value was recorded for this field",
+   "not-extracted": "the field may be stated in a source that was not read",
+   "none-observed": "nothing of this kind was observed",
+   "not-stated": "a source was read and is silent on this field",
+   "process": "a note on how the record was made, with no technical content"
+  }
+ },
+ "quantity_re": "(?:\\d[\\d,.]*\\s*(?:%|[KMGTP]i?B\\b|[KMGTP]bps|[MG]bit|req|requests|calls|per\\b|/|x\\b|hours?|days?|minutes?|seconds?|files?|objects?|links?|downloads?|accounts?|devices?|connections?|threads?|streams?|slots?|vCPU|cores?|credits?|tokens?|USD|EUR))|(?:USD|EUR|GBP|CNY|\\$|\\u20ac)\\s*\\d",
+ "pre_rewrite": [
+  {
+   "id": "N0",
+   "re": "\\s*\\[(?:undated|dated)[^\\]]*\\]",
+   "to": "",
+   "why": "migration date stamp appended to quotes"
+  }
+ ],
+ "narrative_neutralise": [
+  "^(?:rejected|recorded|listed|kept|parked)(?: [a-z]+)? (?:in|by|from) the seed(?:'s)?(?: [a-z-]+){0,3}\\s*[:;,-]\\s*",
+  "^(?:the )?seed(?:'s)? (?:figure|wording|row|record|copy|table|text) (?:said|says|read|reads|was|stated|states)\\s*:?\\s*",
+  "\\s*\\((?:seed|this pass|this session|in this pass|in this session|this lane|the seed)[^)]*\\)",
+  ",?\\s+(?:in|during|from) this (?:session|pass|lane|wave|run|sweep)\\b",
+  ",?\\s+as (?:the )?seed (?:recorded|said|stated)\\b",
+  "^(?:the )?seed(?: pass)? recorded,?\\s*(?:at this URL)?\\s*:\\s*",
+  ",?\\s+(?:that|which) this (?:lane|session|pass) (?:found|saw|measured|read|reached)\\b",
+  "\\s+(?:in|across|of|for|on) (?:the|this) lane\\b",
+  "\\b(?:the|this) lane(?:'s)?\\s+",
+  "^Merged from [a-z0-9-]+:\\s*",
+  "\\s+I (?:read|opened|fetched|checked|tried)\\b",
+  ",?\\s+(?:through|via|by|to|from|at|with|without|in|on) the broker(?:'s (?:egress|read path|read|fetch|crawl|archive|search|provider fallback|default))?\\b(?! (?:site|page|host|website)\\b)",
+  ",?\\s+(?:in|for|across|of) this assignment\\b",
+  ",?\\s+(?:through|via|by|to|from|at|with|without|in|on) (?:the|this) (?:(?:read|fetch|corpus) )?broker(?:'s (?:egress|read path|read|fetch|crawl|archive|search|provider fallback|default))?\\b(?! (?:site|page|host|website)\\b)",
+  "\\bbroker-side\\s+",
+  [
+   "\\b[Aa] broker (\\d{3})\\b",
+   "HTTP \\1"
+  ],
+  "\\s+by me\\b",
+  [
+   "\\b(?:[Oo]ur|[Mm]y) division\\b",
+   "a division"
+  ],
+  [
+   "\\b(?:tells|told) us\\b",
+   "shows"
+  ],
+  [
+   "\\bour reader\\b",
+   "a page reader"
+  ],
+  "\\s+(?:that )?we could (?:read|reach)\\b",
+  "\\s+(?:in|during|across) (?:this|the|the same) session\\b",
+  "\\s+of the session\\b",
+  "\\s*\\((?:read|fetched) via (?:the )?(?:read|fetch) broker(?:, [^)]*)?\\)",
+  "^(?:the )?(?:read|fetch) broker, upstream_status \\d{3}(?: \\([^)]*\\))?[.:,]?\\s*",
+  "\\s+via (?:the )?(?:read|fetch) broker\\b",
+  "\\b(?:read|fetch) broker,\\s*",
+  [
+   "\\b[Tt]his file\\b(?!'s)",
+   "this record"
+  ],
+  [
+   "\\bprobe\\.py\\b",
+   "probe"
+  ],
+  ",?\\s*(?:about |roughly |only |already |just )?(?:an? )?(?:[\\d.,]+(?: percent| per cent|%|x)?|(?:a|one) (?:tenth|quarter|third|sixth|half|eleventh|fifth|hundredth)|\\w+ hundredths|(?:two|three) orders of magnitude short)(?: of(?: one day of)?)? (?:the|our) (?:[\\d.,]+ ?(?:TB|TiB|GB)(?:/month|/day| a day| a month)? )?(?:serving |volume )?target(?: volume)?\\b",
+  "\\s*\\b(?:just )?(?:short of|above|below) the (?:[\\d.,]+ ?(?:TB|TiB|GB)(?:/month|/day| a day| a month)? )?target\\b",
+  "^(?:[A-Z]+ )?CORRECTION(?: \\d+)?(?: \\d{4}-\\d\\d-\\d\\d)?:\\s*",
+  "^[Cc]orrected \\d{4}-\\d\\d-\\d\\d:\\s*",
+  "\\s*\\((?:searched|see) [^)]*\\)",
+  [
+   "\\b([\\d.,]+ ?(?:TB|TiB|GB)) workload:",
+   "at \\1:"
+  ],
+  ",?\\s*(?:roughly |about )?[\\d.,]+ times the target\\b",
+  "\\s*against an? [\\d.,]+ ?(?:GB|TB|TiB)(?:/month|/day| a day| a month)? target\\b",
+  [
+   ",? and it is recorded once, in ",
+   "; see "
+  ],
+  "\\s*[-,\u2014\u2013]?\\s*(?:about |roughly )?(?:one|two|three|four|five|\\d+) orders? of magnitude short\\b(?! of)",
+  "\\s*[-,\u2014\u2013]?\\s*(?:far )?below the bar\\b",
+  [
+   "\\(dossier ([a-z-]+) record ([a-z0-9][a-z0-9-]*)\\)",
+   "(\\1/\\2)"
+  ],
+  ",?\\s*per BRIEF (?:\u00a7|section )?[\\d.]+(?: [a-z ]*ladder)?",
+  ",?\\s*(?:per|according to|as recorded in|as reported in) the (?:platform(?:'s)? )?research report\\b",
+  "^(?:What|The thing) the incumbent(?: (?:row|record|entry))? did not (?:say|carry|state|record|mention) (?:is|was) that\\s+",
+  "\\s+(?:that )?the incumbent (?:row|record|entry)s? did not (?:carry|say|state|record|mention)\\b",
+  ",?\\s+(?:found |anywhere )?(?:in|of|for|across) this slot\\b",
+  [
+   "\\(BRIEF \u00a7[\\d.]+:\\s*",
+   "("
+  ],
+  "^Answer sits here:\\s*",
+  "^(?:The )?(?:[A-Z][a-z]+ )?answer to question:\\s*",
+  ",? and the answer to question(?=:)",
+  [
+   "\\s*[\\u2014\\u2013]\\s*rule (?:1[0-5]|[1-9]) (?:disqualifier|in reverse|in action|in its purest form)\\b",
+   ""
+  ],
+  [
+   ",?\\s*which is rule (?:1[0-5]|[1-9]) in action\\b",
+   ""
+  ],
+  [
+   "\\s*\\((?:see |cf\\. )?rule (?:1[0-5]|[1-9])\\b(?![.,]\\d)[^()]*\\)",
+   ""
+  ],
+  [
+   ",? so rule (?:1[0-5]|[1-9]) applies(?: hard)?:",
+   ":"
+  ],
+  [
+   "\\b[Rr]ule (?:1[0-5]|[1-9]) applies:\\s*",
+   ""
+  ],
+  [
+   "\\b[Cc]onsistent with rule (?:1[0-5]|[1-9])\\b\\.?",
+   ""
+  ],
+  [
+   "\\s+in rule (?:1[0-5]|[1-9])\\b(?![.,]\\d)",
+   ""
+  ],
+  [
+   "(?<![\\w.])[Rr]ule (?:1[0-5]|[1-9]):\\s*",
+   ""
+  ]
+ ],
+ "clause_rules": [
+  {
+   "id": "N1",
+   "class": "narrative",
+   "flags": "i",
+   "re": "\\b(?:in|during|from|by) this (?:session|pass|lane|wave|run|review|sweep|conversion)\\b|\\bthis (?:session|pass|lane|wave|sweep|conversion)\\b|\\b(?:an?|the) (?:earlier|previous|first|second|later) (?:pass|wave|lane|sweep|review|round|revision|draft)\\b",
+   "triggers": [
+    "session",
+    "pass",
+    "lane",
+    "wave",
+    " run",
+    "review",
+    "sweep",
+    "conversion",
+    "round",
+    "revision",
+    "draft"
+   ]
+  },
+  {
+   "id": "N2",
+   "class": "narrative",
+   "flags": "i",
+   "re": "\\bthe seeds?(?:'s|')?(?=\\W|$)|\\b(?:four|three|two|both) seeds\\b|\\bseed (?:corpus|pass|passes|rows?|tables?|records?|cards?|copy|copies|waves?|research|models?|figures?|claims?|values?)\\b|\\b(?:source|corpus|catalogue) card\\b|\\bdead-end row\\b|\\bpeli-cloud\\b|\\bstorage-research\\b|\\btable\\.md\\b|DEAD-ENDS\\.md|findings\\.json",
+   "triggers": [
+    "seed",
+    "card",
+    "dead-end row",
+    "peli-cloud",
+    "storage-research",
+    "table.md",
+    "dead-ends.md",
+    "findings.json"
+   ]
+  },
+  {
+   "id": "N3",
+   "class": "narrative",
+   "flags": "i",
+   "re": "not re-?(?:checked|verified|read|established)|no page was read|\\bwas not (?:fetched|read|probed) in\\b|\\binherited from\\b",
+   "triggers": [
+    "re-check",
+    "recheck",
+    "re-verif",
+    "reverif",
+    "re-read",
+    "reread",
+    "re-establish",
+    "no page was read",
+    "was not",
+    "inherited"
+   ]
+  },
+  {
+   "id": "N4",
+   "class": "narrative",
+   "flags": "i",
+   "re": "\\b(?:the|this) (?:record|row|table|document|sentence|figure|claim|entry) (?:now|said|read|stated|used to|previously)\\b|\\bearlier (?:version|revision|wording|claim|record|reading)\\b|\\bwas (?:corrected|withdrawn|reclassified)\\b|\\bReclassified\\b|\\b[Cc]orrected \\d{4}-\\d\\d-\\d\\d\\b|\\b(?:[A-Z]+ )?CORRECTION\\b|\\bDowngraded from [a-z]+\\b|\\bbatch \\d+ recorded\\b|\\b[Tt]he corpus(?:'s)? (?:document|table|card|row|verdict|figure|entry|earlier)\\b",
+   "triggers": [
+    "batch",
+    "claim",
+    "corpus",
+    "corrected",
+    "correction",
+    "document",
+    "downgraded",
+    "earlier",
+    "entry",
+    "figure",
+    "reclassified",
+    "record",
+    "row",
+    "sentence",
+    "table",
+    "withdrawn"
+   ]
+  },
+  {
+   "id": "N5",
+   "class": "narrative",
+   "flags": "i",
+   "re": "\\.tmp[/\\\\]|\\bscratch\\s+[\\w.-]+/|history[/\\\\]\\d{4}-|METHODOLOGY\\.md|BRIEF\\.md|AGENTS\\.md|\\bsee extras\\.|\\bextras\\.[a-z_]+|\\bwave2\\b",
+   "triggers": [
+    ".tmp/",
+    ".tmp\\",
+    "history\\",
+    "scratch",
+    "history/",
+    "methodology.md",
+    "brief.md",
+    "agents.md",
+    "extras",
+    "wave2"
+   ]
+  },
+  {
+   "id": "N6",
+   "class": "narrative",
+   "flags": "i",
+   "re": "\\bMerged from\\b|\\bfolded (?:from|into)\\b|\\bmerged (?:into|with)\\b",
+   "triggers": [
+    "merged",
+    "folded"
+   ]
+  },
+  {
+   "id": "N7",
+   "class": "narrative",
+   "flags": "i",
+   "re": "\\b(?:two|three|both|one|another|each|this|that|the) lanes?\\b|\\bthe reconciler\\b|\\b(?:a|the) reviewer\\b|\\bagents?:|\\bwave ?\\d\\b|\\badversarial review\\b",
+   "triggers": [
+    "lane",
+    "reconciler",
+    "reviewer",
+    "agent",
+    "wave",
+    "adversarial"
+   ]
+  },
+  {
+   "id": "N8",
+   "class": "narrative",
+   "flags": "i",
+   "re": "\\bthe operator'?s? (?:reports?|reported|asked|owns|instruction|complaint|hypothesis|browser|own|renders?|decision|question|cleared|to judge)\\b|\\boperator instruction\\b",
+   "triggers": [
+    "operator"
+   ]
+  },
+  {
+   "id": "N9",
+   "class": "narrative",
+   "flags": "",
+   "re": "(?<![A-Za-z'])I (?:did|could|read|tried|checked|opened|fetched|was|found|saw|ran|made|probed|measured|got|have not|had)\\b|\\b[Ww]hat I could not (?:establish|confirm|verify|read|find|open)\\b|\\bI (?:did|could) not (?:pass|read|check|probe|fetch|make|open|verify|test|sign|create|log|establish|confirm|find)\\b|\\b(?:page|pages|doc|docs|host|site) I (?:tried|read|checked|opened|fetched)\\b",
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "triggers": [
+    "i checked",
+    "i could",
+    "i could not",
+    "i did",
+    "i did not",
+    "i fetched",
+    "i found",
+    "i got",
+    "i had",
+    "i have not",
+    "i made",
+    "i measured",
+    "i opened",
+    "i probed",
+    "i ran",
+    "i read",
+    "i saw",
+    "i tried",
+    "i was"
+   ],
+   "why": "first-person process narrative: what one session could or could not do",
+   "skip_quoted": true
+  },
+  {
+   "id": "N10",
+   "class": "narrative",
+   "flags": "i",
+   "re": "\\bthis assignment\\b",
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "triggers": [
+    "this assignment"
+   ],
+   "why": "the brief a session worked to, not a fact about the offer"
+  },
+  {
+   "id": "N11",
+   "class": "narrative",
+   "flags": "",
+   "re": "\\b(?:[Tt]he|[Tt]his|[Tt]hat|[Oo]ur|[Ii]ts)\\s+(?:(?:read|fetch|corpus|search|archive|crawl|page|own|research)\\s+)?broker(?:'s)?\\b(?! (?:site|page|host|website)\\b)|\\bbroker-side\\b|\\b(?:[Aa]|[Dd]irect) broker (?:read|fetch|search|crawl|refusal|failure|fault|answer|exit|HTTP|\\d{3})\\b|\\bbroker (?:read|fetch|search|exit \\d|refusal|failure|fault|answer|returned|reported|HTTP)\\b|__egress=broker\\b|\\bbroker:socks5\\b|\\b(?:read|fetch|corpus)[ -]broker\\b|\\bbroker \\d{3}\\b|\\b(?:[Tt]his|[Tt]he) repository's broker\\b|\\bbroker (?:extraction|routes?|status|providers?|archive|probes?|refused|attempts?|could not|reads?|calls?|queries|egress|snapshot)\\b|\\b(?:every|each|all|both|nine|four|three|two|several|separate) broker (?:routes?|providers?|probes?|attempts?|reads?|calls?|queries)\\b|\\b(?:read|fetch|archive|crawl|research)(?: and (?:read|fetch|archive|crawl))?[ -]brokers?\\b|^broker$",
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "triggers": [
+    "broker"
+   ],
+   "why": "the operator's page reader and fetch path are how a page was read, not a provider: the read broker, this broker's egress, a broker-side 530, __egress=broker. A vendor class keeps its name: a tunnel broker, a debrid broker, an IP broker's site, page, host or website",
+   "skip_quoted": true
+  },
+  {
+   "id": "N12",
+   "class": "narrative",
+   "flags": "",
+   "skip_quoted": true,
+   "re": "(?<![A-Za-z'/.\\-])(?<!Linux )(?<!Ryzen )(?<!test )(?<!Test )(?<!Tier )(?<!tier )(?<!Phase )(?<!Type )(?<!Class )(?<!Part )(?<!Level )(?<!Stage )(?<!Series )(?<!Gen )I(?: (?=[a-z])|'(?:m|ve|d|ll)\\b)|(?<![A-Za-z'/.\\-])[Mm]y (?=[a-z])|(?<![A-Za-z'/.\\-])me(?![A-Za-z'/.\\-])|\\b[Oo]ur (?:division|reader|readers|reading|egress|tooling|exact reason|arithmetic|measurements?|probes?|sample|count|fetch|lane|session|run|corpus|records?|catalogue|filter|workload)\\b|\\b(?:tells|told|for|by) us\\b|\\b[Ww]e (?:could|did|want|wanted|measured|probed|checked|counted|tried|read|reached)\\b|\\b(?:object|page|marketplace|endpoint|step|anywhere|source)s? we\\b",
+   "triggers": [
+    "i ",
+    "i'",
+    "my ",
+    "me",
+    "our ",
+    " us",
+    "we "
+   ],
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "why": "the author of the record in the first person, by shape: I with a verb, my, me, and we, our or us where the record's author reads, measures or divides. Quoted third-party text is kept; a vendor's own we or our copied into a field is the vendor's voice, not the author's; a roman numeral (Linux I, Tier I) and a product name (My Drive, My Number) are not pronouns"
+  },
+  {
+   "id": "N13",
+   "class": "narrative",
+   "flags": "i",
+   "skip_quoted": true,
+   "re": "\\b(?:this|the next|a later|a future|an earlier|the previous|the last|the same|the parent|the merge|the research|a resuming|one research)\\s+session\\b(?!\\s+(?:token|cookie|id|key|cap|limit|length|timeout|lifetime|duration)\\b)|\\bthe session's\\b(?!\\s+(?:token|cookie|id|key|cap|limit|length|timeout|lifetime|duration)\\b)|\\bsessions? ago\\b|\\b(?:across|during) the session\\b|\\b(?:dead end|find|finding|result|reading|readings|lead)s? of the session\\b|\\bspend (?:a|one) session\\b|\\ba session (?:reading|with an account)\\b",
+   "triggers": [
+    "session"
+   ],
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "why": "a research session is how the record was made; a browser, SSH, notebook or API session is a technical unit and stays"
+  },
+  {
+   "id": "N14",
+   "class": "narrative",
+   "flags": "",
+   "skip_quoted": true,
+   "re": "\\b[Cc]ensus\\b(?! [Bb]ureau)|\\bsearched: |\\b(?:New|NEW) (?:provider|PROVIDER|record|RECORD)\\b|\\bNew (?:to|for) (?:the|this) corpus\\b|\\b(?:[Tt]he|[Tt]his) corpus (?:holds|has|had|carries|carried) no\\b|\\b(?:[Tt]he|[Tt]his) corpus (?:did not|does not|never) (?:carry|hold|record|have)\\b|\\b(?:[Tt]he|[Tt]his) corpus (?:serves|should|was written|previously)\\b|\\bshape for this corpus\\b|\\bAlready covered\\b|\\bno (?!(?:DNS|MX|TXT|A|AAAA|SPF|PTR|CNAME|NS|SOA|SRV|CAA|DKIM|DMARC|SSHFP|HTTPS|SVCB|WHOIS|RDAP|BGP|IRR|ROA) record)[A-Z][\\w.-]*(?: [A-Z][\\w.-]*)? record\\b|\\bno (?:compute|storage|egress|inference|netdisk-pan|debrid|email|proxy|ip-proxy|topic) record\\b|\\bholds no [A-Z]|\\b[Tt]he brief's\\b|\\b[Tt]he brief\\b(?! (?:outage|window|period|delay|pause|interruption|spike|burst|moment|time|downtime|test|trial|description|summary|overview|answer|reply)\\b)|\\b[Tt]his unit\\b|\\b[Tt]he (?:wave|prober|extractor)(?:'s)?\\b|\\b[Tt]his file's history\\b|\\b[Tt]his file\\b|\\b[Tt]his repository(?:'s)?\\b|\\bsurvives a clean tree\\b|\\bthe ledger reserved\\b|\\bdouble count\\b|\\bno record (?:with|for|of|under) (?:this|that|the) (?:provider|vendor|name|slug)\\b|\\bthere is no record (?:for|of)\\b|\\bno record (?:can )?carr(?:y|ies|ied)\\b|\\bwith no record\\b(?= ?[.;,]|$)|\\bbatch \\d+ (?:left|recorded|found|named)\\b|\\bthe survey list\\b|\\brecorded once\\b|\\b[Aa]lready covered\\b|\\b(?:rather than|not) a new provider\\b|\\bin the survey\\b",
+   "triggers": [
+    "already covered",
+    "batch",
+    "brief",
+    "census",
+    "clean tree",
+    "corpus",
+    "double count",
+    "extractor",
+    "holds no",
+    "ledger",
+    "new ",
+    "new provider",
+    "prober",
+    "record",
+    "recorded once",
+    "searched:",
+    "survey",
+    "survey list",
+    "the wave",
+    "this file",
+    "this repository",
+    "this unit"
+   ],
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "why": "this repository's research process: the census, a dedupe search, a new-provider note, the brief, the prober, 'this file'. The corpus as a whole and a record id stay. A path or a tool of this repository is F1, a pointer and not narrative"
+  },
+  {
+   "id": "N16",
+   "class": "narrative",
+   "flags": "",
+   "skip_quoted": true,
+   "re": "\\b[Dd]ossiers?\\b(?!/)|\\bBRIEF (?:\u00a7|section |rule )|\\bper BRIEF\\b|\\bBRIEF\\.md\\b|\\bMETHODOLOGY(?:\\.md)? ?\\d|(?<![\\w-])(?:talaria|nemo)(?:'s)?\\b|\\b(?:[Nn]either|[Ee]ither|[Bb]oth|[Ee]ach|[Tt]he two|[Aa]n earlier|[Tt]he earlier) seeds?(?:'s)?\\b|\\bseed (?:data|revision|revisions|columns?|numbers?|figures?|verdicts?|waves?)\\b|\\b[Tt]he \\d{4}-\\d\\d-\\d\\d seed\\b|\\b[Bb]atch [1-9](?:'s)?\\b(?! ?(?:[KMGT]i?B|x\\b|%))|\\b(?:in|from|by|as|since|of|so|that) round \\d\\b|\\b[Rr]ound \\d (?:did|recorded|measured|suspected|settled|verified|covered|found|already)\\b|\\b[Rr]ound \\d's\\b|\\b[Tt]he \\d{4}-\\d\\d-\\d\\d pass\\b|^Candidates\\b|\\bCandidates:|\\b(?:[Tt]wo|[Tt]hree|[Ff]our|[Ff]ive) (?:readings|framings|hypotheses|candidates|explanations) (?:were|was) (?:considered|tested|weighed)\\b|\\bAbandonment condition\\b|\\b[\\w-]+ lane's (?:finding|records?|result|note|numbers?)\\b|\\b[Tt]he (?:pricing-history|CIS|other) lane(?:'s)?\\b|\\bthe compute lane\\b|\\b[Tt]he survey (?:named|said|says|list|sentence)\\b|\\bsurvey sentence\\b|(?<!describes )\\b[Tt]he assignment(?:'s)?\\b|\\b[Tt]he plan (?:names this|said the)\\b|\\brecon plan\\b|\\bgrep hits?\\b|\\banswer to (?:the )?question\\b|\\bAnswer sits here\\b|\\bname brief\\b|\\bby the [\\w-]+ agent\\b|\\b[A-Z]-[A-Z]?\\d+ agent\\b|\\b(?:[Tt]wo|[Tt]hree|[Ff]our|[Ff]ive) candidates?(?: explanations)? (?:for|were)\\b|\\btested as (?:two|three|four|five) candidates\\b|\\btop candidates\\b|\\b(?:BRIEF|METHODOLOGY|DEAD-ENDS|RESUME)\\b(?![\\w.-]*[a-z])|\\bAGENTS(?:\\.md| \u00a7| \\d| rule)|\\bseed sub-[a-z]+\\b|\\bseed (?:sub-)?findings?\\b|\\b(?:cheap-paid|aggregators|sibling|ip-class|ip-proxy|seed-western|free-debrid|pricing-history|qualifies-with-caveat|payment-rails|CIS|cis) lanes?(?:'s)?\\b|\\b[Tt]he other lane's\\b|\\b[Aa] sibling lane\\b|\\b(?:[Tt]he|THE) (?:survey|SURVEY)\\b(?! is\\b)|\\bclose the survey\\b|\\b(?:as|because) the survey\\b|\\bnamed in the assignment\\b|\\bthe assignment\\b(?<!describes the assignment)|\\b[\\w-]+ lane's (?:Seen list|tables?|findings?|records?|results?|notes?|numbers?|biggest number|list)\\b",
+   "triggers": [
+    "abandonment",
+    "agent",
+    "agents",
+    "answer sits",
+    "answer to",
+    "assignment",
+    "bar",
+    "batch",
+    "brief",
+    "candidates",
+    "dead-ends",
+    "dossier",
+    "explanations",
+    "filter",
+    "floor",
+    "framings",
+    "grep hit",
+    "hypotheses",
+    "job",
+    "lane",
+    "lane's",
+    "methodology",
+    "name brief",
+    "nemo",
+    "pass",
+    "readings",
+    "recon plan",
+    "resume",
+    "round",
+    "seed",
+    "survey",
+    "talaria",
+    "the plan"
+   ],
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "why": "the research process in the words round 3 found: the dossier, the brief by section, the seed agents talaria and nemo, a seed as an earlier draft, batch and round numbers, the candidates a researcher considered, an abandonment condition, a lane by name, the survey, the assignment, a grep hit, the answer to question, an agent by id. A record id and the corpus as a whole stay"
+  },
+  {
+   "id": "N17",
+   "class": "narrative",
+   "flags": "",
+   "skip_quoted": true,
+   "re": "\\bwould-settle\\b|\\b[Ww]ould (?:also |both |still |then |only |be )?settled?\\b|\\bRecorded (?:as|dead|here|so|rather|because|null|unchanged|only)\\b|\\brecorded as [\\w-]+ rather than\\b|\\b[A-HP]-[A-HP]\\d{1,2}\\b|\\b[Ww]ave[- ]?\\d+\\b|\\b(?:every|each|next|previous|prior|future|earlier|last|first|second) wave\\b|\\bnext pass\\b|\\bfuture (?:check|pass)\\b|\\bworth (?:recording|writing down)\\b|\\bdead[- ]end\\b|\\brather than re-?discover\\w*|\\b(?:[Tt]he|[Tt]his|[Oo]ur) corpus(?:'s)?\\b|\\bfetch exit \\d|\\btoken overlap\\b|__provider=|\\[re-read|\\bthe original capture stands\\b|\\bdefault reader\\b|\\b[Nn]o account was created\\b|\\b[Nn]o signup was executed\\b|\\bC-slots?\\b|\\brule \\d+ in (?:§|section) ?[\\d.]+|\\b1 TiB test\\b|\\bother keyed tiers\\b|\\bCF-covered\\b",
+   "triggers": [
+    "would-settle",
+    "would settle",
+    "settle",
+    "recorded ",
+    "a-a",
+    "a-p",
+    "b-b",
+    "c-c",
+    "d-d",
+    "e-e",
+    "f-f",
+    "g-g",
+    "h-h",
+    "p-p",
+    "wave",
+    "next pass",
+    "future check",
+    "future pass",
+    "worth recording",
+    "worth writing",
+    "dead end",
+    "dead-end",
+    "re-discover",
+    "rediscover",
+    "corpus",
+    "fetch exit",
+    "token overlap",
+    "__provider",
+    "[re-read",
+    "original capture stands",
+    "default reader",
+    "no account was created",
+    "no signup was executed",
+    "c-slot",
+    "rule ",
+    "1 tib test",
+    "keyed tiers",
+    "cf-covered"
+   ],
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "why": "the research process in words round 4 found: the wave and seed ids, what would settle a row (any clause that names what would settle a value, also with a word between: 'would also settle', 'would be settled'), how a row was filed, what is worth recording, the corpus as a subject, the tool that read a page, no account being created, and a rule of a private document"
+  },
+  {
+   "id": "P1",
+   "class": "personal",
+   "action": "drop",
+   "flags": "i",
+   "re": "data scientist|self-taught|outside china|no institutional affiliation|owns? no (?:machine|hardware)",
+   "triggers": [
+    "data scientist",
+    "self-taught",
+    "outside china",
+    "institutional affiliation",
+    "no machine",
+    "no hardware"
+   ]
+  },
+  {
+   "id": "P11",
+   "class": "personal",
+   "action": "drop",
+   "flags": "i",
+   "re": "\\b(?:the|this|that|our) client(?:'s)? (?:has|had|have|hit|hits|half-remembers|lives|wants|wanted|needs|needed|already|actually|starts|stated|serving|workloads?|target|requirement|need|monthly|month|whole|scale|sizing|hypothesis|problem|question|willingness|hard filter|programmatic|real price|likely|country|region|budget|traffic|egress|exactly|~?[0-9])|\\b(?:the|this) client is (?:outside|based|in|one)\\b|\\b500 GB ?(?:to|-|\u2013|\u2014) ?1 Ti?B ?(?:/ ?|a |per )day\\b|\\b10 TiB hot\\b|\\b20 TiB archive\\b|\\bthe 500 GB (?:filter|threshold)\\b|\\bhe cannot afford\\b|\\bhis archive\\b|\\bhis own (?:country|machine|hardware|money)\\b",
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "triggers": [
+    "client",
+    "500 gb",
+    "tib hot",
+    "tib archive",
+    "he cannot afford",
+    "his archive",
+    "his own"
+   ],
+   "why": "the client's circumstances and workloads: who the corpus is for is not a public finding"
+  },
+  {
+   "id": "P13",
+   "class": "personal",
+   "action": "drop",
+   "flags": "i",
+   "re": "\\bthe operator's (?:stated (?:pain|reason)|USD 50|hold|constraint|figure|actual complaint)\\b|\\bwhich is the operator's account\\b|\\bthe operator's (?:Internet Archive |API )?keys?\\b",
+   "triggers": [
+    "operator"
+   ],
+   "why": "the operator's circumstances"
+  },
+  {
+   "id": "P14",
+   "class": "personal",
+   "action": "drop",
+   "flags": "i",
+   "re": "\\ba client (?:with no\\b|who has neither\\b|serving \\d|with \\d|with a public repository\\b|without an institutional\\b)",
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "triggers": [
+    "a client"
+   ],
+   "why": "a client with no card, budget, hardware or account, or with a stated workload, is the corpus's own user"
+  },
+  {
+   "id": "P15",
+   "class": "personal",
+   "action": "narrative",
+   "flags": "i",
+   "skip_quoted": true,
+   "re": "\\bserving (?:target|workload)s?\\b|\\btarget (?:volume|workload)\\b|\\b(?:[\\d.,]+(?: percent| per cent|%|x)?|(?:an?|one) (?:tenth|quarter|third|sixth|half|eleventh|fifth|hundredth)|\\w+ hundredths|orders? of magnitude short|short|above|below|against|than|exceeds?|meets?|misses|clears?|reach(?:es)?|beyond|under|over|toward) (?:of )?(?:the|our) (?:[\\d.,]+ ?(?:TB|TiB|GB|GiB)(?:/month|/day| a day| a month| per day| per month)? )?(?:serving |volume |storage |traffic |egress |monthly |daily )?target\\b(?! (?:host|url|region|machine|server|service|address|ip|port|group|platform|directory|bucket|repository|site|website|domain|account|page|path|file|body|content|cloud|hoster)s?\\b)|\\btarget profile\\b|\\bthe [\\d.,]+ ?(?:TB|TiB|GB|GiB)(?:/month|/day| a day| a month)? (?:serving )?target\\b|\\ban? [\\d.,]+ ?(?:TB|TiB|GB|GiB)(?:/month|/day| a day| a month| per day| per month)? (?:serving )?(?:workload|client)\\b|\\ba workload serving\\b|\\ba 1 TiB month\\b|\\bthe [\\d.,]+ ?(?:TB|TiB|GB|GiB) floor\\b|\\b(?:fails?|failing|passes|passing|meets?|clears?) the (?:egress|capacity|quota|identity|programmatic[- ]access|\\u2265 ?[\\d.,]+ ?(?:GB|TB|TiB)|[\\d.,]+ ?(?:GB|TB|TiB)) filter\\b|\\bthe \\u2265 ?[\\d.,]+ ?(?:GB|TB|TiB) filter\\b|\\bchunk-and-replicate design\\b|\\bper unit for a user\\b|\\b[\\d.,]+ ?(?:GB|TB|TiB|GiB)(?:/month|/day| a day| a month)? (?:serving |fetch )?workload\\b|\\b500 ?GB(?: ?-| to )1 ?TiB/day\\b|\\b[\\d.,]+ ?(?:GB|TB|TiB)/day serving\\b|\\bthe stated workload\\b|\\bclient workload\\b|\\bthe byte target\\b|\\btimes the target\\b|\\bof programmatic serving\\b|\\bof the hot (?:working )?set\\b|\\bnot the hot set\\b|\\bthe 500 GB (?:bar|floor|filter|threshold|line)\\b|\\bthe (?:10|20) TiB problem\\b|\\bhalf of the problem\\b|\\bthe [\\d.,]+ ?TiB question\\b|\\borders? of magnitude (?:short|below the (?:bar|floor|filter|requirement)|too small to matter)\\b|\\b(?:far )?below the bar\\b|\\bshort of the requirement\\b|\\bthe target shape\\b|\\b(?:deliver|past|closest (?:free )?shape to) the target\\b|\\ban? [\\d.,]+ ?(?:GB|TB|TiB|GiB)(?: ?-[\\d.,]+ ?(?:GB|TB|TiB))?(?:/month|/mo|/day| a day| a month| per day| per month)? (?:serving |fetch )?(?:workload|target)\\b|\\ba 1 TiB/month (?:service|client|load)\\b|\\ban? [\\d.,]+ ?(?:TB|TiB|GB)(?:/mo|/month|/day) serving load\\b|\\ba (?:10|20) TiB archive\\b|\\b(?:[\\d.,]+ ?%|[\\d.,]+ percent|one-(?:fifth|tenth|quarter|third|half)|an? (?:fifth|tenth|quarter|third|half)) of the (?:filter|floor|bar)\\b|\\bone day's target\\b|\\b(?:against|below|above|under|over) an? [\\d.,]+ ?(?:GB|TB|TiB)(?:/day| a day)? (?:floor|filter|target|bar)\\b|\\b(?:fails?|fits?|meets?|clears?|misses) the [\\d.,]+ ?(?:GB|TB|TiB)(?:[/-](?:per-)?(?:unit|day|month)| a day| per unit)? (?:bar|job|floor|filter|target|workload)\\b|\\b(?:far )?(?:under|below|above|over) the (?:filter|bar)\\b|\\b(?:far |well )?(?:under|below) the floor\\b(?! (?:of|plan|price|tier|rate))|\\bclear the bar\\b|\\bfails the job\\b",
+   "triggers": [
+    "1 tib month",
+    "500 gb",
+    "archive",
+    "bar",
+    "below the bar",
+    "chunk-and-replicate",
+    "client",
+    "filter",
+    "floor",
+    "gb/day",
+    "hot set",
+    "hot working set",
+    "job",
+    "lane's",
+    "load",
+    "of the problem",
+    "one day's target",
+    "order of magnitude",
+    "orders of magnitude",
+    "per unit for a user",
+    "requirement",
+    "service",
+    "serving",
+    "target",
+    "tib problem",
+    "tib question",
+    "tib/day",
+    "workload"
+   ],
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "why": "the client's serving target and workloads, written as a comparison with a record's numbers: the arithmetic stays and the comparison goes (a share of the target, the 500 GB floor, the egress filter)"
+  },
+  {
+   "id": "P16",
+   "class": "personal",
+   "action": "token",
+   "flags": "",
+   "re": "\\bhello-f-research\\b",
+   "to": "a test string",
+   "triggers": [
+    "f-research"
+   ],
+   "why": "a test string that names this repository, written by a probe into a vendor's database"
+  },
+  {
+   "id": "P17",
+   "class": "personal",
+   "action": "token",
+   "flags": "i",
+   "re": "(?<![a-z0-9-])(?:cf-codex|f-research)\\b(?!/)",
+   "to": "[a private project]",
+   "triggers": [
+    "cf-codex",
+    "f-research"
+   ],
+   "why": "the name of an operator project or of this repository; a path inside one is a pointer (F1)"
+  },
+  {
+   "id": "P2",
+   "class": "personal",
+   "action": "rewrite",
+   "flags": "i",
+   "re": "^none reachable for this client[:;]\\s*",
+   "to": "",
+   "triggers": [
+    "client"
+   ]
+  },
+  {
+   "id": "P3",
+   "class": "personal",
+   "action": "rewrite",
+   "flags": "i",
+   "re": "\\b(?:this|that|our) client's|\\bthe client's(?! (?:area|areas|ip|ips|side|device|devices|app|apps|application|applications|library|libraries|sdk|sdks|binary|binaries|software|certificate|certificates|cert|id|ids|secret|config|configuration|process|portal|dashboard|login|logging|setting|settings|log|logs|timeout|version|program|tool|tools|mode|key|keys|port|daemon|daemons|code|command|script|documentation|repository|layer|list|hello|agent|flow|usage|prefix|endpoint|local|machine|of|sends|opens|connects|dials|maps|polls|downloads|download|retrieves|requests|receives|generates|registers|enumerates|reaches|carries|creates|terminates|treats|assigns|builds|borrows|imposes|confirms|comments|watches|removes|changes|pastes|bursts|leaves)\\b)",
+   "to": "a user's",
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "triggers": [
+    "client"
+   ]
+  },
+  {
+   "id": "P4",
+   "class": "personal",
+   "action": "rewrite",
+   "flags": "i",
+   "re": "\\b(?:for|to) (?:this|the) client\\b(?!['-])",
+   "to": "for a user",
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "triggers": [
+    "client"
+   ]
+  },
+  {
+   "id": "P12",
+   "class": "personal",
+   "action": "rewrite",
+   "flags": "i",
+   "re": "\\b(?:this|that|our) client\\b(?!'|-)|(?<!\\bin )(?<!\\bis )\\bthe client\\b(?!'|-| (?:area|areas|ip|ips|side|device|devices|app|apps|application|applications|library|libraries|sdk|sdks|binary|binaries|software|certificate|certificates|cert|id|ids|secret|config|configuration|process|portal|dashboard|login|logging|setting|settings|log|logs|timeout|version|program|tool|tools|mode|key|keys|port|daemon|daemons|code|command|script|documentation|repository|layer|list|hello|agent|flow|usage|prefix|endpoint|local|machine|of|sends|opens|connects|dials|maps|polls|downloads|download|retrieves|requests|receives|generates|registers|enumerates|reaches|carries|creates|terminates|treats|assigns|builds|borrows|imposes|confirms|comments|watches|removes|changes|pastes|bursts|leaves)\\b)",
+   "to": "a user",
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "triggers": [
+    "client"
+   ],
+   "why": "the client as a person becomes a generic user; the client as software (client IP, client area, the client sends) stays"
+  },
+  {
+   "id": "P5",
+   "class": "personal",
+   "action": "drop",
+   "flags": "",
+   "re": "Azathothas|AjamX|\\bajam\\b|pkgforge|ajam\\.dev|f-shy",
+   "triggers": [
+    "azathothas",
+    "ajamx",
+    "ajam",
+    "pkgforge"
+   ]
+  },
+  {
+   "id": "P6",
+   "class": "personal",
+   "action": "drop",
+   "flags": "",
+   "re": "\\b[A-Z\\u00c4\\u00d6\\u00dc][\\w\\u00e4\\u00f6\\u00fc\\u00df.\\-]+(?:stra(?:\\u00df|ss)e|str\\.|gasse|weg|platz|allee)\\s*\\d+\\w?\\b|\\b\\d{1,5}\\s+[A-Z][a-z]+(?:\\s[A-Z][a-z]+)?\\s(?:Street|St\\.|Road|Rd\\.|Avenue|Ave\\.|Lane|Drive|Boulevard)\\b",
+   "triggers": [
+    "str",
+    "gasse",
+    "weg",
+    "platz",
+    "allee",
+    "street",
+    "st.",
+    "road",
+    "rd.",
+    "avenue",
+    "ave.",
+    "lane",
+    "drive",
+    "boulevard"
+   ]
+  },
+  {
+   "id": "P7",
+   "class": "personal",
+   "action": "drop",
+   "flags": "",
+   "re": "(?:Operated by|run by|owned by|founded by|maintained by)[:,]?\\s+[A-Z][a-z\\u00e4\\u00f6\\u00fc\\u00e9]+\\s[A-Z][a-z\\u00e4\\u00f6\\u00fc\\u00e9]+(?!\\s*(?:GmbH|Ltd|LLC|Inc|AG|SRL|B\\.V\\.|S\\.A\\.|Limited|Corp|Networks|Cloud|Hosting|Technologies|Systems))",
+   "triggers": [
+    "operated by",
+    "run by",
+    "owned by",
+    "founded by",
+    "maintained by"
+   ]
+  },
+  {
+   "id": "P8",
+   "class": "personal",
+   "action": "token",
+   "flags": "",
+   "re": "(?<![\\w.])(?!(?:support|abuse|sales|info|help|contact|grants|noreply|no-reply|admin|billing|security|hello|team|office|postmaster|nokey|researchdata|privacy|press|partners?)@)[A-Za-z0-9._%+\\-]+@[A-Za-z0-9\\-]+(?:\\.[A-Za-z0-9\\-]+)*\\.[A-Za-z]{2,}",
+   "to": "[address removed]",
+   "skip_re": "example\\.(?:com|org|net|invalid)|\\.invalid\\b",
+   "triggers": [
+    "@"
+   ]
+  },
+  {
+   "id": "P9",
+   "class": "personal",
+   "action": "token",
+   "flags": "",
+   "re": "(?<![\\w/])\\+\\d{1,3}[\\s\\-]?\\(?\\d{2,4}\\)?[\\s\\-]?\\d{3,4}[\\s\\-]?\\d{3,4}\\b",
+   "to": "[number removed]",
+   "triggers": [
+    "+"
+   ]
+  },
+  {
+   "id": "P10",
+   "class": "personal",
+   "action": "drop",
+   "flags": "",
+   "re": "(?:[A-Za-z]:\\\\Users\\\\|/Users/|D:\\\\_WORK_)",
+   "triggers": [
+    "users",
+    "_work_"
+   ]
+  },
+  {
+   "id": "L1",
+   "class": "legal",
+   "flags": "i",
+   "re": "terms of (?:service|use)|terms and conditions|\\bT&Cs?\\b|user agreement|\\bAGB\\b|\\bCGU\\b|\\bCGV\\b|(?-i:\\b(?:ToS|TOS|AUP|EULA|DMCA)\\b)|acceptable[- ]use|usage policy|abuse policy|privacy policy|\\bGDPR\\b|\\bcopyright\\b|\\binfring(?!ing_file)\\w*|\\btakedown\\b|\\b(?:il)?legal(?:ity|ly)?\\b(?! entit)|\\b(?:un)?lawful\\w*|\\bjurisdiction\\b|\\bliab(?:le|ility)\\b|\\bpiracy\\b|\\bpirated\\b|\\bwarez\\b|published conditions",
+   "triggers": [
+    "terms",
+    "t&c",
+    "agb",
+    "cgu",
+    "cgv",
+    "tos",
+    "aup",
+    "eula",
+    "dmca",
+    "acceptable",
+    "usage policy",
+    "abuse policy",
+    "privacy",
+    "gdpr",
+    "copyright",
+    "infring",
+    "takedown",
+    "legal",
+    "lawful",
+    "jurisdiction",
+    "liab",
+    "piracy",
+    "pirated",
+    "warez",
+    "published conditions"
+   ]
+  },
+  {
+   "id": "L2",
+   "class": "legal",
+   "flags": "i",
+   "re": "\\bprohibit\\w*|\\bforbid\\w*|\\bforbad\\w*|\\bdisallow\\w*|\\bviolat\\w+|\\bbreach(?:es)? of\\b|\\bmisuse\\b",
+   "triggers": [
+    "prohibit",
+    "forbid",
+    "forbad",
+    "disallow",
+    "violat",
+    "breach",
+    "misuse"
+   ],
+   "keep_if_quantity": true,
+   "why": "restriction wording; a clause that carries a number is a technical limit and stays"
+  },
+  {
+   "id": "L3",
+   "class": "legal",
+   "flags": "i",
+   "re": [
+    "\\b{STRONG}\\s+{NOUN}\\b",
+    "\\bcommercial(?:ly)?\\s+(?:use\\s+)?included\\b",
+    "\\b(?:use|used|using|reuse|re-use|adapt)\\b[^.;:]{0,40}?\\bcommercially\\b",
+    "(?:^\\s*|[(\\[|:,'\\\"\u2018\u201c]\\s*|\\b(?:for|to|allows?|allowing|permits?|only|is|are|of|licen[cs]ed\\s+for)\\s+(?:both\\s+)?(?:an?\\s+)?(?:permitted\\s+)?(?:individual(?:'s)?\\s+)?(?:own\\s+)?){SOFT}(?:(?:\\s*,|,?\\s+and|,?\\s+or)?\\s+{SOFT})*\\s+{NOUN}\\b",
+    "\\b{SOFT}\\s+(?:use|usage)\\s+only\\b",
+    "\\b(?:prior\\s+|express\\s+)?written\\s+(?:approval|permission|consent)\\b|\\bprior\\s+(?:approval|permission|consent)\\b",
+    "\\blicen[cs]ed\\s+(?:under|as)\\b(?!\\s+(?:the\\s+)?(?:Apache|MIT|GPL|AGPL|LGPL|BSD|MPL|Mozilla|GNU|Elastic|SSPL|BUSL|Business\\s+Source|FSL|Functional\\s+Source|ISC|Unlicense|EUPL)[\\w.-]*)",
+    "\\bCC[- ]?BY(?:[- ](?:SA|NC|ND))*\\b|\\bCC0\\b|\\bCreative\\s+Commons\\b|\\bODbL\\b|\\bPDDL\\b|\\bODC-(?:By|ODbL|PDDL)\\b|\\bOpen\\s+(?:Database|Government|Data\\s+Commons)\\b(?:\\s+[\\w-]+)*?\\s+Licen[cs]e\\b|\\bno\\s+open\\s+licen[cs]e\\b",
+    "\\b(?:data|content|database|personal|individual|display|redistribution|end-user|non-commercial)\\s+licen[cs]es?\\b(?!\\s+agreements?\\b)",
+    "\\bthe\\s+licen[cs]e\\s+(?:allows|permits|requires|forbids|bars|limits|is\\s+(?:internal|personal|non-commercial|commercial))\\b",
+    "\\bResults\\s+storable\\b|\\bnot\\s+storable\\b",
+    "\\b(?:with|requires?|required|requiring|needs?|carr(?:y|ies)|plus|without|no|visible|appropriate|proper|mandatory|simple)(?:\\s+(?:an?|the|its|their|visible|appropriate|proper|clear|simple|\\w+'s))?\\s+attribution\\b",
+    "\\battribution\\s+(?:to\\s+\\S+\\s+)?(?:is\\s+|are\\s+)?(?:required|needed|mandatory|requirement|duty|clause|licen[cs]e|guide)\\b",
+    "\\b(?:give|gives|provide|provides)\\s+(?:\\w+\\s+)?attribution\\b|\\battribution\\s+(?:goes\\s+to|should)\\b",
+    "\\bask(?:s|ed)?\\s+for\\b[^.;]{0,60}?\\battribution\\b|\\bcredit\\s+link\\b|\\bcredit\\s+\\S+\\s+as\\s+the\\s+source\\b",
+    "\\bPowered\\s+by\\s+\\S+(?:\\s+API)?\\s+(?:attribution|badge|logo|credit)\\b|\\bcarr(?:y|ies)\\s+(?:a\\s+)?{Q1}?Powered\\s+by\\b",
+    "\\bsublicen[cs]\\w*",
+    "\\b(?:may|may\\s+not|must\\s+not|can|cannot|can't|allowed\\s+to|permitted\\s+to|free\\s+to|right\\s+to|agree\\s+to\\s+not|not\\s+to)\\s+(?:\\w+(?:,|\\s+(?:and|or))?\\s+){0,3}?(?:redistribute|resell|syndicate|rehost|republish)\\b",
+    "\\bredistribut\\w*\\s+(?:(?:the|any|all)\\s+)?(?:results|data|content|material|datasets?)\\b",
+    "\\b(?:redistribut\\w*|display\\w*)\\s+(?:or|and)\\s+(?:redistribut\\w*|display\\w*|resale|share|syndicate)\\b",
+    "\\b(?:use|copy|share)\\s+(?:and|or)\\s+redistribut\\w*",
+    "\\bredistribution(?:,|\\s+(?:and|or))\\s+(?:rehosting|resale|display|mirroring|bulk|sublicens)",
+    "\\b(?:redistribution|resale)\\s+(?:or|and)\\s+(?:bulk\\s+data\\s+)?(?:licen[cs]es?|resale|redistribution)\\b",
+    "\\bredistribution\\s+of\\s+(?:the\\s+)?(?:data|results|content|API)\\b",
+    "\\bmay\\s+(?:not\\s+)?be\\s+(?:\\w+\\s+(?:and|or)\\s+)?(?:redistributed|resold|sublicensed)\\b",
+    "\\b(?:caching|storing|redistribution|redistributing|resale|reselling|rehosting|mirroring|displaying|copying|bulk\\s+download(?:ing|s)?)\\b[^.;:]{0,60}?\\b(?:is|are)\\s+(?:not\\s+|only\\s+|also\\s+)?(?:permitted|allowed)\\b",
+    "\\bbulk\\s+download(?:ing|s)?\\s+(?:is\\s+|are\\s+)?(?:only\\s+)?(?:permitted|allowed)\\b",
+    "\\b(?:results?|responses?|data|content|outputs?|geocodes?|tiles|feeds?|request-response\\s+pairs)(?:\\s+\\([^()]*\\)|\\s+a\\s+(?:day|month))?\\s+(?:that\\s+|which\\s+)?(?:may|may\\s+not|must\\s+not|cannot|can't|can\\s+only|(?:are|is)\\s+(?:not\\s+)?(?:allowed|permitted)\\s+to)\\s+(?:only\\s+|also\\s+|not\\s+)?(?:be\\s+)?(?:stored|cached|kept|held|redistributed|resold|displayed|reused|re-used|copied|sublicensed|written\\s+to|processed\\s+only|used\\s+(?:outside|commercially))\\b",
+    "\\b(?:you|users?|customers?|developers?|subscribers?|licensees?)\\s+(?:may|may\\s+not|must\\s+not|can|cannot|can't|(?:are|is)\\s+(?:not\\s+)?(?:allowed|permitted)\\s+to)\\s+(?:only\\s+|also\\s+|not\\s+)?(?:\\w+ly\\s+)?(?:\\w+\\s+(?:and|or)\\s+|\\w+,\\s+)?(?:store|cache|redistribute|resell|sublicense|share|display|reuse|re-use|copy|release|disclose)\\s+(?:and\\s+\\w+\\s+)?(?:(?:the|any|all|such|weather|API|request-response|returned|response)\\s+)*(?:data|results?|responses?|pairs|content|outputs?)\\b",
+    "\\b(?:may|can)\\s+be\\s+used\\s+for\\s+any\\s+purpose\\b",
+    "\\b(?:allowed|permitted)\\s+for\\s+(?:usage|use)\\s+outside\\b|\\bused\\s+outside\\s+(?:of\\s+)?the\\s+(?:service|platform)\\b",
+    "\\b(?:client\\s+|server-side\\s+|request-response\\s+)?caching\\b[^.;:]{0,40}?\\b(?:at\\s+most|within\\s+cache-control|not\\s+to\\s+serve)\\b",
+    "\\b(?:do|does)\\s+not\\s+(?:allow|permit)\\s+(?:[\\w-]+\\s+){0,2}?(?:caching|storing|storage|redistribution|resale|sharing|display)\\b",
+    "\\b(?:is|are)\\s+displayed\\s+to\\s+end\\s+users\\b",
+    "\\bor\\s+otherwise\\s+(?:retain|store|cache|copy|redistribute|share|disclose|exploit)\\b|\\bunless\\s+(?:otherwise\\s+)?expressly\\b",
+    "\\brelease\\s+of\\s+(?:it|the\\s+data|data)\\s+is\\s+barred\\b",
+    "\\bderived\\s+(?:results|data|works)\\b|\\bderivative\\s+works?\\b",
+    "\\b(?:share|sharing|shared|redistribut\\w*|sell|selling|disclos\\w+|display\\w*)\\b[^.;:]{0,50}\\b(?:with|to)\\s+(?:a\\s+|any\\s+|anyone\\s+or\\s+any\\s+)?(?:third[- ]part(?:y|ies)|3rd[- ]part(?:y|ies))\\b",
+    "\\baccount\\s+sharing\\s+(?:is\\s+|are\\s+)?(?:not\\s+)?(?:permitted|allowed)\\b",
+    "\\bnon-?commercial\\s+(?:credits|requests|calls|quota|tier|plan|key)\\b",
+    "\\bthe\\s+terms\\s+(?:bar|ban|forbid)s?\\b|\\bto\\s+the\\s+extent\\s+the\\s+terms\\s+allow\\b|\\bthe\\s+terms\\s+(?:do\\s+not|don't|does\\s+not)\\s+(?:allow|permit)\\b",
+    "\\bterms\\]\\([^)\\s]*\\)\\s+(?:apply|applies)\\b|\\b(?:vendor's|provider's|our)\\s+terms\\s+(?:apply|applies)\\b",
+    "\\b(?:redistribut\\w*|cop(?:y|ies)|databases?|caching|storing|resale|sharing|reuse)\\b[^.;:]{0,60}?\\b(?:is|are)\\s+not(?:\\s+(?:permitted|allowed))?\\s*[.;]?\\s*$",
+    "^\\s*(?:map\\s+)?(?:tiles?|content|results?)\\s+(?:yes|no)\\s*[.;]?\\s*$|^\\s*(?:API\\s+)?results\\s+not\\s+stated\\s*[.;]?\\s*$"
+   ],
+   "defs": {
+    "STRONG": "(?:non-?commercial|commercial|non-business|non-display)",
+    "SOFT": "(?:personal|internal)",
+    "USE": "(?:non-?commercial|commercial|non-business|non-display|personal|internal|individual|private|home|academic)",
+    "NOUN": "(?:use|usage|purposes?)(?!\\s+cases?\\b)",
+    "PRE": "(?:both\\s+)?(?:an?\\s+)?(?:individual(?:'s)?\\s+)?(?:own\\s+)?",
+    "CHAIN": "(?:{USE}(?:\\s*,|,?\\s+and|,?\\s+or)?\\s+)*{USE}\\s+{NOUN}(?:\\s+only)?",
+    "LIST0": "{PRE}{CHAIN}",
+    "LIST": "{PRE}(?:[\\w-]+(?:\\s+[\\w-]+)?,\\s+){0,3}(?:[\\w-]+(?:\\s+[\\w-]+)?,?\\s+(?:and|or)\\s+)?{CHAIN}",
+    "LB": "(?<!\\bpersonal)(?<!\\binternal)(?<!\\bindividual)(?<!\\bprivate)(?<!\\bcommercial)(?<!\\bnon-business)(?<!\\bhome)",
+    "LIC": "(?:CC[- ]?BY(?:[- ](?:SA|NC|ND))*(?:[- ]\\d(?:\\.\\d)?)?|CC0|ODbL(?:[- ]\\d\\.\\d)?|PDDL|ODC-(?:By|ODbL|PDDL)(?:[- ]\\d\\.\\d)?|Creative\\s+Commons(?:\\s+Attribution)?(?:[- ](?:Share-?Alike|NonCommercial|Noncommercial|NoDerivs))*(?:\\s+\\d\\.\\d)?(?:\\s+International)?|Open\\s+(?:Database|Government|Data\\s+Commons)(?:\\s+[\\w-]+)*?\\s+Licen[cs]e)",
+    "Q1": "['\"\u2018\u201c]",
+    "Q2": "['\"\u2019\u201d]"
+   },
+   "neutralise": [
+    [
+     "(?<=\\()\\s*{LIC}\\s*,\\s*(?=(?-i:[a-z0-9]))",
+     ""
+    ],
+    [
+     "\\s*\\(\\s*(?:under\\s+)?{LIC}[^()]*?(?:\\)|(?=;?\\s*$))",
+     ""
+    ],
+    [
+     "\\s+and\\s+the\\s+{LIC}\\s+licen[cs]e\\s+line\\b",
+     ""
+    ],
+    [
+     ",\\s*(?:\\w+\\s+){0,2}(?:re-?usable|storable|usable)\\s+under\\s+(?:the\\s+)?{LIC}",
+     ""
+    ],
+    [
+     "(\\s+(?:(?:is|are)\\s+)?(?:published|distributed|released|available|provided))\\s+under\\s+(?:the\\s+)?(?:terms\\s+of\\s+the\\s+)?{LIC}(?:\\s+(?:or|and)\\s+{LIC})*(?:\\s+licen[cs]e)?(?:\\s+(?:or|and)\\s+(?:similar|other)\\s+licen[cs]es)?",
+     "\\1"
+    ],
+    [
+     ",?\\s+(?:(?:is|are)\\s+)?(?:licen[cs]ed\\s+)?under\\s+(?:the\\s+)?{LIC}(?:\\s+(?:or|and)\\s+{LIC})*(?:\\s+licen[cs]e)?(?:\\s+(?:or|and)\\s+(?:similar|other)\\s+licen[cs]es)?",
+     ""
+    ],
+    [
+     "(?:,\\s*(?:and\\s+)?|\\s+(?:and|or|with)\\s+)(?:the\\s+|an?\\s+)?{LIC}(?:[- ]licen[cs]ed|\\s+licen[cs]e)??(?=\\s*[,;.)'\\\"\u2019\u201d]|\\s*$|\\s+licen[cs]es?\\b)",
+     ""
+    ],
+    [
+     "\\bCC0(?=\\s+(?:release|after)\\b)",
+     "public"
+    ],
+    [
+     "\\s*\\(\\s*including\\s+(?:for\\s+)?(?:academic|personal|commercial|non-commercial|educational)\\s+use\\s*\\)",
+     ""
+    ],
+    [
+     "^\\s*[^,;.]*?\\b(?:is|are)\\s+(?:only\\s+)?(?:limited|restricted)\\s+to\\s+{LIST0},\\s+(?:and\\s+|but\\s+)?",
+     ""
+    ],
+    [
+     "{LB},\\s+(?!{USE}\\b)([\\w-]+),?\\s+and\\s+{LIST0}(?=\\s*[,;.)(]|\\s*$)",
+     " and \\1"
+    ],
+    [
+     "\\b(is|are)\\s+(?:only\\s+|strictly\\s+)?for\\s+{LIST},\\s+",
+     "\\1 "
+    ],
+    [
+     ",?\\s+(?:and|but)\\s+(?:are|is)\\s+(?:not\\s+)?(?:licen[cs]ed|allowed|permitted)\\s+for\\s+{LIST}",
+     ""
+    ],
+    [
+     "(?<!\\bbuilt)(?<!\\bintended)(?<!\\bmeant)(?<!\\bdesigned)(?<!\\bis)(?<!\\bare)(?<!\\bbe)(?<!\\bonly)(?<!\\bstrictly)(?<!\\bexclusively)(?<!\\bsolely)(?<!\\blicensed)(?<!\\blicenced)\\s+for\\s+{LIST}(?:\\s+too)?(?=\\s*[,;.:)|'\\\"\u2019\u201d]|\\s*$|\\s+(?:with|and|but|while|up\\s+to)\\b)",
+     ""
+    ],
+    [
+     "\\s*\\(\\s*(?:for\\s+)?{LIST0}\\s*\\)",
+     ""
+    ],
+    [
+     "{LB},\\s*(?:and\\s+)?(?:licen[cs]ed\\s+)?(?:for\\s+)?{LIST0}(?:\\s+(?:allowed|permitted|included|not\\s+allowed))?(?=\\s*[,;.)|]|\\s*$)",
+     ""
+    ],
+    [
+     "\\s+{Q1}for\\s+{LIST0}[.!]?{Q2}",
+     ""
+    ],
+    [
+     "\\s*(?:[,+&]|\\band\\b)\\s*{Q1}(?:licen[cs]ed\\s+for\\s+)?{LIST0}[.!]?{Q2}(?:\\s+on\\s+all\\s+\\w+\\s+axes)?",
+     ""
+    ],
+    [
+     "\\s+and\\s+{Q1}{LIST0}[^'\\\"\u2019\u201d]{0,60}?(?:permitted|allowed){Q2}",
+     ""
+    ],
+    [
+     "\\s*\\|\\s*{LIST0}(?=\\s*(?:\\||{Q2}|$))",
+     ""
+    ],
+    [
+     "\\b{LIST0}\\s*[-\u2013\u2014]\\s+",
+     ""
+    ],
+    [
+     ",?\\s+(?:and|or|but)\\s+no\\s+{LIST0}",
+     ""
+    ],
+    [
+     ",\\s*provided\\s+(?:that\\s+)?you\\s+agree\\s+to\\s+{LIST0}(?:\\s+of\\s+the\\s+(?:product|service|software))?",
+     ""
+    ],
+    [
+     "{LB}\\s+and\\s+{LIST0}(?=\\s*[,;.)]|\\s*$)",
+     ""
+    ],
+    [
+     "\\bnon-?commercial\\s+(?=(?:credits|requests|calls|quota|tier|plan|key)\\b)",
+     ""
+    ],
+    [
+     ",\\s*(?:and|but)\\s+(?:redistribution|resale|sublicensing|display|commercial\\s+use)\\b[^;.]*",
+     ""
+    ],
+    [
+     "{LB},\\s*(?:and|but|with|which|where)\\b[^,;.]*?\\b{STRONG}\\s+{NOUN}\\b[^,;.]*(?:,\\s*which[^.;]*)?",
+     ""
+    ],
+    [
+     ",\\s*(?:and\\s+)?attribution\\s+(?:is\\s+)?(?:required|mandatory|needed)(?=\\s*[,;.)]|\\s*$)",
+     ""
+    ],
+    [
+     ",\\s*(?:and\\s+)?(?:no|with|plus)\\s+(?:visible\\s+|simple\\s+)?attribution\\b[^,;.()]*",
+     ""
+    ],
+    [
+     "\\(\\s*no\\s+attribution,\\s*",
+     "("
+    ],
+    [
+     ",?\\s*(?:with\\s+)?account\\s+sharing\\s+(?:is\\s+)?(?:permitted|allowed)",
+     ""
+    ],
+    [
+     "\\s+and\\s+(?:the\\s+)?acceptance\\s+of\\s+(?:a|the)\\s+(?:[\\w-]+\\s+)?licen[cs]e(?:\\s+agreement)?",
+     ""
+    ],
+    [
+     ",?\\s+(?:when|where|if)\\s+(?:the|its)\\s+licen[cs]e\\s+(?:permits|allows)",
+     ""
+    ]
+   ],
+   "triggers": [
+    "commercial",
+    "personal",
+    "internal",
+    "non-business",
+    "non-display",
+    "written",
+    "prior",
+    "licens",
+    "licenc",
+    "cc0",
+    "cc by",
+    "cc-by",
+    "ccby",
+    "creative commons",
+    "odbl",
+    "pddl",
+    "odc-",
+    "open database",
+    "open government",
+    "open data commons",
+    "storable",
+    "attribution",
+    "credit",
+    "powered by",
+    "sublicen",
+    "redistribut",
+    "resale",
+    "resell",
+    "syndicate",
+    "rehost",
+    "republish",
+    "caching",
+    "storing",
+    "mirroring",
+    "display",
+    "copying",
+    "bulk download",
+    "may",
+    "must not",
+    "cannot",
+    "can't",
+    "can only",
+    "can ",
+    "allowed",
+    "permitted",
+    "purpose",
+    "outside",
+    "not allow",
+    "not permit",
+    "otherwise",
+    "expressly",
+    "barred",
+    "derived",
+    "derivative",
+    "third",
+    "3rd",
+    "account sharing",
+    "terms",
+    "cop",
+    "database",
+    "sharing",
+    "reuse",
+    "tile",
+    "content",
+    "result"
+   ],
+   "why": "use-rights and licence wording: a use that a plan permits or forbids (commercial, non-commercial, personal or internal use), a vendor's written consent, a licence of data or content (CC BY, CC0, ODbL, PDDL, 'licensed under'), an attribution or redistribution condition, and a right to store, cache, share or resell returned data. Its neutralisers run on every clause it matches, with a number or not: they delete the phrase when a technical fact shares the clause ('100 calls a month, non-commercial use' keeps '100 calls a month'), and the rest stays when L3 no longer matches it and it keeps three words. A clause that is only terms is withheld, and one that still matches and carries a number is held. 'Personal use' counts only beside a word that makes it a right ('for personal use', 'personal use only'), because it also names a workload. A software licence (Apache, MIT, GPL), a licence key and a licence sold as a product (a Windows licence, a commercial software licence) stay. The pattern is a list of alternatives joined with |, and {NAME} in it stands for the part that defs names"
+  },
+  {
+   "id": "T1",
+   "class": "tidy",
+   "action": "tidy",
+   "flags": "i",
+   "re": "\\b(?:read|fetched|probed|checked|measured|re-read|captured|confirmed|answered|returned)\\b[^.;]{0,40}\\btoday\\b(?!['-])",
+   "neutralise": [
+    [
+     "(\\b(?:read|fetched|probed|checked|measured|re-read|captured|confirmed|answered|returned)\\b[^.;]{0,40}?)\\s+today\\b(?!['-])",
+     "\\1"
+    ]
+   ],
+   "triggers": [
+    "today"
+   ],
+   "why": "a relative date: 'read today' means the record's verified_at, which is in its own field. Class tidy: the word goes and the clause stays, and check C20 does not count it"
+  },
+  {
+   "id": "B1",
+   "class": "boilerplate",
+   "action": "tidy",
+   "flags": "",
+   "re": "\\bOne page read moves it to documented\\b|\\bidentity_cost is a guess by analogy, not a finding\\b|\\bverified_at is the instant its evidence URLs were fetched\\b|\\bsee the history entry\\b",
+   "triggers": [
+    "one page read moves it",
+    "identity_cost is a guess",
+    "verified_at is the instant",
+    "see the history entry"
+   ],
+   "why": "a sentence that tells the researcher what to do next or how a field was made, repeated in hundreds of records. The sentence is deleted and the rest of the clause stays; a value that held only it is withheld. Class boilerplate: check C20 does not count it",
+   "neutralise": [
+    [
+     "\\s*\\bOne page read moves it to documented\\.?",
+     ""
+    ],
+    [
+     "\\s*\\bidentity_cost is a guess by analogy, not a finding:[^.]*\\.?",
+     ""
+    ],
+    [
+     "\\s*\\bverified_at is the instant its evidence URLs were fetched on \\d{4}-\\d\\d-\\d\\d, read from the fetch log, not typed\\.?",
+     ""
+    ],
+    [
+     "\\s*[;,]?\\s*\\bsee the history entry\\.?",
+     ""
+    ]
+   ]
+  },
+  {
+   "id": "F1",
+   "class": "pointer",
+   "action": "narrative",
+   "flags": "",
+   "skip_quoted": true,
+   "re": "(?<![\\w./:-])dossiers?[/\\\\]|(?<![\\w./:-])(?:sources|scripts|registry|history|probes|captures|verify|seed|tools)[/\\\\][\\w.-]|(?<![\\w./:-])docs[/\\\\](?:ci-cd-runners|coding-subs|compute|conventions|crawler-scraper|data-apis|databases-kv|debrid|dev-services|domains-dns|egress|email|expansion|inference|ip-proxy|netdisk-pan|storage|maintenance|research-protocol|sessions)\\b|\\b(?:PLAN|BRIEF|AGENTS|METHODOLOGY|RESUME|DEAD-ENDS|FINDINGS|SEED|INDEX|BRIEF-RESEARCH|MANIFEST)\\.(?:md|tsv)\\b|\\b(?:matrix|watchlist|table|census)\\.(?:md|txt)\\b|\\b(?:probe|tcpprobe|validate|compute-price|broker|gate|fr|rq)\\.(?:py|sh)\\b|\\btcpprobe\\b|\\bschema\\.json\\b|(?<![\\w./:-])cf-codex[/\\\\][\\w.-]",
+   "triggers": [
+    ".md",
+    ".py",
+    ".sh",
+    ".tsv",
+    ".txt",
+    "captures/",
+    "captures\\",
+    "cf-codex/",
+    "cf-codex\\",
+    "docs/",
+    "docs\\",
+    "dossier",
+    "history/",
+    "history\\",
+    "probes/",
+    "probes\\",
+    "registry/",
+    "registry\\",
+    "schema.json",
+    "scripts/",
+    "scripts\\",
+    "seed/",
+    "seed\\",
+    "sources/",
+    "sources\\",
+    "tcpprobe",
+    "tools/",
+    "tools\\",
+    "verify/",
+    "verify\\"
+   ],
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "why": "a pointer to a private file of this repository: a stored copy in sources/p/ or sources/c/, a record path in dossier/ that is not published, a script, a private document. It is correct in a private record and has no meaning in the public build, so the projection withholds its clause (or a neutraliser keeps the fact: probe.py -> probe). Class pointer: the projection applies it, and check C20 does not count it, because a pointer is not narrative. It runs after every N and P rule, so a clause that also narrates is recorded under its narrative rule"
+  },
+  {
+   "id": "F2",
+   "class": "pointer",
+   "flags": "",
+   "re": "(?<![\\w./:-])dossiers?[/\\\\]|(?<![\\w./:-])(?:sources|scripts|registry|history|probes|captures|verify|seed|tools)[/\\\\][\\w.-]|(?<![\\w./:-])docs[/\\\\](?:ci-cd-runners|coding-subs|compute|conventions|crawler-scraper|data-apis|databases-kv|debrid|dev-services|domains-dns|egress|email|expansion|inference|ip-proxy|netdisk-pan|storage|maintenance|research-protocol|sessions)\\b|\\b(?:PLAN|BRIEF|AGENTS|METHODOLOGY|RESUME|DEAD-ENDS|FINDINGS|SEED|INDEX|BRIEF-RESEARCH|MANIFEST)\\.(?:md|tsv)\\b",
+   "triggers": [
+    "dossier",
+    "sources/",
+    "sources\\",
+    "scripts/",
+    "scripts\\",
+    "registry/",
+    "registry\\",
+    "history/",
+    "history\\",
+    "probes/",
+    "probes\\",
+    "captures/",
+    "captures\\",
+    "verify/",
+    "verify\\",
+    "seed/",
+    "seed\\",
+    "tools/",
+    "tools\\",
+    "docs/",
+    "docs\\",
+    ".md",
+    ".tsv"
+   ],
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "why": "a path of this repository inside quoted text: no vendor writes one, so the quote is the corpus quoting its own notes. F1 reads the clause with quotes set aside; this rule reads the quotes too. Class pointer, as F1",
+   "action": "narrative"
+  },
+  {
+   "id": "N18",
+   "class": "narrative",
+   "flags": "",
+   "skip_quoted": true,
+   "re": "(?<![\\w.\\u00a7-])[Rr]ules? (?:1[0-5]|[1-9])\\b(?![.,]\\d)",
+   "triggers": [
+    "rule "
+   ],
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "why": "a reference to a numbered rule of the research method ('rule 4 disqualifier', 'which is rule 6 in action', '(rule 8)'): the method is a private document, so the number means nothing to a reader. The neutralisers delete the reference and keep the fact it was attached to; a clause that is only the reference is withheld. A vendor's own numbered clause ('rule 3.1 requires') has a decimal and stays"
+  },
+  {
+   "id": "N19",
+   "class": "narrative",
+   "flags": "",
+   "skip_quoted": true,
+   "re": "\\b(?:[Tt]he|[Tt]his|[Oo]ur)\\s+(?:platform(?:'s)?\\s+)?research report(?:'s)?\\b|\\bKeep (?:it |this |the record )?(?:dead|parked)\\b|\\bReopen (?:it |this )?(?:only )?(?:when|if|once|after)\\b|\\b[Ww]hat would reopen\\b|\\bwould reopen (?:it|this|the (?:record|question|refutation|claim|row))\\b|\\bincumbent (?:row|record|entry|card|figure|claim|version)s?\\b|\\b[Tt]he incumbent(?:'s)? (?:did not|does not|said|says|carried|carries|had|stated|recorded|put|listed|called|USD|EUR|GBP|figure|price)\\b|\\b(?:in|of|for|across) this slot\\b",
+   "triggers": [
+    "research report",
+    "keep ",
+    "reopen",
+    "incumbent",
+    "this slot"
+   ],
+   "skip_paths_prefix": [
+    "evidence[].quote"
+   ],
+   "why": "the research process in the shapes a blind test found (blind test 2, F-13): the platform's research report as the source of a number, a filing instruction ('Keep dead.', 'Reopen when ...', 'What would reopen it: ...'), the earlier version of a record ('the incumbent row', 'what the incumbent did not say') and a research slot ('the only host in this slot'). The neutralisers delete 'per the research report' and keep the number it was attached to. A vendor that reopens sign-ups, a market incumbent ('a Japanese incumbent GPU VM') and a server slot stay"
+  },
+  {
+   "id": "T2",
+   "class": "tidy",
+   "action": "tidy",
+   "flags": "",
+   "re": "\\*\\*(?=\\S)[^*\\n]+?(?<=\\S)\\*\\*|(?<![\\w*])\\*(?=[A-Za-z0-9$])[^*\\n]{1,60}?(?<=[\\w.)%])\\*(?![\\w*])",
+   "triggers": [
+    "*"
+   ],
+   "neutralise": [
+    [
+     "\\*\\*(?=\\S)([^*\\n]+?)(?<=\\S)\\*\\*",
+     "\\1"
+    ],
+    [
+     "(?<![\\w*])\\*(?=[A-Za-z0-9$])([^*\\n]{1,60}?)(?<=[\\w.)%])\\*(?![\\w*])",
+     "\\1"
+    ]
+   ],
+   "why": "Markdown emphasis copied into a value ('**$0 egress**', '*combined*'): the pages print text, not Markdown, so the asterisks showed. The markers go and the words stay. A footnote asterisk after a word ('Unlimited*') is not emphasis and stays. Class tidy: check C20 does not count it"
+  }
+ ],
+ "legal_neutralise": [
+  [
+   "\\b(?:under|per|in|by|according to|see|subject to) (?:the |its |their |a |our )?(?:fair[- ])?(?:terms of service|terms of use|terms and conditions|terms|ToS|TOS|AUP|AGB|EULA|acceptable[- ]use policy|usage policy|user agreement|published conditions|legal page)\\b,?",
+   ""
+  ],
+  [
+   "\\b(?:the |its |their |a )?(?:fair[- ])?(?:terms of service|terms of use|terms and conditions|ToS|TOS|AUP|AGB|EULA|acceptable[- ]use policy|usage policy|user agreement|published conditions)(?: page| section \\S+)?\\b",
+   "the provider"
+  ]
+ ],
+ "leak_scan": [
+  "\\bpkgforge\\b",
+  "(?<!fshy\\.)ajam\\.dev",
+  "\\bAjamX\\b",
+  "\\bAzathothas\\b",
+  "\\bf-shy\\b",
+  "(?<![\\w-])\\.tmp[/\\\\]",
+  "(?<![\\w./:\\\\-])(?:dossiers?|sources|scripts|registry|history|probes|captures|verify|seed|tools|docs|cf-codex)\\\\[\\w.-]",
+  "[A-Z]:\\\\Users\\\\",
+  "D:\\\\_WORK_",
+  "\\b[Tt]his (?:session|pass)\\b",
+  "\\b[Tt]he seed(?:'s)?\\b",
+  "\\bseed corpus\\b",
+  "\\b[Tt]his client\\b",
+  "\\bself-taught\\b",
+  "\\b[Tt]erms of [Ss]ervice\\b",
+  "\\bDEAD-ENDS\\.md\\b",
+  "\\bMETHODOLOGY\\.md\\b",
+  "\\bthe reconciler\\b",
+  "residential ISP \\([A-Za-z]",
+  "pong from [\\w.-]+ \\(\\d",
+  "probe:tailscale://(?!peer/)[\\w.-]+",
+  "\\b100\\.(?:6[5-9]|[7-9]\\d|1[01]\\d|12[0-7])\\.\\d{1,3}\\.\\d{1,3}\\b(?!/)",
+  "\\b[Tt]he client(?:'s)? (?:has no|half-remembers|wants|needs|already|hit|stated|serving|workload|target)\\b",
+  "\\b(?:for|to) (?:the|this) client\\b(?!['-])",
+  "\\b[Tt]he operator(?:'s)? (?:asked|question|cleared|stated pain|stated reason|USD 50)\\b",
+  "\\b500 GB ?(?:to|-|\u2013|\u2014) ?1 Ti?B ?(?:/ ?|a |per )day\\b",
+  "\\b10 TiB hot\\b",
+  "\\b20 TiB archive\\b",
+  "\\b[Ww]hat I could not establish\\b",
+  "\\b[Aa]jam(?:-|\\b(?!\\.dev\\b))",
+  "\\b[Aa] client (?:with no\\b|who has neither\\b|serving \\d|with \\d|with a public repository\\b)",
+  "\\b[Tt]he operator's (?:Internet Archive |API )?keys?\\b|\\bwhich is the operator's account\\b",
+  "\\b[Tt]his assignment\\b",
+  "\\b(?:read|fetch|corpus)[ -]broker\\b|\\bbroker-side\\b|__egress=broker\\b",
+  "(?<![\\w./:-])dossiers?/[a-z]",
+  "(?<![\\w./:-])(?:sources/(?:p|c|20\\d\\d)/|scripts/(?:probe|fshy|research|broker|dossier|sources|report|discover)/)",
+  "probe:sources/",
+  "\\(searched:",
+  "\\bNot in dossier\\b|\\bNew to the corpus\\b",
+  "\\b(?:the|this|a|compute|storage|free-tier) census\\b|\\bcensus\\.txt\\b",
+  "\\bserving target\\b|\\b(?:1 TB|1 TiB)(?: a day)? (?:serving )?target\\b",
+  "\\b[Tt]his file's history\\b|\\b[Tt]his repository's broker\\b",
+  "\\b(?:PLAN|BRIEF-RESEARCH|FINDINGS)\\.md\\b",
+  "(?i:cf-codex)",
+  "(?i:(?<![a-z0-9])f-research(?![a-z0-9]))",
+  "\\b[Tt]he dossier\\b|\\b[Dd]ossier (?:record|file)s?\\b|\\bno dossier\\b",
+  "(?<![\\w-])(?:talaria|nemo)(?:'s)? (?:USD|demoted|applied|modelled|priced|vs)\\b",
+  "\\bBRIEF \u00a7|\\bgrep hits?\\b|\\bAbandonment condition\\b",
+  "\\b[\\d.,]+ ?% of the filter\\b|\\bone day's target\\b",
+  "\\bBRIEF (?:\\d|DEAD-ENDS)|\\bDEAD-ENDS precedent\\b|\\bnamed in the assignment\\b",
+  "\\b[Tt]he survey (?:named|names|produced|recorded|also records)\\b|\\bTHE SURVEY\\b",
+  "\\bFair the provider\\b|\\b500 GB(?:-per-unit|/day) (?:bar|job)\\b",
+  "(?<![\\w.%+\\-])(?!(?i:new@sdf\\.org|nokey@localhost\\.run|udp@free\\.pinggy\\.io|qr@free\\.pinggy\\.io|stable@proxy\\.tunnl\\.gg|jsmith@frs\\.sourceforge\\.net|sciencedb@cnic\\.cn|superc@cineca\\.it|modules@perl\\.org|19XKJ8pokN4BLjUagNmQp@spot\\.net|awsopensourcecredits@amazon\\.com|ooo@ooo\\.ac\\.kr|ooo@ooo\\.edu)(?![\\w\\-]|\\.\\w))(?!(?i:(?:[a-z0-9]+[.\\-])*(?:support|abuse|sales|info|help|helpdesk|contact|contacts|grants|grant|noreply|no-reply|donotreply|admin|administrator|billing|security|hello|team|office|postmaster|webmaster|hostmaster|privacy|press|media|partners|partner|community|legal|enquiries|inquiries|service|services|feedback|developers|dev|ops|noc|mail|hr|jobs|careers|research|researchdata|data|fund|root|git|ssh|login|user|username|name|firstname|lastname|you|yourname|email|test|demo)(?:[.\\-][a-z0-9]+)*)@)[A-Za-z0-9._%+\\-]+@(?!(?:example\\.(?:com|org|net)|[A-Za-z0-9.\\-]*\\.invalid|[A-Za-z0-9.\\-]*\\.test|localhost)\\b)[A-Za-z0-9\\-]+(?:\\.[A-Za-z0-9\\-]+)*\\.[A-Za-z]{2,}",
+  "(?<![\\w/.\\-])(?!(?:\\+40 721 234 567|\\(?555\\)?[\\s.\\-]|\\+?1[\\s.\\-]\\(?555\\)?|000[\\s.\\-]000|123[\\s.\\-]456))\\+\\d{1,3}[\\s.\\-]?\\(?\\d{2,4}\\)?(?:[\\s.\\-]?\\d{2,5}){2,4}(?![\\w\\-]|\\.\\w)",
+  "(?i:\\b(?:whatsapp|wa|phone|tel|telephone|mobile|cell|fax|sms|signal|viber|telegram)\\b(?:\\s+(?:number|no\\.?|nr\\.?))?[\\s:#.\\-]{0,3})(?!\\d{4}-\\d\\d-\\d\\d)(?!\\(?\\d{3}\\)?[\\s.\\-]555[\\s.\\-])\\(?\\+?\\d[\\d\\s().\\-]{6,}\\d",
+  "(?<![\\w.:/\\-$#])(?!(?:\\+40 721 234 567|\\(?555\\)?[\\s.\\-]|\\+?1[\\s.\\-]\\(?555\\)?|000[\\s.\\-]000|123[\\s.\\-]456))(?!\\(?\\d{3}\\)?[\\s.\\-]555[\\s.\\-])\\(?\\d{3}\\)?[\\s.\\-]\\d{3}[\\s.\\-]\\d{4}(?![\\w\\-]|\\.[A-Za-z])",
+  "(?<![\\w/])\\(\\d{2,4}\\)\\s?\\d{4,5}[\\s.\\-]\\d{4}(?!\\d)"
+ ],
+ "personal_scan": {
+  "about": "A personal e-mail address or phone number in a published field fails the build. Unlike the token rules P8 and P9, which rewrite what they find, this scan reads the source value of every field the projection publishes (build.py personal_scan) and refuses the build, so the detail is removed at the source and not only hidden in the output. The same patterns are in leak_scan, which the public export applies to every file it writes. A role address, a placeholder and a login syntax that a service documents are allowed; a new one is added to role_words or documented_addresses in a reviewed pull request, and test_projection.py proves both lists pass.",
+  "role_words": [
+   "support",
+   "abuse",
+   "sales",
+   "info",
+   "help",
+   "helpdesk",
+   "contact",
+   "contacts",
+   "grants",
+   "grant",
+   "noreply",
+   "no-reply",
+   "donotreply",
+   "admin",
+   "administrator",
+   "billing",
+   "security",
+   "hello",
+   "team",
+   "office",
+   "postmaster",
+   "webmaster",
+   "hostmaster",
+   "privacy",
+   "press",
+   "media",
+   "partners",
+   "partner",
+   "community",
+   "legal",
+   "enquiries",
+   "inquiries",
+   "service",
+   "services",
+   "feedback",
+   "developers",
+   "dev",
+   "ops",
+   "noc",
+   "mail",
+   "hr",
+   "jobs",
+   "careers",
+   "research",
+   "researchdata",
+   "data",
+   "fund",
+   "root",
+   "git",
+   "ssh",
+   "login",
+   "user",
+   "username",
+   "name",
+   "firstname",
+   "lastname",
+   "you",
+   "yourname",
+   "email",
+   "test",
+   "demo"
+  ],
+  "documented_addresses": [
+   "new@sdf.org",
+   "nokey@localhost.run",
+   "udp@free.pinggy.io",
+   "qr@free.pinggy.io",
+   "stable@proxy.tunnl.gg",
+   "jsmith@frs.sourceforge.net",
+   "sciencedb@cnic.cn",
+   "superc@cineca.it",
+   "modules@perl.org",
+   "19XKJ8pokN4BLjUagNmQp@spot.net",
+   "awsopensourcecredits@amazon.com",
+   "ooo@ooo.ac.kr",
+   "ooo@ooo.edu"
+  ],
+  "patterns": [
+   {
+    "id": "E1",
+    "why": "a personal e-mail address (a role address, a placeholder or a documented login is allowed)",
+    "re": "(?<![\\w.%+\\-])(?!(?i:new@sdf\\.org|nokey@localhost\\.run|udp@free\\.pinggy\\.io|qr@free\\.pinggy\\.io|stable@proxy\\.tunnl\\.gg|jsmith@frs\\.sourceforge\\.net|sciencedb@cnic\\.cn|superc@cineca\\.it|modules@perl\\.org|19XKJ8pokN4BLjUagNmQp@spot\\.net|awsopensourcecredits@amazon\\.com|ooo@ooo\\.ac\\.kr|ooo@ooo\\.edu)(?![\\w\\-]|\\.\\w))(?!(?i:(?:[a-z0-9]+[.\\-])*(?:support|abuse|sales|info|help|helpdesk|contact|contacts|grants|grant|noreply|no-reply|donotreply|admin|administrator|billing|security|hello|team|office|postmaster|webmaster|hostmaster|privacy|press|media|partners|partner|community|legal|enquiries|inquiries|service|services|feedback|developers|dev|ops|noc|mail|hr|jobs|careers|research|researchdata|data|fund|root|git|ssh|login|user|username|name|firstname|lastname|you|yourname|email|test|demo)(?:[.\\-][a-z0-9]+)*)@)[A-Za-z0-9._%+\\-]+@(?!(?:example\\.(?:com|org|net)|[A-Za-z0-9.\\-]*\\.invalid|[A-Za-z0-9.\\-]*\\.test|localhost)\\b)[A-Za-z0-9\\-]+(?:\\.[A-Za-z0-9\\-]+)*\\.[A-Za-z]{2,}"
+   },
+   {
+    "id": "T1",
+    "why": "a phone number with an international prefix",
+    "re": "(?<![\\w/.\\-])(?!(?:\\+40 721 234 567|\\(?555\\)?[\\s.\\-]|\\+?1[\\s.\\-]\\(?555\\)?|000[\\s.\\-]000|123[\\s.\\-]456))\\+\\d{1,3}[\\s.\\-]?\\(?\\d{2,4}\\)?(?:[\\s.\\-]?\\d{2,5}){2,4}(?![\\w\\-]|\\.\\w)"
+   },
+   {
+    "id": "T2",
+    "why": "a phone number written after a phone, WhatsApp or similar label",
+    "re": "(?i:\\b(?:whatsapp|wa|phone|tel|telephone|mobile|cell|fax|sms|signal|viber|telegram)\\b(?:\\s+(?:number|no\\.?|nr\\.?))?[\\s:#.\\-]{0,3})(?!\\d{4}-\\d\\d-\\d\\d)(?!\\(?\\d{3}\\)?[\\s.\\-]555[\\s.\\-])\\(?\\+?\\d[\\d\\s().\\-]{6,}\\d"
+   },
+   {
+    "id": "T3",
+    "why": "a phone number in the ddd-ddd-dddd shape",
+    "re": "(?<![\\w.:/\\-$#])(?!(?:\\+40 721 234 567|\\(?555\\)?[\\s.\\-]|\\+?1[\\s.\\-]\\(?555\\)?|000[\\s.\\-]000|123[\\s.\\-]456))(?!\\(?\\d{3}\\)?[\\s.\\-]555[\\s.\\-])\\(?\\d{3}\\)?[\\s.\\-]\\d{3}[\\s.\\-]\\d{4}(?![\\w\\-]|\\.[A-Za-z])"
+   },
+   {
+    "id": "T4",
+    "why": "a phone number with a parenthesised area code",
+    "re": "(?<![\\w/])\\(\\d{2,4}\\)\\s?\\d{4,5}[\\s.\\-]\\d{4}(?!\\d)"
+   }
+  ]
+ },
+ "rename_keys": [
+  {
+   "id": "R01",
+   "path": "extras.wave2",
+   "to": "facets"
+  },
+  {
+   "id": "R02",
+   "path": "extras.wave3",
+   "to": "checked"
+  },
+  {
+   "id": "R03",
+   "path": "extras.verified_in_pass",
+   "to": "verified"
+  },
+  {
+   "id": "R04",
+   "path": "extras.unconfirmed_in_pass",
+   "to": "unconfirmed"
+  },
+  {
+   "id": "R05",
+   "path": "extras.probe_in_seed",
+   "to": "probe_reported"
+  },
+  {
+   "id": "R06",
+   "path": "extras.error_census_run1",
+   "to": "error_counts"
+  },
+  {
+   "id": "R07",
+   "path": "extras.lane4_leading_asns",
+   "to": "leading_asns"
+  },
+  {
+   "id": "R08",
+   "path": "extras.lane4_distinct_exit_asns",
+   "to": "distinct_exit_asns"
+  },
+  {
+   "id": "R09",
+   "path": "extras.lane_position",
+   "to": "position"
+  },
+  {
+   "id": "R10",
+   "path": "extras.census_note",
+   "to": "banner_note"
+  }
+ ],
+ "record_path_rewrite": {
+  "re": "(?<![\\w./:-])dossiers?/([a-z0-9-]+)/([a-z0-9][a-z0-9-]*?)(?:\\.json)?(?![\\w-])",
+  "why": "a path of a record in this repository becomes the record id that the public data uses, when that record is published; a path of a record that is not published stays and N14 withholds its clause"
+ },
+ "history_title": {
+  "narrative_re": "\\b(?:I|[Ww]e|[Oo]ur|us|me|[Mm]y)\\b|(?i:\\b(?:operator|client|sessions?|census|reviews?|reviewer|re-read|seeds?|defects?|harness|probers?|corpus|documents?|documented|sections?|prose|tables?|columns?|\\w+-lane|lanes were|sweep|pass|wave|runs?|shortlist|audit|adversarial|rungs?|(?:credit|evidence|value) ladders?|store|dossier|vocabulary|rules?|window|coverage|lists?|deferred|reconciled|graveyard|winner|answers?|questions?|decided|handed|topics?|counts?|literal|hardcoded|printed|filed|claims?|claimed|verdicts?|moved|downgraded|merged|duplicate|picks?|recommendations?|premise|excluded|conclusion|denominator|serving|cohort|negatives?|road|Q\\d)\\b)|1 TiB/day|500 GB/day|two records each|\\bwords\\b|\\bin the (?:paid|free) lane\\b",
+  "neutral": "{status} on {date}: {records}",
+  "why": "a history title is published only when it states a technical fact about an offer; a title that narrates the research, its documents or its people is replaced by its status, its date and the records it links"
+ },
+ "leak_scan_paths": [
+  "(?i:\\bwave\\d|lane\\d|lane_position|_in_pass\\b|_in_seed\\b|census|talaria|\\bnemo_|\\br\\d\\d_\\d{4}|matrix_ref|verify_file|changed_since_dossier|client_scale)"
+ ],
+ "boilerplate_values": [
+  {
+   "id": "B2",
+   "paths": [
+    "identity_cost.detail"
+   ],
+   "re": "^derived from the record's prose, not from an identity field, and no signup was executed",
+   "why": "a template around a fragment of the record's prose: no identity finding"
+  },
+  {
+   "id": "B3",
+   "paths": [
+    "binding_note"
+   ],
+   "re": "^no constraint (?:of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit|in the record binds at this scale; the record carries no limit of a kind the vocabulary names)\\.?$",
+   "why": "a template that says no limit was named: the binding field already says so"
+  },
+  {
+   "id": "B4",
+   "paths": [
+    "binding_note"
+   ],
+   "re": "^(?:the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota|one stream is shaped, and the client's throughput is the shaped rate times the number of streams|the write is a queue with a person or a rule in it, so the upload rate is set by somebody else|the quota is real and unreachable: identity is the binding constraint, and it is not one of the six limits kinds|a clock, not a quota: bytes leave whether or not the client is finished with them)\\.?$",
+   "why": "the gloss of a binding kind, shared word for word by 530 records of the storage migration: it says what the kind means, not what binds this record, and the binding field and its vocabulary already say so"
+  },
+  {
+   "id": "B5",
+   "paths": [
+    "limits[].source"
+   ],
+   "re": "^(?:the )?platform research report\\b",
+   "why": "a source that names a private research document is no source a reader can open; the limit row keeps its value"
+  }
+ ],
+ "title_rule": {
+  "id": "H1",
+  "paths": [
+   "provider",
+   "tier",
+   "category"
+  ],
+  "process_re": "\\bre-?verif\\w*|\\brevisit\\w*|\\bre-?probe\\w*|\\bre-?check\\w*|\\bcandidates?\\b|\\bprecedent\\b|\\bstructural note\\b|^structural\\b|\\brules? \\d+\\b|\\bin the set\\b|\\bin this (?:slot|slice|lane|set|wave|session|survey|batch|niche|class|family|group|category)\\b|\\breal lever\\b|\\bheadline\\b|\\bmultiplier\\b|\\bprice (?:anchor|floor)\\b|\\breference case\\b|\\bhonest\\w*|\\bcredible-looking\\b|\\bleast verifiable\\b|\\bcorrected\\b|\\bnot a discovery\\b|^known$|\\bfound anywhere\\b|\\bin the (?:family|group|fediverse)\\b|\\binstance found\\b|\\bfails[- ](?:quota|egress|identity)\\b|\\bqualifies\\b|\\bnot a candidate\\b",
+  "ranking_re": "^(?:and\\s+)?(?:(?:the\\s+)?(?:best|cheapest|lowest|highest|largest|strongest|fastest|deepest)\\b|the\\s+(?:only|one)\\b)",
+  "why": "a provider, tier or category is the title of a page, a row and a search hit: the vendor and the product. The research left notes in some of them: a review state ('(revisit)', '(re-verify)', 're-verified write path'), a cross-reference ('see candidate entry', '(precedent, not a candidate)'), a numbered rule of the method, and ranking commentary ('the best ... in the set', 'the strongest finding in this slot', 'BYOB is the real lever'). A parenthesis that holds such a note goes; after the first spaced dash, the first clause that holds one goes with every clause after it. The vendor and the product stay, the name is never emptied, and the slug and the record id, which are permanent URLs, are never changed"
+ },
+ "truncated": {
+  "length": 190,
+  "mark": "\u2026",
+  "complete_endings": [
+   ".",
+   ")",
+   "\"",
+   "'",
+   "]",
+   "!",
+   "?",
+   "\u2026"
+  ],
+  "why": "a migration of the storage topic cut texts at 190 characters; a value of that length that does not end a sentence is cut back to its last whole word and marked with an ellipsis. The repair at the source is an rq:research issue. Other migrations cut texts at 300, 400 or 800 characters and ended them with the ellipsis right after a letter; such a value loses its last, cut word too",
+  "marked_lengths": [
+   300
+  ]
+ }
+}

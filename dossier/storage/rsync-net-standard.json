@@ -1,0 +1,145 @@
+{
+  "topic": "storage",
+  "slug": "rsync-net-standard",
+  "provider": "rsync.net — Standard (ZFS, SSH-only filesystem)",
+  "url": "https://www.rsync.net/pricing.html",
+  "category": "storage-only (bare UNIX filesystem on ZFS)",
+  "free_tier": {
+    "stated": "800 GB minimum order; 0-9 TB, 10-99 TB, 100+ TB bands",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://www.rsync.net/pricing.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.rsync.net/pricing.html",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.rsync.net/pricing.html",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "\"No Egress Charges\" / \"NO Charges for ingress/egress\" — unmetered both ways, no per-request fees.",
+    "metered": false
+  },
+  "interface": [
+    "sftp",
+    "scp",
+    "rsync",
+    "ssh",
+    "git",
+    "rclone"
+  ],
+  "interface_detail": "Any SSH tool: rsync, sftp, scp, borg, rclone, restic, git-annex; zfs send/recv on request",
+  "tooling": "The canonical rclone/restic/borg/rsync target — every backend works because it is a real filesystem",
+  "chaining": "SSHFS mount -> AList -> Cloudflare. No HTTP object API, so a wrapper is mandatory for serving",
+  "limits": [],
+  "limits_note": "800 GB minimum; price falls in bands only at 10 TB and 100 TB",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "Operating since 2001, 7 daily + 4 weekly snapshots on 10 TB+ accounts, physical media shipment. The expensive-but-unbreakable end of the market.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.rsync.net/pricing.html",
+      "date": "2026-10-21",
+      "proved": "verbatim: 0-9 TB '1.5 Cents Per GB Per Month' (800 GB min), 10-99 TB '1.25 Cents Per GB', 100+ TB '0.75 Cents Per GB'; header states 'No Egress Charges'"
+    },
+    {
+      "url": "https://rsync.net/products/restic.html",
+      "date": "2026-10-21",
+      "proved": "(search snippet) — restic accounts '$0.01 per GB, per month - 200 GB Minimum'"
+    },
+    {
+      "url": "https://news.opensuse.org/2024/11/12/rsync-net-becomes-gold-sponsor/",
+      "date": "2026-10-21",
+      "proved": "'Standard Single Region: $0.008 per GB per month' + 500 GB free-forever for openSUSE addresses"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "0-9TB: $15.00/TB/mo. 10-99TB: $12.50/TB. 100TB+: $7.50/TB. restic accounts: $10.00/TB (200 GB min). openSUSE-developer Standard Single Region: $8.00/TB. openSUSE 500 GB tier is free-forever",
+  "notes": "800 GB minimum order; 0-9 TB, 10-99 TB, 100+ TB bands",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-P6-seedbox-storage-hosts.json",
+    "seed_area": "A/P6",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "A/P6"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H9"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "rsync.net — Standard (ZFS, SSH-only filesystem)",
+      "rsync.net — free-forever 500 GB for Debian / FreeBSD / openSUSE developers"
+    ],
+    "conflicts": [
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "800 GB minimum order; 0-9 TB, 10-99 TB, 100+ TB bands",
+            "source": "table.md row, area A/P6",
+            "evidence": null
+          },
+          {
+            "value": "500 GB free-forever per developer account, with 7 daily snapshots. Quo",
+            "source": "table.md row, area H/H9",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "800 GB minimum order; 0-9 TB, 10-99 TB, 100+ TB bands",
+            "source": "table.md (area A/P6)"
+          },
+          {
+            "value": "500 GB free-forever per developer account, with 7 daily snapshots. Quo",
+            "source": "table.md (area H/H9)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/paid/storage-boxes.md",
+    "document_section": "Seedbox and storage hosts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "800 GB minimum order; 0-9 TB, 10-99 TB, 100+ TB bands",
+    "limits_verbatim": "800 GB minimum; price falls in bands only at 10 TB and 100 TB",
+    "egress_verbatim": "\"No Egress Charges\" / \"NO Charges for ingress/egress\" — unmetered both ways, no per-request fees.",
+    "chaining_verbatim": "SSHFS mount -> AList -> Cloudflare. No HTTP object API, so a wrapper is mandatory for serving",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "The canonical rclone/restic/borg/rsync target — every backend works because it is a real filesystem",
+    "interface_verbatim": "Any SSH tool: rsync, sftp, scp, borg, rclone, restic, git-annex; zfs send/recv on request",
+    "price_verbatim": "0-9TB: $15.00/TB/mo. 10-99TB: $12.50/TB. 100TB+: $7.50/TB. restic accounts: $10.00/TB (200 GB min). openSUSE-developer Standard Single Region: $8.00/TB. openSUSE 500 GB tier is free-forever",
+    "agent_focus": "Wave 7 cheap-paid lane: seedboxes and storage-specific hosts as bulk storage (not seeding). Price floor per TB-month with free/unmetered egress. Feral, Ultra.cc, Whatbox, PulsedMedia, SeedHost.eu, Bytesized, Seedbox.io/HostingByDesign, Hostsailor, RapidSeedbox, Dediseedbox, Xirvik, plus storage-only rsync.net, BorgBase, Tuxis, Greenhost, Njalla, Hetzner Storage Share/Box, Icedrive, FileLu."
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

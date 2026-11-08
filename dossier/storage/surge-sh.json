@@ -1,0 +1,119 @@
+{
+  "topic": "storage",
+  "slug": "surge-sh",
+  "provider": "Surge.sh",
+  "url": "https://surge.sh",
+  "category": "paas",
+  "free_tier": {
+    "stated": "Free plan: unlimited projects and unlimited publishes; each project capped at 450 MB and 10,100 files. No account-level byte quota.",
+    "unit": "objects",
+    "metered_on": "unstated",
+    "source_url": "https://surge.sh/docs/cli/publishing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-file cap documented but it inherits the project cap",
+    "source_url": "https://surge.sh/docs/cli/publishing",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://surge.sh/docs/cli/publishing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "No bandwidth quota or metering is documented anywhere on the free plan; every project is served from all 10 of Surge's own edge nodes ('Every project—free or paid—serves from all of them').",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Official `surge` CLI (npm, ~free) and a documented raw REST deploy API: PUT /:domain with Basic auth, Content-Type: application/gzip, a gzipped tarball body plus file-count and project-size headers. That is directly scriptable, no CLI needed.",
+  "chaining": "Unlimited projects x 450 MB = arbitrary total per account; unlimited free accounts (email+password in-terminal, no card). 20 TiB archive = ~45,500 projects of 450 MB. Sharding is natural because each project is just a folder.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "1 TiB/day",
+      "source": "https://surge.sh/docs/cli/publishing"
+    },
+    {
+      "kind": "write-gated",
+      "value": "Application too large')",
+      "source": "https://surge.sh/docs/cli/publishing"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "no per-file cap documented but it inherits the project cap",
+      "source": "https://surge.sh/docs/cli/publishing"
+    }
+  ],
+  "limits_note": "450 MB and 10,100 files per project (hard: 'Aborted - Unable to publish. Application too large'); no bandwidth figure published; no per-file cap documented but it inherits the project cap. Re-publishing replaces the whole project (full-sync deploy), so appending one file re-uploads the directory.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: publishes; each project capped at 450 MB and 10,100 files. No account-level byte quota. Deploy is full-replace, not incremental — a slow link makes each publish expensive. Free tier has",
+    "country": null
+  },
+  "reliability_note": "Deploy is full-replace, not incremental — a slow link makes each publish expensive. Free tier has no stated SLA and no published bandwidth ceiling, so behaviour at 1 TiB/day is unproven.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://surge.sh/docs/cli/publishing",
+      "date": "2026-10-21",
+      "proved": "'Projects are limited to 10,100 files and 450 MB.'"
+    },
+    {
+      "url": "https://surge.sh/docs/platform/plans",
+      "date": "2026-10-21",
+      "proved": "'The core of Surge costs nothing, without trial windows or project caps: Unlimited projects and publishes'"
+    },
+    {
+      "url": "https://surge.sh/docs/api/deploys",
+      "date": "2026-10-21",
+      "proved": "'PUT /:domain ... The body is a gzipped tar archive ... file-count / project-size headers'"
+    },
+    {
+      "url": "https://surge.sh/",
+      "date": "2026-10-21",
+      "proved": "probe: curl -D - -> HTTP/1.1 200, Server: cloudflare, Accept-Ranges: bytes (edge is CF-fronted)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Free plan: unlimited projects and unlimited publishes; each project capped at 450 MB and 10,100 files. No account-level byte quota.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C5-static-hosts.json",
+    "seed_area": "C/C5",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "C/C5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/cloudflare-edge.md",
+    "document_section": "Cloudflare Pages and Workers static assets",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Free plan: unlimited projects and unlimited publishes; each project capped at 450 MB and 10,100 files. No account-level byte quota.",
+    "limits_verbatim": "450 MB and 10,100 files per project (hard: 'Aborted - Unable to publish. Application too large'); no bandwidth figure published; no per-file cap documented but it inherits the project cap. Re-publishing replaces the whole project (full-sync deploy), so appending one file re-uploads the directory.",
+    "egress_verbatim": "No bandwidth quota or metering is documented anywhere on the free plan; every project is served from all 10 of Surge's own edge nodes ('Every project—free or paid—serves from all of them').",
+    "chaining_verbatim": "Unlimited projects x 450 MB = arbitrary total per account; unlimited free accounts (email+password in-terminal, no card). 20 TiB archive = ~45,500 projects of 450 MB. Sharding is natural because each project is just a folder.",
+    "tooling_verbatim": "Official `surge` CLI (npm, ~free) and a documented raw REST deploy API: PUT /:domain with Basic auth, Content-Type: application/gzip, a gzipped tarball body plus file-count and project-size headers. That is directly scriptable, no CLI needed.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Static/docs/wiki hosts with big free limits: GitHub Pages, GitLab Pages, Cloudflare Pages, Netlify, Vercel, Surge, Neocities, ReadTheDocs, GitBook, Notion, Outline, Confluence free, MkDocs hosts, per-site caps"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

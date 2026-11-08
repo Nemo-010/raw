@@ -1,0 +1,100 @@
+{
+  "topic": "storage",
+  "slug": "openxlab-model-dataset-centers",
+  "provider": "OpenXLab 浦源 (Shanghai AI Lab) — model + dataset centers",
+  "url": "https://openxlab.org.cn",
+  "category": "model-hub",
+  "free_tier": {
+    "stated": "Not published, and this is the honest finding. The platform's own intro describes the model center as building an object-storage layer specifically for large files — verbatim: '基于平台内的命令行工具，便于 AI 开发者上传和发布模型文件，搭建对象存储体系，提供大文件存储能力，快速上传下载功能，便于 AI 开发者进行模型存储' (object storage system providing large-file storage capability). The dataset center supports private datasets as well as public ones. But no GB number appears on any page I could reach; the openxlab.org.cn docs tree 504'd repeatedly and the upload pages contain no quota statement.",
+    "unit": "unlimited",
+    "metered_on": "stored-bytes",
+    "source_url": "https://openxlab.org.cn/docs/intro.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://openxlab.org.cn/docs/intro.html",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://openxlab.org.cn/docs/intro.html",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "No egress meter found; public models and datasets are anonymously downloadable. Reads are CDN-served. Unverified at the header level because model-detail pages timed out from this network.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "git",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "pip install openxlab, then first-party subcommands: `openxlab dataset upload-file`, `openxlab dataset upload-folder`, `openxlab model upload ...` with --dataset-repo/--source-path/--target-path. Python SDK mirrors the CLI (upload_file / upload_folder). Also git+LFS. Real, named, documented client — this passes the tooling filter cleanly.",
+  "chaining": "Repos are per-user and per-org and free to create, so capacity is N repos. OpenXLab is the Shanghai AI Lab's public front door (InternLM, OpenDataLab datasets), so its per-repo sizes are already in the tens-of-GB range. Multiplying across accounts is easy but the per-account ceiling is unknown.",
+  "limits": [],
+  "limits_note": "Unverified. What I can say: uploads go through a chunked SDK rather than a web form; dataset upload supports 文件/文件夹/压缩包 with server-side auto-extract for archives (a 50 GB zip becomes an extracted tree — that is a quota-relevant behaviour, since the extracted size can exceed the archive). No published per-file cap, retention period, or rate limit found.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email, plus likely +86 phone — Chinese platform, and prior rounds recorded the pans in this family demanding real-name verification.",
+    "country": null
+  },
+  "reliability_note": "The docs site itself was unreliable from a non-China vantage point this session (multiple 504s and 25 s timeouts on opendatalab.com and openxlab.org.cn API paths), which is a real signal about operational quality. Model pages return 302 to login for detail views.",
+  "confidence": "inferred",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://openxlab.org.cn/docs/intro.html",
+      "date": "2026-10-21",
+      "proved": "read live: model center provides '对象存储体系，提供大文件存储能力' and the dataset center supports '私有数据集的上传、管理和发布'"
+    },
+    {
+      "url": "https://opendatalab.com/docs/datasets/上传数据集.html",
+      "date": "2026-10-21",
+      "proved": "read live: three upload modes (file / folder / archive with auto-extract), plus CLI and Python SDK (`pip install openxlab`, `openxlab dataset upload-folder`)"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "unverified: no quota page exists that I could reach; openxlab.org.cn docs paths 504'd repeatedly and opendatalab.com API paths timed out at 25-30 s"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Not published, and this is the honest finding. The platform's own intro describes the model center as building an object-storage layer specifically for large files — verbatim: '基于平台内的命令行工具，便于 AI 开发者上传和发布模型文件，搭建对象存储体系，提供大文件存储能力，快速上传下载功能，便于 AI 开发者进行模型存储' (object storage system providing large-file storage capability). The dataset center supports private datasets as well as public ones. But no GB number appears on any page I could reach; the openxlab.org.cn docs tree 504'd repeatedly and the upload pages contain no quota statement.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D9-hf-competitors.json",
+    "seed_area": "D/D9",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D9"
+      }
+    ],
+    "seed_confidence": "low",
+    "conflicts": [],
+    "target_document": "docs/storage/free/models-and-media.md",
+    "document_section": "Hugging Face competitors",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Not published, and this is the honest finding. The platform's own intro describes the model center as building an object-storage layer specifically for large files — verbatim: '基于平台内的命令行工具，便于 AI 开发者上传和发布模型文件，搭建对象存储体系，提供大文件存储能力，快速上传下载功能，便于 AI 开发者进行模型存储' (object storage system providing large-file storage capability). The dataset center supports private datasets as well as public ones. But no GB number appears on any page I could reach; the openxlab.org.cn docs tree 504'd repeatedly and the upload pages contain no quota statement.",
+    "limits_verbatim": "Unverified. What I can say: uploads go through a chunked SDK rather than a web form; dataset upload supports 文件/文件夹/压缩包 with server-side auto-extract for archives (a 50 GB zip becomes an extracted tree — that is a quota-relevant behaviour, since the extracted size can exceed the archive). No published per-file cap, retention period, or rate limit found.",
+    "egress_verbatim": "No egress meter found; public models and datasets are anonymously downloadable. Reads are CDN-served. Unverified at the header level because model-detail pages timed out from this network.",
+    "chaining_verbatim": "Repos are per-user and per-org and free to create, so capacity is N repos. OpenXLab is the Shanghai AI Lab's public front door (InternLM, OpenDataLab datasets), so its per-repo sizes are already in the tens-of-GB range. Multiplying across accounts is easy but the per-account ceiling is unknown.",
+    "identity_verbatim": "email, plus likely +86 phone — Chinese platform, and prior rounds recorded the pans in this family demanding real-name verification.",
+    "tooling_verbatim": "pip install openxlab, then first-party subcommands: `openxlab dataset upload-file`, `openxlab dataset upload-folder`, `openxlab model upload ...` with --dataset-repo/--source-path/--target-path. Python SDK mirrors the CLI (upload_file / upload_folder). Also git+LFS. Real, named, documented client — this passes the tooling filter cleanly.",
+    "interface_verbatim": "rest",
+    "agent_focus": "New and up-and-coming competitors to Hugging Face and ModelScope, judged on the hard test the brief sets: a credible HF competitor must permit multi-TB objects and generous per-account storage, because model weights and datasets routinely run to hundreds of GB / TiB. Split into three classes — Chinese domestic hubs (HF is blocked there, so a separate ecosystem exists), Western MLOps artifact stores (W&B/Comet/ClearML/Lightning/Deep Lake), and dataset-publishing startups (Source Cooperative, Oxen, OpenDataLab). Excluded and not re-reported: Hugging Face, ModelScope, Kaggle, Civitai, Ollama, Replicate, DagsHub, OpenML, fal.ai, Baseten, Modal."
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

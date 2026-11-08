@@ -1,0 +1,111 @@
+{
+  "topic": "storage",
+  "slug": "scaleway-container-registry",
+  "provider": "Scaleway Container Registry (public images)",
+  "url": "https://www.scaleway.com/en/container-registry/",
+  "category": "registry",
+  "free_tier": {
+    "stated": "Public images are free up to 75 GB of storage; private images are €0.027/GB/month: 'Public images | Free up to 75GB | ... | Free'. The FAQ repeats it verbatim with dated validation ('validation: 2025-08-19').",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.scaleway.com/en/pricing/containers/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.scaleway.com/en/pricing/containers/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.scaleway.com/en/pricing/containers/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "The registry's own table only covers Scaleway-to-Scaleway traffic: 'Public images | Free up to 75GB | Inter-regional: free - Intra-regional: free', where 'Inter-regional traffic: AMS ↔ PAR, WAW ↔ PAR, or AMS ↔ WAW' and 'Intra-regional traffic: PAR ↔ PAR ...'. EXTERNAL internet egress is simply not mentioned anywhere on the registry FAQ or the containers pricing page — that silence is the finding, not a free grant. Scaleway's account-wide bandwidth meter elsewhere reads 'Egress fees* | 75 GB free every month, then €0.01/GB', with 'Egress fees include external outgoing data transfer and inter-region data transfers'. So the '75 GB free' headline is an Object Storage/everything-else allowance; applying it to registry pulls is an inference, not a quote. Treat registry internet egress as metered-at-€0.01/GB beyond 75 GB/month — cheap, still a per-GB meter, therefore a fail.",
+    "metered": true,
+    "free_allowance": "75 GB per month"
+  },
+  "interface": [
+    "oci",
+    "cli"
+  ],
+  "interface_detail": "oci",
+  "tooling": "docker/skopeo/ORAS; scw CLI. Registry is Harbor-based.",
+  "chaining": "75 GB public storage per namespace x N Scaleway accounts/projects; the egress allowance is per account, not per namespace, so egress does not multiply the same way.",
+  "limits": [],
+  "limits_note": "75 GB free public-image storage per account; egress 75 GB/month free then €0.01/GB; private images €0.027/GB/month; unlimited versions supported.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: images are free up to 75 GB of storage; private images are €0.027/GB/month: 'Public images | Free up to 75GB | ... | Free'. The FAQ repeats it verbatim with dated validation ('vali",
+    "country": null
+  },
+  "reliability_note": "Clean and fast EU-hosted service; the egress meter is the failure mode, not reliability.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.scaleway.com/en/pricing/containers/",
+      "date": "2026-10-21",
+      "proved": "'Public images | Free up to 75GB | Inter-regional: free Intra-regional: free'"
+    },
+    {
+      "url": "https://www.scaleway.com/en/docs/containers/registry/faq/",
+      "date": "2026-10-21",
+      "proved": "(validation 2025-08-19) — identical table; 'Inter-regional traffic: AMS ↔ PAR, WAW ↔ PAR, or AMS ↔ WAW'"
+    },
+    {
+      "url": "https://www.scaleway.com/en/pricing/storage/",
+      "date": "2026-10-21",
+      "proved": "'Egress * | 75GB free every month then €0.01/GB /MONTH' (account-wide, not registry-specific)"
+    },
+    {
+      "url": "https://rg.nl-ams.scw.cloud/v2/",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 401, Docker-Distribution-Api-Version: registry/2.0, realm https://api.scaleway.com/registry-internal/v1/regions/nl-ams/tokens; GET /v2/scaleway/hello-world/manifests/latest -> 404 (no such public image)"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Public images are free up to 75 GB of storage; private images are €0.027/GB/month: 'Public images | Free up to 75GB | ... | Free'. The FAQ repeats it verbatim with dated validation ('validation: 2025-08-19').",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B4-hyperscaler-registries.json",
+    "seed_area": "B/B4",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "B/B4"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Public images are free up to 75 GB of storage; private images are €0.027/GB/month: 'Public images | Free up to 75GB | ... | Free'. The FAQ repeats it verbatim with dated validation ('validation: 2025-08-19').",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area B/B4"
+    },
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "Hyperscaler registries",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Public images are free up to 75 GB of storage; private images are €0.027/GB/month: 'Public images | Free up to 75GB | ... | Free'. The FAQ repeats it verbatim with dated validation ('validation: 2025-08-19').",
+    "limits_verbatim": "75 GB free public-image storage per account; egress 75 GB/month free then €0.01/GB; private images €0.027/GB/month; unlimited versions supported.",
+    "egress_verbatim": "The registry's own table only covers Scaleway-to-Scaleway traffic: 'Public images | Free up to 75GB | Inter-regional: free - Intra-regional: free', where 'Inter-regional traffic: AMS ↔ PAR, WAW ↔ PAR, or AMS ↔ WAW' and 'Intra-regional traffic: PAR ↔ PAR ...'. EXTERNAL internet egress is simply not mentioned anywhere on the registry FAQ or the containers pricing page — that silence is the finding, not a free grant. Scaleway's account-wide bandwidth meter elsewhere reads 'Egress fees* | 75 GB free every month, then €0.01/GB', with 'Egress fees include external outgoing data transfer and inter-region data transfers'. So the '75 GB free' headline is an Object Storage/everything-else allowance; applying it to registry pulls is an inference, not a quote. Treat registry internet egress as metered-at-€0.01/GB beyond 75 GB/month — cheap, still a per-GB meter, therefore a fail.",
+    "chaining_verbatim": "75 GB public storage per namespace x N Scaleway accounts/projects; the egress allowance is per account, not per namespace, so egress does not multiply the same way.",
+    "tooling_verbatim": "docker/skopeo/ORAS; scw CLI. Registry is Harbor-based.",
+    "interface_verbatim": "oci",
+    "agent_focus": "hyperscaler and mid-tier container registries judged on free storage + free egress; explicit test of whether any hyperscaler gives free public storage AND free internet egress"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

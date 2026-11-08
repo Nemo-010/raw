@@ -1,0 +1,100 @@
+{
+  "topic": "storage",
+  "slug": "walrus",
+  "provider": "Walrus",
+  "url": "https://walrus.xyz",
+  "category": "p2p",
+  "free_tier": {
+    "stated": "No free tier on the network itself: $0.023/GB/month, billed on *encoded* size, which is 'about 4.5x the original blob plus a fixed 64 MB of per-blob metadata'. Lighthouse resells Walrus with a 100 MB free plan.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://docs.wal.app/docs/system-overview/storage-costs",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.wal.app/docs/system-overview/storage-costs",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.wal.app/docs/system-overview/storage-costs",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "No published free egress allowance; reads are served by Walrus storage nodes and aggregators. Cost is denominated in WAL + SUI gas per operation, so there is no 'free' path at all.",
+    "metered": true
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "walrus CLI, TypeScript SDK, HTTP aggregator/publisher endpoints; Lighthouse wraps it as an IPFS-compatible layer.",
+  "chaining": "none — paid per GB-month with a 4.5x encoding tax. 500 GB of real data costs like 2.3 TB of billing.",
+  "limits": [],
+  "limits_note": "4.5x encoded-size billing + 64 MB per-blob overhead; SUI gas per blob registration; epoch-based storage duration (must be extended).",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: No free tier on the network itself: $0.023/GB/month, billed on *encoded* size, which is 'about 4.5x the original blob plus a fixed 64 MB of per-blob metadata'",
+    "country": null
+  },
+  "reliability_note": "The 64 MB per-blob metadata overhead is brutal for a data-science corpus of many small files: the docs' own worked example has 6 MB of 10 KiB files costing like 38.4 GB. Quilt batching mitigates but does not remove it.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.wal.app/docs/system-overview/storage-costs",
+      "date": "2026-10-21",
+      "proved": "'fixed, USD-denominated storage cost of $0.023/GB/month'; 'The encoded size is about 4.5x the original blob plus a fixed 64 MB of per-blob metadata'"
+    },
+    {
+      "url": "https://www.lighthouse.storage/pricing",
+      "date": "2026-10-21",
+      "proved": "Walrus Free plan 'Total Storage: 100 MB'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No free tier on the network itself: $0.023/GB/month, billed on *encoded* size, which is 'about 4.5x the original blob plus a fixed 64 MB of per-blob metadata'. Lighthouse resells Walrus with a 100 MB free plan.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E7-decentralised.json",
+    "seed_area": "E/E7",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "E/E7"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "paid",
+      "why": "No free tier on the network itself: $0.023/GB/month, billed on *encoded* size, which is 'about 4.5x the original blob plus a fixed 64 MB of per-blob metadata'. Lighthouse resells Walrus with a 100 MB free plan.",
+      "retry_when": "if the price drops below the paid-lane floor",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E7"
+    },
+    "target_document": "docs/storage/free/relays-and-transports.md",
+    "document_section": "Content-addressed and decentralised stores",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No free tier on the network itself: $0.023/GB/month, billed on *encoded* size, which is 'about 4.5x the original blob plus a fixed 64 MB of per-blob metadata'. Lighthouse resells Walrus with a 100 MB free plan.",
+    "limits_verbatim": "4.5x encoded-size billing + 64 MB per-blob overhead; SUI gas per blob registration; epoch-based storage duration (must be extended).",
+    "egress_verbatim": "No published free egress allowance; reads are served by Walrus storage nodes and aggregators. Cost is denominated in WAL + SUI gas per operation, so there is no 'free' path at all.",
+    "chaining_verbatim": "none — paid per GB-month with a 4.5x encoding tax. 500 GB of real data costs like 2.3 TB of billing.",
+    "tooling_verbatim": "walrus CLI, TypeScript SDK, HTTP aggregator/publisher endpoints; Lighthouse wraps it as an IPFS-compatible layer.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Decentralised storage / IPFS pinning judged on gateway egress economics: Pinata, Storacha/web3.storage, Filebase, 4EVERLAND, Lighthouse, thirdweb, Fleek, QuickNode, Infura, Kubo+self-host, dweb.link/ipfs.io, Sia/Skynet, Storj, Akash, Arweave (ar.io/Turbo/Irys), Walrus, Filecoin/Fil+/FCSS, BitTorrent, ZeroNet, Hypercore, Earthstar, Crust"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

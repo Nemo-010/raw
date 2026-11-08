@@ -1,0 +1,158 @@
+{
+  "topic": "compute",
+  "slug": "coolvds",
+  "provider": "CoolVDS",
+  "url": "https://coolvds.com/pricing",
+  "category": "microVM (Firecracker), monthly reserved",
+  "tier": "SPARK XS",
+  "free_tier": {
+    "stated": "No free tier published on the pricing page; the smallest plan is SPARK XS at USD 4 a month.",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://coolvds.com/pricing",
+    "read_on": "2026-10-24"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object"
+  },
+  "retention": {
+    "stated": "Not stated on the pricing page read; a monthly plan implies the disk persists while the plan is paid.",
+    "source_url": "https://coolvds.com/pricing"
+  },
+  "egress": {
+    "terms": "1 TB of bandwidth included on SPARK XS; the price of traffic beyond it is not published on the pricing page.",
+    "metered": true,
+    "free_allowance": "1 TB",
+    "source_url": "https://coolvds.com/pricing"
+  },
+  "interface": [
+    "ssh"
+  ],
+  "interface_detail": "A Firecracker microVM with a deploy flow and an order page; 'API Access' is listed only on the SPARK M plan and above, so SPARK XS has no published API.",
+  "tooling": "SSH to a Linux microVM. The site is a small operator's storefront: no SDK, no CLI and no documented API at the USD 4 tier.",
+  "chaining": "The cheapest published monthly microVM with a dedicated 1 vCPU: USD 4 a month for 1 vCPU, 512 MB and 10 GB NVMe with 1 TB of transfer. Use it where a real always-on box is wanted and 512 MB is enough, which rules out anything with a JVM, a database and an agent runtime on the same box.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "1 TB of bandwidth a month on SPARK XS",
+      "source": "https://coolvds.com/pricing"
+    }
+  ],
+  "limits_note": "The shape is the first wall: 512 MB of DDR5 RAM and 10 GB of Gen5 NVMe, with no published resize or add-on disk path on the pricing page. Volume discount is 5% from USD 300 a month.",
+  "binding": "volume-quota",
+  "binding_note": "512 MB of RAM is the shape ceiling under USD 5, and the next plan (SPARK S, 2 vCPU / 2 GB) is USD 7; the 1 TB traffic cap is the metered wall behind it.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "A monthly plan implies a payment method at checkout; no card, hold or debit statement was read on the pricing page. Unverified.",
+    "country": null
+  },
+  "reliability_note": "waitlist only: the order page says \"All Slots Currently Occupied\" and offers no order button",
+  "confidence": "documented",
+  "confidence_note": "The plan name, price, shape and traffic allowance are quoted from the pricing page. The broker served a stored snapshot of that page captured at 01:49 UTC today rather than a live fetch, so the page was read today but not re-fetched. SSH, the payment method and the overage rate are not on the page.",
+  "evidence": [
+    {
+      "url": "https://coolvds.com/pricing",
+      "date": "2026-10-24",
+      "proved": "quoted: 'SPARK XS $4/mo - 1 vCPU (Firecracker), 512 MB DDR5 RAM, 10 GB Gen5 NVMe, 1 TB Bandwidth, 99.9% Uptime SLA'"
+    },
+    {
+      "url": "https://coolvds.com/pricing",
+      "date": "2026-10-24",
+      "proved": "plan ladder: 'SPARK S $7/mo' 2 vCPU / 2 GB / 25 GB / 2 TB; 'SPARK M $13/mo' 4 vCPU / 4 GB / 50 GB / 4 TB; 'SPARK L $25/mo' 8 vCPU / 8 GB / 100 GB / 8 TB"
+    },
+    {
+      "url": "https://coolvds.com/order?plan=SPARK+XS&category=microvms",
+      "date": "2026-10-24",
+      "proved": "payment: 'Accepted Payment Methods: Stripe, PayPal ... All major credit cards accepted'"
+    },
+    {
+      "url": "https://coolvds.com/",
+      "date": "2026-10-24",
+      "proved": "quoted: '125ms Boot Time', '$0.00 Ingress Fees', 'Firecracker MicroVMs starting at $3.90/mo' (the meta description's USD 3.90 does not match the USD 4 shown on the plan card)"
+    },
+    {
+      "url": "https://coolvds.com/pricing",
+      "date": "2026-10-24",
+      "proved": "quoted: 'Entry MicroVM SPARK XS $4/mo - 1 vCPU (Firecracker) - 512 MB DDR5 RAM - 10 GB Gen5 NVMe - 1 TB Bandwidth - 99.9% Uptime SLA'"
+    },
+    {
+      "url": "https://coolvds.com/pricing",
+      "date": "2026-10-24",
+      "proved": "quoted: 'SPARK S $7/mo - 2 vCPU (Firecracker) - 2 GB DDR5 RAM - 25 GB Gen5 NVMe - 2 TB Bandwidth'; 'SPARK M $13/mo ... API Access'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-24T02:40:00.000Z",
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "The number is a monthly plan price, not a rate card, so 24/7 costs exactly USD 4.00 whether the box runs or not: no multiplication is involved. What would settle the gaps: reading the checkout page for the payment method, and the docs for SSH and the overage rate. NOT PURCHASABLE on 2026-10-24: the order page states 'All Slots Currently Occupied' and offers no order button, only a waitlist. The shape and price are documented and the row cannot be counted as buyable.",
+  "extras": {
+    "shape": {
+      "vcpu": 1,
+      "ram_gib": 0.5,
+      "disk_gib": 10,
+      "gpu_class": null,
+      "gpu_count": null
+    },
+    "billing_model": "monthly",
+    "term": "monthly",
+    "m10h_usd": 4.0,
+    "m24h_usd": 4.0,
+    "price_arithmetic": "Monthly plan: USD 4.00 a month bills whether it runs or not, so 24/7 = USD 4.00 and 10 h/day = USD 4.00. No hourly rate is published.",
+    "free_tier_kind": "none",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": null,
+      "ports": "not published on the pricing page",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "none published; a monthly plan"
+    },
+    "aggregator_gross_usd_month": 4.0,
+    "aggregator_note": "sandboxprices.com ranks CoolVDS #11 at USD 4.00 gross for this same SPARK XS shape; the two agree exactly because the product is a fixed monthly plan.",
+    "superseded": {
+      "free_tier": {
+        "stated": "no free tier: the smallest plan is SPARK XS at USD 4 a month, and no trial or credit is offered on the pricing page",
+        "unit": "none",
+        "metered_on": "none",
+        "source_url": "https://coolvds.com/pricing",
+        "read_on": "2026-10-24"
+      },
+      "retention": {
+        "stated": "unknown: SPARK XS is a monthly reservation with 10 GB of Gen5 NVMe, but no page read states what happens to the disk on non-payment, cancellation, or suspension",
+        "days": null,
+        "source_url": "https://coolvds.com/pricing"
+      },
+      "egress": {
+        "terms": "1 TB Bandwidth included on SPARK XS (2 TB on SPARK S, 4 TB on M, 8 TB on L), with 'No Ingress Fees' and '$0.00 Ingress Fees' on the homepage. The overage rate beyond 1 TB is not published on any page read.",
+        "metered": true,
+        "free_allowance": "1 TB a month",
+        "price_per_tb": null,
+        "source_url": "https://coolvds.com/pricing"
+      },
+      "limits": [
+        {
+          "kind": "volume-quota",
+          "value": "1 TB a month of bandwidth on SPARK XS, then an unpublished overage rate",
+          "source": "https://coolvds.com/pricing"
+        }
+      ],
+      "binding_note": "The 1 TB monthly transfer allowance is the only quota the vendor publishes as a number, but the 512 MB RAM and 10 GB disk bind before the quota does; the vocabulary has no kind for memory, so the shape is named here rather than mislabeled.",
+      "identity_cost": {
+        "kind": "card",
+        "detail": "Card payment through Stripe or PayPal at the order page: 'All major credit cards accepted' and 'Secure payment processing'. Whether a debit or prepaid card is accepted, what the account signup requires, and whether any amount is held or authorised at order time are not stated on the pages read. The order page also shows 'No Payment Required' near the deploy panel, which is a deploy-flow label rather than a free tier.",
+        "country": null
+      },
+      "reliability_note": "The operator publishes a 99.9% uptime SLA and a 125 ms boot claim, both unmeasured here; the GPU and game-server lines on the same storefront suggest a small multi-product host, and no suspension or data-loss event was observed in this session.",
+      "confidence_note": "The plan, its resources, its price and its bandwidth allowance come from the vendor's own pricing page read today. Identity and disk retention are thinner: the payment methods come from the order page, but account requirements and non-payment behaviour are unpublished. What would raise it: an order-page walk to the payment step, and a read of the vendor's terms.",
+      "notes": "A monthly reservation, so the bill is the bill: USD 4 whether it runs 24 hours or 24 minutes. Two discrepancies inside the vendor's own site: the homepage meta description says 'Firecracker MicroVMs starting at $3.90/mo' while the plan card and the pricing page both say USD 4, and 'API Access' appears only from SPARK M upward while the site is marketed to AI workloads. Neither is resolved here. Unverified: region, IPv4/IPv6, whether inbound UDP is possible, and whether the 1 TB is enforced by shaping or by invoice.",
+      "verified_at": "2026-10-24T01:54:08.000Z"
+    }
+  }
+}

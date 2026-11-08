@@ -1,0 +1,125 @@
+{
+  "topic": "compute",
+  "slug": "collimate",
+  "provider": "Collimate",
+  "url": "https://collimate.ai/pricing",
+  "category": "container and VM sandbox",
+  "free_tier": {
+    "stated": "a free demo key with no card: 2 concurrent sandboxes at 1 hour each, and a suspend call that stops the meter",
+    "unit": "hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://collimate.ai/pricing",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://collimate.ai/pricing",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://collimate.ai/pricing",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "not published: the price list on https://collimate.ai/ and https://collimate.ai/pricing has vCPU, RAM and suspended-storage meters and states no egress allowance or overage price",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://collimate.ai/pricing"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "REST API, a Python SDK and a hosted MCP server; no CLI or SSH interface is documented",
+  "tooling": "not stated in the source card",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "2 concurrent sandboxes on the free demo key, 100 on the paid tier",
+      "source": "https://collimate.ai/pricing"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "a free sandbox session is capped at 1 hour; a paid session runs to 24 hours",
+      "source": "https://collimate.ai/pricing"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "'Sign up with an email and the gateway mints a key scoped to your tenant', quoted from collimate.ai/pricing read 2026-10-22",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the pricing page was read on 2026-10-22 and states the demo key's concurrency, the 1-hour session and the suspend verb. The free tier is a capped demo, so the record names the caps",
+  "evidence": [
+    {
+      "url": "https://collimate.ai/pricing",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://collimate.ai/pricing",
+      "date": "2026-10-22",
+      "proved": "'Start free with a demo key, no card' and '2 concurrent sandboxes, 1 hour each' and 'Sign up with an email and the gateway mints a key scoped to your tenant  -  rate-limited and capped per key' and 'suspend # stops the meter', quoted"
+    },
+    {
+      "url": "https://collimate.ai/",
+      "date": "2026-11-03",
+      "proved": "the price list has vCPU, RAM and suspended storage meters and no egress meter",
+      "capture": "sha256:c704be3c5d15941b50ce7ba4870e8d7e0ae379658dde92fbacd1c88214e984b1",
+      "quote": "vCPU $0.040 / hr · RAM $0.012 / GB-hr · suspended storage $0.10 / GB-mo · spawning and forking free."
+    },
+    {
+      "url": "https://collimate.ai/",
+      "date": "2026-11-03",
+      "proved": "access is by REST, the Python SDK or hosted MCP",
+      "capture": "sha256:c704be3c5d15941b50ce7ba4870e8d7e0ae379658dde92fbacd1c88214e984b1",
+      "quote": "Give an agent a real shell and Python per task, over REST, the Python SDK, or hosted MCP."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T02:24:05.603Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 38.4,
+    "talaria_m24h_usd": 92.16,
+    "nemo_m10h_usd": 38.4,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "unclassified",
+    "shape": null,
+    "session_cap": {
+      "wall_clock_min": 60,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "1 hour per session on the free key, 24 hours paid; an explicit suspend stops the meter before the cap"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "trial",
+    "burst_x": 1.0,
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": {
+      "gib": null,
+      "price": "not stated on this page",
+      "durability": "forks preserve live process memory across clones",
+      "on_stop": true,
+      "on_destroy": false,
+      "retention": "until deleted"
+    },
+    "net": null
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "request-rate"
+}

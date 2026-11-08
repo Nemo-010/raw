@@ -1,0 +1,104 @@
+{
+  "topic": "storage",
+  "slug": "iroh-mainline-dht-content-discovery",
+  "provider": "iroh Mainline-DHT content discovery (iroh-content-discovery)",
+  "url": "https://github.com/n0-computer/iroh-content-discovery",
+  "category": "discovery layer over the public Mainline DHT, published from an iroh node the user runs",
+  "free_tier": {
+    "stated": "No quota, no storage. Pure discovery: publishes BLAKE3->provider mappings onto the public BitTorrent Mainline DHT.",
+    "unit": "unlimited",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.iroh.computer/blog/iroh-global-content-discovery",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.iroh.computer/blog/iroh-global-content-discovery",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.iroh.computer/blog/iroh-global-content-discovery",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "UDP DHT traffic only, kilobytes. Mainline lookups measured at 37 ms in n0's own example.",
+    "metered": false
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "`n0-mainline` crate; `iroh-mainline-address-lookup` (pkarr/BEP 44 records); `iroh_mainline_content_discovery` (`query_dht`, `query_iroh`).",
+  "tooling": "Publishes a signed endpoint record (endpoint id + UDP socket + timestamp) to a tiny UDP address-index service, then `announce_peer` for SHA-1(BLAKE3 hash). Discovery returns candidate EndpointIds which are then dialled with normal iroh hole punching.",
+  "chaining": "Removes the last central dependency: no DNS, no pkarr relay, no account. Requires at least one reachable address-index service, found by rendezvous hash or a curated BEP 44 record.",
+  "limits": [],
+  "limits_note": "Mainline traffic is unencrypted and 'easily blocked by middleboxes'; no privacy ('anybody can look up your ip address'); the address-index service is last-writer-wins, in-memory, and records expire — publishers must re-announce on a schedule.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "anonymous",
+    "country": null
+  },
+  "reliability_note": "Experimental repo (12 stars, last push 2026-10-16). SHA-1 is used only as a keyspace key, so a malicious DHT answer can waste time but cannot corrupt data — verification is against the BLAKE3 root.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.iroh.computer/blog/iroh-global-content-discovery",
+      "date": "2026-10-21",
+      "proved": "announce/discovery workflow, udp-addr-index rationale, 37 ms lookup, 'mainline does not provide any privacy'"
+    },
+    {
+      "url": "https://github.com/n0-computer/iroh-content-discovery",
+      "date": "2026-10-16",
+      "proved": "repo alive, pushed 2026-10-16"
+    },
+    {
+      "url": "https://docs.iroh.computer/connecting/dht-address-lookup",
+      "date": "2026-10-21",
+      "proved": "DHT publishes the same signed records as DNS, different storage"
+    },
+    {
+      "url": "https://github.com/n0-computer/n0-mainline",
+      "date": "2026-10-21",
+      "proved": "iroh-flavoured fork of a Mainline DHT implementation"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No quota, no storage. Pure discovery: publishes BLAKE3->provider mappings onto the public BitTorrent Mainline DHT.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A13-iroh-and-holepunch.json",
+    "seed_area": "A/A13",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "A/A13"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/relays-and-transports.md",
+    "document_section": "iroh, blobs and hole-punching",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 1,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No quota, no storage. Pure discovery: publishes BLAKE3->provider mappings onto the public BitTorrent Mainline DHT.",
+    "limits_verbatim": "Mainline traffic is unencrypted and 'easily blocked by middleboxes'; no privacy ('anybody can look up your ip address'); the address-index service is last-writer-wins, in-memory, and records expire — publishers must re-announce on a schedule.",
+    "egress_verbatim": "UDP DHT traffic only, kilobytes. Mainline lookups measured at 37 ms in n0's own example.",
+    "chaining_verbatim": "Removes the last central dependency: no DNS, no pkarr relay, no account. Requires at least one reachable address-index service, found by rendezvous hash or a curated BEP 44 record.",
+    "identity_verbatim": "anonymous",
+    "tooling_verbatim": "Publishes a signed endpoint record (endpoint id + UDP socket + timestamp) to a tiny UDP address-index service, then `announce_peer` for SHA-1(BLAKE3 hash). Discovery returns candidate EndpointIds which are then dialled with normal iroh hole punching.",
+    "interface_verbatim": "`n0-mainline` crate; `iroh-mainline-address-lookup` (pkarr/BEP 44 records); `iroh_mainline_content_discovery` (`query_dht`, `query_iroh`).",
+    "agent_focus": "iroh (n0-computer) QUIC hole-punching / relay ecosystem: iroh-blobs, public+shared+d dedicated relays, iroh-share / iroh-drop / sendme content discovery via BitTorrent Mainline DHT, deCDN per-MB CDN, and whether a self-hosted origin + free relay can substitute for bulk storage+serving."
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "self_hosted": true
+}

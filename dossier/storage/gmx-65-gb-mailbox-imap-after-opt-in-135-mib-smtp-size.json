@@ -1,0 +1,104 @@
+{
+  "topic": "storage",
+  "slug": "gmx-65-gb-mailbox-imap-after-opt-in-135-mib-smtp-size",
+  "provider": "GMX (free) — 65 GB mailbox, IMAP after opt-in, 135 MiB SMTP SIZE",
+  "url": "https://www.gmx.com",
+  "category": "cloud-drive",
+  "free_tier": {
+    "stated": "GMX's own storage page: \"With GMX, you can store up to 65 GB worth of emails. To put that into perspective, that's around 500,000 emails!\"",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.gmx.com/mail/storage/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.gmx.com/mail/storage/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "65 GB total is the byte ceiling. Folders can be set to auto-delete on a timer, so retention is user-visible and must be left at 'unlimited'.",
+    "source_url": "https://www.gmx.com/mail/storage/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Unmetered; mailbox service.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "IMAP probe-verified: `imap.gmx.net:993` -> `* OK [CAPABILITY IMAP4rev1 CHILDREN ENABLE ID IDLE LIST-EXTENDED LIST-STATUS LITERAL- MOVE NAMESPACE SASL-IR SORT SPECIAL-USE THREAD=ORDEREDSUBJECT UIDPLUS UNSELECT WITHIN AUTH=LOGIN AUTH=PLAIN]`. IMAP is OFF by default and must be toggled on in settings (documented, not a paywall). Same server identity as mail.com — the IMAP banner `H migmxus005` is byte-identical in shape to imap.mail.com's.",
+  "chaining": "65 GB × N free accounts. GMX and mail.com are both United Internet properties, but only GMX leaves IMAP open on the free tier — so GMX is the reachable half of that 130 GB pair.",
+  "limits": [],
+  "limits_note": "per-object-cap from SMTP: `smtp.gmx.com:587` -> `250 SIZE 141557760` = 135 MiB per message (identical value on mail.com, same platform). 65 GB total is the byte ceiling. Folders can be set to auto-delete on a timer, so retention is user-visible and must be left at 'unlimited'.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: storage page: \"With GMX, you can store up to 65 GB worth of emails. To put that into perspective, that's around 500,000 emails!\" Free accounts are deleted for inactivity; IMAP access",
+    "country": null
+  },
+  "reliability_note": "Free accounts are deleted for inactivity; IMAP access is auto-revoked \"for security reasons\" after a long period of non-use, so a dormant archive mailbox can lose its programmatic path.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.gmx.com/mail/storage/",
+      "date": "2026-10-21",
+      "proved": "\"store up to 65 GB worth of emails\""
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: openssl s_client -connect imap.gmx.net:993 -> * OK [CAPABILITY ...] IMAP server ready H migmx010 32.4"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: smtp.gmx.com:587 STARTTLS EHLO -> 250 SIZE 141557760"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "GMX's own storage page: \"With GMX, you can store up to 65 GB worth of emails. To put that into perspective, that's around 500,000 emails!\"",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H8-email-as-storage.json",
+    "seed_area": "H/H8",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "H/H8"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "GMX's own storage page: \"With GMX, you can store up to 65 GB worth of emails. To put that into perspective, that's around 500,000 emails!\"",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H8"
+    },
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Email as storage",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "GMX's own storage page: \"With GMX, you can store up to 65 GB worth of emails. To put that into perspective, that's around 500,000 emails!\"",
+    "limits_verbatim": "per-object-cap from SMTP: `smtp.gmx.com:587` -> `250 SIZE 141557760` = 135 MiB per message (identical value on mail.com, same platform). 65 GB total is the byte ceiling. Folders can be set to auto-delete on a timer, so retention is user-visible and must be left at 'unlimited'.",
+    "egress_verbatim": "Unmetered; mailbox service.",
+    "chaining_verbatim": "65 GB × N free accounts. GMX and mail.com are both United Internet properties, but only GMX leaves IMAP open on the free tier — so GMX is the reachable half of that 130 GB pair.",
+    "tooling_verbatim": "IMAP probe-verified: `imap.gmx.net:993` -> `* OK [CAPABILITY IMAP4rev1 CHILDREN ENABLE ID IDLE LIST-EXTENDED LIST-STATUS LITERAL- MOVE NAMESPACE SASL-IR SORT SPECIAL-USE THREAD=ORDEREDSUBJECT UIDPLUS UNSELECT WITHIN AUTH=LOGIN AUTH=PLAIN]`. IMAP is OFF by default and must be toggled on in settings (documented, not a paywall). Same server identity as mail.com — the IMAP banner `H migmxus005` is byte-identical in shape to imap.mail.com's.",
+    "interface_verbatim": "rest",
+    "agent_focus": "email and mail-adjacent storage: webmail quotas, IMAP-as-block-device, mailing-list archives, newsletter attachment hosts"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

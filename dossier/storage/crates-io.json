@@ -1,0 +1,120 @@
+{
+  "topic": "storage",
+  "slug": "crates-io",
+  "provider": "crates.io",
+  "url": "https://crates.io",
+  "category": "registry",
+  "free_tier": {
+    "stated": "10 MB per .crate file. No limit on versions per crate ('There is no limit to the number of versions which can be published'), no documented cap on total crates or total bytes per account.",
+    "unit": "MB",
+    "metered_on": "unstated",
+    "source_url": "https://doc.rust-lang.org/cargo/reference/publishing.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://doc.rust-lang.org/cargo/reference/publishing.html",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "| Effectively permanent — 'the code cannot be deleted', 'publish is generally permanent'",
+    "source_url": "https://doc.rust-lang.org/cargo/reference/publishing.html",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free and unmetered, Cloudflare-fronted, CORS-open. Probe: static.crates.io .crate GET -> 200, Server: cloudflare, Cache-Control: 'public,max-age=31536000,immutable', Access-Control-Allow-Origin: *, Accept-Ranges: bytes.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "PUT /api/v1/crates/new (binary metadata+body protocol), GET https://static.crates.io/crates/<name>/<name>-<ver>.crate. Clients: cargo publish, cargo-upload style wrappers. No rclone backend.",
+  "chaining": "UNBOUNDED on crates x versions but throttled hard: 5 new crates burst then 1 per 10 minutes; 30 versions burst then 1 per minute. At 10 MB/crate, 10 TiB needs ~1,048,576 crates — at 1 new crate per 10 min that is ~20 years, so crates.io is *capacity*-unlimited and *throughput*-useless for bulk. Use it as a low-priority shard, not the primary.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "1000 downloads/month",
+      "source": "https://doc.rust-lang.org/cargo/reference/publishing.html"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "1.4 GB/day",
+      "source": "https://doc.rust-lang.org/cargo/reference/publishing.html"
+    },
+    {
+      "kind": "pull-count",
+      "value": "1000 downloads/month",
+      "source": "https://doc.rust-lang.org/cargo/reference/publishing.html"
+    }
+  ],
+  "limits_note": "10 MB per .crate. Publish rate: burst 5 new crates, then 1 per 10 min; burst 30 new versions, then 1 per minute (documented, leaky-bucket). No delete after 72h unless <1000 downloads/month-per-month AND no dependents AND single owner. Version numbers can never be reused or overwritten.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Effectively permanent — 'the code cannot be deleted', 'publish is generally permanent'. Excellent durability, terrible write throughput: ~144 crates/day sustained, i.e. ~1.4 GB/day at 10 MB. Never disappears, but you cannot fill it fast.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://doc.rust-lang.org/cargo/reference/publishing.html",
+      "date": "2026-10-21",
+      "proved": "'crates.io currently has a 10MB size limit on the .crate file'; 'There is no limit to the number of versions which can be published'; 'the version can never be overwritten, and the code cannot be deleted'"
+    },
+    {
+      "url": "https://crates.io/docs/rate-limits",
+      "date": "2026-10-21",
+      "proved": "'allow a burst of 5 new crates published at once by a single user account, with a rate limit of 1 crate every 10 minutes'; 'burst of 30 new versions ... 1 crate per minute'"
+    },
+    {
+      "url": "https://crates.io/policies",
+      "date": "2026-10-21",
+      "proved": "deletion only if published <72h, or <1000 downloads per month published, and no dependents"
+    },
+    {
+      "url": "https://static.crates.io/crates/serde/serde-1.0.0.crate",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, Content-Length: 58433, Server: cloudflare, Cache-Control: public,max-age=31536000,immutable"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "10 MB per .crate file. No limit on versions per crate ('There is no limit to the number of versions which can be published'), no documented cap on total crates or total bytes per account.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C2-package-ecosystems.json",
+    "seed_area": "C/C2",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "C/C2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "Language package ecosystems",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "10 MB per .crate file. No limit on versions per crate ('There is no limit to the number of versions which can be published'), no documented cap on total crates or total bytes per account.",
+    "limits_verbatim": "10 MB per .crate. Publish rate: burst 5 new crates, then 1 per 10 min; burst 30 new versions, then 1 per minute (documented, leaky-bucket). No delete after 72h unless <1000 downloads/month-per-month AND no dependents AND single owner. Version numbers can never be reused or overwritten.",
+    "egress_verbatim": "Free and unmetered, Cloudflare-fronted, CORS-open. Probe: static.crates.io .crate GET -> 200, Server: cloudflare, Cache-Control: 'public,max-age=31536000,immutable', Access-Control-Allow-Origin: *, Accept-Ranges: bytes.",
+    "chaining_verbatim": "UNBOUNDED on crates x versions but throttled hard: 5 new crates burst then 1 per 10 minutes; 30 versions burst then 1 per minute. At 10 MB/crate, 10 TiB needs ~1,048,576 crates — at 1 new crate per 10 min that is ~20 years, so crates.io is *capacity*-unlimited and *throughput*-useless for bulk. Use it as a low-priority shard, not the primary.",
+    "tooling_verbatim": "PUT /api/v1/crates/new (binary metadata+body protocol), GET https://static.crates.io/crates/<name>/<name>-<ver>.crate. Clients: cargo publish, cargo-upload style wrappers. No rclone backend.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Package ecosystems as blob stores: npm, PyPI, crates.io, Maven Central, NuGet, RubyGems, Packagist, Conda/conda-forge, Hex, Pub.dev, CocoaPods, R, CPAN, Hackage — per-artifact caps, version-unlimited behaviour, retention/deletion policy"
+  },
+  "binding": "pull-count",
+  "binding_note": "a per-object fetch counter turns a serving workload into a counting problem",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,103 @@
+{
+  "topic": "netdisk-pan",
+  "slug": "s3-776161-xyz",
+  "provider": "龙猫网盘",
+  "url": "https://s3.776161.xyz/",
+  "category": "public-instance",
+  "free_tier": {
+    "stated": "anonymous guest read of 8 root entries; no account and no payment",
+    "unit": "unlimited",
+    "metered_on": "none",
+    "source_url": "https://s3.776161.xyz/",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "the upstream provider's cap; the instance publishes none",
+    "source_url": "https://s3.776161.xyz/"
+  },
+  "retention": {
+    "stated": "until the operator's account or tenant fails; no TTL and no notice",
+    "days": null,
+    "source_url": "https://s3.776161.xyz/"
+  },
+  "egress": {
+    "terms": "served through openresty; the reader pays nothing",
+    "metered": false,
+    "source_url": "https://s3.776161.xyz/"
+  },
+  "interface": [
+    "rest",
+    "webdav"
+  ],
+  "interface_detail": "rest",
+  "tooling": "the AList/OpenList REST surface (/api/fs/list, /api/fs/get, /api/fs/put) and the WebDAV endpoint at /dav; the rclone alist backend speaks the REST",
+  "chaining": "a fetch substrate: point a cache and two mirrors at it, never a write tier Read-only and described by the index as scattered and mostly personal. Not a capacity play",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "PUT denied at the guest role",
+      "source": "probe:https://s3.776161.xyz/api/fs/put"
+    }
+  ],
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "no registration; /api/me returns a guest session",
+    "country": null
+  },
+  "reliability_note": "8 root entries on OpenList v4.2.2, write:true advertised and denied. The hostname says s3 and the API is AList; the name is not the protocol.",
+  "confidence": "measured",
+  "evidence": [
+    {
+      "url": "probe:https://s3.776161.xyz/api/public/settings",
+      "date": "2026-10-22",
+      "proved": "HTTP 200, JSON carrying a code field, site_title '龙猫网盘'"
+    },
+    {
+      "url": "probe:https://s3.776161.xyz/api/fs/list",
+      "date": "2026-10-22",
+      "proved": "anonymous POST /api/fs/list on / returned code 200 with 8 root entries; write:true, write_content_bypass:False, provider:unknown"
+    },
+    {
+      "url": "probe:https://s3.776161.xyz/api/fs/put",
+      "date": "2026-10-22",
+      "proved": "the zero-byte oracle (PUT at an existing directory with Overwrite:false) returned code 403 with message 'permission denied' inside HTTP 200, so the write permission failed and nothing was written"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-22T03:37:00.574Z",
+  "binding": "write-gated",
+  "notes": "8 root entries on OpenList v4.2.2, write:true advertised and denied. The hostname says s3 and the API is AList; the name is not the protocol.",
+  "history": [],
+  "extras": {
+    "access_mode": "public-instance",
+    "read_capability": "full",
+    "write_capability": "permission-denied",
+    "upstream_provider": "unknown",
+    "fronting_cdn": "openresty",
+    "advertised_write_flag": true,
+    "write_content_bypass": false,
+    "permission_bitmask": "0",
+    "base_path": "/",
+    "listing_sha256": "e47646b6",
+    "first_seen": "2024-01-20",
+    "first_seen_source": "kuhehe.github.io/20240120224502, whose page was edited in place until 2025-06-17",
+    "last_verified_alive": "2026-10-22T03:37:00.574Z",
+    "last_verified_dead": null,
+    "consecutive_failures": 0,
+    "aliases": [
+      "龙猫网盘 (s3.776161.xyz) — public OpenList, OS/tool mirrors"
+    ],
+    "seed_facts": {
+      "quota_verbatim": "No stated quota. Eight directories organised by platform: iOS, Windows, Linux, Android, Oracle, Cloudflare, OneDrive and Google",
+      "per_object_cap_verbatim": "Not applicable",
+      "chaining_verbatim": "Read-only and described by the index as scattered and mostly personal. Not a capacity play",
+      "reliability_verbatim": "Alive and a personal tool dump. The name is misleading: it is not an S3 endpoint, and /api/s3 serves the SPA HTML instead of an API",
+      "tooling_verbatim": "OpenList v4.2.2, build 2026-05-25, REST API anonymous, with allow_indexed true and allow_mounted false",
+      "binding_note_verbatim": "Read-only, personal and small. The write refusal is the gate and there is no capacity behind it.",
+      "deferred_name": "龙猫网盘 (s3.776161.xyz) — public OpenList, OS/tool mirrors",
+      "folded_from": "dossier/netdisk-pan/public-openlist-os-tool-mirrors.json, written by this pass and folded here"
+    }
+  },
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

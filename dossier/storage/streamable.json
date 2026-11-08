@@ -1,0 +1,112 @@
+{
+  "topic": "storage",
+  "slug": "streamable",
+  "provider": "Streamable",
+  "url": "https://streamable.com",
+  "category": "media",
+  "free_tier": {
+    "stated": "250 MB per file, 10 minutes per video on the free plan. No storage pool — the unit is the individual clip.",
+    "unit": "MB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://streamable-support.zendesk.com/hc/en-us/articles/35415717293204-Free-Plan-Limits",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "250 MB per file",
+    "bytes": 250000000,
+    "source_url": "https://streamable-support.zendesk.com/hc/en-us/articles/35415717293204-Free-Plan-Limits",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "Videos are auto-deleted after 90 days even on a free account ('archived after 24 hours' when anonymous).",
+    "days": 1,
+    "source_url": "https://streamable-support.zendesk.com/hc/en-us/articles/35415717293204-Free-Plan-Limits",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free, unlimited playback; no egress meter.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "yt-dlp `Streamable` extractor (verified present). Undocumented upload endpoint only.",
+  "chaining": "Unlimited clips at 250 MB — mathematically unbounded but practically useless: 500 GB would need 2,000 separate uploads, each expiring in 90 days.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "250 MB per file",
+      "source": "https://streamable-support.zendesk.com/hc/en-us/articles/35415717293204-Free-Plan-Limits"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "deleted after 90 days",
+      "source": "https://streamable-support.zendesk.com/hc/en-us/articles/35415717293204-Free-Plan-Limits"
+    }
+  ],
+  "limits_note": "250 MB AND 10 minutes, both hard. Videos are auto-deleted after 90 days even on a free account ('archived after 24 hours' when anonymous).",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: days even on a free account ('archived after 24 hours' when anonymous). media",
+    "country": null
+  },
+  "reliability_note": "Systematic 90-day deletion makes it a transfer service, not storage. Data disappears on a timer by design.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://streamable-support.zendesk.com/hc/en-us/articles/35415717293204-Free-Plan-Limits",
+      "date": "2026-10-21",
+      "proved": "'maximum file size of 250 MB and a duration of 10 minutes'; 'Videos uploaded by free users are automatically deleted after 3 months (90 days)'"
+    },
+    {
+      "url": "https://streamable.com/pricing",
+      "date": "2026-10-21",
+      "proved": "'250 MB' free tier"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "250 MB per file, 10 minutes per video on the free plan. No storage pool — the unit is the individual clip.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H1-video-platforms.json",
+    "seed_area": "H/H1",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "H/H1"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "250 MB per file, 10 minutes per video on the free plan. No storage pool — the unit is the individual clip.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H1"
+    },
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Video platforms",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "250 MB per file, 10 minutes per video on the free plan. No storage pool — the unit is the individual clip.",
+    "limits_verbatim": "250 MB AND 10 minutes, both hard. Videos are auto-deleted after 90 days even on a free account ('archived after 24 hours' when anonymous).",
+    "egress_verbatim": "Free, unlimited playback; no egress meter.",
+    "chaining_verbatim": "Unlimited clips at 250 MB — mathematically unbounded but practically useless: 500 GB would need 2,000 separate uploads, each expiring in 90 days.",
+    "tooling_verbatim": "yt-dlp `Streamable` extractor (verified present). Undocumented upload endpoint only.",
+    "interface_verbatim": "rest",
+    "agent_focus": "video/media platforms as bulk storage — the crux is whether the ORIGINAL file is retrievable, or only a re-encode"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

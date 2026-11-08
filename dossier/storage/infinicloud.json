@@ -1,0 +1,189 @@
+{
+  "topic": "storage",
+  "slug": "infinicloud",
+  "provider": "InfiniCLOUD (formerly TeraCLOUD)",
+  "url": "https://infini-cloud.net",
+  "category": "cloud-drive",
+  "free_tier": {
+    "stated": "20 GB free account; referral bonus up to 1,000 GB for the referrer (+5 GB once for the referee). No file size limit",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://infini-cloud.net/en/pricing.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://infini-cloud.net/en/pricing.html",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "'Writing Feature' is disabled on the free plan (no version history); 2 years of inactivity deletes the account; referrer bonuses are valid one year only; 'Malicious or spam referrals may lead to account suspension or deletion'",
+    "days": 730,
+    "source_url": "https://infini-cloud.net/en/pricing.html",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "no per-GB egress charge or transfer quota published on the plan table; free tier capped at 200 Mbps",
+    "metered": false
+  },
+  "interface": [
+    "webdav",
+    "rclone"
+  ],
+  "interface_detail": "webdav",
+  "tooling": "WebDAV endpoint (rclone/webdav, davfs, any WebDAV client); recurring 20 GB plan is free forever, 2-year inactivity expiry",
+  "chaining": "20 GB + 5 GB per account is small, but the referrer side scales to 1,000 GB per account, so a group of accounts that refer each other accumulates ~1 TB per account. The allowance is per account, so N accounts hold N x ~1 TB",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "speed capped at 200 Mbps per account",
+      "source": "https://infini-cloud.net/en/pricing.html"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "expire after 2 years",
+      "source": "https://infini-cloud.net/en/pricing.html"
+    }
+  ],
+  "limits_note": "'Writing Feature' is disabled on the free plan (no version history); 2 years of inactivity deletes the account; referrer bonuses are valid one year only; 'Malicious or spam referrals may lead to account suspension or deletion'",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "referral bonuses expire after a year for the referrer; free accounts silently expire after 2 years idle; Japanese-operated, speed capped at 200 Mbps per account",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://infini-cloud.net/en/pricing.html",
+      "date": "2026-10-21",
+      "proved": "'Capacity 20GB | Free', 'File Size Limit None', 'Referral Bonus 〇 (Up to 1,000GB)', 'Account Expiration 2 Years of inactivity'"
+    },
+    {
+      "url": "https://infini-cloud.net/en/about_introduce.html",
+      "date": "2026-10-21",
+      "proved": "'Referring User Up to 1TB (1,000GB)... Earn 2GB for each person you refer. Bonus storage is valid for one year', referred user 5 GB, last updated 2025-06-20"
+    },
+    {
+      "url": "https://webdav.infini-cloud.net/",
+      "date": "2026-10-21",
+      "proved": "probe: PROPFIND (Depth: 0, no creds) -> 405 Method Not Allowed (WebDAV listener live, rejects unauthenticated PROPFIND)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "20 GB free account; referral bonus up to 1,000 GB for the referrer (+5 GB once for the referee). No file size limit",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A6-niche-drives.json",
+    "seed_area": "A/A6",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "A/A6"
+      },
+      {
+        "value": "fails-quota",
+        "area": "F/F8"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "InfiniCLOUD (formerly TeraCLOUD)",
+      "InfiniCLOUD (formerly TeraCLOUD, Japan)"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area A/A6",
+            "evidence": "quota: 20 GB free account; referral bonus up to 1,000 GB for the referrer (+5"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row, area F/F8",
+            "evidence": "quota: 20 GB on signup, +5 GB with an invite code; a long-term user reports 3"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area F/F8) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "20 GB free account; referral bonus up to 1,000 GB for the referrer (+5",
+            "source": "table.md row, area A/A6",
+            "evidence": null
+          },
+          {
+            "value": "20 GB on signup, +5 GB with an invite code; a long-term user reports 3",
+            "source": "table.md row, area F/F8",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area A/A6)"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md (area F/F8)"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area F/F8) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "20 GB free account; referral bonus up to 1,000 GB for the referrer (+5",
+            "source": "table.md (area A/A6)"
+          },
+          {
+            "value": "20 GB on signup, +5 GB with an invite code; a long-term user reports 3",
+            "source": "table.md (area F/F8)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "20 GB free account; referral bonus up to 1,000 GB for the referrer (+5 GB once for the referee). No file size limit",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/A6"
+    },
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "Niche drives",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 1,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "20 GB free account; referral bonus up to 1,000 GB for the referrer (+5 GB once for the referee). No file size limit",
+    "limits_verbatim": "'Writing Feature' is disabled on the free plan (no version history); 2 years of inactivity deletes the account; referrer bonuses are valid one year only; 'Malicious or spam referrals may lead to account suspension or deletion'",
+    "egress_verbatim": "no per-GB egress charge or transfer quota published on the plan table; free tier capped at 200 Mbps",
+    "chaining_verbatim": "20 GB + 5 GB per account is small, but the referrer side scales to 1,000 GB per account, so a group of accounts that refer each other accumulates ~1 TB per account. The allowance is per account, so N accounts hold N x ~1 TB",
+    "tooling_verbatim": "WebDAV endpoint (rclone/webdav, davfs, any WebDAV client); recurring 20 GB plan is free forever, 2-year inactivity expiry",
+    "interface_verbatim": "webdav",
+    "agent_focus": "niche/regional/small consumer drives with >=500GB free, plus 'unlimited' lifetime-deal cloud and free Nextcloud hosts"
+  },
+  "binding": "retention-clamped",
+  "binding_note": "a clock, not a quota: bytes leave whether or not the client is finished with them",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

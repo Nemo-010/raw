@@ -1,0 +1,122 @@
+{
+  "topic": "storage",
+  "slug": "blossom-blob-servers",
+  "provider": "Blossom blob servers (nostr.download, blossom.nostr.build, 24242.io)",
+  "url": "https://blossom.nostr.build/",
+  "category": "Nostr media/blob servers (content-addressed, keypair auth)",
+  "free_tier": {
+    "stated": "Per-object caps only, and small: nostr.build free uploads 20 MiB, hard cap 100 MiB, then storage plans 5 GB / $18/yr up to 500 GB / $240/yr. 24242.io: 100 MiB max file, files deleted after 60 days unaccessed. blossom.psbt.me: 1 month hosting, files under 1 MB.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://blossom.nostr.build/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://blossom.nostr.build/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "24242.io: 100 MiB max file, files deleted after 60 days unaccessed",
+    "days": 60,
+    "source_url": "https://blossom.nostr.build/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free CDN, global.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "BUD-01/BUD-06 HTTP API: PUT /upload, HEAD /upload, DELETE; auth is a signed Nostr event in the Authorization header, not an account.",
+  "tooling": "any Blossom client; curl with a signed event.",
+  "chaining": "Content-addressed by sha256, so it chunks naturally into the hoangvu12/free-s3 pattern — but 20 MiB chunks would need ~50,000 objects per TiB.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "deleted after 60 days",
+      "source": "https://blossom.nostr.build/"
+    }
+  ],
+  "limits_note": "20 MiB free / 100 MiB absolute on nostr.build; 100 MiB on 24242.io; 1 MB on psbt.me. Auth is a signed event, so 'no account' is real: 401 with x-reason 'Missing Blossom Authorization header'.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "anonymous",
+    "country": null
+  },
+  "reliability_note": "Pure per-object-cap failure. Included because the auth model (keypair, zero registration) is the most open I found anywhere in this wave, and because the 60-day idle deletion on 24242.io is a textbook retention-clamp.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://blossom.nostr.build/",
+      "date": "2026-10-21",
+      "proved": "'A hard cap of 100 MiB per upload (20 MiB for free uploads), with no limit on the number of uploads or retention'; plans $18/yr 5GB … $240/yr 500GB"
+    },
+    {
+      "url": "https://blossom.nostr.build/upload",
+      "date": "2026-10-21",
+      "proved": "HEAD returns 401, x-reason: 'Missing Blossom Authorization header, authorization required' (i.e. keypair auth, no signup)"
+    },
+    {
+      "url": "https://nostr.download/upload",
+      "date": "2026-10-21",
+      "proved": "401, x-reason: 'Auth header not found'"
+    },
+    {
+      "url": "https://24242.io/",
+      "date": "2026-10-21",
+      "proved": "'Max file size: 100MiB. Files are deleted if not accessed for 60 days.'"
+    },
+    {
+      "url": "https://blossom.psbt.me/",
+      "date": "2026-10-21",
+      "proved": "'Free Tier: 1-month hosting for files under 1 MB'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Per-object caps only, and small: nostr.build free uploads 20 MiB, hard cap 100 MiB, then storage plans 5 GB / $18/yr up to 500 GB / $240/yr. 24242.io: 100 MiB max file, files deleted after 60 days unaccessed. blossom.psbt.me: 1 month hosting, files under 1 MB.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E16-open-science-2026-new.json",
+    "seed_area": "E/E16",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "E/E16"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "retention",
+      "why": "Per-object caps only, and small: nostr.build free uploads 20 MiB, hard cap 100 MiB, then storage plans 5 GB / $18/yr up to 500 GB / $240/yr. 24242.io: 100 MiB max file, files deleted after 60 days unaccessed. blossom.psbt.me: 1 month hosting, files under 1 MB.",
+      "retry_when": "if the retention model changes from a clock to indefinite",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E16"
+    },
+    "target_document": "docs/storage/free/academic-identity.md",
+    "document_section": "The 2026 open-science re-sweep",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Per-object caps only, and small: nostr.build free uploads 20 MiB, hard cap 100 MiB, then storage plans 5 GB / $18/yr up to 500 GB / $240/yr. 24242.io: 100 MiB max file, files deleted after 60 days unaccessed. blossom.psbt.me: 1 month hosting, files under 1 MB.",
+    "limits_verbatim": "20 MiB free / 100 MiB absolute on nostr.build; 100 MiB on 24242.io; 1 MB on psbt.me. Auth is a signed event, so 'no account' is real: 401 with x-reason 'Missing Blossom Authorization header'.",
+    "egress_verbatim": "Free CDN, global.",
+    "chaining_verbatim": "Content-addressed by sha256, so it chunks naturally into the hoangvu12/free-s3 pattern — but 20 MiB chunks would need ~50,000 objects per TiB.",
+    "identity_verbatim": "anonymous",
+    "tooling_verbatim": "any Blossom client; curl with a signed event.",
+    "interface_verbatim": "BUD-01/BUD-06 HTTP API: PUT /upload, HEAD /upload, DELETE; auth is a signed Nostr event in the Authorization header, not an account.",
+    "agent_focus": "Two client questions. (1) Open academic infrastructure that does NOT validate institutional identity — for each repository I probed the machine-readable quota endpoint (GET /api/dataverses/:root/storage/quota, /api/records?size=1, /api/info/version) rather than trusting marketing pages, and separately tested the write gate, because open-signup-with-unlimited-quota and open-signup-with-deposit-rights are different things and this wave exists to separate them. (2) Relay/P2P, split into signalling (coordinates only) vs relaying (data transits, operator pays). Secondary sweep: the 2025-26 AI data commons (FineWeb, Common Pile, DCLM, Dolma, Pleias) to establish whether any of them offers writable storage — none does; they are all read-only distribution on HF or Common Crawl S3, i.e. egress sources, not deposit targets. Dataverse turns out to be the only architecture in this space that ships a quota API that answers 'is there a limit' in one GET, so I ran it across every instance I could reach."
+  },
+  "binding": "retention-clamped",
+  "binding_note": "a clock, not a quota: bytes leave whether or not the client is finished with them",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

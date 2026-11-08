@@ -1,0 +1,202 @@
+{
+  "topic": "storage",
+  "slug": "oracle-cloud-infrastructure-registry",
+  "provider": "Oracle Cloud Infrastructure Registry (OCIR)",
+  "url": "https://www.oracle.com/cloud/cloud-native/container-registry/",
+  "category": "registry",
+  "free_tier": {
+    "stated": "No registry fee at all, and storage is billed at raw Object Storage rates: 'Oracle does not charge separately for the service. Users pay only for the associated storage and network resources that they consume' / 'Customers pay only for resources that they consume, such as storage of images at the rate of Object Storage (Standard).' The Always Free Object Storage allowance is '20 GB of combined Standard tier, Infrequent Access tier, and Archive tier data' per tenancy. Quotas: 500 repos total and 500 images per repo PER region.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.oracle.com/europe/cloud/cloud-native/container-registry/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.oracle.com/europe/cloud/cloud-native/container-registry/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.oracle.com/europe/cloud/cloud-native/container-registry/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free up to 10 TB/month, on every tenancy, free or paid: 'Public internet egress | 10 TB/month free. Oracle charges significantly less for data egress over the public internet in all global regions. Customers are not charged for the first 10 TB of data egress per month. Other providers give up to 100 GB free, or none at all.' This is the one hyperscaler that clears the egress filter outright.",
+    "metered": false,
+    "free_allowance": "10 TB per month"
+  },
+  "interface": [
+    "oci",
+    "cli"
+  ],
+  "interface_detail": "oci",
+  "tooling": "docker/skopeo/ORAS. Auth via IAM auth token ('create an Auth Token via your user settings and login with the Docker CLI').",
+  "chaining": "The 20 GB Always Free OSS is small, but egress is 10 TB/month per tenancy and repos can be made public so pulls need no auth: 'if a user has the complete path to the image, they can pull it, with no authentication needed.' Multiple Always Free tenancies are limited — 'One Oracle Cloud Free Trial or Always Free account is permitted per person' — so this scales by tenancy policy, not by unlimited accounts.",
+  "limits": [],
+  "limits_note": "500 repos/region, 500 images/repo; public repos pullable anonymously if the path is known; auto-cleanup retention policies available; storage beyond 20 GB Always Free is billed at Object Storage Standard rates.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: region. Public pull works but the console is hidden from anonymous users; the binding constraint is the 20 GB storage allowance and the one-tenancy-per-person rule, not throughput. The 2",
+    "country": null
+  },
+  "reliability_note": "Public pull works but the console is hidden from anonymous users; the binding constraint is the 20 GB storage allowance and the one-tenancy-per-person rule, not throughput.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.oracle.com/europe/cloud/cloud-native/container-registry/",
+      "date": "2026-10-21",
+      "proved": "'Oracle does not charge separately for the service ... storage of images at the rate of Object Storage (Standard)'"
+    },
+    {
+      "url": "https://www.oracle.com/cloud/networking/virtual-cloud-network/pricing/",
+      "date": "2026-10-21",
+      "proved": "'Public internet egress 10 TB/month free ... not charged for the first 10 TB of data egress per month'"
+    },
+    {
+      "url": "https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm",
+      "date": "2026-10-21",
+      "proved": "'20 GB of combined Standard tier, Infrequent Access tier, and Archive tier data'"
+    },
+    {
+      "url": "https://www.oracle.com/cloud/cloud-native/container-registry/faq/",
+      "date": "2026-10-21",
+      "proved": "'Quotas are 500 repos total and 500 images per repo PER region'; public repos need no auth to pull"
+    },
+    {
+      "url": "https://iad.ocir.io/v2/",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 401 with Docker-Distribution-Api-Version: registry/2.0 (public repos still answer anonymously at the repo path, not at /v2/)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No registry fee at all, and storage is billed at raw Object Storage rates: 'Oracle does not charge separately for the service. Users pay only for the associated storage and network resources that they consume' / 'Customers pay only for resources that they consume, such as storage of images at the rate of Object Storage (Standard).' The Always Free Object Storage allowance is '20 GB of combined Standard tier, Infrequent Access tier, and Archive tier data' per tenancy. Quotas: 500 repos total and 500 images per repo PER region.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B4-hyperscaler-registries.json",
+    "seed_area": "B/B4",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "B/B4"
+      },
+      {
+        "value": "fails-quota",
+        "area": "G/G4"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Oracle Cloud Infrastructure Registry (OCIR)",
+      "Oracle Cloud Infrastructure — Always Free (Object Storage + Block Volume)"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area B/B4",
+            "evidence": "quota: No registry fee at all, and storage is billed at raw Object Storage ra"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row, area G/G4",
+            "evidence": "quota: 20 GB combined Standard + Infrequent Access + Archive object storage,"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried dead-end: Hard 500 GB total per region across 500 repositories, and 'You are charged for stored images' — so it is both capped at  and qualifies-with-caveat. The table.md (area G/G4) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "No registry fee at all, and storage is billed at raw Object Storage ra",
+            "source": "table.md row, area B/B4",
+            "evidence": null
+          },
+          {
+            "value": "20 GB combined Standard + Infrequent Access + Archive object storage,",
+            "source": "table.md row, area G/G4",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area B/B4)"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md (area G/G4)"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried dead-end: Hard 500 GB total per region across 500 repositories, and 'You are charged for stored images' — so it is both capped at  and qualifies-with-caveat. The table.md (area G/G4) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "No registry fee at all, and storage is billed at raw Object Storage ra",
+            "source": "table.md (area B/B4)"
+          },
+          {
+            "value": "20 GB combined Standard + Infrequent Access + Archive object storage,",
+            "source": "table.md (area G/G4)"
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider is both a table row and a dead end",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md"
+          },
+          {
+            "value": "dead-end: Hard 500 GB total per region across 500 repositories, and 'You are charged for stored images' — so it is both capped at ",
+            "source": "DEAD-ENDS.md"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried dead-end: Hard 500 GB total per region across 500 repositories, and 'You are charged for stored images' — so it is both capped at  and qualifies-with-caveat. The table.md (area G/G4) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "No registry fee at all, and storage is billed at raw Object Storage rates: 'Oracle does not charge separately for the service. Users pay only for the associated storage and network resources that they consume' / 'Customers pay only for resources that they consume, such as storage of images at the rate of Object Storage (Standard).' The Always Free Object Storage allowance is '20 GB of combined Standard tier, Infrequent Access tier, and Archive tier data' per tenancy. Quotas: 500 repos total and 500 images per repo PER region.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area B/B4"
+    },
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "Hyperscaler registries",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No registry fee at all, and storage is billed at raw Object Storage rates: 'Oracle does not charge separately for the service. Users pay only for the associated storage and network resources that they consume' / 'Customers pay only for resources that they consume, such as storage of images at the rate of Object Storage (Standard).' The Always Free Object Storage allowance is '20 GB of combined Standard tier, Infrequent Access tier, and Archive tier data' per tenancy. Quotas: 500 repos total and 500 images per repo PER region.",
+    "limits_verbatim": "500 repos/region, 500 images/repo; public repos pullable anonymously if the path is known; auto-cleanup retention policies available; storage beyond 20 GB Always Free is billed at Object Storage Standard rates.",
+    "egress_verbatim": "Free up to 10 TB/month, on every tenancy, free or paid: 'Public internet egress | 10 TB/month free. Oracle charges significantly less for data egress over the public internet in all global regions. Customers are not charged for the first 10 TB of data egress per month. Other providers give up to 100 GB free, or none at all.' This is the one hyperscaler that clears the egress filter outright.",
+    "chaining_verbatim": "The 20 GB Always Free OSS is small, but egress is 10 TB/month per tenancy and repos can be made public so pulls need no auth: 'if a user has the complete path to the image, they can pull it, with no authentication needed.' Multiple Always Free tenancies are limited — 'One Oracle Cloud Free Trial or Always Free account is permitted per person' — so this scales by tenancy policy, not by unlimited accounts.",
+    "tooling_verbatim": "docker/skopeo/ORAS. Auth via IAM auth token ('create an Auth Token via your user settings and login with the Docker CLI').",
+    "interface_verbatim": "oci",
+    "agent_focus": "hyperscaler and mid-tier container registries judged on free storage + free egress; explicit test of whether any hyperscaler gives free public storage AND free internet egress"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

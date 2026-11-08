@@ -1,0 +1,151 @@
+{
+  "topic": "compute",
+  "slug": "solari",
+  "provider": "Solari",
+  "url": "https://docs.getsolari.com/pricing",
+  "category": "container and VM sandbox",
+  "free_tier": {
+    "stated": "$3 of credits a month on a $0 plan, sessions capped at 1 hour, 3 concurrent browsers, 3 profiles and 1 day of replay retention",
+    "unit": "mixed",
+    "metered_on": "wall-clock",
+    "source_url": "https://docs.getsolari.com/pricing",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://docs.getsolari.com/pricing",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://docs.getsolari.com/pricing",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "not published: the pricing page (https://docs.getsolari.com/pricing) lists credits, hourly rate, session time, concurrency and replay retention, and no transfer allowance or per-GB price; a hardened sandbox has no outbound network at all",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://docs.getsolari.com/pricing"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "HTTP API (api.getsolari.com) and SDKs for TypeScript, Python, Go, Rust and C++; VMs are also viewed and controlled over VNC; no CLI or SSH found in the docs read",
+  "tooling": "not stated in the source card",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "$3 of monthly credits on Free, drawn at $0.15 an hour",
+      "source": "https://docs.getsolari.com/pricing"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "a free session is capped at 1 hour and replay is kept 1 day",
+      "source": "https://docs.getsolari.com/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "3 concurrent browsers and 3 profiles on Free; human-verification handling and proxies are not available",
+      "source": "https://docs.getsolari.com/pricing"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the pricing page was read on 2026-10-22 and publishes the full ladder, including the session cap and replay retention per plan. The 1-hour session cap on Free is the wall-clock answer and no record carried it",
+  "evidence": [
+    {
+      "url": "https://docs.getsolari.com/pricing",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://docs.getsolari.com/pricing",
+      "date": "2026-10-22",
+      "proved": "'| **Monthly fee** | $0 | $20 | $200 | Custom |' with '| **Monthly credits** | $3 | $20 | $200 | Custom |', '| **Max session time** | 1 hour | 5 hours | 24 hours | Unlimited |', '| **Rate** | $0.15 / hour', '| **Concurrent browsers** | 3', and 'Replay retention 1 day' on Free, quoted"
+    },
+    {
+      "url": "https://docs.getsolari.com/pricing",
+      "date": "2026-11-03",
+      "proved": "the plan table prices hours and sessions; no transfer allowance or per-GB price in it",
+      "capture": "sha256:cfa41effcf4cbd6c48ffd4f8d1c774a5e148d53cd58ee63096f4bc17d8beb2b4",
+      "quote": "| **Rate** | $0.15 / hour | $0.10 / hour | $0.07 / hour | $0.05 / hour | $0.005 / hour |"
+    },
+    {
+      "url": "https://docs.getsolari.com/api-reference",
+      "date": "2026-11-03",
+      "proved": "a REST HTTP API is documented",
+      "capture": "sha256:f77ce8c5d0fc97013858b054d44e4f3c330f0591f046a2d2ffa3cf25376d22af",
+      "quote": "The raw HTTP surface: every endpoint, every status code, every body shape, callable with `curl` or any HTTP client."
+    },
+    {
+      "url": "https://docs.getsolari.com/languages",
+      "date": "2026-11-03",
+      "proved": "SDKs exist in several languages",
+      "capture": "sha256:b811b079f2992f43de140ed113e6c1bb2d865345627b24ae79d807f939f64274",
+      "quote": "TypeScript and Python are at full parity"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T02:24:18.816Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 43.94,
+    "talaria_m24h_usd": 77.46,
+    "nemo_m10h_usd": 200.0,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "unclassified",
+    "shape": {
+      "vcpu": null,
+      "ram": null,
+      "disk": null,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "a VM adds $0.02 an hour for the live screen and bills per vCPU-hour at $0.0525 on Free"
+    },
+    "session_cap": {
+      "wall_clock_min": 60,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "a hard 1-hour maximum session time on Free, 5 hours on Starter and 24 on Professional"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "recurring-credit",
+    "burst_x": 1.0,
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": {
+      "gib": null,
+      "price": "profiles and replay storage are capped per plan",
+      "durability": "profile and replay",
+      "on_stop": true,
+      "on_destroy": false,
+      "retention": "1 day of replay on Free"
+    },
+    "net": {
+      "out": true,
+      "in": false,
+      "ports": null,
+      "static_ip": false,
+      "ipv6": null,
+      "allowance": "proxies are not available on the free tier"
+    }
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "retention-clamped"
+}

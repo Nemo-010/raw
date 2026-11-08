@@ -1,0 +1,520 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/f-shy/raw/dossier.schema.json",
+  "title": "f-research dossier record",
+  "description": "One provider, one file. The source of truth for every claim in docs/. A document is a view of this record. Validation is structural only: it proves the fields are present and well-formed, not that the numbers are true. Truth is a probe record plus an evidence date.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "topic",
+    "slug",
+    "provider",
+    "url",
+    "category",
+    "free_tier",
+    "per_object_cap",
+    "retention",
+    "egress",
+    "interface",
+    "tooling",
+    "chaining",
+    "limits",
+    "identity_cost",
+    "reliability_note",
+    "confidence",
+    "evidence",
+    "verdict",
+    "verified_at"
+  ],
+  "properties": {
+    "topic": {
+      "description": "The docs/ topic this record belongs to. A typo here orphans the record.",
+      "type": "string",
+      "enum": [
+        "storage",
+        "netdisk-pan",
+        "compute",
+        "coding-subs",
+        "inference",
+        "crawler-scraper",
+        "debrid",
+        "egress",
+        "email",
+        "databases-kv",
+        "domains-dns",
+        "ci-cd-runners",
+        "ip-proxy",
+        "dev-services",
+        "data-apis"
+      ]
+    },
+    "slug": {
+      "description": "Stable join key between dossier, document and history entry. Lowercase, hyphenated.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "minLength": 2,
+      "maxLength": 80
+    },
+    "provider": {
+      "description": "The name a human uses, as the vendor writes it.",
+      "type": "string",
+      "minLength": 1
+    },
+    "url": {
+      "description": "The page the numbers came from. Not a search result, not an aggregator.",
+      "type": "string",
+      "format": "uri"
+    },
+    "category": {
+      "description": "The shape: object storage, drive, registry, sandbox, subscription, broker.",
+      "type": "string",
+      "minLength": 1
+    },
+    "tier": {
+      "description": "The named plan or service tier this record is priced at: 'free', 'pro', 'build', or the vendor's own label. A provider with two materially different tiers is two records, not one, because their limits differ and a reader acts on one.",
+      "type": "string"
+    },
+    "free_tier": {
+      "description": "The headline offer AND the unit it is stated in. Never a bare number.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stated",
+        "unit",
+        "source_url"
+      ],
+      "properties": {
+        "stated": {
+          "description": "The offer verbatim, with its numbers and qualifiers.",
+          "type": "string",
+          "minLength": 1
+        },
+        "unit": {
+          "description": "The unit the offer is denominated in. 'unlimited' is a unit because it is a claim about absence of one.",
+          "type": "string",
+          "enum": [
+            "bytes",
+            "GiB",
+            "TiB",
+            "GB",
+            "TB",
+            "MB",
+            "objects",
+            "requests",
+            "seconds",
+            "minutes",
+            "hours",
+            "core-hours",
+            "gpu-hours",
+            "credits",
+            "tokens",
+            "users",
+            "unlimited",
+            "none",
+            "mixed"
+          ]
+        },
+        "metered_on": {
+          "description": "What the quota is counted against, when that differs from the unit.",
+          "type": "string",
+          "enum": [
+            "stored-bytes",
+            "uploaded-bytes",
+            "downloaded-bytes",
+            "request-count",
+            "object-count",
+            "wall-clock",
+            "identity-count",
+            "none",
+            "unstated"
+          ]
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "read_on": {
+          "description": "The date this page was read. Required to make the number a dated fact rather than a rumour.",
+          "type": "string",
+          "format": "date"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "per_object_cap": {
+      "description": "The largest single object. Separate from the total, always: the biggest caps cluster where retention is shortest.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stated"
+      ],
+      "properties": {
+        "stated": {
+          "description": "The cap as the vendor states it. Prose is accepted; a bare number is not.",
+          "type": "string",
+          "minLength": 1
+        },
+        "bytes": {
+          "description": "The cap in bytes when it is a single hard number; null when it is soft, tiered or unstated.",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "retention": {
+      "description": "How long bytes survive without a touch. Separate from the cap, always.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stated"
+      ],
+      "properties": {
+        "stated": {
+          "description": "Verbatim or near-verbatim. 'Until deleted' and 'unknown' are both valid answers.",
+          "type": "string",
+          "minLength": 1
+        },
+        "days": {
+          "description": "Days before automatic loss; null for indefinite, unknown, or activity-based.",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "egress": {
+      "description": "The terms, plus whether they are metered, capped or free.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "terms",
+        "metered"
+      ],
+      "properties": {
+        "terms": {
+          "description": "What the vendor says about traffic out, with the qualifier that binds.",
+          "type": "string",
+          "minLength": 1
+        },
+        "metered": {
+          "description": "True when traffic out has a price or a quota; false when it is neither.",
+          "type": "boolean"
+        },
+        "free_allowance": {
+          "description": "The included volume before metering starts.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "price_per_tb": {
+          "description": "Marginal price per TB beyond the allowance, in the vendor's currency.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "interface": {
+      "description": "How a client reaches it. Programme access is a hard requirement of this client, so an empty list is a failed record.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "s3",
+          "s3-compatible",
+          "rest",
+          "graphql",
+          "webdav",
+          "sftp",
+          "ftp",
+          "ftps",
+          "scp",
+          "rsync",
+          "smb",
+          "nfs",
+          "ssh",
+          "graph",
+          "oci",
+          "git",
+          "rclone",
+          "cli",
+          "webdav-proxy",
+          "nntp",
+          "unknown"
+        ]
+      }
+    },
+    "interface_detail": {
+      "description": "The vendor's own words about access, when the token list loses a qualifier.",
+      "type": "string"
+    },
+    "endpoint": {
+      "description": "The API endpoint, when there is one. Never a credential.",
+      "type": "string"
+    },
+    "tooling": {
+      "description": "What actually works against it: rclone backend, CLI, SDK, restic, borg.",
+      "type": "string",
+      "minLength": 1
+    },
+    "chaining": {
+      "description": "How this combines with other services into the client's stack. One sentence is enough; empty is a defect.",
+      "type": "string",
+      "minLength": 1
+    },
+    "limits": {
+      "description": "Each binding constraint named from the vocabulary, with its number and source. The headline is almost never the constraint that decides.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "value",
+          "source"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "request-rate",
+              "pull-count",
+              "per-ip-shaping",
+              "per-object-cap",
+              "write-gated",
+              "retention-clamped",
+              "volume-quota"
+            ]
+          },
+          "value": {
+            "description": "The number with its unit: '10 concurrent connections', '750 GB/day'.",
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "description": "The URL or document that establishes it.",
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "limits_note": {
+      "description": "Limit prose that names no vocabulary kind. Kept rather than dropped, and kept separate so the gate can see it is unclassified.",
+      "type": "string"
+    },
+    "binding": {
+      "description": "The one constraint that fails first at this client's scale, named from the same seven-value vocabulary as limits[].kind. METHODOLOGY.md section 4.3 and the definition of done require it on a record whose rung is measured or documented; the schema keeps it optional so a migrated record can land before its author has decided. A record carrying limits[] and no binding has not decided what breaks first.",
+      "type": "string",
+      "enum": [
+        "request-rate",
+        "pull-count",
+        "per-ip-shaping",
+        "per-object-cap",
+        "write-gated",
+        "retention-clamped",
+        "volume-quota",
+        "none"
+      ]
+    },
+    "binding_note": {
+      "description": "Why that kind and not another, in one sentence, when the reasoning is not obvious from limits[].",
+      "type": "string"
+    },
+    "identity_cost": {
+      "description": "What registration costs. The binding constraint on almost every large quota.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "detail"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "anonymous",
+            "email",
+            "any-phone",
+            "country-phone",
+            "national-id",
+            "card",
+            "institution"
+          ]
+        },
+        "detail": {
+          "description": "The evidence for the tier, and any second gate such as a card at signup.",
+          "type": "string",
+          "minLength": 1
+        },
+        "country": {
+          "description": "For country-phone and institution: which country or which institution class.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "reliability_note": {
+      "description": "One line of technical reliability: bans, throttles, data loss, silent re-encoding. No legal caveat, ever.",
+      "type": "string",
+      "minLength": 1
+    },
+    "confidence": {
+      "description": "The weakest rung among the fields that decide the verdict.",
+      "type": "string",
+      "enum": [
+        "measured",
+        "documented",
+        "reported",
+        "inferred",
+        "unverified"
+      ]
+    },
+    "confidence_legacy": {
+      "description": "The seed corpus's own high/medium/low, preserved verbatim when a record was migrated. The two scales are not equivalent; this field keeps the translation auditable.",
+      "type": "string",
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    "confidence_note": {
+      "description": "Why this rung, and what would move it up one.",
+      "type": "string"
+    },
+    "evidence": {
+      "description": "What each source established, not just that it exists.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "url",
+          "date",
+          "proved"
+        ],
+        "properties": {
+          "url": {
+            "description": "The page, or 'probe:<target>' for a measurement we ran.",
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(https?://|probe:)"
+          },
+          "date": {
+            "description": "The date the claim was read or measured, UTC. A number without one is a rumour.",
+            "type": "string",
+            "format": "date"
+          },
+          "proved": {
+            "description": "The specific claim this source supports. 'pricing page' proves nothing.",
+            "type": "string",
+            "minLength": 8
+          },
+          "capture": {
+            "description": "The captured page this row quotes, or for a probe: row the stored probe record: sha256 of its text, stored at sources/c/<first two hex>/<hash>.md.gz (a page) or sources/p/<first two hex>/<hash>.json.gz (a probe record). Required for an http row dated 2026-10-28 or later and a probe: row dated 2026-10-30 or later (scripts/rq check, rule C21).",
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "quote": {
+            "description": "The exact span of the captured page that proves the claim; scripts/rq checks it is in the capture.",
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 600
+          }
+        }
+      }
+    },
+    "verdict": {
+      "description": "'dead' is a finding, not an omission.",
+      "type": "string",
+      "enum": [
+        "qualifies",
+        "qualifies-with-caveat",
+        "fails-egress",
+        "fails-quota",
+        "fails-identity",
+        "trial-only",
+        "paid-only",
+        "dead"
+      ]
+    },
+    "verified_at": {
+      "description": "When the record was last confirmed against the live service. Moves only when somebody actually checked.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "price_per_tb_month": {
+      "description": "The comparable number, in the currency stated, at the tier named.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "stale": {
+      "description": "Computed by scripts/dossier/staleness.py, never written by hand. True when the record is past its class window, its topic window, or its evidence budget, or when verified_at has been moved without the evidence moving with it. A hand-written value is a claim about freshness that the gate will overwrite on its next run.",
+      "type": "boolean"
+    },
+    "stale_checked_at": {
+      "description": "The UTC instant staleness.py last evaluated this record. Written only by the script.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "probe": {
+      "description": "A probe.py record, embedded or referenced, for any claim at the measured rung.",
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "history": {
+      "description": "Links to the history/ entries that changed this record.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "extras": {
+      "description": "Fields migrated from a source that has no canonical home. Nothing is dropped; it is parked here, visibly.",
+      "type": "object"
+    },
+    "self_hosted": {
+      "description": "true when what the record offers is software, or a node, that the user installs, runs and maintains on a machine (owned, rented or free): a server, a daemon, a node, an operator in the user's own cluster, or a client, app, editor or agent whose free part serves nothing itself. The hosted service such software reaches keeps its own record. A record stays hosted when the vendor runs the service its free unit or price is spent on, even when the user runs a client, an endpoint, a routing daemon or their own application code against it: a hosted allocation (address space, a tunnel-broker or relay account), a hosted control plane whose workers the user deploys, or a cluster the vendor spins up in a cloud account the user rents. A remote-control account for software the user runs, with no capacity of its own, is self-hosted. false records a reviewed hosted offer; absent means hosted. A self-hosted record is the last resort: every list puts it after every hosted record, and no list stars it, ranks it first or recommends it. The field does not change the verdict.",
+      "type": "boolean"
+    }
+  }
+}

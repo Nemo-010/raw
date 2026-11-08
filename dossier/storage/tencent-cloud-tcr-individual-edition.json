@@ -1,0 +1,110 @@
+{
+  "topic": "storage",
+  "slug": "tencent-cloud-tcr-individual-edition",
+  "provider": "Tencent Cloud TCR Individual Edition",
+  "url": "https://www.tencentcloud.com/products/tcr",
+  "category": "registry",
+  "free_tier": {
+    "stated": "Free, count-based only: 'The TCR Individual Edition is free of charge and can be activated directly.' Quotas: 'Number of image namespaces in a single region | 10', 'Number of image repositories in a single region | 500 in the Guangzhou region and 100 in other regions', 'Number of image tags for a single image | 100'. No byte quota is published for Individual Edition.",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://www.tencentcloud.com/document/product/1051/37243",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.tencentcloud.com/document/product/1051/37243",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.tencentcloud.com/document/product/1051/37243",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "No per-GB egress charge is documented for Individual Edition; the billing page defines storage and public-network traffic fees only for Enterprise Edition ('The cloud-native artifacts of the TCR Enterprise managed instance ... are stored in your COS bucket. Storage and access fees will apply ... Using the public network to upload and download ... will incur public network traffic fees in COS'). Individual runs on Tencent's shared backend, not your COS bucket. Treat free egress as unverified-but-likely rather than confirmed.",
+    "metered": false
+  },
+  "interface": [
+    "oci",
+    "rclone"
+  ],
+  "interface_detail": "oci",
+  "tooling": "docker/skopeo/ORAS. No TCR-specific rclone backend.",
+  "chaining": "10 namespaces/region x 500 repos (Guangzhou) x N Tencent accounts; tags per image capped at 100, so blob count per repo is bounded but repo count is not.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "20 MB/s",
+      "source": "https://www.tencentcloud.com/document/product/1051/37243"
+    }
+  ],
+  "limits_note": "10 namespaces/region; 500 repos (Guangzhou) or 100 (elsewhere); 100 tags per image; 'Individual Edition instances don't support quota adjustment.' Image size limit '/' (none listed). Pull speed benchmark 20 MB/s.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "'the image repository of TCR Individual Edition is shared with all other public cloud accounts, the images that have been pulled/pushed are blocked in the queue and are not displayed. You can try to push the images again' — i.e. pushes intermittently fail silently under contention.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.tencentcloud.com/document/product/1051/37243",
+      "date": "2026-10-21",
+      "proved": "'free of charge and can be activated directly'; 10 namespaces, 500/100 repos, 100 tags"
+    },
+    {
+      "url": "https://www.tencentcloud.com/document/product/1051/74856",
+      "date": "2026-10-21",
+      "proved": "Individual: no SLA, no dedicated storage backend, no OCI-artifact hosting (Enterprise only)"
+    },
+    {
+      "url": "https://www.tencentcloud.com/document/product/1051/35483",
+      "date": "2026-10-21",
+      "proved": "storage/traffic fees defined only for Enterprise/COS"
+    },
+    {
+      "url": "https://hkccr.ccs.tencentyun.com/v2/library/nginx/manifests/latest",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 401 (token required, Www-Authenticate realm=https://hkccr.ccs.tencentyun.com/service/token); GET /v2/ -> 401"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Free, count-based only: 'The TCR Individual Edition is free of charge and can be activated directly.' Quotas: 'Number of image namespaces in a single region | 10', 'Number of image repositories in a single region | 500 in the Guangzhou region and 100 in other regions', 'Number of image tags for a single image | 100'. No byte quota is published for Individual Edition.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B4-hyperscaler-registries.json",
+    "seed_area": "B/B4",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "B/B4"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "Hyperscaler registries",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Free, count-based only: 'The TCR Individual Edition is free of charge and can be activated directly.' Quotas: 'Number of image namespaces in a single region | 10', 'Number of image repositories in a single region | 500 in the Guangzhou region and 100 in other regions', 'Number of image tags for a single image | 100'. No byte quota is published for Individual Edition.",
+    "limits_verbatim": "10 namespaces/region; 500 repos (Guangzhou) or 100 (elsewhere); 100 tags per image; 'Individual Edition instances don't support quota adjustment.' Image size limit '/' (none listed). Pull speed benchmark 20 MB/s.",
+    "egress_verbatim": "No per-GB egress charge is documented for Individual Edition; the billing page defines storage and public-network traffic fees only for Enterprise Edition ('The cloud-native artifacts of the TCR Enterprise managed instance ... are stored in your COS bucket. Storage and access fees will apply ... Using the public network to upload and download ... will incur public network traffic fees in COS'). Individual runs on Tencent's shared backend, not your COS bucket. Treat free egress as unverified-but-likely rather than confirmed.",
+    "chaining_verbatim": "10 namespaces/region x 500 repos (Guangzhou) x N Tencent accounts; tags per image capped at 100, so blob count per repo is bounded but repo count is not.",
+    "tooling_verbatim": "docker/skopeo/ORAS. No TCR-specific rclone backend.",
+    "interface_verbatim": "oci",
+    "agent_focus": "hyperscaler and mid-tier container registries judged on free storage + free egress; explicit test of whether any hyperscaler gives free public storage AND free internet egress"
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

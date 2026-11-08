@@ -1,0 +1,140 @@
+{
+  "topic": "storage",
+  "slug": "debian-snapshot-archive",
+  "provider": "Debian snapshot archive (snapshot.debian.org)",
+  "url": "https://snapshot.debian.org",
+  "category": "academic",
+  "free_tier": {
+    "stated": "No user storage: snapshot is a read-only archive of the Debian package archives; the site news dated 2024-10-08 says it holds 172 TB.",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://snapshot.debian.org/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://snapshot.debian.org/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://snapshot.debian.org/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free, two sites (Glasklar + LeaseWeb). Netfilter rate limiting was explicitly disabled ('It will be replaced by rate limiting on the HTTP layer').",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "apt with a dated sources.list entry, `debian-snapshot` machine-usable API at /mr/ (e.g. /mr/timestamp/), plain HTTPS. No rclone backend.",
+  "chaining": "None - you cannot add content. Valuable only as a *source* of old Debian packages for a corpus, not as a place to put your data.",
+  "limits": [],
+  "limits_note": "per-object-cap: N/A (read-only). retention: total - every snapshot timestamp from 2005 to present is preserved. request-rate: HTTP-layer rate limiting in place of the old netfilter limit.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "none: an unauthenticated HTTPS GET of /mr/timestamp/ returned HTTP 200; there is no write path to register for.",
+    "country": null
+  },
+  "reliability_note": "Read-only by construction. Included to close the category: Debian's snapshot is a preservation tool, not storage you can use. API verified live.",
+  "confidence": "documented",
+  "confidence_note": "The front page of snapshot.debian.org, re-read on 2026-11-03, says the archive holds 172 TB and describes a read-only history of old Debian packages; the unauthenticated GET of /mr/timestamp/ succeeded on the same date. The free-tier and identity fields cite those rows.",
+  "evidence": [
+    {
+      "url": "https://snapshot.debian.org/",
+      "date": "2026-10-21",
+      "proved": "'Snapshot is currently holding 172TB of data'; 'The Netfilter rate limiting has been disabled ... rate limiting on the HTTP layer'"
+    },
+    {
+      "url": "https://snapshot.debian.org/mr/timestamp/",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200 JSON, debian timestamps from 20050312T000000Z onward"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET /archive/debian/20250101T000000Z/dists/bookworm/Release -> 302 (redirect to a dated snapshot; live)"
+    },
+    {
+      "url": "https://snapshot.debian.org/",
+      "date": "2026-11-03",
+      "proved": "the archive holds 172 TB; it is the service's own archive of Debian packages",
+      "capture": "sha256:fbc25938e59979ae067326f45ea1187aa395af49532a52afc9670127e6f5ee00",
+      "quote": "Snapshot is currently holding 172TB of data."
+    },
+    {
+      "url": "probe:snapshot.debian.org",
+      "date": "2026-11-03",
+      "proved": "an unauthenticated GET of /mr/timestamp/ returned HTTP 200 JSON",
+      "capture": "sha256:c71257fbbb4ee4ffd1db5bda4fea0a2062d6bff280946f8b02854ac5734366c0",
+      "quote": "\"status\": 200"
+    },
+    {
+      "url": "https://snapshot.debian.org/",
+      "date": "2026-11-03",
+      "proved": "request limiting moved to the HTTP layer; no threshold is published",
+      "capture": "sha256:fbc25938e59979ae067326f45ea1187aa395af49532a52afc9670127e6f5ee00",
+      "quote": "The Netfilter rate limiting has been disabled. It will be replaced by rate limiting on the HTTP layer, which should be easier for clients to deal with."
+    },
+    {
+      "url": "https://snapshot.debian.org/",
+      "date": "2026-11-04",
+      "proved": "the archive holds 172 TB of Debian package data",
+      "capture": "sha256:fbc25938e59979ae067326f45ea1187aa395af49532a52afc9670127e6f5ee00",
+      "quote": "Snapshot is currently holding 172TB of data."
+    },
+    {
+      "url": "https://snapshot.debian.org/",
+      "date": "2026-11-04",
+      "proved": "the service is a read-only history of the Debian archive with no upload path described",
+      "capture": "sha256:fbc25938e59979ae067326f45ea1187aa395af49532a52afc9670127e6f5ee00",
+      "quote": "The snapshot archive is a wayback machine that allows access to old packages based on dates and version numbers."
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-11-04T01:24:11.228Z",
+  "notes": "No user quota because there is no user write path - snapshot ingests the Debian archive itself. Scale reference from the site's own news: 'Snapshot is currently holding 172TB of data' (2024-10-08), up from 135 TB (2022) and 24 TB (2014), on 2 x 164 TB RAID6 arrays.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H7-software-archives.json",
+    "seed_area": "H/H7",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "H/H7"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "No user quota because there is no user write path - snapshot ingests the Debian archive itself. Scale reference from the site's own news: 'Snapshot is currently holding 172TB of data' (2024-10-08), up from 135 TB (2022) and 24 TB (2014), on 2 x 164 TB RAID6 arrays.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H7"
+    },
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Software archives",
+    "conversion": "mechanical",
+    "verified_at_basis": "snapshot.debian.org/ (172 TB sentence, rate-limiting news item, archive description) and the /mr/timestamp/ probe were read on 2026-11-03.",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No user quota because there is no user write path - snapshot ingests the Debian archive itself. Scale reference from the site's own news: 'Snapshot is currently holding 172TB of data' (2024-10-08), up from 135 TB (2022) and 24 TB (2014), on 2 x 164 TB RAID6 arrays.",
+    "limits_verbatim": "per-object-cap: N/A (read-only). retention: total - every snapshot timestamp from 2005 to present is preserved. request-rate: HTTP-layer rate limiting in place of the old netfilter limit.",
+    "egress_verbatim": "Free, two sites (Glasklar + LeaseWeb). Netfilter rate limiting was explicitly disabled ('It will be replaced by rate limiting on the HTTP layer').",
+    "chaining_verbatim": "None - you cannot add content. Valuable only as a *source* of old Debian packages for a corpus, not as a place to put your data.",
+    "tooling_verbatim": "apt with a dated sources.list entry, `debian-snapshot` machine-usable API at /mr/ (e.g. /mr/timestamp/), plain HTTPS. No rclone backend.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Software preservation + package-archive mirrors as free bulk storage: which ones accept arbitrary blobs at scale, and what the per-artifact / monthly / retention caps actually are. Sources limited to pages opened in this session; every quota below was read live or from a dated archive capture."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

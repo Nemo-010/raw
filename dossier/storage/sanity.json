@@ -1,0 +1,99 @@
+{
+  "topic": "storage",
+  "slug": "sanity",
+  "provider": "Sanity",
+  "url": "https://www.sanity.io",
+  "category": "paas",
+  "free_tier": {
+    "stated": "100 GB assets + 100 GB bandwidth/month per project; no maximum number of projects per account",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://www.sanity.io/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.sanity.io/pricing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.sanity.io/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "100 GB/month CDN bandwidth included per project, hard cap on Free (no overage purchase). Assets served from cdn.sanity.io with on-the-fly transforms.",
+    "metered": true,
+    "free_allowance": "100 GB per month"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "sanity CLI (`sanity dataset create`, `sanity assets upload`), @sanity/client HTTP API; assets land on cdn.sanity.io with stable public URLs",
+  "chaining": "Account has NO cap on project count ('no maximum limit on the number of projects you can have in a Sanity account' — Sanity's own answers page). Each project = 2 datasets x 100 GB assets. N projects x 200 GB. Multiply the account layer again with separate Google/GitHub logins. This is the single best multiplier in this slot.",
+  "limits": [],
+  "limits_note": "2 datasets per project; 10k documents/project; 100 GB assets and 100 GB bandwidth are HARD caps (Free allows no overage — asset API is blocked at quota); 20 user seats. Bandwidth cap (100 GB/mo) bites before assets for any serving workload.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: GB bandwidth are HARD caps (Free allows no overage — asset API is blocked at quota); 20 user seats. Bandwidth cap (100 GB/mo) bites before assets for any serving workload. paas",
+    "country": null
+  },
+  "reliability_note": "Free projects are hard-capped, not throttled: at 100 GB bandwidth the CDN returns errors until the calendar month resets. Asset URLs are public and permanent; no expiry observed.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.sanity.io/pricing",
+      "date": "2026-10-21",
+      "proved": "'Assets 100GB', 'Bandwidth (per month) 100GB', 'Additional assets — Not included' on Free"
+    },
+    {
+      "url": "https://www.sanity.io/answers/is-there-a-maximum-number-of-projects-i-have-p1599929930432100",
+      "date": "2026-10-21",
+      "proved": "'no maximum limit on the number of projects'"
+    },
+    {
+      "url": "https://cdn.sanity.io/images/3do82whm/next/f21df064721ee7867372278bcbd0de4b512de556-1200x630.png",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200 image/png 990776 bytes; same URL ?w=200&auto=format -> 200 29387 bytes (transforms are free, uncounted as assets)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "100 GB assets + 100 GB bandwidth/month per project; no maximum number of projects per account",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G3-baas-databases.json",
+    "seed_area": "G/G3",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "G/G3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Backend-as-a-service and databases",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "100 GB assets + 100 GB bandwidth/month per project; no maximum number of projects per account",
+    "limits_verbatim": "2 datasets per project; 10k documents/project; 100 GB assets and 100 GB bandwidth are HARD caps (Free allows no overage — asset API is blocked at quota); 20 user seats. Bandwidth cap (100 GB/mo) bites before assets for any serving workload.",
+    "egress_verbatim": "100 GB/month CDN bandwidth included per project, hard cap on Free (no overage purchase). Assets served from cdn.sanity.io with on-the-fly transforms.",
+    "chaining_verbatim": "Account has NO cap on project count ('no maximum limit on the number of projects you can have in a Sanity account' — Sanity's own answers page). Each project = 2 datasets x 100 GB assets. N projects x 200 GB. Multiply the account layer again with separate Google/GitHub logins. This is the single best multiplier in this slot.",
+    "tooling_verbatim": "sanity CLI (`sanity dataset create`, `sanity assets upload`), @sanity/client HTTP API; assets land on cdn.sanity.io with stable public URLs",
+    "interface_verbatim": "rest",
+    "agent_focus": "Backend-as-a-service and database platforms where free storage quota is expressed per PROJECT/DATASET/CLUSTER and the units may multiply with free orgs — plus the headless-CMS class, where assets are CDN-served at no egress cost"
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,182 @@
+{
+  "topic": "storage",
+  "slug": "databricks-free-edition",
+  "provider": "Databricks Free Edition (default storage / Unity Catalog volumes)",
+  "url": "https://docs.databricks.com/aws/en/getting-started/free-edition",
+  "category": "paas",
+  "free_tier": {
+    "stated": "No published byte quota. Free Edition ships 'serverless compute and default storage, so you can immediately start exploring and building' — default storage is 'a fully managed object storage platform' and in serverless workspaces you can 'create additional catalogs in either default storage or in your own cloud object storage'. Quotas are documented for compute, jobs, pipelines, model serving and apps — never for bytes.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.databricks.com/aws/en/getting-started/free-edition-limitations",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.databricks.com/aws/en/getting-started/free-edition-limitations",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.databricks.com/aws/en/getting-started/free-edition-limitations",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Not addressed in the Free Edition docs. Outbound internet is 'restricted to a limited set of trusted domains', which throttles external egress to non-approved hosts.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Unity Catalog volumes via SQL (`CREATE CATALOG ...`) or the Databricks CLI / REST API; no rclone backend. File access requires serverless, Unity-Catalog-enabled compute — 'All interactions with default storage require serverless, Unity Catalog-enabled compute'.",
+  "chaining": "One workspace per signup; the docs do not cap workspaces. Storage is uncapped in the docs but *only reachable through compute*, so the real multiplier is compute quota resets ('your workspace's compute resources will be shut down and unavailable for the rest of the day' on quota exhaustion; data is retained).",
+  "limits": [],
+  "limits_note": "per-object-cap: not documented for default storage — unverified. request-rate: per-account serverless quotas ('Max of 5 concurrent job tasks per account', one SQL warehouse capped at 2X-Small) — this is the binding constraint and it is compute, not storage. retention: 'While your compute will be unavailable, your data and settings will not be deleted'; deleting a managed table/volume keeps files 'to allow for a 7-day recovery window' then purges within 48 hours.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: thout a documented quota but also without a storage-native API — you cannot `PUT` arbitrary bytes without spinning compute, and compute is throttled to 'the rest of the day'. Custom",
+    "country": null
+  },
+  "reliability_note": "Storage without a documented quota but also without a storage-native API — you cannot `PUT` arbitrary bytes without spinning compute, and compute is throttled to 'the rest of the day'. Custom workspace storage locations are unsupported. Realistically a place to park tabular artefacts, not a 20 TiB blob archive.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.databricks.com/aws/en/getting-started/free-edition",
+      "date": "2026-10-21",
+      "proved": "'Your new workspace includes serverless compute and default storage'"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/storage/default-storage",
+      "date": "2026-10-21",
+      "proved": "'Default storage is a fully managed object storage platform'; 'All interactions with default storage require serverless, Unity Catalog-enabled compute'"
+    },
+    {
+      "url": "https://docs.databricks.com/aws/en/getting-started/free-edition-limitations",
+      "date": "2026-10-21",
+      "proved": "(last updated 2026-10-18) — quota table covers compute/jobs/pipelines/serving only; 'Custom workspace storage locations' unsupported"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET docs.databricks.com/aws/en/getting-started/free-edition-limitations -> 200 (read live 2026-10-21)"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No published byte quota. Free Edition ships 'serverless compute and default storage, so you can immediately start exploring and building' — default storage is 'a fully managed object storage platform' and in serverless workspaces you can 'create additional catalogs in either default storage or in your own cloud object storage'. Quotas are documented for compute, jobs, pipelines, model serving and apps — never for bytes.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G7-education-startup-nonprofit.json",
+    "seed_area": "G/G7",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "G/G7"
+      },
+      {
+        "value": "trial-only",
+        "area": "D/D10"
+      }
+    ],
+    "seed_confidence": "medium",
+    "merged_spellings": [
+      "Databricks Free Edition (default storage / Unity Catalog volumes)",
+      "Databricks Free Edition"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area G/G7",
+            "evidence": "quota: No published byte quota. Free Edition ships 'serverless compute and de"
+          },
+          {
+            "value": "trial-only",
+            "source": "table.md row, area D/D10",
+            "evidence": "quota: No published byte quota — deliberately. Free Edition gives managed 'de"
+          }
+        ],
+        "resolution": "trial-only: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area D/D10) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "No published byte quota. Free Edition ships 'serverless compute and de",
+            "source": "table.md row, area G/G7",
+            "evidence": null
+          },
+          {
+            "value": "No published byte quota — deliberately. Free Edition gives managed 'de",
+            "source": "table.md row, area D/D10",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area G/G7)"
+          },
+          {
+            "value": "trial-only",
+            "source": "table.md (area D/D10)"
+          }
+        ],
+        "resolution": "trial-only: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area D/D10) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "No published byte quota. Free Edition ships 'serverless compute and de",
+            "source": "table.md (area G/G7)"
+          },
+          {
+            "value": "No published byte quota — deliberately. Free Edition gives managed 'de",
+            "source": "table.md (area D/D10)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "not-storage",
+      "why": "No published byte quota. Free Edition ships 'serverless compute and default storage, so you can immediately start exploring and building' — default storage is 'a fully managed object storage platform' and in serverless workspaces you can 'create additional catalogs in either default storage or in your own cloud object storage'. Quotas are documented for compute, jobs, pipelines, model serving and apps — never for bytes.",
+      "retry_when": "never; it is not storage",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G7"
+    },
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "Education, startup and nonprofit tenants",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 1,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 1,
+    "quota_verbatim": "No published byte quota. Free Edition ships 'serverless compute and default storage, so you can immediately start exploring and building' — default storage is 'a fully managed object storage platform' and in serverless workspaces you can 'create additional catalogs in either default storage or in your own cloud object storage'. Quotas are documented for compute, jobs, pipelines, model serving and apps — never for bytes.",
+    "limits_verbatim": "per-object-cap: not documented for default storage — unverified. request-rate: per-account serverless quotas ('Max of 5 concurrent job tasks per account', one SQL warehouse capped at 2X-Small) — this is the binding constraint and it is compute, not storage. retention: 'While your compute will be unavailable, your data and settings will not be deleted'; deleting a managed table/volume keeps files 'to allow for a 7-day recovery window' then purges within 48 hours.",
+    "egress_verbatim": "Not addressed in the Free Edition docs. Outbound internet is 'restricted to a limited set of trusted domains', which throttles external egress to non-approved hosts.",
+    "chaining_verbatim": "One workspace per signup; the docs do not cap workspaces. Storage is uncapped in the docs but *only reachable through compute*, so the real multiplier is compute quota resets ('your workspace's compute resources will be shut down and unavailable for the rest of the day' on quota exhaustion; data is retained).",
+    "tooling_verbatim": "Unity Catalog volumes via SQL (`CREATE CATALOG ...`) or the Databricks CLI / REST API; no rclone backend. File access requires serverless, Unity-Catalog-enabled compute — 'All interactions with default storage require serverless, Unity Catalog-enabled compute'.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Programmes that give free storage as a benefit: student / education / nonprofit / startup-benefit bundles. Which ones bundle durable, programmatically-accessible bulk storage, and does it renew?"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

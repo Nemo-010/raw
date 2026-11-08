@@ -1,0 +1,103 @@
+{
+  "topic": "storage",
+  "slug": "self-hosted-synapse-media-repository",
+  "provider": "Self-hosted Synapse media repository",
+  "url": "https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html",
+  "category": "messaging",
+  "free_tier": {
+    "stated": "Unbounded — `max_upload_size` defaults to 50M and can be set to any value; storage and media retention are entirely operator-controlled.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Your own server's bandwidth. Fits the 500 GB/day job if you front it with a free CDN (Cloudflare caches media aggressively if you allow it).",
+    "metered": false
+  },
+  "interface": [
+    "s3",
+    "rest",
+    "webdav",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Synapse (Python) or Dendrite/Conduit; standard Matrix media API so rclone's `s3`/`webdav`-adjacent tooling plus any Matrix SDK works. Admin media API allows listing and purging media per user/room.",
+  "chaining": "Not a free provider — the multiplier angle is that media is content-addressed and deduplicated by Synapse, and federation lets you push copies to other homeservers as a second replica.",
+  "limits": [],
+  "limits_note": "`max_upload_size` default 50M; reverse proxy must be raised too (nginx default body size bites first). `media_retention.local_media_lifetime` / `remote_media_lifetime` can silently delete anything not accessed within the window.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: — enabling media_retention turns the repo into a TTL cache. Federation media cache is the first thing purged. Not a free provider — the multiplier angle is that media is content-addressed an",
+    "country": null
+  },
+  "reliability_note": "Default installs are safe; the risk is operator misconfiguration — enabling media_retention turns the repo into a TTL cache. Federation media cache is the first thing purged.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html",
+      "date": "2026-10-21",
+      "proved": "'max_upload_size — The largest allowed upload size in bytes... Defaults to 50M.'"
+    },
+    {
+      "url": "https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html",
+      "date": "2026-10-21",
+      "proved": "'media_retention ... control whether media will be purged if it has not been accessed in a given amount of time'"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Unbounded — `max_upload_size` defaults to 50M and can be set to any value; storage and media retention are entirely operator-controlled.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F2-discord-chat-cdn.json",
+    "seed_area": "F/F2",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "F/F2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "retention",
+      "why": "Unbounded — `max_upload_size` defaults to 50M and can be set to any value; storage and media retention are entirely operator-controlled.",
+      "retry_when": "if the retention model changes from a clock to indefinite",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F2"
+    },
+    "target_document": "docs/storage/free/messaging.md",
+    "document_section": "Discord and chat CDNs",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Unbounded — `max_upload_size` defaults to 50M and can be set to any value; storage and media retention are entirely operator-controlled.",
+    "limits_verbatim": "`max_upload_size` default 50M; reverse proxy must be raised too (nginx default body size bites first). `media_retention.local_media_lifetime` / `remote_media_lifetime` can silently delete anything not accessed within the window.",
+    "egress_verbatim": "Your own server's bandwidth. Fits the 500 GB/day job if you front it with a free CDN (Cloudflare caches media aggressively if you allow it).",
+    "chaining_verbatim": "Not a free provider — the multiplier angle is that media is content-addressed and deduplicated by Synapse, and federation lets you push copies to other homeservers as a second replica.",
+    "tooling_verbatim": "Synapse (Python) or Dendrite/Conduit; standard Matrix media API so rclone's `s3`/`webdav`-adjacent tooling plus any Matrix SDK works. Admin media API allows listing and purging media per user/room.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Discord and gaming/chat platforms' CDNs as storage: per-file caps, attachment-URL permanence, bot automation paths, and the server/channel/account multiplier"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "self_hosted": true
+}

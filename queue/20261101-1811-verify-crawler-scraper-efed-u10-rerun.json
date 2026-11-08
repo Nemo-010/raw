@@ -1,0 +1,16 @@
+{
+ "id": "20261101-1811-verify-crawler-scraper-efed-u10-rerun",
+ "kind": "verify",
+ "topic": "crawler-scraper",
+ "question": "The Tavily keyless cap and the 600-second hold need a POST probe of https://api.tavily.com/search with the X-Tavily-Access-Mode: keyless header: can the parent run one?\nAn audit of the first attempt judged these claims unsupported by their sources; settle each one first:\n- crawler-scraper/tavily-keyless $.limits[1]: The page backs the hourly cap: hourly_cap_reached after about 30 calls, 72 s (107 in a rerun) and no published number. It says nothing of a daily cap or daily_cap_reached, but the row names it as source. That clause is in github.com/NousResearch/hermes-agent/issues/96185 (sha256:a2abafd4b4ab).\n- crawler-scraper/tavily-keyless $.notes: The page gives error.code and a Retry-After header of 72 s (107 in a rerun). It names no window field and no retry_after_seconds field. Those names are in the tavily-python README (sha256:92453973b839), not in this source.\n- crawler-scraper/tavily-keyless $.tooling: The Python README backs only the Python part: TavilyClient() keyless, search and extract only, TavilyKeylessLimitError. It names no JavaScript SDK, no X-Tavily-Access-Mode header and no MCP. Those are in the tavily-js README (sha256:4a990726de31) and the keyless docs (sha256:51e64d142b0e).\n- crawler-scraper/tavily-keyless $.reliability_note: The page backs the hourly cap after about 30 calls, the keyless /crawl 404 unsupported_endpoint, and /map and /research needing a key. It says nothing of a daily cap or daily_cap_reached. That clause is in github.com/NousResearch/hermes-agent/issues/96185 (sha256:a2abafd4b4ab).",
+ "scope": {
+  "rids": [
+   "crawler-scraper/tavily-keyless"
+  ]
+ },
+ "origin": "audit u28 of 20261101-1811-verify-crawler-scraper-efed/u10 failed: 4 of 8 unsupported",
+ "created": "2026-11-02T10:24:43Z",
+ "queue_files": [
+  "queue/20261030-1045-expand-crawler-scraper-47c4-u03-q03.json"
+ ]
+}

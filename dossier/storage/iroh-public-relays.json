@@ -1,0 +1,159 @@
+{
+  "topic": "storage",
+  "slug": "iroh-public-relays",
+  "provider": "iroh public relays (n0.computer)",
+  "url": "https://docs.iroh.computer/iroh-services/relays/public",
+  "category": "relay/P2P — SIGNALLING with encrypted fallback transport",
+  "free_tier": {
+    "stated": "No storage. Free, no account, no card. Public relays are rate-limited per connection but the rate limits are deliberately unpublished. The paid Shared tier is the only one with published figures: 100 GB relayed egress/month then $0.09/GB, 5 MB/s, 10,000 concurrent connections.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.iroh.computer/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.iroh.computer/pricing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.iroh.computer/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free public relays, rate-limited. Self-hosting a relay is free and unlimited (open licence) — the cost moves to your own bandwidth.",
+    "metered": false
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "QUIC over TLS 1.3; Rust crate `iroh`, bindings for other languages",
+  "tooling": "`iroh` crate; relay is a library, not a service with an upload endpoint",
+  "chaining": "This is SIGNALLING, not relaying, in the normal case: 'roughly 9 out of 10 connections go direct; the relay is only a fallback'. The relay carries bytes only when hole punching fails, which is what makes the free tier viable at all.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "5 MB/s",
+      "source": "https://www.iroh.computer/pricing"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "10,000 concurrent connections",
+      "source": "https://www.iroh.computer/pricing"
+    }
+  ],
+  "limits_note": "Not a storage provider. Only relayed bytes hit the operator, hence the per-connection rate limit rather than a byte quota.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "anonymous",
+    "country": null
+  },
+  "reliability_note": "'The exact rate limits aren't published today, as they get tuned as needed' and 'Do not rely on it for production workloads' — the free tier is explicitly capacity-unstable by design.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.iroh.computer/about/faq",
+      "date": "2026-10-21",
+      "proved": "'In practice, roughly 9 out of 10 connections go direct; the relay is only a fallback'; relays are stateless and cannot read traffic (QUIC/TLS 1.3)"
+    },
+    {
+      "url": "https://docs.iroh.computer/relays/rate-limiting",
+      "date": "2026-10-21",
+      "proved": "'The exact rate limits aren't published today, as they get tuned as needed ... applied per connection'; 'Do not rely on it for production workloads'"
+    },
+    {
+      "url": "https://www.iroh.computer/pricing",
+      "date": "2026-10-21",
+      "proved": "Free: 'Rate limited' / 'Variable'; Pro $19/mo: 10,000 connections, shared relays, 5 MB/s; Dedicated $199/mo/region: unlimited"
+    },
+    {
+      "url": "https://docs.iroh.computer/iroh-services/relays/shared",
+      "date": "2026-10-21",
+      "proved": "'100 GB of relay egress per month, then $0.09/GB'; 'A 5 MB/s rate limit'"
+    },
+    {
+      "url": "https://www.iroh.computer/blog/shared-relays",
+      "date": "2026-10-21",
+      "proved": "worked example: 2,000 users x 10 GB/mo; 'if 98% of the traffic could travel directly ... only the remaining 2% (400 GB) would pass through'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No storage. Free, no account, no card. Public relays are rate-limited per connection but the rate limits are deliberately unpublished. The paid Shared tier is the only one with published figures: 100 GB relayed egress/month then $0.09/GB, 5 MB/s, 10,000 concurrent connections.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D11-dataverse-and-dspace-sweep.json",
+    "seed_area": "D/D11",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D11"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "E/E16"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "iroh public relays (n0.computer)",
+      "iroh public relays (n0.computer) — signalling with relay fallback"
+    ],
+    "conflicts": [
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "No storage. Free, no account, no card. Public relays are rate-limited",
+            "source": "table.md row, area D/D11",
+            "evidence": null
+          },
+          {
+            "value": "No byte quota on the free public relays, but a per-connection token bu",
+            "source": "table.md row, area E/E16",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "No storage. Free, no account, no card. Public relays are rate-limited",
+            "source": "table.md (area D/D11)"
+          },
+          {
+            "value": "No byte quota on the free public relays, but a per-connection token bu",
+            "source": "table.md (area E/E16)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/free/academic-identity.md",
+    "document_section": "The Dataverse and DSpace sweep",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No storage. Free, no account, no card. Public relays are rate-limited per connection but the rate limits are deliberately unpublished. The paid Shared tier is the only one with published figures: 100 GB relayed egress/month then $0.09/GB, 5 MB/s, 10,000 concurrent connections.",
+    "limits_verbatim": "Not a storage provider. Only relayed bytes hit the operator, hence the per-connection rate limit rather than a byte quota.",
+    "egress_verbatim": "Free public relays, rate-limited. Self-hosting a relay is free and unlimited (open licence) — the cost moves to your own bandwidth.",
+    "chaining_verbatim": "This is SIGNALLING, not relaying, in the normal case: 'roughly 9 out of 10 connections go direct; the relay is only a fallback'. The relay carries bytes only when hole punching fails, which is what makes the free tier viable at all.",
+    "identity_verbatim": "anonymous",
+    "tooling_verbatim": "`iroh` crate; relay is a library, not a service with an upload endpoint",
+    "interface_verbatim": "QUIC over TLS 1.3; Rust crate `iroh`, bindings for other languages",
+    "agent_focus": "Systematic sweep of self-hosted academic repository software (Dataverse, DSpace, InvenioRDM, EPrints, Fedora/Islandora) scored on the four client questions: institutional-email requirement, per-file cap, per-collection/dataset cap, and whether the install enforces a quota object at all. Primary method was machine probing, not page reading: /api/info/version and /api/dataverses/:root/storage/quota?showInherited=true against the full official Dataverse installation registry (150 hostnames), the native-signup form probe /dataverseuser.xhtml?editMode=CREATE against all 83 no-quota hosts, and the platform source defaults read out of the upstream config files for DSpace, InvenioRDM, EPrints, libp2p and iroh. Secondary coverage of the relay/P2P half of the slot."
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

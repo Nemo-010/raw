@@ -1,0 +1,156 @@
+{
+  "topic": "compute",
+  "slug": "windmill",
+  "provider": "Windmill",
+  "url": "https://www.windmill.dev/pricing",
+  "category": "platform host",
+  "free_tier": {
+    "stated": "Free and open source at USD 0 a month with unlimited executions when self-hosted; Enterprise Self-Host from USD 120 a month. The hosted Community plan is dev-services/windmill-cloud",
+    "unit": "unlimited",
+    "metered_on": "request-count",
+    "source_url": "https://www.windmill.dev/pricing",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://www.windmill.dev/pricing",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://www.windmill.dev/pricing",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "not published: the pricing page and the CLI docs state no egress term; for the self-hosted software egress is set by the machine that runs it",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.windmill.dev/pricing"
+  },
+  "interface": [
+    "cli",
+    "rest"
+  ],
+  "interface_detail": "wmill CLI (list, get, new, sync); REST API described by an OpenAPI document linked from the pricing page; no SSH or SDK read",
+  "tooling": "the user installs and runs the Windmill server and worker containers and a Postgres database, with Docker Compose on one machine or the Helm chart on Kubernetes, on a rented or free machine",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "'Unlimited executions' on the self-hosted open-source tier; Enterprise Self-Host from $120/mo",
+      "source": "https://www.windmill.dev/pricing"
+    }
+  ],
+  "limits_note": "The free self-hosted edition caps an instance at 3 workspaces, 50 users, 10 users with SSO, a 10 GiB workspace object storage quota, job run details kept up to 30 days and 100 trigger emails a day; executions are unlimited.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "No account with Windmill is needed: the documented install downloads docker-compose.yml, Caddyfile and .env from raw.githubusercontent.com and runs docker compose up, and the first login is on the user's own instance.",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the pricing page was read on 2026-10-22. 'Unlimited executions' is a claim about a missing limit, so it is recorded as the unit unlimited and not multiplied into a capacity figure",
+  "evidence": [
+    {
+      "url": "https://www.windmill.dev/pricing",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://www.windmill.dev/pricing",
+      "date": "2026-10-22",
+      "proved": "'Free and Open-source · from$0/mo · Unlimited executions', quoted"
+    },
+    {
+      "url": "https://www.windmill.dev/docs/misc/plans_details",
+      "date": "2026-10-29",
+      "proved": "self-hosted Windmill is free and open source with unlimited executions; Enterprise Self-Host starts from a trial portal; the cloud plans are Community, Team and Enterprise",
+      "capture": "sha256:f052fbcce4a7104913b2835723336a76f878d89b8c2e7cbf79b2b907d1ded8a9",
+      "quote": "Windmill is free and open source. If self-hosted, the number of executions will be unlimited."
+    },
+    {
+      "url": "https://www.windmill.dev/docs/misc/plans_details",
+      "date": "2026-10-31",
+      "proved": "self-hosted Windmill is free and open source with unlimited executions",
+      "capture": "sha256:c3a4dd5e49ac84d8e100da83ec762ceeccca4e669e7fa2b7911f5df7de1747e2",
+      "quote": "Windmill is free and open source. If self-hosted, the number of executions will be unlimited."
+    },
+    {
+      "url": "https://www.windmill.dev/docs/advanced/self_host",
+      "date": "2026-10-31",
+      "proved": "the documented install downloads the compose file from a public URL with no sign-in step",
+      "capture": "sha256:a6ad104d25553048396563623ef97ef9e44fe6ef41803884f6ce4a4b76bd0847",
+      "quote": "curl https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml -o docker-compose.yml"
+    },
+    {
+      "url": "https://www.windmill.dev/docs/advanced/self_host",
+      "date": "2026-10-31",
+      "proved": "the first login after the install is on the user's own instance",
+      "capture": "sha256:a6ad104d25553048396563623ef97ef9e44fe6ef41803884f6ce4a4b76bd0847",
+      "quote": "Go to [http://localhost](http://localhost/) et voilà. Then you can login for the first time."
+    },
+    {
+      "url": "https://www.windmill.dev/docs/advanced/self_host",
+      "date": "2026-10-31",
+      "proved": "the self-hosted edition runs with Docker Compose on one instance or the Helm chart on Kubernetes",
+      "capture": "sha256:a6ad104d25553048396563623ef97ef9e44fe6ef41803884f6ce4a4b76bd0847",
+      "quote": "For small setups, use Docker and Docker Compose on a single instance. For larger and production use-cases, use our Helm chart to deploy on Kubernetes."
+    },
+    {
+      "url": "https://www.windmill.dev/pricing",
+      "date": "2026-10-31",
+      "proved": "the free open-source tier has unlimited executions",
+      "capture": "sha256:7eb2ec23a2f01097084bd80845847348ddab49259ac06dd0579b8b83ab2466c8",
+      "quote": "Unlimited executions."
+    },
+    {
+      "url": "https://www.windmill.dev/pricing",
+      "date": "2026-10-31",
+      "proved": "the free self-hosted tier caps email triggers at 100 emails a day, beside its other caps in the feature table",
+      "capture": "sha256:7eb2ec23a2f01097084bd80845847348ddab49259ac06dd0579b8b83ab2466c8",
+      "quote": "Max 100 emails per day"
+    },
+    {
+      "url": "https://www.windmill.dev/docs/advanced/cli",
+      "date": "2026-11-03",
+      "proved": "a CLI exists",
+      "capture": "sha256:93f0691df249fe56ded7c6816254898958131393a8f7a384b6a3fb90f7d0767b",
+      "quote": "The Windmill CLI, `wmill` allows you to interact with Windmill instances right from your terminal."
+    },
+    {
+      "url": "https://www.windmill.dev/pricing",
+      "date": "2026-11-03",
+      "proved": "the page links the OpenAPI document of the REST API",
+      "capture": "sha256:128a2edd1c4f00dfc325723587306f41598bda532b667fc1507ec5aa0f3de2c9",
+      "quote": "[OpenAPI](https://app.windmill.dev/openapi.html#/)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T02:24:26.168Z",
+  "price_per_tb_month": null,
+  "notes": "The hosted Community plan that Windmill runs is dev-services/windmill-cloud (also recorded as compute/windmill-cloud) and comes first. This record is no duplicate of it and stays: it is the open-source edition that the user installs and runs, with unlimited executions on the user's own instance, and it is the last resort.",
+  "extras": {
+    "seed_status": "no-rate",
+    "talaria_m10h_usd": null,
+    "talaria_m24h_usd": null,
+    "nemo_m10h_usd": null,
+    "keep_rate": null,
+    "keep_rate_basis": "no field in the source",
+    "billing_model": "unclassified",
+    "shape": null,
+    "session_cap": null,
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "allowance",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22"
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "none",
+  "self_hosted": true,
+  "binding_note": "Executions are unlimited when self-hosted, so no vendor cap binds a single user's jobs; the machine the user runs the instance on bounds throughput."
+}

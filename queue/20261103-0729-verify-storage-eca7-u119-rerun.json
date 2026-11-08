@@ -1,0 +1,18 @@
+{
+ "id": "20261103-0729-verify-storage-eca7-u119-rerun",
+ "kind": "verify",
+ "topic": "storage",
+ "question": "This run re-read these records and moved verified_at to 2026-11-03, adding evidence rows of that date with captures, but each still carries a confidence_note that says the pass did not re-check it (or that no page was read) and an extras.verified_at_basis that says it was not re-checked against the live service. Rewrite confidence_note and extras.verified_at_basis on each record to say what this pass read (the pages of its 2026-11-03 evidence rows, by URL), and raise confidence one rung only where every field that decides the verdict now cites a vendor capture. Read the record's own captures; change nothing else.\nAn audit of the first attempt judged these claims unsupported by their sources; settle each one first:\n- storage/utho-object-storage $.confidence_note: the claim says the monthly price and the per-GB overage are absent from the captures, but the pricing capture (re-read 2026-11-04, same sha256) states 'Starts at ₹500/ month', 'Includes 100 GB of storage' and '+ ₹4/ GB / month above 100 GB'; the 100 GB, 'Free bandwidth included' and 'No egress fees \n- storage/utho-object-storage $.extras.verified_at_basis: the claim says the monthly price and per-GB rate were not found in the captured text; the capture states 'Starts at ₹500/ month' and 'Flat ₹4/GB beyond the base'\n- storage/vercel-blob-2 $.confidence_note: the claim says the Hobby storage allowance is absent from the capture, but the pricing table (re-read 2026-11-04, same sha256) gives Hobby Blob Storage Size '1GB/month'; the 10 GB data transfer, the block on exceeding limits and $0.05/GB in iad1 are correct\n- storage/vercel-blob-2 $.extras.verified_at_basis: the claim says the Hobby storage allowance was not found; the capture's pricing table gives Hobby Blob Storage Size 1GB/month\n- storage/vikingfile $.confidence: the evidence is vikingfile.com itself, a first-party page read in the run, which is the documented rung (METHODOLOGY 3, table); reported is the rung for a third-party source, and no third-party source is cited. The values are on the page; the class should be documented\n- storage/zrok $.confidence_note: the claim says the share backend count is absent from the captures, but the pricing capture lists '50 Share Backends (Ephemeral or Reserved)' on the Free plan; '5 Daily GB' and the service-limits text (shares disabled past daily bandwidth, rolling 24-hour window) are correct. A fresh read on 2026-11",
+ "scope": {
+  "rids": [
+   "storage/utho-object-storage",
+   "storage/vercel-blob-2",
+   "storage/vikingfile",
+   "storage/x0-at",
+   "storage/xirsys-free",
+   "storage/zrok"
+  ]
+ },
+ "origin": "audit u138 of 20261103-0729-verify-storage-eca7/u119 failed: 6 of 16 unsupported",
+ "created": "2026-11-04T02:01:20Z"
+}

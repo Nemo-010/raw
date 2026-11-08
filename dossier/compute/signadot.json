@@ -1,0 +1,132 @@
+{
+  "topic": "compute",
+  "slug": "signadot",
+  "provider": "Signadot",
+  "url": "https://www.signadot.com/",
+  "category": "dev environment",
+  "free_tier": {
+    "stated": "ephemeral environments that share the client's own cluster, so hundreds fit on one; the changed code joins an existing environment rather than standing up a copy",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://www.signadot.com/",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://www.signadot.com/",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://www.signadot.com/",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "not published: https://www.signadot.com/pricing and https://www.signadot.com/ state no egress allowance or overage price; billing is by sandboxes, test invocations and concurrent devboxes",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.signadot.com/"
+  },
+  "interface": [
+    "cli",
+    "rest"
+  ],
+  "interface_detail": "Signadot CLI and API (the dashboard and API are hosted by the vendor; the operator runs in the user's Kubernetes cluster), plus an MCP server shipped with the CLI",
+  "tooling": "not stated in the source card",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "hundreds of ephemeral environments share one cluster; the page states no numeric cap",
+      "source": "https://www.signadot.com/"
+    },
+    {
+      "kind": "write-gated",
+      "value": "the product is a control plane over the client's own cluster, so there is no hosted compute",
+      "source": "https://www.signadot.com/"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field; excluded as no-rate",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the site was read on 2026-10-22 and describes the shared-cluster model precisely. The free tier's existence is a claim about a plan, and the page says a free Starter plan exists but does not price it here",
+  "evidence": [
+    {
+      "url": "https://www.signadot.com/",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://www.signadot.com/",
+      "date": "2026-10-22",
+      "proved": "'A Signadot ephemeral environment starts in seconds and costs a fraction of a full copy, yet behaves like an entire environment, with real services, data and queues. Hundreds share one cluster.' and 'Through the CLI or the MCP server, the changed code joins an ephemeral environment in your cluster', quoted"
+    },
+    {
+      "url": "https://www.signadot.com/pricing",
+      "date": "2026-11-03",
+      "proved": "the pricing page meters sandboxes, devboxes and test invocations and lists no egress allowance or overage line",
+      "capture": "sha256:74ac027c589548333371b579384eb79ef10138b6783437d6c9257ae8c2279c05",
+      "quote": "Pricing is a la carte, so you can buy more sandboxes, concurrent devboxes and Test Invocations."
+    },
+    {
+      "url": "https://www.signadot.com/",
+      "date": "2026-11-03",
+      "proved": "a CLI and an API exist",
+      "capture": "sha256:fda769404ed2768dd95f3e520ab4973c08d898903068f25a4cf3e66e2593b551",
+      "quote": "called a Sandbox in the Signadot CLI and API"
+    },
+    {
+      "url": "https://www.signadot.com/",
+      "date": "2026-11-03",
+      "proved": "an MCP server exists",
+      "capture": "sha256:fda769404ed2768dd95f3e520ab4973c08d898903068f25a4cf3e66e2593b551",
+      "quote": "The [Signadot MCP server](https://www.signadot.com/docs/integrations/mcp) connects coding agents to your Kubernetes clusters through the Model Context Protocol."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T05:24:18.387Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "no-rate",
+    "talaria_m10h_usd": null,
+    "talaria_m24h_usd": null,
+    "nemo_m10h_usd": null,
+    "keep_rate": null,
+    "keep_rate_basis": "no field in the source",
+    "billing_model": "unclassified",
+    "shape": null,
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "an environment is created on the first push and deleted when the pull request closes"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "allowance",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": {
+      "gib": null,
+      "price": "the client's own cluster storage",
+      "durability": "the client's own cluster",
+      "on_stop": true,
+      "on_destroy": false,
+      "max_retention": "the pull request's life"
+    },
+    "net": null
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "write-gated",
+  "self_hosted": true
+}

@@ -1,0 +1,104 @@
+{
+  "topic": "storage",
+  "slug": "paste-rs",
+  "provider": "paste.rs",
+  "url": "https://paste.rs",
+  "category": "anonymous-dump",
+  "free_tier": {
+    "stated": "393,216 bytes per paste (measured). 373,336 chars -> 201 Created; 426,668 chars -> 206 Partial Content with 393,216 bytes stored.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://paste.rs/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://paste.rs/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://paste.rs/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "free direct GET, plain text, no metering.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "curl --data-binary @file https://paste.rs/ returns the URL on stdout; DELETE /<id> works; documented shell function for .bashrc. No wrapper ecosystem needed.",
+  "chaining": "unlimited pastes x 384 KiB. 1 TiB = ~2.7M pastes. Only useful if an encoder pipeline is allowed to fan out aggressively; otherwise a control-plane store.",
+  "limits": [],
+  "limits_note": "393,216 bytes hard; 'Pasting is heavily rate limited' (explicit in docs, no numeric limit published); no expiry documented; DELETE requires only the URL.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ished); no expiry documented; DELETE requires only the URL. anonymous-dump",
+    "country": null
+  },
+  "reliability_note": "Silent truncation: it returns 206 Partial Content rather than an error, so a naive client will believe the full object was stored. Docs also state pasting is heavily rate limited.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://paste.rs/",
+      "date": "2026-10-21",
+      "proved": "'If the response is 206 (PARTIAL), then the paste exceeded the server's maximum upload size ... Pasting is heavily rate limited'"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: POST 373,336 bytes -> 201; POST 426,668 bytes -> 206; GET the 206 result -> 393,216 bytes stored"
+    },
+    {
+      "url": "https://paste.rs/<id>",
+      "date": "2026-10-21",
+      "proved": "probe: POST 5,000-byte payload -> 201 (round trip confirmed with matching body)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "393,216 bytes per paste (measured). 373,336 chars -> 201 Created; 426,668 chars -> 206 Partial Content with 393,216 bytes stored.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E5-pastebins.json",
+    "seed_area": "E/E5",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "E/E5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "393,216 bytes per paste (measured). 373,336 chars -> 201 Created; 426,668 chars -> 206 Partial Content with 393,216 bytes stored.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E5"
+    },
+    "target_document": "docs/storage/free/transfer-services.md",
+    "document_section": "Pastebins",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "393,216 bytes per paste (measured). 373,336 chars -> 201 Created; 426,668 chars -> 206 Partial Content with 393,216 bytes stored.",
+    "limits_verbatim": "393,216 bytes hard; 'Pasting is heavily rate limited' (explicit in docs, no numeric limit published); no expiry documented; DELETE requires only the URL.",
+    "egress_verbatim": "free direct GET, plain text, no metering.",
+    "chaining_verbatim": "unlimited pastes x 384 KiB. 1 TiB = ~2.7M pastes. Only useful if an encoder pipeline is allowed to fan out aggressively; otherwise a control-plane store.",
+    "tooling_verbatim": "curl --data-binary @file https://paste.rs/ returns the URL on stdout; DELETE /<id> works; documented shell function for .bashrc. No wrapper ecosystem needed.",
+    "interface_verbatim": "rest",
+    "agent_focus": "pastebins and text dumps as storage: pastebin, hastebin, ghostbin, rentry, dpaste, privatebin, GitHub Gist, GitLab snippets, pastes.io, controlc, termbin, plus binary-to-text encoders"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

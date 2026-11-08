@@ -1,0 +1,107 @@
+{
+  "topic": "storage",
+  "slug": "lark-starter-free-plan",
+  "provider": "Lark (Feishu) Starter - free plan",
+  "url": "https://www.larksuite.com",
+  "category": "paas",
+  "free_tier": {
+    "stated": "100 GB total storage per organization on Starter (Free); 250 MB single-file limit for Docs uploads on Starter",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.larksuite.com/hc/en-US/articles/497171699982-overview-of-lark-plans",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "250 MB per file",
+    "bytes": 250000000,
+    "source_url": "https://www.larksuite.com/hc/en-US/articles/497171699982-overview-of-lark-plans",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.larksuite.com/hc/en-US/articles/497171699982-overview-of-lark-plans",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Downloads served from Lark CDN (ByteDance edge) at no metered charge; download via OpenAPI media download returns a signed URL, no per-GB line item anywhere in the plan table",
+    "metered": true
+  },
+  "interface": [
+    "rest",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Official OpenAPI v3 drive endpoints (upload_all for <=20MB, multipart upload of 4MB chunks above that) + first-party CLI larksuite/cli (17,762 stars, pushed 2026-10-21) with `lark-cli drive +upload`; no rclone backend",
+  "chaining": "100 GB x N free organizations. Starter is self-serve per organization and the quota is per-org, not per-user, so N disposable orgs = N x 100 GB. Paid Basic (5 TB) shows the ceiling is only billing, not architecture.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "250 MB per file",
+      "source": "https://www.larksuite.com/hc/en-US/articles/497171699982-overview-of-lark-plans"
+    }
+  ],
+  "limits_note": "250 MB per file for Docs on Starter (vs 50 GB on Pro); upload_all hard-caps at 20 MB by design, must use multipart; 5 QPS on upload_all; 4 MB fixed chunk size on multipart; upload transaction ID valid 1 day for resume",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Rate limits are explicit (5 QPS on single upload) and multipart is resumable, but Starter orgs that lapse back from a paid plan are force-collapsed to Starter member and storage caps - data above 100 GB becomes unwritable, not deleted.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.larksuite.com/hc/en-US/articles/497171699982-overview-of-lark-plans",
+      "date": "2026-10-21",
+      "proved": "table row: 'Total storage space | 100 GB | 5 TB | 15 TB | 15 TB + 30 GB x purchased seats'; 'Single file upload limit for Docs | 250 MB'"
+    },
+    {
+      "url": "https://open.larksuite.com/document/uAjLw4CM/ukTMukTMukTM/reference/drive-v1/file/upload_all",
+      "date": "2026-10-21",
+      "proved": "'please do not use this interface to upload files larger than 20MB... use the multipart upload interface', supports 5QPS"
+    },
+    {
+      "url": "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal",
+      "date": "2026-10-21",
+      "proved": "probe: POST (via fetch.web.pkgforge.dev) -> HTTP 200 {\"code\":10003,\"data\":{},\"msg\":\"invalid param\"} - endpoint live and anonymously reachable"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "100 GB total storage per organization on Starter (Free); 250 MB single-file limit for Docs uploads on Starter",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F3-team-chat.json",
+    "seed_area": "F/F3",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "F/F3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/messaging.md",
+    "document_section": "Team chat",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "100 GB total storage per organization on Starter (Free); 250 MB single-file limit for Docs uploads on Starter",
+    "limits_verbatim": "250 MB per file for Docs on Starter (vs 50 GB on Pro); upload_all hard-caps at 20 MB by design, must use multipart; 5 QPS on upload_all; 4 MB fixed chunk size on multipart; upload transaction ID valid 1 day for resume",
+    "egress_verbatim": "Downloads served from Lark CDN (ByteDance edge) at no metered charge; download via OpenAPI media download returns a signed URL, no per-GB line item anywhere in the plan table",
+    "chaining_verbatim": "100 GB x N free organizations. Starter is self-serve per organization and the quota is per-org, not per-user, so N disposable orgs = N x 100 GB. Paid Basic (5 TB) shows the ceiling is only billing, not architecture.",
+    "tooling_verbatim": "Official OpenAPI v3 drive endpoints (upload_all for <=20MB, multipart upload of 4MB chunks above that) + first-party CLI larksuite/cli (17,762 stars, pushed 2026-10-21) with `lark-cli drive +upload`; no rclone backend",
+    "interface_verbatim": "rest",
+    "agent_focus": "Team collaboration suites: Slack free (files, retention), Microsoft Teams, Mattermost, Rocket.Chat, Zulip, Twist, Discourse, Basecamp, ClickUp, Notion, Coda, Airtable attachments"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

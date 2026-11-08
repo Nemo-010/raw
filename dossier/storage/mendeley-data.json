@@ -1,0 +1,187 @@
+{
+  "topic": "storage",
+  "slug": "mendeley-data",
+  "provider": "Mendeley Data (Elsevier)",
+  "url": "https://data.mendeley.com",
+  "category": "academic",
+  "free_tier": {
+    "stated": "10 GB per dataset, free, unlimited datasets per account ('you can split your datasets into small sizes'; 'we can reference datasets within datasets'). Institutional Digital Commons Data raises this to 100 GB/dataset.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://www.elsevier.support/mendeley/answer/what-can-i-do-when-my-dataset-exceeds-the-10gb-per-dataset-limit",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap: 10 GB",
+    "bytes": 10000000000,
+    "source_url": "https://www.elsevier.support/mendeley/answer/what-can-i-do-when-my-dataset-exceeds-the-10gb-per-dataset-limit",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "| Published datasets cannot be edited or deleted (versioning only) — a write-once archive, not a mutable store",
+    "source_url": "https://www.elsevier.support/mendeley/answer/what-can-i-do-when-my-dataset-exceeds-the-10gb-per-dataset-limit",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free, public datasets downloadable without login. Backed by AWS S3 eu-west-1 plus DANS long-term archive (three replicas).",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Documented REST API (data.mendeley.com/api/docs) with OAuth2 client-credentials; search endpoint `/api/datasets/v2/search` is anonymous. Download URLs are `/public-files/datasets/<id>/files/<fileid>/file_downloaded`.",
+  "chaining": "10 GB per dataset × unlimited datasets per account = effectively unbounded per identity; multiple free accounts multiply further. This is the cleanest 'per-record unlimited' shape in the niche.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap: 10 GB",
+      "source": "https://www.elsevier.support/mendeley/answer/what-can-i-do-when-my-dataset-exceeds-the-10gb-per-dataset-limit"
+    }
+  ],
+  "limits_note": "per-object-cap: 10 GB per dataset (100 GB institutional). Retention: published datasets are immutable and 'archived with DANS ... in perpetuity', no expiry. Read path caveat: the download URL pattern returns a JSON envelope rather than bytes for non-existent file IDs, so anonymous bulk scraping needs real file UUIDs from the dataset API.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: small sizes'; 'we can reference datasets within datasets'). Institutional Digital Commons Data raises this to 100 GB/dataset. Published datasets cannot be edited or deleted (versioning onl",
+    "country": null
+  },
+  "reliability_note": "Published datasets cannot be edited or deleted (versioning only) — a write-once archive, not a mutable store. Download endpoint resolves via JSON for bad IDs, so naive crawlers must parse the API first.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://data.mendeley.com/faq",
+      "date": "2026-10-21",
+      "proved": "100 GB institutional cap, DANS perpetuity archiving, 'once a dataset is published, it is not possible to edit or delete it'"
+    },
+    {
+      "url": "https://www.elsevier.support/mendeley/answer/what-can-i-do-when-my-dataset-exceeds-the-10gb-per-dataset-limit",
+      "date": "2026-10-21",
+      "proved": "'10GB per dataset limit', with the vendor's split-and-reference alternative route"
+    },
+    {
+      "url": "https://data.mendeley.com/api/datasets/v2/search?query=test&limit=1",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, real dataset JSON with doi 10.17632/..."
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET .../public-files/datasets/jxj8bn2vyf/files/1/file_downloaded -> 200 but Content-Type application/json, code 400 envelope (not bytes) — read path needs real file UUIDs"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "10 GB per dataset, free, unlimited datasets per account ('you can split your datasets into small sizes'; 'we can reference datasets within datasets'). Institutional Digital Commons Data raises this to 100 GB/dataset.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D7-domain-science-repos.json",
+    "seed_area": "D/D7",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D7"
+      },
+      {
+        "value": "fails-quota",
+        "area": "E/E15"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Mendeley Data (Elsevier)",
+      "Mendeley Data"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area D/D7",
+            "evidence": "quota: 10 GB per dataset, free, unlimited datasets per account ('you can spli"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row, area E/E15",
+            "evidence": "quota: 10 GB per dataset for personal accounts; 100 GB only if your instituti"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area E/E15) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "10 GB per dataset, free, unlimited datasets per account ('you can spli",
+            "source": "table.md row, area D/D7",
+            "evidence": null
+          },
+          {
+            "value": "10 GB per dataset for personal accounts; 100 GB only if your instituti",
+            "source": "table.md row, area E/E15",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area D/D7)"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md (area E/E15)"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area E/E15) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "10 GB per dataset, free, unlimited datasets per account ('you can spli",
+            "source": "table.md (area D/D7)"
+          },
+          {
+            "value": "10 GB per dataset for personal accounts; 100 GB only if your instituti",
+            "source": "table.md (area E/E15)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "10 GB per dataset, free, unlimited datasets per account ('you can split your datasets into small sizes'; 'we can reference datasets within datasets'). Institutional Digital Commons Data raises this to 100 GB/dataset.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area D/D7"
+    },
+    "target_document": "docs/storage/free/academic.md",
+    "document_section": "Domain science repositories",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "10 GB per dataset, free, unlimited datasets per account ('you can split your datasets into small sizes'; 'we can reference datasets within datasets'). Institutional Digital Commons Data raises this to 100 GB/dataset.",
+    "limits_verbatim": "per-object-cap: 10 GB per dataset (100 GB institutional). Retention: published datasets are immutable and 'archived with DANS ... in perpetuity', no expiry. Read path caveat: the download URL pattern returns a JSON envelope rather than bytes for non-existent file IDs, so anonymous bulk scraping needs real file UUIDs from the dataset API.",
+    "egress_verbatim": "Free, public datasets downloadable without login. Backed by AWS S3 eu-west-1 plus DANS long-term archive (three replicas).",
+    "chaining_verbatim": "10 GB per dataset × unlimited datasets per account = effectively unbounded per identity; multiple free accounts multiply further. This is the cleanest 'per-record unlimited' shape in the niche.",
+    "tooling_verbatim": "Documented REST API (data.mendeley.com/api/docs) with OAuth2 client-credentials; search endpoint `/api/datasets/v2/search` is anonymous. Download URLs are `/public-files/datasets/<id>/files/<fileid>/file_downloaded`.",
+    "interface_verbatim": "rest",
+    "agent_focus": "domain-specific scientific data repositories with large free quotas (not generalist: Zenodo/OSF/Dataverse excluded as already done)"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

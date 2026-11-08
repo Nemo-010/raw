@@ -1,0 +1,144 @@
+{
+  "topic": "compute",
+  "slug": "aws-workspaces",
+  "provider": "Amazon WorkSpaces Personal (Windows)",
+  "url": "https://aws.amazon.com/workspaces/desktop-as-a-service/pricing/",
+  "category": "Windows host",
+  "free_tier": {
+    "stated": "5 Performance AutoStop Ubuntu WorkSpaces with 100 combined hours a month, 80 GB root and 100 GB user volume, free for up to 3 months; a Paid account plan is required at signup",
+    "unit": "mixed",
+    "metered_on": "wall-clock",
+    "source_url": "https://aws.amazon.com/workspaces/desktop-as-a-service/pricing/",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://aws.amazon.com/workspaces/desktop-as-a-service/pricing/",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://aws.amazon.com/workspaces/desktop-as-a-service/pricing/",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "not published on the source card",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://aws.amazon.com/workspaces/desktop-as-a-service/pricing/"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "WorkSpaces console, AWS CLI and SDKs, per the WorkSpaces API Reference welcome page: \"manage your WorkSpaces resources using the WorkSpaces console, AWS Command Line Interface (AWS CLI), and SDKs\"",
+  "tooling": "the page names the AWS CLI and SDKs: \"AWS Command Line Interface (AWS CLI), and SDKs\"",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "100 combined hours a month across 5 free Performance AutoStop Ubuntu desktops",
+      "source": "https://aws.amazon.com/workspaces/desktop-as-a-service/pricing/"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "the free allowance ends after 3 months; WorkSpaces Pools closed to new customers on 2026-07-31",
+      "source": "https://aws.amazon.com/workspaces/desktop-as-a-service/pricing/"
+    },
+    {
+      "kind": "write-gated",
+      "value": "a Paid account plan is required to open the WorkSpaces console, so a free-plan account cannot provision one",
+      "source": "https://aws.amazon.com/workspaces/desktop-as-a-service/pricing/"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "'When creating your AWS account, you'll need to select a Paid account plan to access the WorkSpaces console', quoted from the pricing page read 2026-10-22; a payment method is the gate",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the WorkSpaces pricing page was read on 2026-10-22. The free allowance is 5 Performance AutoStop Ubuntu desktops with 100 combined hours a month for up to 3 months, and the page states that a Paid account plan is required to reach the console at all",
+  "evidence": [
+    {
+      "url": "https://aws.amazon.com/workspaces/desktop-as-a-service/pricing/",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://aws.amazon.com/workspaces/desktop-as-a-service/pricing/",
+      "date": "2026-10-22",
+      "proved": "'5 Performance AutoStop Ubuntu WorkSpaces with 100 hours combined monthly usage, 80GB root + 100GB user volume, free for up to 3 months' and 'Amazon WorkSpaces Pools will no longer accept new customers beginning July 31, 2026' and 'When creating your AWS account, you'll need to select a Paid account plan to access the WorkSpaces console', quoted"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/workspaces/latest/api/Welcome.html",
+      "date": "2026-11-04",
+      "proved": "WorkSpaces has an API reference, a console, a CLI and SDKs",
+      "capture": "sha256:61e5ee585888362b99d98faea16e80a268c8a69ac77209d53456ccea11d87f9c",
+      "quote": "You can also manage your WorkSpaces resources using the WorkSpaces console, AWS Command Line Interface (AWS CLI), and SDKs."
+    },
+    {
+      "url": "https://docs.aws.amazon.com/workspaces/latest/api/Welcome.html",
+      "date": "2026-11-04",
+      "proved": "the page names the console, the AWS CLI and SDKs as ways to manage WorkSpaces",
+      "capture": "sha256:df507d42b61601f4ece1a8f04af1087f0d21ae96383ac3e91c0524843a5cebd1",
+      "quote": "manage your WorkSpaces resources using the WorkSpaces console, AWS Command Line Interface (AWS CLI), and SDKs"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T11:01:15.542Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 12.74,
+    "talaria_m24h_usd": 30.58,
+    "nemo_m10h_usd": 84.01,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "always-on by contract",
+    "billing_model": "unclassified",
+    "shape": {
+      "vcpu": 2,
+      "ram": 8,
+      "disk": 100,
+      "gpu_class": null,
+      "gpu_count": 1,
+      "note": "Performance bundle: 2 vCPU, 8 GiB, 80 GB root plus 100 GB user volume"
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "AutoStop stops the desktop on disconnect and bills a small monthly access fee instead of the hourly rate"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "trial",
+    "granularity": {
+      "min_billed_s": 0,
+      "rounding_s": null
+    },
+    "seed_min_bill": "min 1 h",
+    "burst_x": 2.0498,
+    "burst_bill": "min 1 h",
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": {
+      "gib": 100,
+      "price": "billed as part of the bundle",
+      "durability": "user volume",
+      "on_stop": true,
+      "on_destroy": false,
+      "retention": "while the WorkSpace exists"
+    },
+    "net": null
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "write-gated"
+}

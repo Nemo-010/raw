@@ -1,0 +1,137 @@
+{
+  "topic": "compute",
+  "slug": "rivet",
+  "provider": "Rivet (Actors & agentOS)",
+  "url": "https://rivet.dev/pricing/",
+  "category": "container and VM sandbox",
+  "free_tier": {
+    "stated": "100,000 awake actor hours a month on the free tier, with state storage and active CPU billed per second beyond it",
+    "unit": "hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://rivet.dev/pricing/",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://rivet.dev/pricing/",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://rivet.dev/pricing/",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "not published on the source card",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://rivet.dev/pricing/"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "TypeScript SDK (rivetkit, rivetkit/client) and a web dashboard; no REST, CLI or SSH access read",
+  "tooling": "not stated in the source card",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "100,000 awake actor hours a month on the free tier",
+      "source": "https://rivet.dev/pricing/"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "1 vCPU is half a physical core; configurations are 0.08 to 1 vCPU, or exactly 2, 4 or 8",
+      "source": "https://rivet.dev/pricing/"
+    },
+    {
+      "kind": "request-rate",
+      "value": "active execution bills per vCPU-second plus $0.0000029 a GiB-second of state storage",
+      "source": "https://rivet.dev/pricing/"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the pricing page was read on 2026-10-22 and states the free tier's awake-actor-hour cap and the metered rates. The vCPU definition is the shape fact: one vCPU is half a physical core",
+  "evidence": [
+    {
+      "url": "https://rivet.dev/pricing/",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://rivet.dev/pricing/",
+      "date": "2026-10-22",
+      "proved": "'Awake Actor Hours · 100,000 /mo max' on the free tier, with 'per 1k Awake Actor Hours', 'State Storage', 'per vCPU-second + $0.0000029/GiB-s' and '1 vCPU = half a physical core. 0.08-1 vCPU, or exactly 2, 4, or 8', quoted"
+    },
+    {
+      "url": "https://rivet.dev/docs/",
+      "date": "2026-11-03",
+      "proved": "a TypeScript SDK (rivetkit) is the documented way in",
+      "capture": "sha256:a33e7b42f5cd6530a2507d618ce4859a931b55c0d3501a27896820add38b945f",
+      "quote": "npm install rivetkit"
+    },
+    {
+      "url": "https://rivet.dev/pricing/",
+      "date": "2026-11-03",
+      "proved": "the page prices control plane and Actor Nodes per month; no egress allowance or egress price is listed",
+      "capture": "sha256:bb41c9e377806440a6b33b63444353a356647fb39e2ff0e9ce1bda721d44143f",
+      "quote": "Pay for coordination, state, and active execution on Rivet Cloud."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T02:24:16.351Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 103.81,
+    "talaria_m24h_usd": 221.14,
+    "nemo_m10h_usd": 86.29,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "unclassified",
+    "shape": {
+      "vcpu": 1,
+      "ram": null,
+      "disk": null,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "1 vCPU is half a physical core; the free tier can run 0.08 to 1 vCPU"
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "an actor sleeps when idle and only awake hours are counted, so the meter is the state axis"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "allowance",
+    "burst_x": 1.0,
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": {
+      "gib": null,
+      "price": "$0.0000029 a GiB-second of persisted actor state",
+      "durability": "FoundationDB persistence layer",
+      "on_stop": true,
+      "on_destroy": false,
+      "retention": "until deleted"
+    },
+    "net": null
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "request-rate"
+}

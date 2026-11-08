@@ -1,0 +1,189 @@
+{
+  "topic": "storage",
+  "slug": "cloudsmith-open-source-repositories",
+  "provider": "Cloudsmith — open-source (Broadcast: Open Source) repositories",
+  "url": "https://cloudsmith.com",
+  "category": "registry",
+  "free_tier": {
+    "stated": "At least 50 GB of artifact data + 200 GB of package delivery per month, free, pooled across ALL open-source repositories in one org — 'You get at least 50GB of artifact data + 200GB of package delivery for free, across all open-source repositories.' Available on the $0 Core plan, no special plan needed.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://docs.cloudsmith.com/open-source-hosting-policy",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "5 GB maximum per file",
+    "bytes": 5000000000,
+    "source_url": "https://docs.cloudsmith.com/open-source-hosting-policy",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.cloudsmith.com/open-source-hosting-policy",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "200 GB/month of 'package delivery' included, then metered (Core has no overage path at all: 'Additional data: N/A'; the settings cap is '200% of plan'). Delivery counts only outgoing bytes, partial downloads prorated, requests not charged.",
+    "metered": true,
+    "free_allowance": "200 GB per month"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "rest (Cloudsmith REST API + CLI), plus every native package client: apt/yum/npm/pypi/nuget/helm/docker/raw; public broadcast URLs on dl.cloudsmith.io",
+  "tooling": "cloudsmith-cli (`cloudsmith push raw OWNER/REPO FILE`), REST API v1, Terraform provider, officially documented; anonymous pulls need no token (probe below).",
+  "chaining": "Usage is pooled per org, not per repo — so the multiplier is orgs, not repos: unlimited free signups × 50 GB + 200 GB/mo. OSS status is granted automatically at repo creation ('We don't require advance permission to create open-source repositories'), with post-hoc checks; sponsorship raises the allowance for large projects.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "5 GB maximum per file",
+      "source": "https://docs.cloudsmith.com/open-source-hosting-policy"
+    }
+  ],
+  "limits_note": "5 GB maximum per file ('the current maximum file size is 5GB'); 50 GB total artifact data and 200 GB/mo delivery per org; artifact data billed as a high-water mark within the billing period (upload-then-delete does not refund); 28+ formats plus arbitrary raw files; OSS repos must carry an SPDX licence, a project URL and a Cloudsmith attribution badge.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: no special plan needed. Real hosted CDN with a real CLI/API; the risk is administrative, not technical — OSS repos that fail the eligibility rules (no attribution, minor fork) get",
+    "country": null
+  },
+  "reliability_note": "Real hosted CDN with a real CLI/API; the risk is administrative, not technical — OSS repos that fail the eligibility rules (no attribution, minor fork) get suspended, and the free Core plan cannot pay overage so it hard-stops at the cap.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.cloudsmith.com/open-source-hosting-policy",
+      "date": "2026-10-21",
+      "proved": "read live: 'You get at least 50GB of artifact data + 200GB of package delivery for free, across all open-source repositories'; 'Usage for open-source repositories is tracked separately'; 'We don't require advance permission to create open-source repositories'"
+    },
+    {
+      "url": "https://cloudsmith.com/pricing",
+      "date": "2026-10-21",
+      "proved": "read live: Core $0 = 'Artifact data 500 MB / Package delivery 1 GB / Additional data N/A'; Pro $149 = 5 GB / 25 GB / $1.50 per GB; 'Number of packages / repositories: Unlimited' on every tier"
+    },
+    {
+      "url": "https://docs.cloudsmith.com/artifact-management/package-upload",
+      "date": "2026-10-21",
+      "proved": "read live FAQ: 'the current maximum file size is 5GB'"
+    },
+    {
+      "url": "https://dl.cloudsmith.io/public/caddy/stable/gpg.key",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200 (anonymous download, no token); GET https://api.cloudsmith.io/v1/packages/cloudsmith/cli/?page=1&page_size=1 -> 200 with full package JSON (anonymous read API)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "At least 50 GB of artifact data + 200 GB of package delivery per month, free, pooled across ALL open-source repositories in one org — 'You get at least 50GB of artifact data + 200GB of package delivery for free, across all open-source repositories.' Available on the $0 Core plan, no special plan needed.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B5-artifact-managers.json",
+    "seed_area": "B/B5",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "B/B5"
+      },
+      {
+        "value": "fails-quota",
+        "area": "B/B5"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Cloudsmith — open-source (Broadcast: Open Source) repositories",
+      "Cloudsmith — Core (free) plan"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area B/B5",
+            "evidence": "quota: At least 50 GB of artifact data + 200 GB of package delivery per month"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row, area B/B5",
+            "evidence": "quota: 500 MB of artifact data and 1 GB of package delivery, $0/month, unlimi"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area B/B5) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "At least 50 GB of artifact data + 200 GB of package delivery per month",
+            "source": "table.md row, area B/B5",
+            "evidence": null
+          },
+          {
+            "value": "500 MB of artifact data and 1 GB of package delivery, $0/month, unlimi",
+            "source": "table.md row, area B/B5",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area B/B5)"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md (area B/B5)"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area B/B5) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "At least 50 GB of artifact data + 200 GB of package delivery per month",
+            "source": "table.md (area B/B5)"
+          },
+          {
+            "value": "500 MB of artifact data and 1 GB of package delivery, $0/month, unlimi",
+            "source": "table.md (area B/B5)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "At least 50 GB of artifact data + 200 GB of package delivery per month, free, pooled across ALL open-source repositories in one org — 'You get at least 50GB of artifact data + 200GB of package delivery for free, across all open-source repositories.' Available on the $0 Core plan, no special plan needed.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area B/B5"
+    },
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "Artifact managers",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "At least 50 GB of artifact data + 200 GB of package delivery per month, free, pooled across ALL open-source repositories in one org — 'You get at least 50GB of artifact data + 200GB of package delivery for free, across all open-source repositories.' Available on the $0 Core plan, no special plan needed.",
+    "limits_verbatim": "5 GB maximum per file ('the current maximum file size is 5GB'); 50 GB total artifact data and 200 GB/mo delivery per org; artifact data billed as a high-water mark within the billing period (upload-then-delete does not refund); 28+ formats plus arbitrary raw files; OSS repos must carry an SPDX licence, a project URL and a Cloudsmith attribution badge.",
+    "egress_verbatim": "200 GB/month of 'package delivery' included, then metered (Core has no overage path at all: 'Additional data: N/A'; the settings cap is '200% of plan'). Delivery counts only outgoing bytes, partial downloads prorated, requests not charged.",
+    "chaining_verbatim": "Usage is pooled per org, not per repo — so the multiplier is orgs, not repos: unlimited free signups × 50 GB + 200 GB/mo. OSS status is granted automatically at repo creation ('We don't require advance permission to create open-source repositories'), with post-hoc checks; sponsorship raises the allowance for large projects.",
+    "tooling_verbatim": "cloudsmith-cli (`cloudsmith push raw OWNER/REPO FILE`), REST API v1, Terraform provider, officially documented; anonymous pulls need no token (probe below).",
+    "interface_verbatim": "rest (Cloudsmith REST API + CLI), plus every native package client: apt/yum/npm/pypi/nuget/helm/docker/raw; public broadcast URLs on dl.cloudsmith.io",
+    "agent_focus": "artifact/package *managers* (self-hosted repo managers and hosted artifact services) as bulk storage — distinct from public package registries (C2) and OCI/ORAS registries (B6)"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

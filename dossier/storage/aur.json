@@ -1,0 +1,115 @@
+{
+  "topic": "storage",
+  "slug": "aur",
+  "provider": "AUR (Arch User Repository)",
+  "url": "https://aur.archlinux.org",
+  "category": "registry",
+  "free_tier": {
+    "stated": "Not a storage candidate at all: the AUR enforces a hard maximum blob size of 250 KiB per git object. The git hook rejects the push: 'remote: error: maximum blob size (250.00KiB) exceeded / remote: error: hook declined to update refs/heads/master'. Config files around 250.8 KiB already trip it.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://bugs.archlinux.org/task/68997",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap: 250 KiB",
+    "bytes": 256000,
+    "source_url": "https://bugs.archlinux.org/task/68997",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "per-object-cap: 250 KiB (hard, server-side git hook). retention: indefinite for packages",
+    "source_url": "https://bugs.archlinux.org/task/68997",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free (plain git over SSH/HTTPS), but irrelevant given the cap.",
+    "metered": false
+  },
+  "interface": [
+    "ssh",
+    "git",
+    "rclone"
+  ],
+  "interface_detail": "git",
+  "tooling": "git over ssh://aur.archlinux.org/<pkg>.git; AUR RPC v5 at /rpc/. No rclone backend (git is the interface).",
+  "chaining": "unlimited AUR packages x 250 KiB = useless for bulk. Content must be PKGBUILD + patches; large sources are fetched at build time by URL, never stored.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap: 250 KiB",
+      "source": "https://bugs.archlinux.org/task/68997"
+    }
+  ],
+  "limits_note": "per-object-cap: 250 KiB (hard, server-side git hook). retention: indefinite for packages. request-rate: git push over ssh, per-key.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Cleanest possible dead end: a hard 250 KiB blob limit enforced by a git hook. Any 'AUR as storage' idea dies here. Not covered in round 1.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://bugs.archlinux.org/task/68997",
+      "date": "2026-10-21",
+      "proved": "'remote: error: maximum blob size (250.00KiB) exceeded' on a 250.8 KiB config file; maintainer confirms the limit is intentional"
+    },
+    {
+      "url": "https://lists.archlinux.org/pipermail/aur-general/2015-August/031470.html",
+      "date": "2026-10-21",
+      "proved": "'[aur-general] max blob size exceeded'"
+    },
+    {
+      "url": "https://aur.archlinux.org/rpc/?v=5&type=info&arg=google-chrome",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, 679 bytes (RPC v5 live; metadata only, no blob path)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Not a storage candidate at all: the AUR enforces a hard maximum blob size of 250 KiB per git object. The git hook rejects the push: 'remote: error: maximum blob size (250.00KiB) exceeded / remote: error: hook declined to update refs/heads/master'. Config files around 250.8 KiB already trip it.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H7-software-archives.json",
+    "seed_area": "H/H7",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "H/H7"
+      }
+    ],
+    "seed_confidence": "high",
+    "unit_note": "free_tier.unit is 'mixed' because the headline is denominated in MiB or KiB, which the schema enum does not carry; the verbatim free_tier.stated keeps the true unit. See the storage-dossier handover.",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Not a storage candidate at all: the AUR enforces a hard maximum blob size of 250 KiB per git object. The git hook rejects the push: 'remote: error: maximum blob size (250.00KiB) exceeded / remote: error: hook declined to update refs/heads/master'. Config files around 250.8 KiB already trip it.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H7"
+    },
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Software archives",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Not a storage candidate at all: the AUR enforces a hard maximum blob size of 250 KiB per git object. The git hook rejects the push: 'remote: error: maximum blob size (250.00KiB) exceeded / remote: error: hook declined to update refs/heads/master'. Config files around 250.8 KiB already trip it.",
+    "limits_verbatim": "per-object-cap: 250 KiB (hard, server-side git hook). retention: indefinite for packages. request-rate: git push over ssh, per-key.",
+    "egress_verbatim": "Free (plain git over SSH/HTTPS), but irrelevant given the cap.",
+    "chaining_verbatim": "unlimited AUR packages x 250 KiB = useless for bulk. Content must be PKGBUILD + patches; large sources are fetched at build time by URL, never stored.",
+    "tooling_verbatim": "git over ssh://aur.archlinux.org/<pkg>.git; AUR RPC v5 at /rpc/. No rclone backend (git is the interface).",
+    "interface_verbatim": "git",
+    "agent_focus": "Software preservation + package-archive mirrors as free bulk storage: which ones accept arbitrary blobs at scale, and what the per-artifact / monthly / retention caps actually are. Sources limited to pages opened in this session; every quota below was read live or from a dated archive capture."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

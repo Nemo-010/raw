@@ -1,0 +1,118 @@
+{
+  "topic": "storage",
+  "slug": "packagecloud-io-free-plan",
+  "provider": "Packagecloud.io — Free plan",
+  "url": "https://packagecloud.io/pricing/",
+  "category": "registry",
+  "free_tier": {
+    "stated": "2 GB storage + 10 GB bandwidth per month, unlimited repositories and unlimited CI/CD minutes. Private repositories are no longer usable on the free plan (restricted since 7 Sep 2023), so the free tier is effectively public-repo only.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://packagecloud.io/pricing/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://packagecloud.io/pricing/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://packagecloud.io/pricing/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "10 GB/month of download bandwidth; overage is $1.50/GB on paid plans and the account is disabled at the 'maximum overage amount' setting — so on Free it is a hard wall.",
+    "metered": true,
+    "free_allowance": "10 GB per month"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "rest (packagecloud API), native apt/yum/ruby/pypi/npm clients via packagecloud.io/install/repositories/...",
+  "tooling": "packagecloud CLI (`packagecloud push`), `curl -X POST` to the API, setup scripts for apt/yum; public repos pull anonymously.",
+  "chaining": "Unlimited repositories per account, but storage and bandwidth are account-level watermarks ('high watermark for any given billing period'), so N repos do not multiply the 2 GB. Only N accounts would.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "bandwidth per month, unlimited repositories and unlimited CI/CD minutes",
+      "source": "https://packagecloud.io/pricing/"
+    }
+  ],
+  "limits_note": "2 GB storage (high-water mark, so delete-then-reupload does not refund within a period); 10 GB/month bandwidth; private repos gated; packages over 2.6 GB are a paid-plan feature; bandwidth metered from request logs, HEAD/conditional GETs excluded.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Stable hosted service; the 2023 change that cut private repos off the free plan shows the free tier is a moving target.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://packagecloud.io/pricing/",
+      "date": "2026-10-21",
+      "proved": "read live (firecrawl render): 'Free ... 10 GB bandwidth ... 2 GB storage ... Unlimited CI/CD Minutes'; comparison table shows 'Unlimited repositories', 'Public repositories' ticked, 'Private repositories' and 'Package sizes > 2.6 GB' as paid"
+    },
+    {
+      "url": "https://packagecloud.io/pricing/faq/",
+      "date": "2026-10-21",
+      "proved": "read live: 'if you upload 100GB of packages, and delete 90GB of them, you'll still have used 100GB for that billing period' (high-water mark)"
+    },
+    {
+      "url": "https://blog.packagecloud.io/packagecloud-private-repositories-on-the-free-plan/",
+      "date": "2026-10-21",
+      "proved": "read live: free-plan private repos got 402s from 7 Sep 2023"
+    },
+    {
+      "url": "https://packagecloud.io/install/repositories/github/git-lfs/config_file.list?os=ubuntu&dist=xenial",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200 (anonymous public-repo read)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "2 GB storage + 10 GB bandwidth per month, unlimited repositories and unlimited CI/CD minutes. Private repositories are no longer usable on the free plan (restricted since 7 Sep 2023), so the free tier is effectively public-repo only.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B5-artifact-managers.json",
+    "seed_area": "B/B5",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "B/B5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "egress",
+      "why": "2 GB storage + 10 GB bandwidth per month, unlimited repositories and unlimited CI/CD minutes. Private repositories are no longer usable on the free plan (restricted since 7 Sep 2023), so the free tier is effectively public-repo only.",
+      "retry_when": "if the egress meter is removed or a Cloudflare path is added",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area B/B5"
+    },
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "Artifact managers",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "2 GB storage + 10 GB bandwidth per month, unlimited repositories and unlimited CI/CD minutes. Private repositories are no longer usable on the free plan (restricted since 7 Sep 2023), so the free tier is effectively public-repo only.",
+    "limits_verbatim": "2 GB storage (high-water mark, so delete-then-reupload does not refund within a period); 10 GB/month bandwidth; private repos gated; packages over 2.6 GB are a paid-plan feature; bandwidth metered from request logs, HEAD/conditional GETs excluded.",
+    "egress_verbatim": "10 GB/month of download bandwidth; overage is $1.50/GB on paid plans and the account is disabled at the 'maximum overage amount' setting — so on Free it is a hard wall.",
+    "chaining_verbatim": "Unlimited repositories per account, but storage and bandwidth are account-level watermarks ('high watermark for any given billing period'), so N repos do not multiply the 2 GB. Only N accounts would.",
+    "tooling_verbatim": "packagecloud CLI (`packagecloud push`), `curl -X POST` to the API, setup scripts for apt/yum; public repos pull anonymously.",
+    "interface_verbatim": "rest (packagecloud API), native apt/yum/ruby/pypi/npm clients via packagecloud.io/install/repositories/...",
+    "agent_focus": "artifact/package *managers* (self-hosted repo managers and hosted artifact services) as bulk storage — distinct from public package registries (C2) and OCI/ORAS registries (B6)"
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

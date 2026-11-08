@@ -1,0 +1,143 @@
+{
+  "topic": "netdisk-pan",
+  "slug": "data-yanshiqwq-cn",
+  "provider": "延时の奇妙网盘 (data.yanshiqwq.cn)",
+  "url": "https://data.yanshiqwq.cn/",
+  "category": "public-instance",
+  "free_tier": {
+    "stated": "anonymous guest read of the whole mount list, and a write on one path; no account, no payment, no published quota",
+    "unit": "unlimited",
+    "metered_on": "none",
+    "source_url": "https://data.yanshiqwq.cn/",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "between 100 MiB (200) and 110 MiB (413 from the Cloudflare front); the operator publishes no cap",
+    "bytes": null,
+    "source_url": "https://data.yanshiqwq.cn/",
+    "notes": "the seed's A11 wave pinned the boundary; this session did not re-measure it"
+  },
+  "retention": {
+    "stated": "until the operator's disk or Cloudflare account fails; no TTL, no SLA, no notice",
+    "days": null,
+    "source_url": "https://data.yanshiqwq.cn/"
+  },
+  "egress": {
+    "terms": "served through Cloudflare; the reader pays nothing and the operator pays nothing per byte",
+    "metered": false,
+    "source_url": "https://data.yanshiqwq.cn/"
+  },
+  "interface": [
+    "rest",
+    "webdav"
+  ],
+  "tooling": "OpenList v4.2.7 REST (/api/fs/*) and its WebDAV endpoint; rclone's alist backend speaks the same REST",
+  "chaining": "the only verified write in 170 hosts: a 4 KiB PUT, a GET, and a SHA-256 match. Useful as a one-object staging area, not as capacity. One instance on one operator's disk, so a second account carries no second allowance here. The composition angle is the pattern and not this host: a public OpenList that returns write true is the candidate class, and the index lists are where the census finds them",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "writable on the guest path only; /api/fs/remove returns 403, so nothing can be deleted",
+      "source": "probe:https://data.yanshiqwq.cn/api/fs/remove"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "413 from Cloudflare between 100 MiB and 110 MiB",
+      "source": "dossier history: the seed A11 wave, 2026-10-21"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "~1.9 MB/s up, ~1.0 MB/s down on a home uplink",
+      "source": "dossier history: the seed A11 wave, 2026-10-21"
+    }
+  ],
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "no registration, no token, no cookie; /api/me returns a guest session with role 1 and permission 256",
+    "country": null
+  },
+  "reliability_note": "One volunteer's home disk behind Cloudflare. No quota, no SLA, no delete, and the bytes are world-listable once written.",
+  "confidence": "measured",
+  "evidence": [
+    {
+      "url": "probe:https://data.yanshiqwq.cn/api/fs/list",
+      "date": "2026-10-22",
+      "proved": "HTTP 200, code 200, 27 root entries, write:true and write_content_bypass:true, provider:unknown"
+    },
+    {
+      "url": "probe:https://data.yanshiqwq.cn/api/fs/put",
+      "date": "2026-10-22",
+      "proved": "PUT of 32 bytes returned {\"code\":200,\"message\":\"success\"} and GET /p/ returned the same 32 bytes with a matching SHA-256"
+    },
+    {
+      "url": "https://data.yanshiqwq.cn/api/public/settings",
+      "date": "2026-10-22",
+      "proved": "OpenList v4.2.7, build 2026-10-15, allow_indexed false, allow_mounted false"
+    },
+    {
+      "url": "probe:https://data.yanshiqwq.cn/api/me",
+      "date": "2026-10-22",
+      "proved": "guest session, role 1, permission 256 = bit 8 (WebDAV read) only, with no bit 3; the write is granted by a per-path meta, not by the bitmask"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-22T03:37:00.574Z",
+  "binding": "write-gated",
+  "notes": "The only host of 170 that accepted a write and gave the bytes back. It passes the zero-byte oracle with 'file exists', reports permission 256 with no bit 3, and is writable only because a per-path meta overrides the role. Two runs of the same probe in this session agreed on the verdict, and the seed's independent wave found the same host one day earlier. Probes left 32-byte files named *-r6probe.bin in its root, because delete is denied.",
+  "history": [],
+  "extras": {
+    "access_mode": "public-instance",
+    "read_capability": "full",
+    "write_capability": "verified",
+    "upstream_provider": "unknown",
+    "fronting_cdn": "cloudflare",
+    "advertised_write_flag": true,
+    "first_seen": "2026-10-21",
+    "first_seen_source": "seed storage-research A-A11, one day before this probe",
+    "last_verified_alive": "2026-10-22T03:37:00.574Z",
+    "last_verified_dead": null,
+    "permission_bitmask": 256,
+    "bit3_upload": false,
+    "write_content_bypass": true,
+    "listing_sha256": "906b9822fef7",
+    "observations": [
+      {
+        "at": "2026-10-21T00:00:00Z",
+        "state": "listed",
+        "writable": true,
+        "source": "seed A-A11"
+      },
+      {
+        "at": "2026-10-22T03:21:00Z",
+        "state": "listed",
+        "entries": 27,
+        "writable": true,
+        "source": "this session, two independent runs"
+      },
+      {
+        "at": "2026-10-22T03:37:00.574Z",
+        "state": "listed",
+        "entries": 27,
+        "writable": true,
+        "source": "this session, write confirmed by SHA-256 roundtrip"
+      }
+    ],
+    "aliases": [
+      "延时の奇妙网盘 (data.yanshiqwq.cn) — public OpenList instance, WRITABLE"
+    ],
+    "seed_facts": {
+      "quota_verbatim": "No published quota. Storage is the operator's own Local disk mounted into OpenList v4.2.7, and the only hard ceiling observed is the fronting CDN at 100 MiB per upload, where 110 MiB returned 413 Payload Too Large",
+      "per_object_cap_verbatim": "100 MiB per file, verified: 104,857,600 bytes returned 200 and 115,343,360 bytes returned 413 from Cloudflare at the edge",
+      "chaining_verbatim": "One instance on one operator's disk, so a second account carries no second allowance here. The composition angle is the pattern and not this host: a public OpenList that returns write true is the candidate class, and the index lists are where the census finds them",
+      "reliability_verbatim": "Alive and actively updated, build 2026-10-15. Uploads land durably and are world-readable under /upload, and a 20 MiB and a 100 MiB write both came back SHA-256 identical. But it is one person's disk with no SLA, no delete permission and no quota, and the operator can wipe it or close writes at any time",
+      "tooling_verbatim": "the OpenList v4 REST API anonymously: PUT /api/fs/put with a File-Path header and no auth, POST /api/fs/list, get, mkdir, and GET /p/<path> to download. The rclone webdav backend does not work here, so a write needs a small shim over the PUT endpoint",
+      "binding_note_verbatim": "The write works, which is the rare part, and 100 MiB per file is the ceiling: the Cloudflare edge rejects anything larger before the origin sees it. At 1.9 MB/s upload the 10 TiB working set would also need 61 days of continuous writing.",
+      "deferred_name": "延时の奇妙网盘 (data.yanshiqwq.cn) — public OpenList instance, WRITABLE",
+      "folded_from": "dossier/netdisk-pan/public-openlist-instance-writable.json, written by this pass and folded here"
+    }
+  },
+  "binding_note": "The write is real but undeletable, capped by the CDN body limit, and rate-limited by one home uplink, so the binding constraint is the gate on writing at all, not a quota.",
+  "interface_detail": "rest",
+  "endpoint": "https://data.yanshiqwq.cn/api/fs/put",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

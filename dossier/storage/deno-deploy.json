@@ -1,0 +1,106 @@
+{
+  "topic": "storage",
+  "slug": "deno-deploy",
+  "provider": "Deno Deploy (managed Deno KV)",
+  "url": "https://deno.com/deploy",
+  "category": "paas",
+  "free_tier": {
+    "stated": "1 GiB of KV storage on Free. Pricing page, KV section: 'KV storage: 1 GiB'; 'KV read units/mo (4KiB): 1,000,000'; 'KV write units/mo (1KiB): 500,000'. Pro raises KV to 5 GiB. Deployment assets are separately capped: 'the total size of all files within the deployment (source files and static files) should not exceed 1 gigabyte' and Free includes 'Revision storage: 10 GiB'.",
+    "unit": "GiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://deno.com/deploy/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://deno.com/deploy/pricing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://deno.com/deploy/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "20 GiB/month on Free, metered: 'Egress Bandwidth: Monthly limit on data egress across all your deployments.' Also 1M requests/month. This is 25x short of even one day of the serving workload.",
+    "metered": true,
+    "free_allowance": "20 GiB per month"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "`Deno.Kv` API in-runtime; `@deno/kv` client; remote access via the URL connector (`https://api.deno.com/v2/databases/<id>/connect`). No HTTP object endpoint — every read must go through your own code.",
+  "chaining": "10 apps per organization on Free, but KV storage is 1 GiB per organization, not per app, so extra apps buy nothing. 1 GiB x N organizations requires N billing identities for 20 TiB — 20,000 accounts. Dead.",
+  "limits": [],
+  "limits_note": "1 GiB KV, 1M read units/mo, 500K write units/mo, 20 GiB egress, 1M requests, 10 apps, 1 concurrent build, 15 builds/hour. Deployment bundle <= 1 GB. 512 MB memory. KV data is stored in and transits the US; no GDPR docs.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Durable once written, but 'Deleting a Deno KV database instance ... deletes all existing Deno KV databases and their data' — a single DELETE wipes every KV database in the org, which is a sharp edge. Free-plan service is in public beta with no uptime guarantee.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://deno.com/deploy/pricing",
+      "date": "2026-10-21",
+      "proved": "Free column: 'KV storage: 1 GiB'; 'KV read units/mo (4KiB): 1,000,000'; 'KV write units/mo (1KiB): 500,000'; 'Egress Bandwidth: 20GiB'; 'Revision storage: 10 GiB'; 'Apps: 10'"
+    },
+    {
+      "url": "https://docs.deno.com/deploy/pricing_and_limits/",
+      "date": "2026-10-21",
+      "proved": "'should not exceed 1 gigabyte' deployment bundle; 'No uptime guarantees are provided during the initial public beta'"
+    },
+    {
+      "url": "https://docs.deno.com/deploy/reference/deno_kv/",
+      "date": "2026-10-21",
+      "proved": "'this action deletes all existing Deno KV databases and their data'; last updated June 5, 2026"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "1 GiB of KV storage on Free. Pricing page, KV section: 'KV storage: 1 GiB'; 'KV read units/mo (4KiB): 1,000,000'; 'KV write units/mo (1KiB): 500,000'. Pro raises KV to 5 GiB. Deployment assets are separately capped: 'the total size of all files within the deployment (source files and static files) should not exceed 1 gigabyte' and Free includes 'Revision storage: 10 GiB'.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G2-serverless-edge.json",
+    "seed_area": "G/G2",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "G/G2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "1 GiB of KV storage on Free. Pricing page, KV section: 'KV storage: 1 GiB'; 'KV read units/mo (4KiB): 1,000,000'; 'KV write units/mo (1KiB): 500,000'. Pro raises KV to 5 GiB. Deployment assets are separately capped: 'the total size of all files within the deployment (source files and static files) should not exceed 1 gigabyte' and Free includes 'Revision storage: 10 GiB'.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G2"
+    },
+    "target_document": "docs/storage/free/cloudflare-edge.md",
+    "document_section": "Serverless and edge runtimes as a storage substrate",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "1 GiB of KV storage on Free. Pricing page, KV section: 'KV storage: 1 GiB'; 'KV read units/mo (4KiB): 1,000,000'; 'KV write units/mo (1KiB): 500,000'. Pro raises KV to 5 GiB. Deployment assets are separately capped: 'the total size of all files within the deployment (source files and static files) should not exceed 1 gigabyte' and Free includes 'Revision storage: 10 GiB'.",
+    "limits_verbatim": "1 GiB KV, 1M read units/mo, 500K write units/mo, 20 GiB egress, 1M requests, 10 apps, 1 concurrent build, 15 builds/hour. Deployment bundle <= 1 GB. 512 MB memory. KV data is stored in and transits the US; no GDPR docs.",
+    "egress_verbatim": "20 GiB/month on Free, metered: 'Egress Bandwidth: Monthly limit on data egress across all your deployments.' Also 1M requests/month. This is 25x short of even one day of the serving workload.",
+    "chaining_verbatim": "10 apps per organization on Free, but KV storage is 1 GiB per organization, not per app, so extra apps buy nothing. 1 GiB x N organizations requires N billing identities for 20 TiB — 20,000 accounts. Dead.",
+    "tooling_verbatim": "`Deno.Kv` API in-runtime; `@deno/kv` client; remote access via the URL connector (`https://api.deno.com/v2/databases/<id>/connect`). No HTTP object endpoint — every read must go through your own code.",
+    "interface_verbatim": "rest",
+    "agent_focus": "serverless/edge/JAMstack platforms used as blob storage, with the multi-project multiplication angle. Excludes Cloudflare R2 per brief."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

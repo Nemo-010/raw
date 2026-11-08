@@ -1,0 +1,107 @@
+{
+  "topic": "storage",
+  "slug": "cloud-storage-for-firebase",
+  "provider": "Cloud Storage for Firebase (Spark/Blaze)",
+  "url": "https://firebase.google.com/pricing",
+  "category": "paas",
+  "free_tier": {
+    "stated": "5 GB stored free, but only on the Blaze pay-as-you-go plan; Spark project buckets return 402/403.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://firebase.google.com/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://firebase.google.com/pricing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://firebase.google.com/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "1 GB/day free for legacy *.appspot.com buckets, then $0.12/GB; 100 GB/month for *.firebasestorage.app buckets. Metered beyond that.",
+    "metered": true,
+    "free_allowance": "100 GB per month"
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Firebase Storage SDK / GCS JSON+XML API (rclone 'gs'/'gcs'); buckets are ordinary GCS buckets so rclone works.",
+  "chaining": "5 GB x N Firebase projects — each project needs a billing account on Blaze, which defeats the purpose since Blaze is a metered surface.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "1 GB/day",
+      "source": "https://firebase.google.com/pricing"
+    }
+  ],
+  "limits_note": "5 GB stored; 20K upload ops/day (appspot) / 5K/month (firebasestorage.app); 1 GB/day or 100 GB/month egress; bucket creation post-Sept-2024 uses PROJECT_ID.firebasestorage.app naming.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ark project buckets return 402/403. Requires attaching a credit card (Blaze). No free path at all since the Sept 2024 change — this is the clearest 'free that is not free' in the Google st",
+    "country": null
+  },
+  "reliability_note": "Requires attaching a credit card (Blaze). No free path at all since the Sept 2024 change — this is the clearest 'free that is not free' in the Google stack.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://firebase.google.com/pricing",
+      "date": "2026-10-21",
+      "proved": "'Storage | * Not applicable * | No-cost up to 5 GB Then $0.10/GB'; 'GB downloaded | No-cost up to 1 GB/day Then $0.12/GB'"
+    },
+    {
+      "url": "https://firebase.google.com/docs/storage/faqs-storage-changes-announced-sept-2024",
+      "date": "2026-10-21",
+      "proved": "'If your Firebase project is on the Spark pricing plan, you won't have access to any Cloud Storage buckets … your API calls to buckets will return 402 or 403 errors'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "5 GB stored free, but only on the Blaze pay-as-you-go plan; Spark project buckets return 402/403.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A1-google-drive-service-accounts.json",
+    "seed_area": "A/A1",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "A/A1"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "5 GB stored free, but only on the Blaze pay-as-you-go plan; Spark project buckets return 402/403.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/A1"
+    },
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "Google Drive and its service-account history",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "5 GB stored free, but only on the Blaze pay-as-you-go plan; Spark project buckets return 402/403.",
+    "limits_verbatim": "5 GB stored; 20K upload ops/day (appspot) / 5K/month (firebasestorage.app); 1 GB/day or 100 GB/month egress; bucket creation post-Sept-2024 uses PROJECT_ID.firebasestorage.app naming.",
+    "egress_verbatim": "1 GB/day free for legacy *.appspot.com buckets, then $0.12/GB; 100 GB/month for *.firebasestorage.app buckets. Metered beyond that.",
+    "chaining_verbatim": "5 GB x N Firebase projects — each project needs a billing account on Blaze, which defeats the purpose since Blaze is a metered surface.",
+    "tooling_verbatim": "Firebase Storage SDK / GCS JSON+XML API (rclone 'gs'/'gcs'); buckets are ordinary GCS buckets so rclone works.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Google ecosystem: Drive service accounts + shared drives, Colab, Firebase, GCS free tier, Photos. Service-account chain as reference case, quantified."
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,118 @@
+{
+  "topic": "storage",
+  "slug": "cpan-pause",
+  "provider": "CPAN / PAUSE (pause.perl.org)",
+  "url": "https://pause.perl.org",
+  "category": "registry",
+  "free_tier": {
+    "stated": "No published byte quota, and the empirical evidence points to a tight request-body limit rather than a documented number: a 2,072,566-byte distribution was rejected with 'Upload failed (request failed with error code 413 Message: Request Entity Too Large)' in April 2024, and the same upload succeeded shortly after, so the 413 was transient rather than a hard 2 MB cap. Treat the ceiling as a few MB, undocumented.",
+    "unit": "MB",
+    "metered_on": "unstated",
+    "source_url": "https://www.cpan.org/modules/04pause.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "2 MB cap",
+    "bytes": 2000000,
+    "source_url": "https://www.cpan.org/modules/04pause.html",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "per-object-cap: undocumented; 413s observed around 2 MB, transient. retention: permanent and immutable per version",
+    "source_url": "https://www.cpan.org/modules/04pause.html",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free and globally mirrored (CPAN mirror ring); no metering.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "ftp"
+  ],
+  "interface_detail": "rest",
+  "tooling": "`cpan-upload` / `pause upload` (HTTP POST to pause.perl.org/pause/authenquery?ACTION=add_uri), plus the historical FTP path. Read side is plain HTTP from any CPAN mirror.",
+  "chaining": "unlimited distributions x unlimited versions, but each must be a valid Perl distribution tarball with a version number in the filename, and 'you will never be able to upload a file with identical' name+version. Cardinality is real; size per unit is tiny.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "2 MB cap",
+      "source": "https://www.cpan.org/modules/04pause.html"
+    }
+  ],
+  "limits_note": "per-object-cap: undocumented; 413s observed around 2 MB, transient. retention: permanent and immutable per version. request-rate: not documented. Account gate: PAUSE registration requires a human-readable full name with a space (historical anti-spam check).",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "The 413 is emitted by the PAUSE web server as a request-body limit, so it behaves like a surprise ceiling that appears and disappears. Even at a generous reading this is a single-digit-MB store - three orders of magnitude from useful.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.mail-archive.com/modules@perl.org/msg53837.html",
+      "date": "2026-10-21",
+      "proved": "'I've got a 2Mb distribution which is being rejected ... 413 Message: Request Entity Too Large'"
+    },
+    {
+      "url": "https://www.mail-archive.com/modules@perl.org/msg53838.html",
+      "date": "2026-10-21",
+      "proved": "'I'm now able to upload the distribution, so that issue seems to have been temporary in nature.'"
+    },
+    {
+      "url": "https://www.cpan.org/modules/04pause.html",
+      "date": "2026-10-21",
+      "proved": "'you will never be able to upload a file with identical' filename/version"
+    },
+    {
+      "url": "https://pause.perl.org/pause/query?ACTION=request_id",
+      "date": "2026-10-21",
+      "proved": "PAUSE signup form live"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No published byte quota, and the empirical evidence points to a tight request-body limit rather than a documented number: a 2,072,566-byte distribution was rejected with 'Upload failed (request failed with error code 413 Message: Request Entity Too Large)' in April 2024, and the same upload succeeded shortly after, so the 413 was transient rather than a hard 2 MB cap. Treat the ceiling as a few MB, undocumented.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H11-code-forges.json",
+    "seed_area": "H/H11",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "H/H11"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "No published byte quota, and the empirical evidence points to a tight request-body limit rather than a documented number: a 2,072,566-byte distribution was rejected with 'Upload failed (request failed with error code 413 Message: Request Entity Too Large)' in April 2024, and the same upload succeeded shortly after, so the 413 was transient rather than a hard 2 MB cap. Treat the ceiling as a few MB, undocumented.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H11"
+    },
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "Code forges",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "No published byte quota, and the empirical evidence points to a tight request-body limit rather than a documented number: a 2,072,566-byte distribution was rejected with 'Upload failed (request failed with error code 413 Message: Request Entity Too Large)' in April 2024, and the same upload succeeded shortly after, so the 413 was transient rather than a hard 2 MB cap. Treat the ceiling as a few MB, undocumented.",
+    "limits_verbatim": "per-object-cap: undocumented; 413s observed around 2 MB, transient. retention: permanent and immutable per version. request-rate: not documented. Account gate: PAUSE registration requires a human-readable full name with a space (historical anti-spam check).",
+    "egress_verbatim": "Free and globally mirrored (CPAN mirror ring); no metering.",
+    "chaining_verbatim": "unlimited distributions x unlimited versions, but each must be a valid Perl distribution tarball with a version number in the filename, and 'you will never be able to upload a file with identical' name+version. Cardinality is real; size per unit is tiny.",
+    "tooling_verbatim": "`cpan-upload` / `pause upload` (HTTP POST to pause.perl.org/pause/authenquery?ACTION=add_uri), plus the historical FTP path. Read side is plain HTTP from any CPAN mirror.",
+    "interface_verbatim": "rest",
+    "agent_focus": "The code-forge seam: OSS project hosts, software-download directories, game/mod distribution and mirror services. Question for each: (a) any published byte quota, (b) is upload possible over SFTP/rsync/SCP/SSH rather than a web form, (c) is there a public download CDN, (d) does it need an approved project or can any account create one, (e) per-file cap. Round 2 flagged that SourceForge has no published quota and serves over plain SFTP with a global mirror CDN, and that an rclone-backend enumerator would score the niche as empty. This slot tests that class systematically. Every number below was read live or from a dated archive capture this session."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

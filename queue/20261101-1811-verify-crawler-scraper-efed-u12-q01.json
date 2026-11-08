@@ -1,0 +1,15 @@
+{
+ "id": "20261101-1811-verify-crawler-scraper-efed-u12-q01",
+ "kind": "verify",
+ "topic": "inference",
+ "question": "Queue item 20261028-0433-expand-inference-u32-q01: should compute/cloudflare-workers-ai (free_tier.unit minutes, metered_on wall-clock) move to free_tier.unit credits and metered_on request-count, and inference/cloudflare-workers-ai (free_tier.unit tokens, metered_on request-count) to free_tier.unit credits, as crawler-scraper/cfai does, keeping the Neuron named in free_tier.stated?",
+ "why": "A Neuron is neither time nor a token count. Cloudflare's changelog says each model's core input format (tokens, audio seconds, images, etc) maps to Neurons, and the pricing page prices models in neurons per M input tokens, per M images, per 512x512 tile, per audio minute and per 1k characters (bge-reranker-base 283 neurons per M input tokens, whisper 41.14 neurons per audio minute), so minutes and tokens each misstate the unit of the 10,000 Neurons a day, and wall-clock misstates what the compute record counts it on. credits is the corpus term for a vendor's own unit (docs/conventions section 6.3) and cfai files the same allowance under it. Trade-off: tokens keeps inference/cloudflare-workers-ai in token-denominated inference lists, but the same 10,000 Neurons is a different token count on every model. Pages: https://developers.cloudflare.com/changelog/post/2025-02-20-updated-pricing-docs/ and https://developers.cloudflare.com/workers-ai/platform/pricing/",
+ "scope": {
+  "rids": [
+   "compute/cloudflare-workers-ai",
+   "inference/cloudflare-workers-ai"
+  ]
+ },
+ "origin": "20261101-1811-verify-crawler-scraper-efed/u12",
+ "created": "2026-11-02T01:02:29Z"
+}

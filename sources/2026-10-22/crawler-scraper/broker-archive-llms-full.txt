@@ -1,0 +1,328 @@
+# archive: web archives, brokered
+
+> A web archive broker: the captures of a URL one archive a page, `next` walking on across Cloudflare URL Scanner (its scans of the last 30 days, first inside them and the fallback outside), the Wayback Machine, Arquivo.pt and Common Crawl; the capture closest to an instant, the Wayback Machine's and URL Scanner's compared; one capture's archived body; and a save through Save Page Now.
+
+Host: `archive.web.pkgforge.dev`. State: built.
+
+Version: `338ed53460cc`, openapi.json's `info.version`, the first 12 hex digits of the SHA-256 of the four root documents (llms.txt, llms-full.txt, openapi.json, SKILL.md, in that order, joined by a newline), each rendered with an empty version; it changes whenever anything a caller reads in them changes.
+
+Cost: free to every caller; no key, no account and no quota (never gated). The one exception is the operator's: a service can be switched off (503, reason `disabled`), and a spend breaker can cap each caller IP at 100 requests per 60 s for at most 12 hours (429, reason `rate-limited`).
+
+CORS: every answer carries `access-control-allow-origin: *` and exposes the provenance headers; OPTIONS on a listed path is the preflight (204), and it allows every request header the browser names; no credentials.
+
+Every service and its live status: https://web.pkgforge.dev/
+
+## When to use
+
+- which archived copies of a URL exist, with their timestamps and, where the archive records it, the origin's status (null on a URL Scanner scan): `GET /captures?url=`, then each page's `next` until `more` is false
+- the copy nearest a date: `GET /closest?url=&at=`
+- the page as it was archived: `GET /capture/<timestamp>/<url>`, the URL each capture's `replay` names
+- archive a page now: `POST /save?url=`, then poll `/save/<job>`
+- `provider=<id>` to ask one archive only; its refusal is the answer
+- not for the live page: use fetch.web.pkgforge.dev for the origin's response and read.web.pkgforge.dev for its text
+
+## Shared parameters
+
+Two or more routes take each of these, as written here; each route names the ones it takes.
+
+| parameter | in | required | schema | meaning |
+| --- | --- | --- | --- | --- |
+| `url` | query | yes | `{"type":"string","minLength":1,"maxLength":2048}` | the URL asked about, at most 2048 characters: absolute http(s), or a bare host and path read as http://; no user name or password, no wildcard |
+| `provider` | query | no | `{"type":"string","pattern":"^[a-z0-9][a-z0-9-]{0,63}$"}` | a provider id, `cfscan`, `wayback`, `arquivo` or `commoncrawl`: only that archive is asked, and its refusal is the answer, never another archive's; asked for what it does not keep (`cfscan` before its 30 days) it is a 400 |
+| `skip` | query | no | `{"type":"string","enum":["cfscan"]}` | `cfscan`, the only value: the other archives' walk, Cloudflare URL Scanner not asked, neither first nor as the fallback. The `next` of a page URL Scanner answered carries it. Not with `provider` |
+
+## Shared answers
+
+Two or more routes answer each of these, as written here; each route names the ones it answers.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 503 | `application/problem+json` | `reason` none-configured (body `errors[]` names each gap, e.g. `provider disabled`, or a pinned archive with no such operation) or permanently-exhausted |
+| 429 | `application/problem+json` | every archive leg is held by its rate window; `Retry-After` is the earliest reopening, body `errors[]` each hold |
+| 502 | `application/problem+json` | every archive asked failed; body `errors[]` has one row per archive with each attempt's account and classified kind |
+
+## Routes
+
+### GET /healthz
+
+service state and the running Worker version.
+
+JSON `{ok, service, version: {id, tag, at}, built, entry?, d1: {ok, ms, error?}, keys?: {state, ms}, gate?}`, always `no-store`. `version.id` is the Worker version that answered; `d1` is a `SELECT 1` on the service's D1 database, bounded at 1 s, and a failed one answers 503 with `ok: false`. `keys`, on a service that calls providers, says whether it could open one sealed key of the store with its own secret (`ok`, `failed`, `secret-unset`, `no-key`, `timeout`), never a value. `gate` says whether the operator or a spend breaker switched the service off; an off service still answers 200 here. A 200 says the Worker and its database answer, not that every route does.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | `application/json` | up |
+| 503 | `application/json` | down: the same `application/json` body as the 200 with `ok: false`, not a problem; the D1 database did not answer `SELECT 1` within 1 s (`d1.error`: `failed`, `timeout`, `unbound`) |
+
+state and version:
+
+```bash
+curl -qfsS https://archive.web.pkgforge.dev/healthz
+```
+
+### GET /
+
+the index of this service.
+
+A browser (`Accept: text/html`) gets an HTML index: links to the four root documents and the status page, and each route with its parameters and examples; any other caller gets llms.txt as `text/plain`.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | `text/plain` | the HTML index for a browser, llms.txt otherwise |
+
+the index:
+
+```bash
+curl -qfsS https://archive.web.pkgforge.dev/
+```
+
+### GET /captures
+
+list a URL's archived captures.
+
+The captures of one URL, one archive a page, oldest first, as `captures[]`, the listing going on across the archives by `next`. A page comes from one archive: Cloudflare URL Scanner (`cfscan`, the scans of the exact URL in the last 30 days) first when the listing's `from` is inside those days, then the Wayback Machine, then Arquivo.pt, then Common Crawl, and the walk stops at the first that holds the URL; an archive that holds nothing, or that is held by its rate window, is passed for the next. A page URL Scanner answers never ends the listing: `more` is true and `next` is this listing again with `skip=cfscan`, the other archives' walk, unless every one of them was asked already, and `note` says so; `next_scans` is URL Scanner's own next page (`provider=cfscan`) when it holds more scans in the window than `limit`. Every non-2xx is an RFC 9457 problem. An unknown parameter, or one given twice, is a 400; so is a request pinned to an archive for what it does not keep (`provider=cfscan` before its 30 days), which names its reach. Outside URL Scanner's 30 days (no `from`, or one before them, with a `to` that does not end before them) an unpinned first page asks it beside the walk, as the fallback, in one search bounded at 6 s. When the Wayback Machine gives no capture (it holds none, could not say, is held, failed or could not be asked) or has not answered within 3 s, and URL Scanner holds scans of the URL in the window, those scans answer at once: `fallback` is `{provider: cfscan, reach_days: 30, state: answered, because: wayback-<none|unknown|held|failed|not-asked|slow>}` (`hedge_ms` with `wayback-slow`, which never says the Wayback Machine holds none), `x-web-fallback` says the same, `misses` names only the archives that had answered, `note` says what the captures are and why, and `next` is the other archives' walk (`skip=cfscan`), which runs on after the answer and is stored as that page, so following it is usually a cache hit. When the walk answers with captures first, that is the answer and URL Scanner's are left out: a Wayback page is one of an oldest-first listing paged by its resume key. When no archive holds the URL, the empty answer's `fallback` names URL Scanner's own state: `none`, `unknown`, `held` (its account's window of 240 requests a minute is read's too, and the fallback keeps 4 of it free for a read lookup, so it is not asked rather than take them) or `unavailable`. A page the fallback answered is stored for 60 s, or 3600 s once every other archive was asked and holds none; an empty answer whose `fallback` is not `none` for 60 s. The Common Crawl crawls' host checks start as soon as the Wayback Machine gives no capture, while Arquivo.pt is asked, so a URL no archive holds is answered in about the time of the slowest archive rather than of all of them. No scan is submitted: the scanner is only read. When every archive asked holds none, the answer is a 200 with an empty `captures` and one `misses` row per archive that serves listings, whose reason is `none` or `unknown` for an archive asked, and `held` or `unavailable` for one held or not askable, which is never left out: such a listing is not "absent everywhere". An empty listing has `more: false` unless Common Crawl has crawls within the request not yet asked: then `more` is true, `next` asks Common Crawl from the first crawl not yet asked (a crawl it asked and could not read is passed over, never asked again by that cursor), and `note` says `no capture found so far; <n> crawls not yet asked`. On an empty listing `more` means only that unasked crawls remain, never that captures are known to. A row that repeats an earlier one's timestamp, digest and URL is dropped, and `duplicates` and `x-web-duplicates-dropped` count them, so a listing can hold fewer rows than `limit`. Common Crawl asks its newest 3 crawl indexes within `from` and `to` (`crawls` asks up to 12), oldest of them first, one call at a time, filling the page from one crawl before the next. Before any index call, each of those crawls' own index files on data.commoncrawl.org (its cluster.idx and at most one block of it) are read for the URL's own keys (its path lowercased, its trailing slash dropped, as Common Crawl keys it; for a URL with a port, its host's keys), all crawls at once within 5 s: a crawl whose index holds no such key is answered `none` with no index call (`host-absent=<n>` in `x-web-provider-notes`), so a URL no crawl holds, on a host it holds or not, is `none` everywhere with `more: false` on the first page; a crawl the check finds a key in, or could not check (an IP address, a cut read), is asked of the index, each call bounded at 5 s from its start. Cloudflare URL Scanner lists the scans of the exact URL within `from` and `to`, oldest first, from one search of its newest 100 scans; when that search is full and its oldest scan is after `from`, older scans may be missing and it is `unknown`. Common Crawl's listing ends at 8 s, or sooner so the whole walk ends within about 10 s (never under 1.5 s), and the crawl not answered by then, or that answered 504, is `unknown` together with every crawl after it, as `x-web-provider-notes` counts. When more captures remain, `more` is true and `next` is this route again, pinned to the archive that answered: GET it for the next page, which can be empty. Wayback and Common Crawl page by `cursor`, which carries where the page ended (Wayback's CDX resume key; Common Crawl's crawl, the rows of it listed and the crawls left), so no capture is listed twice or skipped, and a Common Crawl crawl that was `unknown` on a page that listed a capture is asked again on the next page. A cursor always moves on: when the crawl a cursor resumes at is not answered again, it is skipped (`skipped=<crawl>` in `x-web-provider-notes`) and the next cursor names the crawl after it, or `more` is false when it was the last. Arquivo.pt pages by time: when its page holds `limit` captures, `next_from` is the timestamp one second past the latest listed and `next` asks from that instant, so captures in that same second past the limit are not listed again. `from` and `to` are a year (YYYY), a month (YYYY-MM), a date (YYYY-MM-DD), or 1 to 14 digits of YYYYMMDDhhmmss; a date or a month is read as its digits, so 2006-01 is 200601. Stored for 3600 s; a listing with any `unknown` (a miss, or a crawl not answered), `held` or `unavailable` for 60 s.
+
+| parameter | in | required | schema | meaning |
+| --- | --- | --- | --- | --- |
+| `from` | query | no | `{"type":"string","pattern":"^(\\d{1,14}|\\d{4}-\\d{2}(-\\d{2})?)$"}` | the earliest capture: YYYY, YYYY-MM, YYYY-MM-DD, or 1 to 14 digits of YYYYMMDDhhmmss (2006 is the start of 2006, 2006-03 the start of March 2006) |
+| `to` | query | no | `{"type":"string","pattern":"^(\\d{1,14}|\\d{4}-\\d{2}(-\\d{2})?)$"}` | the latest capture: YYYY, YYYY-MM, YYYY-MM-DD, or 1 to 14 digits (2006 is the end of 2006, 2006-03-31 the end of that day); not before `from` |
+| `limit` | query | no | `{"type":"integer","minimum":1,"default":100}` | captures wanted, default 100; above 1000 it is clamped, and `query.limit_asked` and `x-web-limit-clamped` say so |
+| `crawls` | query | no | `{"type":"integer","minimum":1,"maximum":12}` | with provider=commoncrawl only: how many of the newest crawl indexes to ask, 1 to 12, default 3 |
+| `cursor` | query | no | `{"type":"string","pattern":"^[A-Za-z0-9_-]+$","maxLength":1024}` | the `cursor` of an earlier page, given with the same parameters and the `provider` it names; `next` carries it. Opaque, and bound to its listing: a cursor this service did not write, one given with another `url`, `from`, `to` or `crawls` than the page that answered it (`cursor was not handed out for this listing`), and one written before cursors were bound (2026-10-22, the first page asked again) are a 400 |
+
+Also the shared parameters `url`, `provider`, `skip` (query), each under Shared parameters.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | `application/json` | the archive's captures, or an empty `captures` with `misses` when no archive asked holds any |
+| 400 | `application/problem+json` | `url` missing, too long or not http(s); a bad `from`, `to`, `limit`, `crawls` or `provider`; a `cursor` this service did not write, given without the `provider` it names, or given with another listing's `url`, `from`, `to` or `crawls`; a `skip` other than cfscan, or with `provider`; `provider=cfscan` with no `from`, or one before its 30 days; an unknown or repeated parameter; an unknown provider id |
+
+Also the shared answers 429, 502, 503, each under Shared answers.
+
+list captures:
+
+```bash
+curl -qfsS "https://archive.web.pkgforge.dev/captures?url=example.com&limit=5"
+```
+
+captures in 2006:
+
+```bash
+curl -qfsS "https://archive.web.pkgforge.dev/captures?url=example.com&from=2006&to=2006"
+```
+
+captures in March 2006, by date:
+
+```bash
+curl -qfsS "https://archive.web.pkgforge.dev/captures?url=example.com&from=2006-03-01&to=2006-03-31"
+```
+
+the provenance headers:
+
+```bash
+curl -qsS -o /dev/null -D - "https://archive.web.pkgforge.dev/captures?url=example.com&limit=5"
+```
+
+Common Crawl's newest six crawls:
+
+```bash
+curl -qfsS "https://archive.web.pkgforge.dev/captures?url=example.com&provider=commoncrawl&crawls=6"
+```
+
+the other archives' walk, URL Scanner not asked:
+
+```bash
+curl -qfsS "https://archive.web.pkgforge.dev/captures?url=example.com&limit=5&skip=cfscan"
+```
+
+### GET /closest
+
+the one capture nearest an instant.
+
+The capture of `url` nearest `at`, as `closest`. The Wayback Machine's is its CDX server's row closest to `at` that is not a `warc/revisit` record (a revisit points at an earlier record and carries none of the page's own fields), with the same fields as a listing's row (`mimetype`, `digest` and `record_length` included), in one request; when CDX lists none, its Availability API is asked once (two requests on the same CDX window), whose capture has no `mimetype`, `digest` or `record_length` (null). Cloudflare URL Scanner's is its scan of the URL nearest `at` among its newest 100 of the last 30 days, one search (`status`, `mimetype`, `digest` and `record_length` null). Unpinned, both are asked together and both are waited for, whatever `at` is: the answer is the nearer of the two, and within 300 s of each other the Wayback Machine's, whose row is the fuller; `compared` names each candidate with its timestamp and its distance from `at` in seconds, and `note` says which answered and why, so a far scan never stands for a nearer Wayback capture. With one candidate it is the answer: URL Scanner's as the fallback (`fallback` and `x-web-fallback`, `because` naming why the Wayback Machine gave none), with `next` (`skip=cfscan`, the Wayback Machine alone) when the Wayback Machine was held, failed or could not be asked, and null when it holds none. With none, `closest` is null with a `misses` row and `fallback` naming URL Scanner's state. The search leaves 4 requests of the account's window, which read shares, free, and is `held` rather than take them. `skip=cfscan` asks the Wayback Machine alone. Arquivo.pt and Common Crawl have no such operation. `at` is a year (YYYY), a month (YYYY-MM), a date (YYYY-MM-DD) or 1 to 14 digits of YYYYMMDDhhmmss; a date or a month is read as its digits. A short `at` is the first instant of its period (2019 is 20190101000000, 201903 and 2019-03 are 20190301000000): the archive is asked that instant, `query.at` names it, and `query.at_asked` the form given. Stored for 3600 s; an answer of the fallback, or one whose `fallback` is not `none`, for 60 s. Every non-2xx is an RFC 9457 problem. An unknown parameter, or one given twice, is a 400; so is a request pinned to an archive for what it does not keep (`provider=cfscan` before its 30 days), which names its reach.
+
+| parameter | in | required | schema | meaning |
+| --- | --- | --- | --- | --- |
+| `at` | query | yes | `{"type":"string","pattern":"^(\\d{1,14}|\\d{4}-\\d{2}(-\\d{2})?)$"}` | the instant: YYYY, YYYY-MM, YYYY-MM-DD, or 1 to 14 digits of YYYYMMDDhhmmss; a short one is the start of its period, so 2019 is 20190101000000 and 2019-03-15 is 20190315000000 |
+
+Also the shared parameters `url`, `provider`, `skip` (query), each under Shared parameters.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | `application/json` | the closest capture, or null with `misses` |
+| 400 | `application/problem+json` | `url` or `at` missing or malformed; a `skip` other than cfscan, or with `provider`; `provider=cfscan` with an `at` before its 30 days; an unknown or repeated parameter; an unknown provider id |
+
+Also the shared answers 429, 502, 503, each under Shared answers.
+
+closest to 1 January 2006:
+
+```bash
+curl -qfsS "https://archive.web.pkgforge.dev/closest?url=example.com&at=20060101"
+```
+
+closest to a recent day, both archives compared:
+
+```bash
+curl -qfsS "https://archive.web.pkgforge.dev/closest?url=https://example.com/&at=2026-10-14"
+```
+
+### GET /capture/{rest}
+
+one capture's archived body.
+
+`/capture/<YYYYMMDDhhmmss>/<url>`: the archived response of one capture, its body unchanged (Common Crawl's is read out of its WARC record; Cloudflare URL Scanner's is the scan's main document as the origin served it to the scanner, under the recorded status and headers, three requests: the search, the scan's result and the body). A timestamp with no exact capture answers the archive's nearest one, and `x-web-capture-timestamp` and `memento-datetime` name the capture answered; whenever that is not the timestamp asked, `x-web-capture-substituted: true` and `x-web-capture-asked` say so. The Wayback Machine never replays a redirect capture (a 3xx a listing names) as its 3xx: its raw replay answers with its own redirect to the nearest capture of the redirect's target (measured 2026-10-22 for `/capture/20200218180018/http://www.python.org/about`, listed 301: `id_`, `if_` and the plain replay each answered 302 to 20200216181909 of https://www.python.org/about/), so such a capture is answered substituted, `x-web-original-url` naming the target. The answer is a 200 whatever the origin's archived status; `x-web-origin-status` names that status, `x-web-body: archived` says the body is an archive's copy, never the origin's live response, and the origin's archived headers come back as `x-archive-orig-*`. A `?` or `#` of the captured URL is percent-encoded in the path. The body is served under `content-security-policy: sandbox`. read.web.pkgforge.dev reads a Wayback Machine capture's URL from the Wayback Machine's raw capture and refuses another archive's with a 403 that says so; GET that one here. One request reaches one archive: Cloudflare URL Scanner (`cfscan`) when the timestamp is inside its 30 days, then the Wayback Machine, then Arquivo.pt, then Common Crawl, and the walk stops at the first that holds a capture; an archive that holds nothing, or that is held by its rate window, is passed for the next. A timestamp before URL Scanner's days never asks it: it holds no scan there. Every non-2xx is an RFC 9457 problem. An unknown parameter, or one given twice, is a 400; so is a request pinned to an archive for what it does not keep (`provider=cfscan` before its 30 days), which names its reach. When no archive asked holds a capture, the answer is a 404 problem, reason `no-capture`, with `misses`.
+
+| parameter | in | required | schema | meaning |
+| --- | --- | --- | --- | --- |
+| `rest` | path | yes | `{"type":"string"}` | <14-digit timestamp>/<url>. OpenAPI cannot express a path parameter that holds `/`: the value may also be sent percent-encoded as one segment (`%2F` for `/`, `%3A` for `:`), and it is decoded once. |
+
+Also the shared parameters `provider` (query), each under Shared parameters.
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | none | the archived body; its content type is the archived one |
+| 400 | `application/problem+json` | a timestamp that is not 14 digits of a calendar instant; a bad url; an unknown parameter or provider id |
+| 404 | `application/problem+json` | `reason: no-capture`: no archive asked holds a capture of the URL; body `misses[]` |
+
+Also the shared answers 429, 502, 503, each under Shared answers.
+
+the 2002 capture of example.com:
+
+```bash
+curl -qfsS "https://archive.web.pkgforge.dev/capture/20020120142510/http://example.com/"
+```
+
+the provenance headers:
+
+```bash
+curl -qsS -o /dev/null -D - "https://archive.web.pkgforge.dev/capture/20020120142510/http://example.com/"
+```
+
+### POST /save
+
+archive a URL now through Save Page Now.
+
+Asks the Internet Archive's Save Page Now to capture `url`, on the operator's Internet Archive accounts, and answers 202 with a `job` to poll at `/save/<job>` (also `Location`). A URL saved in the last hour answers with that capture instead of a new one. Save Page Now takes 5 saves of one URL a day; a further save of the URL answers 429 with `Retry-After` and reaches no account. A save makes a public capture. No request body.
+
+| parameter | in | required | schema | meaning |
+| --- | --- | --- | --- | --- |
+| `url` | query | yes | `{"type":"string","minLength":1,"maxLength":2048}` | the URL to capture, absolute http(s), at most 2048 characters |
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 202 | `application/json` | submitted: `{job, url, status: pending, poll, provider, account}` |
+| 400 | `application/problem+json` | `url` missing or malformed, an unknown parameter, or Save Page Now refused the URL (body names its token) |
+
+Also the shared answers 429, 502, 503, each under Shared answers.
+
+save a page:
+
+```bash
+curl -qfsS -X POST "https://archive.web.pkgforge.dev/save?url=https%3A%2F%2Fexample.com%2F"
+```
+
+### GET /save/{job}
+
+a save job's state.
+
+The state Save Page Now's status body states, never its HTTP code: `pending`; `success` with the capture's `timestamp`, the `capture` URL on this service of the URL asked at that timestamp, and `status_url`, the URL the status body names, without its fragment, when it is the URL asked, and null when the status names another URL (one of the page's resources, such as its favicon, or another page); or `error` with Save Page Now's `error` token. A job still pending 60 minutes after it was submitted answers `error` with `reason: expired`, because an unknown job reads pending without end; a job Save Page Now's status read does not know answers `error` with `reason: unknown-to-provider`. A job this service did not submit, or submitted over 120 minutes ago, is a 404.
+
+| parameter | in | required | schema | meaning |
+| --- | --- | --- | --- | --- |
+| `job` | path | yes | `{"type":"string","pattern":"^[A-Za-z0-9][A-Za-z0-9_-]{0,99}$"}` | the job a save answered |
+
+| status | content type | meaning |
+| --- | --- | --- |
+| 200 | `application/json` | `{job, url, submitted_at, status, timestamp, capture, status_url?, error, reason?, provider}` |
+| 400 | `application/problem+json` | a query parameter (this route takes none), or a job id that is not one a save answers with |
+| 404 | `application/problem+json` | `reason: unknown-job` |
+
+Also the shared answers 429, 502, 503, each under Shared answers.
+
+poll a job:
+
+```bash
+curl -qfsS "https://archive.web.pkgforge.dev/save/<job>"
+```
+
+### The root documents
+
+Rendered from the route table the router is built from; a build whose documents differ from it fails.
+
+Each answers 200:
+
+| route | content type | meaning |
+| --- | --- | --- |
+| `GET /llms.txt` | `text/plain` | llmstxt.org index of this service |
+| `GET /llms-full.txt` | `text/plain` | every route with parameters, answers and examples inline |
+| `GET /openapi.json` | `application/json` | OpenAPI 3.1 for every route |
+| `GET /SKILL.md` | `text/markdown` | one file an agent reads to use this service |
+
+```bash
+curl -qfsS https://archive.web.pkgforge.dev/llms.txt
+curl -qfsS https://archive.web.pkgforge.dev/llms-full.txt
+curl -qfsS https://archive.web.pkgforge.dev/openapi.json
+curl -qfsS https://archive.web.pkgforge.dev/SKILL.md
+```
+
+## Provenance headers
+
+| header | meaning |
+| --- | --- |
+| `x-web-provider` | the archive that answered: `cfscan`, `wayback`, `arquivo` or `commoncrawl`; on a listing no archive holds, every archive asked, comma-separated |
+| `x-web-account` | the label of the provider account that answered: a short name this service gives one of its own accounts at that provider; it names no key and no account of the caller (`keyless` for the archives' public routes) |
+| `x-web-cache` | `hit`: a stored listing from an archive that is still enabled, and no archive was asked; `miss`: an archive was asked |
+| `x-web-body` | `normalised` on a listing (the archive's rows in the capture schema); `archived` on a capture (an archive's copy, never the origin's live response) |
+| `memento-datetime` | on a capture: the instant of the capture answered (RFC 7089) |
+| `x-web-capture-timestamp` | on a capture: the 14-digit timestamp of the capture answered, which can differ from the one asked |
+| `x-web-capture-substituted` | on a capture: `true` when the capture answered is not the one asked (the archive's nearest, or the target of a Wayback redirect capture); absent for the exact capture |
+| `x-web-capture-asked` | on a substituted capture: the 14-digit timestamp asked, beside `x-web-capture-timestamp`, the one answered |
+| `x-web-origin-status` | on a capture: the status the origin answered the capture with, as archived |
+| `x-web-original-url` | on a capture: the URL the archive captured, when it says |
+| `x-web-provider-notes` | the archive's own facts, `key=value` tokens: `more=true` (Wayback holds more captures past the limit), `crawls=<n>` and `unknown=<n>` (Common Crawl's indexes asked, and those that could not say), `host-absent=<n>` (Common Crawl crawls whose own index holds no key of the URL, answered without an index call), `skipped=<crawl>` (a crawl a cursor resumed at that was not answered again, passed over), `dropped=<n>` (rows left out: dated in the future, or malformed), `asked-timestamp=<ts>`, `crawl=<id>`; URL Scanner's `reach-days=30` (how far its search reaches), `replay=document` (its replay is the main document as served to the scanner) and `scan=<id>` (the scan a capture's body is read from). On a page URL Scanner answered unpinned, its own `more` is left out: the body's `more` is the listing's |
+| `x-web-fallback` | Cloudflare URL Scanner beside the walk, as the body's `fallback`: `cfscan=answered because=wayback-<none|unknown|held|failed|not-asked|slow>` when its scans answered because the Wayback Machine gave none (`slow`: not within the hedge, never that it holds none), or `cfscan=<none|unknown|held|unavailable>` on an empty answer; absent when it was not asked beside the walk, or the walk's captures answered |
+| `x-web-limit-clamped` | present when `limit` was over 1000: the limit used |
+| `x-web-duplicates-dropped` | on a listing: the rows dropped as repeats of an earlier row's timestamp, digest and URL (body `duplicates`), 0 when none |
+| `x-web-store` | `degraded` when the provider walk behind an answer from the archives (never a cache hit) could not read the provider store: only this build's keyless providers were walked, unclaimed on any account's windows, and a keyed provider was not asked; absent when the store was read |
+
+## Failure states
+
+A path no route takes answers 404, reason `not-found`; a method a listed path does not take answers 405, reason `method-not-allowed`, with `Allow`; every non-2xx this service builds is an RFC 9457 problem whose `reason` is one of the values openapi.json publishes.
+
+| status | when | what to do |
+| --- | --- | --- |
+| 400 | a malformed request (see each route), an unknown or repeated parameter, an unknown provider id, or the archive refused it as malformed (body names `provider`) | fix the request; do not retry it unchanged |
+| 404 | a path not listed here (`reason: not-found`); `reason: no-capture` on /capture when no archive holds one; `reason: unknown-job` on /save/<job> | list captures with /captures and replay one it names |
+| 405 | a listed path with a method it does not take: GET or HEAD, or POST on /save; OPTIONS is the CORS preflight (204) | use the method the route names; `Allow` names it |
+| 429 | every archive leg is held by its rate window, or one URL's five saves of the day are spent | retry after `Retry-After` seconds |
+| 502 | every archive asked failed (5xx, timeout, unreachable, or an answer that is not its shape); body `errors[]` names each | retry later |
+| 503 | `reason: none-configured`: no archive can answer, each gap named in `errors[]` (an archive disabled after a refusal that can become a permanent block is one); `reason: permanently-exhausted` | do not retry soon; drop `provider` to let selection choose |
+| 500 | a defect or a store fault on this request; the error is logged | retry later |
+| 503 | reason `disabled`: the operator, or a spend breaker, switched this service or every public service off; `scope` says which (`global` or `service`) and `since` since when. `/healthz` and the root documents still answer | wait `Retry-After` (60 s) and ask again; the state is read again every 5 s, and https://web.pkgforge.dev/status says when a service is off |
+| 429 | reason `rate-limited`: a spend breaker caps each caller IP at 100 requests per 60 s on every public service, and this caller is past it | wait `Retry-After` and ask again; the cap lifts after at most 12 hours |
+
+## Pipeline contract
+
+Stable: paths and methods, `reason` values and provenance header names, held by `packages/docs/src/stable.json` (a removal or rename edits it). Each JSON answer's required fields:
+
+- `GET /captures`: `query`, `captures`, `duplicates`, `more`, `next_from`, `cursor`, `next`, `misses`, `provider`, `account`, `cached`
+- `GET /closest`: `query`, `closest`, `misses`, `provider`, `account`, `cached`
+- `POST /save`: `job`, `url`, `status`, `poll`, `provider`, `account`
+- `GET /save/{job}`: `job`, `url`, `submitted_at`, `status`, `timestamp`, `capture`, `error`, `provider`
+
+Retry, by what a client does:
+
+- retry after `Retry-After`: 429 `held`; 503 `disabled`, 429 `rate-limited` (any request route)
+- retry with backoff: 503 `deadline`, `budget`
+- retry only when `retryable` is true: 502 `providers-failed`
+- no retry: fix the request: 400 `bad-request`, `provider-refused`, `unknown-provider`
+- no retry unchanged: 503 `none-configured`, `permanently-exhausted`; 404 `no-capture`, `unknown-job`
+
+Paging `GET /captures`: follow `next`, the next page's URL, until it is null:
+
+```bash
+u="https://archive.web.pkgforge.dev/captures?url=example.com&limit=5"
+while [ -n "$u" ] && r=$(curl -qfsS "$u"); do
+  jq -c . <<<"$r" >> pages.jsonl; u=$(jq -r '.next // empty' <<<"$r")
+done
+```

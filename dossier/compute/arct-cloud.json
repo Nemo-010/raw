@@ -1,0 +1,144 @@
+{
+  "topic": "compute",
+  "slug": "arct-cloud",
+  "provider": "Arct Cloud",
+  "url": "https://www.arct.cloud/",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "USD 3.89 per month for cvm.pico in the Cost Optimized series: 1 vCPU, 1 GB RAM, 15 GB NVMe, 1 TB of outbound transfer a month, as the pricing page's table prints. The page prints monthly terms only; no annual or quarterly price appears on any page read. The terms state card plans renew automatically at the end of each billing period for a new period of the same length at the renewal price shown at checkout, and crypto or account-credit plans renew by invoice instead. The order flow is the console at console.arct.cloud behind a sign-up gate (e-mail address and password, or Google, Discord or GitHub sign-in), so the cart's own term prices are unverified: behind a sign-up. No sold-out marker on the pricing page. Overage beyond the allowance is USD 0.01 per GB, USD 0.02 per GB in Tokyo.",
+    "unit": "GiB",
+    "metered_on": "wall-clock",
+    "source_url": "https://www.arct.cloud/",
+    "read_on": "2026-10-22",
+    "notes": "none"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://www.arct.cloud/",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://www.arct.cloud/",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "Outbound transfer is counted per plan: 1 TB a month on cvm.pico up to 6 TB a month on cvm.xlarge in the Cost Optimized series, 5 to 10 TB in the General Purpose and High Performance series; inbound is free and not counted. Overage above the allowance costs USD 0.01 per GB, or USD 0.02 per GB in Tokyo. Backups and snapshots are billed separately.",
+    "metered": true,
+    "free_allowance": "1 TB per month outbound",
+    "price_per_tb": null,
+    "source_url": "https://www.arct.cloud/"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "a custom customer console at console.arct.cloud with VNC console, snapshots, resize, reinstall and daily backups; no API or CLI is documented on the pages read",
+  "chaining": "USD 3.89 is the lowest monthly rate for a 1 GB machine in this lane and the quarterly term brings it to USD 3.50 a month; 1 TB of outbound caps it at a control node or an API front end, and the separate snapshot charge at USD 0.04 per GB per month is the line to watch on a 15 GB disk",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "1 TB a month of outbound transfer on the entry plan is the wall, and the 25 Gbps network capacity behind it is unreachable at that allowance: 1 TB a month averages about 3 Mbit/s. The thread says '1 TB outbound transfer per month' specifically, so inbound is not counted. No overage price and no post-allowance throttle are stated.",
+      "source": "https://www.arct.cloud/"
+    }
+  ],
+  "limits_note": "1 TB a month of outbound transfer on the entry plan is the wall, and the 25 Gbps network capacity behind it is unreachable at that allowance: 1 TB a month averages about 3 Mbit/s. The thread says '1 TB outbound transfer per month' specifically, so inbound is not counted. No overage price and no post-allowance throttle are stated.",
+  "binding": "volume-quota",
+  "binding_note": "1 TB a month of outbound transfer on the entry plan is the wall, and the 25 Gbps network capacity behind it is unreachable at that allowance: 1 TB a month averages about 3 Mbit/s. The thread says '1 TB outbound transfer per month' specifically, so inbound is not counted. No overage price and no post-allowance throttle are stated.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "not read: the signup page was not fetched in this lane",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session: the thread is a first post from a company registered in Wyoming, with no operating history read",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://www.arct.cloud/",
+      "date": "2026-10-22",
+      "proved": "vendor page quoted: 'cvm.pico 1 vCPU - 1 GB RAM - 15 GB NVMe $3.89/mo'; 'Daily backups add 20% to the server's monthly price. Snapshots cost $0.04 per GB per month'; page description: 'Cloud servers from $3.89/mo with NVMe storage and DDoS protection'"
+    },
+    {
+      "url": "https://lowendtalk.com/discussion/221949/meet-arct-cloud-amd-epyc-kvm-vps-from-3-89-mo-nvme-ipv4-custom-control-panel",
+      "date": "2026-10-22",
+      "proved": "the offer thread states: 'cvm.pico - 1 vCPU / 1 GB RAM / 15 GB NVMe / 1 TB outbound transfer per month', 'Monthly: $3.89', 'Quarterly: $10.50 total every 3 months'; 'Our footprint includes London, Frankfurt, Amsterdam, Salt Lake City, and Tokyo'; the operator is 'Arct Technology LLC, a Wyoming-registered company'"
+    },
+    {
+      "url": "https://www.arct.cloud/pricing",
+      "date": "2026-11-07",
+      "proved": "the pricing table prices cvm.pico at USD 3.89 per month with 1 TB of outbound transfer",
+      "capture": "sha256:11a3a9a9a923de94ac7f4e6c561290bd0af2f05f4d3a2449fb6dd4d10d880450",
+      "quote": "| cvm.pico | 1 | 1 GB | 15 GB | 1 TB/mo | $3.89 |"
+    },
+    {
+      "url": "https://www.arct.cloud/pricing",
+      "date": "2026-11-07",
+      "proved": "the overage price is published on the pricing page",
+      "capture": "sha256:11a3a9a9a923de94ac7f4e6c561290bd0af2f05f4d3a2449fb6dd4d10d880450",
+      "quote": "Outbound transfer above your plan's monthly allowance costs $0.01 per GB, or $0.02 per GB in Tokyo."
+    },
+    {
+      "url": "https://www.arct.cloud/pricing",
+      "date": "2026-11-07",
+      "proved": "the pricing table re-states the entry plan's price and 1 TB outbound allowance",
+      "capture": "sha256:11a3a9a9a923de94ac7f4e6c561290bd0af2f05f4d3a2449fb6dd4d10d880450",
+      "quote": "| cvm.pico | 1 | 1 GB | 15 GB | 1 TB/mo | $3.89 |"
+    },
+    {
+      "url": "https://console.arct.cloud/auth/login?screen_hint=signup&returnTo=/servers/new",
+      "date": "2026-11-07",
+      "proved": "the console sign-up gate asks an e-mail address and password and offers Google, Discord and GitHub sign-in",
+      "capture": "sha256:d0a07ab40b4d889feeae4f93af33afb2f2fb19ffc959b38c9bdf2ef2ccd7ffe7",
+      "quote": "Continue with Google"
+    },
+    {
+      "url": "https://www.arct.cloud/legal/terms",
+      "date": "2026-11-07",
+      "proved": "the renewal rule is printed in the terms: automatic renewal at the checkout price, changed only under section 3.7",
+      "capture": "sha256:bc465bd759c5d5749288eaec3f15ff97939d7cd2413fef1f78bb8ce16ef402ac",
+      "quote": "If you pay by card, each Server's plan renews automatically at the end of each billing period for a new period of the same length. We charge your saved card the renewal price until you cancel."
+    },
+    {
+      "url": "https://www.arct.cloud/pricing",
+      "date": "2026-11-07",
+      "proved": "the vendor's pricing table prices cvm.pico at USD 3.89 a month",
+      "capture": "sha256:11a3a9a9a923de94ac7f4e6c561290bd0af2f05f4d3a2449fb6dd4d10d880450",
+      "quote": "| cvm.pico | 1 | 1 GB | 15 GB | 1 TB/mo | $3.89 |"
+    },
+    {
+      "url": "https://www.arct.cloud/legal/terms",
+      "date": "2026-11-07",
+      "proved": "the terms print the renewal rule and point to the checkout price, which only an account sees",
+      "capture": "sha256:bc465bd759c5d5749288eaec3f15ff97939d7cd2413fef1f78bb8ce16ef402ac",
+      "quote": "If you pay by card, each Server's plan renews automatically at the end of each billing period for a new period of the same length. We charge your saved card the renewal price until you cancel."
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-07T14:17:00.739Z",
+  "notes": "Not in dossier/compute (searched: arct and arctcloud, no record). The vendor page prices one plan and the thread prices the same one, and they agree. would-settle: the General Purpose and High Performance series, which the thread names but does not price, and whether the 25 Gbps network capacity is per-server or per-site, since the thread calls it 'network capacity' and not a port.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "Arct Cloud",
+      "class": null,
+      "category_as_written": "cloud VM",
+      "free_tier_kind": "none",
+      "shape": {
+        "vcpu": 1,
+        "ram_gib": 1,
+        "disk_gib": 15,
+        "gpu_class": null,
+        "gpu_count": null
+      },
+      "seen_routes": null,
+      "agents": [
+        "lowendbox"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "price_on_page": "USD 3.89/month for cvm.pico",
+    "renewal_usd": "not published: the terms renew card plans at the checkout price and the checkout is behind a sign-up, so no public page prints a renewal figure"
+  }
+}

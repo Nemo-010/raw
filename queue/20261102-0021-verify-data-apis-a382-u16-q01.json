@@ -1,0 +1,23 @@
+{
+ "id": "20261102-0021-verify-data-apis-a382-u16-q01",
+ "kind": "verify",
+ "topic": "data-apis",
+ "question": "Recommended: add `https-download` to the interface vocabulary, for a file fetched by a plain HTTP(S) GET of a documented path or an issued URL with no request API in front of it. Is that accepted?",
+ "why": "data-apis/meteostat holds rest, the nearest term, and names the real access in interface_detail; all 66 data-apis records carry rest, so a filter on it cannot find plain file downloads. The same vendor shows the split: data-apis/meteostat-json-api (also rest, binding request-rate) needs a RapidAPI key on every request and answers a JSON object with meta and data, while the bulk and per-station files are fetched with curl, no key (binding none). Probed on 2026-11-02, data.meteostat.net serves static files: HEAD answers 200 with content-length, etag, last-modified and accept-ranges bytes on hourly/2024.parquet (992,333,139 bytes), daily/2024.parquet (178,268,362), monthly.parquet (152,559,044) and stations.db (32,804,864); a range read of hourly/2024.parquet answered 206 with content-range bytes 0-1023/992333139; a missing path (hourly/1800.parquet) answered a 236-byte HTML 404, not a JSON error. W3C DCAT 3 draws the same line: dcat:downloadURL is the URL at which a distribution is available directly, typically through an HTTP GET request; dcat:accessURL is for a service reached by a query or an API call. Records that carry rest or cli and name a plain HTTPS file download in interface_detail: data-apis gdelt, ip-location-db, ip2location-lite, maxmind-geolite, db-ip, ipapi-is, ipinfo, wikidata, core-ac-uk; ip-proxy/thespeedx-proxy-list, ip-proxy/openproxylist-xyz; egress/github-releases-cdn; debrid/project-gutenberg, debrid/standard-ebooks, debrid/wikimedia-dumps. Boundary: a parameterised request answered as JSON, CSV or XML stays rest; an S3 bucket stays s3; a record with a file lane and an API lane carries both terms, and data-apis/meteostat would hold https-download alone. Queue items 20261030-1250-research-data-apis-35cd-u02-q04 and -u04-q05 ask for the same term. A rules session adds it by a reviewed pull request (AGENTS.md section 2 rule 12); the closed set is spelled in the interface enum of the dossier schema and in the conventions table of enumerated fields.",
+ "scope": {
+  "rids": [
+   "data-apis/meteostat",
+   "data-apis/gdelt",
+   "data-apis/ip-location-db",
+   "data-apis/ip2location-lite",
+   "data-apis/maxmind-geolite",
+   "data-apis/db-ip",
+   "data-apis/ipapi-is",
+   "data-apis/ipinfo",
+   "data-apis/wikidata",
+   "data-apis/core-ac-uk"
+  ]
+ },
+ "origin": "20261102-0021-verify-data-apis-a382/u16",
+ "created": "2026-11-03T00:28:29Z"
+}

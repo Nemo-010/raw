@@ -1,0 +1,99 @@
+{
+  "topic": "storage",
+  "slug": "google-colab",
+  "provider": "Google Colab",
+  "url": "https://colab.research.google.com",
+  "category": "iaas",
+  "free_tier": {
+    "stated": "No persistent disk at all. Notebook files live in Drive; the VM disk is per-session.",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://research.google.com/colaboratory/faq.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://research.google.com/colaboratory/faq.html",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "until the instance is recycled; not persistent",
+    "source_url": "https://research.google.com/colaboratory/faq.html",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "N/A — file hosting is outside the published allocation, so there is no serving path.",
+    "metered": false
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "wrapper-only",
+  "tooling": "`google.colab` Python package, Drive mount; no storage client because there is nothing to store to.",
+  "chaining": "None for storage. Several accounts are explicitly outside the published conditions ('using multiple accounts to work around access or resource usage restrictions') and the usage-anomaly detection is behavioural, so this does not even survive as a compute-box play at scale.",
+  "limits": [],
+  "limits_note": "12 h max runtime; idle timeout unpublished and variable; 'file hosting, media serving, or other web service offerings not related to interactive compute' explicitly outside the published conditions; 'Virtual machines are deleted when idle'.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: not related to interactive compute' explicitly outside the published conditions; 'Virtual machines are deleted when idle'. iaas",
+    "country": null
+  },
+  "reliability_note": "Confirmed both counts: file hosting is outside the published allocation AND zero persistence — the VM disk and the container are destroyed with the session.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://research.google.com/colaboratory/faq.html",
+      "date": "2026-10-21",
+      "proved": "the published conditions list includes 'file hosting, media serving, or other web service offerings not related to interactive compute'"
+    },
+    {
+      "url": "https://research.google.com/colaboratory/faq.html",
+      "date": "2026-10-21",
+      "proved": "'Virtual machines are deleted when idle for a while'; 'notebooks can run for at most 12 hours'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No persistent disk at all. Notebook files live in Drive; the VM disk is per-session.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G5-notebooks-compute.json",
+    "seed_area": "G/G5",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "G/G5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "No persistent disk at all. Notebook files live in Drive; the VM disk is per-session.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G5"
+    },
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Notebook disks and compute-attached storage",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No persistent disk at all. Notebook files live in Drive; the VM disk is per-session.",
+    "limits_verbatim": "12 h max runtime; idle timeout unpublished and variable; 'file hosting, media serving, or other web service offerings not related to interactive compute' explicitly outside the published conditions; 'Virtual machines are deleted when idle'.",
+    "egress_verbatim": "N/A — file hosting is outside the published allocation, so there is no serving path.",
+    "chaining_verbatim": "None for storage. Several accounts are explicitly outside the published conditions ('using multiple accounts to work around access or resource usage restrictions') and the usage-anomaly detection is behavioural, so this does not even survive as a compute-box play at scale.",
+    "tooling_verbatim": "`google.colab` Python package, Drive mount; no storage client because there is nothing to store to.",
+    "interface_verbatim": "wrapper-only",
+    "agent_focus": "notebook/compute hosts and the persistent disk bundled with them — can a free compute box double as storage and as an HTTP origin"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

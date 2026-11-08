@@ -1,0 +1,101 @@
+{
+  "topic": "storage",
+  "slug": "imageshack",
+  "provider": "ImageShack",
+  "url": "https://imageshack.com",
+  "category": "media",
+  "free_tier": {
+    "stated": "Free account with no published image-count or total-byte cap; the metered axis is bandwidth, not storage. 'Paid subscriptions don't impose a fixed file-count limit', and free is the same shape.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://imageshack.com/faq",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://imageshack.com/faq",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://imageshack.com/faq",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "METERED: free 10 GB/month, Basic 100 GB/mo, Pro 1,000 GB/mo, Premium 4,000 GB/mo. Over-limit hotlinks are 'temporarily blocked until your usage resets'. Fails the free-egress filter for serving; fine for cold write.",
+    "metered": true,
+    "free_allowance": "10 GB per month"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "REST upload API plus ShareX/legacy clients, account-level API key. Historically the most-scripted image host (imageshack.us API since 2005).",
+  "chaining": "Unlimited free accounts x unmetered storage, but each throttled to 10 GB/mo egress — so shard accounts per serving shard if egress is the constraint.",
+  "limits": [],
+  "limits_note": "25 MB per image hard. 'Each image you upload must be no more than 25 megabytes in size.'",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Survived the 2017 Photobucket-style breakage; still operating and still hosting free accounts in 2026. Bandwidth blocking is automatic and resets monthly.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://imageshack.com/faq",
+      "date": "2026-10-21",
+      "proved": "'free account with basic features and a 10 GB monthly bandwidth limit'; 'Each image you upload must be no more than 25 megabytes in size'; 'Paid subscriptions don't impose a fixed file-count limit'"
+    },
+    {
+      "url": "https://imageshack.com/upgrade",
+      "date": "2026-10-21",
+      "proved": "'25MB file size per image' on paid tiers too"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Free account with no published image-count or total-byte cap; the metered axis is bandwidth, not storage. 'Paid subscriptions don't impose a fixed file-count limit', and free is the same shape.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H2-image-hosts.json",
+    "seed_area": "H/H2",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "H/H2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "not-storage",
+      "why": "Free account with no published image-count or total-byte cap; the metered axis is bandwidth, not storage. 'Paid subscriptions don't impose a fixed file-count limit', and free is the same shape.",
+      "retry_when": "never; it is not storage",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H2"
+    },
+    "target_document": "docs/storage/free/anonymous-hosts.md",
+    "document_section": "Image hosts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Free account with no published image-count or total-byte cap; the metered axis is bandwidth, not storage. 'Paid subscriptions don't impose a fixed file-count limit', and free is the same shape.",
+    "limits_verbatim": "25 MB per image hard. 'Each image you upload must be no more than 25 megabytes in size.'",
+    "egress_verbatim": "METERED: free 10 GB/month, Basic 100 GB/mo, Pro 1,000 GB/mo, Premium 4,000 GB/mo. Over-limit hotlinks are 'temporarily blocked until your usage resets'. Fails the free-egress filter for serving; fine for cold write.",
+    "chaining_verbatim": "Unlimited free accounts x unmetered storage, but each throttled to 10 GB/mo egress — so shard accounts per serving shard if egress is the constraint.",
+    "tooling_verbatim": "REST upload API plus ShareX/legacy clients, account-level API key. Historically the most-scripted image host (imageshack.us API since 2005).",
+    "interface_verbatim": "rest",
+    "agent_focus": "image hosts and photo platforms as bulk binary storage: free byte ceilings are high or unlimited because photos are the product, but most re-encode. Crux = which hosts return the original bytes, verified by HEAD/hash, not by marketing copy."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

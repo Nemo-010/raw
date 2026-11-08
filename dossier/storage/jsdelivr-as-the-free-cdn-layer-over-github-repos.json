@@ -1,0 +1,161 @@
+{
+  "topic": "storage",
+  "slug": "jsdelivr-as-the-free-cdn-layer-over-github-repos",
+  "provider": "jsDelivr as the free CDN layer over GitHub repos",
+  "url": "https://www.jsdelivr.com",
+  "category": "paas",
+  "free_tier": {
+    "stated": "free for personal and commercial use with no limits on bandwidth or number of requests; GitHub-proxy soft limits of 10 000 actively accessed files and 100 000 files per repository",
+    "unit": "objects",
+    "metered_on": "object-count",
+    "source_url": "https://www.jsdelivr.com/terms/acceptable-use-policy",
+    "read_on": "2026-10-30",
+    "notes": "the acceptable-use-policy URL serves the jsDelivr Terms of Use, effective October 5, 2026; the file-count soft limits are not automatically enforced"
+  },
+  "per_object_cap": {
+    "stated": "files up to 20 MB through the GitHub proxy, regardless of repository size",
+    "bytes": 20000000,
+    "source_url": "https://github.com/jsdelivr/jsdelivr/issues/18550",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "| Immutable: 'Previously served immutable files may be retained in permanent storage even after upstream deletion' — deletion upstream does not remove it from jsDelivr",
+    "source_url": "https://www.jsdelivr.com/terms/acceptable-use-policy",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Unmetered, and immutable-cached at the edge: probed 'Cache-Control: public, max-age=31536000, s-maxage=31536000, immutable' plus Access-Control-Allow-Origin: *. This cleanly covers the 500 GB-1 TiB/day serving workload from a single repo without touching GitHub's own edge.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "URL pattern https://cdn.jsdelivr.net/gh/USER/REPO@TAG/path — no client needed, no auth, no config. Purge API exists for cache busting.",
+  "chaining": "Serving layer only: pair it with Releases (storage) or a git repo (small files). One repo backs 1 TiB/day because the edge absorbs repeats with a 1-year immutable TTL.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per file | 20 MB",
+      "source": "https://github.com/jsdelivr/jsdelivr/issues/18550"
+    }
+  ],
+  "limits_note": "Git repo files only — release assets are NOT served (probed: /gh/cli/cli@v2.102.1/dist/README.md -> 404). ~20 MB effective per-file ceiling for the GitHub proxy (the git-unlimited-storage README states 'jsDelivr per file | 20 MB'); hard per-file/per-package caps are undocumented and enforced at request time. Does not serve the >2 GiB release assets, so the serving path for big objects stays on GitHub's own Fastly edge.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Immutable: 'Previously served immutable files may be retained in permanent storage even after upstream deletion' — deletion upstream does not remove it from jsDelivr. Extension blocklist exists; binaries with unusual extensions can be refused.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.jsdelivr.com/terms/acceptable-use-policy",
+      "date": "2026-10-21",
+      "proved": "'there are no limits on bandwidth or number of requests'; soft limit '100 000' files per repository"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET cdn.jsdelivr.net/gh/jquery/jquery@3.7.1/dist/jquery.min.js -> 200, Cache-Control: public, max-age=31536000, s-maxage=31536000, immutable, Access-Control-Allow-Origin: *"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET cdn.jsdelivr.net/gh/cli/cli@v2.102.1/dist/README.md -> 404 (release assets not mirrored)"
+    },
+    {
+      "url": "https://www.jsdelivr.com/terms/acceptable-use-policy",
+      "date": "2026-10-30",
+      "proved": "jsDelivr CDN sets no limit on bandwidth or on the number of requests",
+      "capture": "sha256:2f18e724ac81932cd47f54f153f7202a350bb363b577a1de43bb9073f2771431",
+      "quote": "there are no limits on bandwidth or number of requests"
+    },
+    {
+      "url": "https://www.jsdelivr.com/terms/acceptable-use-policy",
+      "date": "2026-10-30",
+      "proved": "jsDelivr CDN is free for personal and commercial use",
+      "capture": "sha256:2f18e724ac81932cd47f54f153f7202a350bb363b577a1de43bb9073f2771431",
+      "quote": "using jsDelivr CDN is free for both personal and commercial use,"
+    },
+    {
+      "url": "https://www.jsdelivr.com/terms/acceptable-use-policy",
+      "date": "2026-10-30",
+      "proved": "the GitHub-proxy recommendation is at most 10 000 actively accessed files per repository",
+      "capture": "sha256:2f18e724ac81932cd47f54f153f7202a350bb363b577a1de43bb9073f2771431",
+      "quote": "We recommend that the number of actively accessed files per repository does not exceed 10 000."
+    },
+    {
+      "url": "https://www.jsdelivr.com/terms/acceptable-use-policy",
+      "date": "2026-10-30",
+      "proved": "the GitHub-proxy soft limit is 100 000 files per repository",
+      "capture": "sha256:2f18e724ac81932cd47f54f153f7202a350bb363b577a1de43bb9073f2771431",
+      "quote": "The soft limit for the number of files per repository is 100 000."
+    },
+    {
+      "url": "https://www.jsdelivr.com/terms/acceptable-use-policy",
+      "date": "2026-10-30",
+      "proved": "the soft limits are not automatically enforced",
+      "capture": "sha256:2f18e724ac81932cd47f54f153f7202a350bb363b577a1de43bb9073f2771431",
+      "quote": "These limits are not automatically enforced by us, but you agree not to exceed them."
+    },
+    {
+      "url": "https://www.jsdelivr.com/terms/acceptable-use-policy",
+      "date": "2026-10-30",
+      "proved": "the URL serves the jsDelivr Terms of Use effective October 5, 2026",
+      "capture": "sha256:2f18e724ac81932cd47f54f153f7202a350bb363b577a1de43bb9073f2771431",
+      "quote": "_Effective date: October 5, 2026_"
+    },
+    {
+      "url": "https://github.com/jsdelivr/jsdelivr/issues/18550",
+      "date": "2026-10-30",
+      "proved": "a jsDelivr member states the GitHub-proxy per-file limit of 20 MB",
+      "capture": "sha256:2d9aff2fdf9921dacb7594a19f8bc87205957ed03a5a3139bb131f85f89e24c1",
+      "quote": "We actually allow files up to 20 MB for GitHub regardless of the overall repo size"
+    },
+    {
+      "url": "https://www.jsdelivr.com/terms/acceptable-use-policy",
+      "date": "2026-10-30",
+      "proved": "served immutable files can outlive upstream deletion",
+      "capture": "sha256:2f18e724ac81932cd47f54f153f7202a350bb363b577a1de43bb9073f2771431",
+      "quote": "Previously served immutable files may be retained in permanent storage even after upstream deletion."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-30T18:09:47.045Z",
+  "notes": "Not storage, it is the egress answer for the serving workload: \"there are no limits on bandwidth or number of requests\" (AUP section 1), with soft limits of 10,000 actively accessed files and 100,000 files per repository.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B1-github-packages.json",
+    "seed_area": "B/B1",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "B/B1"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "GitHub Packages and GHCR",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Not storage, it is the egress answer for the serving workload: \"there are no limits on bandwidth or number of requests\" (AUP section 1), with soft limits of 10,000 actively accessed files and 100,000 files per repository.",
+    "limits_verbatim": "Git repo files only — release assets are NOT served (probed: /gh/cli/cli@v2.102.1/dist/README.md -> 404). ~20 MB effective per-file ceiling for the GitHub proxy (the git-unlimited-storage README states 'jsDelivr per file | 20 MB'); hard per-file/per-package caps are undocumented and enforced at request time. Does not serve the >2 GiB release assets, so the serving path for big objects stays on GitHub's own Fastly edge.",
+    "egress_verbatim": "Unmetered, and immutable-cached at the edge: probed 'Cache-Control: public, max-age=31536000, s-maxage=31536000, immutable' plus Access-Control-Allow-Origin: *. This cleanly covers the 500 GB-1 TiB/day serving workload from a single repo without touching GitHub's own edge.",
+    "chaining_verbatim": "Serving layer only: pair it with Releases (storage) or a git repo (small files). One repo backs 1 TiB/day because the edge absorbs repeats with a 1-year immutable TTL.",
+    "tooling_verbatim": "URL pattern https://cdn.jsdelivr.net/gh/USER/REPO@TAG/path — no client needed, no auth, no config. Purge API exists for cache busting.",
+    "interface_verbatim": "rest",
+    "agent_focus": "GitHub as storage — quantitative ceilings (per-file / per-release / per-repo / per-account), multiplication model, and the automation layer (gh, oras, softprops, gh-large-releases, cf-github-releases, jsDelivr)"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

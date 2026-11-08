@@ -1,0 +1,7 @@
+#!/bin/sh
+# fr: query the corpus (scripts/fshy/README.md). $PYTHON when it is set, else python3 when the shell finds one
+# that is not the Windows Store stub, else python. No Python is started to test one.
+d="$(dirname "$0")/fshy"
+if [ -n "${PYTHON:-}" ]; then exec "$PYTHON" "$d/fr.py" "$@"; fi
+p=$(command -v python3 2>/dev/null) && case "$p" in */WindowsApps/*) ;; *) exec python3 "$d/fr.py" "$@" ;; esac
+exec python "$d/fr.py" "$@"

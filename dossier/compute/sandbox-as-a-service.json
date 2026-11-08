@@ -1,0 +1,148 @@
+{
+  "topic": "compute",
+  "slug": "sandbox-as-a-service",
+  "provider": "Sandbox as a Service",
+  "url": "https://sandbox-as-a-service.com/pricing",
+  "category": "container and VM sandbox",
+  "free_tier": {
+    "stated": "$5 of signup credit, which the page estimates at about 56 hours of a small sandbox; small is 2 vCPU, 4 GB and 40 GB at $0.09 an hour",
+    "unit": "mixed",
+    "metered_on": "wall-clock",
+    "source_url": "https://sandbox-as-a-service.com/pricing",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://sandbox-as-a-service.com/pricing",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://sandbox-as-a-service.com/pricing",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "not published on the source card",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://sandbox-as-a-service.com/pricing"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "REST API at sandbox-as-a-service.com/v1 with bearer API keys, plus an MCP server; no SDK, CLI or SSH documented",
+  "tooling": "not stated in the source card",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "$0.09 an hour for small, $0.28 for medium and $0.55 for large",
+      "source": "https://sandbox-as-a-service.com/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "20 concurrent sandboxes per account; going over returns 429 until one is destroyed",
+      "source": "https://sandbox-as-a-service.com/pricing"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "a sandbox has a 1,440-minute maximum lifetime",
+      "source": "https://sandbox-as-a-service.com/pricing"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "No card is required to sign up; the quickstart signs in with Google and creates an API key. The kind email is inferred from the Google sign-in.",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the pricing page was read on 2026-10-22 and states the credit, the ladder, the concurrency cap and the 1,440-minute lifetime. That lifetime is the wall-clock axis, stated by the vendor in the units it is enforced in",
+  "evidence": [
+    {
+      "url": "https://sandbox-as-a-service.com/pricing",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://sandbox-as-a-service.com/pricing",
+      "date": "2026-10-22",
+      "proved": "'Prepaid credit, charged for exactly as long as a sandbox runs  -  no minimum, no rounding up, and provisioning time is not billed. No subscription, no seats, no minimum spend. An account with no running sandboxes costs nothing.' with the ladder 'small 2 vCPU 4 GB 40 GB $0.09/hour', 'A 10-minute small sandbox: about $0.015. The $5 of credit you get on signup covers roughly 56 hours', '20 concurrent sandboxes' and '1440 minutes maximum lifetime', quoted"
+    },
+    {
+      "url": "https://sandbox-as-a-service.com/",
+      "date": "2026-11-03",
+      "proved": "the service is reached by REST and an MCP server",
+      "capture": "sha256:b036caf42e41feaad8f8f2d12dc96c0a34c6e910278feacd8b7ce9ebd5950011",
+      "quote": "Dedicated VMs for AI agents · REST + MCP"
+    },
+    {
+      "url": "https://sandbox-as-a-service.com/pricing",
+      "date": "2026-11-03",
+      "proved": "signup needs no card",
+      "capture": "sha256:b0ed2b9c866e43b89c33a3e98ae708615f368d83735f072e47055c01b0fc2a4e",
+      "quote": "No credit card is required to sign up, and we never charge a card automatically."
+    },
+    {
+      "url": "https://sandbox-as-a-service.com/pricing",
+      "date": "2026-11-03",
+      "proved": "the pricing page lists hourly sandbox prices only; no egress allowance or egress price",
+      "capture": "sha256:b0ed2b9c866e43b89c33a3e98ae708615f368d83735f072e47055c01b0fc2a4e",
+      "quote": "Prepaid credit, charged for exactly as long as a sandbox runs"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T02:24:16.353Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 27.0,
+    "talaria_m24h_usd": 64.8,
+    "nemo_m10h_usd": 27.0,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "unclassified",
+    "shape": {
+      "vcpu": 2,
+      "ram": 4,
+      "disk": 40,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "small; medium is 4 vCPU, 8 GB and 80 GB, large is 8 vCPU, 16 GB and 160 GB"
+    },
+    "session_cap": {
+      "wall_clock_min": 1440,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "1,440 minutes maximum lifetime per sandbox, and an account with no running sandboxes costs nothing"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "one-time-credit",
+    "granularity": {
+      "min_billed_s": 0,
+      "rounding_s": null
+    },
+    "burst_x": 1.0,
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": {
+      "gib": 40,
+      "price": "included in the sandbox size",
+      "durability": "sandbox disk",
+      "on_stop": true,
+      "on_destroy": false,
+      "retention": "the 1,440-minute lifetime"
+    },
+    "net": null
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "request-rate"
+}

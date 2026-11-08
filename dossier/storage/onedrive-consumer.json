@@ -1,0 +1,102 @@
+{
+  "topic": "storage",
+  "slug": "onedrive-consumer",
+  "provider": "OneDrive consumer (Microsoft account)",
+  "url": "https://www.microsoft.com/en-us/microsoft-365/onedrive/compare-onedrive-plans",
+  "category": "cloud-drive",
+  "free_tier": {
+    "stated": "5 GB free per Microsoft account; paid tiers 100 GB / 1 TB / 2 TB.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://www.microsoft.com/en-us/microsoft-365/onedrive/compare-onedrive-plans",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.microsoft.com/en-us/microsoft-365/onedrive/compare-onedrive-plans",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.microsoft.com/en-us/microsoft-365/onedrive/compare-onedrive-plans",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Unmetered for direct download links.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "graph",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "rclone 'onedrive' with drive_type=personal; Microsoft Graph /me/drive; the OneDrive v1.0 API",
+  "chaining": "5 GB x N Microsoft accounts. Accounts are free but each needs a verified identity and there is no documented no-verification bulk signup; 5 GB is also below the 'trivially repeatable' threshold in practice for 10 TiB (2,000 accounts for 10 TB).",
+  "limits": [],
+  "limits_note": "5 GB; 250 GB max single file; OneDrive 'unlimited' offers no longer exist on consumer plans.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Stable, no data-loss history; the blocker is purely the 5 GB number.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.microsoft.com/en-us/microsoft-365/onedrive/compare-onedrive-plans",
+      "date": "2026-10-21",
+      "proved": "'Get 5 GB free, or upgrade to a Microsoft 365 subscription'; paid tiers '100 GB', '1 TB (1,000 GB)', '2 TB'"
+    },
+    {
+      "url": "https://graph.microsoft.com/v1.0/me/drive",
+      "date": "2026-10-21",
+      "proved": "probe: curl -> HTTP 401 (live, auth required)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "5 GB free per Microsoft account; paid tiers 100 GB / 1 TB / 2 TB.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A2-onedrive-sharepoint.json",
+    "seed_area": "A/A2",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "A/A2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "5 GB free per Microsoft account; paid tiers 100 GB / 1 TB / 2 TB.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/A2"
+    },
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "OneDrive, SharePoint and the M365 tenant",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "5 GB free per Microsoft account; paid tiers 100 GB / 1 TB / 2 TB.",
+    "limits_verbatim": "5 GB; 250 GB max single file; OneDrive 'unlimited' offers no longer exist on consumer plans.",
+    "egress_verbatim": "Unmetered for direct download links.",
+    "chaining_verbatim": "5 GB x N Microsoft accounts. Accounts are free but each needs a verified identity and there is no documented no-verification bulk signup; 5 GB is also below the 'trivially repeatable' threshold in practice for 10 TiB (2,000 accounts for 10 TB).",
+    "tooling_verbatim": "rclone 'onedrive' with drive_type=personal; Microsoft Graph /me/drive; the OneDrive v1.0 API",
+    "interface_verbatim": "rest",
+    "agent_focus": "Microsoft ecosystem: OneDrive, SharePoint, Office 365 dev/E5, Azure Blob free tier, Azure DevOps, Teams files"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

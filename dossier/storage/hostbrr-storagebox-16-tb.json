@@ -1,0 +1,127 @@
+{
+  "topic": "storage",
+  "slug": "hostbrr-storagebox-16-tb",
+  "provider": "HostBrr StorageBox 16 TB (BFBOX recurring coupon)",
+  "url": "https://my.hostbrr.com/order/main/packages/storagebox/?group_id=65",
+  "category": "DirectAdmin-managed storage box (NVMe-cached HDD, RAID-6/60)",
+  "free_tier": {
+    "stated": "500 GB / 1 / 2 / 4 / 8 / 16 TB, US (Utah) and DE (Falkenstein). 16 TB = $35.50/mo or $355/yr. 8 TB = $18.50/mo or $185/yr. 4 TB = $9.50/mo or $95/yr.",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://my.hostbrr.com/order/main/packages/storagebox/?group_id=65",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://my.hostbrr.com/order/main/packages/storagebox/?group_id=65",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://my.hostbrr.com/order/main/packages/storagebox/?group_id=65",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "bandwidth is quoted as a hard multiple of storage — \"5 TB Bandwidth @ 10 Gbps\" on 1 TB, \"40 TB\" on 8 TB, \"80 TB\" on 16 TB. So 5x storage per month. NOT unmetered. A LET poster claims \"its actually unmetered if you know how to set it up\" — treat that as unverified forum folklore, not a policy.",
+    "metered": false
+  },
+  "interface": [
+    "s3",
+    "webdav",
+    "sftp",
+    "ftp",
+    "rsync",
+    "smb",
+    "ssh",
+    "rclone"
+  ],
+  "interface_detail": "SSH, FTP, rsync, SFTP, DirectAdmin panel. **No WebDAV, no SMB** — confirmed by LET users comparing it to Hetzner.",
+  "tooling": "rsync/rclone-over-SFTP only. No S3, no WebDAV, no object API.",
+  "chaining": "Weakest chaining of the top candidates: no WebDAV means AList mounting requires an SFTP shim, and no S3 means no presigned URLs. Fine as a pure rsync/Borg target behind an app server; poor as a served origin.",
+  "limits": [],
+  "limits_note": "DirectAdmin is a web-hosting panel bolted onto storage — you manage FTP users and bandwidth there. RAID-6 (DE) / RAID-60 (500 GB) at order-page level. US inventory and DE inventory are separate products with separate coupons.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "Real hosting business (labze), 2+ years on LET with a Patron Provider tag; users report multi-year renewals at the same price, which is rare. But it is a small operator reselling/colocating, not owning DCs — and the 500 GB SKU is excluded from BFBOX by design.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://my.hostbrr.com/order/main/packages/storagebox/?group_id=65",
+      "date": "2026-10-21",
+      "proved": "full US ladder with monthly AND yearly prices and per-tier bandwidth (opened this session)"
+    },
+    {
+      "url": "https://my.hostbrr.com/order/forms/",
+      "date": "2026-10-21",
+      "proved": "\"Use coupon BFBOX for 40% off yearly purchases recurring! Does not include 500 GB package.\" (opened this session)"
+    },
+    {
+      "url": "https://lowendtalk.com/discussion/205842/can-a-let-be-cheaper-than-cloud-storage",
+      "date": "2026-10-21",
+      "proved": "\"For just €57/year with the recurring coupon code BFBOX (40% off), you get the StorageBox 4 TB plan\""
+    },
+    {
+      "url": "https://lowendtalk.com/discussion/212154/.../p278",
+      "date": "2026-10-21",
+      "proved": "\"BFBOX for Hostbrr DA boxes gives 40% off and is re-enabled\""
+    },
+    {
+      "url": "https://lowendtalk.com/discussion/212070/",
+      "date": "2026-10-21",
+      "proved": "... — BF2025 thread: \"The 40% off our DirectAdmin storageboxes return this year\", plus separate \"HDD Block Storage at ... €1/month per TB ... recurring as long as your service is active\""
+    },
+    {
+      "url": "https://lowendtalk.com/discussion/210850/alternative-to-hetzner-storage-box",
+      "date": "2026-10-21",
+      "proved": "\"Hostbrr's storagebox ... No smb or webdav support though\""
+    },
+    {
+      "url": "https://hostbrr.com/terms.html",
+      "date": "2026-10-21",
+      "proved": "and payment threads — PayPal, Stripe card, Coinbase Commerce crypto"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "List: $1.85/TB/mo at 16 TB ($355/yr), $1.93 at 8 TB. With BFBOX 40% recurring on yearly: 16 TB = $213/yr = $1.11/TB/mo; 8 TB = $111/yr = $1.16/TB/mo; 4 TB = $57/yr = $1.19/TB/mo. 5 TB workload: 8 TB plan = $1.16/TB/mo. 20 TB workload: two 16 TB boxes = $2.22/TB/mo (16 TB is their ceiling, so the di…",
+  "notes": "500 GB / 1 / 2 / 4 / 8 / 16 TB, US (Utah) and DE (Falkenstein). 16 TB = $35.50/mo or $355/yr. 8 TB = $18.50/mo or $185/yr. 4 TB = $9.50/mo or $95/yr.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-P7-discount-channels.json",
+    "seed_area": "A/P7",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "A/P7"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/paid/lifetime-and-deals.md",
+    "document_section": "Discount channels and Black Friday",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 7,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "500 GB / 1 / 2 / 4 / 8 / 16 TB, US (Utah) and DE (Falkenstein). 16 TB = $35.50/mo or $355/yr. 8 TB = $18.50/mo or $185/yr. 4 TB = $9.50/mo or $95/yr.",
+    "limits_verbatim": "DirectAdmin is a web-hosting panel bolted onto storage — you manage FTP users and bandwidth there. RAID-6 (DE) / RAID-60 (500 GB) at order-page level. US inventory and DE inventory are separate products with separate coupons.",
+    "egress_verbatim": "VERBATIM: bandwidth is quoted as a hard multiple of storage — \"5 TB Bandwidth @ 10 Gbps\" on 1 TB, \"40 TB\" on 8 TB, \"80 TB\" on 16 TB. So 5x storage per month. NOT unmetered. A LET poster claims \"its actually unmetered if you know how to set it up\" — treat that as unverified forum folklore, not a policy.",
+    "chaining_verbatim": "Weakest chaining of the top candidates: no WebDAV means AList mounting requires an SFTP shim, and no S3 means no presigned URLs. Fine as a pure rsync/Borg target behind an app server; poor as a served origin.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "rsync/rclone-over-SFTP only. No S3, no WebDAV, no object API.",
+    "interface_verbatim": "SSH, FTP, rsync, SFTP, DirectAdmin panel. **No WebDAV, no SMB** — confirmed by LET users comparing it to Hetzner.",
+    "price_verbatim": "List: $1.85/TB/mo at 16 TB ($355/yr), $1.93 at 8 TB. With BFBOX 40% recurring on yearly: 16 TB = $213/yr = $1.11/TB/mo; 8 TB = $111/yr = $1.16/TB/mo; 4 TB = $57/yr = $1.19/TB/mo. 5 TB workload: 8 TB plan = $1.16/TB/mo. 20 TB workload: two 16 TB boxes = $2.22/TB/mo (16 TB is their ceiling, so the discount curve breaks at the 20 TB archive size). Caveat: no WebDAV/SMB and egress = 5x storage.",
+    "agent_focus": "The cheap-paid lane — where bulk storage is actually bought (LowEndTalk offers, LowEndBox, r/DataHoarder, Slickdeals, 什么值得买, AppSumo, StackSocial, bundles, provider promo channels, lifetime flash sales). True $/TB/month price floor with free egress, stated at the 5 TB and 20 TB tiers, plus which providers run an annual promo window."
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

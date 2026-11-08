@@ -1,0 +1,105 @@
+{
+  "topic": "storage",
+  "slug": "digitalocean-container-registry-starter",
+  "provider": "DigitalOcean Container Registry (DOCR) — Starter",
+  "url": "https://docs.digitalocean.com/products/container-registry/details/pricing/",
+  "category": "registry",
+  "free_tier": {
+    "stated": "'Starter is a free offering with a single registry and repository to let you try out DOCR.' Storage 500 MiB: table row 'Storage | 500 MiB | 5 GiB | 100 GiB'. Allowance is prorated by active days: 'If a Starter registry is active for 16 days in a month, it receives ~285 MiB of storage allowance'.",
+    "unit": "GiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.digitalocean.com/products/container-registry/details/pricing/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.digitalocean.com/products/container-registry/details/pricing/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.digitalocean.com/products/container-registry/details/pricing/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "No egress charge is stated for DOCR anywhere on the pricing or limits page; DOCR is described as 'a private Docker image registry', so there is no public/anonymous pull path and no CDN-facing egress at all.",
+    "metered": false
+  },
+  "interface": [
+    "oci"
+  ],
+  "interface_detail": "oci",
+  "tooling": "doctl registry, docker. Private only — pulls require a DO API token.",
+  "chaining": "1 registry, 1 repository, 500 MiB. Not worth chaining; a second account buys 500 MiB more.",
+  "limits": [],
+  "limits_note": "1 registry, 1 repository, 500 MiB prorated; 100 GB max image, 20 GB max per layer; untagged images count toward quota; storage overage 'Not Available' on Starter (hard stop).",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Starter's prorated storage means a fresh registry can be charged overage on a partial month; 500 MiB is below any useful dataset.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.digitalocean.com/products/container-registry/details/pricing/",
+      "date": "2026-10-21",
+      "proved": "(Last verified 13 Jul 2026) — Starter $0.00, 500 MiB, 1 repo; 'Extra Storage | Not Available'"
+    },
+    {
+      "url": "https://docs.digitalocean.com/products/container-registry/details/limits/",
+      "date": "2026-10-21",
+      "proved": "100 GB max image, 20 GB per layer, registry name rules"
+    },
+    {
+      "url": "https://registry.digitalocean.com/v2/",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 401, Server: cloudflare, CF-RAY present (Cloudflare-fronted), realm https://api.digitalocean.com/v2/registry/auth"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "'Starter is a free offering with a single registry and repository to let you try out DOCR.' Storage 500 MiB: table row 'Storage | 500 MiB | 5 GiB | 100 GiB'. Allowance is prorated by active days: 'If a Starter registry is active for 16 days in a month, it receives ~285 MiB of storage allowance'.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B4-hyperscaler-registries.json",
+    "seed_area": "B/B4",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "B/B4"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "'Starter is a free offering with a single registry and repository to let you try out DOCR.' Storage 500 MiB: table row 'Storage | 500 MiB | 5 GiB | 100 GiB'. Allowance is prorated by active days: 'If a Starter registry is active for 16 days in a month, it receives ~285 MiB of storage allowance'.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area B/B4"
+    },
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "Hyperscaler registries",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "'Starter is a free offering with a single registry and repository to let you try out DOCR.' Storage 500 MiB: table row 'Storage | 500 MiB | 5 GiB | 100 GiB'. Allowance is prorated by active days: 'If a Starter registry is active for 16 days in a month, it receives ~285 MiB of storage allowance'.",
+    "limits_verbatim": "1 registry, 1 repository, 500 MiB prorated; 100 GB max image, 20 GB max per layer; untagged images count toward quota; storage overage 'Not Available' on Starter (hard stop).",
+    "egress_verbatim": "No egress charge is stated for DOCR anywhere on the pricing or limits page; DOCR is described as 'a private Docker image registry', so there is no public/anonymous pull path and no CDN-facing egress at all.",
+    "chaining_verbatim": "1 registry, 1 repository, 500 MiB. Not worth chaining; a second account buys 500 MiB more.",
+    "tooling_verbatim": "doctl registry, docker. Private only — pulls require a DO API token.",
+    "interface_verbatim": "oci",
+    "agent_focus": "hyperscaler and mid-tier container registries judged on free storage + free egress; explicit test of whether any hyperscaler gives free public storage AND free internet egress"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

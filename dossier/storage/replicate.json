@@ -1,0 +1,111 @@
+{
+  "topic": "storage",
+  "slug": "replicate",
+  "provider": "Replicate (r8.im + Files API)",
+  "url": "https://replicate.com",
+  "category": "paas",
+  "free_tier": {
+    "stated": "Files API is a workspace scratch space with no advertised total; documented behaviour is expiry, not quota. r8.im is a private-ish OCI registry for cog models.",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://replicate.com/docs/topics/predictions/data-retention",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap 100 MB",
+    "bytes": 100000000,
+    "source_url": "https://replicate.com/docs/topics/predictions/data-retention",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://replicate.com/docs/topics/predictions/data-retention",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Per-prediction output files are served from Replicate's CDN, but only for the retention window.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "`cog push r8.im/<owner>/<model>`, replicate-python Files API (files.create/list/get/delete).",
+  "chaining": "No viable chain: 100 MB per object x 1-hour retention. This is the textbook 'big per-file cap lives where retention is shortest' inverse — here small cap AND short retention.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap 100 MB",
+      "source": "https://replicate.com/docs/topics/predictions/data-retention"
+    }
+  ],
+  "limits_note": "per-object-cap 100 MB via the client library ('This will work for files up to 100MB'); data-URI path recommended only <1 MB. Retention is the killer: 'For predictions created through the API, all input parameters, output values, output files, and logs are automatically removed after an hour, by default.' Files API objects carry an explicit `expires_at`.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: Files API is a workspace scratch space with no advertised total; documented behaviour is expiry, not quota. r8.im is a private-is",
+    "country": null
+  },
+  "reliability_note": "r8.im has no anonymous pull path I could find: GET /v2/ -> 401, /v2/token -> {'error':'Endpoint not found'}, and /v2/<repo>/manifests/latest 307s to a replicate.com HTML page that 404s.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://replicate.com/docs/topics/predictions/data-retention",
+      "date": "2026-10-21",
+      "proved": "'all input parameters, output values, output files, and logs are automatically removed after an hour, by default'"
+    },
+    {
+      "url": "https://replicate.com/docs/topics/predictions/input-files",
+      "date": "2026-10-21",
+      "proved": "'This will work for files up to 100MB'"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET r8.im/v2/ -> 401; GET r8.im/v2/token -> 404 {'error':'Endpoint not found'}; GET r8.im/replicate/cog-hello-world/manifests/latest -L -> 307 -> 404 HTML"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Files API is a workspace scratch space with no advertised total; documented behaviour is expiry, not quota. r8.im is a private-ish OCI registry for cog models.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B7-model-media-hubs.json",
+    "seed_area": "B/B7",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "B/B7"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Files API is a workspace scratch space with no advertised total; documented behaviour is expiry, not quota. r8.im is a private-ish OCI registry for cog models.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area B/B7"
+    },
+    "target_document": "docs/storage/free/models-and-media.md",
+    "document_section": "Model and media hubs",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Files API is a workspace scratch space with no advertised total; documented behaviour is expiry, not quota. r8.im is a private-ish OCI registry for cog models.",
+    "limits_verbatim": "per-object-cap 100 MB via the client library ('This will work for files up to 100MB'); data-URI path recommended only <1 MB. Retention is the killer: 'For predictions created through the API, all input parameters, output values, output files, and logs are automatically removed after an hour, by default.' Files API objects carry an explicit `expires_at`.",
+    "egress_verbatim": "Per-prediction output files are served from Replicate's CDN, but only for the retention window.",
+    "chaining_verbatim": "No viable chain: 100 MB per object x 1-hour retention. This is the textbook 'big per-file cap lives where retention is shortest' inverse — here small cap AND short retention.",
+    "tooling_verbatim": "`cog push r8.im/<owner>/<model>`, replicate-python Files API (files.create/list/get/delete).",
+    "interface_verbatim": "rest",
+    "agent_focus": "Model / adapter / media-asset hubs that are NOT Hugging Face or ModelScope — per-file caps (several allow 40-455 GiB), anonymous download speed, and whether arbitrary bytes can be pushed through a 'model' slot"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

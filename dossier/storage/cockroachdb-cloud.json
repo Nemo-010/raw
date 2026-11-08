@@ -1,0 +1,106 @@
+{
+  "topic": "storage",
+  "slug": "cockroachdb-cloud",
+  "provider": "CockroachDB Cloud (Basic tier)",
+  "url": "https://www.cockroachlabs.com/",
+  "category": "paas",
+  "free_tier": {
+    "stated": "$15/month of free resource consumption per pay-as-you-go org, equivalent to 50 million Request Units AND 10 GiB of storage per month",
+    "unit": "GiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.cockroachlabs.com/docs/cockroachcloud/plan-your-cluster-basic",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.cockroachlabs.com/docs/cockroachcloud/plan-your-cluster-basic",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "10 GiB storage/month free allowance; 50M RUs/month; 30K RU/sec ceiling on Basic; the legacy 'Serverless free tier' (5 GiB + 50M RUs, no card) has been replaced — current signup is $400 credit for 30 days then the $15/month Basic allowance",
+    "days": 30,
+    "source_url": "https://docs.cockroachlabs.com/docs/cockroachcloud/plan-your-cluster-basic",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Not separately charged (storage + RUs are the meters); but the free allowance is denominated in dollars, so ANY overage converts to a bill. Effectively metered.",
+    "metered": true
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "psql / any Postgres wire client (CockroachDB is PG-wire compatible), `cockroach` CLI, Cloud API",
+  "chaining": "The $15 credit is per ORG, and the 10 GiB is a monthly allowance, not a permanent bucket. New orgs get a separate $400 30-day trial. There is no documented per-account cap on the number of orgs, so 50 orgs x 10 GiB = 500 GB in principle — but each org requires a distinct signup and a payment method to keep the $15 recurring benefit, which is a much higher friction per byte than Telegram or a drive.",
+  "limits": [],
+  "limits_note": "10 GiB storage/month free allowance; 50M RUs/month; 30K RU/sec ceiling on Basic; the legacy 'Serverless free tier' (5 GiB + 50M RUs, no card) has been replaced — current signup is $400 credit for 30 days then the $15/month Basic allowance",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: $15/month of free resource consumption per pay-as-you-go org, equivalent to 50 million Request Units AND 10 GiB of storage",
+    "country": null
+  },
+  "reliability_note": "Very reliable, but the free tier is a dollar credit rather than a hard quota, so a runaway query or a large storage footprint silently converts to charges. Storage is billed on logical GiB with 3 replicas included.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.cockroachlabs.com/docs/cockroachcloud/plan-your-cluster-basic",
+      "date": "2026-10-21",
+      "proved": "'Each pay-as-you-go CockroachDB Cloud organization ... is given $15 of resource consumption (equivalent to 50 million Request Units and 10 GiB of storage) for free each month.'"
+    },
+    {
+      "url": "https://www.cockroachlabs.com/free-tier/1a/",
+      "date": "2026-10-21",
+      "proved": "'$400 in free credits to start—no credit card required'; 'New users get $400 in free credits to use within the first 30 days.'"
+    },
+    {
+      "url": "https://www.cockroachlabs.com/docs/cockroachcloud/quickstart",
+      "date": "2026-10-21",
+      "proved": "'$400 in free-trial free trial credits ... you will need to [add a payment method] by the end of the trial'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "$15/month of free resource consumption per pay-as-you-go org, equivalent to 50 million Request Units AND 10 GiB of storage per month",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G6-db-kv-blobs.json",
+    "seed_area": "G/G6",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "G/G6"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "$15/month of free resource consumption per pay-as-you-go org, equivalent to 50 million Request Units AND 10 GiB of storage per month",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G6"
+    },
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Database and KV blobs",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "$15/month of free resource consumption per pay-as-you-go org, equivalent to 50 million Request Units AND 10 GiB of storage per month",
+    "limits_verbatim": "10 GiB storage/month free allowance; 50M RUs/month; 30K RU/sec ceiling on Basic; the legacy 'Serverless free tier' (5 GiB + 50M RUs, no card) has been replaced — current signup is $400 credit for 30 days then the $15/month Basic allowance",
+    "egress_verbatim": "Not separately charged (storage + RUs are the meters); but the free allowance is denominated in dollars, so ANY overage converts to a bill. Effectively metered.",
+    "chaining_verbatim": "The $15 credit is per ORG, and the 10 GiB is a monthly allowance, not a permanent bucket. New orgs get a separate $400 30-day trial. There is no documented per-account cap on the number of orgs, so 50 orgs x 10 GiB = 500 GB in principle — but each org requires a distinct signup and a payment method to keep the $15 recurring benefit, which is a much higher friction per byte than Telegram or a drive.",
+    "tooling_verbatim": "psql / any Postgres wire client (CockroachDB is PG-wire compatible), `cockroach` CLI, Cloud API",
+    "interface_verbatim": "rest",
+    "agent_focus": "Structured stores (SQL/NoSQL/KV/queue/search) repurposed as blob storage by encoding bytes into rows, values and documents — free bytes, per-item caps, op quotas, and the bytes-per-operation arithmetic that decides whether any of them can carry 500 GB"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

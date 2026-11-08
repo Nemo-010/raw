@@ -1,0 +1,226 @@
+{
+  "topic": "compute",
+  "slug": "tencent-cnb",
+  "provider": "Tencent CNB",
+  "url": "https://docs.cnb.cool/zh/pricing.html",
+  "category": "dev environment",
+  "free_tier": {
+    "stated": "translated from the CNB pricing table: cloud-native build CPU free quota 160 core-hours a month; cloud-native development CPU free quota 1,600 core-hours a month; both GPU lines 0 core-hours a month; GPU overage at CNY 0.5 per core-hour; repository storage 100 GiB; object storage 100 GiB; 500 AI credits a month. A core-hour is cores multiplied by hours, so 1,600 core-hours is 200 hours on an 8-core node and 1,600 hours on a 1-core node.",
+    "unit": "core-hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://docs.cnb.cool/zh/pricing.html",
+    "read_on": "2026-11-04",
+    "notes": "allowance"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://docs.cnb.cool/zh/pricing.html",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://docs.cnb.cool/zh/pricing.html",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "not published: the billing table on the pricing page lists repository storage, object storage, build and dev CPU and GPU core-hours and AI Credits, and no egress or traffic item",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://docs.cnb.cool/zh/pricing.html"
+  },
+  "interface": [
+    "rest",
+    "git"
+  ],
+  "interface_detail": "REST (OpenAPI at api.cnb.cool), Git over HTTPS with an access token, and the browser cloud IDE; Git over SSH is documented as unsupported",
+  "tooling": "a Git client over HTTPS (username cnb, an access token as the password); the REST OpenAPI at api.cnb.cool; the CNB CLI (command cnb, npm package @cnbcool/cnb-cli or Docker image cnbcool/cnb-cli, login by OAuth2 device flow or the CNB_TOKEN variable)",
+  "chaining": "1,600 CPU core-hours a month runs a continuous build and test loop for a single developer, and it holds the build step of any chain whose GPU step has moved elsewhere.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "160 core-hours a month of build CPU and 1,600 core-hours a month of development CPU, both reset at month end and never carried over; both GPU lanes are 0 core-hours a month, so a job that needs a card bills at CNY 0.5 per core-hour from the first one.",
+      "source": "https://docs.cnb.cool/zh/pricing.html"
+    }
+  ],
+  "limits_note": "the build CPU allowance of 160 core-hours a month binds first, at 20 hours on an 8-core node; the development allowance of 1,600 core-hours is the larger lane, at 200 hours on the same node; both GPU lanes are 0 core-hours a month.",
+  "binding": "volume-quota",
+  "binding_note": "the build CPU allowance of 160 core-hours a month binds first, at 20 hours on an 8-core node; the development allowance of 1,600 core-hours is the larger lane, at 200 hours on the same node; both GPU lanes are 0 core-hours a month.",
+  "identity_cost": {
+    "kind": "any-phone",
+    "detail": "a WeChat account and a phone number. The terms say the account is registered by scanning a WeChat QR code and that the WeChat identifier is its only credential, with the holder's legal phone number completed after registration; the help centre says the real-name step authorises CNB to read the phone number bound to that WeChat account, and that an account without real-name verification may not write, by creating an issue for example. No page read states a country for the number, and whether a WeChat account with no mainland number passes is unverified.",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://docs.cnb.cool/zh/pricing.html",
+      "date": "2026-10-22",
+      "proved": "the pricing table: build CPU 160 core-hours a month free, development CPU 1,600 core-hours a month free, both GPU lines 0 core-hours a month free, storage 100 GiB for repositories and 100 GiB for objects"
+    },
+    {
+      "url": "https://cloud.tencent.com/announce/detail/2349",
+      "date": "2026-07-01",
+      "proved": "quoted announcement, translated: from 2026-08-01 CNB cancels the free quota for cloud-native build GPU and cloud-native development GPU; GPU moves to pay-as-you-go; organizations without a bound Tencent Cloud budget cannot use GPU at all until they bind one"
+    },
+    {
+      "url": "https://linux.do/t/topic/2068176",
+      "date": "2026-04-27",
+      "proved": "the pre-withdrawal state, translated: a .cnb.yaml can request the cnb amd64 GPU L40 tag, giving a shared L40 with more than 40 GB of VRAM, with a single session of at most 4 hours"
+    },
+    {
+      "url": "https://linux.do/t/topic/2635751",
+      "date": "2026-07-26",
+      "proved": "an account's own quota panel showing a development GPU monthly quota of 1,600 core-hours, then a reply noting the announcement cancels it, then an answer on 2026-08-01 saying the GPU still works, which is a rollout lag and not a revocation"
+    },
+    {
+      "url": "https://docs.cnb.cool/zh/pricing.html",
+      "date": "2026-11-03",
+      "proved": "the billing table ends with AI Credits and has no egress or traffic row",
+      "capture": "sha256:a9f02eb070a0a636baab9c5ca987f0a723bc8700c5b8e7420b165bb19f2434c6",
+      "quote": "| AI Credits | 500 credits/月 | ¥0.05/credit | NPC 等 AI Token |"
+    },
+    {
+      "url": "https://api.cnb.cool/",
+      "date": "2026-11-03",
+      "proved": "the provider publishes an OpenAPI reference at api.cnb.cool",
+      "capture": "sha256:45919295a138f3c0b6f4f4e2353056b3f4da5ca92de6a1cd0c3463254bd16cdb",
+      "quote": "CNB OPENAPI"
+    },
+    {
+      "url": "https://docs.cnb.cool/zh/guide/git-access.html",
+      "date": "2026-11-03",
+      "proved": "Git access is over HTTPS with an access token; SSH is not supported for Git",
+      "capture": "sha256:2138e9967ce85e13c0951bb1817cdf012901a3d664b88a5c59ddee12533168d7",
+      "quote": "平台不支持 SSH 协议访问，原因如下："
+    },
+    {
+      "url": "https://docs.cnb.cool/zh/guide/git-access.html",
+      "date": "2026-11-04",
+      "proved": "Git access uses the fixed username cnb with an access token",
+      "capture": "sha256:2138e9967ce85e13c0951bb1817cdf012901a3d664b88a5c59ddee12533168d7",
+      "quote": "**用户名**：固定填写 `cnb`"
+    },
+    {
+      "url": "https://docs.cnb.cool/zh/develops/cnb-cli.html",
+      "date": "2026-11-04",
+      "proved": "CNB publishes a command-line tool, CNB CLI, installed as the npm package @cnbcool/cnb-cli or run as the Docker image cnbcool/cnb-cli, covering the OpenAPI",
+      "capture": "sha256:0e30d0e54949089bc6a3c00a5224f52c91a4c3eb48817ea11a84c798791b0876",
+      "quote": "**CNB CLI** 是 CNB 平台 OpenAPI 的命令行工具， 一条 `cnb` 命令即可访问全部 OpenAPI 能力"
+    },
+    {
+      "url": "https://docs.cnb.cool/zh/guide/git-access.html",
+      "date": "2026-11-04",
+      "proved": "Git over HTTPS uses the fixed username cnb with an access token as the password",
+      "capture": "sha256:2138e9967ce85e13c0951bb1817cdf012901a3d664b88a5c59ddee12533168d7",
+      "quote": "**用户名**：固定填写 `cnb`"
+    },
+    {
+      "url": "https://docs.cnb.cool/zh/pricing.html",
+      "date": "2026-11-04",
+      "proved": "the table's unit is the core-hour, cores multiplied by hours, not the clock hour",
+      "capture": "sha256:b99d2bb60fa5744f2c4267651d73e0b00e0279d93cb86fe538884a8a2f2e1865",
+      "quote": "- `8核` 使用 `1小时` = `8核 × 1小时` = `8核时`"
+    },
+    {
+      "url": "https://docs.cnb.cool/zh/pricing.html",
+      "date": "2026-11-04",
+      "proved": "the development CPU allowance is 1,600 core-hours a month, and the table prices overage per core-hour",
+      "capture": "sha256:b99d2bb60fa5744f2c4267651d73e0b00e0279d93cb86fe538884a8a2f2e1865",
+      "quote": "| 云原生开发-CPU | 1600 核时/月 | ¥0.125/核时 | 云原生开发 CPU |"
+    },
+    {
+      "url": "https://docs.cnb.cool/zh/pricing.html",
+      "date": "2026-11-04",
+      "proved": "the development CPU allowance is a monthly core-hour quota that resets at month end, which is a volume quota and not a request rate",
+      "capture": "sha256:b99d2bb60fa5744f2c4267651d73e0b00e0279d93cb86fe538884a8a2f2e1865",
+      "quote": "**云原生开发-CPU** 免费额度 `1600核时/月`，月底清零，不叠加至次月。"
+    },
+    {
+      "url": "https://docs.cnb.cool/zh/pricing.html",
+      "date": "2026-11-04",
+      "proved": "the build CPU lane keeps a 160 core-hour monthly allowance alongside the 1,600 development allowance",
+      "capture": "sha256:b99d2bb60fa5744f2c4267651d73e0b00e0279d93cb86fe538884a8a2f2e1865",
+      "quote": "**云原生构建-CPU** 免费额度 `160核时/月`，月底清零，不叠加至次月。"
+    },
+    {
+      "url": "https://docs.cnb.cool/zh/pricing.html",
+      "date": "2026-11-04",
+      "proved": "a monthly core-hour allowance per lane, with overage billed per core-hour",
+      "capture": "sha256:b99d2bb60fa5744f2c4267651d73e0b00e0279d93cb86fe538884a8a2f2e1865",
+      "quote": "| 云原生构建-CPU | 160 核时/月 | ¥0.125/核时 | 云原生构建 CPU |"
+    },
+    {
+      "url": "https://docs.cnb.cool/zh/pricing.html",
+      "date": "2026-11-04",
+      "proved": "the 160 core-hour build allowance is 20 hours on the 8-core node, against 200 hours for the 1,600 core-hour development allowance",
+      "capture": "sha256:b99d2bb60fa5744f2c4267651d73e0b00e0279d93cb86fe538884a8a2f2e1865",
+      "quote": "| 8 | 16 | 20小时 |"
+    },
+    {
+      "url": "https://docs.cnb.cool/zh/pricing.html",
+      "date": "2026-11-04",
+      "proved": "the 1,600 core-hour development allowance is 200 hours on the 8-core node",
+      "capture": "sha256:b99d2bb60fa5744f2c4267651d73e0b00e0279d93cb86fe538884a8a2f2e1865",
+      "quote": "| 8 | 16 | 200小时 | 1人、8h/天、25天 |"
+    },
+    {
+      "url": "https://cloud.tencent.com/document/product/1785/116269",
+      "date": "2026-11-04",
+      "proved": "the real-name step reads the phone number bound to the WeChat account that signed in, so no phone number is typed into CNB",
+      "capture": "sha256:919b100876ce7f7e1dee2b15a173f3991666d40fd0f2ceea143f41b29ec23d8e",
+      "quote": "在**个人设置 **> **实名认证**中，微信扫码授权云原生构建获取您微信关联的手机号码，即可完成实名认证。"
+    },
+    {
+      "url": "https://linux.do/t/topic/2068176",
+      "date": "2026-11-04",
+      "proved": "the post reports a shared L40 with more than 40 GB of VRAM as the GPU a build could request",
+      "capture": "sha256:68ae5d4a48075014c1b1919306907e7a9ada70d666f3378ce8602e8c9e6b6dd1",
+      "quote": "可以用L40，40多G显存（共享）"
+    },
+    {
+      "url": "https://docs.cnb.cool/zh/pricing.html",
+      "date": "2026-11-04",
+      "proved": "the pricing table was read again and still lists zero core-hours a month for the build GPU lane",
+      "capture": "sha256:b99d2bb60fa5744f2c4267651d73e0b00e0279d93cb86fe538884a8a2f2e1865",
+      "quote": "| 云原生构建-GPU | 0 核时/月 | ¥0.5/核时 | 云原生构建 GPU |"
+    },
+    {
+      "url": "https://docs.cnb.cool/zh/pricing.html",
+      "date": "2026-11-04",
+      "proved": "the build GPU lane is zero core-hours a month and overage bills per core-hour",
+      "capture": "sha256:b99d2bb60fa5744f2c4267651d73e0b00e0279d93cb86fe538884a8a2f2e1865",
+      "quote": "| 云原生构建-GPU | 0 核时/月 | ¥0.5/核时 | 云原生构建 GPU |"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T16:54:12.670Z",
+  "notes": "the GPU lanes now bill by the core-hour: the announcement cancels the free quota for both GPU lines from 2026-08-01 and moves them to pay-as-you-go, and the pricing table lists both at zero core-hours a month. A forum post dated 2026-04-27 had made a shared L40 with more than 40 GB of VRAM look like free capacity. The account is a WeChat login tied to a phone number.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "Tencent CNB (Cloud Native Build, cnb.cool)",
+      "class": "ci-gpu-runner",
+      "category_as_written": "CI runner and cloud dev environment",
+      "free_tier_kind": "allowance",
+      "shape": {
+        "vcpu": 8,
+        "ram_gib": 16,
+        "gpu_class": null,
+        "gpu_count": 0
+      },
+      "seen_routes": [
+        "broker read 200 docs.cnb.cool/zh/pricing.html (full table)",
+        "broker search --tsv hits on cloud.tencent.com/announce/detail/2349",
+        "broker read 200 linux.do/t/topic/2635751 via the exa provider, upstream 403",
+        "broker search --domains linux.do"
+      ],
+      "agents": [
+        "a09-forums"
+      ],
+      "promoted_from": ".tmp/wave2"
+    }
+  }
+}

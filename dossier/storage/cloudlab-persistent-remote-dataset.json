@@ -1,0 +1,112 @@
+{
+  "topic": "storage",
+  "slug": "cloudlab-persistent-remote-dataset",
+  "provider": "CloudLab persistent remote dataset (10 TB, iSCSI)",
+  "url": "https://docs.cloudlab.us/advanced-storage.html",
+  "category": "research testbed - persistent block storage",
+  "free_tier": {
+    "stated": "up to 10 TB per persistent remote dataset; pool is 500 TB at Utah, 160 TB at Wisconsin, 40 TB at Clemson. Anything over 1 TB 'likely to require administrative approval'; long-term datasets are 'subject to per-project quotas for total size and might require interaction with CloudLab staff'",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://docs.cloudlab.us/hardware.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "10 TB hard ceiling per",
+    "bytes": 10000000000000,
+    "source_url": "https://docs.cloudlab.us/hardware.html",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.cloudlab.us/hardware.html",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "free; mounted as /dev/sdb via iSCSI on the experiment network, 50-200 MB/s",
+    "metered": false
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "block device -> any filesystem -> any server you run on the node",
+  "tooling": "portal 'Create Dataset' UI, RemoteBlockstore in RSpec, rwclone/readonly mapping for multi-node",
+  "chaining": "persistent dataset + one node running S3/WebDAV + Cloudflare in front = 10 TB of genuinely durable-by-dint-of-not-being-wiped storage at $0",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "approval'",
+      "source": "https://docs.cloudlab.us/hardware.html"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "10 TB hard ceiling per",
+      "source": "https://docs.cloudlab.us/hardware.html"
+    }
+  ],
+  "limits_note": "10 TB hard ceiling per dataset, so 20 TiB needs two datasets and two projects' worth of quota. >1 TB needs a human to approve. Simultaneous read-write sharing across nodes 'will almost certainly wind up with a corrupted dataset'. No off-site backup; RAID/ZFS on the storage server only.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "institution",
+    "country": null
+  },
+  "reliability_note": "Storage servers have RAID/ZFS but 'most clusters do not have off-site backup of user data'; a project expiry deletes the allocation.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.cloudlab.us/advanced-storage.html",
+      "date": "2026-10-21",
+      "proved": "'Persistent remote datasets ... Capacity: up to 10TB'; 'sizes in excess of 1TB are likely to require administrative approval'; 'long-term datasets ... subject to per-project quotas for total size and might require interaction with CloudLab staff'"
+    },
+    {
+      "url": "https://docs.cloudlab.us/hardware.html",
+      "date": "2026-10-21",
+      "proved": "'The Utah Cloudlab cluster includes a storage server for remote datasets. The server currently has 500TB available for allocation'; Wisconsin 160TB; Clemson 40TB"
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "up to 10 TB per persistent remote dataset; pool is 500 TB at Utah, 160 TB at Wisconsin, 40 TB at Clemson. Anything over 1 TB 'likely to require administrative approval'; long-term datasets are 'subject to per-project quotas for total size and might require interaction with CloudLab staff'",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A15-contributed-infra.json",
+    "seed_area": "A/A15",
+    "seed_verdict": [
+      {
+        "value": "fails-identity",
+        "area": "A/A15"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "write-gated",
+      "why": "up to 10 TB per persistent remote dataset; pool is 500 TB at Utah, 160 TB at Wisconsin, 40 TB at Clemson. Anything over 1 TB 'likely to require administrative approval'; long-term datasets are 'subject to per-project quotas for total size and might require interaction with CloudLab staff'",
+      "retry_when": "if the write gate becomes self-service",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/A15"
+    },
+    "target_document": "docs/storage/free/relays-and-transports.md",
+    "document_section": "Contributed infrastructure",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "up to 10 TB per persistent remote dataset; pool is 500 TB at Utah, 160 TB at Wisconsin, 40 TB at Clemson. Anything over 1 TB 'likely to require administrative approval'; long-term datasets are 'subject to per-project quotas for total size and might require interaction with CloudLab staff'",
+    "limits_verbatim": "10 TB hard ceiling per dataset, so 20 TiB needs two datasets and two projects' worth of quota. >1 TB needs a human to approve. Simultaneous read-write sharing across nodes 'will almost certainly wind up with a corrupted dataset'. No off-site backup; RAID/ZFS on the storage server only.",
+    "egress_verbatim": "free; mounted as /dev/sdb via iSCSI on the experiment network, 50-200 MB/s",
+    "chaining_verbatim": "persistent dataset + one node running S3/WebDAV + Cloudflare in front = 10 TB of genuinely durable-by-dint-of-not-being-wiped storage at $0",
+    "identity_verbatim": "institution",
+    "tooling_verbatim": "portal 'Create Dataset' UI, RemoteBlockstore in RSpec, rwclone/readonly mapping for multi-node",
+    "interface_verbatim": "block device -> any filesystem -> any server you run on the node",
+    "agent_focus": "Marketplaces and networks where storage or bandwidth is contributed by third parties for free or near-free. Two directions probed: (1) BUY side - can you consume contributed bandwidth/storage cheaply; (2) SUPPLY side - the arbitrage question, whether contributing a disk earns storage credit at better than the retail rate. Also research testbeds that hand out whole physical nodes with multi-TB local disk (CloudLab, Chameleon, FABRIC, Emulab) and community mesh networks (Guifi, Freifunk, NYC Mesh). Decided per candidate by computing 20 TiB stored + 1 TiB/day egress against that path's actual tariff."
+  },
+  "binding": "none",
+  "binding_note": "the quota is real and unreachable: identity is the binding constraint, and it is not one of the six limits kinds",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,102 @@
+{
+  "topic": "storage",
+  "slug": "gcore-free-cdn",
+  "provider": "Gcore Free CDN (1 TB/mo traffic, no card)",
+  "url": "https://gcore.com/cdn",
+  "category": "cdn",
+  "free_tier": {
+    "stated": "1 TB/month included traffic and 1 billion requests on the free PAYG plan at €0/month. Verified against Gcore's own pricing payload: 'Included FREE Traffic 1 TB/Month', 'Traffic overage (per GB) €0.01', 'Requests over 1B (per 1M) €0.75'. No trial period — it is a standing free plan.",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://gcore.com/pricing/edge-network",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://gcore.com/pricing/edge-network",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://gcore.com/pricing/edge-network",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "The free 1 TB/month IS the egress. Overage €0.01/GB (≈$10/TB). Separately, Gcore Object Storage has free egress to Gcore CDN and free ingress.",
+    "metered": true,
+    "free_allowance": "1 TB per month",
+    "price_per_tb": "$10/TB"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Standard CDN pull-zone config; origin can be any URL. No card needed for the CDN free plan (confirmed: 'CDN (Free) … Free plan has no trial period, but has a 1 TB traffic limit' with no card condition listed).",
+  "chaining": "1 TB/mo = 33 GB/day, which is 3% of the serving requirement — but it is free, card-free and on 210+ PoPs, so it works as one lane in a multi-CDN rotation. Each email-only account carries the same monthly allowance, and cycling the origin across 10 accounts yields ~330 GB/day in total. Gcore's own object storage is too expensive (€0.04/GiB = €40/TB) to be the origin.",
+  "limits": [],
+  "limits_note": "per-object-cap: none published. The binding limit is the 1 TB/month traffic counter plus 1B requests. Gcore blocks Gcore storage if a plan payment fails, which can cascade into CDN suspension.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "210+ PoPs, 200+ Tbps. Origin-shielding is 'Basic' on the free plan. Free tier has been reshaped before (was 100 GB until ~2025, then moved to 1 TB), so budget for the number moving.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://gcore.com/pricing/edge-network",
+      "date": "2026-10-21",
+      "proved": "raw HTML extract: 'CDN PAYG … €0/mo … Included FREE Traffic 1 TB/Month … Traffic overage (per GB) €0.01 … Requests over 1B (per 1M) €0.75' (fetched via fetch broker because the read broker returns only nav chrome)"
+    },
+    {
+      "url": "https://docs.gcore.com/account-settings/billing/trial-conditions",
+      "date": "2026-10-21",
+      "proved": "'CDN (Free) | Not available | Free plan has no trial period, but has a 1 TB traffic limit'"
+    },
+    {
+      "url": "https://docs.gcore.com/storage/how-storage-is-billed",
+      "date": "2026-10-21",
+      "proved": "S3 Standard €0.04/GiB/mo, 'Egress to CDN Free', 'Ingress Free'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$0 for the first 1 TB/mo; $10/TB beyond (€0.01/GB). Object storage €0.04/GiB/mo ≈ €40/TB ≈ $46/TB — not a viable origin.",
+  "notes": "1 TB/month included traffic and 1 billion requests on the free PAYG plan at €0/month. Verified against Gcore's own pricing payload: 'Included FREE Traffic 1 TB/Month', 'Traffic overage (per GB) €0.01', 'Requests over 1B (per 1M) €0.75'. No trial period — it is a standing free plan.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G9-edge-cdn-as-storage.json",
+    "seed_area": "G/G9",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "G/G9"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/cloudflare-edge.md",
+    "document_section": "Edge CDN used as an object store",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "1 TB/month included traffic and 1 billion requests on the free PAYG plan at €0/month. Verified against Gcore's own pricing payload: 'Included FREE Traffic 1 TB/Month', 'Traffic overage (per GB) €0.01', 'Requests over 1B (per 1M) €0.75'. No trial period — it is a standing free plan.",
+    "limits_verbatim": "per-object-cap: none published. The binding limit is the 1 TB/month traffic counter plus 1B requests. Gcore blocks Gcore storage if a plan payment fails, which can cascade into CDN suspension.",
+    "egress_verbatim": "The free 1 TB/month IS the egress. Overage €0.01/GB (≈$10/TB). Separately, Gcore Object Storage has free egress to Gcore CDN and free ingress.",
+    "chaining_verbatim": "1 TB/mo = 33 GB/day, which is 3% of the serving requirement — but it is free, card-free and on 210+ PoPs, so it works as one lane in a multi-CDN rotation. Each email-only account carries the same monthly allowance, and cycling the origin across 10 accounts yields ~330 GB/day in total. Gcore's own object storage is too expensive (€0.04/GiB = €40/TB) to be the origin.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "Standard CDN pull-zone config; origin can be any URL. No card needed for the CDN free plan (confirmed: 'CDN (Free) … Free plan has no trial period, but has a 1 TB traffic limit' with no card condition listed).",
+    "interface_verbatim": "rest",
+    "price_verbatim": "$0 for the first 1 TB/mo; $10/TB beyond (€0.01/GB). Object storage €0.04/GiB/mo ≈ €40/TB ≈ $46/TB — not a viable origin.",
+    "agent_focus": "CDN / edge platforms as storage+egress: Fastly (free tier + Fast Forward OSS), Akamai/Linode, Bunny.net (storage + free origin->CDN transit), KeyCDN, CacheFly, Gcore, CDN77, StackPath status, Edgio/Limelight status, jsDelivr, unpkg, esm.sh, Statically, raw.githack, ghproxy mirrors. Question asked: which CDN gives free or near-free egress so a cheap origin becomes viable. Cloudflare R2 excluded per brief. Hard-probed every per-file cap with real GETs this session."
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

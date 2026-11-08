@@ -1,0 +1,19 @@
+{
+ "id": "20261103-1641-expand-inference-e236-u01-rerun",
+ "kind": "verify",
+ "topic": "inference",
+ "question": "Is the Workers AI 10,000 Neurons per day free allocation and the 300 requests per minute Text Generation limit counted per account, does the dashboard sign-up add a phone or card step, which free_tier.unit fits an allowance metered in Neurons per day, and which constraint binds first (the open item of issue #16 on the binding of compute/cloudflare-workers-ai)?\nAn audit of the first attempt judged these claims unsupported by their sources; settle each one first:\n- compute/cloudflare-workers-ai $.free_tier.metered_on: The page does state the metering basis: Neurons, a measure of the GPU compute of a request. 'unstated' says the vendor gives none, which this span contradicts; no metered_on term fits, so the record needs a new term rather than unstated.\n- compute/cloudflare-workers-ai $.free_tier.notes: The daily Neuron metering is supported, but the clause 'a request costs 1 Neuron or millions depending on model and token count' is on no page: the highest per-row rate is 606061 neurons per M output tokens (llama-2-7b-chat-fp16), and a request can cost under 1 Neuron (0.51 neurons per audio minute,\n- compute/cloudflare-workers-ai $.limits[1]: 10,000 Neurons per day on both plans and the 00:00 UTC reset are supported, but the value attaches 'further operations fail with an error past it' to both plans. On Workers Paid, usage above the allocation is billed at $0.011 per 1,000 Neurons, not failed; the failure applies on Workers Free only.\n- inference/cloudflare-workers-ai $.free_tier.metered_on: The page does state the metering basis: Neurons, a measure of the GPU compute of a request. 'unstated' says the vendor gives none, which this span contradicts; no metered_on term fits, so the record needs a new term rather than unstated.\n- inference/cloudflare-workers-ai $.free_tier.notes: The daily Neuron metering is supported, but the clause 'a request costs 1 Neuron or millions depending on model and token count' is on no page: the highest per-row rate is 606061 neurons per M output tokens (llama-2-7b-chat-fp16), and a request can cost under 1 Neuron (0.51 neurons per audio minute,",
+ "scope": {
+  "rids": [
+   "inference/cloudflare-workers-ai",
+   "compute/cloudflare-workers-ai"
+  ]
+ },
+ "origin": "audit u17 of 20261103-1641-expand-inference-e236/u01 failed: 5 of 20 unsupported",
+ "created": "2026-11-04T06:13:04Z",
+ "queue_files": [
+  "queue/20261028-0433-expand-inference-u01-q04.json",
+  "queue/20261028-0433-expand-inference-u32-q01.json",
+  "queue/20261030-1813-expand-inference-1e4a-u08-rerun.json"
+ ]
+}

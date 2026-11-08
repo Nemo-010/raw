@@ -1,0 +1,170 @@
+{
+  "topic": "storage",
+  "slug": "rentry-co",
+  "provider": "Rentry.co",
+  "url": "https://rentry.co",
+  "category": "anonymous-dump",
+  "free_tier": {
+    "stated": "200,000 characters per entry (hard, enforced at API), unlimited entries, no account required. Entries kept 'forever' unless they break rules.",
+    "unit": "unlimited",
+    "metered_on": "unstated",
+    "source_url": "https://rentry.co/what",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://rentry.co/what",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "Entries are kept forever unless they break the rules, in which case they might be deleted, or the owner deletes them.",
+    "source_url": "https://rentry.co/what",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "free direct GET, no metering; behind Cloudflare so it is CDN-cacheable at the edge.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Official Python client github.com/radude/rentry (593 stars) + pip package 'rentry'; single-file CLI with zero dependencies.",
+  "chaining": "unlimited anonymous entries x 200,000 chars (~150 KB of base64 binary after the 4/3 encoder penalty). To reach 500 GB you would need ~3.5M entries, so this is a control-plane / manifest store, not a data tier — unless an unlimited free identity source is added, and even then the operator's storage is the ceiling.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "roughly 10 anonymous creations per minute per IP (429 status when exceeded)",
+      "source": "https://github.com/radude/rentry"
+    },
+    {
+      "kind": "write-gated",
+      "value": "application and stated in the 400 error, so silent truncation does not happen — writes fail",
+      "source": "https://rentry.co/what"
+    }
+  ],
+  "limits_note": "200,000 chars per entry; custom URL 2-100 chars; edit_code required to modify; no per-account quota and no per-IP cap observed (8 rapid anonymous POSTs all returned 200); URL squatting reclaimed after 12 months idle.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: 200,000 characters per entry (hard, enforced at API), unlimited entries, no account required. Entries kept 'forever' unless they break rules. No throttling at 8 request",
+    "country": null
+  },
+  "reliability_note": "Anonymous creation is limited per IP to roughly 10 per minute (429); the per-entry text ceiling is enforced by the application and a write above it fails with a 400. Bulk write volume at the creation limit is the untested risk.",
+  "confidence": "reported",
+  "confidence_note": "pages captured 2026-11-03: https://github.com/radude/rentry, https://rentry.co/what, https://rentry.co/user-account/membership; the per-IP creation limit rests on a third-party client README, so the rung stays reported",
+  "evidence": [
+    {
+      "url": "https://rentry.co/what",
+      "date": "2026-10-21",
+      "proved": "'200000 characters for text field', 'Your entries will be kept forever'"
+    },
+    {
+      "url": "https://rentry.co/api/new",
+      "date": "2026-10-21",
+      "proved": "probe: POST with form fields url/edit_code/text -> {\"status\":\"200\",\"url\":\"https://rentry.co/n7f74b9t\",\"edit_code\":\"...\"}; page then contained the probe string"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: POST with 293,336 chars -> {\"status\": \"400\", \"errors\": \"Ensure text field has at most 200000 characters (it has 293336).\"}"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: 8 sequential anonymous creations -> 200 x8, no rate limit"
+    },
+    {
+      "url": "https://github.com/radude/rentry",
+      "date": "2026-11-03",
+      "proved": "entries are created anonymously, limited per IP",
+      "capture": "sha256:7d6b0c28d536e7c4db5cd27ed4f766198cdad3a22d27f7e2b65eb8186b1f1695",
+      "quote": "Anonymous creation is rate-limited per IP, roughly 10 per minute on rentry.co and configurable per instance."
+    },
+    {
+      "url": "https://github.com/radude/rentry",
+      "date": "2026-11-03",
+      "proved": "the documented per-IP creation limit is about 10 per minute",
+      "capture": "sha256:7d6b0c28d536e7c4db5cd27ed4f766198cdad3a22d27f7e2b65eb8186b1f1695",
+      "quote": "Anonymous creation is rate-limited per IP, roughly 10 per minute on rentry.co and configurable per instance."
+    },
+    {
+      "url": "https://github.com/radude/rentry",
+      "date": "2026-11-03",
+      "proved": "the limit is stated in the API reference",
+      "capture": "sha256:7d6b0c28d536e7c4db5cd27ed4f766198cdad3a22d27f7e2b65eb8186b1f1695",
+      "quote": "Anonymous creation is rate-limited per IP, roughly 10 per minute on rentry.co and configurable per instance."
+    },
+    {
+      "url": "https://rentry.co/what",
+      "date": "2026-11-03",
+      "proved": "retention is unbounded unless the rules are broken",
+      "capture": "sha256:301b14b44d59110df3e0d106814e3867ff9952f35274e138d6b67ed6a0772195",
+      "quote": "Your entries will be kept forever. Unless they break the rules, in which case they *might* get deleted."
+    },
+    {
+      "url": "https://github.com/radude/rentry",
+      "date": "2026-11-03",
+      "proved": "the creation limit is about 10 per minute per IP",
+      "capture": "sha256:7d6b0c28d536e7c4db5cd27ed4f766198cdad3a22d27f7e2b65eb8186b1f1695",
+      "quote": "Anonymous creation is rate-limited per IP, roughly 10 per minute on rentry.co and configurable per instance."
+    },
+    {
+      "url": "https://rentry.co/user-account/membership",
+      "date": "2026-11-03",
+      "proved": "an optional account is created from an email address; the membership price is behind this sign-in",
+      "capture": "sha256:0aa44b9024b1defdfa3ba6d65d7de251234e4f9d70ab75a1bf3fcb2a96af7d6d",
+      "quote": "Enter your email to sign in to your existing account or create a new one."
+    },
+    {
+      "url": "https://rentry.co/what",
+      "date": "2026-11-03",
+      "proved": "the per-entry limit is 200000 characters and entries are kept forever",
+      "capture": "sha256:301b14b44d59110df3e0d106814e3867ff9952f35274e138d6b67ed6a0772195",
+      "quote": "200000 characters for text field."
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-11-03T15:04:15.278Z",
+  "notes": "200,000 characters per entry (hard, enforced at API), unlimited entries, no account required. Entries kept 'forever' unless they break rules.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E5-pastebins.json",
+    "seed_area": "E/E5",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "E/E5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "200,000 characters per entry (hard, enforced at API), unlimited entries, no account required. Entries kept 'forever' unless they break rules.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E5"
+    },
+    "target_document": "docs/storage/free/transfer-services.md",
+    "document_section": "Pastebins",
+    "conversion": "mechanical",
+    "verified_at_basis": "re-checked against the live pages captured 2026-11-03: https://github.com/radude/rentry, https://rentry.co/what, https://rentry.co/user-account/membership",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "200,000 characters per entry (hard, enforced at API), unlimited entries, no account required. Entries kept 'forever' unless they break rules.",
+    "limits_verbatim": "200,000 chars per entry; custom URL 2-100 chars; edit_code required to modify; no per-account quota and no per-IP cap observed (8 rapid anonymous POSTs all returned 200); URL squatting reclaimed after 12 months idle.",
+    "egress_verbatim": "free direct GET, no metering; behind Cloudflare so it is CDN-cacheable at the edge.",
+    "chaining_verbatim": "unlimited anonymous entries x 200,000 chars (~150 KB of base64 binary after the 4/3 encoder penalty). To reach 500 GB you would need ~3.5M entries, so this is a control-plane / manifest store, not a data tier — unless an unlimited free identity source is added, and even then the operator's storage is the ceiling.",
+    "tooling_verbatim": "Official Python client github.com/radude/rentry (593 stars) + pip package 'rentry'; single-file CLI with zero dependencies.",
+    "interface_verbatim": "rest",
+    "agent_focus": "pastebins and text dumps as storage: pastebin, hastebin, ghostbin, rentry, dpaste, privatebin, GitHub Gist, GitLab snippets, pastes.io, controlc, termbin, plus binary-to-text encoders"
+  },
+  "binding": "write-gated",
+  "binding_note": "the write is a queue with a person or a rule in it, so the upload rate is set by somebody else",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,108 @@
+{
+  "topic": "storage",
+  "slug": "firebase-storage",
+  "provider": "Firebase Storage (Cloud Storage for Firebase)",
+  "url": "https://firebase.google.com/products/storage",
+  "category": "paas",
+  "free_tier": {
+    "stated": "5 GB stored on Spark (no-cost) plan; 1 GB downloaded per day; 50k download ops/day",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://firebase.google.com/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://firebase.google.com/pricing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://firebase.google.com/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "1 GB/day download (~30 GB/month) free, then $0.12/GB; outbound networking 5 GB/month. The 1 GB/DAY download cap is the binding constraint, not the 5 GB stored.",
+    "metered": true,
+    "free_allowance": "30 GB per month"
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Firebase SDKs (web/Android/iOS), Admin SDK, gsutil/gcloud storage against the underlying GCS bucket, `firebase storage:upload`; rclone can hit the bucket with GCS (not rclone's 'firebase' — that is the Realtime DB). Public download URLs via `getDownloadURL` / Firebase download tokens.",
+  "chaining": "5 GB per PROJECT. Projects per Google account on Spark are limited to 'a small number of projects (usually around 5-10)' — so ~25-50 GB/account, not a big multiplier. Multiple Google accounts is the only axis. Deleting a project takes 30 days and still counts against quota, which badly hurts churn-and-burn cycling.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "1 GB/day",
+      "source": "https://firebase.google.com/pricing"
+    }
+  ],
+  "limits_note": "1 GB/day egress (~30 GB/mo) is the practical ceiling — a 5 GB store is refetchable only 6x/month. Download-op cap 50k/day. Spark also caps Cloud Storage at 5 GB-months and 100 GB/month downloaded for the *default* bucket variant. No billing = hard stop, not overage.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Hard daily reset at midnight; exceeding it fails requests until reset. Project deletion is 30 days and blocked from quota reuse, so account cycling is slow.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://firebase.google.com/pricing",
+      "date": "2026-10-21",
+      "proved": "'GB stored | No-cost up to 5 GB | Then $0.026/GB', 'GB downloaded | No-cost up to 1 GB/day', 'Download operations | No-cost up to 50K/day'"
+    },
+    {
+      "url": "https://firebase.google.com/docs/projects/learn-more",
+      "date": "2026-10-21",
+      "proved": "'Spark pricing plan: Project-creation quota is limited to a small number of projects (usually around 5-10)'"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "5 GB stored on Spark (no-cost) plan; 1 GB downloaded per day; 50k download ops/day",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G3-baas-databases.json",
+    "seed_area": "G/G3",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "G/G3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "5 GB stored on Spark (no-cost) plan; 1 GB downloaded per day; 50k download ops/day",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G3"
+    },
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Backend-as-a-service and databases",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "5 GB stored on Spark (no-cost) plan; 1 GB downloaded per day; 50k download ops/day",
+    "limits_verbatim": "1 GB/day egress (~30 GB/mo) is the practical ceiling — a 5 GB store is refetchable only 6x/month. Download-op cap 50k/day. Spark also caps Cloud Storage at 5 GB-months and 100 GB/month downloaded for the *default* bucket variant. No billing = hard stop, not overage.",
+    "egress_verbatim": "1 GB/day download (~30 GB/month) free, then $0.12/GB; outbound networking 5 GB/month. The 1 GB/DAY download cap is the binding constraint, not the 5 GB stored.",
+    "chaining_verbatim": "5 GB per PROJECT. Projects per Google account on Spark are limited to 'a small number of projects (usually around 5-10)' — so ~25-50 GB/account, not a big multiplier. Multiple Google accounts is the only axis. Deleting a project takes 30 days and still counts against quota, which badly hurts churn-and-burn cycling.",
+    "tooling_verbatim": "Firebase SDKs (web/Android/iOS), Admin SDK, gsutil/gcloud storage against the underlying GCS bucket, `firebase storage:upload`; rclone can hit the bucket with GCS (not rclone's 'firebase' — that is the Realtime DB). Public download URLs via `getDownloadURL` / Firebase download tokens.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Backend-as-a-service and database platforms where free storage quota is expressed per PROJECT/DATASET/CLUSTER and the units may multiply with free orgs — plus the headless-CMS class, where assets are CDN-served at no egress cost"
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

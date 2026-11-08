@@ -1,0 +1,115 @@
+{
+  "topic": "storage",
+  "slug": "anyflip",
+  "provider": "AnyFlip (flipbook PDF host)",
+  "url": "https://anyflip.com",
+  "category": "media",
+  "free_tier": {
+    "stated": "FREE plan: 100 GB storage, unlimited number of publications, 5 uploads/day, 150 MB max PDF.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://anyflip.com/pricing/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "100 GB cap",
+    "bytes": 100000000000,
+    "source_url": "https://anyflip.com/pricing/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://anyflip.com/pricing/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "No egress metering documented; free plan caps \"Daily Opens\" at 30,000/day and readers can download the PDF; flipbooks are served from online.anyflip.com with a per-page HTML reader. Free tier embeds an AnyFlip watermark in the embed.",
+    "metered": false
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "wrapper-only",
+  "tooling": "No public API; upload is the web form at anyflip.com/quick-upload/ (POST without a session 302s to /login.php). Flipbook pages are static per-page HTML at online.anyflip.com/<a>/<b>/files/basic-html/pageN.html so a downloader can be written, but there is no upload client.",
+  "chaining": "Unlimited free accounts x 100 GB each. Rate is the binding constraint, not storage: 5 uploads/day x 150 MB = 750 MB/day/account, so 10 TiB/month needs ~450 accounts uploading daily; 20 TiB archive needs ~900.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "5 uploads/day",
+      "source": "https://anyflip.com/pricing/"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "100 GB cap",
+      "source": "https://anyflip.com/pricing/"
+    }
+  ],
+  "limits_note": "150 MB per PDF; 5 uploads/day free (60/day Pro); 30,000 daily opens; 100 GB cap; watermark on free embeds; download of the source PDF is plan-gated in practice.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Originals are re-served as derived page images, and the free download path returns 403 without a session; content is publicly listed, so anything put here is discoverable.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://anyflip.com/pricing/",
+      "date": "2026-10-21",
+      "proved": "table: 'Storage | 100G' (free column), 'Uploads / Day | 5', 'Daily Opens | 30 000'"
+    },
+    {
+      "url": "https://anyflip.com/faq/",
+      "date": "2026-10-21",
+      "proved": "'The max PDF file size is 150 MB'; 'There is no limit on the publications you may have'"
+    },
+    {
+      "url": "https://anyflip.com/quick-upload/",
+      "date": "2026-10-21",
+      "proved": "probe: POST -F file=@t.pdf -> 302 Location: /login.php (no anonymous upload)"
+    },
+    {
+      "url": "https://online.anyflip.com/xrbo/eygi/files/basic-html/page2.html",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200 HTML reader page; GET https://online.anyflip.com/xrbo/eygi/download.pdf -> 403"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "FREE plan: 100 GB storage, unlimited number of publications, 5 uploads/day, 150 MB max PDF.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H4-document-hosting.json",
+    "seed_area": "H/H4",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H4"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/anonymous-hosts.md",
+    "document_section": "Document hosting",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "FREE plan: 100 GB storage, unlimited number of publications, 5 uploads/day, 150 MB max PDF.",
+    "limits_verbatim": "150 MB per PDF; 5 uploads/day free (60/day Pro); 30,000 daily opens; 100 GB cap; watermark on free embeds; download of the source PDF is plan-gated in practice.",
+    "egress_verbatim": "No egress metering documented; free plan caps \"Daily Opens\" at 30,000/day and readers can download the PDF; flipbooks are served from online.anyflip.com with a per-page HTML reader. Free tier embeds an AnyFlip watermark in the embed.",
+    "chaining_verbatim": "Unlimited free accounts x 100 GB each. Rate is the binding constraint, not storage: 5 uploads/day x 150 MB = 750 MB/day/account, so 10 TiB/month needs ~450 accounts uploading daily; 20 TiB archive needs ~900.",
+    "tooling_verbatim": "No public API; upload is the web form at anyflip.com/quick-upload/ (POST without a session 302s to /login.php). Flipbook pages are static per-page HTML at online.anyflip.com/<a>/<b>/files/basic-html/pageN.html so a downloader can be written, but there is no upload client.",
+    "interface_verbatim": "wrapper-only",
+    "agent_focus": "Document and ebook platforms: Internet Archive texts, Open Library, Scribd, Issuu, Calameo, Google Books, HathiTrust, Anna's Archive, Z-Library, DocDroid, SlideShare — upload limits and whether originals are retrievable"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

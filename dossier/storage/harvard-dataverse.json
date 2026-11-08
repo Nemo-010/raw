@@ -1,0 +1,241 @@
+{
+  "topic": "storage",
+  "slug": "harvard-dataverse",
+  "provider": "Harvard Dataverse",
+  "url": "https://dataverse.harvard.edu",
+  "category": "academic",
+  "free_tier": {
+    "stated": "2.5 GB per file; 1 TB per Dataverse Collection for non-Harvard researchers (2.5 TB for Harvard affiliates). The 1 TB is real and stated by Harvard, but it is a *service/support* threshold, not a hard enforced cap — see limits.",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://support.dataverse.harvard.edu/researchers",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "2.5 GB per file",
+    "bytes": 2500000000,
+    "source_url": "https://support.dataverse.harvard.edu/researchers",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://support.dataverse.harvard.edu/researchers",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free and unmetered. Public file access returns 303 -> a presigned S3 URL (dvn-cloud-iqss.s3.amazonaws.com) valid 3600s; S3 honours Range requests. No egress pricing exists anywhere in the product. Probe: GET /api/access/datafile/11685194 -L -H 'Range: bytes=0-1023' -> 303 then HTTP 206, Content-Range: bytes 0-1023/21269528, Server: AmazonS3.",
+    "metered": false
+  },
+  "interface": [
+    "s3",
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Native REST API v6.10.1 (live: GET /api/info/version -> {\"version\":\"6.10.1\"}); SWORD v2 deposit; OAI-PMH harvest; S3 direct-upload API for files >2.5 GB (docs: 'This option can handle files >300GB'). Python client pyDataverse; R package dataverse. No rclone backend, but a REST loop is trivial (~15 lines) and the platform is a well-documented Invenio-free Java stack.",
+  "chaining": "Unlimited Dataverse Collections per account (Harvard: 9,755 collections / 306,011 datasets exist, anyone may create one). x 1 TB per collection. 20 collections = 20 TB in one account; 20 accounts = 400 TB. Also multiplies per *dataset* rather than per collection if the 1 TB is read as a guidance number, since no per-dataset quota is enforced on the root collection.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "2.5 GB per file",
+      "source": "https://support.dataverse.harvard.edu/researchers"
+    },
+    {
+      "kind": "write-gated",
+      "value": "Review' spam-check gate, not peer review",
+      "source": "https://support.dataverse.harvard.edu/researchers"
+    },
+    {
+      "kind": "write-gated",
+      "value": "curator rejecting a deposit at the review gate, and the storage-quota feature is flagge",
+      "source": "https://support.dataverse.harvard.edu/researchers"
+    }
+  ],
+  "limits_note": "Per-file 2.5 GB through the Harvard UI/API; larger files require the S3 direct-upload path, which Harvard has enabled (downloads already redirect to S3, so upload-redirect is configured). Dataset file-count cap observed live: effectiveDatasetFileCountLimit=1000 (12 used on the sampled dataset). No enforced collection quota: GET /api/dataverses/harvard/storage/quota?showInherited=true -> {\"message\":\"No quota defined for this collection\"}. Publishing is a 'Submit for Review' spam-check gate, not peer review.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: he root collection. Per-file 2.5 GB through the Harvard UI/API; larger files require the S3 direct-upload path, which Harvard has enabled (downloads already redirect to S3, so upload",
+    "country": null
+  },
+  "reliability_note": "Mature, 15+ year old service with DOI permanence and S3-backed bytes; the only soft failure mode is a curator rejecting a deposit at the review gate, and the storage-quota feature is flagged 'new and still experimental' upstream.",
+  "confidence": "documented",
+  "confidence_note": "The quota endpoint answers were re-read in this session. The record keeps `reported` because the per-file cap and the identity field were not measured. Was reported; now documented.",
+  "evidence": [
+    {
+      "url": "https://support.dataverse.harvard.edu/researchers",
+      "date": "2026-10-21",
+      "proved": "'can deposit files of up to 2.5GB, and store up to 1TB of data on the Harvard Dataverse Repository'"
+    },
+    {
+      "url": "https://support.dataverse.harvard.edu/sites/g/files/omnuum821/files/2024-12/Harvard%20Dataverse%20Repository%20Large%20Data%20Services.pdf",
+      "date": "2026-10-21",
+      "proved": "(updated Dec 3 2024) — 'free support for research data collections up to 1.0TB for non-Harvard researchers and groups and 2.5TB for Harvard affiliates'; paid Large Data Services only above 2.5TB"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET /api/dataverses/harvard/storage/quota?showInherited=true -> 'No quota defined for this collection'; GET /api/access/datafile/11685194 -> 303 to presigned S3 -> 206 Partial Content"
+    },
+    {
+      "url": "https://dataverse.harvard.edu/",
+      "date": "2026-10-22",
+      "proved": "the instance answers. NOT re-read: https://dataverse.harvard.edu/ returned no body to the read broker and no body to the fetch broker, so the claim is unchanged and unconfirmed."
+    },
+    {
+      "url": "probe:https://dataverse.harvard.edu/api/dataverses/harvard/storage/quota?showInherited=true",
+      "date": "2026-10-22",
+      "proved": "GET 2026-10-22: harvard 200/73 B 'No quota defined for this collection'; SEE_Precursors 200/104 B 'Total quota allocation for this collection: 1,099,511,627,776 bytes'; kgwas 200/104 B 2,748,779,069,440 bytes"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-22T00:00:00.000Z",
+  "notes": "2.5 GB per file; 1 TB per Dataverse Collection for non-Harvard researchers (2.5 TB for Harvard affiliates). The 1 TB is real and stated by Harvard, but it is a *service/support* threshold, not a hard enforced cap — see limits.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D2-open-science.json",
+    "seed_area": "D/D2",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "D/D2"
+      },
+      {
+        "value": "qualifies",
+        "area": "E/E16"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D11"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Harvard Dataverse",
+      "Harvard Dataverse — personal Dataverse Collection (the multiplier, not the 1 TB headline)",
+      "Harvard Dataverse (Harvard Dataverse Repository)"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md row, area D/D2",
+            "evidence": "quota: 2.5 GB per file; 1 TB per Dataverse Collection for non-Harvard researc"
+          },
+          {
+            "value": "qualifies",
+            "source": "table.md row, area E/E16",
+            "evidence": "quota: 1 TiB (1,099,511,627,776 bytes) per Dataverse Collection, confirmed by"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area D/D11",
+            "evidence": "quota: 1 TB per user, published and explicit. Dataverse Collections are free"
+          }
+        ],
+        "resolution": "qualifies-with-caveat: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies. The table.md (area D/D11) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "2.5 GB per file; 1 TB per Dataverse Collection for non-Harvard researc",
+            "source": "table.md row, area D/D2",
+            "evidence": null
+          },
+          {
+            "value": "1 TiB (1,099,511,627,776 bytes) per Dataverse Collection, confirmed by",
+            "source": "table.md row, area E/E16",
+            "evidence": null
+          },
+          {
+            "value": "1 TB per user, published and explicit. Dataverse Collections are free",
+            "source": "table.md row, area D/D11",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md (area D/D2)"
+          },
+          {
+            "value": "qualifies",
+            "source": "table.md (area E/E16)"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area D/D11)"
+          }
+        ],
+        "resolution": "qualifies-with-caveat: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies. The table.md (area D/D11) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "2.5 GB per file; 1 TB per Dataverse Collection for non-Harvard researc",
+            "source": "table.md (area D/D2)"
+          },
+          {
+            "value": "1 TiB (1,099,511,627,776 bytes) per Dataverse Collection, confirmed by",
+            "source": "table.md (area E/E16)"
+          },
+          {
+            "value": "1 TB per user, published and explicit. Dataverse Collections are free",
+            "source": "table.md (area D/D11)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/free/academic.md",
+    "document_section": "Generalist open-science repositories",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "2.5 GB per file; 1 TB per Dataverse Collection for non-Harvard researchers (2.5 TB for Harvard affiliates). The 1 TB is real and stated by Harvard, but it is a *service/support* threshold, not a hard enforced cap — see limits.",
+    "limits_verbatim": "Per-file 2.5 GB through the Harvard UI/API; larger files require the S3 direct-upload path, which Harvard has enabled (downloads already redirect to S3, so upload-redirect is configured). Dataset file-count cap observed live: effectiveDatasetFileCountLimit=1000 (12 used on the sampled dataset). No enforced collection quota: GET /api/dataverses/harvard/storage/quota?showInherited=true -> {\"message\":\"No quota defined for this collection\"}. Publishing is a 'Submit for Review' spam-check gate, not peer review.",
+    "egress_verbatim": "Free and unmetered. Public file access returns 303 -> a presigned S3 URL (dvn-cloud-iqss.s3.amazonaws.com) valid 3600s; S3 honours Range requests. No egress pricing exists anywhere in the product. Probe: GET /api/access/datafile/11685194 -L -H 'Range: bytes=0-1023' -> 303 then HTTP 206, Content-Range: bytes 0-1023/21269528, Server: AmazonS3.",
+    "chaining_verbatim": "Unlimited Dataverse Collections per account (Harvard: 9,755 collections / 306,011 datasets exist, anyone may create one). x 1 TB per collection. 20 collections = 20 TB in one account; 20 accounts = 400 TB. Also multiplies per *dataset* rather than per collection if the 1 TB is read as a guidance number, since no per-dataset quota is enforced on the root collection.",
+    "tooling_verbatim": "Native REST API v6.10.1 (live: GET /api/info/version -> {\"version\":\"6.10.1\"}); SWORD v2 deposit; OAI-PMH harvest; S3 direct-upload API for files >2.5 GB (docs: 'This option can handle files >300GB'). Python client pyDataverse; R package dataverse. No rclone backend, but a REST loop is trivial (~15 lines) and the platform is a well-documented Invenio-free Java stack.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Open-science repositories with per-project/per-file quotas (excluding Zenodo, owned by another agent). Central question: is 20 TiB of non-research data technically placeable, and does private/unpublished staging count against quota (i.e. is the repo usable as working storage, not just as a publish target).",
+    "verified_in_pass": [
+      {
+        "url": "https://dataverse.harvard.edu/",
+        "date": "2026-10-22",
+        "via": "none",
+        "http_status": 0,
+        "bytes": 0,
+        "sha256": null,
+        "pattern_found": false,
+        "what_changed": "not read",
+        "capture": null
+      }
+    ],
+    "unconfirmed_in_pass": [
+      {
+        "url": "https://dataverse.harvard.edu/",
+        "status": 0,
+        "bytes": 0,
+        "why": "not read"
+      }
+    ]
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

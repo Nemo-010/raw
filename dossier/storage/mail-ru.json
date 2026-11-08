@@ -1,0 +1,143 @@
+{
+  "topic": "storage",
+  "slug": "mail-ru",
+  "provider": "Облако Mail.ru (VK)",
+  "url": "https://cloud.mail.ru",
+  "category": "cloud-drive",
+  "free_tier": {
+    "stated": "8 GB free: 'Сколько в Облаке бесплатного места — 8 ГБ'. The historic 100 GB-for-beta-testers grant was cancelled in Nov 2024; accounts drop to 8 GB after 6 months of inactivity.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://help.mail.ru/cloud/faq/space/size/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://help.mail.ru/cloud/faq/space/size/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "The historic 100 GB-for-beta-testers grant was cancelled in Nov 2024; accounts drop to 8 GB after 6 months of inactivity",
+    "days": 180,
+    "source_url": "https://help.mail.ru/cloud/faq/space/size/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "No egress fee; sync across devices remains free (unlike Yandex).",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "webdav",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "WebDAV historically; Disk-O is the desktop aggregator client. No rclone backend.",
+  "chaining": "8 GB x N accounts is irrelevant at this scale. 1 TB 'Safe' vault exists but is capped at 3 months and does not count as storage.",
+  "limits": [],
+  "limits_note": "8 GB free. Auto-freeze and shrink-to-8GB after 6 months without login.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Mail.ru also revoked the free permanent 100 GB it gave its 2013 beta cohort, with file deletion after a 3-month grace period — a direct precedent for 'free tier that was real and then was taken away'.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://help.mail.ru/cloud/faq/space/size/",
+      "date": "2026-10-21",
+      "proved": "'Сколько в Облаке бесплатного места — 8 ГБ'; 'Если не заходить в облако больше 6 месяцев, оно автоматически заморозится, и уменьшится до 8 ГБ'"
+    },
+    {
+      "url": "https://habr.com/ru/news/854870/",
+      "date": "2026-10-21",
+      "proved": "'Mail.ru отменила бесплатные вечные 100 ГБ для первых пользователей «Облако Mail.ru»', effective 2024-11-11, deletion after 2025-02-11"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "8 GB free: 'Сколько в Облаке бесплатного места — 8 ГБ'. The historic 100 GB-for-beta-testers grant was cancelled in Nov 2024; accounts drop to 8 GB after 6 months of inactivity.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F10-intl-forums.json",
+    "seed_area": "F/F10",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "F/F10"
+      },
+      {
+        "value": "fails-quota",
+        "area": "H/H8"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Облако Mail.ru (VK)",
+      "Mail.ru — 8 GB, the 'unlimited mailbox' that ended"
+    ],
+    "conflicts": [
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "8 GB free: 'Сколько в Облаке бесплатного места — 8 ГБ'. The historic 1",
+            "source": "table.md row, area F/F10",
+            "evidence": null
+          },
+          {
+            "value": "Current: \"8 ГБ доступны бесплатно\" (8 GB free), now a single pool shar",
+            "source": "table.md row, area H/H8",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "8 GB free: 'Сколько в Облаке бесплатного места — 8 ГБ'. The historic 1",
+            "source": "table.md (area F/F10)"
+          },
+          {
+            "value": "Current: \"8 ГБ доступны бесплатно\" (8 GB free), now a single pool shar",
+            "source": "table.md (area H/H8)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "8 GB free: 'Сколько в Облаке бесплатного места — 8 ГБ'. The historic 100 GB-for-beta-testers grant was cancelled in Nov 2024; accounts drop to 8 GB after 6 months of inactivity.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F10"
+    },
+    "target_document": "docs/storage/free/anonymous-hosts.md",
+    "document_section": "International forum finds",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "8 GB free: 'Сколько в Облаке бесплатного места — 8 ГБ'. The historic 100 GB-for-beta-testers grant was cancelled in Nov 2024; accounts drop to 8 GB after 6 months of inactivity.",
+    "limits_verbatim": "8 GB free. Auto-freeze and shrink-to-8GB after 6 months without login.",
+    "egress_verbatim": "No egress fee; sync across devices remains free (unlike Yandex).",
+    "chaining_verbatim": "8 GB x N accounts is irrelevant at this scale. 1 TB 'Safe' vault exists but is capped at 3 months and does not count as storage.",
+    "tooling_verbatim": "WebDAV historically; Disk-O is the desktop aggregator client. No rclone backend.",
+    "interface_verbatim": "rest",
+    "agent_focus": "non-English, non-Chinese forums — Japanese / Korean / Russian / Brazilian / Vietnamese / Indonesian provider scenes"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

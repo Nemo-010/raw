@@ -1,0 +1,123 @@
+{
+  "topic": "ci-cd-runners",
+  "slug": "codeberg-ci",
+  "provider": "Codeberg CI (hosted Woodpecker)",
+  "url": "https://docs.codeberg.org/ci/",
+  "category": "CI runner",
+  "free_tier": {
+    "stated": "free for public repositories under a free licence, after a manual access request; linux/amd64 only",
+    "unit": "unlimited",
+    "source_url": "https://docs.codeberg.org/ci/",
+    "read_on": "2026-10-22",
+    "metered_on": "wall-clock"
+  },
+  "per_object_cap": {
+    "stated": "unverified: the Codeberg CI page states no per-job wall clock",
+    "bytes": null,
+    "source_url": "https://docs.codeberg.org/ci/"
+  },
+  "retention": {
+    "stated": "the CI is provided as-is and may break for an undefined period",
+    "days": null,
+    "source_url": "https://docs.codeberg.org/ci/"
+  },
+  "egress": {
+    "terms": "no charge published",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://docs.codeberg.org/ci/"
+  },
+  "interface": [
+    "git",
+    "cli"
+  ],
+  "interface_detail": "a .woodpecker.yml pipeline against ci.codeberg.org; self-hosted agents can be attached",
+  "tooling": "the Woodpecker pipeline images; no Docker daemon inside the hosted runners",
+  "chaining": "a free control plane on a non-commercial forge, which pairs with a self-hosted agent for long-running or resource-intensive jobs",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "onboarding requires a request form reviewed by a Codeberg volunteer",
+      "source": "https://docs.codeberg.org/ci/"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "linux/amd64 is the sole build target; there is no Docker daemon in the hosted runners",
+      "source": "https://docs.codeberg.org/ci/"
+    }
+  ],
+  "binding": "write-gated",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "a Codeberg account plus a reviewed access request",
+    "country": null
+  },
+  "reliability_note": "'CI access is provided as-is and might break at any time and for an undefined period'",
+  "confidence": "documented",
+  "confidence_note": "the Codeberg CI page was read today and states the manual onboarding and the amd64-only limit.",
+  "evidence": [
+    {
+      "url": "https://docs.codeberg.org/ci/",
+      "date": "2026-10-22",
+      "proved": "'Onboarding requires a few manual steps ... a Codeberg volunteer will review your request'; 'linux/amd64 is the sole build target'; CI is provided as-is and may break at any time"
+    },
+    {
+      "url": "https://docs.codeberg.org/ci/",
+      "date": "2026-11-04",
+      "proved": "onboarding is a manual request reviewed by a volunteer",
+      "capture": "sha256:8e71091b439845f5ae6219fac0135e684a18827efc36f77fc73a37b308360d13",
+      "quote": "a Codeberg volunteer will review your request and grant you access if your use case is appropriate."
+    },
+    {
+      "url": "https://docs.codeberg.org/ci/",
+      "date": "2026-11-04",
+      "proved": "amd64 is the only build target",
+      "capture": "sha256:8e71091b439845f5ae6219fac0135e684a18827efc36f77fc73a37b308360d13",
+      "quote": "`linux/amd64` is the sole build target on the Woodpecker CI deployment."
+    },
+    {
+      "url": "https://docs.codeberg.org/ci/",
+      "date": "2026-11-04",
+      "proved": "the service carries no availability promise",
+      "capture": "sha256:8e71091b439845f5ae6219fac0135e684a18827efc36f77fc73a37b308360d13",
+      "quote": "**CI access is provided as-is and might break at any time**"
+    },
+    {
+      "url": "probe:https://docs.codeberg.org/ci/",
+      "date": "2026-11-04",
+      "proved": "the CI page answered HTTP 200 on 2026-11-04",
+      "capture": "sha256:d07a3111c5e0485900964a9ed47bf6430b465a9def1ae7bfb7ef43c6410b2963",
+      "quote": "\"status\": 200"
+    },
+    {
+      "url": "https://docs.codeberg.org/ci/",
+      "date": "2026-11-06",
+      "proved": "the page limits resource use by a reasonable-use rule, not a per-job number",
+      "capture": "sha256:8e71091b439845f5ae6219fac0135e684a18827efc36f77fc73a37b308360d13",
+      "quote": "Resource usage must be reasonable for the intended use-case."
+    },
+    {
+      "url": "https://woodpecker-ci.org/docs/administration/configuration/server",
+      "date": "2026-11-06",
+      "proved": "a pipeline is killed at 60 minutes by default and the repo setting is capped at 120 minutes by default",
+      "capture": "sha256:e5756a4fdfb6832c692b7bfbc58562fd98196178cee63121f2f042c8c4f5a6d5",
+      "quote": "- Default: 60 ... The default time for a repo in minutes before a pipeline gets killed ... - Default: 120 ... The maximum time in minutes you can set in the repo settings before a pipeline gets killed"
+    },
+    {
+      "url": "https://docs.codeberg.org/ci/agents",
+      "date": "2026-11-06",
+      "proved": "a self-hosted agent is recommended for long-running or resource-intensive jobs",
+      "capture": "sha256:92475eec5eff9b9c011a6189d761581047da0110d3b33824ca490b2ec5690c34",
+      "quote": "when you want faster feedback from CI, to handle long-running or resource-intensive jobs"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-06T19:14:28.504Z",
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "The gate is a volunteer and the availability is explicitly not promised; the page publishes no per-job wall clock.",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "limits_note": "the Woodpecker software kills a pipeline at 60 minutes by default and caps the repo setting at 120 minutes by default"
+}

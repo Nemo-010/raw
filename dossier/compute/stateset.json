@@ -1,0 +1,204 @@
+{
+  "topic": "compute",
+  "slug": "stateset",
+  "provider": "StateSet Sandbox",
+  "url": "https://sandbox.stateset.app/pricing",
+  "category": "container and VM sandbox",
+  "free_tier": {
+    "stated": "Hobby is USD 0 a month 'plus usage, billed per second', including 5 vCPU-hours and 420 memory GB-hours each month, 20 GB of network egress and 5,000 sandbox creations.",
+    "unit": "hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://sandbox.stateset.app/pricing",
+    "read_on": "2026-10-24",
+    "notes": "monthly vCPU-hours, reset each month"
+  },
+  "per_object_cap": {
+    "stated": "max sandbox runtime 45 minutes on Hobby, 24 hours on Pro; 10 concurrent sandboxes on Hobby, 50 on Pro"
+  },
+  "retention": {
+    "stated": "Not stated on the pricing page: a 45-minute maximum runtime means nothing survives a session unless the sandbox is durable, and durable sandboxes are listed as 'Not available' on Hobby.",
+    "source_url": "https://sandbox.stateset.app/pricing"
+  },
+  "egress": {
+    "terms": "20 GB of network egress included each month on Hobby (100 GB Pro, 1,000 GB Team); overage is USD 0.15 per GB on Hobby and Pro and USD 0.12 per GB on Team",
+    "metered": true,
+    "free_allowance": "20 GB",
+    "source_url": "https://sandbox.stateset.app/pricing",
+    "price_per_tb": "USD 150"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "REST API (api.sandbox.stateset.app), Node.js SDK and Python SDK; no CLI or SSH found in the docs read",
+  "tooling": "not stated in the source card",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "45 minutes maximum sandbox runtime on Hobby, 24 hours on Pro (USD 49/month)",
+      "source": "https://sandbox.stateset.app/pricing"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "The Hobby plan is USD 0 plus usage, which normally needs a card on file to meter beyond the included hours; no card, hold or debit statement was read on the pricing page. Unverified.",
+    "country": null
+  },
+  "reliability_note": "Shared sandboxes 'burst on Spot capacity at the lowest price and can be preempted', which is an interruption that cannot be scheduled around.",
+  "confidence": "documented",
+  "confidence_note": "The runtime caps, concurrency, included hours and the spot-preemption sentence are quoted from the pricing page read today. The unit rates, the card requirement and SSH access are not established.",
+  "evidence": [
+    {
+      "url": "https://sandbox.stateset.app/",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://sandbox.stateset.app/",
+      "date": "2026-10-22",
+      "proved": "'$25 in trial credits. No credit card required' with '$0.028/hour', 'Pay for the time a sandbox runs, not a rounded-up hour', '$25 trial ≈ 892 hours' of a '4 vCPU · 8 GB shared sandbox', and 'Explicit CPU, memory, and sandbox lifetime limits', quoted"
+    },
+    {
+      "url": "https://sandbox.stateset.app/pricing",
+      "date": "2026-10-24",
+      "proved": "quoted: 'Hobby ... Limits ... Max sandbox runtime 45 minutes ... Concurrent sandboxes 10 ... Durable sandboxes Not available'; 'Pro $49/month ... Max sandbox runtime 24 hours'"
+    },
+    {
+      "url": "https://sandbox.stateset.app/pricing",
+      "date": "2026-10-24",
+      "proved": "quoted: 'Shared sandboxes burst on Spot capacity at the lowest price and can be preempted; dedicated sandboxes get guaranteed CPU and memory, billed on 50% of their size ($0.2984/hour for the same size on Pro).'"
+    },
+    {
+      "url": "https://sandbox.stateset.app/pricing",
+      "date": "2026-11-03",
+      "proved": "egress overage is USD 0.15 per GB on Hobby and Pro, USD 0.12 on Team",
+      "capture": "sha256:c2c754f9a3c3edb65fb7e7a00ef76268df0fa7c7ecdbe589e3e5dc414ad3b134",
+      "quote": "| Network egress per GB | $0.15 | $0.15 | $0.12 |"
+    },
+    {
+      "url": "https://sandbox.stateset.app/pricing",
+      "date": "2026-11-03",
+      "proved": "Team includes 1,000 GB of egress",
+      "capture": "sha256:c2c754f9a3c3edb65fb7e7a00ef76268df0fa7c7ecdbe589e3e5dc414ad3b134",
+      "quote": "- 1,000 GB Network egress"
+    },
+    {
+      "url": "https://sandbox.stateset.app/docs/getting-started",
+      "date": "2026-11-03",
+      "proved": "REST API and two SDKs",
+      "capture": "sha256:9df0e87bc8020fbbf0b4cebba0cbf16fa7c22a9c09996babbf434b1cdfd81793",
+      "quote": "Create, execute, and manage sandboxes using the REST API, Node.js SDK, or Python SDK."
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-04T02:24:18.817Z",
+  "price_per_tb_month": null,
+  "notes": "No 730-hour figure exists to record because the product cannot run for 730 hours: 45 minutes is the Hobby cap and 24 hours the Pro cap. The byline prices the reference 4 vCPU / 8 GB shared sandbox at USD 0.028/hour, which would be USD 20.44 at 730 h if it could run that long - it cannot.",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 118.6,
+    "talaria_m24h_usd": 216.04,
+    "nemo_m10h_usd": 368.6,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "per-second",
+    "shape": {
+      "vcpu": 4,
+      "ram_gib": 8,
+      "disk_gib": null,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "the shared reference sandbox the page headlines"
+    },
+    "session_cap": {
+      "wall_clock_min": 45,
+      "idle_reap_s": null,
+      "restart_required": true,
+      "note": "45 minutes on Hobby, 24 hours on Pro (USD 49/month)"
+    },
+    "persistent_storage": null,
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": null,
+      "ports": "not stated on the pricing page",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "credit",
+    "seed_min_bill": "$5e-07 per start",
+    "burst_x": 1.0,
+    "burst_bill": "$5e-07 per start",
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": null,
+    "net": null,
+    "term": "monthly plan plus usage",
+    "m10h_usd": null,
+    "m24h_usd": null,
+    "price_arithmetic": "Not computable as a 24/7 figure: the Hobby cap is 45 minutes per sandbox and the Pro cap is 24 hours, so no shape can be held for 730 h. At the headline USD 0.028/hour for 4 vCPU / 8 GB, 730 h would be USD 20.44 if it were purchasable.",
+    "superseded": {
+      "url": "https://sandbox.stateset.app/",
+      "free_tier": {
+        "stated": "$25 of trial credits with no card, which the page estimates at about 892 hours of a 4 vCPU and 8 GB sandbox at $0.028 an hour",
+        "unit": "mixed",
+        "metered_on": "wall-clock",
+        "source_url": "https://sandbox.stateset.app/",
+        "read_on": "2026-10-22"
+      },
+      "per_object_cap": {
+        "stated": "not stated in the source card",
+        "bytes": null,
+        "source_url": "https://sandbox.stateset.app/",
+        "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+      },
+      "retention": {
+        "stated": "not stated in the source card",
+        "days": null,
+        "source_url": "https://sandbox.stateset.app/",
+        "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+      },
+      "egress": {
+        "terms": "not published on the source card",
+        "metered": false,
+        "free_allowance": null,
+        "price_per_tb": null,
+        "source_url": "https://sandbox.stateset.app/"
+      },
+      "limits": [
+        {
+          "kind": "request-rate",
+          "value": "$0.028 an hour for a sandbox, billed on running time with no rounded-up hour",
+          "source": "https://sandbox.stateset.app/"
+        },
+        {
+          "kind": "retention-clamped",
+          "value": "explicit sandbox lifetime limits are set on creation",
+          "source": "https://sandbox.stateset.app/"
+        },
+        {
+          "kind": "per-object-cap",
+          "value": "the reference sandbox is 4 vCPU and 8 GB shared",
+          "source": "https://sandbox.stateset.app/"
+        }
+      ],
+      "binding": "request-rate",
+      "identity_cost": {
+        "kind": "email",
+        "detail": "'No credit card required', quoted from sandbox.stateset.app read 2026-10-22",
+        "country": null
+      },
+      "reliability_note": "no reliability event recorded in the source passes",
+      "confidence_note": "the site was read on 2026-10-22 and states the trial credit, the hourly rate and its own hour estimate. Sandbox lifetime limits are explicit, which is the wall-clock answer",
+      "verified_at": "2026-10-22T04:48:05.137Z"
+    }
+  },
+  "binding": "retention-clamped",
+  "history": [
+    "history/2026-10-22T053100Z/nineteen-credits-called-tiers-and-tiers-called-credits.md"
+  ],
+  "tier": "Hobby, shared sandbox",
+  "binding_note": "A 45-minute wall-clock cap reaps the machine before a monthly budget can matter, so the cap is the wall and price is irrelevant."
+}

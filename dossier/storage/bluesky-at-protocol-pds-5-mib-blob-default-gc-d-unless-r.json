@@ -1,0 +1,109 @@
+{
+  "topic": "storage",
+  "slug": "bluesky-at-protocol-pds-5-mib-blob-default-gc-d-unless-r",
+  "provider": "Bluesky / AT Protocol PDS — 5 MiB blob default, GC'd unless referenced",
+  "url": "https://github.com/bluesky-social/atproto/blob/main/packages/pds/src/config/config.ts",
+  "category": "atproto-pds",
+  "free_tier": {
+    "stated": "blobUploadLimit defaults to 5 * 1024 * 1024 = 5 MiB per blob, overridable per-PDS via the BLOB_UPLOAD_LIMIT env var. Per-account: bsky.app's hosted PDS is generous in practice but the protocol layer only guarantees blobs that are REFERENCED by a record.",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://raw.githubusercontent.com/bluesky-social/atproto/main/packages/pds/src/config/config.ts",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "5 MiB per blob",
+    "bytes": 5242880,
+    "source_url": "https://raw.githubusercontent.com/bluesky-social/atproto/main/packages/pds/src/config/config.ts",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://raw.githubusercontent.com/bluesky-social/atproto/main/packages/pds/src/config/config.ts",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free on bsky.app's PDS and on any self-hosted PDS (it serves blobs directly from /xrpc/com.atproto.sync.getBlob). No egress meter.",
+    "metered": false
+  },
+  "interface": [
+    "cli"
+  ],
+  "interface_detail": "http-xrpc",
+  "tooling": "XRPC: POST /xrpc/com.atproto.repo.uploadBlob (binary body + Content-Type) -> returns a `blob` ref; must then be referenced by a record (e.g. app.bsky.feed.post embed) or it is garbage-collected. Client libs: @atproto/api, atproto Python SDK, `goat` CLI.",
+  "chaining": "Self-hosting a PDS removes the 5 MiB default (it is a config value), so a self-hosted PDS is bounded by YOUR disk, not Bluesky's — that makes it a hosting product, not free storage. On bsky.app's PDS the 5 MiB cap plus the reference requirement makes it useless for bulk. The usable margin is only the 'unreferenced blobs are deleted within minutes' semantics working in reverse: referenced blobs are retained indefinitely.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "5 MiB per blob",
+      "source": "https://raw.githubusercontent.com/bluesky-social/atproto/main/packages/pds/src/config/config.ts"
+    }
+  ],
+  "limits_note": "per-object-cap 5 MiB default (config.ts: `blobUploadLimit: env.blobUploadLimit ?? 5 * 1024 * 1024`); blobs unreferenced within a time window (minutes) are deleted; account-level repo size limits are enforced by the AppView/PDS separately.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Blob GC is literal and fast — an upload without a referencing record vanishes. That is the single most important fact about this candidate.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://raw.githubusercontent.com/bluesky-social/atproto/main/packages/pds/src/config/config.ts",
+      "date": "2026-10-21",
+      "proved": "`blobUploadLimit: env.blobUploadLimit ?? 5 * 1024 * 1024, // 5mb`"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/bluesky-social/atproto/main/lexicons/com/atproto/repo/uploadBlob.json",
+      "date": "2026-10-21",
+      "proved": "'The blob will be deleted if it is not referenced within a time window (eg, minutes). Blob restrictions (mimetype, size, etc) are enforced when the reference is created. Requires auth, implemented by PDS.'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "blobUploadLimit defaults to 5 * 1024 * 1024 = 5 MiB per blob, overridable per-PDS via the BLOB_UPLOAD_LIMIT env var. Per-account: bsky.app's hosted PDS is generous in practice but the protocol layer only guarantees blobs that are REFERENCED by a record.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F7-fediverse.json",
+    "seed_area": "F/F7",
+    "seed_verdict": [
+      {
+        "value": "?",
+        "area": "F/F7"
+      }
+    ],
+    "seed_confidence": "high",
+    "verdict_note": "the seed left this row with verdict '?'; PLAN.md §3.2 rules fails-quota by default, because no row in this set clears 500 GiB per unit. A writer's judgement, not the seed's, and flagged as such",
+    "unit_note": "free_tier.unit is 'mixed' because the headline is denominated in MiB or KiB, which the schema enum does not carry; the verbatim free_tier.stated keeps the true unit. See the storage-dossier handover.",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "blobUploadLimit defaults to 5 * 1024 * 1024 = 5 MiB per blob, overridable per-PDS via the BLOB_UPLOAD_LIMIT env var. Per-account: bsky.app's hosted PDS is generous in practice but the protocol layer only guarantees blobs that are REFERENCED by a record.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F7"
+    },
+    "target_document": "docs/storage/free/social-and-fediverse.md",
+    "document_section": "Fediverse instances",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "blobUploadLimit defaults to 5 * 1024 * 1024 = 5 MiB per blob, overridable per-PDS via the BLOB_UPLOAD_LIMIT env var. Per-account: bsky.app's hosted PDS is generous in practice but the protocol layer only guarantees blobs that are REFERENCED by a record.",
+    "limits_verbatim": "per-object-cap 5 MiB default (config.ts: `blobUploadLimit: env.blobUploadLimit ?? 5 * 1024 * 1024`); blobs unreferenced within a time window (minutes) are deleted; account-level repo size limits are enforced by the AppView/PDS separately.",
+    "egress_verbatim": "Free on bsky.app's PDS and on any self-hosted PDS (it serves blobs directly from /xrpc/com.atproto.sync.getBlob). No egress meter.",
+    "chaining_verbatim": "Self-hosting a PDS removes the 5 MiB default (it is a config value), so a self-hosted PDS is bounded by YOUR disk, not Bluesky's — that makes it a hosting product, not free storage. On bsky.app's PDS the 5 MiB cap plus the reference requirement makes it useless for bulk. The usable margin is only the 'unreferenced blobs are deleted within minutes' semantics working in reverse: referenced blobs are retained indefinitely.",
+    "tooling_verbatim": "XRPC: POST /xrpc/com.atproto.repo.uploadBlob (binary body + Content-Type) -> returns a `blob` ref; must then be referenced by a record (e.g. app.bsky.feed.post embed) or it is garbage-collected. Client libs: @atproto/api, atproto Python SDK, `goat` CLI.",
+    "interface_verbatim": "http-xrpc",
+    "agent_focus": "Fediverse / decentralised social instances as media storage: Mastodon, Misskey/Sharkey/IceShark, Pleroma/Akkoma, Pixelfed, Lemmy/pict-rs, Bluesky AT Protocol PDS, Nostr relays + Blossom, Farcaster hubs/Snapchain. Per-user media quotas, per-file caps, media-URL permanence, and the 'unlimited instances x modest quota' multiplication."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

@@ -1,0 +1,99 @@
+{
+  "topic": "storage",
+  "slug": "line-messaging-api-message-content-endpoint",
+  "provider": "LINE Messaging API — message content endpoint",
+  "url": "https://developers.line.biz/en/docs/messaging-api/receiving-messages/",
+  "category": "messaging",
+  "free_tier": {
+    "stated": "No storage quota is offered at all. Content is a delivery mechanism, not a store.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://developers.line.biz/en/docs/messaging-api/receiving-messages/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://developers.line.biz/en/docs/messaging-api/receiving-messages/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://developers.line.biz/en/docs/messaging-api/receiving-messages/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Retrieval is authenticated only: GET /v2/bot/message/{messageId}/content with a channel access token. No public URL is ever issued.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "line-bot-sdk (Python/Node/Java/Go/PHP). The SDK exposes get_message_content() and nothing else — no listing, no expiry control, no bulk export.",
+  "chaining": "Not chainable: there is no enumeration API, so you cannot even address stored objects after the fact without having logged every messageId yourself.",
+  "limits": [],
+  "limits_note": "Explicit auto-deletion with an undisclosed period: 'Content that users send is automatically deleted after a certain period of time.' LINE does not publish the number, which is worse than a known 30 days because it cannot be reasoned about. No listing endpoint, no bulk download.",
+  "identity_cost": {
+    "kind": "national-id",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ed objects after the fact without having logged every messageId yourself. Explicit auto-deletion with an undisclosed period: 'Content that users send is automatically deleted after a",
+    "country": null
+  },
+  "reliability_note": "Undisclosed retention window plus no enumeration = data becomes unreachable silently. Cannot be used even as a 7-day cache reliably.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://developers.line.biz/en/docs/messaging-api/receiving-messages/",
+      "date": "2026-10-21",
+      "proved": "read live: 'Content that users send is automatically deleted after a certain period of time.'"
+    },
+    {
+      "url": "https://api-data.line.me/v2/bot/message/1234567890/content",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 401 (token mandatory, anonymous read impossible)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No storage quota is offered at all. Content is a delivery mechanism, not a store.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F4-consumer-im-apis.json",
+    "seed_area": "F/F4",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "F/F4"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "No storage quota is offered at all. Content is a delivery mechanism, not a store.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F4"
+    },
+    "target_document": "docs/storage/free/messaging.md",
+    "document_section": "Consumer IM APIs",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No storage quota is offered at all. Content is a delivery mechanism, not a store.",
+    "limits_verbatim": "Explicit auto-deletion with an undisclosed period: 'Content that users send is automatically deleted after a certain period of time.' LINE does not publish the number, which is worse than a known 30 days because it cannot be reasoned about. No listing endpoint, no bulk download.",
+    "egress_verbatim": "Retrieval is authenticated only: GET /v2/bot/message/{messageId}/content with a channel access token. No public URL is ever issued.",
+    "chaining_verbatim": "Not chainable: there is no enumeration API, so you cannot even address stored objects after the fact without having logged every messageId yourself.",
+    "tooling_verbatim": "line-bot-sdk (Python/Node/Java/Go/PHP). The SDK exposes get_message_content() and nothing else — no listing, no expiry control, no bulk export.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Consumer/enterprise messaging platforms with media APIs as bulk storage — the crux being RETENTION: which platforms keep uploaded media indefinitely and serve it without an auth token. Telegram, Discord, Slack, Teams, Notion and Airtable were already covered by other slots and are excluded here."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

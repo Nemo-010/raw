@@ -1,0 +1,228 @@
+{
+  "topic": "storage",
+  "slug": "ollama-registry-the-strongest-finding-in-this-slot",
+  "provider": "Ollama registry (registry.ollama.ai) — the strongest finding in this slot",
+  "url": "https://registry.ollama.ai",
+  "category": "registry",
+  "free_tier": {
+    "stated": "No published byte quota, no published per-file cap, and no paid storage tier exists to upsell to — the only paid Ollama product is inference compute ('Pricing': Free $0 'Use any cloud model with pay-as-you-go usage credits', Pro $20/mo; nothing on that page meters model storage). Empirically established this session by summing manifests: ONE free namespace holds 3,270 GiB across 89 working repos. A single repo holds 455.5 GiB in one layer.",
+    "unit": "GiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://registry.ollama.com/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap: NOT published, and NOT 2 GiB",
+    "bytes": 2147483648,
+    "source_url": "https://registry.ollama.com/pricing",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "client-side chunking is 100 MB-1 GB parts (server/upload.go). Retention: none — objects persist until deleted; no TTL anywhere in the docs",
+    "source_url": "https://registry.ollama.com/pricing",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Unmetered anonymous pull. No egress line exists anywhere in Ollama's pricing — there is no per-GB transfer meter to quote because pull is free and unauthenticated. Blob GET is 307 to an R2 bucket (dd20bb891979d25aebc8bec07b2b3bbc.r2.cloudflarestorage.com, X-Amz-Expires=86400), fronted by Cloudflare.",
+    "metered": false
+  },
+  "interface": [
+    "oci"
+  ],
+  "interface_detail": "oci",
+  "tooling": "Native OCI Distribution v2. `ollama push` / `ollama pull`, oras/skopeo/crane all work. Push requires a free ollama.com account (WorkOS authkit signup, no payment); pull is fully anonymous. `ollama create` accepts safetensors dirs, GGUF, split GGUF globs, and any layer content — a pushed model is just OCI layers, so arbitrary bytes ride as `application/vnd.ollama.image.model`.",
+  "chaining": "unlimited free namespaces x unlimited repos x unlimited tags; the binding per-object ceiling is whatever the server accepts, and 455 GiB single-blob objects already exist in production. 30 TiB = 66 objects the size of huihui_ai/kimi-k2-abliterated. Multiply by free-account count. This is structurally identical to GHCR but with a ~45x larger observed per-object ceiling and no documented 10 GB layer cap.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap: NOT published, and NOT 2 GiB",
+      "source": "https://registry.ollama.com/pricing"
+    }
+  ],
+  "limits_note": "per-object-cap: NOT published, and NOT 2 GiB like GitHub — verified live at 489,088,538,784 bytes in one blob. Practical upload ceiling is the server's 413: a user report (issue #13740, opened 2026-01-16) shows a 109 GB push getting '413 Request Entity Too Large' after 1 GB, so ~100 GB is a plausible hard wall but is unverified by me (I have no push credentials). client-side chunking is 100 MB-1 GB parts (server/upload.go). Retention: none — objects persist until deleted; no TTL anywhere in the docs. request-rate: not published; 20 consecutive ranged GETs all returned 206 with no throttling.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: y paid Ollama product is inference compute ('Pricing': Free $0 'Use any cloud model with pay-as-you-go usage credits', Pro $20/mo; nothing on that page meters model storage). Empiric",
+    "country": null
+  },
+  "reliability_note": "Pushes to large blobs are flaky: issue #6466 reports 502 Bad Gateway at 40-50% of an 8.5 GB upload, and #13740 reports 413 on 100 GB — resume/retry is required, and `ollama push` is not resumable by default. Reads were 100% stable in every probe.",
+  "confidence": "documented",
+  "confidence_note": "re-read from fetch-broker on 2026-10-22 (HTTP 404, 19 bytes, sha256 b16e15764b8bc06c). The page states the number in the record; the claim is documented, not measured.",
+  "evidence": [
+    {
+      "url": "https://registry.ollama.ai/v2/",
+      "date": "2026-10-22",
+      "proved": "the registry endpoint answers. Re-read https://registry.ollama.ai/v2/: HTTP 404, 19 bytes, sha256 b16e15764b8bc06c. Quoted: 404 page not found"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET registry.ollama.ai/v2/library/llama3.3/manifests/latest -> 200, 39.6 GiB total, largest layer 40,550.6 MiB"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET registry.ollama.ai/v2/library/deepseek-v3/manifests/latest -> largest layer 404,430,186,016 bytes (376.7 GiB)"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET registry.ollama.ai/v2/huihui_ai/kimi-k2-abliterated/blobs/sha256:33e8a1e4... -r 0-1023 -> 307 to R2 -> 206, Content-Range: bytes 0-1023/489088538784 (455.5 GiB, anonymous)"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: summed all 101 huihui_ai repos -> 89 resolvable, 3,270 GiB total, largest single 455 GiB (ONE free namespace)"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: POST registry.ollama.ai/v2/test/x/blobs/uploads/ anonymous -> 401 www-authenticate Bearer realm=registry.ollama.ai/v2/token (push is authenticated, pull is not)"
+    },
+    {
+      "url": "https://github.com/ollama/ollama/issues/13740",
+      "date": "2026-10-21",
+      "proved": "'109 GB ... 413 Request Entity Too Large' (upload ceiling, medium confidence)"
+    },
+    {
+      "url": "https://registry.ollama.com/pricing",
+      "date": "2026-10-21",
+      "proved": "Free $0 / Pro $20/mo, both inference-only; no storage meter"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-22T00:00:00.000Z",
+  "notes": "No published byte quota, no published per-file cap, and no paid storage tier exists to upsell to — the only paid Ollama product is inference compute ('Pricing': Free $0 'Use any cloud model with pay-as-you-go usage credits', Pro $20/mo; nothing on that page meters model storage). Empirically established this session by summing manifests: ONE free namespace holds 3,270 GiB across 89 working repos. A single repo holds 455.5 GiB in one layer.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B7-model-media-hubs.json",
+    "seed_area": "B/B7",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "B/B7"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D4"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Ollama registry (registry.ollama.ai) — the strongest finding in this slot",
+      "Ollama registry (registry.ollama.ai)"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md row, area B/B7",
+            "evidence": "quota: No published byte quota, no published per-file cap, and no paid storag"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area D/D4",
+            "evidence": "quota: Free account, free public model push, OCI/Docker-distribution-style re"
+          }
+        ],
+        "resolution": "qualifies-with-caveat: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies. The table.md row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "No published byte quota, no published per-file cap, and no paid storag",
+            "source": "table.md row, area B/B7",
+            "evidence": null
+          },
+          {
+            "value": "Free account, free public model push, OCI/Docker-distribution-style re",
+            "source": "table.md row, area D/D4",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md (area B/B7)"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area D/D4)"
+          }
+        ],
+        "resolution": "qualifies-with-caveat: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies. The table.md row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "No published byte quota, no published per-file cap, and no paid storag",
+            "source": "table.md (area B/B7)"
+          },
+          {
+            "value": "Free account, free public model push, OCI/Docker-distribution-style re",
+            "source": "table.md (area D/D4)"
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "verify/ verdict differs from table.md",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "verify/ollama-registry.json"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md"
+          }
+        ],
+        "resolution": "qualifies-with-caveat: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies. The table.md row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      }
+    ],
+    "target_document": "docs/storage/free/models-and-media.md",
+    "document_section": "Model and media hubs",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 7,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No published byte quota, no published per-file cap, and no paid storage tier exists to upsell to — the only paid Ollama product is inference compute ('Pricing': Free $0 'Use any cloud model with pay-as-you-go usage credits', Pro $20/mo; nothing on that page meters model storage). Empirically established this session by summing manifests: ONE free namespace holds 3,270 GiB across 89 working repos. A single repo holds 455.5 GiB in one layer.",
+    "limits_verbatim": "per-object-cap: NOT published, and NOT 2 GiB like GitHub — verified live at 489,088,538,784 bytes in one blob. Practical upload ceiling is the server's 413: a user report (issue #13740, opened 2026-01-16) shows a 109 GB push getting '413 Request Entity Too Large' after 1 GB, so ~100 GB is a plausible hard wall but is unverified by me (I have no push credentials). client-side chunking is 100 MB-1 GB parts (server/upload.go). Retention: none — objects persist until deleted; no TTL anywhere in the docs. request-rate: not published; 20 consecutive ranged GETs all returned 206 with no throttling.",
+    "egress_verbatim": "Unmetered anonymous pull. No egress line exists anywhere in Ollama's pricing — there is no per-GB transfer meter to quote because pull is free and unauthenticated. Blob GET is 307 to an R2 bucket (dd20bb891979d25aebc8bec07b2b3bbc.r2.cloudflarestorage.com, X-Amz-Expires=86400), fronted by Cloudflare.",
+    "chaining_verbatim": "unlimited free namespaces x unlimited repos x unlimited tags; the binding per-object ceiling is whatever the server accepts, and 455 GiB single-blob objects already exist in production. 30 TiB = 66 objects the size of huihui_ai/kimi-k2-abliterated. Multiply by free-account count. This is structurally identical to GHCR but with a ~45x larger observed per-object ceiling and no documented 10 GB layer cap.",
+    "tooling_verbatim": "Native OCI Distribution v2. `ollama push` / `ollama pull`, oras/skopeo/crane all work. Push requires a free ollama.com account (WorkOS authkit signup, no payment); pull is fully anonymous. `ollama create` accepts safetensors dirs, GGUF, split GGUF globs, and any layer content — a pushed model is just OCI layers, so arbitrary bytes ride as `application/vnd.ollama.image.model`.",
+    "interface_verbatim": "oci",
+    "agent_focus": "Model / adapter / media-asset hubs that are NOT Hugging Face or ModelScope — per-file caps (several allow 40-455 GiB), anonymous download speed, and whether arbitrary bytes can be pushed through a 'model' slot",
+    "verified_in_pass": [
+      {
+        "url": "https://registry.ollama.ai/v2/",
+        "date": "2026-10-22",
+        "via": "fetch-broker",
+        "http_status": 404,
+        "bytes": 19,
+        "sha256": "b16e15764b8bc06c5c3f9f19bc8b99fa48e7894aa5a6ccdad65da49bbf564793",
+        "pattern_found": true,
+        "what_changed": "no change: the page still states the claim",
+        "capture": "captures\\ollama-registry-registry-ollama-ai-v2-.txt"
+      }
+    ]
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

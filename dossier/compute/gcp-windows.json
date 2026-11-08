@@ -1,0 +1,199 @@
+{
+  "topic": "compute",
+  "slug": "gcp-windows",
+  "provider": "Google Compute Engine (Windows Server)",
+  "url": "https://cloud.google.com/compute/disks-image-pricing#windows_server_pricing",
+  "category": "Windows host",
+  "free_tier": {
+    "stated": "not stated for the Windows Server image on https://cloud.google.com/compute/disks-image-pricing (read 2026-10-30), which bills it from a 1 minute minimum; the page's only free row is standard persistent disk, 'Standard provisioned space | 0 gibibyte month to 30 gibibyte month $0.00 (Free)', per month per account in Iowa (us-central1)",
+    "unit": "none",
+    "metered_on": "wall-clock",
+    "source_url": "https://cloud.google.com/compute/disks-image-pricing#windows_server_pricing",
+    "read_on": "2026-10-30",
+    "notes": "The USD 300 Free Trial credit does not reach this offer before an upgrade: a non-billable Free Trial account cannot 'Create VM instances that are based on Windows Server images.' After the upgrade to a Paid billing account the Free Trial document says the remaining credit stays usable on products and services covered by the Free Trial for the original 90 days from sign-up, and its list of what the credit cannot pay for names Gemini API in AI Studio and managed-API partner models, not Windows Server images, so the credit is expected to pay the Windows Server licence (inferred; no first-party page states it for Windows Server). No page read states a free Windows Server allowance."
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://cloud.google.com/compute/disks-image-pricing#windows_server_pricing",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://cloud.google.com/compute/disks-image-pricing#windows_server_pricing",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "not published on the source card",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://cloud.google.com/compute/disks-image-pricing#windows_server_pricing"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "the source card states no access interface",
+  "tooling": "not stated in the source card",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "Windows Server image licence at USD 0.046 an hour per visible vCPU (USD 0.023 an hour on f1-micro and g1-small), on top of the machine type; 1 minute minimum, then 1 second increments",
+      "source": "https://cloud.google.com/compute/disks-image-pricing#windows_server_pricing"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "an archive snapshot is billed for a minimum of 90 days whether or not it is deleted sooner",
+      "source": "https://cloud.google.com/compute/disks-image-pricing#windows_server_pricing"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "Free Trial signup requires a credit card or other payment method, and the upgrade to a Paid billing account that GPU and Windows Server VMs need is made on that billing account",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the disks and images pricing page was read on 2026-10-30: it bills the Windows Server image at USD 0.046 an hour per visible vCPU (USD 0.023 on f1-micro and g1-small) from a 1 minute minimum and states the 90-day archive-snapshot minimum; the Free Trial document bars Windows Server VMs on a Free Trial account",
+  "evidence": [
+    {
+      "url": "https://cloud.google.com/compute/disks-image-pricing#windows_server_pricing",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://cloud.google.com/compute/disks-image-pricing#windows_server_pricing",
+      "date": "2026-10-22",
+      "proved": "'$0.06 USD/hour for instances with 4 or fewer vCPUs' and '$0.13 USD/hour for instances with more than 4 vCPUs' on the Windows Server premium image, and 'Archive snapshots are billed for a minimum of 90 days of storage', quoted"
+    },
+    {
+      "url": "https://cloud.google.com/compute/disks-image-pricing",
+      "date": "2026-10-30",
+      "proved": "the Windows Server image is billed from a 1 minute minimum, with no free allowance on the page",
+      "capture": "sha256:6d1f74ec60fb6294c297e678e061fa34dd64677bb05f0a06f762f59c48283281",
+      "quote": "Windows Server images are charged a **1 minute minimum**."
+    },
+    {
+      "url": "https://cloud.google.com/free/docs/free-cloud-features",
+      "date": "2026-10-30",
+      "proved": "a non-billable Free Trial account cannot create VM instances based on Windows Server images",
+      "capture": "sha256:885a38c2b738a7e9ac34bffbae919db1163c80786856ff5f689da3a3bfe0b095",
+      "quote": "Create VM instances that are based on Windows Server images."
+    },
+    {
+      "url": "https://cloud.google.com/compute/disks-image-pricing",
+      "date": "2026-10-30",
+      "proved": "the only free row on the disks and images page is 30 gibibyte months of standard persistent disk per month per account",
+      "capture": "sha256:6d1f74ec60fb6294c297e678e061fa34dd64677bb05f0a06f762f59c48283281",
+      "quote": "Standard provisioned space | 0 gibibyte month to 30 gibibyte month $0.00 (Free) / 1 gibibyte hour, per 1 month / account"
+    },
+    {
+      "url": "https://cloud.google.com/compute/disks-image-pricing",
+      "date": "2026-10-30",
+      "proved": "the Windows Server image licence is USD 0.046 an hour per visible vCPU on every machine type but f1-micro and g1-small",
+      "capture": "sha256:6d1f74ec60fb6294c297e678e061fa34dd64677bb05f0a06f762f59c48283281",
+      "quote": "All other machine types: **$0.046 USD/hour per visible vCPU**."
+    },
+    {
+      "url": "https://cloud.google.com/compute/disks-image-pricing",
+      "date": "2026-10-30",
+      "proved": "the Windows Server image licence on f1-micro and g1-small is USD 0.023 an hour",
+      "capture": "sha256:6d1f74ec60fb6294c297e678e061fa34dd64677bb05f0a06f762f59c48283281",
+      "quote": "f1-micro and g1-small machine types: **$0.023 USD/hour**."
+    },
+    {
+      "url": "https://cloud.google.com/compute/disks-image-pricing",
+      "date": "2026-10-30",
+      "proved": "archive snapshots are billed for at least 90 days",
+      "capture": "sha256:6d1f74ec60fb6294c297e678e061fa34dd64677bb05f0a06f762f59c48283281",
+      "quote": "Archive snapshots are billed for a minimum of 90 days of storage, and also billed for retrieval charges when used to create a disk."
+    },
+    {
+      "url": "https://cloud.google.com/free/docs/free-cloud-features",
+      "date": "2026-11-03",
+      "proved": "after the upgrade to a Paid billing account the remaining credit stays usable on products and services covered by the Free Trial, within 90 days of sign-up",
+      "capture": "sha256:1b2c72166c369756ff5dff598a4a1f009ccc902f90e5efcd6100de6e0ab17c85",
+      "quote": "Your remaining credit is available for use on [products and services covered by the Free Trial](https://docs.cloud.google.com/free/docs/free-cloud-features#during-free-trial), but they must be consumed within the original 90 days period from your sign-up date."
+    },
+    {
+      "url": "https://cloud.google.com/free/docs/free-cloud-features",
+      "date": "2026-11-03",
+      "proved": "the credit has its own exclusion list, which names Gemini API in AI Studio and managed-API partner models, and neither GPUs nor Windows Server images",
+      "capture": "sha256:1b2c72166c369756ff5dff598a4a1f009ccc902f90e5efcd6100de6e0ab17c85",
+      "quote": "The $300 credit can't be used for the following"
+    },
+    {
+      "url": "https://cloud.google.com/terms/free-trial",
+      "date": "2026-11-03",
+      "proved": "the Free Trial terms let an upgraded customer keep using unused credit for the Services, expiring 3 months after the Free Trial start",
+      "capture": "sha256:ab6f9b98d83853d5785226dfcfcdd13082241c566fbe4159c171f03bc86a21b2",
+      "quote": "Customer may continue to use the credits for the Services (subject to the limitations described at the Free Trial Description Page). Any unused credits will expire 3 months after the Free Trial Start Date."
+    },
+    {
+      "url": "https://cloud.google.com/free/docs/free-cloud-features",
+      "date": "2026-11-03",
+      "proved": "upgrading to a Paid billing account unlocks GPUs, which a non-billable Free Trial account cannot add",
+      "capture": "sha256:1b2c72166c369756ff5dff598a4a1f009ccc902f90e5efcd6100de6e0ab17c85",
+      "quote": "**Google Cloud access unlocked**: You gain access to all Google Cloud products and services, including those products and services that were restricted during the Free Trial, such as GPUs, Google Cloud Marketplace, and third-party generative AI models."
+    },
+    {
+      "url": "https://cloud.google.com/free/docs/free-cloud-features",
+      "date": "2026-11-03",
+      "proved": "Windows Server VMs are listed among what a non-billable Free Trial account cannot do, a restriction tied to the account state",
+      "capture": "sha256:1b2c72166c369756ff5dff598a4a1f009ccc902f90e5efcd6100de6e0ab17c85",
+      "quote": "Create VM instances that are based on Windows Server [images](https://docs.cloud.google.com/compute/docs/images)."
+    },
+    {
+      "url": "https://cloud.google.com/free/docs/free-cloud-features",
+      "date": "2026-11-03",
+      "proved": "the Free Trial signup, which precedes the upgrade, requires a credit card or other payment method",
+      "capture": "sha256:1b2c72166c369756ff5dff598a4a1f009ccc902f90e5efcd6100de6e0ab17c85",
+      "quote": "During the sign up, you must provide a credit card or other payment method that is valid for the period of the Free Trial."
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-03T01:29:47.010Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 10.05,
+    "talaria_m24h_usd": 24.12,
+    "nemo_m10h_usd": null,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "unclassified",
+    "shape": null,
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "the licence bills with the instance hour; the free e2-micro allowance does not carry a Windows image"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "none",
+    "granularity": {
+      "min_billed_s": 60,
+      "rounding_s": null
+    },
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the pages read on 2026-10-30",
+    "ps": {
+      "gib": null,
+      "price": "archive snapshots metered at a 90-day floor",
+      "durability": "snapshot",
+      "on_stop": true,
+      "on_destroy": true,
+      "retention": "90 days of billing even if deleted sooner"
+    },
+    "net": null
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "request-rate"
+}

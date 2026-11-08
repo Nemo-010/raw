@@ -1,0 +1,158 @@
+{
+  "topic": "netdisk-pan",
+  "slug": "china-mobile-cloud",
+  "provider": "China Mobile Cloud (中国移动云盘, 139 / 和彩云)",
+  "url": "https://yun.139.com",
+  "category": "carrier cloud",
+  "free_tier": {
+    "stated": "1,000 GB (1 TB) free per the Wikipedia table, with 20 GB the base grant and 1 TB or 2 TB obtained through carrier promotions. Membership promos are cited at 8 TB",
+    "unit": "TiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://zh.wikipedia.org/zh-cn/中国大陆网盘列表",
+    "read_on": "2026-10-21"
+  },
+  "per_object_cap": {
+    "stated": "Varies by tier; single-file and upload caps are not published as one number",
+    "bytes": null,
+    "source_url": "https://yun.139.com/intro/"
+  },
+  "retention": {
+    "stated": "Promotional capacity expires. No retention clock on stored files is published",
+    "days": null,
+    "source_url": "https://yun.139.com/intro/"
+  },
+  "egress": {
+    "terms": "Free and unthrottled by design: '不限速：上传下载不限速', and members get carrier zero-rating on China Mobile. Forum consensus agrees China Mobile does not shape, unlike Baidu at 0.1 MB/s and Quark at 1.7 MB/s",
+    "metered": false,
+    "free_allowance": "unlimited on net",
+    "price_per_tb": null,
+    "source_url": "https://yun.139.com/intro/"
+  },
+  "interface": [
+    "rest",
+    "webdav"
+  ],
+  "tooling": "an official open platform at open.yun.139.com, application and approval based; the OpenList 139Yun driver works off a browser-captured Authorization header and needs v3.41.0 or later; netdisk-fast-download's p139 parser is in the paid tier",
+  "chaining": "1 TB free with no shaping is genuinely attractive for serving, and multiplying by accounts is the only path. The gate is a China Mobile number, and the large grants ride the carrier plan and evaporate when it lapses",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "parameters must be scraped from the browser network tab, so an interactive login is mandatory for the driver",
+      "source": "https://alistgo.com/guide/drivers/139"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "unpublished and tier-dependent",
+      "source": "https://yun.139.com/intro/"
+    }
+  ],
+  "identity_cost": {
+    "kind": "country-phone",
+    "detail": "+86 only, and the login is tied to a China Mobile subscriber identity in practice. Promotions are redeemed inside the carrier app's 权益超市, not on the web",
+    "country": "86"
+  },
+  "reliability_note": "The driver is reverse-engineered and the share endpoints change shape: getOutLinkInfoV5 and V6 both exist and both answer resultCode 01000101 to an unauthenticated caller. Promotional capacity expires, so a 20 TiB archive cannot rest on it",
+  "confidence": "reported",
+  "evidence": [
+    {
+      "url": "https://zh.wikipedia.org/zh-cn/中国大陆网盘列表",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: table row 中国移动云盘, 1000G, no upload limit, sharing yes, no speed limit, login required"
+    },
+    {
+      "url": "https://yun.139.com/intro/",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: '初始空间20G，用户可直接通过丰富的网盘活动，轻松领取1T、2T等更大容量的空间'; '不限速：上传下载不限速'; 尊享云计划 '额外8T超大空间'"
+    },
+    {
+      "url": "probe:https://yun.139.com/sharewap/m/i?1D5C36d226M2O=",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: 200 with a 4,541-byte SPA shell, so the share page loads and carries no data"
+    },
+    {
+      "url": "probe:POST https://share-kd-njs.yun.139.com/yun-share/richlifeApp/devapp/IOutLink/getOutLinkInfoV6",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: 200 with {\"resultCode\":\"01000101\",\"desc\":\"服务器响应异常\",\"success\":true}, so both V5 and V6 refuse an unauthenticated caller"
+    },
+    {
+      "url": "https://github.com/OpenListTeam/OpenList/tree/main/drivers/139",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: the driver is named '139Yun'"
+    },
+    {
+      "url": "https://yun.139.com/intro/",
+      "date": "2026-11-03",
+      "proved": "the vendor page still states a 20G base space with 1T and 2T larger grants through campaigns",
+      "capture": "sha256:b75183a9c12d8148de4b862c5d8110bf81fe4bc966cdc5bc439c4191cbf5102c",
+      "quote": "初始空间20G且用户可直接通过丰富的网盘活动，轻松领取1T、2T等更大容量的空间"
+    },
+    {
+      "url": "https://yun.139.com/intro/",
+      "date": "2026-11-03",
+      "proved": "the vendor page still states upload and download are not rate-limited",
+      "capture": "sha256:b75183a9c12d8148de4b862c5d8110bf81fe4bc966cdc5bc439c4191cbf5102c",
+      "quote": "不限速：上传下载不限速，支持5G网络环境下高速传输。"
+    },
+    {
+      "url": "https://yun.139.com/intro/",
+      "date": "2026-11-03",
+      "proved": "the 尊享云计划 membership still lists an extra 8T of space",
+      "capture": "sha256:b75183a9c12d8148de4b862c5d8110bf81fe4bc966cdc5bc439c4191cbf5102c",
+      "quote": "额外8T超大空间"
+    },
+    {
+      "url": "https://zh.wikipedia.org/zh-cn/中国大陆网盘列表",
+      "date": "2026-11-03",
+      "proved": "the table row still reads 1000G free, no upload limit, sharing yes, no download limit, login required",
+      "capture": "sha256:87cfd4212b0eaf2bb73b16353c13f114920639a0b2df7d9e3a6465f3bf0ce870",
+      "quote": "| 中国移动云盘 | 1000G | 无 |  | 有 | 无 | 是 |  |"
+    },
+    {
+      "url": "https://zh.wikipedia.org/zh-cn/中国大陆网盘列表",
+      "date": "2026-11-03",
+      "proved": "the prose of the same page gives free users a 4G single-file upload limit, which the table row does not",
+      "capture": "sha256:87cfd4212b0eaf2bb73b16353c13f114920639a0b2df7d9e3a6465f3bf0ce870",
+      "quote": "免费用户支持最高4G的单个文件上传，下载不限速，支持分享文件"
+    },
+    {
+      "url": "https://alistgo.com/guide/drivers/139",
+      "date": "2026-11-03",
+      "proved": "the driver documentation still says its parameters are read from the browser network tab",
+      "capture": "sha256:961236b1dd9ac0ed3d84001ba3ad2dae41d5350baaf846e5575a85b5afc928ab",
+      "quote": "Parameters can be obtained from the browser DevTools -> Network by searching keywords."
+    },
+    {
+      "url": "probe:https://yun.139.com/sharewap/m/i?1D5C36d226M2O=",
+      "date": "2026-11-03",
+      "proved": "the share page answers 200 with a 4,541-byte SPA shell titled as a share page and carries no data",
+      "capture": "sha256:391aeea336ee8a4694fad765bad0dcf7ae7530662baf7304313c7ca0b239e5a3",
+      "quote": "<title>中国移动云盘分享</title>"
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-11-04T00:20:53.782Z",
+  "history": [],
+  "binding": "write-gated",
+  "binding_note": "The capacity and the egress both qualify, and the gate is the carrier identity: a China Mobile subscriber number, with the promotions redeemable only inside the carrier app. The write gate on the driver's parameters is the second lock.",
+  "notes": "This record covers the 139 and 和彩云 spellings. The deferred list carries four further spellings of the same provider (China Mobile Cloud, 中国移动云盘 / China Mobile Cloud, 中国移动云盘 (China Mobile / 和彩云), and the TV-edition client); this one record is their single home and the other spellings are aliases in the field below.",
+  "extras": {
+    "access_mode": "registration-gated",
+    "anonymous_read": "share SPA loads, data refused",
+    "aliases": [
+      "China Mobile Cloud / 中国移动云盘 (139 / 和彩云)",
+      "中国移动云盘 (China Mobile / 和彩云)",
+      "139Yun",
+      "和彩云",
+      "中国移动云盘 / China Mobile Cloud (139 / 和彩云)",
+      "中国移动云盘 / China Mobile Cloud (139/和彩云)"
+    ],
+    "seed_verdicts": [
+      "fails-identity (A-A12)",
+      "fails-quota (F-F8)",
+      "fails-egress (A-A8)"
+    ],
+    "seed_source": "storage-research",
+    "seed_wave": "A-A12-android-tv-cloud.json",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service"
+  }
+}

@@ -1,0 +1,53 @@
+name: backup
+
+# Every Monday at 07:30 UTC, and on a manual run on main, this job writes a git bundle of every branch and tag to
+# a private Cloudflare R2 bucket, under f-research/. The bucket keeps a file 365 days, and it refuses to delete or
+# replace a file in its first 28 days. The job fails when the bucket holds more than 4.5 GiB of its 5 GiB budget,
+# and when a setting is missing.
+# .github/r2-backup.sh is the same file as in f-shy/fshy.ajam.dev, whose docs/backup.md says how to restore.
+# Actions are pinned by commit; the tag is in the comment.
+
+# Manual only: this private repository spends no Actions minutes on a pull request or a schedule. The checks run in
+# the public repository's Actions (scripts/research/settings.json ci_repo, ci_workflow; scripts/research/ci.py and
+# scripts/research/ci-checks.sh), which `scripts/rq land` starts and `scripts/rq merge` waits for. This file stays
+# for a manual run.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: bundle every branch and tag
+        run: |
+          git for-each-ref --format='%(refname:strip=3)' refs/remotes/origin | grep -vx HEAD |
+            while read -r b; do git update-ref "refs/heads/$b" "refs/remotes/origin/$b"; done
+          git bundle create "$RUNNER_TEMP/repo.bundle" --branches --tags
+          git bundle verify "$RUNNER_TEMP/repo.bundle"
+
+      - name: upload, and check the budget
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          R2_BUCKET: ${{ vars.R2_BUCKET }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: sh .github/r2-backup.sh "$RUNNER_TEMP/repo.bundle"

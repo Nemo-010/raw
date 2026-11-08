@@ -1,0 +1,136 @@
+{
+  "topic": "compute",
+  "slug": "vdsina",
+  "provider": "VDSina",
+  "url": "https://www.vdsina.com/ru/pricing/gpu-servers",
+  "category": "GPU cloud",
+  "free_tier": {
+    "stated": "No trial, and the provider says so on its own pricing FAQ: there is no test period, but every server bills by the day. The cheapest GPU shape is a standard server with 8 CPU cores, 8 GB RAM, 150 GB NVMe and 2 GB of video memory from an Nvidia L4, on a 10 Gbit/s port with 32 TB of traffic included per calendar month, at USD 2.00 a day or USD 60 a month. The 8 GB GPU shape is 32 cores, 32 GB RAM, 500 GB NVMe and 8 GB of video memory at USD 20 a day or USD 600 a month. A custom constructor adds a whole L4 with 24 GB at USD 15 a day against a USD 100 minimum balance, or a whole L40S with 48 GB at USD 50 a day against USD 250. Traffic above the allowance costs USD 2.25 per TB, and a single top-up of USD 100 earns a 10 percent bonus on the balance, USD 1,000 earns 20 percent. The pages list no H100, A100 80 GB or RTX 4090 and quote no hourly rate: billing is per day, so the L4 24 GB at USD 15 a day is USD 0.625 an hour averaged over a day and the L40S 48 GB at USD 50 a day is USD 2.083 an hour.",
+    "unit": "GiB",
+    "metered_on": "wall-clock",
+    "source_url": "https://www.vdsina.com/ru/pricing/gpu-servers",
+    "read_on": "2026-10-22",
+    "notes": "none"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://www.vdsina.com/ru/pricing/gpu-servers",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://www.vdsina.com/ru/pricing/gpu-servers",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "not published on the page read: no egress term was found, so nothing is asserted",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.vdsina.com/ru/pricing/gpu-servers"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "not stated in the finding; the provider documents no client",
+  "chaining": "This is the only shape in the lane that pairs a GPU with 32 TB a month of egress at USD 60: it composes with the free object storage tiers held elsewhere, because the GPU box can pull training data in with no inbound charge and then serve results from a storage tier with its own free egress.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "The 32 TB a month traffic allowance is the number that decides it: a workload serving 1 TB a day for a month wants 30 TB, so the cheapest shape carries that load with 2 TB to spare and the next constraint is the 2 GB of video memory rather than the network.",
+      "source": "https://www.vdsina.com/ru/pricing/gpu-servers"
+    }
+  ],
+  "limits_note": "The 32 TB a month traffic allowance is the number that decides it: a workload serving 1 TB a day for a month wants 30 TB, so the cheapest shape carries that load with 2 TB to spare and the next constraint is the 2 GB of video memory rather than the network.",
+  "binding": "volume-quota",
+  "binding_note": "The 32 TB a month traffic allowance is the number that decides it: a workload serving 1 TB a day for a month wants 30 TB, so the cheapest shape carries that load with 2 TB to spare and the next constraint is the 2 GB of video memory rather than the network.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "the account is funded from a balance and there is no trial: the pricing FAQ states \"There is no test period, but we have a daily payment\", a custom GPU constructor requires a minimum balance of USD 100 for a whole L4 and USD 250 for a whole L40S, and a single top-up from USD 100 earns a 10 percent bonus. The record does not name the payment rail, so the card cost rests on the billing model; no hold, debit or prepaid answer appears, and whether a card issued outside Russia works is not stated",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://www.vdsina.com/ru/pricing/gpu-servers",
+      "date": "2026-10-22",
+      "proved": "standard GPU server with 8 cores, 8 GB RAM, 150 GB NVMe and 2 GB of L4 video memory at USD 2.00 a day or USD 60 a month, 32 TB of traffic per calendar month on a 10 Gbit/s port, overage USD 2.25 per TB, quoted and translated"
+    },
+    {
+      "url": "https://www.vdsina.com/pricing",
+      "date": "2026-10-22",
+      "proved": "the FAQ answer 'Is there a test period? There is no test period, but we have a daily payment', quoted"
+    },
+    {
+      "url": "https://www.vdsina.com/ru/plans-min-costs",
+      "date": "2026-10-22",
+      "proved": "constructor with GPU requires a minimum balance of USD 100 for a whole L4 at USD 15 a day and USD 250 for a whole L40S at USD 50 a day, quoted and translated"
+    },
+    {
+      "url": "https://www.vdsina.com/pricing",
+      "date": "2026-10-22",
+      "proved": "a single top-up from USD 100 carries a 10 percent balance bonus and from USD 1,000 a 20 percent bonus, quoted"
+    },
+    {
+      "url": "https://www.vdsina.com/ru/plans-min-costs",
+      "date": "2026-11-03",
+      "proved": "the constructor lists a whole L4 24 GB at USD 15 a day with a USD 100 minimum balance",
+      "capture": "sha256:14657a05c69baa91f9d024c71d38df3406a2cf33b2ca7f32de739e93f9d71afd",
+      "quote": "| GPU NVIDIA L4 / 24GB VRAM | 15.00 $ / день | 100.00 $ | Да |"
+    },
+    {
+      "url": "https://www.vdsina.com/ru/plans-min-costs",
+      "date": "2026-11-03",
+      "proved": "the constructor lists an L40S 48 GB at USD 50 a day with a USD 250 minimum balance",
+      "capture": "sha256:14657a05c69baa91f9d024c71d38df3406a2cf33b2ca7f32de739e93f9d71afd",
+      "quote": "| GPU NVIDIA L40S / 48GB VRAM | 50.00 $ / день | 250.00 $ | Да |"
+    },
+    {
+      "url": "https://www.vdsina.com/ru/pricing/gpu-servers",
+      "date": "2026-11-03",
+      "proved": "billing is per day, with no test period",
+      "capture": "sha256:dc127f04d24ad0f00f3d1102c5b253d1957b035779cc7fa09e0e889a9c33733e",
+      "quote": "Тестового периода нет, но у нас посуточная оплата."
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-03T08:50:36.652Z",
+  "notes": "New provider for the corpus. Dollar pricing with an Amsterdam data centre is why this record matters more than its Russian peers: a card that is not Russian is the normal way to pay, while the same machines from FirstVDS or Cloud.ru need roubles and a Russian instrument. Arithmetic: 2 x 30 = 60, so the month price is exactly 30 days of the daily rate with no discount for commitment; 32 TB a month against 30 TB of load leaves 2 TB, and one day over the daily average at 1 TB would spend it. Not established: whether the L4 slice can be left stopped without charge, and whether the daily billing rounds up.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "VDSina",
+      "class": "regional-gpu",
+      "category_as_written": "GPU cloud, Russian-founded host with dollar pricing and daily billing",
+      "free_tier_kind": "none",
+      "shape": {
+        "vcpu": 8,
+        "ram_gib": 8,
+        "gpu_class": "Nvidia L4, 2 GB VRAM slice",
+        "gpu_count": 1,
+        "disk_gib": 150,
+        "port_mbit": 10000
+      },
+      "seen_routes": [
+        "broker search vdsina gpu price, domain scoped",
+        "broker read vdsina.com/ru/pricing/gpu-servers via search snippet",
+        "broker read vdsina.com/pricing via search snippet",
+        "broker read vdsina.com/ru/plans-min-costs via search snippet"
+      ],
+      "agents": [
+        "ru-cis-forums"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "superseded": {
+      "identity_cost": {
+        "kind": "card",
+        "detail": "as stated by the provider's signup page",
+        "country": null
+      }
+    }
+  }
+}

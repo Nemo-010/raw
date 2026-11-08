@@ -1,0 +1,254 @@
+{
+  "topic": "compute",
+  "slug": "abeiyun",
+  "provider": "Abeiyun",
+  "url": "https://www.abeiyun.com/help/content_1209.html",
+  "category": "cloud VM",
+  "tier": "free cloud server",
+  "free_tier": {
+    "stated": "The vendor withdrew the free cloud server on 2026-09-20. It was 1 core, 1 GiB RAM, 5 Mbps bandwidth and a 10 GiB data disk, with a dedicated public IP on BGP multi-line routing and a free 免备案 (no ICP filing) service. First activation ran 24 hours, an extension could be requested after 6 hours, and each approved extension added 5 to 10 days depending on real-name verification status; the vendor called the product permanently free. The notice states free instances were to be taken offline by 2026-09-27 and their disk data deleted. The paid cloud server starts at CNY 15 for the first month at 1 core, 1 GiB RAM, 5 Mbps and a 100 GiB data disk.",
+    "unit": "hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://www.abeiyun.com/free",
+    "read_on": "2026-11-06",
+    "notes": "the free instance was time-boxed: 24 hours at first activation, then 5 to 10 days per approved extension, and deleted at expiry"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://www.abeiyun.com/free",
+    "notes": "the ceiling that mattered was the machine shape: 1 core, 1 GiB RAM and a 10 GiB data disk"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine, not stored bytes; the instance and its disk are deleted when the free period ends",
+    "days": null,
+    "source_url": "https://www.abeiyun.com/help/content_1115.html",
+    "notes": "a machine record: what is lost is the running process and its disk"
+  },
+  "egress": {
+    "terms": "a 5 Mbps port on the free instance; the free product page states no monthly traffic allowance and no overage price",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.abeiyun.com/free"
+  },
+  "interface": [
+    "ssh"
+  ],
+  "interface_detail": "SSH on port 22 for the Linux images and RDP on 3389 for the Windows images, with a VNC console in the control panel; no API, CLI or SDK is documented on the vendor's help pages",
+  "tooling": "no API, CLI or SDK is documented on the vendor's help pages; the control panel and SSH are the access paths",
+  "chaining": "Not usable: the free tier stopped on 2026-09-20. The paid cloud server at CNY 15 for the first month needs the same real-name verification with a Chinese ID number, so it is not a substitute.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "24 hours at first activation, then 5 to 10 days per approved extension; the instance and its disk are deleted when the free period ends",
+      "source": "https://www.abeiyun.com/help/content_1058.html"
+    },
+    {
+      "kind": "write-gated",
+      "value": "each extension requires a public post on a third-party site carrying the vendor's keywords and more than 20 characters of experience text, submitted for review",
+      "source": "https://www.abeiyun.com/help/content_1155.html"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "1 core, 1 GiB RAM, 10 GiB data disk and a 5 Mbps port",
+      "source": "https://www.abeiyun.com/free"
+    }
+  ],
+  "limits_note": "one free instance per person, reported by a third-party walkthrough in 2026-05; the machine shape is 1 core, 1 GiB RAM and a 10 GiB data disk",
+  "binding": "retention-clamped",
+  "binding_note": "the instance is deleted 24 hours after activation unless a reviewed public post earns 5 to 10 more days, so holding the machine costs a recurring publishing task",
+  "identity_cost": {
+    "kind": "national-id",
+    "detail": "Registration takes an 11-digit mobile number and an SMS code: the register form's identity field is 手机号码 with maxlength 11, plus 手机验证码, and activation runs 注册登录, 关注微信公众号, 认证开通. Opening the free server needs 实名认证 (real-name verification): the vendor states domestic cloud resources require it, that the name and 身份证号码 (national ID number) must be correct, that the registered mobile number must belong to that person, and that a fee is charged on every attempt whether or not it succeeds. A third-party write-up puts the verification fee at CNY 0.3 and a CNY 1 minimum balance before activation.",
+    "country": "CN"
+  },
+  "reliability_note": "the free instance and its disk are deleted when the free period ends and the vendor states the data cannot be recovered; the free cloud server stopped service on 2026-09-20, with instances offline by 2026-09-27",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://www.abeiyun.com/help/content_1209.html",
+      "date": "2026-11-06",
+      "capture": "sha256:b129c4c712bb8e1a2fe14272a76d6e705826fc17f736cf5288ba62547ea9f818",
+      "quote": "因产品战略调整，自今日起，阿贝云免费云服务器正式停止服务。",
+      "proved": "the vendor states the free cloud server stopped service as of the notice's date"
+    },
+    {
+      "url": "https://www.abeiyun.com/help/content_1209.html",
+      "date": "2026-11-06",
+      "capture": "sha256:b129c4c712bb8e1a2fe14272a76d6e705826fc17f736cf5288ba62547ea9f818",
+      "quote": "最后更新时间：2026-09-20 08:40:38",
+      "proved": "the notice carries a last-updated stamp of 2026-09-20, which dates the withdrawal"
+    },
+    {
+      "url": "https://www.abeiyun.com/help/content_1209.html",
+      "date": "2026-11-06",
+      "capture": "sha256:b129c4c712bb8e1a2fe14272a76d6e705826fc17f736cf5288ba62547ea9f818",
+      "quote": "免费云服务器实例将于2026年09月27日逐步下线完毕，服务器访问、远程连接、控制台操作等功能会陆续失效。",
+      "proved": "free instances were to be taken offline by 2026-09-27"
+    },
+    {
+      "url": "https://www.abeiyun.com/help/content_1209.html",
+      "date": "2026-11-06",
+      "capture": "sha256:b129c4c712bb8e1a2fe14272a76d6e705826fc17f736cf5288ba62547ea9f818",
+      "quote": "服务停止后，服务器磁盘数据将被清除，数据无法找回、不可恢复",
+      "proved": "the disk data of the free instances is deleted and cannot be recovered"
+    },
+    {
+      "url": "https://www.abeiyun.com/help/content_1209.html",
+      "date": "2026-11-06",
+      "capture": "sha256:b129c4c712bb8e1a2fe14272a76d6e705826fc17f736cf5288ba62547ea9f818",
+      "quote": "本次仅针对免费云服务器，付费云服务器产品不受本次调整影响，可正常使用。",
+      "proved": "the withdrawal covers the free cloud server only; the paid cloud servers keep running"
+    },
+    {
+      "url": "https://www.abeiyun.com/free",
+      "date": "2026-11-06",
+      "capture": "sha256:bdb779dcdfb6fc1a1e18efd5b229bf8e254ccd0958364e2ff4f439b6f49212ed",
+      "quote": "免费云服务器配置 CPU 1核 内存 1G 带宽 5M 数据盘 10G",
+      "proved": "the free cloud server was 1 core, 1 GiB RAM, 5 Mbps bandwidth and a 10 GiB data disk"
+    },
+    {
+      "url": "https://www.abeiyun.com/free",
+      "date": "2026-11-06",
+      "capture": "sha256:bdb779dcdfb6fc1a1e18efd5b229bf8e254ccd0958364e2ff4f439b6f49212ed",
+      "quote": "永久免费云服务器采用BGP多线路，速度快，独立IP地址，送免备案服务",
+      "proved": "BGP multi-line routing, a dedicated public IP and a free no-filing service on the free cloud server"
+    },
+    {
+      "url": "https://www.abeiyun.com/free",
+      "date": "2026-11-06",
+      "capture": "sha256:bdb779dcdfb6fc1a1e18efd5b229bf8e254ccd0958364e2ff4f439b6f49212ed",
+      "quote": "注册登录 关注微信公众号 认证开通",
+      "proved": "the activation flow is registration, following the vendor's WeChat account, then real-name verification"
+    },
+    {
+      "url": "https://www.abeiyun.com/help/content_1058.html",
+      "date": "2026-11-06",
+      "capture": "sha256:6d2a0702d9409c8616542997f4ae5aa74478a5383051ebc18d1303baa3aa4f3b",
+      "quote": "免费云服务器初始开通时24小时的使用时间，开通6小时后您可以进行免费延期操作。",
+      "proved": "first activation is 24 hours and an extension can be requested after 6 hours"
+    },
+    {
+      "url": "https://www.abeiyun.com/help/content_1058.html",
+      "date": "2026-11-06",
+      "capture": "sha256:6d2a0702d9409c8616542997f4ae5aa74478a5383051ebc18d1303baa3aa4f3b",
+      "quote": "每次免费延期根据您的认证状态不同，将可以免费延长5到10天的时间，通过免费延期您可以永久免费使用。",
+      "proved": "each approved extension adds 5 to 10 days depending on verification status, and repeated extension is presented as permanent free use"
+    },
+    {
+      "url": "https://www.abeiyun.com/help/content_1115.html",
+      "date": "2026-11-06",
+      "capture": "sha256:af74c8240e3729af4cb9f6df05f26cbd76c5d90b11fdf111ee9429dca4d42e85",
+      "quote": "但如果您未延期，到达使用时间后系统将会自动删除，数据等无法恢复。",
+      "proved": "an instance that is not extended is deleted at expiry and its data cannot be recovered"
+    },
+    {
+      "url": "https://www.abeiyun.com/help/content_1155.html",
+      "date": "2026-11-06",
+      "capture": "sha256:d188b4c5ae964b61cdfe0a75b386638cec6ef3ff8ca7ad32fe6d3613f4c62cf2",
+      "quote": "文章中必须包含“阿贝云”\"免费虚拟主机\"“免费云服务器”字样和大于20字的使用感受内容。",
+      "proved": "an extension requires a public post containing the vendor's keywords and more than 20 characters of experience text"
+    },
+    {
+      "url": "https://www.abeiyun.com/help/content_1155.html",
+      "date": "2026-11-06",
+      "capture": "sha256:d188b4c5ae964b61cdfe0a75b386638cec6ef3ff8ca7ad32fe6d3613f4c62cf2",
+      "quote": "延期需要您在第三方网站发布使用感受",
+      "proved": "the extension post must be published on a third-party site"
+    },
+    {
+      "url": "https://www.abeiyun.com/help/content_1067.html",
+      "date": "2026-11-06",
+      "capture": "sha256:6abb9118f40bfb7e9edcfa0ba831ded2f86c40dff396198e8c4d7e0a54a390bc",
+      "quote": "国内云计算资源用户须完成用户实名认证才能使用相关服务",
+      "proved": "real-name verification is required before domestic cloud resources can be used"
+    },
+    {
+      "url": "https://www.abeiyun.com/help/content_1067.html",
+      "date": "2026-11-06",
+      "capture": "sha256:6abb9118f40bfb7e9edcfa0ba831ded2f86c40dff396198e8c4d7e0a54a390bc",
+      "quote": "请确保姓名、身份证号码完全正确，请勿使用他人身份信息进行认证，否则会认证失败",
+      "proved": "the verification needs the account holder's name and national ID number"
+    },
+    {
+      "url": "https://www.abeiyun.com/help/content_1067.html",
+      "date": "2026-11-06",
+      "capture": "sha256:6abb9118f40bfb7e9edcfa0ba831ded2f86c40dff396198e8c4d7e0a54a390bc",
+      "quote": "注册手机号必须属本人所有，请勿使用他人手机进行注册，否则认证会失败",
+      "proved": "the registered mobile number must belong to the person being verified"
+    },
+    {
+      "url": "https://www.abeiyun.com/help/content_1067.html",
+      "date": "2026-11-06",
+      "capture": "sha256:6abb9118f40bfb7e9edcfa0ba831ded2f86c40dff396198e8c4d7e0a54a390bc",
+      "quote": "无论是否认证成功系统每次收取一定的认证手续费。",
+      "proved": "a verification fee is charged on every attempt, successful or not"
+    },
+    {
+      "url": "https://www.abeiyun.com/register",
+      "date": "2026-11-06",
+      "capture": "sha256:4d3e3b8aa087fe1c620b78ca1764986e76d8db06cc02138428fdddfae4482b4b",
+      "quote": "<input type=\"text\" name=\"mobile\" id=\"mobile\" maxlength=\"11\"/>",
+      "proved": "the registration form's identity field is a mobile number capped at 11 digits"
+    },
+    {
+      "url": "https://www.abeiyun.com/register",
+      "date": "2026-11-06",
+      "capture": "sha256:4d3e3b8aa087fe1c620b78ca1764986e76d8db06cc02138428fdddfae4482b4b",
+      "quote": "<th><b>*</b>手机验证码</th>",
+      "proved": "registration also requires an SMS code sent to that mobile number"
+    },
+    {
+      "url": "https://www.abeiyun.com/server/",
+      "date": "2026-11-06",
+      "capture": "sha256:3c02976be50a410801a8eb5ef00deee53d752b9efeadc3f0705746d8eb58f8f2",
+      "quote": "入门型 适用于个人网站初始阶段并发访问量小，经济配置省钱适用，两步购买方便快捷 CPU: 1核 内存: 1G 带宽: 5M 防御: 100G 系统盘: 赠送 数据盘: 100G 15元 / 首月",
+      "proved": "the paid cloud server's entry plan is 1 core, 1 GiB RAM, 5 Mbps and a 100 GiB data disk at CNY 15 for the first month"
+    },
+    {
+      "url": "https://www.coderlog.net/post/abeiyun-free-cloud-server-experience",
+      "date": "2026-11-06",
+      "capture": "sha256:24d866bd2d52cddcc4a8444ba7bd579cdf501fda8accba2bf5404097f607bb73",
+      "quote": "注册后需要完成实名认证，这一步要支付 **0.3 元**",
+      "proved": "a third-party write-up puts the real-name verification fee at CNY 0.3"
+    },
+    {
+      "url": "https://www.coderlog.net/post/abeiyun-free-cloud-server-experience",
+      "date": "2026-11-06",
+      "capture": "sha256:24d866bd2d52cddcc4a8444ba7bd579cdf501fda8accba2bf5404097f607bb73",
+      "quote": "账户里至少要充值 **1 元**",
+      "proved": "the same write-up states at least CNY 1 must be on the balance before the free server is activated"
+    },
+    {
+      "url": "https://www.coderlog.net/post/abeiyun-free-cloud-server-experience",
+      "date": "2026-11-06",
+      "capture": "sha256:24d866bd2d52cddcc4a8444ba7bd579cdf501fda8accba2bf5404097f607bb73",
+      "quote": "初次开通后，有效期只有 24 小时",
+      "proved": "a third-party account corroborates the 24-hour first activation"
+    },
+    {
+      "url": "https://openeuler.csdn.net/6a1288ff10ee7a33f274bef5.html",
+      "date": "2026-11-06",
+      "capture": "sha256:3ce48b582544e80a5617fcb5600cb7565ced26667b399214a4beab5845694158",
+      "quote": "每人**限一台免费云服务器**",
+      "proved": "one free cloud server per person"
+    },
+    {
+      "url": "https://openeuler.csdn.net/6a1288ff10ee7a33f274bef5.html",
+      "date": "2026-11-06",
+      "capture": "sha256:3ce48b582544e80a5617fcb5600cb7565ced26667b399214a4beab5845694158",
+      "quote": "Linux：SSH（22 端口）",
+      "proved": "Linux images are reached over SSH on port 22"
+    }
+  ],
+  "verdict": "dead",
+  "verified_at": "2026-11-06T16:58:46.967Z",
+  "notes": "The vendor withdrew the free cloud server on 2026-09-20; the product page at https://www.abeiyun.com/free still advertises it, so the notice is the newer statement. The notice states the change applies only to the free cloud server. The paid cloud server starts at CNY 15 for the first month on the same real-name gate. The vendor writes its name 阿贝云; the notice is signed 陕西阿贝云计算有限公司.",
+  "extras": {
+    "death": {
+      "on": "2026-09-20",
+      "cause": "free-tier-removed"
+    }
+  }
+}

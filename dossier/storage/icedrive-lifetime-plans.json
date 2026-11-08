@@ -1,0 +1,223 @@
+{
+  "topic": "storage",
+  "slug": "icedrive-lifetime-plans",
+  "provider": "Icedrive — lifetime plans (direct)",
+  "url": "https://icedrive.net/lifetime-plans",
+  "category": "cloud-drive",
+  "free_tier": {
+    "stated": "Lifetime Personal 500 GB $229 (from $344); Lifetime Personal+ 2 TB $499 (from $749). One-time, 'No recurring renewal'. Live on the vendor page 2026-10-21.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://icedrive.net/lifetime-plans",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://icedrive.net/lifetime-plans",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "2 sync devices on lifetime, 14 days file versioning",
+    "days": 14,
+    "source_url": "https://icedrive.net/lifetime-plans",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free-tier bandwidth is capped (TechRadar: 3 GB/day on free). Lifetime paid tiers not metered per-GB; sync-limited to 2 devices on lifetime.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "webdav",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "rclone backend `icedrive`. Third-party clients exist; WebDAV is not native.",
+  "chaining": "$250/TB at 2 TB. No stacking — lifetime tiers are fixed capacity.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "lifetime, 14 days",
+      "source": "https://icedrive.net/lifetime-plans"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "lifetime page but 14 days",
+      "source": "https://icedrive.net/lifetime-plans"
+    }
+  ],
+  "limits_note": "2 sync devices on lifetime, 14 days file versioning. Vendor explicitly says heavy sync/NAS workloads belong on subscriptions — i.e. the lifetime tier is throttled by device count, not bytes.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "Gibraltar-registered ICE PRIVACY LTD, 30-day guarantee on the lifetime page but 14 days in the published conditions — decide inside 14. Price discrepancy vs the 2026-10-17 audit ($699 for 2 TB) suggests the vendor page is running a deeper promo than third parties track.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://icedrive.net/lifetime-plans",
+      "date": "2026-10-21",
+      "proved": "'Lifetime Personal+ 2 TB ... $749 $499 One-time payment', fetched 2026-10-21"
+    },
+    {
+      "url": "https://www.techradar.com/pro/grab-1-54tb-free-cloud-storage-for-life-but-you-will-need-to-sign-up-43-services",
+      "date": "2026-10-21",
+      "proved": "'Icedrive, for example, has a 3GB per day limit' on free"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Lifetime Personal 500 GB $229 (from $344); Lifetime Personal+ 2 TB $499 (from $749). One-time, 'No recurring renewal'. Live on the vendor page 2026-10-21.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E13-deals-channels.json",
+    "seed_area": "E/E13",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "E/E13"
+      },
+      {
+        "value": "fails-egress",
+        "area": "A/P6"
+      },
+      {
+        "value": "fails-quota",
+        "area": "A/A3"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Icedrive — lifetime plans (direct)",
+      "Icedrive — 10 TB Pro",
+      "Icedrive"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area E/E13",
+            "evidence": "quota: Lifetime Personal 500 GB $229 (from $344); Lifetime Personal+ 2 TB $49"
+          },
+          {
+            "value": "fails-egress",
+            "source": "table.md row, area A/P6",
+            "evidence": "quota: 200 GB / 1 / 3 / 5 / 10 TB; lifetime 500 GB and 2 TB"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row, area A/A3",
+            "evidence": "quota: 10 GB free"
+          }
+        ],
+        "resolution": "fails-egress: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried dead-end: 10 GB free. Failed on both quota and the programmatic path: there is no rclone backend at all (generic webdav only, via  and fails-quota and qualifies-with-caveat. The table.md (area A/P6) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "Lifetime Personal 500 GB $229 (from $344); Lifetime Personal+ 2 TB $49",
+            "source": "table.md row, area E/E13",
+            "evidence": null
+          },
+          {
+            "value": "200 GB / 1 / 3 / 5 / 10 TB; lifetime 500 GB and 2 TB",
+            "source": "table.md row, area A/P6",
+            "evidence": null
+          },
+          {
+            "value": "10 GB free",
+            "source": "table.md row, area A/A3",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area E/E13)"
+          },
+          {
+            "value": "fails-egress",
+            "source": "table.md (area A/P6)"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md (area A/A3)"
+          }
+        ],
+        "resolution": "fails-egress: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried dead-end: 10 GB free. Failed on both quota and the programmatic path: there is no rclone backend at all (generic webdav only, via  and fails-quota and qualifies-with-caveat. The table.md (area A/P6) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "Lifetime Personal 500 GB $229 (from $344); Lifetime Personal+ 2 TB $49",
+            "source": "table.md (area E/E13)"
+          },
+          {
+            "value": "200 GB / 1 / 3 / 5 / 10 TB; lifetime 500 GB and 2 TB",
+            "source": "table.md (area A/P6)"
+          },
+          {
+            "value": "10 GB free",
+            "source": "table.md (area A/A3)"
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider is both a table row and a dead end",
+        "claims": [
+          {
+            "value": "fails-quota",
+            "source": "table.md"
+          },
+          {
+            "value": "dead-end: 10 GB free. Failed on both quota and the programmatic path: there is no rclone backend at all (generic webdav only, via ",
+            "source": "DEAD-ENDS.md"
+          }
+        ],
+        "resolution": "fails-egress: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried dead-end: 10 GB free. Failed on both quota and the programmatic path: there is no rclone backend at all (generic webdav only, via  and fails-quota and qualifies-with-caveat. The table.md (area A/P6) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Lifetime Personal 500 GB $229 (from $344); Lifetime Personal+ 2 TB $499 (from $749). One-time, 'No recurring renewal'. Live on the vendor page 2026-10-21.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E13"
+    },
+    "target_document": "docs/storage/paid/lifetime-and-deals.md",
+    "document_section": "Deal channels and the lifetime graveyard",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 1,
+    "evidence_dated_to_seed_pass": 1,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Lifetime Personal 500 GB $229 (from $344); Lifetime Personal+ 2 TB $499 (from $749). One-time, 'No recurring renewal'. Live on the vendor page 2026-10-21.",
+    "limits_verbatim": "2 sync devices on lifetime, 14 days file versioning. Vendor explicitly says heavy sync/NAS workloads belong on subscriptions — i.e. the lifetime tier is throttled by device count, not bytes.",
+    "egress_verbatim": "Free-tier bandwidth is capped (TechRadar: 3 GB/day on free). Lifetime paid tiers not metered per-GB; sync-limited to 2 devices on lifetime.",
+    "chaining_verbatim": "$250/TB at 2 TB. No stacking — lifetime tiers are fixed capacity.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "rclone backend `icedrive`. Third-party clients exist; WebDAV is not native.",
+    "interface_verbatim": "rest",
+    "agent_focus": "deals, 优惠活动 (discount campaign) communities, coupon channels, lifetime-deal graveyard, student programmes, trial-stacking"
+  },
+  "binding": "retention-clamped",
+  "binding_note": "a clock, not a quota: bytes leave whether or not the client is finished with them",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

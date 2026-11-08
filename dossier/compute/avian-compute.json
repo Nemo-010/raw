@@ -1,0 +1,156 @@
+{
+  "topic": "compute",
+  "slug": "avian-compute",
+  "provider": "Avian Compute",
+  "url": "https://avian.io/compute/",
+  "category": "GPU cloud",
+  "free_tier": {
+    "stated": "No free tier and no credit on the compute page: every rate is per GPU-hour, prepaid for a whole term, on complete 8-GPU HGX nodes with a one-node minimum. B200 USD 4.32 per GPU-hour on a 12-month term, against USD 5.40 on 1 month and USD 3.42 on 36 months; B300 USD 4.95 on 12 months and USD 5.40 on 1 month. H100, A100 80 GB, L40S and L4: not listed; RTX 4090: not listed.",
+    "unit": "hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://avian.io/compute/",
+    "read_on": "2026-11-06",
+    "notes": "none"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://computeprices.com/providers/avian",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://computeprices.com/providers/avian",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "not published on the page read",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://computeprices.com/providers/avian"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "the provider description states it offers 'a range of AI models accessible via a single API key, billed on a pay-per-token basis or through long-term reservations'",
+  "chaining": "USD 4.32 per GPU-hour for a B200 with 180 GB is the cheapest Blackwell rate in this lane, and it is also the least reachable: the commitment is twelve months on eight cards. An 8x B200 node at that rate is the machine for a training run that will not fit on a rented 48 GB card, not a machine for a single inference job, and the pay-per-token API on the same provider is the row to price for the small job",
+  "limits": [],
+  "limits_note": "no transfer quota is stated. The binding term is the commitment: one 8-GPU HGX node minimum, prepaid for the whole term on a 730 hour per GPU per month basis, and the 1, 3 and 6 month rows are sold out, so the shortest term on offer is 12 months at USD 4.32 a GPU-hour for a B200.",
+  "binding": "none",
+  "binding_note": "the commitment binds: a whole-term prepayment on at least eight cards, USD 302,746 upfront for a 12-month B200 node, in place of any quota the page states.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "not read: the signup page was not fetched in this lane",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://computeprices.com/providers/avian",
+      "date": "2026-10-22",
+      "proved": "row fields, transcribed and joined by me (unquoted values are not verbatim): [B200] | $4.32/hr | 180GB | 8x | 128 | 2048 GB | 10/21/2026, with the rows tags reading Reserved - 12mo' and 'North America'"
+    },
+    {
+      "url": "https://computeprices.com/providers/avian",
+      "date": "2026-10-22",
+      "proved": "second row fields, transcribed and joined by me (unquoted values are not verbatim): [HGX B300] | $4.95/hr | 288GB | 8x | 192 | 4096 GB | 10/21/2026 with the same Reserved - 12mo and 'North America' tags; provider described as 'Avian Compute provides AI inference and dedicated GPU compute services through NVIDIA B200 and B300 HGX nodes'"
+    },
+    {
+      "url": "https://avian.io/compute/",
+      "date": "2026-11-06",
+      "proved": "the B200 effective rate is USD 4.32 per GPU-hour on a 730 hour per month basis",
+      "capture": "sha256:f586c58853040b235bbda9e443ef6edd565cc966eb07dd4da170df114178db24",
+      "quote": "Effective rate: **$4.32**/GPU·hr · 730 hr/mo basis"
+    },
+    {
+      "url": "https://avian.io/compute/",
+      "date": "2026-11-06",
+      "proved": "the term table states the per-GPU-hour rate and the whole-term payment for each card",
+      "capture": "sha256:f586c58853040b235bbda9e443ef6edd565cc966eb07dd4da170df114178db24",
+      "quote": "| 12 months | $4.32/GPU-hr$302,746 per node, whole term | $4.95/GPU-hr$346,896 per node, whole term |"
+    },
+    {
+      "url": "https://avian.io/compute/",
+      "date": "2026-11-06",
+      "proved": "the billing unit is one GPU-hour prepaid for a whole term, with a one-node minimum",
+      "capture": "sha256:f586c58853040b235bbda9e443ef6edd565cc966eb07dd4da170df114178db24",
+      "quote": "Sold as complete 8-GPU HGX nodes, one node minimum. All rates are per GPU, per hour, prepaid for the full term"
+    },
+    {
+      "url": "https://avian.io/compute/",
+      "date": "2026-11-06",
+      "proved": "the 6-month term is sold out, so the shortest purchasable term is the 12-month row",
+      "capture": "sha256:f586c58853040b235bbda9e443ef6edd565cc966eb07dd4da170df114178db24",
+      "quote": "| 6 months | $4.77/GPU-hr$167,141 per node, whole term | $5.15/GPU-hr$180,456 per node, whole term | Sold out |"
+    },
+    {
+      "url": "https://avian.io/compute/",
+      "date": "2026-11-06",
+      "proved": "the 12-month B200 node is one upfront payment of USD 302,746",
+      "capture": "sha256:f586c58853040b235bbda9e443ef6edd565cc966eb07dd4da170df114178db24",
+      "quote": "$302,746 one payment, upfront"
+    },
+    {
+      "url": "https://avian.io/compute/",
+      "date": "2026-11-06",
+      "proved": "the per-hour figure divides a whole-term payment over 730 hours a month",
+      "capture": "sha256:f586c58853040b235bbda9e443ef6edd565cc966eb07dd4da170df114178db24",
+      "quote": "730 hr/GPU/month basis"
+    },
+    {
+      "url": "https://avian.io/compute/",
+      "date": "2026-11-06",
+      "proved": "the minimum order is one eight-GPU node",
+      "capture": "sha256:f586c58853040b235bbda9e443ef6edd565cc966eb07dd4da170df114178db24",
+      "quote": "Sold as complete 8-GPU HGX nodes, one node minimum."
+    },
+    {
+      "url": "https://avian.io/compute/",
+      "date": "2026-11-06",
+      "proved": "the vendor page is the pricing page the numbers now come from",
+      "capture": "sha256:f586c58853040b235bbda9e443ef6edd565cc966eb07dd4da170df114178db24",
+      "quote": "## Dedicated B200 & B300, prepaid per term"
+    },
+    {
+      "url": "https://avian.io/compute/",
+      "date": "2026-11-06",
+      "proved": "the term table has two GPU columns, B200 and B300, so no H100, A100 80 GB, L40S, RTX 4090 or L4 is priced",
+      "capture": "sha256:f586c58853040b235bbda9e443ef6edd565cc966eb07dd4da170df114178db24",
+      "quote": "| Term | NVIDIA B200 | NVIDIA B300 | Request |"
+    },
+    {
+      "url": "https://avian.io/compute/",
+      "date": "2026-11-06",
+      "proved": "every rate is per GPU-hour, prepaid for a whole term, on 8-GPU nodes",
+      "capture": "sha256:f586c58853040b235bbda9e443ef6edd565cc966eb07dd4da170df114178db24",
+      "quote": "Sold as complete 8-GPU HGX nodes, one node minimum. All rates are per GPU, per hour, prepaid for the full term"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-06T18:39:12.192Z",
+  "notes": "The vendor page prices two cards, both as prepaid reservations on 8-GPU nodes: a 730 hour per GPU per month basis, a one-node minimum, the US region, and sales tax or VAT extra. The per-token inference API is a separate offer priced per million tokens.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "Avian Compute",
+      "class": null,
+      "category_as_written": "GPU cloud",
+      "free_tier_kind": "none",
+      "shape": {
+        "vcpu": 128,
+        "ram_gib": 2048,
+        "disk_gib": null,
+        "gpu_class": "NVIDIA B200 180GB",
+        "gpu_count": 8
+      },
+      "seen_routes": null,
+      "agents": [
+        "index-aggregators"
+      ],
+      "promoted_from": ".tmp/wave2"
+    }
+  }
+}

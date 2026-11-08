@@ -1,0 +1,208 @@
+{
+  "topic": "storage",
+  "slug": "uloz-to-disk",
+  "provider": "Uloz.to Disk (ULTRA 25 TB)",
+  "url": "https://uloz.to/koupit-disk",
+  "category": "consumer cloud drive sold in 3/12/25/50 TB blocks",
+  "free_tier": {
+    "stated": "PREMIUM 3 TB $6.50/mo · MAX 12 TB $16/mo · ULTRA 25 TB $32/mo · ULTIMATE 50 TB $64/mo",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://uloz.to/koupit-disk",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://uloz.to/koupit-disk",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://uloz.to/koupit-disk",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "VERBATIM per-tier transfer allowance: PREMIUM \"30 TB for data transfer/month\", MAX \"150 TB\", ULTRA \"300 TB\", ULTIMATE \"600 TB\". So egress is ~12x stored capacity per month, resetting monthly — not unlimited, but 12 full restores of the whole account per month is effectively unmetered for any read pattern the workload generates.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "webdav",
+    "rclone"
+  ],
+  "interface_detail": "Native rclone backend (`ulozto`, added v1.66, Tier 3), REST/resumable upload API, CDN download links",
+  "tooling": "rclone `ulozto:` — first-class, not a WebDAV fallback. Needs an app_token from https://uloz.to/upload-resumable-api-beta",
+  "chaining": "rclone mount or `rclone serve s3`/`serve webdav` in front, then Cloudflare. Single namespace, no chunking needed.",
+  "limits": [],
+  "limits_note": "rclone backend does NOT implement About/`--drive-*` free-space query (docs say the endpoint is not exposed in the API) so `mfs`/quota policies cannot see remaining space — declare total size manually. No per-file size limit stated on the price page. No S3 API.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "Czech provider (Uloz.to/Kramerius) that pivoted from a public file locker to a paid private drive after EU DSM pressure in 2023-24. rclone forum users report no download speed limits and working mounts; two independent threads note the price doubled when the 200 TB tier was withdrawn (200 TB $64 → 100 TB, then to the current ladder). Assume the ladder can move.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://uloz.to/koupit-disk",
+      "date": "2026-10-21",
+      "proved": "the four paid tiers with storage size, monthly USD price and monthly transfer allowance (opened this session)"
+    },
+    {
+      "url": "https://rclone.org/ulozto/",
+      "date": "2026-10-21",
+      "proved": "native backend, app_token requirement, About limitation (opened this session)"
+    },
+    {
+      "url": "https://forum.rclone.org/t/unlimited-alternatives-to-google-drive-what-are-the-options/36529?page=78",
+      "date": "2026-10-21",
+      "proved": "user confirms 200 TB/$64 line and 'no file size restrictions', and 'they even give a discount for yearly payments'"
+    },
+    {
+      "url": "https://uloz.to/",
+      "date": "2026-10-21",
+      "proved": "HTTP 301 to www, live (probed this session)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$1.28/TB/mo at the 25 TB tier ($32) and at the 50 TB tier ($64). 5 TB workload: buy the 12 TB tier = $1.33/TB/mo. 20 TB workload: buy the 25 TB tier = $1.28/TB/mo. Cheapest genuine $/TB/mo of anything verified in this dossier.",
+  "notes": "PREMIUM 3 TB $6.50/mo · MAX 12 TB $16/mo · ULTRA 25 TB $32/mo · ULTIMATE 50 TB $64/mo",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-P7-discount-channels.json",
+    "seed_area": "A/P7",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "A/P7"
+      },
+      {
+        "value": "fails-quota",
+        "area": "H/H9"
+      },
+      {
+        "value": "fails-quota",
+        "area": "F/F10"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Uloz.to Disk (ULTRA 25 TB)",
+      "Uloz.to Disk — free plan with native rclone backend",
+      "Uloz.to Disk (Czech, uloz.to)"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md row, area A/P7",
+            "evidence": "quota: PREMIUM 3 TB $6.50/mo · MAX 12 TB $16/mo · ULTRA 25 TB $32/mo · ULTIMA"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row, area H/H9",
+            "evidence": "quota: 25 GB free ('Free25 — 25 GB — Free'), but the FAQ is explicit that rea"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row, area F/F10",
+            "evidence": "quota: Free25 plan: 25 GB. Paid plans step up to 50 TB."
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies. The table.md (area F/F10) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "PREMIUM 3 TB $6.50/mo · MAX 12 TB $16/mo · ULTRA 25 TB $32/mo · ULTIMA",
+            "source": "table.md row, area A/P7",
+            "evidence": null
+          },
+          {
+            "value": "25 GB free ('Free25 — 25 GB — Free'), but the FAQ is explicit that rea",
+            "source": "table.md row, area H/H9",
+            "evidence": null
+          },
+          {
+            "value": "Free25 plan: 25 GB. Paid plans step up to 50 TB.",
+            "source": "table.md row, area F/F10",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md (area A/P7)"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md (area H/H9)"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md (area F/F10)"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies. The table.md (area F/F10) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "PREMIUM 3 TB $6.50/mo · MAX 12 TB $16/mo · ULTRA 25 TB $32/mo · ULTIMA",
+            "source": "table.md (area A/P7)"
+          },
+          {
+            "value": "25 GB free ('Free25 — 25 GB — Free'), but the FAQ is explicit that rea",
+            "source": "table.md (area H/H9)"
+          },
+          {
+            "value": "Free25 plan: 25 GB. Paid plans step up to 50 TB.",
+            "source": "table.md (area F/F10)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "PREMIUM 3 TB $6.50/mo · MAX 12 TB $16/mo · ULTRA 25 TB $32/mo · ULTIMATE 50 TB $64/mo",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/P7"
+    },
+    "target_document": "docs/storage/paid/lifetime-and-deals.md",
+    "document_section": "Discount channels and Black Friday",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "PREMIUM 3 TB $6.50/mo · MAX 12 TB $16/mo · ULTRA 25 TB $32/mo · ULTIMATE 50 TB $64/mo",
+    "limits_verbatim": "rclone backend does NOT implement About/`--drive-*` free-space query (docs say the endpoint is not exposed in the API) so `mfs`/quota policies cannot see remaining space — declare total size manually. No per-file size limit stated on the price page. No S3 API.",
+    "egress_verbatim": "VERBATIM per-tier transfer allowance: PREMIUM \"30 TB for data transfer/month\", MAX \"150 TB\", ULTRA \"300 TB\", ULTIMATE \"600 TB\". So egress is ~12x stored capacity per month, resetting monthly — not unlimited, but 12 full restores of the whole account per month is effectively unmetered for any read pattern the workload generates.",
+    "chaining_verbatim": "rclone mount or `rclone serve s3`/`serve webdav` in front, then Cloudflare. Single namespace, no chunking needed.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "rclone `ulozto:` — first-class, not a WebDAV fallback. Needs an app_token from https://uloz.to/upload-resumable-api-beta",
+    "interface_verbatim": "Native rclone backend (`ulozto`, added v1.66, Tier 3), REST/resumable upload API, CDN download links",
+    "price_verbatim": "$1.28/TB/mo at the 25 TB tier ($32) and at the 50 TB tier ($64). 5 TB workload: buy the 12 TB tier = $1.33/TB/mo. 20 TB workload: buy the 25 TB tier = $1.28/TB/mo. Cheapest genuine $/TB/mo of anything verified in this dossier.",
+    "agent_focus": "The cheap-paid lane — where bulk storage is actually bought (LowEndTalk offers, LowEndBox, r/DataHoarder, Slickdeals, 什么值得买, AppSumo, StackSocial, bundles, provider promo channels, lifetime flash sales). True $/TB/month price floor with free egress, stated at the 5 TB and 20 TB tiers, plus which providers run an annual promo window."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

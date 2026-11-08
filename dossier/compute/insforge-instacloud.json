@@ -1,0 +1,149 @@
+{
+  "topic": "compute",
+  "slug": "insforge-instacloud",
+  "provider": "InsForge (InstaCloud)",
+  "url": "https://www.instacloud.com/pricing",
+  "category": "platform host",
+  "free_tier": {
+    "stated": "$10 of usage credit a month that refreshes, with up to 4 vCPU, 4 GB of RAM and 1 GB of volume per service; a project pauses when the credit runs out and resumes next cycle",
+    "unit": "mixed",
+    "metered_on": "wall-clock",
+    "source_url": "https://www.instacloud.com/pricing",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://www.instacloud.com/pricing",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://www.instacloud.com/pricing",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "egress is priced at USD 0.05 per GB as a usage cost; no free egress allowance is listed on the pricing page",
+    "metered": true,
+    "free_allowance": null,
+    "price_per_tb": "USD 50 per TB",
+    "source_url": "https://www.instacloud.com/pricing"
+  },
+  "interface": [
+    "cli",
+    "rest"
+  ],
+  "interface_detail": "the insta CLI (interactive login or an API token) and the InstaCloud REST API authenticated with an insta_ token",
+  "tooling": "the insta CLI, which a coding agent can also drive",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "$10 of usage credit a month, refreshing; $0.00000772 a vCPU-second",
+      "source": "https://www.instacloud.com/pricing"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "up to 4 vCPU, 4 GB of RAM and 1 GB of volume per service",
+      "source": "https://www.instacloud.com/pricing"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "a project pauses when the credit runs out and resumes in the next cycle, so exhaustion is a pause rather than a delete",
+      "source": "https://www.instacloud.com/pricing"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the pricing page was read on 2026-10-22 and states the monthly credit, the per-service caps and the pause-on-exhaustion behaviour. The credit recurs, which makes it a tier, and the pause is the state answer",
+  "evidence": [
+    {
+      "url": "https://www.instacloud.com/pricing",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://www.instacloud.com/pricing",
+      "date": "2026-10-22",
+      "proved": "'$10 of usage credit per month. Refreshes every month' with 'Up to 4 vCPU / 4 GB RAM / 1 GB volume per service', 'Projects pause when credit runs out, and resume next cycle', and '$0.00000772 per vCPU/sec', quoted"
+    },
+    {
+      "url": "https://www.instacloud.com/pricing",
+      "date": "2026-11-03",
+      "proved": "egress is priced at $0.05 per GB",
+      "capture": "sha256:9813aed5a2c5cb4b87f7c7c70dacd635dc3ecd2e4e33b7946509739b451800a5",
+      "quote": "Egress\n\n$0.05 per GB"
+    },
+    {
+      "url": "https://docs.instacloud.com/reference/cli/overview.md",
+      "date": "2026-11-03",
+      "proved": "a CLI manages services",
+      "capture": "sha256:ecc89f4c6e79d3fc2dcf56c57db235e4c2143d22b555122c43c417a17558770d",
+      "quote": "The `insta` CLI manages projects, branches, services, secrets, and deploys from a terminal"
+    },
+    {
+      "url": "https://docs.instacloud.com/llms.txt",
+      "date": "2026-11-03",
+      "proved": "a REST API exists",
+      "capture": "sha256:060a35f1e487bf5ab156c66cf117d3afea67c5637e0715bd65a1f90abd26888a",
+      "quote": "Authenticate to the InstaCloud REST API with an insta_ token"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T02:24:32.967Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 48.35,
+    "talaria_m24h_usd": 95.04,
+    "nemo_m10h_usd": 7.92,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "unclassified",
+    "shape": {
+      "vcpu": 4,
+      "ram": 4,
+      "disk": 1,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "the ceiling per service on the free tier"
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "billed only on active CPU and memory; a project pauses on exhaustion and resumes next cycle"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "recurring-credit",
+    "granularity": {
+      "min_billed_s": 0,
+      "rounding_s": null
+    },
+    "burst_x": 1.0,
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": {
+      "gib": 1,
+      "price": "$0.000000057833 a GB-second of volume, $0.000000005783 a GB-second of object storage",
+      "durability": "volume and object storage",
+      "on_stop": true,
+      "on_destroy": false,
+      "retention": "until deleted"
+    },
+    "net": null
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "request-rate"
+}

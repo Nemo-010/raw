@@ -1,0 +1,95 @@
+{
+  "topic": "storage",
+  "slug": "alibaba-cloud-acr-enterprise-edition-oss-backed-registri",
+  "provider": "Alibaba Cloud ACR Enterprise Edition / OSS-backed registries (structural note, not a candidate)",
+  "url": "https://www.alibabacloud.com/help/en/acr/product-overview/billing-description",
+  "category": "registry",
+  "free_tier": {
+    "stated": "Enterprise Edition stores artifacts in YOUR OSS bucket, so 'registry storage' is just OSS storage and is billed as OSS pay-as-you-go. There is no free allowance.",
+    "unit": "none",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.alibabacloud.com/help/en/acr/product-overview/billing-description",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.alibabacloud.com/help/en/acr/product-overview/billing-description",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.alibabacloud.com/help/en/acr/product-overview/billing-description",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "OSS outbound traffic is charged unless you disable public network access and pull only over a VPC endpoint.",
+    "metered": true
+  },
+  "interface": [
+    "oci"
+  ],
+  "interface_detail": "oci",
+  "tooling": "oras / docker push; the registry is a façade over OSS.",
+  "chaining": "None — it inherits OSS pricing, which is metered.",
+  "limits": [],
+  "limits_note": "Metered storage + metered egress.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Documented here only because it explains a trap: several 'free registry' pages (Alibaba EE, Baidu CCR EE) are OSS/BOS front-ends whose real cost sits in the bucket.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.alibabacloud.com/help/en/acr/product-overview/billing-description",
+      "date": "2026-10-21",
+      "proved": "read live: 'Enterprise Edition stores cloud-native artifacts such as container images and Helm charts in your OSS buckets. This may incur storage and traffic fees.'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Enterprise Edition stores artifacts in YOUR OSS bucket, so 'registry storage' is just OSS storage and is billed as OSS pay-as-you-go. There is no free allowance.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B6-oras-oci-artifacts.json",
+    "seed_area": "B/B6",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "B/B6"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "paid",
+      "why": "Enterprise Edition stores artifacts in YOUR OSS bucket, so 'registry storage' is just OSS storage and is billed as OSS pay-as-you-go. There is no free allowance.",
+      "retry_when": "if the price drops below the paid-lane floor",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area B/B6"
+    },
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "ORAS and arbitrary OCI artifacts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 1,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Enterprise Edition stores artifacts in YOUR OSS bucket, so 'registry storage' is just OSS storage and is billed as OSS pay-as-you-go. There is no free allowance.",
+    "limits_verbatim": "Metered storage + metered egress.",
+    "egress_verbatim": "OSS outbound traffic is charged unless you disable public network access and pull only over a VPC endpoint.",
+    "chaining_verbatim": "None — it inherits OSS pricing, which is metered.",
+    "tooling_verbatim": "oras / docker push; the registry is a façade over OSS.",
+    "interface_verbatim": "oci",
+    "agent_focus": "OCI/ORAS as a universal storage hack: pushing arbitrary blobs as OCI artifacts to any registry, wasm/model/helm OCI registries, sigstore, notation, CNAB, and which registries allow it anonymously with what per-blob caps"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

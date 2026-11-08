@@ -1,0 +1,295 @@
+{
+  "topic": "dev-services",
+  "slug": "new-relic",
+  "provider": "New Relic",
+  "tier": "Free",
+  "url": "https://newrelic.com/pricing",
+  "category": "observability platform: APM, infrastructure, logs, browser and synthetic monitoring",
+  "free_tier": {
+    "stated": "Perpetual free tier: 100 GB/month of data ingest, one free full platform user, unlimited basic users, default data retention of at least 8 days, 500 synthetic checks; no credit card required",
+    "unit": "GB",
+    "metered_on": "uploaded-bytes",
+    "source_url": "https://newrelic.com/pricing",
+    "read_on": "2026-10-30",
+    "notes": "Basic users can ingest data, query, build dashboards and set alerts; the one full platform user reaches all 50+ capabilities, APM and logs among them. Ingest beyond 100 GB costs USD 0.40 per GB on a paid edition."
+  },
+  "per_object_cap": {
+    "stated": "unverified: no per-event size is stated on the pages read",
+    "bytes": null
+  },
+  "retention": {
+    "stated": "Default data retention of at least 8 days. Default namespace retention for the original data option: APM and browser 8 days, logs and custom events 30 days, infrastructure integrations 395 days (13 months).",
+    "days": 8,
+    "source_url": "https://docs.newrelic.com/docs/data-apis/manage-data/manage-data-retention/"
+  },
+  "egress": {
+    "terms": "unverified: no egress term on the pages read; data is read back through the NerdGraph GraphQL API",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://docs.newrelic.com/docs/apis/nerdgraph/get-started/introduction-new-relic-nerdgraph/"
+  },
+  "interface": [
+    "graphql"
+  ],
+  "interface_detail": "NerdGraph, a GraphQL API at https://api.newrelic.com/graphql (US), https://api.eu.newrelic.com/graphql (EU) or https://api.jp.newrelic.com/graphql (JP), with a user key in the API-Key header. It answered 401 without a key.",
+  "endpoint": "https://api.newrelic.com/graphql",
+  "tooling": "curl or any GraphQL client with a user key",
+  "chaining": "One account holds APM traces, logs, infrastructure metrics and 500 synthetic checks for a set of free compute services, up to 100 GB of ingest a month.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "100 GB of data ingest per month; above it ingest stops and platform access is lost until the first day of the next month or an upgrade",
+      "source": "https://newrelic.com/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "one full platform user; 500 synthetic checks",
+      "source": "https://newrelic.com/pricing"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "default data retention of at least 8 days; 8 days for APM and browser data",
+      "source": "https://docs.newrelic.com/docs/data-apis/manage-data/manage-data-retention/"
+    }
+  ],
+  "binding": "volume-quota",
+  "binding_note": "At 100 GB in a month ingest stops and the platform locks until the first day of the next month, so the monthly ingest is a hard ceiling rather than a billing threshold.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The sign-up form asks for a company e-mail and a name, or sign-in with Google, GitHub, GitLab or Bitbucket, behind reCAPTCHA; no credit card is required. New Relic's documentation lists Google and Google Workplace as separate social sign-up options, and its Learn site lists the free-account steps as create the account, verify the e-mail address, then create a password. A July 2020 post in New Relic's organization on DEV Community lists only a name and an e-mail address as the sign-up input, and an October 2022 walkthrough on Medium reports that the form accepted a Gmail address. Whether the Company Email field accepts an address at a public mail domain now, and whether a later step asks for a phone number, are unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "Data ingest stops and platform access is lost after 100 GB in a month until the first day of the next month or an upgrade.",
+  "confidence": "documented",
+  "confidence_note": "Every limit is quoted from a first-party page, and the NerdGraph endpoint answered 401 without a key. No account was opened; an authenticated NerdGraph query from a free account would move it to measured.",
+  "evidence": [
+    {
+      "url": "https://newrelic.com/pricing",
+      "date": "2026-10-30",
+      "proved": "the free tier is perpetual with 100 GB a month of ingest",
+      "capture": "sha256:cb2720213ad13518cadd247892b7a0b1b3473f39bbd87d3aed4f2120df7caec7",
+      "quote": "Sign up for free access with our perpetual free tier and 100 GB/month of data ingest included."
+    },
+    {
+      "url": "https://newrelic.com/pricing",
+      "date": "2026-10-30",
+      "proved": "the free tier includes one full platform user",
+      "capture": "sha256:cb2720213ad13518cadd247892b7a0b1b3473f39bbd87d3aed4f2120df7caec7",
+      "quote": "One free full platform user"
+    },
+    {
+      "url": "https://newrelic.com/pricing",
+      "date": "2026-10-30",
+      "proved": "basic users are unlimited and can ingest, query, build dashboards and set alerts",
+      "capture": "sha256:cb2720213ad13518cadd247892b7a0b1b3473f39bbd87d3aed4f2120df7caec7",
+      "quote": "Unlimited basic users with access to data ingest, querying, dashboards, and alerts."
+    },
+    {
+      "url": "https://newrelic.com/pricing",
+      "date": "2026-10-30",
+      "proved": "the full platform user reaches all 50+ capabilities, APM with distributed tracing among them",
+      "capture": "sha256:cb2720213ad13518cadd247892b7a0b1b3473f39bbd87d3aed4f2120df7caec7",
+      "quote": "access to all 50+ New Relic platform capabilities, such as APM with distributed tracing"
+    },
+    {
+      "url": "https://newrelic.com/pricing",
+      "date": "2026-10-30",
+      "proved": "default retention is at least 8 days",
+      "capture": "sha256:cb2720213ad13518cadd247892b7a0b1b3473f39bbd87d3aed4f2120df7caec7",
+      "quote": "Default data retention of at least 8 days."
+    },
+    {
+      "url": "https://newrelic.com/pricing",
+      "date": "2026-10-30",
+      "proved": "the free tier includes 500 synthetic checks",
+      "capture": "sha256:cb2720213ad13518cadd247892b7a0b1b3473f39bbd87d3aed4f2120df7caec7",
+      "quote": "500 synthetic checks."
+    },
+    {
+      "url": "https://newrelic.com/pricing",
+      "date": "2026-10-30",
+      "proved": "ingest stops and access is lost above 100 GB in a month",
+      "capture": "sha256:cb2720213ad13518cadd247892b7a0b1b3473f39bbd87d3aed4f2120df7caec7",
+      "quote": "Data ingest will cease and you will lose access to the platform when you exceed your free 100 GB of data ingest for the month"
+    },
+    {
+      "url": "https://newrelic.com/pricing",
+      "date": "2026-10-30",
+      "proved": "the lock lasts until an upgrade or the first day of the next month",
+      "capture": "sha256:cb2720213ad13518cadd247892b7a0b1b3473f39bbd87d3aed4f2120df7caec7",
+      "quote": "until you upgrade to a paid edition or until the first day of the following month"
+    },
+    {
+      "url": "https://newrelic.com/pricing",
+      "date": "2026-10-30",
+      "proved": "ingest beyond 100 GB costs USD 0.40 per GB",
+      "capture": "sha256:cb2720213ad13518cadd247892b7a0b1b3473f39bbd87d3aed4f2120df7caec7",
+      "quote": "100 GB of free data ingest per month and $0.40/GB ingested beyond."
+    },
+    {
+      "url": "https://newrelic.com/signup",
+      "date": "2026-10-31",
+      "proved": "the sign-up form asks for a company e-mail",
+      "capture": "sha256:b8a87bb2e7557104a33dc5ae7dd133d91c3be74b82e3b1982ea2889cb1c9ae80",
+      "quote": "Company Email"
+    },
+    {
+      "url": "https://newrelic.com/signup",
+      "date": "2026-10-31",
+      "proved": "the sign-up page states no credit card is required",
+      "capture": "sha256:b8a87bb2e7557104a33dc5ae7dd133d91c3be74b82e3b1982ea2889cb1c9ae80",
+      "quote": "No credit card required"
+    },
+    {
+      "url": "https://newrelic.com/signup",
+      "date": "2026-10-31",
+      "proved": "Google sign-up is offered",
+      "capture": "sha256:b8a87bb2e7557104a33dc5ae7dd133d91c3be74b82e3b1982ea2889cb1c9ae80",
+      "quote": "Sign up with Google"
+    },
+    {
+      "url": "https://newrelic.com/signup",
+      "date": "2026-10-31",
+      "proved": "GitLab sign-up is offered",
+      "capture": "sha256:b8a87bb2e7557104a33dc5ae7dd133d91c3be74b82e3b1982ea2889cb1c9ae80",
+      "quote": "GitLab"
+    },
+    {
+      "url": "https://newrelic.com/signup",
+      "date": "2026-10-31",
+      "proved": "Bitbucket sign-up is offered",
+      "capture": "sha256:b8a87bb2e7557104a33dc5ae7dd133d91c3be74b82e3b1982ea2889cb1c9ae80",
+      "quote": "Bitbucket"
+    },
+    {
+      "url": "https://newrelic.com/signup",
+      "date": "2026-10-31",
+      "proved": "the sign-up form is protected by reCAPTCHA",
+      "capture": "sha256:b8a87bb2e7557104a33dc5ae7dd133d91c3be74b82e3b1982ea2889cb1c9ae80",
+      "quote": "reCAPTCHA"
+    },
+    {
+      "url": "https://docs.newrelic.com/docs/data-apis/manage-data/manage-data-retention/",
+      "date": "2026-10-30",
+      "proved": "APM data is kept 8 days by default",
+      "capture": "sha256:202445f22c9cf2272d652f762201a88aeced569e28f694ec751bda1b46b0c96e",
+      "quote": "| APM | APM | 8 | 98 |"
+    },
+    {
+      "url": "https://docs.newrelic.com/docs/data-apis/manage-data/manage-data-retention/",
+      "date": "2026-10-30",
+      "proved": "logs are kept 30 days by default",
+      "capture": "sha256:202445f22c9cf2272d652f762201a88aeced569e28f694ec751bda1b46b0c96e",
+      "quote": "| Logging | Logging | 30 | 120 |"
+    },
+    {
+      "url": "https://docs.newrelic.com/docs/data-apis/manage-data/manage-data-retention/",
+      "date": "2026-10-30",
+      "proved": "custom events are kept 30 days by default",
+      "capture": "sha256:202445f22c9cf2272d652f762201a88aeced569e28f694ec751bda1b46b0c96e",
+      "quote": "| Custom events | Custom events | 30 | 120 |"
+    },
+    {
+      "url": "https://docs.newrelic.com/docs/data-apis/manage-data/manage-data-retention/",
+      "date": "2026-10-30",
+      "proved": "infrastructure integration data is kept 395 days by default",
+      "capture": "sha256:202445f22c9cf2272d652f762201a88aeced569e28f694ec751bda1b46b0c96e",
+      "quote": "| Infrastructure | Infrastructure integrations (learn more) | 395 (13 months) | 485 (16 months) |"
+    },
+    {
+      "url": "https://docs.newrelic.com/docs/apis/nerdgraph/get-started/introduction-new-relic-nerdgraph/",
+      "date": "2026-10-30",
+      "proved": "NerdGraph is a GraphQL API for querying data and configuring features",
+      "capture": "sha256:341cdb20b13f05cec1aa7b7781e085e22960d7e2b90206b46c6d3457c07c06d3",
+      "quote": "NerdGraph is our GraphQL-format API that lets you query New Relic data and configure some New Relic features."
+    },
+    {
+      "url": "https://docs.newrelic.com/docs/apis/nerdgraph/get-started/introduction-new-relic-nerdgraph/",
+      "date": "2026-10-30",
+      "proved": "the US NerdGraph endpoint",
+      "capture": "sha256:341cdb20b13f05cec1aa7b7781e085e22960d7e2b90206b46c6d3457c07c06d3",
+      "quote": "US region (default): `https://api.newrelic.com/graphql`"
+    },
+    {
+      "url": "https://docs.newrelic.com/docs/apis/nerdgraph/get-started/introduction-new-relic-nerdgraph/",
+      "date": "2026-10-30",
+      "proved": "the EU NerdGraph endpoint",
+      "capture": "sha256:341cdb20b13f05cec1aa7b7781e085e22960d7e2b90206b46c6d3457c07c06d3",
+      "quote": "EU region: `https://api.eu.newrelic.com/graphql`"
+    },
+    {
+      "url": "https://docs.newrelic.com/docs/apis/nerdgraph/get-started/introduction-new-relic-nerdgraph/",
+      "date": "2026-10-30",
+      "proved": "the JP NerdGraph endpoint",
+      "capture": "sha256:341cdb20b13f05cec1aa7b7781e085e22960d7e2b90206b46c6d3457c07c06d3",
+      "quote": "JP region: `https://api.jp.newrelic.com/graphql`"
+    },
+    {
+      "url": "https://docs.newrelic.com/docs/apis/nerdgraph/get-started/introduction-new-relic-nerdgraph/",
+      "date": "2026-10-30",
+      "proved": "requests carry a user key in the API-Key header",
+      "capture": "sha256:341cdb20b13f05cec1aa7b7781e085e22960d7e2b90206b46c6d3457c07c06d3",
+      "quote": "-H 'API-Key: YOUR_NEW_RELIC_USER_KEY'"
+    },
+    {
+      "url": "probe:https://api.newrelic.com/graphql",
+      "date": "2026-10-31",
+      "proved": "the NerdGraph endpoint answers 401 without a key",
+      "capture": "sha256:4fcff947e74ba4c9978d230bf940e10a5a195ecbaf7a24859a9972405dbb1042",
+      "quote": "\"status\": 401"
+    },
+    {
+      "url": "https://docs.newrelic.com/docs/accounts/accounts-billing/account-setup/login-options/",
+      "date": "2026-11-01",
+      "proved": "the documentation lists Google and Google Workplace as separate social sign-up options",
+      "capture": "sha256:ded8ef7a5c0ea82ddea056b7c68c41b9f14dfcffb5a258e0c02beede21547a9b",
+      "quote": "Social login: You can use Google, Google Workplace, GitHub, and Bitbucket to sign up for and log into New Relic."
+    },
+    {
+      "url": "https://learn.newrelic.com/page/sso-info",
+      "date": "2026-11-01",
+      "proved": "New Relic's Learn site lists the free-account steps as create the account, verify the e-mail address, then create a password",
+      "capture": "sha256:692491b1a3e949fd23e69f0cf9a760eaa1648fa23738508bab6e4135daf00d77",
+      "quote": "How do I sign up for a free account to access my course history? 1. Create a free account 2. Verify your email address 3. Create a password and log-in"
+    },
+    {
+      "url": "https://dev.to/newrelic/how-to-sign-up-for-new-relic-s-new-perpetual-free-tier-1ebn",
+      "date": "2026-11-01",
+      "proved": "a post in New Relic's organization on DEV Community lists a name and an e-mail address as the sign-up input and says no phone number is asked for",
+      "capture": "sha256:1f63fcb4536500052c1ae33ce2747e0d11c0e2d4ca41fe55543cf7222bb86d76",
+      "quote": "Enter your Name and Email *-- That's it. No credit card. No phone number. No rights to your first-born son.*"
+    },
+    {
+      "url": "https://dev.to/newrelic/how-to-sign-up-for-new-relic-s-new-perpetual-free-tier-1ebn",
+      "date": "2026-11-01",
+      "proved": "the DEV Community post is dated Jul 30, 2020",
+      "capture": "sha256:1f63fcb4536500052c1ae33ce2747e0d11c0e2d4ca41fe55543cf7222bb86d76",
+      "quote": "Posted on Jul 30, 2020"
+    },
+    {
+      "url": "https://medium.com/@m.baig162/monitoring-node-js-app-using-new-relic-apm-fc8e84d676c1",
+      "date": "2026-11-01",
+      "proved": "a Medium walkthrough reports that the New Relic sign-up form accepted a Gmail address",
+      "capture": "sha256:a6fd4957f19642be1c596f6a21d10a39f86f35492f899b828bf319167d060f30",
+      "quote": "Enter name and email: It does accept the Gmail account."
+    },
+    {
+      "url": "https://medium.com/@m.baig162/monitoring-node-js-app-using-new-relic-apm-fc8e84d676c1",
+      "date": "2026-11-01",
+      "proved": "the Medium walkthrough is dated Oct 7, 2022",
+      "capture": "sha256:a6fd4957f19642be1c596f6a21d10a39f86f35492f899b828bf319167d060f30",
+      "quote": "5 min readOct 7, 2022"
+    },
+    {
+      "url": "https://newrelic.com/signup",
+      "date": "2026-11-01",
+      "proved": "the sign-up form asks for a company e-mail and a name",
+      "capture": "sha256:c9f4b5523250e5207d1175c464d859935a750d6d6483d26695ee6c832800373d",
+      "quote": "Company Email Name"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-02T00:37:34.246Z",
+  "notes": "The free tier is a hard stop, not a billing threshold: past 100 GB in a month nothing more is ingested and the platform is locked until the month turns, unless a card is added."
+}

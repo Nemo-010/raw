@@ -1,0 +1,115 @@
+{
+  "topic": "storage",
+  "slug": "hosthatch-storage-vm",
+  "provider": "HostHatch Storage VM",
+  "url": "https://hosthatch.com/products",
+  "category": "storage-vps",
+  "free_tier": {
+    "stated": "1 / 2 / 3 / 4 / 5 / 6 / 8 / 10 TB HDD, 'enterprise-grade spinning hard disk drives', 8 locations.",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://hosthatch.com/products",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://hosthatch.com/products",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://hosthatch.com/products",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Metered with throttle-on-exceed, no published per-TB overage price. Ratios are 2.5x storage: 1 TB plan = 2.5 TB, 2 TB = 5 TB, 5 TB = 12.5 TB, 10 TB = 25 TB. Exceeding it is throttling, not billing — a holder of the 2 TB Hong Kong plan reports '2.5 TB (throttled to about 5 Mbps after limit from my experience)' (LET thread 217891). APAC bandwidth is a separate, smaller pool: a HostHatch rep confirmed on LET that 'the actual limit is 3TB per month for Singapore' while the site quoted 7.5 TB (thread 194949).",
+    "metered": true,
+    "free_allowance": "3TB per month"
+  },
+  "interface": [
+    "rest",
+    "sftp",
+    "rsync",
+    "rclone"
+  ],
+  "interface_detail": "sftp, rsync, rest (self-hosted)",
+  "tooling": "rclone SFTP, Borg/Restic, root KVM",
+  "chaining": "Root KVM. Note the array is RAID-50 on some nodes — HostHatch itself conceded on LET that 'RAID 50 comes with an inherently higher risk as compared to RAID 10' (thread 188952).",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "50 GB/day",
+      "source": "https://hosthatch.com/products"
+    }
+  ],
+  "limits_note": "per-object-cap: none. APAC gets 40% of the advertised bandwidth (3 TB instead of 7.5 TB on the 3 TB plan).",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "Mixed and the worst reliability record of the three leaders. Documented incidents: HostHatch Chicago storage 'data lost' with 5d15h downtime and multi-day ticket silence (thread 178049); Stockholm storage down (thread 199687); Los Angeles storage outage (thread 188952); one user reports being suspended for writing ~50 GB/day because it 'degrades their array' despite being under the bandwidth cap (thread 122150). Countervailing: a 859-day and a since-2015 customer both report the service as solid (threads 163774, 194092).",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://hosthatch.com/products",
+      "date": "2026-10-21",
+      "proved": "full Storage VM ladder read this session: 1TB $5, 2TB $9, 3TB $12, 4TB $16, 5TB $20, 6TB $24, 8TB $32, 10TB $38, with bandwidth 2.5/5/7.5/10/12.5/15/20/25 TB respectively"
+    },
+    {
+      "url": "https://lowendtalk.com/discussion/217891/",
+      "date": "2026-10-21",
+      "proved": "'2.5 TB (throttled to about 5 Mbps after limit from my experience)'"
+    },
+    {
+      "url": "https://lowendtalk.com/discussion/194949/",
+      "date": "2026-10-21",
+      "proved": "HostHatch rep: Singapore 'actual limit is 3TB per month'"
+    },
+    {
+      "url": "https://lowendtalk.com/discussion/178049/",
+      "date": "2026-10-21",
+      "proved": "Chicago storage data loss"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$3.80/TB/mo at 10 TB ($38/mo, 25 TB included). At 5 TB: $20/mo = $4.00/TB (12.5 TB included). At 20 TB: two 10 TB VMs = $76/mo = $3.80/TB. Pricing is linear — no volume break — so the 10 TB rung is the only sensible buy.",
+  "notes": "1 / 2 / 3 / 4 / 5 / 6 / 8 / 10 TB HDD, 'enterprise-grade spinning hard disk drives', 8 locations.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "P-P2-storage-vps-us-asia.json",
+    "seed_area": "P/P2",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "P/P2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/paid/storage-boxes.md",
+    "document_section": "US and Asia storage VPS",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "1 / 2 / 3 / 4 / 5 / 6 / 8 / 10 TB HDD, 'enterprise-grade spinning hard disk drives', 8 locations.",
+    "limits_verbatim": "per-object-cap: none. APAC gets 40% of the advertised bandwidth (3 TB instead of 7.5 TB on the 3 TB plan).",
+    "egress_verbatim": "Metered with throttle-on-exceed, no published per-TB overage price. Ratios are 2.5x storage: 1 TB plan = 2.5 TB, 2 TB = 5 TB, 5 TB = 12.5 TB, 10 TB = 25 TB. Exceeding it is throttling, not billing — a holder of the 2 TB Hong Kong plan reports '2.5 TB (throttled to about 5 Mbps after limit from my experience)' (LET thread 217891). APAC bandwidth is a separate, smaller pool: a HostHatch rep confirmed on LET that 'the actual limit is 3TB per month for Singapore' while the site quoted 7.5 TB (thread 194949).",
+    "chaining_verbatim": "Root KVM. Note the array is RAID-50 on some nodes — HostHatch itself conceded on LET that 'RAID 50 comes with an inherently higher risk as compared to RAID 10' (thread 188952).",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "rclone SFTP, Borg/Restic, root KVM",
+    "interface_verbatim": "sftp, rsync, rest (self-hosted)",
+    "price_verbatim": "$3.80/TB/mo at 10 TB ($38/mo, 25 TB included). At 5 TB: $20/mo = $4.00/TB (12.5 TB included). At 20 TB: two 10 TB VMs = $76/mo = $3.80/TB. Pricing is linear — no volume break — so the 10 TB rung is the only sensible buy.",
+    "agent_focus": "cheap-PAID lane — cheapest $/TB/month storage outside Europe for a self-funded buyer. Every candidate priced at the 5 TB and 20 TB tier as $ per TB per month, egress policy quoted verbatim, and payment friction for a non-US/non-EU buyer recorded. Deliberately excludes AWS/Azure/GCP/Alibaba/R2/B2/iDrive e2 (rejected). FX rates used throughout, taken 2026-10-21 from api.frankfurter.dev: EUR 0.89015, CAD 1.4046, INR 94.47, JPY 157.88, KRW 1325.57 per USD."
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

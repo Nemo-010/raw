@@ -1,0 +1,14 @@
+{
+ "id": "20261101-1811-verify-crawler-scraper-efed-u09-q02",
+ "kind": "verify",
+ "topic": "crawler-scraper",
+ "question": "Measure the anonymous rate limit of https://mcp.parallel.ai/mcp with a probe that sends POST JSON-RPC (initialize, tools/list, then repeated web_search calls) and register its record with --probe.",
+ "why": "The unmeasured half of queue item 20261030-1045-expand-crawler-scraper-47c4-u03-q01: the vendor publishes no anonymous limit ('lower rate limits'), and probe.py sends only GET and HEAD while the route takes POST, so only the GET answers were measured (405 on /mcp, 401 on /mcp?login). The legacy Search MCP docs say the session_id argument is used for free-tier rate limiting, and the vendor's setup skill says sustained use answers HTTP 429. A POST probe would find the 429 threshold, its Retry-After, and whether a new session_id resets it.",
+ "scope": {
+  "rids": [
+   "crawler-scraper/parallel"
+  ]
+ },
+ "origin": "20261101-1811-verify-crawler-scraper-efed/u09",
+ "created": "2026-11-02T01:02:26Z"
+}

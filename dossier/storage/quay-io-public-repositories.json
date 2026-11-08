@@ -1,0 +1,103 @@
+{
+  "topic": "storage",
+  "slug": "quay-io-public-repositories",
+  "provider": "Quay.io public repositories (Red Hat)",
+  "url": "https://quay.io",
+  "category": "registry",
+  "free_tier": {
+    "stated": "\"We offer unlimited storage and serving of public repositories\" — Red Hat's own support article. Every paid plan is priced only by private-repo count and lists 'Unlimited public repos'; a free account gets unlimited public repos, private repos require a 30-day trial then a paid plan.",
+    "unit": "unlimited",
+    "metered_on": "stored-bytes",
+    "source_url": "https://access.redhat.com/articles/quayio-help",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://access.redhat.com/articles/quayio-help",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "Every paid plan is priced only by private-repo count and lists 'Unlimited public repos'; a free account gets unlimited public repos, private repos require a 30-day trial then a paid plan",
+    "days": 30,
+    "source_url": "https://access.redhat.com/articles/quayio-help",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Included in 'unlimited storage and serving of public repositories' — no per-GB line item exists for public repos on any plan. Served over quay.io's own CDN edge.",
+    "metered": false
+  },
+  "interface": [
+    "oci"
+  ],
+  "interface_detail": "oci",
+  "tooling": "oras push / docker push / skopeo; standard distribution-spec v2 registry (Docker-Distribution-API-Version: registry/2.0). Cosign/notation signing supported natively.",
+  "chaining": "N public repos x N free Red Hat accounts. Repos are namespaced per user/org, so one account already gives effectively unbounded blob count; orgs are free to create.",
+  "limits": [],
+  "limits_note": "Requires a Red Hat SSO account to push (anonymous pull only). Quay is a shared hosted registry: pull QPS and total storage are subject to undisclosed fair use; the paid tiers exist purely to buy private repos, which signals public storage is deliberately not metered.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: are free to create. Requires a Red Hat SSO account to push (anonymous pull only). Quay is a shared hosted registry: pull QPS and total storage are subject to undisclosed fair use; the paid",
+    "country": null
+  },
+  "reliability_note": "Hosted multitenancy means a noisy-neighbour throttle is possible but not documented; no data-expiry policy on public repos, so blobs persist indefinitely.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://access.redhat.com/articles/quayio-help",
+      "date": "2026-10-21",
+      "proved": "read live: 'Can I use Quay for free? Yes! We offer unlimited storage and serving of public repositories.'"
+    },
+    {
+      "url": "https://quay.io/plans/",
+      "date": "2026-10-21",
+      "proved": "read live: every tier lists 'Unlimited public repos'; Developer is $15/mo for 5 private repos, i.e. no free private tier, 30-day trial only"
+    },
+    {
+      "url": "https://quay.io/v2/",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 401 with WWW-Authenticate: Bearer realm=\"https://quay.io/v2/auth\",service=\"quay.io\" (correct challenge); then GET https://quay.io/v2/prometheus/busybox/manifests/latest -> 200, 736 bytes anonymous"
+    },
+    {
+      "url": "https://quay.io/v2/probe/blobs/uploads/",
+      "date": "2026-10-21",
+      "proved": "probe: POST -> 404 (anonymous write refused)"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "\"We offer unlimited storage and serving of public repositories\" — Red Hat's own support article. Every paid plan is priced only by private-repo count and lists 'Unlimited public repos'; a free account gets unlimited public repos, private repos require a 30-day trial then a paid plan.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B6-oras-oci-artifacts.json",
+    "seed_area": "B/B6",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "B/B6"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "ORAS and arbitrary OCI artifacts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "\"We offer unlimited storage and serving of public repositories\" — Red Hat's own support article. Every paid plan is priced only by private-repo count and lists 'Unlimited public repos'; a free account gets unlimited public repos, private repos require a 30-day trial then a paid plan.",
+    "limits_verbatim": "Requires a Red Hat SSO account to push (anonymous pull only). Quay is a shared hosted registry: pull QPS and total storage are subject to undisclosed fair use; the paid tiers exist purely to buy private repos, which signals public storage is deliberately not metered.",
+    "egress_verbatim": "Included in 'unlimited storage and serving of public repositories' — no per-GB line item exists for public repos on any plan. Served over quay.io's own CDN edge.",
+    "chaining_verbatim": "N public repos x N free Red Hat accounts. Repos are namespaced per user/org, so one account already gives effectively unbounded blob count; orgs are free to create.",
+    "tooling_verbatim": "oras push / docker push / skopeo; standard distribution-spec v2 registry (Docker-Distribution-API-Version: registry/2.0). Cosign/notation signing supported natively.",
+    "interface_verbatim": "oci",
+    "agent_focus": "OCI/ORAS as a universal storage hack: pushing arbitrary blobs as OCI artifacts to any registry, wasm/model/helm OCI registries, sigstore, notation, CNAB, and which registries allow it anonymously with what per-blob caps"
+  },
+  "binding": "none",
+  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

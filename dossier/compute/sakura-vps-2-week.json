@@ -1,0 +1,108 @@
+{
+  "topic": "compute",
+  "slug": "sakura-vps-2-week",
+  "provider": "Sakura VPS 2-week",
+  "url": "https://vps.sakura.ad.jp/flow/",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "Every plan is free for two weeks when the order is placed with credit-card payment: 'クレジットカード払いをご選択された場合、全プランで2週間の無料お試し期間をご利用いただけます'. Two servers may run on trial at once. At the end of the two weeks the account converts automatically to the paid service ('自動的に本サービスのご利用開始（本登録）となります'), and the service carries a three-month minimum term.",
+    "unit": "GiB",
+    "metered_on": "wall-clock",
+    "source_url": "https://vps.sakura.ad.jp/flow/",
+    "read_on": "2026-10-22",
+    "notes": "time-boxed-trial"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://vps.sakura.ad.jp/flow/",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://vps.sakura.ad.jp/flow/",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "the application-flow page states that all plans are free for two weeks with credit-card payment, that two servers may be trialled at once, that the trial converts automatically to the paid service at expiry, and that the minimum service period is three months; the trial restriction table lists a 10 Mbps outbound cap, OP25B on port 25, and no free nameserver",
+    "metered": false,
+    "free_allowance": "unlimited data transfer (データ転送量: 無制限), network 100Mbps shared",
+    "price_per_tb": null,
+    "source_url": "https://vps.sakura.ad.jp/flow/"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "not stated in the finding; the provider documents no client",
+  "chaining": "The trial is the cheapest way to hold a Japanese-resident IP for two weeks at zero cost, and it stacks with nothing: the card is the same instrument the next provider will refuse if the trial is abandoned unpaid.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "During the trial the outbound path is held at 10 Mbps, port 25 is closed, and the free nameserver is withheld; the first thing that fails is any bulk transfer, and the second is the automatic conversion to a paid contract with a three-month minimum if the trial is not cancelled in time.",
+      "source": "https://vps.sakura.ad.jp/flow/"
+    }
+  ],
+  "limits_note": "During the trial the outbound path is held at 10 Mbps, port 25 is closed, and the free nameserver is withheld; the first thing that fails is any bulk transfer, and the second is the automatic conversion to a paid contract with a three-month minimum if the trial is not cancelled in time.",
+  "binding": "per-ip-shaping",
+  "binding_note": "During the trial the outbound path is held at 10 Mbps, port 25 is closed, and the free nameserver is withheld; the first thing that fails is any bulk transfer, and the second is the automatic conversion to a paid contract with a three-month minimum if the trial is not cancelled in time.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "a credit card at order is the condition of the free two weeks: the application-flow page states that when credit-card payment is selected every plan gets a two-week free trial, and two servers may be trialled at once. The authorisation amount is not stated; whether debit or prepaid is accepted is not stated. The account converts automatically to the paid service at expiry under a three-month minimum term",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://vps.sakura.ad.jp/flow/",
+      "date": "2026-10-22",
+      "proved": "the application-flow page states that all plans are free for two weeks with credit-card payment, that two servers may be trialled at once, that the trial converts automatically to the paid service at expiry, and that the minimum service period is three months; the trial restriction table lists a 10 Mbps outbound cap, OP25B on port 25, and no free nameserver"
+    },
+    {
+      "url": "https://vps.sakura.ad.jp/specification/",
+      "date": "2026-10-22",
+      "proved": "the price table gives 512 MB with 1 virtual core and 25 GB SSD at 月額換算590円/月 (年額7,078円), 1 GB with 2 cores and 50 GB at 807円/月, 2 GB with 3 cores and 100 GB at 1,594円/月, 4 GB with 4 cores and 200 GB at 3,227円/月, up to 32 GB with 8 cores and 1,600 GB at 24,200円/月, each with 初期費用無料"
+    },
+    {
+      "url": "https://vps.sakura.ad.jp/specification/",
+      "date": "2026-11-03",
+      "proved": "data transfer volume is unlimited",
+      "capture": "sha256:7aead30902362a3a943d588202d6e03d1a441f6668f1dcca2acdc90158600093",
+      "quote": "データ転送量 | 無制限"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-04T05:43:11.430Z",
+  "notes": "The corpus holds three Sakura Cloud records (sakura-cloud, sakura-cloud-2, sakura-cloud-certification, sakura-cloud-student) but none for VPS, which is a separate product with its own billing and its own trial. The trial's shape ceiling is the whole ladder, so the largest trialled box is 32 GB with 8 cores and 1,600 GB SSD for fourteen days at JPY 0, and the smallest is 512 MB. The 10 Mbps cap is the honest detail: a free two-week box that cannot push a backup out is a test environment. Currency figures are the vendor's yen as written; no conversion is asserted.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "Sakura VPS ( VPS) 2-week trial",
+      "class": "regional-trial",
+      "category_as_written": "cloud VM (Japan)",
+      "free_tier_kind": "time-boxed-trial",
+      "shape": {
+        "vcpu": 1,
+        "ram_gib": 0.5,
+        "gpu_class": null,
+        "gpu_count": 0
+      },
+      "seen_routes": [
+        "broker read 200 (vps.sakura.ad.jp/flow/)",
+        "broker read 200 (vps.sakura.ad.jp/specification/)"
+      ],
+      "agents": [
+        "kr-jp-forums"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "superseded": {
+      "identity_cost": {
+        "kind": "card",
+        "detail": "as stated by the provider's signup page",
+        "country": null
+      }
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "topic": "storage",
+  "slug": "val-town",
+  "provider": "Val Town",
+  "url": "https://val.town",
+  "category": "serverless",
+  "free_tier": {
+    "stated": "Free plan blob storage: '10mb on the free plan and 1gb on pro'. Pro is the ceiling, so there is no free path to bulk.",
+    "unit": "none",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.val.town/std/blob/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.val.town/std/blob/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.val.town/std/blob/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Vals serve HTTP by default with no transfer meter — the serving side is genuinely free.",
+    "metered": false
+  },
+  "interface": [
+    "s3",
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "`std/blob` TypeScript API (scoped blobs on S3, global blobs on Cloudflare R2); vals themselves are HTTP endpoints at `<val>.web.val.run`.",
+  "chaining": "Val creation is capped at 2,500 vals on Free with a 10 MB account-wide blob pool — the pool is per account, not per val, so it does not multiply.",
+  "limits": [],
+  "limits_note": "10 MB total blob storage on Free; 1 min execution timeout; 100,000 runs/day; 80,000 character per-file source limit.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "The R2/S3 backing is real and fast; the quota is the blocker, not the tech.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.val.town/std/blob/",
+      "date": "2026-10-21",
+      "proved": "'Blob-stored data counts towards your total Val Town storage – 10mb on the free plan and 1gb on pro' (page last updated September 10, 2026)"
+    },
+    {
+      "url": "https://www.val.town/limits",
+      "date": "2026-10-21",
+      "proved": "Free: 2,500 vals, 1 min execution timeout, 100,000 runs/day"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Free plan blob storage: '10mb on the free plan and 1gb on pro'. Pro is the ceiling, so there is no free path to bulk.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G5-notebooks-compute.json",
+    "seed_area": "G/G5",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "G/G5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "paid",
+      "why": "Free plan blob storage: '10mb on the free plan and 1gb on pro'. Pro is the ceiling, so there is no free path to bulk.",
+      "retry_when": "if the price drops below the paid-lane floor",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G5"
+    },
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Notebook disks and compute-attached storage",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Free plan blob storage: '10mb on the free plan and 1gb on pro'. Pro is the ceiling, so there is no free path to bulk.",
+    "limits_verbatim": "10 MB total blob storage on Free; 1 min execution timeout; 100,000 runs/day; 80,000 character per-file source limit.",
+    "egress_verbatim": "Vals serve HTTP by default with no transfer meter — the serving side is genuinely free.",
+    "chaining_verbatim": "Val creation is capped at 2,500 vals on Free with a 10 MB account-wide blob pool — the pool is per account, not per val, so it does not multiply.",
+    "tooling_verbatim": "`std/blob` TypeScript API (scoped blobs on S3, global blobs on Cloudflare R2); vals themselves are HTTP endpoints at `<val>.web.val.run`.",
+    "interface_verbatim": "rest",
+    "agent_focus": "notebook/compute hosts and the persistent disk bundled with them — can a free compute box double as storage and as an HTTP origin"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

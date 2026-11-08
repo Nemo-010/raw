@@ -1,0 +1,104 @@
+{
+  "topic": "netdisk-pan",
+  "slug": "w2-apachecn-org",
+  "provider": "组织云盘合集  ",
+  "url": "https://w2.apachecn.org/",
+  "category": "public-instance",
+  "free_tier": {
+    "stated": "anonymous guest read of 18 root entries; no account and no payment",
+    "unit": "unlimited",
+    "metered_on": "none",
+    "source_url": "https://w2.apachecn.org/",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "the upstream provider's cap; the instance publishes none",
+    "source_url": "https://w2.apachecn.org/"
+  },
+  "retention": {
+    "stated": "until the operator's account or tenant fails; no TTL and no notice",
+    "days": null,
+    "source_url": "https://w2.apachecn.org/"
+  },
+  "egress": {
+    "terms": "served through cloudflare; the reader pays nothing",
+    "metered": false,
+    "source_url": "https://w2.apachecn.org/"
+  },
+  "interface": [
+    "rest",
+    "webdav"
+  ],
+  "interface_detail": "rest",
+  "tooling": "the AList/OpenList REST surface (/api/fs/list, /api/fs/get, /api/fs/put) and the WebDAV endpoint at /dav; the rclone alist backend speaks the REST",
+  "chaining": "a fetch substrate: point a cache and two mirrors at it, never a write tier Read-only. The ApacheCN corpus is the largest publicly listable AList library found, so a reader who needs a specific dataset should search here before paying anyone",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "PUT denied at the guest role",
+      "source": "probe:https://w2.apachecn.org/api/fs/put"
+    }
+  ],
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "no registration; /api/me returns a guest session",
+    "country": null
+  },
+  "reliability_note": "An 18-entry public corpus on AList v3.35 with base_path /公共. Read-only by design and stable since at least 2024-01.",
+  "confidence": "measured",
+  "evidence": [
+    {
+      "url": "probe:https://w2.apachecn.org/api/public/settings",
+      "date": "2026-10-22",
+      "proved": "HTTP 200, JSON carrying a code field, site_title '组织云盘合集  '"
+    },
+    {
+      "url": "probe:https://w2.apachecn.org/api/fs/list",
+      "date": "2026-10-22",
+      "proved": "anonymous POST /api/fs/list on / returned code 200 with 18 root entries; write:false, write_content_bypass:None, provider:unknown"
+    },
+    {
+      "url": "probe:https://w2.apachecn.org/api/fs/put",
+      "date": "2026-10-22",
+      "proved": "the zero-byte oracle (PUT at an existing directory with Overwrite:false) returned code 403 with message 'permission denied' inside HTTP 200, so the write permission failed and nothing was written"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-22T03:37:00.574Z",
+  "binding": "write-gated",
+  "notes": "An 18-entry public corpus on AList v3.35 with base_path /公共. Read-only by design and stable since at least 2024-01.",
+  "history": [],
+  "extras": {
+    "access_mode": "public-instance",
+    "read_capability": "full",
+    "write_capability": "permission-denied",
+    "upstream_provider": "unknown",
+    "fronting_cdn": "cloudflare",
+    "advertised_write_flag": false,
+    "write_content_bypass": null,
+    "permission_bitmask": "0",
+    "base_path": "/公共",
+    "listing_sha256": "81e2e3af",
+    "first_seen": "2024-01-20",
+    "first_seen_source": "kuhehe.github.io/20240120224502, whose page was edited in place until 2025-06-17",
+    "last_verified_alive": "2026-10-22T03:37:00.574Z",
+    "last_verified_dead": null,
+    "consecutive_failures": 0,
+    "aliases": [
+      "组织云盘合集 (w2.apachecn.org) — public AList, largest visible corpus, 252 TB claimed"
+    ],
+    "seed_facts": {
+      "quota_verbatim": "Directory names self-advertise the corpus: 252.67 TB in one collection, 12.67 TB of books and journals, 5.70 TB of programming, 2.45 TB of finance. Treat 252 TB as the operator's own label in a folder name and not an independently verified number",
+      "per_object_cap_verbatim": "Not applicable",
+      "chaining_verbatim": "Read-only. The ApacheCN corpus is the largest publicly listable AList library found, so a reader who needs a specific dataset should search here before paying anyone",
+      "reliability_verbatim": "Alive, large, organised and maintained. The 252 TB is the operator's folder label and the record says so rather than presenting it as a measurement",
+      "tooling_verbatim": "the AList v3.35.0 REST API anonymously, with 19 root directories. Internal paths are prefixed /公共/, which a bare path reveals through the error's rawPath field",
+      "binding_note_verbatim": "The largest visible read corpus in the population and it cannot be written to, so what binds is the gate rather than any quota. As a source of existing datasets it is the best thing found.",
+      "deferred_name": "组织云盘合集 (w2.apachecn.org) — public AList, largest visible corpus, 252 TB claimed",
+      "folded_from": "dossier/netdisk-pan/public-alist-largest-visible-corpus-252-tb-claimed.json, written by this pass and folded here"
+    },
+    "claimed_total_tb": "252.67, the operator's own folder label"
+  },
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

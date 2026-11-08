@@ -1,0 +1,206 @@
+{
+  "topic": "storage",
+  "slug": "recherche-data-gouv",
+  "provider": "Recherche Data Gouv (French national Dataverse)",
+  "url": "https://entrepot.recherche.data.gouv.fr",
+  "category": "academic",
+  "free_tier": {
+    "stated": "50 GB max per file via the deposit interface; institutional datasets carry an agreement limit 'currently 5 TB'; datasets over 50 GB are explicitly supported via DVUploader and the S3 direct-upload API, and TB-range datasets are handled by arrangement",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://recherche.data.gouv.fr/en/guide/recommendations-on-large-datasets",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "50 GB max per file",
+    "bytes": 50000000000,
+    "source_url": "https://recherche.data.gouv.fr/en/guide/recommendations-on-large-datasets",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://recherche.data.gouv.fr/en/guide/recommendations-on-large-datasets",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Unmetered, national infrastructure",
+    "metered": false
+  },
+  "interface": [
+    "s3",
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Dataverse REST + DVUploader + S3 direct upload (one-time upload URLs, multipart, /api/datasets/mpload). Same tooling chain as Harvard, so one client covers both.",
+  "chaining": "The 5 TB figure is per institutional agreement, i.e. per lab rather than per person. That is the shape that matters: one institution's allocation is 5 TB, not 500 GB",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "50 GB max per file",
+      "source": "https://recherche.data.gouv.fr/en/guide/recommendations-on-large-datasets"
+    }
+  ],
+  "limits_note": "Deposit is restricted: 'Only research data produced by research teams with at least one collaborator affiliated to an institution belonging to the French public research community are accepted by right.' The 50 GB single-file cap is a hard interface limit (use DVUploader/S3 above it).",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: 50 GB max per file via the deposit interface; institutional datasets carry an agreement limit 'currently 5 TB'; datasets over 50 GB are explicitly supported via DVUploader and t",
+    "country": null
+  },
+  "reliability_note": "Instance is healthy and live (Dataverse 6.0 at probe). The eligibility rule is an institutional gate, not a technical one — the API and storage behave normally for anyone who can authenticate.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://recherche.data.gouv.fr/en/guide/recommendations-on-large-datasets",
+      "date": "2026-10-21",
+      "proved": "read live: 'the maximum file size limit is 50 GB ... For institutional datasets, please ensure compliance with the limit set by your agreement (currently 5 TB)' and 'Do not split large files to bypass the 50 GB limit. Instead, use the DVUploader application' (the provider's own rule: a file above 50 GB goes through DVUploader and is not split)"
+    },
+    {
+      "url": "https://recherche.data.gouv.fr/en/faq",
+      "date": "2026-10-21",
+      "proved": "read live: 'Only research data produced by research teams with at least one collaborator affiliated to an institution belonging to the French public research community are accepted by right'"
+    },
+    {
+      "url": "https://entrepot.recherche.data.gouv.fr/api/info/version",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200 {\"status\":\"OK\",\"data\":{\"version\":\"6.0\"}}"
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "50 GB max per file via the deposit interface; institutional datasets carry an agreement limit 'currently 5 TB'; datasets over 50 GB are explicitly supported via DVUploader and the S3 direct-upload API, and TB-range datasets are handled by arrangement",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D1-zenodo-cern.json",
+    "seed_area": "D/D1",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D1"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D10"
+      },
+      {
+        "value": "fails-identity",
+        "area": "E/E16"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Recherche Data Gouv (French national Dataverse)",
+      "Recherche Data Gouv (entrepot.recherche.data.gouv.fr) — the generique space",
+      "Recherche Data Gouv — entrepôt générique"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area D/D1",
+            "evidence": "quota: 50 GB max per file via the deposit interface; institutional datasets c"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area D/D10",
+            "evidence": "quota: 5 TB per institutional space, 50 GB per file. Critically, there is an"
+          },
+          {
+            "value": "fails-identity",
+            "source": "table.md row, area E/E16",
+            "evidence": "quota: 5 TB per institutional space, 50 GB per file (documented 'recommandati"
+          }
+        ],
+        "resolution": "fails-identity: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area E/E16) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "50 GB max per file via the deposit interface; institutional datasets c",
+            "source": "table.md row, area D/D1",
+            "evidence": null
+          },
+          {
+            "value": "5 TB per institutional space, 50 GB per file. Critically, there is an",
+            "source": "table.md row, area D/D10",
+            "evidence": null
+          },
+          {
+            "value": "5 TB per institutional space, 50 GB per file (documented 'recommandati",
+            "source": "table.md row, area E/E16",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area D/D1)"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area D/D10)"
+          },
+          {
+            "value": "fails-identity",
+            "source": "table.md (area E/E16)"
+          }
+        ],
+        "resolution": "fails-identity: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area E/E16) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "50 GB max per file via the deposit interface; institutional datasets c",
+            "source": "table.md (area D/D1)"
+          },
+          {
+            "value": "5 TB per institutional space, 50 GB per file. Critically, there is an",
+            "source": "table.md (area D/D10)"
+          },
+          {
+            "value": "5 TB per institutional space, 50 GB per file (documented 'recommandati",
+            "source": "table.md (area E/E16)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "50 GB max per file via the deposit interface; institutional datasets carry an agreement limit 'currently 5 TB'; datasets over 50 GB are explicitly supported via DVUploader and the S3 direct-upload API, and TB-range datasets are handled by arrangement",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area D/D1"
+    },
+    "target_document": "docs/storage/free/academic.md",
+    "document_section": "Zenodo and CERN",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "50 GB max per file via the deposit interface; institutional datasets carry an agreement limit 'currently 5 TB'; datasets over 50 GB are explicitly supported via DVUploader and the S3 direct-upload API, and TB-range datasets are handled by arrangement",
+    "limits_verbatim": "Deposit is restricted: 'Only research data produced by research teams with at least one collaborator affiliated to an institution belonging to the French public research community are accepted by right.' The 50 GB single-file cap is a hard interface limit (use DVUploader/S3 above it).",
+    "egress_verbatim": "Unmetered, national infrastructure",
+    "chaining_verbatim": "The 5 TB figure is per institutional agreement, i.e. per lab rather than per person. That is the shape that matters: one institution's allocation is 5 TB, not 500 GB",
+    "tooling_verbatim": "Dataverse REST + DVUploader + S3 direct upload (one-time upload URLs, multipart, /api/datasets/mpload). Same tooling chain as Harvard, so one client covers both.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Zenodo and the CERN/InvenioRDM academic-repository family: per-record (not per-account) quotas, whether records are unlimited, anonymous read speed, REST/deposition API and tooling, rate limits, and which institutional InvenioRDM/Dataverse deployments beat Zenodo's 50GB per record"
+  },
+  "binding": "none",
+  "binding_note": "the quota is real and unreachable: identity is the binding constraint, and it is not one of the six limits kinds",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

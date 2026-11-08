@@ -1,0 +1,132 @@
+{
+  "topic": "netdisk-pan",
+  "slug": "uc-drive",
+  "provider": "UC Drive (UC网盘)",
+  "url": "https://drive.uc.cn",
+  "category": "consumer-pan",
+  "free_tier": {
+    "stated": "1 TB permanent handed out as claimable promo codes that are repeatable and stackable: '加上之前的活动，有 2t 了' and '都是永久'. A separate 1 TB plus 10 GB baseline per a 2026 comparison post",
+    "unit": "TiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://linux.do/t/topic/269012",
+    "read_on": "2026-10-21"
+  },
+  "per_object_cap": {
+    "stated": "1 GB per file on a free account: 'UC网盘2t,但单文件就1G，相当难用'",
+    "bytes": 1000000000,
+    "source_url": "https://linux.do/t/topic/1426604"
+  },
+  "retention": {
+    "stated": "Promo capacity is permanent once claimed. No retention clock on stored files is published",
+    "days": null,
+    "source_url": "https://linux.do/t/topic/269012"
+  },
+  "egress": {
+    "terms": "Free downloads are throttled hard, with reports of 300 to 400 KB/s for video: 'UC网盘之前宣称不限速，现在下载视频三四百k'. The paid tier advertises 上传下载不限速 as an SVIP benefit",
+    "metered": true,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://linux.do/t/topic/623279"
+  },
+  "interface": [
+    "rest"
+  ],
+  "tooling": "No public API. A reverse-engineered client mounts it: the OpenList UC driver takes a pasted browser cookie, root folder id 0. A separate UC TV driver pairs by QR code from the mobile app and supports list and download only. Same backend family as Quark. No official S3 or WebDAV",
+  "chaining": "Codes are batch-minted, a hundred a month per one poster, and shared in threads, so one account can stack several to 2 TB. Each account is a +86 identity, and the 1 GB per-file ceiling makes the capacity useless as a dataset store",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "1 GB per file on a free account",
+      "source": "https://linux.do/t/topic/1426604"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "free downloads reported at 300 to 400 KB/s",
+      "source": "https://linux.do/t/topic/623279"
+    },
+    {
+      "kind": "write-gated",
+      "value": "the OpenList driver is cookie-based, and the netdisk-fast-download auth table requires a logged-in cookie for UC",
+      "source": "https://github.com/qaiu/netdisk-fast-download"
+    }
+  ],
+  "identity_cost": {
+    "kind": "country-phone",
+    "detail": "an Alibaba account, which is +86-bound in practice, and the SVIP tier needs a Chinese identity document",
+    "country": "86"
+  },
+  "reliability_note": "Promo capacity is permanent once claimed, but the 1 GB per-file ceiling makes it a media-hoarding pan and not a dataset store. Download tickets are IP-bound on the shared Quark backend, so a harvested cookie dies on the first replay",
+  "confidence": "reported",
+  "evidence": [
+    {
+      "url": "https://linux.do/t/topic/269012",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: 'UC网盘1TB永久容量领取...公益~还剩20个', and a reply '加上之前的活动，有 2t 了...都是永久'"
+    },
+    {
+      "url": "https://linux.do/t/topic/1426604",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: 'UC网盘2t,但单文件就1G，相当难用'"
+    },
+    {
+      "url": "https://linux.do/t/topic/623279",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: 'uc网盘之前宣称不限速，现在下载视频三四百k'"
+    },
+    {
+      "url": "https://drive.uc.cn/",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: '开通UC网盘SVIP畅享6TB存储空间', '上传下载不限速...开通UC网盘SVIP畅享专属极速通道'"
+    },
+    {
+      "url": "https://github.com/qaiu/netdisk-fast-download",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: the auth table states 'UC网盘(UC) 必须', meaning a cookie is mandatory"
+    },
+    {
+      "url": "https://openlistteam.github.io/docs/guide/drivers/uc.html",
+      "date": "2026-11-03",
+      "proved": "the OpenList UC driver takes a browser cookie",
+      "capture": "sha256:90b3a655e5b4e2eb98615afca63dda79d94f886a53fd3456a5979aebd43211bb",
+      "quote": "Press F12 to open \"Debug\", select \"Network\", select any request on the left, and find the one with the `Cookie` parameter."
+    },
+    {
+      "url": "https://openlistteam.github.io/docs/guide/drivers/uc.html",
+      "date": "2026-11-03",
+      "proved": "the UC TV driver is list and download only",
+      "capture": "sha256:90b3a655e5b4e2eb98615afca63dda79d94f886a53fd3456a5979aebd43211bb",
+      "quote": "The TV version supports `302`, but only `List` and `Download` operations are supported."
+    },
+    {
+      "url": "https://drive.uc.cn/",
+      "date": "2026-11-03",
+      "proved": "the vendor page advertises 6 TB under the SVIP tier",
+      "capture": "sha256:622c94b57c266dd2e22a3d49c272358f1804ea158fd3d87a7e12dcc81c40f822",
+      "quote": "开通UC网盘SVIP畅享6TB存储空间"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-11-04T00:21:07.067Z",
+  "history": [],
+  "binding": "per-object-cap",
+  "binding_note": "2 TB of claimable promo capacity is real and permanent, and 1 GB per file turns a 20 TiB archive into 20,000 objects. The per-file cap is what closes it, not the quota or the identity.",
+  "notes": "Both UC spellings are folded in here: the A-A5 record covers the SVIP tier and the F-F8 record covers the promo-code tier. The two together are the finding: the capacity is real, permanent and pointless because of a 1 GB ceiling.",
+  "extras": {
+    "access_mode": "registration-gated",
+    "aliases": [
+      "UC Drive / UC网盘",
+      "UC网盘 (UC Browser drive, Alibaba)",
+      "UC Browser drive"
+    ],
+    "seed_verdicts": [
+      "fails-quota (A-A5)",
+      "fails-quota (F-F8)",
+      "dead end: UC and Quark as storage (A-A8)"
+    ],
+    "per_file_cap_bytes_derived": 1000000000,
+    "shared_backend_with_quark": true,
+    "seed_source": "storage-research",
+    "seed_wave": "A-A5-asian-drives.json",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service"
+  }
+}

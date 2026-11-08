@@ -1,0 +1,125 @@
+{
+  "topic": "netdisk-pan",
+  "slug": "nintendo-switch-online-save-data-cloud",
+  "provider": "Nintendo Switch Online Save Data Cloud",
+  "url": "https://support.nintendo.com/sg/nso/services/savedata-backup/index.html",
+  "category": "console cloud saves",
+  "free_tier": {
+    "stated": "No pool at all: one save slot per supported game title. A personal subscription covers one account and a family plan covers eight",
+    "unit": "none",
+    "metered_on": "object-count",
+    "source_url": "https://support.nintendo.com/sg/nso/services/savedata-backup/index.html",
+    "read_on": "2026-10-21"
+  },
+  "per_object_cap": {
+    "stated": "One save data file per software title for each Nintendo Account. There is no aggregate cap and no way to store non-save bytes",
+    "bytes": null,
+    "source_url": "https://support.nintendo.com/sg/nso/services/savedata-backup/index.html"
+  },
+  "retention": {
+    "stated": "Backed-up saves are not usable once the subscription ends, and are accessible again if the subscription is renewed within 180 days",
+    "days": 180,
+    "source_url": "https://support.nintendo.com/sg/nso/services/savedata-backup/index.html"
+  },
+  "egress": {
+    "terms": "Console-mediated only. There is no HTTP API, so there is no egress path at all",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://support.nintendo.com/sg/nso/services/savedata-backup/index.html"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "tooling": "none public. The switch's own backup menu is the only client",
+  "chaining": "Nothing to multiply: there is no capacity number to shard, and the practical ceiling is titles owned times per-title save size, which is tens of gigabytes at most",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "one save file per supported title per account",
+      "source": "https://support.nintendo.com/sg/nso/services/savedata-backup/index.html"
+    },
+    {
+      "kind": "write-gated",
+      "value": "an active Nintendo Switch Online membership is required, and the only client is the console",
+      "source": "https://www.nintendo.com/en-gb/Support/Nintendo-Account/Nintendo-Switch-Online-FAQ-1442566.html"
+    }
+  ],
+  "identity_cost": {
+    "kind": "email",
+    "detail": "a Nintendo Account and a paid subscription",
+    "country": null
+  },
+  "reliability_note": "Multiple games are excluded from backup entirely, and saves are not usable once the subscription lapses (accessible again on renewal within 180 days). The console is the only client, so there is no programmatic read or write path",
+  "confidence": "reported",
+  "evidence": [
+    {
+      "url": "https://support.nintendo.com/sg/nso/services/savedata-backup/index.html",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: 'You can only back up one save data file per software title for each Nintendo Account' and 'There is no limit to the amount of storage space or number of software titles that can be backed up'"
+    },
+    {
+      "url": "https://www.nintendo.com/en-gb/Support/Nintendo-Account/Nintendo-Switch-Online-FAQ-1442566.html",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: backup requires an active Nintendo Switch Online membership"
+    },
+    {
+      "url": "https://tech-insider.org/cloud-save-storage-ps-plus-xbox-steam-switch-2026/",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: 'Nintendo Switch Online: title-by-title, not a storage pool'"
+    },
+    {
+      "url": "https://support.nintendo.com/sg/nso/services/savedata-backup/index.html",
+      "date": "2026-11-03",
+      "proved": "after the subscription ends the backed-up saves are not usable; renewing within 180 days restores access",
+      "capture": "sha256:187249e4267aaa57beeb14f7abeed1dc3bb55360e25495ee3ac0f07495c388fb",
+      "quote": "if you re-subscribe within 180 days, you will be able to access the save data that was backed up during your previous subscription period."
+    },
+    {
+      "url": "https://support.nintendo.com/sg/nso/services/savedata-backup/index.html",
+      "date": "2026-11-03",
+      "proved": "one save data file per title per account",
+      "capture": "sha256:187249e4267aaa57beeb14f7abeed1dc3bb55360e25495ee3ac0f07495c388fb",
+      "quote": "You can only back up one save data file per software title for each Nintendo Account."
+    },
+    {
+      "url": "https://support.nintendo.com/sg/nso/services/savedata-backup/index.html",
+      "date": "2026-11-03",
+      "proved": "no aggregate storage limit is stated",
+      "capture": "sha256:187249e4267aaa57beeb14f7abeed1dc3bb55360e25495ee3ac0f07495c388fb",
+      "quote": "There is no limit to the amount of storage space or number of software titles that can be backed up."
+    },
+    {
+      "url": "https://support.nintendo.com/sg/nso/services/savedata-backup/index.html",
+      "date": "2026-11-03",
+      "proved": "backup needs a Nintendo Switch Online subscription",
+      "capture": "sha256:187249e4267aaa57beeb14f7abeed1dc3bb55360e25495ee3ac0f07495c388fb",
+      "quote": "Only users (Nintendo Accounts) that have a subscription to Nintendo Switch Online can back up save data."
+    },
+    {
+      "url": "https://www.nintendo.com/en-gb/Support/Nintendo-Account/Nintendo-Switch-Online-FAQ-1442566.html",
+      "date": "2026-11-03",
+      "proved": "a family membership covers up to 8 people",
+      "capture": "sha256:5695a6c83bf751dccb384daca7e4d7d50d2545f3933bf69aac398e14c60cd5ea",
+      "quote": "A family membership provides the Nintendo Switch Online service to everyone in the purchaser's Nintendo Account family group (up to 8 people)."
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-11-04T00:20:56.364Z",
+  "history": [],
+  "binding": "per-object-cap",
+  "binding_note": "The advertised absence of a storage limit is bound to one save file per title, so the per-object cap is the whole quota. There is no pool to measure.",
+  "notes": "Recorded because the vendor's sentence is a good example of an unlimited claim that is technically true and structurally empty: 'no limit to the amount of storage space' next to 'one save data file per software title'. The corpus's own storage topic carries a record for the same provider; this one is scoped to the pan question and adds the console-only access note.",
+  "extras": {
+    "access_mode": "registration-gated",
+    "api": "none, console only",
+    "aliases": [
+      "Nintendo Switch Online Save Data Cloud"
+    ],
+    "cross_topic_record": "dossier/storage/nintendo-switch-online-save-data-cloud.json",
+    "cross_topic_note": "the storage topic carries the same provider from the game-save angle; this record is scoped to whether it is a pan",
+    "seed_source": "storage-research",
+    "seed_wave": "A-A12-android-tv-cloud.json",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service"
+  }
+}

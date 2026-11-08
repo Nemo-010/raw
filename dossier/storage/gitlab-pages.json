@@ -1,0 +1,111 @@
+{
+  "topic": "storage",
+  "slug": "gitlab-pages",
+  "provider": "GitLab Pages (gitlab.io)",
+  "url": "https://gitlab.com/groups/pages",
+  "category": "git",
+  "free_tier": {
+    "stated": "1 GB maximum site size on gitlab.com (tied to the 1 GB max artifact size); 200,000 file entries per site; unlimited projects.",
+    "unit": "objects",
+    "metered_on": "unstated",
+    "source_url": "https://docs.gitlab.com/user/gitlab_com/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.gitlab.com/user/gitlab_com/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.gitlab.com/user/gitlab_com/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "No egress charge published; rate limits are 1,000 requests/50s per IP and 5,000 requests/10s per Pages domain — generous enough for real serving but a hard ceiling if sharded heavily onto one domain.",
+    "metered": false
+  },
+  "interface": [
+    "git",
+    "rclone"
+  ],
+  "interface_detail": "git",
+  "tooling": "git push + a `pages` job in .gitlab-ci.yml (a 'pages' artifact); the git-pages v2 API also accepts a direct HTTP upload. No rclone backend.",
+  "chaining": "1 GB x unlimited projects x unlimited namespaces. 20 TiB = 20,480 projects. Per-project cap is 2x GitHub Pages but still fails a 500 GB unit test on its own.",
+  "limits": [],
+  "limits_note": "1 GB site size and 1 GB max artifact; 200,000 files/dirs/symlinks per site; 150 custom domains; 1000 parallel deployments per top-level namespace; Pages rate limits 1,000 req/50s per IP.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Self-managed default is a 100 MB Pages cap, but gitlab.com is 1 GB — do not confuse the two. CI minutes are free but shared runners now require a card on file for gitlab.com.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.gitlab.com/user/gitlab_com/",
+      "date": "2026-10-21",
+      "proved": "'Maximum site size | 1 GB', 'The maximum size of your Pages site depends on the maximum artifact size'"
+    },
+    {
+      "url": "https://docs.gitlab.com/administration/instance_limits/",
+      "date": "2026-10-21",
+      "proved": "'total number of file entries (including directories and symlinks) is limited to 200,000 per GitLab Pages website'"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/gitlab_com/rate_limits/",
+      "date": "2026-10-21",
+      "proved": "'GitLab Pages requests for an IP address | 1,000 requests every 50 seconds'"
+    },
+    {
+      "url": "https://gitlab-org.gitlab.io/gitlab-pages/",
+      "date": "2026-10-21",
+      "proved": "probe: curl -D - -> HTTP 302 chain, Server: cloudflare (live serving path)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "1 GB maximum site size on gitlab.com (tied to the 1 GB max artifact size); 200,000 file entries per site; unlimited projects.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "C-C5-static-hosts.json",
+    "seed_area": "C/C5",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "C/C5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "1 GB maximum site size on gitlab.com (tied to the 1 GB max artifact size); 200,000 file entries per site; unlimited projects.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area C/C5"
+    },
+    "target_document": "docs/storage/free/cloudflare-edge.md",
+    "document_section": "Cloudflare Pages and Workers static assets",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "1 GB maximum site size on gitlab.com (tied to the 1 GB max artifact size); 200,000 file entries per site; unlimited projects.",
+    "limits_verbatim": "1 GB site size and 1 GB max artifact; 200,000 files/dirs/symlinks per site; 150 custom domains; 1000 parallel deployments per top-level namespace; Pages rate limits 1,000 req/50s per IP.",
+    "egress_verbatim": "No egress charge published; rate limits are 1,000 requests/50s per IP and 5,000 requests/10s per Pages domain — generous enough for real serving but a hard ceiling if sharded heavily onto one domain.",
+    "chaining_verbatim": "1 GB x unlimited projects x unlimited namespaces. 20 TiB = 20,480 projects. Per-project cap is 2x GitHub Pages but still fails a 500 GB unit test on its own.",
+    "tooling_verbatim": "git push + a `pages` job in .gitlab-ci.yml (a 'pages' artifact); the git-pages v2 API also accepts a direct HTTP upload. No rclone backend.",
+    "interface_verbatim": "git",
+    "agent_focus": "Static/docs/wiki hosts with big free limits: GitHub Pages, GitLab Pages, Cloudflare Pages, Netlify, Vercel, Surge, Neocities, ReadTheDocs, GitBook, Notion, Outline, Confluence free, MkDocs hosts, per-site caps"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

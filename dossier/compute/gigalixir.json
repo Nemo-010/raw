@@ -1,0 +1,134 @@
+{
+  "topic": "compute",
+  "slug": "gigalixir",
+  "provider": "Gigalixir",
+  "url": "https://gigalixir.com/pricing",
+  "category": "platform host",
+  "free_tier": {
+    "stated": "Free tier, quoted: '1 App Replica (0.5 GB memory)', 'Free Tier PostgreSQL Database', 'Custom Domains & SSL', 'Zero-downtime Deploys'. The free database is capped at '10k Rows' and '2 connections'. Paid Standard is 'USD 10/mo' for 0.2 GB, scaling to 'Up to 384 GB' of replica memory and '10+ (Horizontal)' replicas.",
+    "unit": "GiB",
+    "metered_on": "wall-clock",
+    "source_url": "https://gigalixir.com/pricing",
+    "read_on": "2026-10-22",
+    "notes": "free-forever"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://gigalixir.com/pricing",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "a Free app 'Sleeps after 30 days' without a deploy, and the free database stops at 10,000 rows and 2 connections, which a real workload reaches first.",
+    "days": null,
+    "source_url": "https://gigalixir.com/pricing",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "Standard production bandwidth is included with the provisioned resources, with no per-GB price and no numeric allowance published; a fair-use policy applies to extremely high-volume egress, and the page recommends Dedicated Ingress at USD 250/mo for massive data transfer.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://gigalixir.com/pricing"
+  },
+  "interface": [
+    "cli",
+    "ssh"
+  ],
+  "interface_detail": "the gigalixir CLI (macOS, Linux, Windows); SSH and a remote console on every plan; no REST API page was found",
+  "tooling": "the gigalixir CLI installs with a one-line script; SSH and a remote console are available on every plan",
+  "chaining": "an Elixir or Phoenix app plus a 10,000-row Postgres on one free tier is a complete small backend with no charge; the free replica publishes no vCPU number, so sizing it needs a run rather than a table.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "a Free app 'Sleeps after 30 days' without a deploy, and the free database stops at 10,000 rows and 2 connections, which a real workload reaches first.",
+      "source": "https://gigalixir.com/pricing"
+    }
+  ],
+  "limits_note": "a Free app 'Sleeps after 30 days' without a deploy, and the free database stops at 10,000 rows and 2 connections, which a real workload reaches first.",
+  "binding": "retention-clamped",
+  "binding_note": "a Free app 'Sleeps after 30 days' without a deploy, and the free database stops at 10,000 rows and 2 connections, which a real workload reaches first.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "a credit card required at signup on every plan, the free tier included: the pricing page states 'A credit card is required at signup for all plans. Free Tier usage is not charged.' The authorisation amount is not stated; whether debit or prepaid is accepted is not stated; no phone or ID step is stated",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://gigalixir.com/pricing",
+      "date": "2026-10-22",
+      "proved": "Free Tier card: '1 App Replica (0.5 GB memory)', 'Free Tier PostgreSQL Database', 'Custom Domains & SSL', 'Zero-downtime Deploys', quoted"
+    },
+    {
+      "url": "https://gigalixir.com/pricing",
+      "date": "2026-10-22",
+      "proved": "comparison table: 'Inactivity Policy | Sleeps after 30 days | Never sleeps' and 'DB Size Limit | 10k Rows', quoted"
+    },
+    {
+      "url": "https://gigalixir.com/pricing",
+      "date": "2026-10-22",
+      "proved": "'A credit card is required at signup for all plans. Free Tier usage is not charged.', quoted"
+    },
+    {
+      "url": "https://gigalixir.com/pricing",
+      "date": "2026-11-03",
+      "proved": "bandwidth is included with provisioned resources and no per-GB price is published",
+      "capture": "sha256:0caede6d66b79d3112de089f4bce7e0276ceaa1dd7381d2b30701c83f1af88d1",
+      "quote": "Standard production bandwidth is included with your provisioned resources."
+    },
+    {
+      "url": "https://gigalixir.com/pricing",
+      "date": "2026-11-03",
+      "proved": "a fair-use policy applies to extremely high-volume egress, with no stated volume",
+      "capture": "sha256:0caede6d66b79d3112de089f4bce7e0276ceaa1dd7381d2b30701c83f1af88d1",
+      "quote": "However, to ensure platform stability for everyone, we maintain a fair-use policy for extremely high-volume egress."
+    },
+    {
+      "url": "https://gigalixir.com/docs/cli",
+      "date": "2026-11-03",
+      "proved": "a CLI controls the platform",
+      "capture": "sha256:196c2a2022cfb0033cd983f30bf070da680f2e606a56e5af5908ad90889b7b02",
+      "quote": "The Gigalixir Command-Line Interface or CLI is a tool you install on your local machine to control Gigalixir."
+    },
+    {
+      "url": "https://gigalixir.com/pricing",
+      "date": "2026-11-03",
+      "proved": "SSH and a remote console are included on every plan, the Free plan included",
+      "capture": "sha256:0caede6d66b79d3112de089f4bce7e0276ceaa1dd7381d2b30701c83f1af88d1",
+      "quote": "| SSH & Remote Console | ✓ Full Access | ✓ Full Access | ✓ Full Access |"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T02:24:32.964Z",
+  "notes": "Aggregator claim checked: free-for.dev says 'one free instance that never sleeps and a free-tier PostgreSQL database limited to 2 connections, 10,000 rows'. The 'never sleeps' half is wrong: the vendor table says Free 'Sleeps after 30 days' of no deploy and only Standard never sleeps. The aggregator omits the card requirement at signup, which is the identity cost that decides whether this is reachable. vCPU is not published for the free replica and is null rather than guessed.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "Gigalixir",
+      "class": "aggregator-correction",
+      "category_as_written": "platform host, Elixir/Ruby/Node",
+      "free_tier_kind": "free-forever",
+      "shape": {
+        "vcpu": null,
+        "ram_gib": 0.5,
+        "gpu_class": null,
+        "gpu_count": null
+      },
+      "seen_routes": [
+        "broker read 200 https://gigalixir.com/pricing"
+      ],
+      "agents": [
+        "trackers"
+      ],
+      "promoted_from": ".tmp/wave2"
+    },
+    "superseded": {
+      "identity_cost": {
+        "kind": "card",
+        "detail": "as stated by the provider's signup page",
+        "country": null
+      }
+    }
+  }
+}

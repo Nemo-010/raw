@@ -1,0 +1,99 @@
+{
+  "topic": "storage",
+  "slug": "cisco-webex-messages-api-file-attachments",
+  "provider": "Cisco Webex — Messages API file attachments",
+  "url": "https://developer.webex.com/docs/basics#message-attachments",
+  "category": "messaging",
+  "free_tier": {
+    "stated": "No storage quota published. Per-attachment cap is the only hard number: 'Message attachments are limited to 100MB each.'",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://developer.webex.com/docs/basics#message-attachments",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://developer.webex.com/docs/basics#message-attachments",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "Retention is governed by the org's retention policy (license-dependent); free-tier spaces are not a documented permanent store",
+    "source_url": "https://developer.webex.com/docs/basics#message-attachments",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "No per-GB egress charge found, but files are fetched by authenticated API call or a short-lived download URL tied to the message — not an anonymous CDN path.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "webexteamssdk / webex-python-sdk; POST /v1/messages with multipart files, GET /v1/contents/{id}. Room Tabs API can attach a persistent URL to a space but does not store bytes.",
+  "chaining": "100 MB/attachment x unlimited messages in a space is genuinely large in principle, but free Webex accounts have message-retention limits and the org pays per user beyond the free tier.",
+  "limits": [],
+  "limits_note": "100 MB per attachment. Retention is governed by the org's retention policy (license-dependent); free-tier spaces are not a documented permanent store. Auth required for every read.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: icy change or license lapse can remove content without any API-visible warning. Unverified for the free tier specifically — blocked from the retention help page. 100 MB/attachment x",
+    "country": null
+  },
+  "reliability_note": "Retention is policy-driven rather than fixed, so an admin policy change or license lapse can remove content without any API-visible warning. Unverified for the free tier specifically — blocked from the retention help page.",
+  "confidence": "inferred",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://developer.webex.com/docs/basics#message-attachments",
+      "date": "2026-10-21",
+      "proved": "read live: 'Message attachments are limited to 100MB each.'"
+    },
+    {
+      "url": "https://help.webex.com/en-us/article/8c1lzx/Manage-retention-policies-in-Webex-App",
+      "date": "2026-10-21",
+      "proved": "unverified: blocked by challenge (no retention number obtained)"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No storage quota published. Per-attachment cap is the only hard number: 'Message attachments are limited to 100MB each.'",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F4-consumer-im-apis.json",
+    "seed_area": "F/F4",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "F/F4"
+      }
+    ],
+    "seed_confidence": "low",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "No storage quota published. Per-attachment cap is the only hard number: 'Message attachments are limited to 100MB each.'",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F4"
+    },
+    "target_document": "docs/storage/free/messaging.md",
+    "document_section": "Consumer IM APIs",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No storage quota published. Per-attachment cap is the only hard number: 'Message attachments are limited to 100MB each.'",
+    "limits_verbatim": "100 MB per attachment. Retention is governed by the org's retention policy (license-dependent); free-tier spaces are not a documented permanent store. Auth required for every read.",
+    "egress_verbatim": "No per-GB egress charge found, but files are fetched by authenticated API call or a short-lived download URL tied to the message — not an anonymous CDN path.",
+    "chaining_verbatim": "100 MB/attachment x unlimited messages in a space is genuinely large in principle, but free Webex accounts have message-retention limits and the org pays per user beyond the free tier.",
+    "tooling_verbatim": "webexteamssdk / webex-python-sdk; POST /v1/messages with multipart files, GET /v1/contents/{id}. Room Tabs API can attach a persistent URL to a space but does not store bytes.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Consumer/enterprise messaging platforms with media APIs as bulk storage — the crux being RETENTION: which platforms keep uploaded media indefinitely and serve it without an auth token. Telegram, Discord, Slack, Teams, Notion and Airtable were already covered by other slots and are excluded here."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

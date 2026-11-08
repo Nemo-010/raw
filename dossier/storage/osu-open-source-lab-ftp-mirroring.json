@@ -1,0 +1,106 @@
+{
+  "topic": "storage",
+  "slug": "osu-open-source-lab-ftp-mirroring",
+  "provider": "OSU Open Source Lab - FTP mirroring (ftp.osuosl.org / ftp2.osuosl.org)",
+  "url": "https://osuosl.org",
+  "category": "paas",
+  "free_tier": {
+    "stated": "No published per-project quota, but an explicit capacity statement and an allocation policy: 'Because space on the main mirrors is limited, we also host projects on ftp2.osuosl.org. It runs in Salem and stores its content on our Ceph cluster instead of copying it to every server. We currently host about 100 projects using around 37 TB of disk space, about 16 TB on the main mirrors and 21 TB on ftp2.' Mean is therefore ~370 GB per hosted project.",
+    "unit": "objects",
+    "metered_on": "stored-bytes",
+    "source_url": "https://osuosl.org/services/hosting/details/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://osuosl.org/services/hosting/details/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "The binding constraint is the request/review process ('Please give us a few days or a week to discuss and respond') and the statement that main-mirror space is limited. retention: indefinite for accepted projects",
+    "source_url": "https://osuosl.org/services/hosting/details/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free and genuinely high-capacity: 'Three servers sit behind ftp.osuosl.org with a combined bandwidth capacity of 60 gigabits per second. They are located in Salem, Chicago and New York, and each one carries a full copy of the content.' No billing.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "ftp",
+    "rsync"
+  ],
+  "interface_detail": "rest",
+  "tooling": "FTP/HTTP mirror distribution plus rsync from the mirror ring; no self-service upload API - content is placed by arrangement. Request flow is a form at osuosl.org/services/hosting/request/ asking for project name, URL, source repo, and role.",
+  "chaining": "Not multiplicable - it is an allocation, not a tier. The value is scale per allocation: ~370 GB mean, 60 Gbps aggregate egress, three-city replication, and a Ceph-backed second tier (ftp2) with 21 TB already in use.",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "review process ('Please give us a few days or a week to discuss and respond') and the",
+      "source": "https://osuosl.org/services/hosting/details/"
+    }
+  ],
+  "limits_note": "per-object-cap: none published. The binding constraint is the request/review process ('Please give us a few days or a week to discuss and respond') and the statement that main-mirror space is limited. retention: indefinite for accepted projects. request-rate: N/A (mirror serves static files).",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Human-gated and OSS-only in practice (the form asks for a source code repository and a role such as maintainer). It is a good home for a legitimately large OSS release corpus and a bad fit for arbitrary bulk - there is no self-service path and capacity is finite and publicly rationed.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://osuosl.org/services/hosting/details/",
+      "date": "2026-10-21",
+      "proved": "'Three servers sit behind ftp.osuosl.org with a combined bandwidth capacity of 60 gigabits per second'; 'about 100 projects using around 37 TB of disk space, about 16 TB on the main mirrors and 21 TB on ftp2'"
+    },
+    {
+      "url": "https://osuosl.org/services/hosting/request/",
+      "date": "2026-10-21",
+      "proved": "request form requires project name, URL, source code repository, and role; 'Please give us a few days or a week to discuss and respond'"
+    },
+    {
+      "url": "https://osuosl.org/services/hosting/",
+      "date": "2026-10-21",
+      "proved": "'Release files and package repositories served from mirrors in three cities'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No published per-project quota, but an explicit capacity statement and an allocation policy: 'Because space on the main mirrors is limited, we also host projects on ftp2.osuosl.org. It runs in Salem and stores its content on our Ceph cluster instead of copying it to every server. We currently host about 100 projects using around 37 TB of disk space, about 16 TB on the main mirrors and 21 TB on ftp2.' Mean is therefore ~370 GB per hosted project.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H11-code-forges.json",
+    "seed_area": "H/H11",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H11"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/forge-surfaces.md",
+    "document_section": "Code forges",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "No published per-project quota, but an explicit capacity statement and an allocation policy: 'Because space on the main mirrors is limited, we also host projects on ftp2.osuosl.org. It runs in Salem and stores its content on our Ceph cluster instead of copying it to every server. We currently host about 100 projects using around 37 TB of disk space, about 16 TB on the main mirrors and 21 TB on ftp2.' Mean is therefore ~370 GB per hosted project.",
+    "limits_verbatim": "per-object-cap: none published. The binding constraint is the request/review process ('Please give us a few days or a week to discuss and respond') and the statement that main-mirror space is limited. retention: indefinite for accepted projects. request-rate: N/A (mirror serves static files).",
+    "egress_verbatim": "Free and genuinely high-capacity: 'Three servers sit behind ftp.osuosl.org with a combined bandwidth capacity of 60 gigabits per second. They are located in Salem, Chicago and New York, and each one carries a full copy of the content.' No billing.",
+    "chaining_verbatim": "Not multiplicable - it is an allocation, not a tier. The value is scale per allocation: ~370 GB mean, 60 Gbps aggregate egress, three-city replication, and a Ceph-backed second tier (ftp2) with 21 TB already in use.",
+    "tooling_verbatim": "FTP/HTTP mirror distribution plus rsync from the mirror ring; no self-service upload API - content is placed by arrangement. Request flow is a form at osuosl.org/services/hosting/request/ asking for project name, URL, source repo, and role.",
+    "interface_verbatim": "rest",
+    "agent_focus": "The code-forge seam: OSS project hosts, software-download directories, game/mod distribution and mirror services. Question for each: (a) any published byte quota, (b) is upload possible over SFTP/rsync/SCP/SSH rather than a web form, (c) is there a public download CDN, (d) does it need an approved project or can any account create one, (e) per-file cap. Round 2 flagged that SourceForge has no published quota and serves over plain SFTP with a global mirror CDN, and that an rclone-backend enumerator would score the niche as empty. This slot tests that class systematically. Every number below was read live or from a dated archive capture this session."
+  },
+  "binding": "write-gated",
+  "binding_note": "the write is a queue with a person or a rule in it, so the upload rate is set by somebody else",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

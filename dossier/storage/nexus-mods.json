@@ -1,0 +1,165 @@
+{
+  "topic": "storage",
+  "slug": "nexus-mods",
+  "provider": "Nexus Mods",
+  "url": "https://www.nexusmods.com",
+  "category": "Game-mod repository — unlimited hosting, GB-scale files",
+  "free_tier": {
+    "stated": "Vendor help page states it outright: 'Unlimited storage and distribution for mods and images that you create. Unlimited file hosting for mods and images that you've created and uploaded.' Their own wiki table: Maximum Storage 'Unrestricted', Upload Limitations 'Unlimited (20GB limit through the browser, contact us for larger uploads)'.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://help.nexusmods.com/article/42-what-are-the-benefits-of-creating-a-nexus-mods-account",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap 20 GB",
+    "bytes": 20000000000,
+    "source_url": "https://help.nexusmods.com/article/42-what-are-the-benefits-of-creating-a-nexus-mods-account",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://help.nexusmods.com/article/42-what-are-the-benefits-of-creating-a-nexus-mods-account",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free, no egress quota — but per-IP shaped (see reliability_note). No Cloudflare in front of the file CDN; downloads come from their own edge.",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "Web upload + REST API v1 (api.nexusmods.com, `users/validate.json` returned 401 unauthenticated = live and auth-gated, not dead). Free API key issued per account.",
+  "tooling": "REST + a maintained community uploader (Digitalroot.ModUploader, supports `nexusmods` commands).",
+  "chaining": "Unlimited storage makes it a candidate cold-archive shard: 20 GB/object with no aggregate cap is the best per-object-to-quota ratio in this dossier after Printables. No hot-link story — downloads require a session/API key, so it is archive-tier, not serving-tier.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "1 MB/s",
+      "source": "https://help.nexusmods.com/article/42-what-are-the-benefits-of-creating-a-nexus-mods-account"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "1.5 MB/s",
+      "source": "https://help.nexusmods.com/article/42-what-are-the-benefits-of-creating-a-nexus-mods-account"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap 20 GB",
+      "source": "https://help.nexusmods.com/article/42-what-are-the-benefits-of-creating-a-nexus-mods-account"
+    }
+  ],
+  "limits_note": "per-object-cap 20 GB via browser, larger by request. per-ip-shaping is the binding number: ~1 MB/s regular, ~1.5 MB/s with an adblocker, 3 MB/s Supporters; uncapped only for Premium (paid). Resumable downloads are free only on files >500 MB.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "The 1–1.5 MB/s un-premium cap is the real constraint — ~3.5–5 GB/hour per stream, so per-IP-shaping governs, not storage. Files are virus-scanned and quarantined on false positives (WinRAR .rar especially).",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://help.nexusmods.com/article/42-what-are-the-benefits-of-creating-a-nexus-mods-account",
+      "date": "2026-10-21",
+      "proved": "'Unlimited storage and distribution' and 'Unlimited file hosting' as free Basic benefits"
+    },
+    {
+      "url": "https://wiki.nexusmods.com/index.php/List_of_online_hosting_sites",
+      "date": "2026-10-21",
+      "proved": "Nexus Mods row: Maximum Storage Unrestricted, Upload Limitations 20GB via browser"
+    },
+    {
+      "url": "https://help.nexusmods.com/article/96-download-speed-caps-adblockers-and-different-types-of-membership",
+      "date": "2026-10-21",
+      "proved": "speed cap table: ~1.5MB/s adblock, 3MB/s Supporter, uncapped Premium"
+    },
+    {
+      "url": "https://help.nexusmods.com/article/170-resumable-downloads",
+      "date": "2026-10-21",
+      "proved": "resumable downloads free only on files over 500MB, still in beta"
+    },
+    {
+      "url": "https://api.nexusmods.com/v1/users/validate.json",
+      "date": "2026-10-21",
+      "proved": "401 (endpoint alive, auth required); www.nexusmods.com itself 403s plain curl (Cloudflare)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Vendor help page states it outright: 'Unlimited storage and distribution for mods and images that you create. Unlimited file hosting for mods and images that you've created and uploaded.' Their own wiki table: Maximum Storage 'Unrestricted', Upload Limitations 'Unlimited (20GB limit through the browser, contact us for larger uploads)'.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H14-print-and-media-fulfilment.json",
+    "seed_area": "H/H14",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H14"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "F/F6"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "Nexus Mods",
+      "Nexus Mods (free account, file hosting)"
+    ],
+    "conflicts": [
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "Vendor help page states it outright: 'Unlimited storage and distributi",
+            "source": "table.md row, area H/H14",
+            "evidence": null
+          },
+          {
+            "value": "Free Basic membership grants 'Unlimited storage and distribution for m",
+            "source": "table.md row, area F/F6",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "Vendor help page states it outright: 'Unlimited storage and distributi",
+            "source": "table.md (area H/H14)"
+          },
+          {
+            "value": "Free Basic membership grants 'Unlimited storage and distribution for m",
+            "source": "table.md (area F/F6)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Print and media fulfilment",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Vendor help page states it outright: 'Unlimited storage and distribution for mods and images that you create. Unlimited file hosting for mods and images that you've created and uploaded.' Their own wiki table: Maximum Storage 'Unrestricted', Upload Limitations 'Unlimited (20GB limit through the browser, contact us for larger uploads)'.",
+    "limits_verbatim": "per-object-cap 20 GB via browser, larger by request. per-ip-shaping is the binding number: ~1 MB/s regular, ~1.5 MB/s with an adblocker, 3 MB/s Supporters; uncapped only for Premium (paid). Resumable downloads are free only on files >500 MB.",
+    "egress_verbatim": "Free, no egress quota — but per-IP shaped (see reliability_note). No Cloudflare in front of the file CDN; downloads come from their own edge.",
+    "chaining_verbatim": "Unlimited storage makes it a candidate cold-archive shard: 20 GB/object with no aggregate cap is the best per-object-to-quota ratio in this dossier after Printables. No hot-link story — downloads require a session/API key, so it is archive-tier, not serving-tier.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "REST + a maintained community uploader (Digitalroot.ModUploader, supports `nexusmods` commands).",
+    "interface_verbatim": "Web upload + REST API v1 (api.nexusmods.com, `users/validate.json` returned 401 unauthenticated = live and auth-gated, not dead). Free API key issued per account.",
+    "agent_focus": "Print-on-demand, media and fulfilment platforms that host your uploads permanently and serve them cheaply. The question for every candidate was NOT 'can I upload' (all of them accept uploads) but: does the platform serve my ORIGINAL bytes back, unsigned, indefinitely, from a CDN I can hot-link? POD image hosts (Redbubble/Printful/Printify/Society6/Threadless/Zazzle/Etsy) all re-encode, cap at 20-300 MB and gate the write behind account setup — they are inverted (tiny ingress, no egress). The value in this niche is the DIGITAL-PRODUCT fulfilment layer and the 3D-model repositories, which are the two places where arbitrary file types survive ingest at GB scale."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

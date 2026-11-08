@@ -1,0 +1,135 @@
+{
+  "topic": "compute",
+  "slug": "oracle-cloud-infrastructure",
+  "provider": "Oracle Cloud Infrastructure",
+  "url": "https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm",
+  "category": "GPU cloud",
+  "free_tier": {
+    "stated": "A refutation. A widely syndicated claim states that OCI Always Free includes '1 NVIDIA A10 GPU, 24GB VRAM ... capped at 500 GPU-hours per month', worth about USD 640 a month, attributed to a December 2025 Oracle blog post. The official Always Free page lists no GPU at all. Its Compute section names exactly two shapes: 'up to two Always Free VM instances using the VM.Standard.E2.1.Micro shape' and 'the first 1,500 OCPU hours and 9,000 GB hours per month for free for VM instances using the VM.Standard.A1.Flex shape'. The cited blog URL returns HTTP 403 and has no Wayback capture.",
+    "unit": "hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm",
+    "read_on": "2026-10-22",
+    "notes": "pay-as-you-go list prices per GPU-hour from the vendor's price list data: H100 USD 10, A100 80 GB (A100 v2) USD 4, L40S USD 3.5; no RTX 4090 and no L4 row. unverified: the price list states no billing granularity and no minimum bill for GPU shapes."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "not published on the page read: no egress term was found, so nothing is asserted",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "tooling": "not stated in the finding; the provider documents no client",
+  "chaining": "Nothing to chain: the entitlement does not exist on the page that would define it.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "No GPU shape appears in the Always Free entitlement, so the 500 GPU-hour figure has no page behind it.",
+      "source": "https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm"
+    }
+  ],
+  "limits_note": "No GPU shape appears in the Always Free entitlement, so the 500 GPU-hour figure has no page behind it.",
+  "binding": "volume-quota",
+  "binding_note": "No GPU shape appears in the Always Free entitlement, so the 500 GPU-hour figure has no page behind it.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "as stated by the provider's signup page",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm",
+      "date": "2026-10-22",
+      "proved": "the Available Shapes section lists only VM.Standard.E2.1.Micro and VM.Standard.A1.Flex, and the page contains no GPU entitlement, read in full"
+    },
+    {
+      "url": "https://tcoiq.com/cloud-news/oracle-oci-announces-always-free-gpu-tier-with-nvidia-a10-access-for-ai-develope",
+      "date": "2026-10-22",
+      "proved": "the syndicated claim of '1 NVIDIA A10 GPU, 24GB VRAM ... capped at 500 GPU-hours per month' and an implicit USD 640 monthly subsidy, published 2026-05-13 and attributed to December 2025"
+    },
+    {
+      "url": "https://blogs.oracle.com/cloud-infrastructure/post/oci-always-free-nvidia-a10-gpu-tier-december-2025",
+      "date": "2026-10-22",
+      "proved": "the cited source returns HTTP 403 from the origin, and broker archive at 2026-01 reports 'no capture' from Wayback and no Cloudflare scan"
+    },
+    {
+      "url": "https://docs.oracle.com/en-us/iaas/Content/Compute/Concepts/preemptible.htm",
+      "date": "2026-10-22",
+      "proved": "'Preemptible capacity costs 50% less than on-demand capacity in all regions' and an event fires two minutes before termination, quoted"
+    },
+    {
+      "url": "https://docs.oracle.com/en-us/iaas/Content/Compute/Concepts/preemptible.htm",
+      "date": "2026-10-22",
+      "proved": "the Supported Shapes list contains VM.GPU2 and VM.GPU3 and does not contain VM.GPU.A10, VM.GPU4, or bare metal, read in full"
+    },
+    {
+      "url": "https://apexapps.oracle.com/pls/apex/cetools/api/v1/products/?currencyCode=USD",
+      "date": "2026-11-03",
+      "proved": "H100 GPU pay-as-you-go is USD 10 per GPU hour",
+      "capture": "sha256:1cd7bcf4a1d9e4feea339bd1a7c755fde6430d749773bdd3e49c848c356537a8",
+      "quote": "\"displayName\":\"Oracle Cloud Infrastructure - Compute - GPU - H100\" ... \"metricName\":\"GPU Per Hour\",\"serviceCategory\":\"Compute - GPU\",\"currencyCodeLocalizations\":[{\"currencyCode\":\"USD\",\"prices\":[{\"model\":\"PAY_AS_YOU_GO\",\"value\":10}]}]"
+    },
+    {
+      "url": "https://apexapps.oracle.com/pls/apex/cetools/api/v1/products/?currencyCode=USD",
+      "date": "2026-11-03",
+      "proved": "A100 v2 (the 80 GB shape, BM.GPU.A100-v2.8 on the price list) pay-as-you-go is USD 4 per GPU hour",
+      "capture": "sha256:1cd7bcf4a1d9e4feea339bd1a7c755fde6430d749773bdd3e49c848c356537a8",
+      "quote": "{\"partNumber\":\"B95907\",\"displayName\":\"Compute - GPU - A100 - v2\",\"metricName\":\"GPU Per Hour\",\"serviceCategory\":\"Compute - GPU\",\"currencyCodeLocalizations\":[{\"currencyCode\":\"USD\",\"prices\":[{\"model\":\"PAY_AS_YOU_GO\",\"value\":4}]}]}"
+    },
+    {
+      "url": "https://apexapps.oracle.com/pls/apex/cetools/api/v1/products/?currencyCode=USD",
+      "date": "2026-11-03",
+      "proved": "L40S pay-as-you-go is USD 3.5 per GPU hour",
+      "capture": "sha256:1cd7bcf4a1d9e4feea339bd1a7c755fde6430d749773bdd3e49c848c356537a8",
+      "quote": "{\"partNumber\":\"B109479\",\"displayName\":\"Compute - GPU - L40S\",\"metricName\":\"GPU Per Hour\",\"serviceCategory\":\"Compute - GPU\",\"currencyCodeLocalizations\":[{\"currencyCode\":\"USD\",\"prices\":[{\"model\":\"PAY_AS_YOU_GO\",\"value\":3.5}]}]}"
+    },
+    {
+      "url": "https://www.oracle.com/cloud/price-list/",
+      "date": "2026-11-03",
+      "proved": "the A100 v2 shape is the 80 GB A100, priced per GPU per hour",
+      "capture": "sha256:9ee6bbd8391217bd68bd8020e5248a709f6859645ae8245444048d101d89724e",
+      "quote": "| BM.GPU.A100-v2.8 (8x NVIDIA A100 80GB Tensor Core) |  |  | GPU per hour |"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-03T08:50:29.744Z",
+  "notes": "The secondary article also contains arithmetic errors that a reader can check: it prices the A10 at USD 1.28 an hour in one sentence and says that maps to VM.GPU3.1, which is a V100 shape, and it describes BM.GPU.A10.1, which is not a shape name on OCI's price list (the bare metal A10 shape is BM.GPU.A10.4). Oracle did announce an Always Free compute reduction enforced from 18 August 2026, cutting Ampere A1 from 4 OCPU and 24 GB to 2 OCPU and 12 GB, and the official page reflects the reduced figures, which is independent evidence that the page read is current. A real OCI GPU free allowance would be the largest single finding in the corpus, which is why this refutation is worth recording rather than leaving the claim to be rediscovered. Conflicting verdicts across agents: fails-quota via a05-spot. The one recorded is the better-evidenced. Verdict scope corrected 2026-10-22: this record is about a refuted claim, not a dead product. The claim that OCI Always Free includes an A10 GPU has no page behind it, and that claim is dead. The provider is not: it sells preemptible GPU capacity at about half the on-demand rate, with a two-minute termination event and VM.GPU2 and VM.GPU3 as supported preemptible shapes, as this record's own evidence rows state. `dead` was read as 'OCI has nothing', which the evidence contradicts.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "Oracle Cloud Infrastructure",
+      "class": "spot-arbitrage",
+      "category_as_written": "spot GPU",
+      "free_tier_kind": "none",
+      "shape": null,
+      "seen_routes": [
+        "broker read 200 (official Always Free page, read in full)",
+        "broker fetch 403 (cited blog)",
+        "broker archive 2026-01 no capture",
+        "broker search for any corroborating official source"
+      ],
+      "agents": [
+        "a05-spot"
+      ],
+      "promoted_from": ".tmp/wave2",
+      "verdict_change": "dead -> paid-only on 2026-10-22 (verdict scope)"
+    }
+  }
+}

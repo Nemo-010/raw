@@ -1,0 +1,111 @@
+{
+  "topic": "storage",
+  "slug": "azure-devops-artifacts",
+  "provider": "Azure DevOps Artifacts (Universal Packages)",
+  "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
+  "category": "paas",
+  "free_tier": {
+    "stated": "2 GiB free storage per organization; Universal Packages up to 4 TiB per file.",
+    "unit": "GiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "4 TiB per file",
+    "bytes": 4398046511104,
+    "source_url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "| Hard 2 GiB per org; publishing is blocked at the cap until you delete packages or enable pay-go billing ($0.25-$2/GB/mo tiers)",
+    "source_url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Unmetered for restore (ADO has no egress meter).",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "az artifacts universal publish/download, nuget/npm/maven/python clients; Universal Packages are the only type that lets you push a multi-TiB blob",
+  "chaining": "2 GiB x unlimited orgs - but only 2 GiB per org and each org needs an Azure subscription to create. The interesting number is the 4 TiB per-file ceiling, which is moot at 2 GiB of pool.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "4 TiB per file",
+      "source": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "500 MiB per file",
+      "source": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits"
+    }
+  ],
+  "limits_note": "Hard 2 GiB per org; publishing is blocked at the cap until you delete packages or enable pay-go billing ($0.25-$2/GB/mo tiers). 500 MiB per file for NuGet/npm/Maven/Python/Cargo.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: the cap until you delete packages or enable pay-go billing ($0.25-$2/GB/mo tiers). 500 MiB per file for NuGet/npm/Maven/Python/Cargo. paas",
+    "country": null
+  },
+  "reliability_note": "At the 2 GiB cap, 'you won't be able to publish new packages' - hard stop, no grace.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
+      "date": "2026-10-21",
+      "proved": "'Azure Artifacts provides 2 GiB of free storage per organization'; 'Universal Packages | 4 TiB'; 'When your organization reaches the 2 GiB free-tier storage limit, you won't be able to publish new packages'"
+    },
+    {
+      "url": "https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/",
+      "date": "2026-10-21",
+      "proved": "'First 2 GiB free'; '0 - 2 GiB = Free; 2 - 10 GiB = $2 per GiB'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "2 GiB free storage per organization; Universal Packages up to 4 TiB per file.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A2-onedrive-sharepoint.json",
+    "seed_area": "A/A2",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "A/A2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "2 GiB free storage per organization; Universal Packages up to 4 TiB per file.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/A2"
+    },
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "OneDrive, SharePoint and the M365 tenant",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "2 GiB free storage per organization; Universal Packages up to 4 TiB per file.",
+    "limits_verbatim": "Hard 2 GiB per org; publishing is blocked at the cap until you delete packages or enable pay-go billing ($0.25-$2/GB/mo tiers). 500 MiB per file for NuGet/npm/Maven/Python/Cargo.",
+    "egress_verbatim": "Unmetered for restore (ADO has no egress meter).",
+    "chaining_verbatim": "2 GiB x unlimited orgs - but only 2 GiB per org and each org needs an Azure subscription to create. The interesting number is the 4 TiB per-file ceiling, which is moot at 2 GiB of pool.",
+    "tooling_verbatim": "az artifacts universal publish/download, nuget/npm/maven/python clients; Universal Packages are the only type that lets you push a multi-TiB blob",
+    "interface_verbatim": "rest",
+    "agent_focus": "Microsoft ecosystem: OneDrive, SharePoint, Office 365 dev/E5, Azure Blob free tier, Azure DevOps, Teams files"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

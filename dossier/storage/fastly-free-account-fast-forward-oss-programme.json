@@ -1,0 +1,114 @@
+{
+  "topic": "storage",
+  "slug": "fastly-free-account-fast-forward-oss-programme",
+  "provider": "Fastly free account + Fast Forward OSS programme",
+  "url": "https://www.fastly.com/fast-forward",
+  "category": "cdn",
+  "free_tier": {
+    "stated": "Free account: 100 GB bandwidth/month free across all regions, 1M CDN requests/month, 5 domains, 100K purge requests. Above 100 GB: $0.12/GB EU/NA, $0.19/GB Asia/Australia, $0.28/GB Africa/India/South Korea. Fast Forward (OSS/nonprofit programme) has **no published byte quota** — 'we extend free services to eligible open source projects and nonprofits that support them', scope agreed after human review of a Google Form application.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://www.fastly.com/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.fastly.com/pricing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.fastly.com/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "100 GB/mo free, then metered per region. Fast Forward absorbs bandwidth for accepted projects but is the only path to meaningful volume.",
+    "metered": true,
+    "free_allowance": "100 GB per month"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "VCL / Compute@Edge; standard HTTP origin pull. Free accounts are self-serve at fastly.com/signup.",
+  "chaining": "100 GB/month = 3.3 GB/day: an order of magnitude too small to matter for serving, so the free tier is a *test bench*, not a lane. Fast Forward is the only Fastly path to real capacity and it is gated on being a recognised open-source project with an OSI licence and public documentation — i.e. it is a legitimate way to get a big free CDN for an OSS artefact but not for a private 20 TiB archive.",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "review of a Google Form application",
+      "source": "https://www.fastly.com/pricing"
+    }
+  ],
+  "limits_note": "per-object-cap: none. The binding limit is the 100 GB/month counter (and 1M requests). Fast Forward: discretionary human acceptance, no published SLA, and the previous '$50/month of free traffic' credit model was retired for new accounts created after 2025-10-28.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "Bandwidth is metered per *region* with no pooling, so a geographically mixed audience burns the 100 GB fastest. Fast Forward is real (PyPI, Rust Foundation, PSF, Kubernetes, Mastodon, 100+ projects) and worth applying to if any dataset ships as a public OSS artefact.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.fastly.com/pricing",
+      "date": "2026-10-21",
+      "proved": "'Bandwidth | 100 GB free | Billed per GB per Region per month'; per-region table 0-100 GB Free, 100 GB-10 TB $0.28 Africa / $0.19 Asia / $0.12 Europe / $0.12 North America (read via read broker)"
+    },
+    {
+      "url": "https://www.fastly.com/fast-forward",
+      "date": "2026-10-21",
+      "proved": "'we extend free services to eligible open source projects and nonprofits that support them'; application is an embedded Google Form; criteria 'Open … Community-centered … Built on trust'"
+    },
+    {
+      "url": "https://www.fastly.com/documentation/guides/account-info/billing/account-types",
+      "date": "2026-10-21",
+      "proved": "'monthly free tier of services for many Network Services and Compute products, subject to certain limitations'; OSS programme contact community@fastly.com"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "Free tier 100 GB/mo; $120/TB EU/NA, $190/TB Asia, $280/TB Africa/India/KR. Not competitive as paid egress.",
+  "notes": "Free account: 100 GB bandwidth/month free across all regions, 1M CDN requests/month, 5 domains, 100K purge requests. Above 100 GB: $0.12/GB EU/NA, $0.19/GB Asia/Australia, $0.28/GB Africa/India/South Korea. Fast Forward (OSS/nonprofit programme) has **no published byte quota** — 'we extend free services to eligible open source projects and nonprofits that support them', scope agreed after human review of a Google Form application.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G9-edge-cdn-as-storage.json",
+    "seed_area": "G/G9",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "G/G9"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "write-gated",
+      "why": "Free account: 100 GB bandwidth/month free across all regions, 1M CDN requests/month, 5 domains, 100K purge requests. Above 100 GB: $0.12/GB EU/NA, $0.19/GB Asia/Australia, $0.28/GB Africa/India/South Korea. Fast Forward (OSS/nonprofit programme) has **no published byte quota** — 'we extend free services to eligible open source projects and nonprofits that support them', scope agreed after human review of a Google Form application.",
+      "retry_when": "if the write gate becomes self-service",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G9"
+    },
+    "target_document": "docs/storage/free/cloudflare-edge.md",
+    "document_section": "Edge CDN used as an object store",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Free account: 100 GB bandwidth/month free across all regions, 1M CDN requests/month, 5 domains, 100K purge requests. Above 100 GB: $0.12/GB EU/NA, $0.19/GB Asia/Australia, $0.28/GB Africa/India/South Korea. Fast Forward (OSS/nonprofit programme) has **no published byte quota** — 'we extend free services to eligible open source projects and nonprofits that support them', scope agreed after human review of a Google Form application.",
+    "limits_verbatim": "per-object-cap: none. The binding limit is the 100 GB/month counter (and 1M requests). Fast Forward: discretionary human acceptance, no published SLA, and the previous '$50/month of free traffic' credit model was retired for new accounts created after 2025-10-28.",
+    "egress_verbatim": "100 GB/mo free, then metered per region. Fast Forward absorbs bandwidth for accepted projects but is the only path to meaningful volume.",
+    "chaining_verbatim": "100 GB/month = 3.3 GB/day: an order of magnitude too small to matter for serving, so the free tier is a *test bench*, not a lane. Fast Forward is the only Fastly path to real capacity and it is gated on being a recognised open-source project with an OSI licence and public documentation — i.e. it is a legitimate way to get a big free CDN for an OSS artefact but not for a private 20 TiB archive.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "VCL / Compute@Edge; standard HTTP origin pull. Free accounts are self-serve at fastly.com/signup.",
+    "interface_verbatim": "rest",
+    "price_verbatim": "Free tier 100 GB/mo; $120/TB EU/NA, $190/TB Asia, $280/TB Africa/India/KR. Not competitive as paid egress.",
+    "agent_focus": "CDN / edge platforms as storage+egress: Fastly (free tier + Fast Forward OSS), Akamai/Linode, Bunny.net (storage + free origin->CDN transit), KeyCDN, CacheFly, Gcore, CDN77, StackPath status, Edgio/Limelight status, jsDelivr, unpkg, esm.sh, Statically, raw.githack, ghproxy mirrors. Question asked: which CDN gives free or near-free egress so a cheap origin becomes viable. Cloudflare R2 excluded per brief. Hard-probed every per-file cap with real GETs this session."
+  },
+  "binding": "write-gated",
+  "binding_note": "the write is a queue with a person or a rule in it, so the upload rate is set by somebody else",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

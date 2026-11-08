@@ -1,0 +1,125 @@
+{
+  "topic": "compute",
+  "slug": "mastra",
+  "provider": "Mastra",
+  "url": "https://mastra.ai",
+  "category": "platform host",
+  "free_tier": {
+    "stated": "Mastra Platform Starter, $0 a month: 100K events and 24 CPU hours, then $10 per 100K events and $0.35 per CPU hour; the open-source framework is free to self-host",
+    "unit": "mixed",
+    "metered_on": "wall-clock",
+    "source_url": "https://mastra.ai/pricing",
+    "read_on": "2026-10-29",
+    "notes": "read from the vendor pricing page; the plan is priced a month, and whether the allowance resets monthly is not stated"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://mastra.ai",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://mastra.ai",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "Starter includes 10 GB of Server data egress, then USD 0.10 per GB; the Teams and Enterprise columns list 100 GB then USD 0.10 per GB",
+    "metered": true,
+    "free_allowance": "10 GB (Starter)",
+    "price_per_tb": "USD 100 per TB",
+    "source_url": "https://mastra.ai"
+  },
+  "interface": [
+    "cli"
+  ],
+  "interface_detail": "the mastra CLI (mastra deploy) pushes a project to a platform environment; no hosted management REST API or SSH was found on the pages read",
+  "tooling": "the mastra CLI with mastra deploy to the hosted platform",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "the hosted Starter plan includes 100K events and 24 CPU hours; usage past them is billed at $10 per 100K events and $0.35 per CPU hour",
+      "source": "https://mastra.ai/pricing"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field; excluded as too-big",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the pricing page was read on 2026-10-29: the hosted Mastra Platform has a Starter plan at $0 a month with 100K events and 24 CPU hours, above Teams at $250 a month. The site read on 2026-10-22 described only the open-source framework",
+  "evidence": [
+    {
+      "url": "https://mastra.ai",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://mastra.ai",
+      "date": "2026-10-22",
+      "proved": "the site was read on 2026-10-22 and describes an open-source TypeScript agent framework with workflows, memory and a harness; it publishes no plan, price or free tier"
+    },
+    {
+      "url": "https://mastra.ai/pricing",
+      "date": "2026-10-29",
+      "proved": "the hosted Mastra Platform Starter plan is $0 a month with 100K events and 24 CPU hours, then $10 per 100K events and $0.35 per CPU hour",
+      "capture": "sha256:936f71462973221783f3fe021a0488c107af750cc3e991c9a163971d3e209d13",
+      "quote": "24 CPU hours+ $0.35/hr"
+    },
+    {
+      "url": "https://mastra.ai/pricing",
+      "date": "2026-11-03",
+      "proved": "the Starter column of the Server data-egress row: 10 GB, then $0.10 per GB",
+      "capture": "sha256:936f71462973221783f3fe021a0488c107af750cc3e991c9a163971d3e209d13",
+      "quote": "10GBthen $0.10/GB"
+    },
+    {
+      "url": "https://mastra.ai/reference/cli/mastra",
+      "date": "2026-11-03",
+      "proved": "the mastra CLI deploys to the hosted platform",
+      "capture": "sha256:ed35f882359bbafecac74947b56b1cf0f171b0d728d6192abf362fb8808a8f66",
+      "quote": "Builds and deploys your project to the Mastra platform environment selected by `--env`."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T02:24:32.967Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "too-big",
+    "talaria_m10h_usd": null,
+    "talaria_m24h_usd": null,
+    "nemo_m10h_usd": null,
+    "keep_rate": null,
+    "keep_rate_basis": "no field in the source",
+    "billing_model": "unclassified",
+    "shape": null,
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "the harness manages sessions inside the client's own deployment"
+    },
+    "persistent_storage": {
+      "gib": null,
+      "price": "the client's own storage",
+      "durability": "thread storage in the client's database",
+      "on_stop": true,
+      "on_destroy": false,
+      "max_retention": "as long as the client keeps it"
+    },
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "none",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22"
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "volume-quota",
+  "self_hosted": false
+}

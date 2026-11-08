@@ -1,0 +1,180 @@
+{
+  "topic": "compute",
+  "slug": "vultr",
+  "provider": "Vultr Cloud Compute",
+  "url": "https://www.vultr.com/pricing/",
+  "category": "cloud VM",
+  "free_tier": {
+    "stated": "Promotional credit by code, not on signup: 'Use Code: FLY300VULTR ... Try Vultr for free with $300 free credit' and 'Use Code: 250VULTRFLY ... Try Vultr for free with $250 free credit'. The docs add 'Vultr offers free credits for up to 30 days for you to try our services.' New customers only.",
+    "unit": "mixed",
+    "metered_on": "wall-clock",
+    "source_url": "https://www.vultr.com/coupons/",
+    "read_on": "2026-10-23",
+    "notes": "the pricing page itself carries no credit; the amount needs a code entered at billing, and the 30-day term is in the docs rather than on the credit page"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://www.vultr.com/pricing/",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://www.vultr.com/pricing/",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "Each plan carries its own monthly bandwidth quota; usage above the plan quota is billed at $0.01 per GB.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": "USD 10",
+    "source_url": "https://www.vultr.com/pricing/"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "REST API v2 (HTTP endpoints, documented with curl examples) at vultr.com/api; the vultr-cli command-line client wraps the same API.",
+  "tooling": "vultr-cli, the provider's command-line client for the Vultr API (github.com/vultr/vultr-cli); the REST API v2 can also be called directly over HTTP.",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "USD 250 or USD 300 of promotional credit, up to 30 days, new customers only",
+      "source": "https://www.vultr.com/coupons/"
+    }
+  ],
+  "limits_note": "the credit is granted by code; without a code the account is paid-only",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card at signup, with a USD 0.00 verification deposit option; the provider may place a small temporary authorisation hold, amount not published; debit accepted; prepaid is not stated",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the coupons page and the account docs were read on 2026-10-23; the pricing page returned 403 to the live fetch and was read from the broker's 2026-10-21 snapshot | Payment facts re-read on 2026-10-24: the card types, the hold and the identity gate each come from a first-party page quoted in evidence[].",
+  "evidence": [
+    {
+      "url": "https://www.vultr.com/coupons/",
+      "date": "2026-10-23",
+      "proved": "quoted: 'Use Code: 250VULTRFLY ... Try Vultr for free with $250 free credit' and the FLY300VULTR $300 variant"
+    },
+    {
+      "url": "https://docs.vultr.com/platform/create-an-account",
+      "date": "2026-10-23",
+      "proved": "quoted: 'Vultr offers free credits for up to 30 days for you to try our services.'"
+    },
+    {
+      "url": "https://www.vultr.com/pricing/",
+      "date": "2026-10-23",
+      "proved": "read from the 2026-10-21 snapshot: Regular Performance 4 vCPU/8 GB $40.00/mo $0.06/hr; 8 vCPU/32 GB $160.00/mo $0.219/hr; High Performance AMD 4/8 $48.00/mo $0.071/hr and 8/16 $96.00/mo $0.143/hr"
+    },
+    {
+      "url": "https://docs.vultr.com/support/platform/billing/what-payment-methods-do-you-accept",
+      "date": "2026-10-24",
+      "proved": "quoted: 'Credit and Debit Cards: Visa, Mastercard, American Express, Discover, and JCB.' (page states 'Updated 16 December 2025')"
+    },
+    {
+      "url": "https://docs.vultr.com/platform/create-an-account",
+      "date": "2026-10-24",
+      "proved": "quoted: 'choose I just want to link my credit card - $0.00 deposit to verify without an initial deposit. Your provider may place a small temporary authorization hold that will be released shortly.'"
+    },
+    {
+      "url": "https://docs.vultr.com/support/platform/billing/what-is-the-bandwidth-overage-rate",
+      "date": "2026-11-03",
+      "proved": "overage price per GB",
+      "capture": "sha256:be9518e738540c49abbb69938fc05022b8c27501880ace499d7fb50044ddc276",
+      "quote": "Bandwidth usage exceeding your plan's allocated quota is billed at an overage rate of **$0.01 per GB**."
+    },
+    {
+      "url": "https://www.vultr.com/api/",
+      "date": "2026-11-03",
+      "proved": "REST API exists",
+      "capture": "sha256:5f640a6091d5f9ff157473dbe460df8ae7a7e186f0c8d05a4ce3f444b930baa9",
+      "quote": "The Vultr API v2 is a set of HTTP endpoints that adhere to RESTful design principles"
+    },
+    {
+      "url": "https://www.vultr.com/api/",
+      "date": "2026-11-04",
+      "proved": "the provider documents a REST API v2",
+      "capture": "sha256:5f640a6091d5f9ff157473dbe460df8ae7a7e186f0c8d05a4ce3f444b930baa9",
+      "quote": "The Vultr API v2 is a set of HTTP endpoints that adhere to RESTful design principles"
+    },
+    {
+      "url": "https://github.com/vultr/vultr-cli",
+      "date": "2026-11-04",
+      "proved": "the provider's CLI is vultr-cli",
+      "capture": "sha256:921c56c18d1804d3c847c44b4308a836a7b3a6935e996600f2bb0c04269a6d76",
+      "quote": "vultr-cli is a command line interface for the Vultr API"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-04T05:43:11.428Z",
+  "price_per_tb_month": null,
+  "notes": "The credit is a promo code, so it is not a signup offer and it cannot be counted on until the code is applied. A payment method is required before any instance exists. Cloud Compute monthly prices are not stated to be capped at 672 hours, unlike VX1. PAYMENT CORRECTION 2026-10-24: debit is documented and the verification deposit is USD 0.00, so no money is taken at signup. Prepaid is not addressed on either page read.",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 8.94,
+    "talaria_m24h_usd": 21.46,
+    "nemo_m10h_usd": 8.94,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "flat-pool",
+    "shape": null,
+    "session_cap": null,
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a VPS bills by the month with an hourly rate capped at the monthly figure, so the two columns answer two questions: destroying the box between runs versus keeping it up.",
+    "free_tier_kind": "none",
+    "free_tier_kind_basis": "derived from the catalogue card's free_monthly_credit, free_one_time_credit and has_genuine_free_tier; no page was read",
+    "m10h_usd": 8.94,
+    "m24h_usd": 20.0,
+    "price_basis": "10 h/day column = 300 h at the hourly rate; 24/7 column = the monthly cap. Rates read from the broker's 2026-10-21 snapshot of the pricing page because the live fetch returned 403 on 2026-10-23.",
+    "granularity": {
+      "min_billed_s": 3600,
+      "rounding_s": null
+    },
+    "seed_min_bill": "min 1 h",
+    "burst_x": 2.0,
+    "burst_bill": "min 1 h",
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "hourly_usd": {
+      "regular_1vcpu_1gb": 0.007,
+      "regular_2vcpu_2gb": 0.022,
+      "regular_2vcpu_4gb": 0.03,
+      "regular_4vcpu_8gb": 0.06,
+      "regular_6vcpu_16gb": 0.11,
+      "regular_8vcpu_32gb": 0.219,
+      "hp_amd_4vcpu_8gb": 0.071,
+      "hp_amd_8vcpu_16gb": 0.143,
+      "hp_amd_12vcpu_24gb": 0.214
+    },
+    "monthly_usd": {
+      "regular_6vcpu_16gb": 80.0,
+      "regular_8vcpu_32gb": 160.0
+    },
+    "payment_methods": {
+      "card_at_signup": "yes",
+      "debit": "accepted",
+      "prepaid": "not-stated",
+      "virtual": "not-stated",
+      "hold_amount": "USD 0.00",
+      "hold_detail": "no-deposit verification; provider may place a small temporary hold of unpublished size",
+      "identity": "email and password, then a payment method for verification",
+      "source_url": "https://docs.vultr.com/platform/create-an-account",
+      "read_on": "2026-10-24"
+    },
+    "superseded": {
+      "identity_cost": {
+        "kind": "card",
+        "detail": "a valid email address and password, then 'Add a payment method of your choice for verification purposes'; a card can be linked with a $0.00 deposit, and other methods need a small deposit",
+        "country": null
+      },
+      "confidence_note": "the coupons page and the account docs were read on 2026-10-23; the pricing page returned 403 to the live fetch and was read from the broker's 2026-10-21 snapshot",
+      "notes": "The credit is a promo code, so it is not a signup offer and it cannot be counted on until the code is applied. A payment method is required before any instance exists. Cloud Compute monthly prices are not stated to be capped at 672 hours, unlike VX1.",
+      "verified_at": "2026-10-23T11:10:48.000Z"
+    }
+  },
+  "binding": "volume-quota",
+  "binding_note": "USD 250 over 30 days is 34.7 cents an hour; above that rate the balance ends before the month does"
+}

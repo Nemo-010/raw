@@ -1,0 +1,320 @@
+{
+  "topic": "domains-dns",
+  "slug": "afraid-freedns",
+  "provider": "afraid.org FreeDNS",
+  "url": "https://freedns.afraid.org/",
+  "category": "shared-registry subdomains and managed DNS",
+  "free_tier": {
+    "stated": "unlimited domains per account with 20 free subdomains on each, plus 5 free hostnames on a shared registry of 23,087 domains",
+    "unit": "unlimited",
+    "source_url": "https://freedns.afraid.org/signup/features/",
+    "read_on": "2026-11-02",
+    "metered_on": "object-count"
+  },
+  "per_object_cap": {
+    "stated": "5 hostnames on the shared registry and 20 subdomains on each domain you own, on the free plan",
+    "bytes": null,
+    "notes": "the paid plans raise the subdomain cap to 50, 100, 250 or 500 and add wildcard records, which the free plan lacks"
+  },
+  "retention": {
+    "stated": "a hosted domain that stays undelegated (broken) for 365 days is disabled; a shared-registry hostname lasts only while its domain stays in the registry, which the FAQ says may disappear next week",
+    "days": null,
+    "source_url": "https://freedns.afraid.org/faq/"
+  },
+  "egress": {
+    "terms": "no query cap published",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://freedns.afraid.org/"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "no general record-management API is documented, and the /api/ page is behind a login, so its content is unverified: behind a sign-up; the site's client list says a client that sends a SHA1 hash of the user name and password can fetch the needed update URL itself; the free plan's programmatic path is the dynamic-update URL https://sync.afraid.org/u/<token>/ (https://v6.sync.afraid.org/u/<token>/ for IPv6), which changes the address of an existing record; other record edits, TXT included, are POSTs to https://freedns.afraid.org/subdomain/save.php with a logged-in session cookie; the interface term for the update URL would be dyndns, which the vocabulary lacks, so interface carries unknown",
+  "tooling": "curl against sync.afraid.org/u/<token>/; DD-WRT and router integrations",
+  "chaining": "a free hostname that resolves without owning a domain, which is the only thing here that does",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "5 free shared-registry hostnames and 20 subdomains on each domain you own",
+      "source": "https://freedns.afraid.org/signup/features/"
+    },
+    {
+      "kind": "write-gated",
+      "value": "a hostname on a Shared: Private domain can be rejected by that domain's owner, while a Shared: Public domain takes hostnames without the owner's approval",
+      "source": "https://freedns.afraid.org/faq/"
+    },
+    {
+      "kind": "write-gated",
+      "value": "the free plan keeps captchas, which every paid plan removes; the pricing table does not say which actions they guard",
+      "source": "https://freedns.afraid.org/pricing/"
+    }
+  ],
+  "binding": "write-gated",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "a first and last name, a user ID, a password and an e-mail address that receives the activation link, an image captcha, and a required checkbox declaring the user is not on a U.S. restricted list or in a U.S.-sanctioned territory; no phone and no card (https://freedns.afraid.org/signup/)",
+    "country": null
+  },
+  "reliability_note": "a shared-registry name is on someone else's domain, so its survival is their decision",
+  "confidence": "documented",
+  "confidence_note": "the landing, features, pricing, signup, signup Q&A and FAQ pages were read and quoted; the shared-registry cap of 5 hostnames and the 20-subdomain cap on an owned domain are first-party figures",
+  "evidence": [
+    {
+      "url": "https://freedns.afraid.org/",
+      "date": "2026-10-22",
+      "proved": "'23,246 domains in the shared domain registry'; dynamic update by URL token at sync.afraid.org/u/<token>/; free and premium subdomain and domain hosting"
+    },
+    {
+      "url": "https://freedns.afraid.org/domain/registry/",
+      "date": "2026-10-22",
+      "proved": "the registry is a browsable list of domains a hostname may be attached to"
+    },
+    {
+      "url": "https://freedns.afraid.org/signup/features/",
+      "date": "2026-10-30",
+      "proved": "an account may host any number of owned domains; the same page counts 23,097 shared-registry domains",
+      "capture": "sha256:8227876238a766b38022311fce710cb30bc8a342741b8dd7a98550017148f564",
+      "quote": "Unlimited number of domains per account (yes really)"
+    },
+    {
+      "url": "https://freedns.afraid.org/signup/features/",
+      "date": "2026-10-30",
+      "proved": "a free account gets 5 hostnames on the shared registry, a first-party figure",
+      "capture": "sha256:8227876238a766b38022311fce710cb30bc8a342741b8dd7a98550017148f564",
+      "quote": "Comes with 5 free hostnames that work in the shared domain registry"
+    },
+    {
+      "url": "https://freedns.afraid.org/pricing/",
+      "date": "2026-10-30",
+      "proved": "the subdomain cap is 5 on the free plan and 50, 100, 250 or 500 on the four paid plans",
+      "capture": "sha256:4e93846147e892623809ea394a6d8335282bd20a0601d7e4a7717b6b6f31c5f6",
+      "quote": "Subdomain cap 5 50 100 250 500"
+    },
+    {
+      "url": "https://freedns.afraid.org/signup/features/",
+      "date": "2026-10-30",
+      "proved": "each domain the user owns gets 20 free subdomains",
+      "capture": "sha256:8227876238a766b38022311fce710cb30bc8a342741b8dd7a98550017148f564",
+      "quote": "20 free subdomains included on each of your own domains"
+    },
+    {
+      "url": "https://freedns.afraid.org/faq/",
+      "date": "2026-10-30",
+      "proved": "only a Shared: Private domain screens hostnames; a Shared: Public domain takes them without the owner's approval",
+      "capture": "sha256:c4b6f7b8405458eb332e70a776d756fb3703e4aaa9f782d037389750e60e2b44",
+      "quote": "Shared: Public - means anyone in FreeDNS can setup a hostname using that domain without the domain owner's approval."
+    },
+    {
+      "url": "https://freedns.afraid.org/pricing/",
+      "date": "2026-10-30",
+      "proved": "the free plan keeps captchas and every paid plan removes them",
+      "capture": "sha256:4e93846147e892623809ea394a6d8335282bd20a0601d7e4a7717b6b6f31c5f6",
+      "quote": "Captchas Removed No Yes Yes Yes Yes"
+    },
+    {
+      "url": "https://freedns.afraid.org/signup/",
+      "date": "2026-10-30",
+      "proved": "the signup form asks for a first and last name, a user ID, a password and an e-mail address",
+      "capture": "sha256:39de7d687e77626ba2021c208378092f379348d4c3e37e70224f1a807b3cfb28",
+      "quote": "First Name Last Name UserID Password Password (confirm) E-Mail"
+    },
+    {
+      "url": "https://freedns.afraid.org/faq/",
+      "date": "2026-10-30",
+      "proved": "a TXT or other record edit outside the dynamic URL is a POST to subdomain/save.php with the logged-in session cookie; no token-based record API is documented",
+      "capture": "sha256:c4b6f7b8405458eb332e70a776d756fb3703e4aaa9f782d037389750e60e2b44",
+      "quote": "You can get the dns_cookie by analyzing the saved cookie in your browser while logged in."
+    },
+    {
+      "url": "https://freedns.afraid.org/",
+      "date": "2026-10-30",
+      "proved": "the dynamic update is a GET of https://sync.afraid.org/u/<token>/, and of the v6.sync.afraid.org host for IPv6",
+      "capture": "sha256:366519d84d215ddef158e3710beae64b4dfe57a8e761162c047866fa38c9ff37",
+      "quote": "IPv6 updates? Easy, same as above, just add **v6**."
+    },
+    {
+      "url": "https://freedns.afraid.org/faq/",
+      "date": "2026-10-30",
+      "proved": "a hosted domain that stays undelegated for 365 days is disabled",
+      "capture": "sha256:c4b6f7b8405458eb332e70a776d756fb3703e4aaa9f782d037389750e60e2b44",
+      "quote": "If a domain remains in a broken state for 365 days, it is then disabled unless DNS authority returns."
+    },
+    {
+      "url": "https://freedns.afraid.org/signup/",
+      "date": "2026-10-30",
+      "proved": "the signup form submits by sending an activation e-mail, so the account rests on an e-mail address",
+      "capture": "sha256:39de7d687e77626ba2021c208378092f379348d4c3e37e70224f1a807b3cfb28",
+      "quote": "value=\"Send activation email\""
+    },
+    {
+      "url": "https://freedns.afraid.org/signup/",
+      "date": "2026-10-30",
+      "proved": "the signup form carries a required checkbox declaring the user is not in a U.S.-sanctioned territory",
+      "capture": "sha256:39de7d687e77626ba2021c208378092f379348d4c3e37e70224f1a807b3cfb28",
+      "quote": "I confirm that I am not on any U.S. government restricted list and that I am not located or resident in a territory subject to U.S. sanctions"
+    },
+    {
+      "url": "https://freedns.afraid.org/signup/",
+      "date": "2026-10-30",
+      "proved": "the signup form carries an image captcha",
+      "capture": "sha256:39de7d687e77626ba2021c208378092f379348d4c3e37e70224f1a807b3cfb28",
+      "quote": "[ Different Image ]"
+    },
+    {
+      "url": "https://freedns.afraid.org/pricing/",
+      "date": "2026-10-30",
+      "proved": "wildcard records are absent on the free plan and unlimited on the paid plans",
+      "capture": "sha256:4e93846147e892623809ea394a6d8335282bd20a0601d7e4a7717b6b6f31c5f6",
+      "quote": "Wildcard support None Unlimited"
+    },
+    {
+      "url": "https://freedns.afraid.org/",
+      "date": "2026-10-30",
+      "proved": "the shared registry holds 23,097 domains",
+      "capture": "sha256:366519d84d215ddef158e3710beae64b4dfe57a8e761162c047866fa38c9ff37",
+      "quote": "23,097 domains in the shared domain registry. Click on any to attach, or use your own"
+    },
+    {
+      "url": "https://freedns.afraid.org/faq/",
+      "date": "2026-10-30",
+      "proved": "a shared-registry domain can leave the registry at any time, taking its hostnames with it",
+      "capture": "sha256:c4b6f7b8405458eb332e70a776d756fb3703e4aaa9f782d037389750e60e2b44",
+      "quote": "The domain you choose may last for years and years, or it may disappear next week."
+    },
+    {
+      "url": "https://freedns.afraid.org/api/",
+      "date": "2026-10-30",
+      "proved": "the /api/ page redirects to the login page, so what it offers is behind a sign-in",
+      "capture": "sha256:59db94e6130fbd92325701d4ae57a9233f0639d415f676182b081611d7c9989f",
+      "quote": "Recover your password here"
+    },
+    {
+      "url": "https://freedns.afraid.org/signup/features/",
+      "date": "2026-10-31",
+      "proved": "the features page states the 5 free shared-registry hostnames of limits[0]",
+      "capture": "sha256:2e69e05013470539531a6cd60e591d619812a4463d11edb675b22f6cd8fe4e7d",
+      "quote": "Comes with 5 free hostnames that work in the shared domain registry"
+    },
+    {
+      "url": "https://freedns.afraid.org/signup/features/",
+      "date": "2026-10-31",
+      "proved": "the features page states the 20 free subdomains on each owned domain of limits[0]",
+      "capture": "sha256:2e69e05013470539531a6cd60e591d619812a4463d11edb675b22f6cd8fe4e7d",
+      "quote": "20 free subdomains included on each of your own domains"
+    },
+    {
+      "url": "https://freedns.afraid.org/faq/",
+      "date": "2026-10-31",
+      "proved": "the FAQ states the Shared: Public half of the limits[1] rule",
+      "capture": "sha256:c4b6f7b8405458eb332e70a776d756fb3703e4aaa9f782d037389750e60e2b44",
+      "quote": "Shared: Public - means anyone in FreeDNS can setup a hostname using that domain without the domain owner's approval."
+    },
+    {
+      "url": "https://freedns.afraid.org/faq/",
+      "date": "2026-10-31",
+      "proved": "the FAQ states the Shared: Private half of the limits[1] rule",
+      "capture": "sha256:c4b6f7b8405458eb332e70a776d756fb3703e4aaa9f782d037389750e60e2b44",
+      "quote": "Shared: Private - means the domain owner reserves the ability to reject hostnames that they deem slanderous or offensive."
+    },
+    {
+      "url": "https://freedns.afraid.org/signup/features/",
+      "date": "2026-10-31",
+      "proved": "the values of limits[0] and limits[1] are unchanged on the features page and the FAQ",
+      "capture": "sha256:2e69e05013470539531a6cd60e591d619812a4463d11edb675b22f6cd8fe4e7d",
+      "quote": "20 free subdomains included on each of your own domains"
+    },
+    {
+      "url": "https://freedns.afraid.org/scripts/freedns.clients.php",
+      "date": "2026-11-02",
+      "proved": "the site's own client list says a client that sends a SHA1 hash of the user name and password can fetch the needed update URL itself",
+      "capture": "sha256:a120d48942ee720f50e18535765dbef93d32a15c4bcd8615c666b54d22141a61",
+      "quote": "Gargoyle supports SHA1 hashing of username/password, so the client can fetch the needed update url dynamically (users need not supply the key needed to do the update)."
+    },
+    {
+      "url": "https://freedns.afraid.org/api/",
+      "date": "2026-11-02",
+      "proved": "a request for the /api/ page without a session lands on the sign-in page, so the page content is behind a login",
+      "capture": "sha256:523269e5231645c2e93013712cddaebad711d02f80b5f0a2d352d5c4b71d1b06",
+      "quote": "Keep getting thrown back here? Enable cookies."
+    },
+    {
+      "url": "probe:https://freedns.afraid.org/api/?action=getdyndns&sha=0000000000000000000000000000000000000000",
+      "date": "2026-11-02",
+      "proved": "the /api/ endpoint ?action=getdyndns with a sha key, which third-party clients call to list update URLs, answers HTTP 200 with the text ERROR: Could not authenticate. to a placeholder key of forty zeros",
+      "capture": "sha256:2907b7616e2de83d5a58ebeb7b757b4f30a8ad536ff72e26be0ce87979d60148",
+      "quote": "ERROR: Could not authenticate."
+    },
+    {
+      "url": "https://github.com/ddclient/ddclient/issues/180",
+      "date": "2026-11-02",
+      "proved": "third party: a ddclient issue ties the /api/ page to the v1 update protocol, which takes one request to get the update URL of a host and one to perform the update",
+      "capture": "sha256:d4a5a3f6106cb5f22095b9c134f95abc261cbdc6f05f660f36ec15c0493345cc",
+      "quote": "The [v1 update protocol](https://freedns.afraid.org/api/) is used, which requires two requests: one to get the update URL for the desired host and another to actually perform the update."
+    },
+    {
+      "url": "https://github.com/ekkis/afraid-dyndns",
+      "date": "2026-11-02",
+      "proved": "third party: a client's README says the signed-in /api/ page offers Available API Interfaces links whose sha parameter is the account key",
+      "capture": "sha256:fccc0d3026beac50c230ee84f1579442321db5e70e0642d43f07b14b955aa352",
+      "quote": "log into afraid.org and visit: http://freedns.afraid.org/api/ then click on either of the \"Available API Interfaces\" links and take the value of the \"sha\" parameter (it's a long string) from the url."
+    },
+    {
+      "url": "https://beigebox.co.uk/programming/freedns-management-tool/",
+      "date": "2026-11-02",
+      "proved": "third party: a script's comment places the API page under the Dynamic DNS menu as a Programmer's XML API with two interfaces, XML and ASCII",
+      "capture": "sha256:cc4828f494dbfbe45388bd8c1acf97de7345806182f8c8f869b6189b9f10599f",
+      "quote": "Dynamic DNS > Programmer's XML API > Available API Interfaces : XML | ASCII"
+    },
+    {
+      "url": "https://github.com/acmesh-official/acme.sh/wiki/dnsapi",
+      "date": "2026-11-02",
+      "proved": "third party: the acme.sh maintainers say FreeDNS provides no API to update DNS records other than the IPv4 and IPv6 dynamic DNS addresses",
+      "capture": "sha256:6451e746adf77b6173b87f9b3dc391f77e3c074989ee3b42762f5ac68446cfec",
+      "quote": "does not provide an API to update DNS records (other than IPv4 and IPv6 dynamic DNS addresses)"
+    },
+    {
+      "url": "https://freedns.afraid.org/signup/features/",
+      "date": "2026-11-02",
+      "proved": "the features page counts 23,087 domains in the shared registry pool",
+      "capture": "sha256:9df6de6eb5f711aef47074aad66020ada3c2efb529367e2bd8c4586813557169",
+      "quote": "currently 23,087 domains in the shared pool"
+    },
+    {
+      "url": "https://freedns.afraid.org/signup/features/",
+      "date": "2026-11-02",
+      "proved": "an account may host any number of owned domains",
+      "capture": "sha256:9df6de6eb5f711aef47074aad66020ada3c2efb529367e2bd8c4586813557169",
+      "quote": "Unlimited number of domains per account (yes really)"
+    },
+    {
+      "url": "https://freedns.afraid.org/signup/features/",
+      "date": "2026-11-02",
+      "proved": "a free account gets 5 hostnames on the shared registry",
+      "capture": "sha256:9df6de6eb5f711aef47074aad66020ada3c2efb529367e2bd8c4586813557169",
+      "quote": "Comes with 5 free hostnames that work in the [shared domain registry]"
+    },
+    {
+      "url": "https://freedns.afraid.org/signup/features/",
+      "date": "2026-11-02",
+      "proved": "each domain the user owns gets 20 free subdomains",
+      "capture": "sha256:9df6de6eb5f711aef47074aad66020ada3c2efb529367e2bd8c4586813557169",
+      "quote": "20 free subdomains included on each of your own domains"
+    },
+    {
+      "url": "https://freedns.afraid.org/signup/moreinfo/",
+      "date": "2026-11-02",
+      "proved": "the vendor describes the update path as a fetchable URL that auto-updates the network address, available in the Dynamic DNS section",
+      "capture": "sha256:5bedaaeb1d196740356389dee453cd8d674dba3a7ae3891cc1451afa7a79e2bb",
+      "quote": "a special fetchable URL to auto-update the network address in FreeDNS is available in the 'Dynamic DNS' section for those whose IP address changes at random."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-02T10:17:37.729Z",
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "The name is not yours and the owner can withdraw consent. It is a dynamic-DNS tool with a social dependency, not a name.",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

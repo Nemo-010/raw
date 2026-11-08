@@ -1,0 +1,110 @@
+{
+  "topic": "storage",
+  "slug": "rollin-host-drive-empresarial-backup-storage-flat-per-tb",
+  "provider": "Rollin Host Drive empresarial / Backup & Storage (Brazil) — flat per-TB, no request or traffic charge, Pix/boleto",
+  "url": "https://www.rollinhost.com.br/backup-na-nuvem",
+  "category": "storage-vps-managed-nas",
+  "free_tier": {
+    "stated": "Topázio 1 TB R$79.90/mo; Esmeralda 5 TB R$199.90/mo; Diamante 10 TB R$379.90/mo. Monthly cycle, no lock-in («sem fidelidade»), Brazilian NF-e invoice, ceiling 10 TB then sales contact.",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://www.rollinhost.com.br/backup-na-nuvem",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.rollinhost.com.br/backup-na-nuvem",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.rollinhost.com.br/backup-na-nuvem",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "FREE, stated twice and unambiguously: «Preço fixo por capacidade — sem cobrança por upload, download ou requisição» (fixed price per capacity — no charge for upload, download or request) and repeated per plan as «Sem cobrança de tráfego». The FAQ confirms it is not S3-compatible: «não é object storage S3-compatible».",
+    "metered": false
+  },
+  "interface": [
+    "webdav",
+    "sftp",
+    "rsync",
+    "smb",
+    "rclone"
+  ],
+  "interface_detail": "webdav + sftp + samba",
+  "tooling": "SFTP, Samba/CIFS, WebDAV; explicitly documented as working with BorgBackup, Restic, rsync, rclone and Duplicati. Mounts as a network drive on Windows and macOS. Automatic read-only snapshots for ransomware rollback.",
+  "chaining": "Three fixed capacities; 20 TB would need sales contact (they say «Precisa de mais de 10 TB? Fale com a gente»). Two 10 TB plans = 20 TB at the same rate if they will sell it.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "1 TiB/day",
+      "source": "https://www.rollinhost.com.br/backup-na-nuvem"
+    }
+  ],
+  "limits_note": "Brazilian datacentre only — for a non-Brazilian client every byte is intercontinental, which makes the 500 GB-1 TiB/day serving workload uneconomic regardless of the zero egress price. Not S3, so no presigned-URL path to Cloudflare. Stripe of the product is backup/archive, not a CDN origin.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "Small Brazilian host; the product is explicitly positioned as backup storage («Não é uma suíte de documentos colaborativos: é o arquivo central da empresa»). No independent benchmark exists. Payment friction is low for a Brazilian buyer (Pix, boleto, card in 12×) and moderate for a foreign one (card only, BRL FX).",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.rollinhost.com.br/backup-na-nuvem",
+      "date": "2026-10-21",
+      "proved": "read broker, upstream_status 200. «Topázio 1 TB R$ 79,90/mês … Esmeralda 5 TB R$ 199,90/mês … Diamante 10 TB R$ 379,90/mês», each with «Sem cobrança de tráfego»"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "same page — «Preço fixo por capacidade — sem cobrança por upload, download ou requisição»; «Faturamento em real (Pix, boleto, cartão), NF-e brasileira»"
+    },
+    {
+      "url": "https://www.rollinhost.com.br/drive-empresarial",
+      "date": "2026-10-21",
+      "proved": "«1 TB (R$ 79,90/mês) a 10 TB (R$ 379,90/mês), com preço fixo pela capacidade e sem cobrança por upload, download ou requisição … acessada como unidade de rede (WebDAV ou Samba), por SFTP ou por ferramentas como rclone»"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$7.56/TB/mo at 10 TB ($75.63/mo); $7.96/TB/mo at 5 TB ($39.80/mo); $15.91/TB/mo at 1 TB ($15.91/mo). At 20 TB: $7.56/TB/mo if the 10 TB plan can be bought twice ($151.26/mo). BRL at 0.199082 USD/BRL. Egress $0.",
+  "notes": "Topázio 1 TB R$79.90/mo; Esmeralda 5 TB R$199.90/mo; Diamante 10 TB R$379.90/mo. Monthly cycle, no lock-in («sem fidelidade»), Brazilian NF-e invoice, ceiling 10 TB then sales contact.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-P5-regional-cheap-paid.json",
+    "seed_area": "A/P5",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "A/P5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/paid/regional.md",
+    "document_section": "Regional cheap paid",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Topázio 1 TB R$79.90/mo; Esmeralda 5 TB R$199.90/mo; Diamante 10 TB R$379.90/mo. Monthly cycle, no lock-in («sem fidelidade»), Brazilian NF-e invoice, ceiling 10 TB then sales contact.",
+    "limits_verbatim": "Brazilian datacentre only — for a non-Brazilian client every byte is intercontinental, which makes the 500 GB-1 TiB/day serving workload uneconomic regardless of the zero egress price. Not S3, so no presigned-URL path to Cloudflare. Stripe of the product is backup/archive, not a CDN origin.",
+    "egress_verbatim": "FREE, stated twice and unambiguously: «Preço fixo por capacidade — sem cobrança por upload, download ou requisição» (fixed price per capacity — no charge for upload, download or request) and repeated per plan as «Sem cobrança de tráfego». The FAQ confirms it is not S3-compatible: «não é object storage S3-compatible».",
+    "chaining_verbatim": "Three fixed capacities; 20 TB would need sales contact (they say «Precisa de mais de 10 TB? Fale com a gente»). Two 10 TB plans = 20 TB at the same rate if they will sell it.",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "SFTP, Samba/CIFS, WebDAV; explicitly documented as working with BorgBackup, Restic, rsync, rclone and Duplicati. Mounts as a network drive on Windows and macOS. Automatic read-only snapshots for ransomware rollback.",
+    "interface_verbatim": "webdav + sftp + samba",
+    "price_verbatim": "$7.56/TB/mo at 10 TB ($75.63/mo); $7.96/TB/mo at 5 TB ($39.80/mo); $15.91/TB/mo at 1 TB ($15.91/mo). At 20 TB: $7.56/TB/mo if the 10 TB plan can be bought twice ($151.26/mo). BRL at 0.199082 USD/BRL. Egress $0.",
+    "agent_focus": "Wave 7 cheap-PAID lane, regional angle: storage sold in RUB / CNY / BRL / INR / ZAR / TRY / PLN / UAH that never appears on Western price lists. Every paid candidate carries price_per_tb_month at USD-converted list price. FX fixed 2026-10-21 from open.er-api.com: RUB 82.5719/USD, CNY 6.6913, BRL 5.0231, INR 94.9952, ZAR 16.3972, TRY 49.5978, PLN 3.8923, UAH 45.0922, EUR 0.89075/USD. Excluded per brief: AWS, Azure, GCP, Alibaba Cloud, Cloudflare R2, Backblaze B2, IDrive e2. Headline result: the true regional floor with genuinely free egress is ~$2.00/TB/mo (Yandex 360 Profi 3 TB on a Russian card) rising to ~$4.17/TB/mo for the same product bought with a foreign card, and ~$5.95-7.56/TB/mo for flat-rate Western-facing file storage (TheHost, Rollin Host). Everything advertised below ~$2/TB/mo in this set is either capacity-capped, egress-metered, or unverifiable marketing."
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

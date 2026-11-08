@@ -1,0 +1,147 @@
+{
+  "topic": "storage",
+  "slug": "flickr",
+  "provider": "Flickr",
+  "url": "https://www.flickr.com",
+  "category": "media",
+  "free_tier": {
+    "stated": "Free: at most 1,000 items, of which at most 50 may be non-public. Pro (paid): unlimited storage, full-res uploads with no monthly cap; $11 per month, $82 per year or $148 per two years in domestic USD (third-party price report).",
+    "unit": "objects",
+    "metered_on": "object-count",
+    "source_url": "https://www.flickrhelp.com/hc/en-us/articles/13690320471060-Free-account-limits-and-enforcement",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.flickrhelp.com/hc/en-us/articles/13690320471060-Free-account-limits-and-enforcement",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.flickrhelp.com/hc/en-us/articles/13690320471060-Free-account-limits-and-enforcement",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free and unmetered for public images (staticflickr.com CDN). Non-public content on free accounts is capped at 50 and at risk of deletion, so egress is real only for public photos.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Flickr API (OAuth1), flickr-sync; no native rclone backend; ShareX and Lightroom publish plugins.",
+  "chaining": "Unlimited free accounts x 1,000 items. This is a per-record cap, not a byte cap — but 1,000 items x 200 MB max = ~200 GB/account at absolute best, and item 1,001 is deleted.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "1,000 items in total; 50 non-public items",
+      "source": "https://www.flickrhelp.com/hc/en-us/articles/13690320471060-Free-account-limits-and-enforcement"
+    }
+  ],
+  "limits_note": "1,000 items; 50 non-public items; free accounts limited to Safe content and no commercial use. 'Upload over 1,000 items' is explicitly prohibited and 'Content that exceeds these limits is at risk of suspension or deletion'.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Enforcement is real and documented: over-limit accounts are suspended or have content deleted. Pro is required for any bulk use.",
+  "confidence": "documented",
+  "confidence_note": "the 2026-11-03 read covered the Flickr free-account limits article (the Flickr help article on free-account limits and enforcement on www.flickrhelp.com: 1,000 items, 50 non-public, suspension or deletion over the limits) and the plan-selection page (https://www.flickr.com/registration/plan-selection: Pro with no monthly cap); the Pro price is from a third-party page, https://www.toolsurf.com/flickr-pricing-2026/",
+  "evidence": [
+    {
+      "url": "https://www.flickrhelp.com/hc/en-us/articles/13690320471060-Free-account-limits-and-enforcement",
+      "date": "2026-10-21",
+      "proved": "'Store more than 50 Non-Public photos or videos'; 'Upload over 1,000 items'; 'Content that exceeds these limits is at risk of suspension or deletion'"
+    },
+    {
+      "url": "https://blog.flickr.net/en/2018/11/01/changing-flickr-free-accounts-1000-photos/",
+      "date": "2026-10-21",
+      "proved": "the 2018 announcement ending 1 TB for free accounts, effective Jan 8 2019"
+    },
+    {
+      "url": "https://www.flickr.com/registration/plan-selection",
+      "date": "2026-10-21",
+      "proved": "paid tier still advertises 'Unlimited storage... Full-res uploads with no monthly cap' (Pro only)"
+    },
+    {
+      "url": "https://www.toolsurf.com/flickr-pricing-2026/",
+      "date": "2026-11-03",
+      "proved": "Pro price in domestic USD (third-party report)",
+      "capture": "sha256:c96efeccb7c9688a875a4c6b425ba20cfdf4af455a1c4cb8717d1c991222c719",
+      "quote": "Flickr Pro costs $11/month, $82/year, or $148 for two years in domestic USD at the time of writing (September 2026)."
+    },
+    {
+      "url": "https://www.flickrhelp.com/hc/en-us/articles/13690320471060-Free-account-limits-and-enforcement",
+      "date": "2026-11-03",
+      "proved": "free accounts may not upload more than 1,000 items",
+      "capture": "sha256:4d82bfef89186e221507e5c439b9acd5c28313959be0ad533ea9707ae95eb7a5",
+      "quote": "Upload over 1,000 items."
+    },
+    {
+      "url": "https://www.flickrhelp.com/hc/en-us/articles/13690320471060-Free-account-limits-and-enforcement",
+      "date": "2026-11-03",
+      "proved": "free accounts may hold at most 50 non-public items",
+      "capture": "sha256:4d82bfef89186e221507e5c439b9acd5c28313959be0ad533ea9707ae95eb7a5",
+      "quote": "Store more than 50 Non-Public photos or videos."
+    },
+    {
+      "url": "https://www.flickrhelp.com/hc/en-us/articles/13690320471060-Free-account-limits-and-enforcement",
+      "date": "2026-11-03",
+      "proved": "over-limit content is at risk of suspension or deletion",
+      "capture": "sha256:4d82bfef89186e221507e5c439b9acd5c28313959be0ad533ea9707ae95eb7a5",
+      "quote": "Content that exceeds these limits is at risk of suspension or deletion."
+    },
+    {
+      "url": "https://www.flickr.com/registration/plan-selection",
+      "date": "2026-11-03",
+      "proved": "Pro advertises unlimited storage with no monthly cap",
+      "capture": "sha256:87be991df9f328e9ee1f537a89af24f24b5dd3bff69b83a53d6a1afaee2fb610",
+      "quote": "Full-res uploads with no monthly cap"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-11-03T15:04:38.758Z",
+  "notes": "FREE TIER IS 1,000 ITEMS, NOT 1 TB. The famous 1 TB was killed on 2019-01-08. Free = 1,000 photos/videos total, of which max 50 may be non-public. Pro (paid) = unlimited storage, full-res, no monthly cap.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H2-image-hosts.json",
+    "seed_area": "H/H2",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "H/H2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "FREE TIER IS 1,000 ITEMS, NOT 1 TB. The famous 1 TB was killed on 2019-01-08. Free = 1,000 photos/videos total, of which max 50 may be non-public. Pro (paid) = unlimited storage, full-res, no monthly cap.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H2"
+    },
+    "target_document": "docs/storage/free/anonymous-hosts.md",
+    "document_section": "Image hosts",
+    "conversion": "mechanical",
+    "verified_at_basis": "the vendor help article and plan-selection page were read on 2026-11-03; the Pro price is a third-party report",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "FREE TIER IS 1,000 ITEMS, NOT 1 TB. The famous 1 TB was killed on 2019-01-08. Free = 1,000 photos/videos total, of which max 50 may be non-public. Pro (paid) = unlimited storage, full-res, no monthly cap.",
+    "limits_verbatim": "1,000 items; 50 non-public items; free accounts limited to Safe content and no commercial use. 'Upload over 1,000 items' is explicitly prohibited and 'Content that exceeds these limits is at risk of suspension or deletion'.",
+    "egress_verbatim": "Free and unmetered for public images (staticflickr.com CDN). Non-public content on free accounts is capped at 50 and at risk of deletion, so egress is real only for public photos.",
+    "chaining_verbatim": "Unlimited free accounts x 1,000 items. This is a per-record cap, not a byte cap — but 1,000 items x 200 MB max = ~200 GB/account at absolute best, and item 1,001 is deleted.",
+    "tooling_verbatim": "Flickr API (OAuth1), flickr-sync; no native rclone backend; ShareX and Lightroom publish plugins.",
+    "interface_verbatim": "rest",
+    "agent_focus": "image hosts and photo platforms as bulk binary storage: free byte ceilings are high or unlimited because photos are the product, but most re-encode. Crux = which hosts return the original bytes, verified by HEAD/hash, not by marketing copy."
+  },
+  "binding": "volume-quota",
+  "binding_note": "the free plan stops at 1,000 items (50 non-public); an item count with no byte figure, so the nearest kind is volume-quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

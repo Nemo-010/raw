@@ -1,0 +1,135 @@
+{
+  "topic": "compute",
+  "slug": "riza",
+  "provider": "Riza Code Interpreter",
+  "url": "https://riza.io/pricing",
+  "category": "container and VM sandbox",
+  "free_tier": {
+    "stated": "an execution runtime with hard per-invocation caps: 30 seconds, 128 MiB of memory, HTTP-only network access and one interpreter version",
+    "unit": "seconds",
+    "metered_on": "wall-clock",
+    "source_url": "https://riza.io/pricing",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://riza.io/pricing",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://riza.io/pricing",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "not published on the source card",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://riza.io/pricing"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "HTTPS REST API at api.riza.io with Python, Node and Go SDKs; no CLI or SSH",
+  "tooling": "not stated in the source card",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "execution is capped at 30 seconds per invocation",
+      "source": "https://riza.io/pricing"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "128 MiB of memory per invocation",
+      "source": "https://riza.io/pricing"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "network access is limited to HTTP; no raw sockets, so no non-HTTP protocol",
+      "source": "https://riza.io/pricing"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field; excluded as no-rate",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "country": null
+  },
+  "reliability_note": "no reliability event recorded in the source passes",
+  "confidence": "documented",
+  "confidence_note": "the pricing page was read on 2026-10-22 and its limits section states the four caps that decide usability. The page publishes no price or free allowance in the extracted body, so the free-tier field keeps its earlier source",
+  "evidence": [
+    {
+      "url": "https://riza.io/pricing",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://riza.io/pricing",
+      "date": "2026-10-22",
+      "proved": "'Execution time is limited to 30 seconds per invocation', 'Memory consumption is limited to 128Mib per invocation', 'Network access is limited to HTTP' and 'No support for alternative interpreter versions', quoted"
+    },
+    {
+      "url": "https://docs.riza.io/api-reference/introduction",
+      "date": "2026-11-03",
+      "proved": "the service is reached through a REST API",
+      "capture": "sha256:e76dbdab1488b4a524964e4df57e6d7fed44ab6b309ed23cdaaed2710eef77e1",
+      "quote": "The Riza API accepts HTTPS requests at `api.riza.io`."
+    },
+    {
+      "url": "https://riza.io/pricing",
+      "date": "2026-11-03",
+      "proved": "the page states a network restriction and no egress allowance or egress price",
+      "capture": "sha256:413b32ab1864b6ceb8d779a2c29ea9fbe859743cb52dec44d92b50f1a57bfc8a",
+      "quote": "Network access is limited to HTTP."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T02:24:16.351Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "no-rate",
+    "talaria_m10h_usd": null,
+    "talaria_m24h_usd": null,
+    "nemo_m10h_usd": null,
+    "keep_rate": null,
+    "keep_rate_basis": "no field in the source",
+    "billing_model": "unclassified",
+    "shape": {
+      "vcpu": null,
+      "ram": 0.125,
+      "disk": null,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "128 MiB of memory per invocation"
+    },
+    "session_cap": {
+      "wall_clock_min": 0.5,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "30 seconds per invocation, a hard cap rather than a reap"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "allowance",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": null,
+    "net": {
+      "out": true,
+      "in": false,
+      "ports": "HTTP only",
+      "static_ip": false,
+      "ipv6": null,
+      "allowance": null
+    }
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "request-rate"
+}

@@ -1,0 +1,127 @@
+{
+  "topic": "storage",
+  "slug": "cyverse-data-store",
+  "provider": "CyVerse Data Store",
+  "url": "https://cyverse.org/policies/data",
+  "category": "research-data-repository",
+  "free_tier": {
+    "stated": "5 GB default for every account, explicitly for 'all domestic and international CyVerse account holders'. Above that it is paid: $125/TB/year single-copy up to 4 TB, $105/TB/year beyond, and $250/TB/year for 2025 double-copy. Community Data folders can be granted larger allocations on application, and published data in the Data Commons can be larger — but the free self-serve number is 5 GB.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://cyverse.org/policies/data",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://cyverse.org/policies/data",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "US NSF-funded, data mirrored at Arizona and TACC. Explicitly not an archive: 'The Data Store is not intended for permanent, archival storage.'",
+    "source_url": "https://cyverse.org/policies/data",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free — iRODS-backed, anonymous public links for published data; the Data Commons is browsable without an account.",
+    "metered": false
+  },
+  "interface": [
+    "s3",
+    "rest",
+    "webdav",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "iRODS with iCommands, plus a REST API and the Discovery Environment UI. Mature and scriptable, but the data model is iRODS rather than S3/WebDAV, so rclone needs the iRODS plugin rather than a stock backend.",
+  "chaining": "5 GB per account is trivially repeatable in principle, but each account needs its own email and the allocation is tied to identity, so it does not compose into anything large without deliberate account farming. Community Data folders are the only legitimate multiplier and they are reviewed.",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "application, and published data in the Data Commons can be larger — but the free self-serve",
+      "source": "https://cyverse.org/policies/data"
+    }
+  ],
+  "limits_note": "fails-quota at the free tier by two orders of magnitude. The paid rate is also not competitive: $125/TB/year = ~$10.4/TB/month, twice the wave-6 floor. Community Released Data folders additionally require 'a current paid subscription to CyVerse (Reg, Pro, Commercial)'.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "US NSF-funded, data mirrored at Arizona and TACC. Explicitly not an archive: 'The Data Store is not intended for permanent, archival storage.'",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://cyverse.org/policies/data",
+      "date": "2026-10-21",
+      "proved": "opened: 'All domestic and international CyVerse account holders receive a default allocation of 5GB of storage at no cost'; '$125 USD per TB per year for single-copy for up to 4TB'; 'For 2025, a flat rate of $250 USD/TB/year … (double-copy)'; 'The Data Store is not intended for permanent, archival storage.'"
+    },
+    {
+      "url": "https://cyverse.org/policies/data",
+      "date": "2026-10-21",
+      "proved": "same page, Community Released Data: 'The person requesting the Community Released Data Folder must have a current paid subscription to CyVerse (Reg, Pro, Commercial).'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$10.42/TB/month single-copy ($125/TB/yr), $8.75/TB/month above 4 TB, $20.83/TB/month double-copy. Above the wave-6 price floor of ~$5/TB/mo — not recommended.",
+  "notes": "5 GB default for every account, explicitly for 'all domestic and international CyVerse account holders'. Above that it is paid: $125/TB/year single-copy up to 4 TB, $105/TB/year beyond, and $250/TB/year for 2025 double-copy. Community Data folders can be granted larger allocations on application, and published data in the Data Commons can be larger — but the free self-serve number is 5 GB.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D10-preprint-and-data-2026.json",
+    "seed_area": "D/D10",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "D/D10"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [
+      {
+        "field": "verdict",
+        "class": "same provider is both a table row and a dead end",
+        "claims": [
+          {
+            "value": "fails-quota",
+            "source": "table.md"
+          },
+          {
+            "value": "dead-end: Now 5 GB free. Quotas were enforced from 2025-03-01 and 'data exceeding your storage quota will be removed ... Deleted d",
+            "source": "DEAD-ENDS.md"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "write-gated",
+      "why": "5 GB default for every account, explicitly for 'all domestic and international CyVerse account holders'. Above that it is paid: $125/TB/year single-copy up to 4 TB, $105/TB/year beyond, and $250/TB/year for 2025 double-copy. Community Data folders can be granted larger allocations on application, and published data in the Data Commons can be larger — but the free self-serve number is 5 GB.",
+      "retry_when": "if the write gate becomes self-service",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area D/D10"
+    },
+    "target_document": "docs/storage/free/academic.md",
+    "document_section": "Preprint and data repositories, 2026",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "5 GB default for every account, explicitly for 'all domestic and international CyVerse account holders'. Above that it is paid: $125/TB/year single-copy up to 4 TB, $105/TB/year beyond, and $250/TB/year for 2025 double-copy. Community Data folders can be granted larger allocations on application, and published data in the Data Commons can be larger — but the free self-serve number is 5 GB.",
+    "limits_verbatim": "fails-quota at the free tier by two orders of magnitude. The paid rate is also not competitive: $125/TB/year = ~$10.4/TB/month, twice the wave-6 floor. Community Released Data folders additionally require 'a current paid subscription to CyVerse (Reg, Pro, Commercial)'.",
+    "egress_verbatim": "Free — iRODS-backed, anonymous public links for published data; the Data Commons is browsable without an account.",
+    "chaining_verbatim": "5 GB per account is trivially repeatable in principle, but each account needs its own email and the allocation is tied to identity, so it does not compose into anything large without deliberate account farming. Community Data folders are the only legitimate multiplier and they are reviewed.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "iRODS with iCommands, plus a REST API and the Discovery Environment UI. Mature and scriptable, but the data model is iRODS rather than S3/WebDAV, so rclone needs the iRODS plugin rather than a stock backend.",
+    "interface_verbatim": "rest",
+    "price_verbatim": "$10.42/TB/month single-copy ($125/TB/yr), $8.75/TB/month above 4 TB, $20.83/TB/month double-copy. Above the wave-6 price floor of ~$5/TB/mo — not recommended.",
+    "agent_focus": "2026-era research-data and data-marketplace platforms, deliberately judged on the BINDING constraint (does a person with only an email get past the write gate?) rather than on the marketing quota. Coverage: IEEE DataPort (the wave-7 discovery this slot confirms and extends), Mozilla Data Collective (2025 launch, the only new ≥100 GB-per-file free host found), Source Cooperative re-probed at the byte level, the French national Dataverse (Recherche Data Gouv) as the one genuinely EU-funded space with a self-serve email account, plus the 2026 data-marketplace entrants (Snowflake, Databricks Free Edition, data.world, Datarade, Tableland, Spice.ai, DataChain), the EU Data Spaces (Gaia-X / Catena-X / EOSC EU Node / DICE) and ResearchGate/Academia.edu data upload. Two structural results dominate: (a) the 'data marketplace' category is uniformly not storage — they are catalogues, and every one of them fails on per-object size by two to three orders of magnitude; (b) the EU Data Spaces are real and large but gated on eduGAIN/eIDAS identity, so they are closed on identity exactly like CSC Allas and LUMI-O before them."
+  },
+  "binding": "write-gated",
+  "binding_note": "the write is a queue with a person or a rule in it, so the upload rate is set by somebody else",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

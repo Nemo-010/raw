@@ -1,0 +1,180 @@
+{
+  "topic": "compute",
+  "slug": "declaw",
+  "provider": "Declaw",
+  "url": "https://docs.declaw.ai/platform/billing",
+  "category": "container and VM sandbox",
+  "free_tier": {
+    "stated": "$100 of sandbox compute credit and a separate $200 of guardrails credit, both one-time and never refilled; compute meters every 30 seconds at $0.0504 a vCPU-hour",
+    "unit": "mixed",
+    "metered_on": "wall-clock",
+    "source_url": "https://docs.declaw.ai/platform/billing",
+    "read_on": "2026-10-22"
+  },
+  "per_object_cap": {
+    "stated": "not stated in the source card",
+    "bytes": null,
+    "source_url": "https://docs.declaw.ai/platform/billing",
+    "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+  },
+  "retention": {
+    "stated": "not stated in the source card",
+    "days": null,
+    "source_url": "https://docs.declaw.ai/platform/billing",
+    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+  },
+  "egress": {
+    "terms": "not published: the archived billing and plans pages state no traffic allowance or per-GB overage; the plans table caps egress connections per sandbox at 50 on Free and 200 on Pro",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://docs.declaw.ai/platform/billing"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "REST API with an X-API-Key header, the declaw CLI, and Python, TypeScript and Go SDKs (archived docs index of 2026-10-13)",
+  "tooling": "not stated in the source card",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "$0.0504 a vCPU-hour, $0.0162 a GB-hour of memory and $0.110 a GB-month of disk",
+      "source": "https://docs.declaw.ai/platform/billing"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "metering ticks every 30 seconds and a delayed tick is capped at 90 seconds of billable time, so a stop is noticed within 90 seconds",
+      "source": "https://docs.declaw.ai/platform/billing"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "the two grants are one-time: $100 for sandbox compute and $200 for guardrails, never refilled",
+      "source": "https://docs.declaw.ai/platform/billing"
+    }
+  ],
+  "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email: a cloud account is created at declaw.ai or console.declaw.ai before an API key exists ('A Declaw Cloud account — sign up at declaw.ai to get an API key'), and the account record carries an email address. No card is needed for the free credits, and no phone or identity document is named.",
+    "country": null
+  },
+  "reliability_note": "unverified: docs.declaw.ai answered DNS status 3 (NXDOMAIN) on 2026-11-04 and declaw.ai has no address record, so the billing page is readable only in archived copies of 2026-05-26 and 2026-10-13",
+  "confidence": "documented",
+  "confidence_note": "the billing page was read on 2026-10-22 and states both grants, the microdollar metering and the 30-second tick with its 90-second cap. The record carried only the $100; the $200 is a second wallet with its own meter",
+  "evidence": [
+    {
+      "url": "https://docs.declaw.ai/platform/billing",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://docs.declaw.ai/platform/billing",
+      "date": "2026-10-22",
+      "proved": "'$100 grant at account creation' for sandbox compute and '$200 grant at account creation' for guardrails scans, both 'Never refilled by deposits', metered every 30 seconds at '14.0 microdollars / vCPU / sec = $0.0504 / vCPU / hour', with the metering tick capping at 90 seconds of billable time, quoted"
+    },
+    {
+      "url": "probe:docs.declaw.ai",
+      "date": "2026-11-04",
+      "proved": "the documentation host docs.declaw.ai answered NXDOMAIN to a DNS query",
+      "capture": "sha256:c8e7e6245efc53e60e33ad62c30308bf54d4a27ae1e6c4d8c336e7664954976f",
+      "quote": "\"Status\":3"
+    },
+    {
+      "url": "https://web.archive.org/web/2026/https://docs.declaw.ai/llms.txt",
+      "date": "2026-11-04",
+      "proved": "a REST API exists",
+      "capture": "sha256:3888ed81ba0d39f55f8fc300f0f686cb549e52e459e68496338802715076f379",
+      "quote": "[API Overview](https://docs.declaw.ai/api-reference/overview.md): Conventions, base URL, request/response format, and error handling for the Declaw REST API."
+    },
+    {
+      "url": "https://web.archive.org/web/2026/https://docs.declaw.ai/llms.txt",
+      "date": "2026-11-04",
+      "proved": "a CLI exists",
+      "capture": "sha256:3888ed81ba0d39f55f8fc300f0f686cb549e52e459e68496338802715076f379",
+      "quote": "[CLI](https://docs.declaw.ai/cli/overview.md): Install and configure the Declaw CLI to manage sandboxes, templates, volumes, vault secrets, and MCP servers from the command line."
+    },
+    {
+      "url": "https://web.archive.org/web/2026/https://docs.declaw.ai/platform/plans",
+      "date": "2026-11-04",
+      "proved": "the plans table caps egress connections per sandbox and carries no traffic volume row",
+      "capture": "sha256:c41f997b0f3ccc2fd57dfeefeb7b977010499abb91022331560e68ee141c892a",
+      "quote": "| **Max egress connections / sandbox** | 50 | 200 | Custom |"
+    },
+    {
+      "url": "https://web.archive.org/web/2026/https://docs.declaw.ai/quickstart",
+      "date": "2026-11-04",
+      "proved": "a Declaw account is a precondition of the API key, and it is created by signing up at the vendor site",
+      "capture": "sha256:f0ea2b198883fd03817820120c7511b741565d356b53c51cb80550638ea3e8ee",
+      "quote": "A Declaw Cloud account — sign up at declaw.ai to get an API key"
+    },
+    {
+      "url": "https://web.archive.org/web/2026/https://declaw.ai/",
+      "date": "2026-11-04",
+      "proved": "the managed cloud credits are granted without a card",
+      "capture": "sha256:22984cb90fb6e2d1d28b04854d4f5a3476038737bab7ad1e6a9bead37204d9cc",
+      "quote": "$300 in free credits — no credit card"
+    },
+    {
+      "url": "https://web.archive.org/web/2026/https://docs.declaw.ai/platform/usage",
+      "date": "2026-11-04",
+      "proved": "the account object carries an email address",
+      "capture": "sha256:c0ce5c5a16bd6aff3f77e9bac88c547c3cb64f0ad67e4a80741a9824483f6437",
+      "quote": "Account email."
+    },
+    {
+      "url": "https://web.archive.org/web/2026/https://docs.declaw.ai/cli/overview",
+      "date": "2026-11-04",
+      "proved": "sign-up happens on the console, and the API key is self-service from the dashboard",
+      "capture": "sha256:036ca9a465fa99b32ba5ec15cf4d31f6c4958666858c44e701fd73e13cc3a968",
+      "quote": "Sign up at console.declaw.ai"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T15:51:59.407Z",
+  "price_per_tb_month": null,
+  "notes": "",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 100.0,
+    "talaria_m24h_usd": 119.23,
+    "nemo_m10h_usd": 50.58,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "unclassified",
+    "shape": {
+      "vcpu": 2,
+      "ram": 4,
+      "disk": 10,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "the page's own worked example: 2 vCPU, 4 GB and 10 GB for an hour costs 100,800 + 64,800 + 1,526 microdollars"
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "metered every 30 seconds against provisioned resources; a lagging tick bills at most 90 seconds"
+    },
+    "persistent_storage": null,
+    "network_out": null,
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "one-time-credit",
+    "burst_x": 1.0,
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": {
+      "gib": 10,
+      "price": "$0.110 a GB-month of overlay disk",
+      "durability": "overlay disk",
+      "on_stop": true,
+      "on_destroy": false,
+      "retention": "until deleted"
+    },
+    "net": null
+  },
+  "stale": true,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "request-rate"
+}

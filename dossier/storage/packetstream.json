@@ -1,0 +1,109 @@
+{
+  "topic": "storage",
+  "slug": "packetstream",
+  "provider": "PacketStream (buy side)",
+  "url": "https://packetstream.io/pricing",
+  "category": "contributed bandwidth - metered consumer-connection proxy",
+  "free_tier": {
+    "stated": "$1.00/GB, $50 minimum purchase, balance never expires",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://packetstream.io/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://packetstream.io/pricing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://packetstream.io/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "metered at the gateway: 'you are metered at the gateway for exactly what you send'. No free allowance.",
+    "metered": true
+  },
+  "interface": [
+    "s3",
+    "rclone"
+  ],
+  "interface_detail": "HTTP/HTTPS/SOCKS5 proxy",
+  "tooling": "curl -x, requests, any S3/rclone HTTP proxy config",
+  "chaining": "the cheapest published per-GB consumer-connection rate found ($1.00/GB), and the only vendor that publishes both sides - pays contributors $0.10/GB and sells at $1.00/GB",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "1 TiB/day",
+      "source": "https://packetstream.io/pricing"
+    }
+  ],
+  "limits_note": "1 TiB/day = 30,720 GB/month x $1.00 = $30,720/month. Fails by roughly two orders of magnitude against any real storage budget. The $1/GB is the floor of the market, not an anomaly.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "Consumer-connection exits, same automated-traffic-filter and churn issues as Proxyrack; payouts to contributors carry a 3% cashout fee.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://packetstream.io/pricing",
+      "date": "2026-10-21",
+      "proved": "'$1 per GB. No subscription.'; 'Buy $50 of bandwidth and use it over a year'; 'nothing expires, and you are metered at the gateway for exactly what you send'"
+    },
+    {
+      "url": "https://proxypicker.com/what-your-wifi-is-worth/",
+      "date": "2026-10-21",
+      "proved": "'PacketStream is the only app that publishes both sides of the deal: it pays $0.10/GB and sells at $1.00/GB. That's a 10x markup'; median entry price across 10 consumer-connection proxy providers is $4.50/GB"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$1024/TB (egress)",
+  "notes": "$1.00/GB, $50 minimum purchase, balance never expires",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A15-contributed-infra.json",
+    "seed_area": "A/A15",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "A/A15"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "retention",
+      "why": "$1.00/GB, $50 minimum purchase, balance never expires",
+      "retry_when": "if the retention model changes from a clock to indefinite",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/A15"
+    },
+    "target_document": "docs/storage/free/relays-and-transports.md",
+    "document_section": "Contributed infrastructure",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "$1.00/GB, $50 minimum purchase, balance never expires",
+    "limits_verbatim": "1 TiB/day = 30,720 GB/month x $1.00 = $30,720/month. Fails by roughly two orders of magnitude against any real storage budget. The $1/GB is the floor of the market, not an anomaly.",
+    "egress_verbatim": "metered at the gateway: 'you are metered at the gateway for exactly what you send'. No free allowance.",
+    "chaining_verbatim": "the cheapest published per-GB consumer-connection rate found ($1.00/GB), and the only vendor that publishes both sides - pays contributors $0.10/GB and sells at $1.00/GB",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "curl -x, requests, any S3/rclone HTTP proxy config",
+    "interface_verbatim": "HTTP/HTTPS/SOCKS5 proxy",
+    "price_verbatim": "$1024/TB (egress)",
+    "agent_focus": "Marketplaces and networks where storage or bandwidth is contributed by third parties for free or near-free. Two directions probed: (1) BUY side - can you consume contributed bandwidth/storage cheaply; (2) SUPPLY side - the arbitrage question, whether contributing a disk earns storage credit at better than the retail rate. Also research testbeds that hand out whole physical nodes with multi-TB local disk (CloudLab, Chameleon, FABRIC, Emulab) and community mesh networks (Guifi, Freifunk, NYC Mesh). Decided per candidate by computing 20 TiB stored + 1 TiB/day egress against that path's actual tariff."
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

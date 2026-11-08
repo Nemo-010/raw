@@ -1,0 +1,112 @@
+{
+  "topic": "storage",
+  "slug": "snowflake-30-day-trial",
+  "provider": "Snowflake 30-day trial ($400 credits)",
+  "url": "https://www.snowflake.com/en/snowflake-trial/",
+  "category": "iaas",
+  "free_tier": {
+    "stated": "$400 in free credits on a 30-day trial ('Start your 30-day Snowflake trial today. Get $400 in credits'). No byte quota — storage is billed from the credit balance.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.snowflake.com/en/snowflake-trial/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.snowflake.com/en/snowflake-trial/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "retention: 'Snowflake trial account credits may be used within 30 days'; 'If you don't upgrade before the trial period ends, the account is suspended and any unused free usage balance expires' and 'you may lose access to your data'.",
+    "days": 30,
+    "source_url": "https://www.snowflake.com/en/snowflake-trial/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Data leaves via query results, not object GETs; no egress-free download path.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Snowflake SQL API / Snowpark; internal stages + `GET`/`PUT` for file transfer. No rclone backend; files sit inside stages or named internal stages, not a general object store.",
+  "chaining": "New email = new trial, explicitly ('you can sign up ... all you need is a valid email address; no payment information'). So $400 x N throwaway trials — but each dies at 30 days.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "retention: 'Snowflake trial account credits may be used within 30 days",
+      "source": "https://www.snowflake.com/en/snowflake-trial/"
+    }
+  ],
+  "limits_note": "per-object-cap: internal stage file size limits apply. request-rate: warehouse credits burn while running. retention: 'Snowflake trial account credits may be used within 30 days'; 'If you don't upgrade before the trial period ends, the account is suspended and any unused free usage balance expires' and 'you may lose access to your data'.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: $400 in free credits on a 30-day trial ('Start your 30-day Snowflake trial today. Get $400 in credits'). No byte quota — s",
+    "country": null
+  },
+  "reliability_note": "Hard 30-day cliff with documented data loss on non-conversion. Not storage — a compute trial that happens to include stage space.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.snowflake.com/en/snowflake-trial/",
+      "date": "2026-10-21",
+      "proved": "'$400 in free credits ... built for a 30-day experience'; 'credits may be used within 30 days'"
+    },
+    {
+      "url": "https://docs.snowflake.com/en/user-guide/admin-trial-account",
+      "date": "2026-10-21",
+      "proved": "'the account is suspended and any unused free usage balance expires'"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: GET docs.snowflake.com/en/user-guide/admin-trial-account -> 200; GET www.snowflake.com/en/snowflake-trial/ -> 200"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "$400 in free credits on a 30-day trial ('Start your 30-day Snowflake trial today. Get $400 in credits'). No byte quota — storage is billed from the credit balance.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G7-education-startup-nonprofit.json",
+    "seed_area": "G/G7",
+    "seed_verdict": [
+      {
+        "value": "trial-only",
+        "area": "G/G7"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "$400 in free credits on a 30-day trial ('Start your 30-day Snowflake trial today. Get $400 in credits'). No byte quota — storage is billed from the credit balance.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G7"
+    },
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "Education, startup and nonprofit tenants",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "$400 in free credits on a 30-day trial ('Start your 30-day Snowflake trial today. Get $400 in credits'). No byte quota — storage is billed from the credit balance.",
+    "limits_verbatim": "per-object-cap: internal stage file size limits apply. request-rate: warehouse credits burn while running. retention: 'Snowflake trial account credits may be used within 30 days'; 'If you don't upgrade before the trial period ends, the account is suspended and any unused free usage balance expires' and 'you may lose access to your data'.",
+    "egress_verbatim": "Data leaves via query results, not object GETs; no egress-free download path.",
+    "chaining_verbatim": "New email = new trial, explicitly ('you can sign up ... all you need is a valid email address; no payment information'). So $400 x N throwaway trials — but each dies at 30 days.",
+    "tooling_verbatim": "Snowflake SQL API / Snowpark; internal stages + `GET`/`PUT` for file transfer. No rclone backend; files sit inside stages or named internal stages, not a general object store.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Programmes that give free storage as a benefit: student / education / nonprofit / startup-benefit bundles. Which ones bundle durable, programmatically-accessible bulk storage, and does it renew?"
+  },
+  "binding": "retention-clamped",
+  "binding_note": "a clock, not a quota: bytes leave whether or not the client is finished with them",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

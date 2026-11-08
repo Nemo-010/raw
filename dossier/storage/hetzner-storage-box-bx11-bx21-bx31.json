@@ -1,0 +1,153 @@
+{
+  "topic": "storage",
+  "slug": "hetzner-storage-box-bx11-bx21-bx31",
+  "provider": "Hetzner Storage Box BX11 / BX21 / BX31 (1/5/10 TB)",
+  "url": "https://www.hetzner.com/storage/storage-box/",
+  "category": "managed storage box",
+  "free_tier": {
+    "stated": "1 TB / 5 TB / 10 TB",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://www.hetzner.com/storage/storage-box/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.hetzner.com/storage/storage-box/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.hetzner.com/storage/storage-box/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Unlimited on all four tiers — the matrix row 'Traffic | Unlimited' spans 1/5/10/20 TB. Same fair-use caveat as BX41.",
+    "metered": false
+  },
+  "interface": [
+    "webdav",
+    "sftp",
+    "scp",
+    "rsync",
+    "smb",
+    "rclone"
+  ],
+  "interface_detail": "same as BX41 (SFTP/SCP/SMB/WebDAV/rsync/Borg/Restic/rclone)",
+  "tooling": "rclone, restic, borg, rsync, davfs2",
+  "chaining": "identical; the 5 TB tier is the natural fit for the hot working set, 20 TB for archive",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "10 concurrent connections",
+      "source": "https://www.hetzner.com/storage/storage-box/"
+    }
+  ],
+  "limits_note": "10 concurrent connections on every tier; 10/20/30/40 snapshots at 1/5/10/20 TB; 100 sub-accounts per box",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "registration needs a valid email address, contact information and a billing address, with a phone number optional; payment is by credit card, PayPal, bank transfer or SEPA direct debit, and before an order is processed an account may be verified with a copy of a government-issued ID or an advance payment from a credit card",
+    "country": null
+  },
+  "reliability_note": "the same platform as BX41; the ladder is close to linear, so EUR 3.20 per TB at 1 TB falls only to EUR 2.03 per TB at 20 TB, and splitting one booking into two buys connections rather than bytes",
+  "confidence": "documented",
+  "confidence_note": "the vendor plan matrix states the capacities, the four monthly prices, the concurrent-connection cap and the snapshot ladder",
+  "evidence": [
+    {
+      "url": "https://www.hetzner.com/storage/storage-box/?__provider=firecrawl",
+      "date": "2026-10-21",
+      "proved": "BX11 €3.20, BX21 €10.90, BX31 €20.80, BX41 €40.60 per month excl. VAT, all with Traffic Unlimited, setup €0.00"
+    },
+    {
+      "url": "https://www.hetzner.com/storage/storage-box/bx11/?country=gb",
+      "date": "2026-10-21",
+      "proved": "payment: 'bank transfer, credit card, Paypal and SEPA direct debit (only in EUR) for accounts from SEPA countries'; no minimum contract term"
+    },
+    {
+      "url": "https://www.hetzner.com/dedicated-rootserver/matrix-sx/",
+      "date": "2026-10-21",
+      "proved": "storage box price row reconfirms 1 TB €3.20 / 5 TB €10.90 / 10 TB €20.80 / 20 TB €40.60"
+    },
+    {
+      "url": "https://docs.hetzner.com/general/security-and-identify/fraud-prevention-faq/",
+      "date": "2026-11-01",
+      "proved": "an order may require account verification by ID document or by a card prepayment",
+      "capture": "sha256:8f8bb169af727cac3b39ab390075e8c31bae86ecf6e3e05a15d69005c929ca83",
+      "quote": "Alternatively, you can verify your account by making an advance payment with your own credit card."
+    },
+    {
+      "url": "https://www.hetzner.com/storage/storage-box/",
+      "date": "2026-11-01",
+      "proved": "the plan matrix's capacity row and the four monthly prices for 1/5/10/20 TB, excluding VAT",
+      "capture": "sha256:01d2947913be5814b5e76db99e8b3caff57aa13fb9fa8fe8b22ac57b92b7794d",
+      "quote": "Available storage ... 3.20 per month, excl. VAT ... 10.90 per month, excl. VAT ... 20.80 per month, excl. VAT ... 40.60 per month, excl. VAT"
+    },
+    {
+      "url": "https://www.hetzner.com/storage/storage-box/",
+      "date": "2026-11-01",
+      "proved": "the 1 TB tier is EUR 3.20 a month, excluding VAT",
+      "capture": "sha256:01d2947913be5814b5e76db99e8b3caff57aa13fb9fa8fe8b22ac57b92b7794d",
+      "quote": "3.20 per month, excl. VAT"
+    },
+    {
+      "url": "https://www.hetzner.com/storage/storage-box/",
+      "date": "2026-11-01",
+      "proved": "the 5 TB tier is EUR 10.90 a month, excluding VAT",
+      "capture": "sha256:01d2947913be5814b5e76db99e8b3caff57aa13fb9fa8fe8b22ac57b92b7794d",
+      "quote": "10.90 per month, excl. VAT"
+    },
+    {
+      "url": "https://www.hetzner.com/storage/storage-box/",
+      "date": "2026-11-01",
+      "proved": "the 20 TB tier is EUR 40.60 a month, excluding VAT",
+      "capture": "sha256:01d2947913be5814b5e76db99e8b3caff57aa13fb9fa8fe8b22ac57b92b7794d",
+      "quote": "40.60 per month, excl. VAT"
+    },
+    {
+      "url": "https://www.hetzner.com/storage/storage-box/bx21/",
+      "date": "2026-11-01",
+      "proved": "payment is by card, PayPal, bank transfer or SEPA direct debit",
+      "capture": "sha256:51ff5a0305d0b1de1239f42b5f5404195e0ee697262481cf858378073219f612",
+      "quote": "Possible payment methods are: bank transfer, credit card, Paypal and SEPA direct debit"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-11-01T18:05:06.745Z",
+  "price_per_tb_month": "EUR 3.20 per TB per month at 1 TB, EUR 2.18 at 5 TB, EUR 2.08 at 10 TB, EUR 2.03 at 20 TB, all excluding VAT, with no setup fee",
+  "notes": "1 TB / 5 TB / 10 TB",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "P-P1-storage-vps-eu.json",
+    "seed_area": "P/P1",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "P/P1"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/paid/storage-boxes.md",
+    "document_section": "European storage VPS and dedicated",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "1 TB / 5 TB / 10 TB",
+    "limits_verbatim": "10 concurrent connections; 20/30/40 snapshots at 5/10/20 TB",
+    "egress_verbatim": "Unlimited on all four tiers — the matrix row 'Traffic | Unlimited' spans 1/5/10/20 TB. Same fair-use caveat as BX41.",
+    "chaining_verbatim": "identical; the 5 TB tier is the natural fit for the hot working set, 20 TB for archive",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "rclone, restic, borg, rsync, davfs2",
+    "interface_verbatim": "same as BX41 (SFTP/SCP/SMB/WebDAV/rsync/Borg/Restic/rclone)",
+    "price_verbatim": "1 TB €3.20/TB · 5 TB €2.18/TB · 10 TB €2.08/TB · 20 TB €2.03/TB (all excl. VAT, no setup, hourly-billed)",
+    "agent_focus": "Cheapest per-TB-month storage VPS and Storage Boxes in Europe. Price floor hunt with egress as the deciding term. Tiers recorded at 1TB/5TB/10TB/20TB. Excludes AWS/Azure/GCP/Alibaba/R2/B2/iDrive e2 per client instruction."
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

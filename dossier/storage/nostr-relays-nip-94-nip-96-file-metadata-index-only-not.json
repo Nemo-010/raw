@@ -1,0 +1,103 @@
+{
+  "topic": "storage",
+  "slug": "nostr-relays-nip-94-nip-96-file-metadata-index-only-not",
+  "provider": "Nostr relays + NIP-94/NIP-96 file metadata — index only, not bytes",
+  "url": "https://github.com/nostr-protocol/nips/blob/master/94.md",
+  "category": "nostr-relay",
+  "free_tier": {
+    "stated": "Zero bytes. NIP-94 is a *metadata* event: `url`, `m` (mime), `size`, `dim`, `i` (torrent infohash), `thumb`. The relay stores the JSON pointer, the file lives elsewhere.",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://raw.githubusercontent.com/nostr-protocol/nips/master/94.md",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap = relay event size limit (~64 KB",
+    "bytes": 64000,
+    "source_url": "https://raw.githubusercontent.com/nostr-protocol/nips/master/94.md",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "until the instance is recycled; not persistent",
+    "source_url": "https://raw.githubusercontent.com/nostr-protocol/nips/master/94.md",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "n/a — relay never serves the file.",
+    "metered": false
+  },
+  "interface": [
+    "cli"
+  ],
+  "interface_detail": "websocket",
+  "tooling": "nostr websocket protocol (EVENT/REQ), `nak` CLI. Relays are free and accept arbitrary events, but the event size limit (typ. 64 KB) caps any inline-base64 trick at ~48 KB.",
+  "chaining": "Chains with Blossom: NIP-94/NIP-96 events make Blossom blobs discoverable and re-mirrorable. On its own this is not storage.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap = relay event size limit (~64 KB",
+      "source": "https://raw.githubusercontent.com/nostr-protocol/nips/master/94.md"
+    }
+  ],
+  "limits_note": "per-object-cap = relay event size limit (~64 KB typical), of which base64 payload is ~75%, so ~48 KB of real data per event — three orders of magnitude short of useful.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Relays are ephemeral and freely delete events; free relays exist in the thousands but none is a byte store.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://raw.githubusercontent.com/nostr-protocol/nips/master/94.md",
+      "date": "2026-10-21",
+      "proved": "tags are `url`, `m`, `size`, `dim`, `i` (torrent infohash), `thumb`; 'A relay for indexing shared files. For example, to promote torrents.' — confirms metadata-only semantics"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Zero bytes. NIP-94 is a *metadata* event: `url`, `m` (mime), `size`, `dim`, `i` (torrent infohash), `thumb`. The relay stores the JSON pointer, the file lives elsewhere.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F7-fediverse.json",
+    "seed_area": "F/F7",
+    "seed_verdict": [
+      {
+        "value": "?",
+        "area": "F/F7"
+      }
+    ],
+    "seed_confidence": "high",
+    "verdict_note": "the seed left this row with verdict '?'; PLAN.md §3.2 rules fails-quota by default, because no row in this set clears 500 GiB per unit. A writer's judgement, not the seed's, and flagged as such",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Zero bytes. NIP-94 is a *metadata* event: `url`, `m` (mime), `size`, `dim`, `i` (torrent infohash), `thumb`. The relay stores the JSON pointer, the file lives elsewhere.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area F/F7"
+    },
+    "target_document": "docs/storage/free/social-and-fediverse.md",
+    "document_section": "Fediverse instances",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 1,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Zero bytes. NIP-94 is a *metadata* event: `url`, `m` (mime), `size`, `dim`, `i` (torrent infohash), `thumb`. The relay stores the JSON pointer, the file lives elsewhere.",
+    "limits_verbatim": "per-object-cap = relay event size limit (~64 KB typical), of which base64 payload is ~75%, so ~48 KB of real data per event — three orders of magnitude short of useful.",
+    "egress_verbatim": "n/a — relay never serves the file.",
+    "chaining_verbatim": "Chains with Blossom: NIP-94/NIP-96 events make Blossom blobs discoverable and re-mirrorable. On its own this is not storage.",
+    "tooling_verbatim": "nostr websocket protocol (EVENT/REQ), `nak` CLI. Relays are free and accept arbitrary events, but the event size limit (typ. 64 KB) caps any inline-base64 trick at ~48 KB.",
+    "interface_verbatim": "websocket",
+    "agent_focus": "Fediverse / decentralised social instances as media storage: Mastodon, Misskey/Sharkey/IceShark, Pleroma/Akkoma, Pixelfed, Lemmy/pict-rs, Bluesky AT Protocol PDS, Nostr relays + Blossom, Farcaster hubs/Snapchain. Per-user media quotas, per-file caps, media-URL permanence, and the 'unlimited instances x modest quota' multiplication."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

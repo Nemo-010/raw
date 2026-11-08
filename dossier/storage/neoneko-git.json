@@ -1,0 +1,119 @@
+{
+  "topic": "storage",
+  "slug": "neoneko-git",
+  "provider": "NeoNeko Git (Forgejo, open registration)",
+  "url": "https://git.neoneko.org",
+  "category": "registry",
+  "free_tier": {
+    "stated": "No published storage quota. Site advertises 'no seat limits, no repository caps'; Forgejo ships quota disabled by default (quota.ENABLED=false, quota.default.TOTAL=-1 = unlimited), and this instance exposes no quota documentation.",
+    "unit": "unlimited",
+    "metered_on": "stored-bytes",
+    "source_url": "https://git.neoneko.org/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "No per-file cap documented",
+    "source_url": "https://git.neoneko.org/",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://git.neoneko.org/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "No metered download policy published; Cloudflare-fronted. Not contradicted anywhere on the instance.",
+    "metered": true
+  },
+  "interface": [
+    "rest",
+    "oci"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Full Forgejo API v1 with Swagger at /api/swagger; OCI registry at /v2/; generic package registry; LFS; Actions on an owner-run runner.",
+  "chaining": "Unknown per-account cap x unlimited free accounts. If the default holds (TOTAL=-1), each account is effectively unbounded — this is the 'unlimited free identity x no quota' case, strictly better than CodeFloe but with zero published guarantee.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "No per-file cap documented",
+      "source": "https://git.neoneko.org/"
+    }
+  ],
+  "limits_note": "Unstated. No per-file cap documented. Small instance (29 public repos observed via API search), self-hosted runner, Patreon-funded. Accounts left unactivated are auto-removed.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: p documented. Small instance (29 public repos observed via API search), self-hosted runner, Patreon-funded. Accounts left unactivated are auto-removed. registry",
+    "country": null
+  },
+  "reliability_note": "Hobby instance run by one admin; tiny disk budget implied by the funding model. Unpublished quota means an admin can introduce one at any moment with no notice. Data-loss risk is materially higher than a commercial forge.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://git.neoneko.org/",
+      "date": "2026-10-21",
+      "proved": "'Public and private repositories, no seat limits, no repository caps'; 'Full API access ... documented with Swagger'"
+    },
+    {
+      "url": "https://git.neoneko.org/api/v1/version",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> {\"version\":\"16.0.5+gitea-1.22.0\"} (live Forgejo 16.0.5)"
+    },
+    {
+      "url": "https://git.neoneko.org/v2/",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 401 with Bearer realm https://git.neoneko.org/v2/token (registry enabled, not a stub)"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: anonymous /v2/token -> 200 (anonymous pull path exists)"
+    },
+    {
+      "url": "https://git.neoneko.org/api/v1/repos/search?limit=50",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 29 repos (small instance, quota never exercised at scale)"
+    },
+    {
+      "url": "https://forgejo.org/docs/latest/admin/config-cheat-sheet/",
+      "date": "2026-10-21",
+      "proved": "quota.ENABLED defaults false, quota.default.TOTAL defaults -1"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No published storage quota. Site advertises 'no seat limits, no repository caps'; Forgejo ships quota disabled by default (quota.ENABLED=false, quota.default.TOTAL=-1 = unlimited), and this instance exposes no quota documentation.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "B-B2-gitlab-forgejo-registry.json",
+    "seed_area": "B/B2",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "B/B2"
+      }
+    ],
+    "seed_confidence": "medium",
+    "conflicts": [],
+    "target_document": "docs/storage/free/registries.md",
+    "document_section": "GitLab, Forgejo and forge registries",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 6,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No published storage quota. Site advertises 'no seat limits, no repository caps'; Forgejo ships quota disabled by default (quota.ENABLED=false, quota.default.TOTAL=-1 = unlimited), and this instance exposes no quota documentation.",
+    "limits_verbatim": "Unstated. No per-file cap documented. Small instance (29 public repos observed via API search), self-hosted runner, Patreon-funded. Accounts left unactivated are auto-removed.",
+    "egress_verbatim": "No metered download policy published; Cloudflare-fronted. Not contradicted anywhere on the instance.",
+    "chaining_verbatim": "Unknown per-account cap x unlimited free accounts. If the default holds (TOTAL=-1), each account is effectively unbounded — this is the 'unlimited free identity x no quota' case, strictly better than CodeFloe but with zero published guarantee.",
+    "tooling_verbatim": "Full Forgejo API v1 with Swagger at /api/swagger; OCI registry at /v2/; generic package registry; LFS; Actions on an owner-run runner.",
+    "interface_verbatim": "rest",
+    "agent_focus": "GitLab and the Forgejo/Gitea federation: container registry, package registry, generic packages, releases, snippets, Pages; Codeberg, Gitea hosted instances, SourceHut, Bitbucket, Radicle"
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

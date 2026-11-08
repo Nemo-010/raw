@@ -1,0 +1,103 @@
+{
+  "topic": "storage",
+  "slug": "interserver-storage-vps",
+  "provider": "InterServer Storage VPS (1 TB slices)",
+  "url": "https://www.interserver.net/vps/storage.html",
+  "category": "storage VPS, composable slices",
+  "free_tier": {
+    "stated": "1 TB per slice, 1–20+ slices stacked",
+    "unit": "TB",
+    "metered_on": "unstated",
+    "source_url": "https://www.interserver.net/vps/storage.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://www.interserver.net/vps/storage.html",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://www.interserver.net/vps/storage.html",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Metered per slice: 'Each storage VPS slice adds 1TB SATA storage, 2GB memory, 2TB transfer'. A 2:1 ratio. At 10 slices = 10 TB storage and only 20 TB/mo transfer — below the 30 TB/mo serving requirement. Overage rate not published on the page.",
+    "metered": true,
+    "free_allowance": "20 TB per month"
+  },
+  "interface": [
+    "sftp",
+    "nfs"
+  ],
+  "interface_detail": "full root; run MinIO/SFTP/NFS yourself",
+  "tooling": "unrestricted",
+  "chaining": "MinIO + Cloudflare; or rsync target",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "10 Gbps",
+      "source": "https://www.interserver.net/vps/storage.html"
+    }
+  ],
+  "limits_note": "Slice count adds RAM and cores linearly, which is wasted spend for pure storage. 10 Gbps shared port. The traffic ratio is the binding constraint, not the price.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "Long-established US host (Secaucus/LA). The $3/TB headline is genuine and linear — 10 slices is $30 for 10 TB, no discount, no cliff. Page served a 403 to the read broker and was retrieved via the provider renderer.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://www.interserver.net/vps/storage.html",
+      "date": "2026-10-21",
+      "proved": "'Starts at $3.00 per TB per month'; 1 Slice $3/mo (1TB SATA, 2TB transfer, 10Gbps shared); 10 Slices $30/mo (10TB SATA, 20TB transfer); 20 Slices listed"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "same page — 'Use storage-optimized cloud compute for backups, archives, and high-volume file hosting when capacity matters more than raw application I/O'"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$3.00/TB/mo flat at 1, 5, 10, 20 TB — genuinely linear, no tier discount. Caveat: 2 TB transfer per TB stored does not cover 30 TB/mo serving at 20 TB stored (40 TB included, so it does at 20 TB; it fails at 10 TB stored where only 20 TB is included).",
+  "notes": "1 TB per slice, 1–20+ slices stacked",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "P-P1-storage-vps-eu.json",
+    "seed_area": "P/P1",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "P/P1"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/paid/storage-boxes.md",
+    "document_section": "European storage VPS and dedicated",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "1 TB per slice, 1–20+ slices stacked",
+    "limits_verbatim": "Slice count adds RAM and cores linearly, which is wasted spend for pure storage. 10 Gbps shared port. The traffic ratio is the binding constraint, not the price.",
+    "egress_verbatim": "Metered per slice: 'Each storage VPS slice adds 1TB SATA storage, 2GB memory, 2TB transfer'. A 2:1 ratio. At 10 slices = 10 TB storage and only 20 TB/mo transfer — below the 30 TB/mo serving requirement. Overage rate not published on the page.",
+    "chaining_verbatim": "MinIO + Cloudflare; or rsync target",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "unrestricted",
+    "interface_verbatim": "full root; run MinIO/SFTP/NFS yourself",
+    "price_verbatim": "$3.00/TB/mo flat at 1, 5, 10, 20 TB — genuinely linear, no tier discount. Caveat: 2 TB transfer per TB stored does not cover 30 TB/mo serving at 20 TB stored (40 TB included, so it does at 20 TB; it fails at 10 TB stored where only 20 TB is included).",
+    "agent_focus": "Cheapest per-TB-month storage VPS and Storage Boxes in Europe. Price floor hunt with egress as the deciding term. Tiers recorded at 1TB/5TB/10TB/20TB. Excludes AWS/Azure/GCP/Alibaba/R2/B2/iDrive e2 per client instruction."
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

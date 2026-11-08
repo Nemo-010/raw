@@ -1,0 +1,118 @@
+{
+  "topic": "storage",
+  "slug": "google-cloud-storage-always-free-tier",
+  "provider": "Google Cloud Storage Always Free tier",
+  "url": "https://cloud.google.com/free/docs/free-cloud-features",
+  "category": "iaas",
+  "free_tier": {
+    "stated": "5 GB-months of regional storage (US regions only) + 5,000 Class A ops + 50,000 Class B ops per month.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://cloud.google.com/free/docs/free-cloud-features",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://cloud.google.com/free/docs/free-cloud-features",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://cloud.google.com/free/docs/free-cloud-features",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "100 GB/month outbound to all destinations excluding China/Australia — described in the Always Free table as '100 GB of outbound data transfer from North America'. Beyond that it is $0.12/GiB, metered.",
+    "metered": true,
+    "free_allowance": "100 GB per month"
+  },
+  "interface": [
+    "s3",
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "s3",
+  "tooling": "Native S3-interoperable XML API + JSON API; rclone 'gcs' backend; gsutil/gcloud storage; signed URLs; HMAC keys make it literally S3.",
+  "chaining": "5 GB x N projects. Project creation is capped (~30 default before requesting increase) and soft-deleted projects still count for 30 days, so the practical ceiling is a few hundred GB, not TiB.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "500 GB/day",
+      "source": "https://cloud.google.com/free/docs/free-cloud-features"
+    }
+  ],
+  "limits_note": "5 GB stored, 100 GB/mo egress, free tier restricted to us-east1/us-west1/us-central1; 5 TiB max object; anonymous writes are correctly refused.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: e hot working set and egress beyond 100 GB/mo is metered at $0.12/GiB — a 500 GB/day serving load would cost ~$1,800/mo. 5 GB x N projects. Project creation is capped (~30 default be",
+    "country": null
+  },
+  "reliability_note": "Rock solid technically, but 5 GB is 0.05% of the hot working set and egress beyond 100 GB/mo is metered at $0.12/GiB — a 500 GB/day serving load would cost ~$1,800/mo.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://cloud.google.com/free/docs/free-cloud-features",
+      "date": "2026-10-21",
+      "proved": "'Cloud Storage | 5 GB-months of regional storage (US regions only) per month … 100 GB of outbound data transfer from North America … per month'"
+    },
+    {
+      "url": "https://cloud.google.com/storage/pricing",
+      "date": "2026-10-21",
+      "proved": "'Data transfer to Worldwide Destinations (excluding Asia & Australia) (per GB) 0 to 10 TiB — $0.12 / 1 GiB'"
+    },
+    {
+      "url": "https://storage.googleapis.com/storage/v1/b/gcp-public-data-landsat",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200 (public buckets are anonymously listable/readable — useful for reading, irrelevant for storage)"
+    },
+    {
+      "url": "https://storage.googleapis.com/gcp-public-data-landsat/probe.txt",
+      "date": "2026-10-21",
+      "proved": "probe: PUT (anonymous) -> 403 (no anonymous write path)"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "5 GB-months of regional storage (US regions only) + 5,000 Class A ops + 50,000 Class B ops per month.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A1-google-drive-service-accounts.json",
+    "seed_area": "A/A1",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "A/A1"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "5 GB-months of regional storage (US regions only) + 5,000 Class A ops + 50,000 Class B ops per month.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/A1"
+    },
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "Google Drive and its service-account history",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "5 GB-months of regional storage (US regions only) + 5,000 Class A ops + 50,000 Class B ops per month.",
+    "limits_verbatim": "5 GB stored, 100 GB/mo egress, free tier restricted to us-east1/us-west1/us-central1; 5 TiB max object; anonymous writes are correctly refused.",
+    "egress_verbatim": "100 GB/month outbound to all destinations excluding China/Australia — described in the Always Free table as '100 GB of outbound data transfer from North America'. Beyond that it is $0.12/GiB, metered.",
+    "chaining_verbatim": "5 GB x N projects. Project creation is capped (~30 default before requesting increase) and soft-deleted projects still count for 30 days, so the practical ceiling is a few hundred GB, not TiB.",
+    "tooling_verbatim": "Native S3-interoperable XML API + JSON API; rclone 'gcs' backend; gsutil/gcloud storage; signed URLs; HMAC keys make it literally S3.",
+    "interface_verbatim": "s3",
+    "agent_focus": "Google ecosystem: Drive service accounts + shared drives, Colab, Firebase, GCS free tier, Photos. Service-account chain as reference case, quantified."
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

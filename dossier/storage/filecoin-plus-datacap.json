@@ -1,0 +1,116 @@
+{
+  "topic": "storage",
+  "slug": "filecoin-plus-datacap",
+  "provider": "Filecoin Plus DataCap (faucet + allocators)",
+  "url": "https://faucet.allocator.tech/",
+  "category": "p2p",
+  "free_tier": {
+    "stated": "1 TiB of free DataCap per verified client, instantly, via Gitcoin Passport (score >= 20) on Optimism. Fil+ allocators can grant more. DataCap is a one-time, non-transferable credit — 'If a client needs more DataCap, they must request additional allocations.'",
+    "unit": "TiB",
+    "metered_on": "unstated",
+    "source_url": "https://faucet.allocator.tech/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://faucet.allocator.tech/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://faucet.allocator.tech/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Not free, and this is what kills it. DataCap buys *storage deal quality*, not bandwidth. On Filecoin Onchain Cloud the retrieval layer is Filecoin Beam: 'Up to $14/TiB (≈ $0.014/GiB) egress'. FCSS: 'Retrieval is billed per TiB retrieved, with one free full-dataset retrieval a year'; unsealed HTTP retrieval returns 402 Payment Required per paid piece.",
+    "metered": true
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Lotus/Boost deal-making, Singularity (github.com/data-preservation-programs/singularity), Spade for renewals, synapse-sdk for FOC, retrieval-client for FCSS.",
+  "chaining": "DataCap is per verified client and explicitly non-transferable; GLIF Verify caps re-verification at once per 30 days and grants from 64 GiB by GitHub account age. Multiple Gitcoin Passports are an identity-farming exercise, not a technical multiplier — and even a successful farm buys storage, not egress.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "1 TiB/day",
+      "source": "https://faucet.allocator.tech/"
+    }
+  ],
+  "limits_note": "64 GiB+ via GLIF (GitHub age dependent), 1 TiB via the faucet; deal duration fixed at signing; retrieval metered; FCSS minimum 6-month term.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "This is the closest thing in the class to a genuine free 500 GB+ *pin* — DataCap really does let you place 1 TiB of verified deals — but the requirement is 500 GB–1 TiB/day of *serving*, and Filecoin charges for exactly that. Storage free, egress paid is a fail against hard filter #2.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://faucet.allocator.tech/",
+      "date": "2026-10-21",
+      "proved": "'provides 1 TiB of free DataCap to users looking to store verified data on the Filecoin network'; requires Gitcoin Passport score >= 20"
+    },
+    {
+      "url": "https://fil.org/filecoin-plus",
+      "date": "2026-10-21",
+      "proved": "'DataCap is a one-time credit and cannot be transferred between addresses. If a client needs more DataCap, they must request additional allocations.'"
+    },
+    {
+      "url": "https://docs.filecoin.cloud/introduction/about/",
+      "date": "2026-10-21",
+      "proved": "'Add-on Retrieval (Filecoin Beam) | Up to $14/TiB (≈ $0.014/GiB) egress'; 'Storage | $2.50/TiB/month/copy (minimum 2 copies)'"
+    },
+    {
+      "url": "https://docs.filecoin.io/build-on-filecoin/filecoin-onchain-cloud/fcss",
+      "date": "2026-10-21",
+      "proved": "'Retrieval is billed per TiB retrieved, with one free full-dataset retrieval a year'; 'A paid piece returns 402 Payment Required'"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "1 TiB of free DataCap per verified client, instantly, via Gitcoin Passport (score >= 20) on Optimism. Fil+ allocators can grant more. DataCap is a one-time, non-transferable credit — 'If a client needs more DataCap, they must request additional allocations.'",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "E-E7-decentralised.json",
+    "seed_area": "E/E7",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "E/E7"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "1 TiB of free DataCap per verified client, instantly, via Gitcoin Passport (score >= 20) on Optimism. Fil+ allocators can grant more. DataCap is a one-time, non-transferable credit — 'If a client needs more DataCap, they must request additional allocations.'",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area E/E7"
+    },
+    "target_document": "docs/storage/free/relays-and-transports.md",
+    "document_section": "Content-addressed and decentralised stores",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "1 TiB of free DataCap per verified client, instantly, via Gitcoin Passport (score >= 20) on Optimism. Fil+ allocators can grant more. DataCap is a one-time, non-transferable credit — 'If a client needs more DataCap, they must request additional allocations.'",
+    "limits_verbatim": "64 GiB+ via GLIF (GitHub age dependent), 1 TiB via the faucet; deal duration fixed at signing; retrieval metered; FCSS minimum 6-month term.",
+    "egress_verbatim": "Not free, and this is what kills it. DataCap buys *storage deal quality*, not bandwidth. On Filecoin Onchain Cloud the retrieval layer is Filecoin Beam: 'Up to $14/TiB (≈ $0.014/GiB) egress'. FCSS: 'Retrieval is billed per TiB retrieved, with one free full-dataset retrieval a year'; unsealed HTTP retrieval returns 402 Payment Required per paid piece.",
+    "chaining_verbatim": "DataCap is per verified client and explicitly non-transferable; GLIF Verify caps re-verification at once per 30 days and grants from 64 GiB by GitHub account age. Multiple Gitcoin Passports are an identity-farming exercise, not a technical multiplier — and even a successful farm buys storage, not egress.",
+    "tooling_verbatim": "Lotus/Boost deal-making, Singularity (github.com/data-preservation-programs/singularity), Spade for renewals, synapse-sdk for FOC, retrieval-client for FCSS.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Decentralised storage / IPFS pinning judged on gateway egress economics: Pinata, Storacha/web3.storage, Filebase, 4EVERLAND, Lighthouse, thirdweb, Fleek, QuickNode, Infura, Kubo+self-host, dweb.link/ipfs.io, Sia/Skynet, Storj, Akash, Arweave (ar.io/Turbo/Irys), Walrus, Filecoin/Fil+/FCSS, BitTorrent, ZeroNet, Hypercore, Earthstar, Crust"
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

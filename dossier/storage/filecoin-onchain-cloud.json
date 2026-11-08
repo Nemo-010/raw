@@ -1,0 +1,107 @@
+{
+  "topic": "storage",
+  "slug": "filecoin-onchain-cloud",
+  "provider": "Filecoin Onchain Cloud (FWSS / Filecoin Pay)",
+  "url": "https://docs.filecoin.cloud/cookbooks/payments-and-storage/",
+  "category": "contributed storage - on-chain paid deals",
+  "free_tier": {
+    "stated": "$2.50/TiB/month per copy, plus $0.12 per data-set/month proving fee. 20 TiB = $50/mo per copy; two copies = $100/mo",
+    "unit": "TiB",
+    "metered_on": "unstated",
+    "source_url": "https://docs.filecoin.cloud/cookbooks/payments-and-storage/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.filecoin.cloud/cookbooks/payments-and-storage/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.filecoin.cloud/cookbooks/payments-and-storage/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "CDN egress 'up to $14/TiB (about $0.014/GiB) downloaded' via Filecoin Beam, about half that from cache. 1 TiB/day = 30 TiB/mo = up to $420/mo",
+    "metered": true,
+    "free_allowance": "30 TiB per month"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "Synapse SDK; FWSS (Filecoin Warm Storage Service); Filecoin Pay streaming payments",
+  "tooling": "synapse-sdk, USDFC deposits, lotus/curio on the provider side",
+  "chaining": "cheap storage, expensive egress - the classic shape that fails the serving workload but suits the cold-archive workload",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "1 TiB/day",
+      "source": "https://docs.filecoin.cloud/cookbooks/payments-and-storage/"
+    }
+  ],
+  "limits_note": "Storage at $2.50/TiB is genuinely competitive, but total cost of ownership is dominated by egress: $420/mo of CDN to serve 1 TiB/day on top of $100/mo of storage = $520/mo. Also gated on holding USDFC (a stablecoin) and a refundable ~$0.50 lifecycle reserve per data set; each add-pieces call costs $0.008 + $0.003/piece, which is punitive for a 20 TiB corpus of many small objects.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "Requires a funded stablecoin wallet; deals are 30-day-epoch denominated and stream payments continuously.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.filecoin.cloud/cookbooks/payments-and-storage/",
+      "date": "2026-10-21",
+      "proved": "pricing table: 'Storage $2.50/TiB/month per copy'; 'Proving Service $0.12/data set/month'; 'CDN egress up to $14/TiB (≈ $0.014/GiB) downloaded'; 'Add pieces $0.008 + $0.003 per piece'"
+    },
+    {
+      "url": "https://docs.filecoin.cloud/cookbooks/payments-and-storage/",
+      "date": "2026-10-21",
+      "proved": "'No CDN ~0.50 USDFC (lifecycle reserve lockup)' minimum to create a data set"
+    },
+    {
+      "url": "https://docs.filecoin.io/provide-storage/filecoin-deals/verified-deals",
+      "date": "2026-10-21",
+      "proved": "verified deals required allocator approval and DataCap (now historical)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$2.50/TiB storage + up to $14/TiB egress",
+  "notes": "$2.50/TiB/month per copy, plus $0.12 per data-set/month proving fee. 20 TiB = $50/mo per copy; two copies = $100/mo",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A15-contributed-infra.json",
+    "seed_area": "A/A15",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "A/A15"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/relays-and-transports.md",
+    "document_section": "Contributed infrastructure",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "$2.50/TiB/month per copy, plus $0.12 per data-set/month proving fee. 20 TiB = $50/mo per copy; two copies = $100/mo",
+    "limits_verbatim": "Storage at $2.50/TiB is genuinely competitive, but total cost of ownership is dominated by egress: $420/mo of CDN to serve 1 TiB/day on top of $100/mo of storage = $520/mo. Also gated on holding USDFC (a stablecoin) and a refundable ~$0.50 lifecycle reserve per data set; each add-pieces call costs $0.008 + $0.003/piece, which is punitive for a 20 TiB corpus of many small objects.",
+    "egress_verbatim": "CDN egress 'up to $14/TiB (about $0.014/GiB) downloaded' via Filecoin Beam, about half that from cache. 1 TiB/day = 30 TiB/mo = up to $420/mo",
+    "chaining_verbatim": "cheap storage, expensive egress - the classic shape that fails the serving workload but suits the cold-archive workload",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "synapse-sdk, USDFC deposits, lotus/curio on the provider side",
+    "interface_verbatim": "Synapse SDK; FWSS (Filecoin Warm Storage Service); Filecoin Pay streaming payments",
+    "price_verbatim": "$2.50/TiB storage + up to $14/TiB egress",
+    "agent_focus": "Marketplaces and networks where storage or bandwidth is contributed by third parties for free or near-free. Two directions probed: (1) BUY side - can you consume contributed bandwidth/storage cheaply; (2) SUPPLY side - the arbitrage question, whether contributing a disk earns storage credit at better than the retail rate. Also research testbeds that hand out whole physical nodes with multi-TB local disk (CloudLab, Chameleon, FABRIC, Emulab) and community mesh networks (Guifi, Freifunk, NYC Mesh). Decided per candidate by computing 20 TiB stored + 1 TiB/day egress against that path's actual tariff."
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

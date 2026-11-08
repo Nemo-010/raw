@@ -1,0 +1,162 @@
+---
+title: "Plans & Pricing"
+description: "Documentation for Diffbot — transform the raw web into structured knowledge."
+words: 636
+upstream_status: 200
+content_kind: page
+extraction: article
+source: extractor
+title_source: h1
+final_url: "https://www.diffbot.com/pricing"
+fetched_at: "2026-10-22T04:00:31.128Z"
+---
+# Plans & Pricing
+
+Estimate your monthly cost by anticipated workload, or browse all our available plans.
+
+Pages extracted1 credit each
+
+= 2,000 credits
+
+KG entities queried25 credits each
+
+= 5,000 credits
+
+NLP requests1 credit each
+
+= 500 credits
+
+Web searches1 credit each
+
+= 2,000 credits
+
+CrawlingPlus plan and up
+
+Recommended plan
+
+Free
+
+$0 / mo
+
+Free base
+
+$0
+
+Credits / month9,500
+
+- Pages extracted2,000 credits
+- KG entities queried5,000 credits
+- NLP requests500 credits
+- Web searches2,000 credits
+
+5 requests / min
+
+[Start for free](https://app.diffbot.com/get-started/)
+
+## Every plan, side by side
+
+Your pick
+
+### Free
+
+Free
+
+Kick the tires on every API.
+
+- 10,000 credits / month
+- All four APIs included
+- No credit card required
+- 5 requests / min
+
+At your usage$0 / mo
+
+[Start for free](https://app.diffbot.com/get-started/)
+
+### Startup
+
+$299 / mo
+
+For production workloads finding their feet.
+
+- 250,000 credits / month
+- Overage at $0.001 / credit
+- All four APIs included
+- 5 requests / sec
+
+At your usage$299 / mo
+
+[Start with Startup](https://app.diffbot.com/plans/KG10)
+
+### Plus
+
+$899 / mo
+
+For teams scaling steady, heavy usage.
+
+- 1,000,000 credits / month
+- Overage at $0.0009 / credit
+- Access to Crawl (25 active)
+- 3 user seats
+- 25 requests / sec
+
+At your usage$899 / mo
+
+[Start with Plus](https://app.diffbot.com/plans/KG40)
+
+### Enterprise
+
+Custom
+
+Custom volume, rate limits, and support.
+
+- Custom credit allotment
+- 100+ active crawls
+- Custom user seats
+- Dedicated support
+- 25+ requests / sec
+
+At your usageCustom
+
+[Talk to sales](https://www.diffbot.com/resources/demo)
+
+## What a credit buys
+
+A credit is Diffbot’s unit of processing. Consumption varies per API and is laid out below.
+
+| Product | Action | Credits |
+| --- | --- | --- |
+| Extract | Extract 1 page | 1 |
+| Extract | Extract 1 page via datacenter proxy | 2 |
+| Crawl | Spider a site for links & pages | 0 |
+| Natural Language | Process 1 document (≤10,000 chars) | 1 |
+| Knowledge Graph | Export 1 entity record | 25 |
+| Knowledge Graph | Export 1 facet query record | 100 |
+| Knowledge Graph | Enhance 1 entity record | 25 |
+| Knowledge Graph | Enhance 1 entity record with refresh | 100 |
+| Web Search | Run 1 search | 1 |
+
+## Frequently Asked Questions
+
+What are credits, and how many do I need?
+
+A credit is Diffbot’s unit of processing value. Most actions cost a fixed number — extracting a page is 1 credit, exporting a Knowledge Graph entity is 25. Every plan includes a pool of renewable monthly credits; the calculator above maps your workload onto that pool. If you’re unsure, start on Free or Startup and scale up as your usage grows.
+
+What happens when I exceed my plan’s monthly credits?
+
+On a paid plan, usage beyond your monthly credits is billed pro rata at your plan’s per-credit rate — nothing more. For example, 1,500,000 credits on Plus is $899 + 500,000 × $0.0009. On the Free plan you’ll get a `429 Quota Exceeded` response once you hit 10,000 credits or your rate limit; quotas reset at the start of each billing period.
+
+Do I need a long-term contract? What’s your cancellation policy?
+
+No. Diffbot is a flexible monthly subscription — cancel anytime and you won’t be billed for the following month.
+
+Do I need a credit card to sign up for the free plan?
+
+No. Signing up for the Free plan doesn’t require a credit card; you only add payment details when you upgrade.
+
+Do you offer student or academic discounts?
+
+Yes. Diffbot for Students gives students and academic researchers Startup-tier access free of charge.
+
+What if I have more questions?
+
+Email [sales@diffbot.com](mailto:sales@diffbot.com) and we’ll help you size a plan or set up Enterprise.

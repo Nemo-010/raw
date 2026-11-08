@@ -1,0 +1,22 @@
+{
+ "id": "20261102-1522-verify-ci-cd-runners-afaa-u15-rerun",
+ "kind": "verify",
+ "topic": "ci-cd-runners",
+ "question": "Re-read each usable record. State the free minutes and the runner size with a quote. Where a public endpoint exists, run `python scripts/probe/probe.py URL --out WS/probe` and register the record with `--probe`.\nAn audit of the first attempt judged these claims unsupported by their sources; settle each one first:\n- ci-cd-runners/forgejo-gitea-actions $.per_object_cap.stated: The cited page compares Forgejo Actions with GitHub Actions; it says nothing about the absence of a cap or that the runner host is the ceiling. Fresh reads of the Forgejo runner admin pages found no statement of that either (the only limit mechanism seen is the per-job timeout-minutes key in the wor\n- ci-cd-runners/github-packages $.identity_cost.detail: The token half is stated verbatim (and personal access token (classic) is the only supported credential). The condition 'a GitHub account with a verified email' is not on the page: it says nothing about email verification.\n- ci-cd-runners/ghcr $.binding_note: The 10 GB per-layer limit is on the page, but 'the only published limit' is contradicted by the same Troubleshooting list, which also publishes a 10 minute upload timeout (and claim c26 itself records it).\n- ci-cd-runners/forgejo-gitea-actions $.free_tier.stated: The cited page supports only that workflows are GitHub-Actions-style. Gitea MIT (LICENSE text) and Forgejo GPL v3+ (forgejo.org/faq) were confirmed on fresh reads, but no page read says there is no minute cap from the software, that runners are user-registered only, or that the runner host sets the \n- ci-cd-runners/woodpecker-selfhost $.per_object_cap.stated: The cited page describes the server/agent architecture and says job limits are tuned per agent; it does not say there is no cap from the software or that the agent host's memory and disk are the limit.\nAn audit of the first attempt judged these claims unsupported by their sources; settle each one first:\n- ci-cd-runners/github-packages $.per_object_cap.stated: The 500MB figure is the GitHub Free allowance for private packages, shared with Actions artifacts; the page exempts Container registry images (currently free) and public packages, so 'across all package types' overstates the condition. It is also a total quota, not a per-object cap.\n- ci-cd-runners/ghcr $.limits[1].value: The 1GB monthly transfer is the GitHub Packages allowance for private packages; the billing page states Container registry bandwidth is currently free, so it is not a GHCR limit. The cited Container registry capture states no transfer figure.\n- ci-cd-runners/github-packages $.limits[0].value: The page shares the 500MB with Actions artifacts for private packages, but Container registry images are currently free, so 'every other package type' overstates it; it is a total storage quota, not a per-object cap.",
+ "scope": {
+  "rids": [
+   "ci-cd-runners/appveyor",
+   "ci-cd-runners/codeberg-ci",
+   "ci-cd-runners/ghcr",
+   "ci-cd-runners/github-packages",
+   "ci-cd-runners/gitlab-container-registry",
+   "ci-cd-runners/forgejo-gitea-actions",
+   "ci-cd-runners/woodpecker-selfhost"
+  ]
+ },
+ "origin": "audit u35 of 20261102-1522-verify-ci-cd-runners-afaa/u15 failed: 3 of 30 unsupported",
+ "created": "2026-11-03T00:59:45Z",
+ "queue_files": [
+  "queue/20261030-1045-expand-ci-cd-runners-97f1-u05-rerun.json"
+ ]
+}

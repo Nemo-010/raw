@@ -1,0 +1,102 @@
+{
+  "topic": "storage",
+  "slug": "microsoft-teams",
+  "provider": "Microsoft Teams (free / personal)",
+  "url": "https://support.microsoft.com/en-us/teams/free/troubleshoot/where-is-my-microsoft-teams-free-data-stored",
+  "category": "messaging",
+  "free_tier": {
+    "stated": "5 GB free per person for files in Teams for personal use; images/videos explicitly do not count and have no storage limit; files land in the 'Microsoft Teams Chat Files' folder in the user's OneDrive.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://support.microsoft.com/en-us/teams/free/troubleshoot/where-is-my-microsoft-teams-free-data-stored",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://support.microsoft.com/en-us/teams/free/troubleshoot/where-is-my-microsoft-teams-free-data-stored",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://support.microsoft.com/en-us/teams/free/troubleshoot/where-is-my-microsoft-teams-free-data-stored",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Unmetered; share links resolve to OneDrive direct URLs.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "graph",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "Graph API chatMessageHostedContent + driveItem; no rclone backend for Teams specifically (use the onedrive remote pointing at the Chat Files folder)",
+  "chaining": "Effectively OneDrive consumer's 5 GB wearing a different hat - Teams free files ARE OneDrive files, so this is not a second quota. The one genuine loophole claim on the page is 'Images and videos are not saved on OneDrive and don't have a storage limit' - unverified whether that means arbitrary files can be smuggled as media.",
+  "limits": [],
+  "limits_note": "5 GB total files; 250 GB max individual file upload/download; chat messages unlimited.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "Leaving a community does not revoke other members' access; deleting the 5 GB block blocks attaches but not history.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://support.microsoft.com/en-us/teams/free/troubleshoot/where-is-my-microsoft-teams-free-data-stored",
+      "date": "2026-10-21",
+      "proved": "'The amount of free storage ... is 5 GB'; 'Images and videos are not saved on OneDrive and don't have a storage limit'"
+    },
+    {
+      "url": "https://support.microsoft.com/en-us/onedrive/restrictions-and-limitations-in-onedrive-and-sharepoint",
+      "date": "2026-10-21",
+      "proved": "'Individual files | 250 GB'"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "5 GB free per person for files in Teams for personal use; images/videos explicitly do not count and have no storage limit; files land in the 'Microsoft Teams Chat Files' folder in the user's OneDrive.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-A2-onedrive-sharepoint.json",
+    "seed_area": "A/A2",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "A/A2"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "5 GB free per person for files in Teams for personal use; images/videos explicitly do not count and have no storage limit; files land in the 'Microsoft Teams Chat Files' folder in the user's OneDrive.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/A2"
+    },
+    "target_document": "docs/storage/free/cloud-tenants.md",
+    "document_section": "OneDrive, SharePoint and the M365 tenant",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "5 GB free per person for files in Teams for personal use; images/videos explicitly do not count and have no storage limit; files land in the 'Microsoft Teams Chat Files' folder in the user's OneDrive.",
+    "limits_verbatim": "5 GB total files; 250 GB max individual file upload/download; chat messages unlimited.",
+    "egress_verbatim": "Unmetered; share links resolve to OneDrive direct URLs.",
+    "chaining_verbatim": "Effectively OneDrive consumer's 5 GB wearing a different hat - Teams free files ARE OneDrive files, so this is not a second quota. The one genuine loophole claim on the page is 'Images and videos are not saved on OneDrive and don't have a storage limit' - unverified whether that means arbitrary files can be smuggled as media.",
+    "tooling_verbatim": "Graph API chatMessageHostedContent + driveItem; no rclone backend for Teams specifically (use the onedrive remote pointing at the Chat Files folder)",
+    "interface_verbatim": "rest",
+    "agent_focus": "Microsoft ecosystem: OneDrive, SharePoint, Office 365 dev/E5, Azure Blob free tier, Azure DevOps, Teams files"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

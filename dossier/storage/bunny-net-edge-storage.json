@@ -1,0 +1,115 @@
+{
+  "topic": "storage",
+  "slug": "bunny-net-edge-storage",
+  "provider": "Bunny.net Edge Storage (+ free origin→CDN transit)",
+  "url": "https://bunny.net/pricing/storage/",
+  "category": "object-storage",
+  "free_tier": {
+    "stated": "Unlimited volume, pay-as-you-go. $0.01/GB/mo HDD per region (up to 9 regions), $0.02/GB/mo SSD per region (up to 15). 20 TiB single-region HDD = $200/mo. $1 monthly minimum.",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://docs.bunny.net/storage/pricing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.bunny.net/storage/pricing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.bunny.net/storage/pricing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "The structurally important bit: **origin→CDN transit is free** ('Free traffic to Bunny CDN', 'Free API egress'). Only end-user CDN delivery is billed, at $0.01/GB EU/NA, $0.03/GB Asia-Oceania, $0.045/GB South America, $0.06/GB ME-Africa — or a flat $0.005/GB on the 10-PoP Volume Network. So storage and delivery are one bill with no double charge, unlike B2/R2-style metres.",
+    "metered": true
+  },
+  "interface": [
+    "s3-compatible",
+    "rest",
+    "ftps",
+    "ftp",
+    "rclone"
+  ],
+  "interface_detail": "s3 + rest + ftp",
+  "tooling": "S3-compatible API and an HTTP API, FTP/FTPS, plus rclone's bunny backend. Limits are per-server: 100 concurrent HTTP conns/IP, 500 RPS per zone, 1 Gbps per connection — the docs explicitly tell you to shard across connections, which is rule 6 in action.",
+  "chaining": "This is the canonical 'cheap origin becomes viable' answer. Origin = Hetzner Storage Box at €2.03/TB (already in A-P8) or Bunny Storage at $10/TB; front door = Bunny CDN at $5–10/TB delivered, or free with the Cloudflare/EdgeOne layer. Bunny also *is* a pull zone, so you can point it at any free qualifying origin and pay only for delivery.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "1 Gbps",
+      "source": "https://docs.bunny.net/storage/pricing"
+    }
+  ],
+  "limits_note": "per-ip-shaping: 100 concurrent conns per IP per server; 500 RPS per storage zone; 8 MB POST body for zip/download requests; 1 Gbps per connection. Geo-replication multiplies the storage price linearly (2 regions = 2x).",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "PCI/99.99% SLA on storage; $1 minimum means idle cost is trivial. Card required at signup is the binding constraint, and is why the free CDNs above matter more than Bunny's own storage.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://bunny.net/pricing/storage/",
+      "date": "2026-10-21",
+      "proved": "'$0.01/GB … Up to 9 regions', '$1 monthly minimum', 'Free traffic to Bunny CDN', 'Free API egress' (read via read broker)"
+    },
+    {
+      "url": "https://bunny.net/pricing/cdn/",
+      "date": "2026-10-21",
+      "proved": "EU/NA $0.01/GB, Asia & Oceania $0.03/GB, Volume Network 'First 500 TB $0.005/GB' (read via read broker)"
+    },
+    {
+      "url": "https://docs.bunny.net/storage/pricing",
+      "date": "2026-10-21",
+      "proved": "per-region arithmetic: 1 region $0.01/GB, 9 regions $0.055/GB; 'Traffic from Storage to CDN is FREE'"
+    },
+    {
+      "url": "https://docs.bunny.net/storage/limits",
+      "date": "2026-10-21",
+      "proved": "100 concurrent HTTP conns/IP, 500 RPS/zone, 1 Gbps per connection, 8 MB POST body"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$10/TB stored (HDD, 1 region); $20/TB (SSD); delivery +$10/TB EU/NA, +$30/TB Asia, +$5/TB on Volume Network. 20 TiB stored + 30 TB/mo served EU/NA = $200 + $300 = $500/mo ≈ $25 per stored TB all-in.",
+  "notes": "Unlimited volume, pay-as-you-go. $0.01/GB/mo HDD per region (up to 9 regions), $0.02/GB/mo SSD per region (up to 15). 20 TiB single-region HDD = $200/mo. $1 monthly minimum.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G9-edge-cdn-as-storage.json",
+    "seed_area": "G/G9",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "G/G9"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/cloudflare-edge.md",
+    "document_section": "Edge CDN used as an object store",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Unlimited volume, pay-as-you-go. $0.01/GB/mo HDD per region (up to 9 regions), $0.02/GB/mo SSD per region (up to 15). 20 TiB single-region HDD = $200/mo. $1 monthly minimum.",
+    "limits_verbatim": "per-ip-shaping: 100 concurrent conns per IP per server; 500 RPS per storage zone; 8 MB POST body for zip/download requests; 1 Gbps per connection. Geo-replication multiplies the storage price linearly (2 regions = 2x).",
+    "egress_verbatim": "The structurally important bit: **origin→CDN transit is free** ('Free traffic to Bunny CDN', 'Free API egress'). Only end-user CDN delivery is billed, at $0.01/GB EU/NA, $0.03/GB Asia-Oceania, $0.045/GB South America, $0.06/GB ME-Africa — or a flat $0.005/GB on the 10-PoP Volume Network. So storage and delivery are one bill with no double charge, unlike B2/R2-style metres.",
+    "chaining_verbatim": "This is the canonical 'cheap origin becomes viable' answer. Origin = Hetzner Storage Box at €2.03/TB (already in A-P8) or Bunny Storage at $10/TB; front door = Bunny CDN at $5–10/TB delivered, or free with the Cloudflare/EdgeOne layer. Bunny also *is* a pull zone, so you can point it at any free qualifying origin and pay only for delivery.",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "S3-compatible API and an HTTP API, FTP/FTPS, plus rclone's bunny backend. Limits are per-server: 100 concurrent HTTP conns/IP, 500 RPS per zone, 1 Gbps per connection — the docs explicitly tell you to shard across connections, which is rule 6 in action.",
+    "interface_verbatim": "s3 + rest + ftp",
+    "price_verbatim": "$10/TB stored (HDD, 1 region); $20/TB (SSD); delivery +$10/TB EU/NA, +$30/TB Asia, +$5/TB on Volume Network. 20 TiB stored + 30 TB/mo served EU/NA = $200 + $300 = $500/mo ≈ $25 per stored TB all-in.",
+    "agent_focus": "CDN / edge platforms as storage+egress: Fastly (free tier + Fast Forward OSS), Akamai/Linode, Bunny.net (storage + free origin->CDN transit), KeyCDN, CacheFly, Gcore, CDN77, StackPath status, Edgio/Limelight status, jsDelivr, unpkg, esm.sh, Statically, raw.githack, ghproxy mirrors. Question asked: which CDN gives free or near-free egress so a cheap origin becomes viable. Cloudflare R2 excluded per brief. Hard-probed every per-file cap with real GETs this session."
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

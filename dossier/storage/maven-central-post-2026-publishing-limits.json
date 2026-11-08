@@ -1,0 +1,112 @@
+{
+  "topic": "storage",
+  "slug": "maven-central-post-2026-publishing-limits",
+  "provider": "Maven Central (Sonatype Central Portal) - post-2026 publishing limits",
+  "url": "https://central.sonatype.org",
+  "category": "registry",
+  "free_tier": {
+    "stated": "Maven Central introduced hard monthly *publishing* limits per organization in 2026. Three independent metrics: file count, release size, release count, evaluated as hard thresholds against the current calendar month, with a 30-day grace period on first breach (resets after 2 consecutive below-limit months). Thresholds are set near the top-10% of publishers; the published distribution table gives 90th percentile = 1,167 files / 78 MB release size / 7 releases per month, 99th = 17,724 / 1,808 MB / 50. Separately, from 2026-10-01, any artifact with a 'commercial nature' requires a paid Publisher Pro subscription regardless of volume.",
+    "unit": "objects",
+    "metered_on": "unstated",
+    "source_url": "https://central.sonatype.org/publish/maven-central-publishing-limits/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://central.sonatype.org/publish/maven-central-publishing-limits/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "Three independent metrics: file count, release size, release count, evaluated as hard thresholds against the current calendar month, with a 30-day grace period on first breach (resets after 2 consecutive below-limit months)",
+    "days": 30,
+    "source_url": "https://central.sonatype.org/publish/maven-central-publishing-limits/",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free and effectively unmetered for consumers - repo1.maven.org is a heavyweight CDN. Publishing is what is metered, not download.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rclone"
+  ],
+  "interface_detail": "rest",
+  "tooling": "`mvn deploy` / central-publishing-maven-plugin, `gradle` publishing, `curl` to the Central Portal API, and plain HTTPS Maven-layout GETs from repo1.maven.org. No rclone backend.",
+  "chaining": "unlimited namespaces/group-ids x unlimited organizations x (monthly release-size threshold, ~78 MB at p90, ~1.8 GB at p99). Because limits are per *organization per month* and reset monthly, an organization publishing 1.8 GB/month sustained is ~21.6 GB/year - three orders of magnitude short of 20 TiB. Multiplying by many free organizations multiplies the account surface, not the rate, and every org has the same monthly reset.",
+  "limits": [],
+  "limits_note": "per-object-cap: none stated for a single artifact, but release *size* is the metered metric. request-rate: publishing limits are monthly per-org (file count / release size / release count). retention: indefinite for already-published artifacts - 'Public artifacts already published to Maven Central remain available for download.' Enforcement blocks *new releases*, not existing storage. Commercial-nature artifacts require Publisher Pro from 2026-10-01.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "country": null
+  },
+  "reliability_note": "The 2026 change is the important signal for the whole niche: the largest free package registry concluded that '10% of namespaces accounted for more than 88% of all files published' and moved to hard monthly thresholds plus a commercial-use gate. Any plan that treats a public registry as a bulk blob store is now rate-limited at ~GB/month/org, not capped at a total. Already partly covered in round 1 C-C2; the exact thresholds table and the commercial-nature gate are new.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://central.sonatype.org/publish/maven-central-publishing-limits/",
+      "date": "2026-10-21",
+      "proved": "'These limits are evaluated as hard thresholds against an organization's usage during the current calendar month'; percentile table (p90: 1,167 files / 78 MB / 7 releases; p99: 17,724 / 1,808 MB / 50)"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "same page - '30-day grace period rather than immediate enforcement'; 'Commercial-nature artifacts require Maven Central Publisher Pro from October 1, 2026'"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "same page - 'Public artifacts already published to Maven Central remain available for download.'"
+    },
+    {
+      "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-compiler/1.9.0/kotlin-compiler-1.9.0.jar",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, 60,219,212 bytes, application/java-archive"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "Maven Central introduced hard monthly *publishing* limits per organization in 2026. Three independent metrics: file count, release size, release count, evaluated as hard thresholds against the current calendar month, with a 30-day grace period on first breach (resets after 2 consecutive below-limit months). Thresholds are set near the top-10% of publishers; the published distribution table gives 90th percentile = 1,167 files / 78 MB release size / 7 releases per month, 99th = 17,724 / 1,808 MB / 50. Separately, from 2026-10-01, any artifact with a 'commercial nature' requires a paid Publisher Pro subscription regardless of volume.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H7-software-archives.json",
+    "seed_area": "H/H7",
+    "seed_verdict": [
+      {
+        "value": "fails-quota",
+        "area": "H/H7"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Maven Central introduced hard monthly *publishing* limits per organization in 2026. Three independent metrics: file count, release size, release count, evaluated as hard thresholds against the current calendar month, with a 30-day grace period on first breach (resets after 2 consecutive below-limit months). Thresholds are set near the top-10% of publishers; the published distribution table gives 90th percentile = 1,167 files / 78 MB release size / 7 releases per month, 99th = 17,724 / 1,808 MB / 50. Separately, from 2026-10-01, any artifact with a 'commercial nature' requires a paid Publisher Pro subscription regardless of volume.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area H/H7"
+    },
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Software archives",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": true,
+    "quota_verbatim": "Maven Central introduced hard monthly *publishing* limits per organization in 2026. Three independent metrics: file count, release size, release count, evaluated as hard thresholds against the current calendar month, with a 30-day grace period on first breach (resets after 2 consecutive below-limit months). Thresholds are set near the top-10% of publishers; the published distribution table gives 90th percentile = 1,167 files / 78 MB release size / 7 releases per month, 99th = 17,724 / 1,808 MB / 50. Separately, from 2026-10-01, any artifact with a 'commercial nature' requires a paid Publisher Pro subscription regardless of volume.",
+    "limits_verbatim": "per-object-cap: none stated for a single artifact, but release *size* is the metered metric. request-rate: publishing limits are monthly per-org (file count / release size / release count). retention: indefinite for already-published artifacts - 'Public artifacts already published to Maven Central remain available for download.' Enforcement blocks *new releases*, not existing storage. Commercial-nature artifacts require Publisher Pro from 2026-10-01.",
+    "egress_verbatim": "Free and effectively unmetered for consumers - repo1.maven.org is a heavyweight CDN. Publishing is what is metered, not download.",
+    "chaining_verbatim": "unlimited namespaces/group-ids x unlimited organizations x (monthly release-size threshold, ~78 MB at p90, ~1.8 GB at p99). Because limits are per *organization per month* and reset monthly, an organization publishing 1.8 GB/month sustained is ~21.6 GB/year - three orders of magnitude short of 20 TiB. Multiplying by many free organizations multiplies the account surface, not the rate, and every org has the same monthly reset.",
+    "tooling_verbatim": "`mvn deploy` / central-publishing-maven-plugin, `gradle` publishing, `curl` to the Central Portal API, and plain HTTPS Maven-layout GETs from repo1.maven.org. No rclone backend.",
+    "interface_verbatim": "rest",
+    "agent_focus": "Software preservation + package-archive mirrors as free bulk storage: which ones accept arbitrary blobs at scale, and what the per-artifact / monthly / retention caps actually are. Sources limited to pages opened in this session; every quota below was read live or from a dated archive capture."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

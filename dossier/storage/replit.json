@@ -1,0 +1,105 @@
+{
+  "topic": "storage",
+  "slug": "replit",
+  "provider": "Replit (App Storage)",
+  "url": "https://replit.com",
+  "category": "paas",
+  "free_tier": {
+    "stated": "No free storage allowance. App Storage is metered: $0.015/GiB/mo storage, $0.05/GiB data transfer, $0.0004/1k basic ops.",
+    "unit": "GiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://docs.replit.com/billing/object-storage-billing",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://docs.replit.com/billing/object-storage-billing",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://docs.replit.com/billing/object-storage-billing",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "'App Storage Data Transfer: $0.05 per GiB' — plain metered egress, no free allowance.",
+    "metered": true
+  },
+  "interface": [
+    "s3",
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "S3-shaped API on top of GCS (buckets, access policies); usable with standard S3 tooling.",
+  "chaining": "None. Metered storage plus metered egress means multiplying accounts multiplies the bill, not the capacity.",
+  "limits": [],
+  "limits_note": "7-day minimum billing period per object; Starter plan gets 1 published app whose link 'will automatically go down after 30 days'; per-account storage limits are 'determined by plan' and not published as a number.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: No free storage allowance. App Storage is metered: $0.015/GiB/mo storage, $0.05/GiB data transfer, $0.0004/1k basic ops. Technically solid (backed by GCS) but economicall",
+    "country": null
+  },
+  "reliability_note": "Technically solid (backed by GCS) but economically the opposite of what we want: it is a paid object store wearing a notebook UI.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://docs.replit.com/billing/object-storage-billing",
+      "date": "2026-10-21",
+      "proved": "price table: '$0.015 per GiB per month', 'Data Transfer $0.05 per GiB'"
+    },
+    {
+      "url": "https://docs.replit.com/billing/plans/starter-plan",
+      "date": "2026-10-21",
+      "proved": "'This published link will automatically go down after 30 days'"
+    },
+    {
+      "url": "https://docs.replit.com/legal-and-security-info/usage",
+      "date": "2026-10-21",
+      "proved": "'Storage per account: determined by plan (hard)'"
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No free storage allowance. App Storage is metered: $0.015/GiB/mo storage, $0.05/GiB data transfer, $0.0004/1k basic ops.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "G-G5-notebooks-compute.json",
+    "seed_area": "G/G5",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "G/G5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "egress",
+      "why": "No free storage allowance. App Storage is metered: $0.015/GiB/mo storage, $0.05/GiB data transfer, $0.0004/1k basic ops.",
+      "retry_when": "if the egress meter is removed or a Cloudflare path is added",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area G/G5"
+    },
+    "target_document": "docs/storage/free/odd-substrates.md",
+    "document_section": "Notebook disks and compute-attached storage",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 3,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "No free storage allowance. App Storage is metered: $0.015/GiB/mo storage, $0.05/GiB data transfer, $0.0004/1k basic ops.",
+    "limits_verbatim": "7-day minimum billing period per object; Starter plan gets 1 published app whose link 'will automatically go down after 30 days'; per-account storage limits are 'determined by plan' and not published as a number.",
+    "egress_verbatim": "'App Storage Data Transfer: $0.05 per GiB' — plain metered egress, no free allowance.",
+    "chaining_verbatim": "None. Metered storage plus metered egress means multiplying accounts multiplies the bill, not the capacity.",
+    "tooling_verbatim": "S3-shaped API on top of GCS (buckets, access policies); usable with standard S3 tooling.",
+    "interface_verbatim": "rest",
+    "agent_focus": "notebook/compute hosts and the persistent disk bundled with them — can a free compute box double as storage and as an HTTP origin"
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

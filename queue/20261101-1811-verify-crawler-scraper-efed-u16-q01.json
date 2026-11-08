@@ -1,0 +1,14 @@
+{
+ "id": "20261101-1811-verify-crawler-scraper-efed-u16-q01",
+ "kind": "verify",
+ "topic": "crawler-scraper",
+ "question": "Measure a keyless POST https://api.spider.cloud/scrape with the JSON body {\"url\": \"https://example.com\", \"return_format\": \"markdown\"} several times in one minute: status, bytes, whether the body holds page content, RateLimit-Limit, RateLimit-Remaining, RateLimit-Reset, the 429 answer, and how many calls pass in a minute against free_rpm 4 (8 of 12 parallel keyless GETs passed in one minute).",
+ "why": "scripts/probe/probe.py sends only GET and HEAD and broker.sh fetch sends only GET and HEAD, so no lane command can send a POST with a body. A keyless GET answers 400 with no page content and reaches the same free tier limiter (429, free_rpm 4), so it cannot show whether the POST returns content or counts against the same limit. Needs a probe tool with a method and a body option, then a unit whose Start from names the POST probe records for a lane to register.",
+ "scope": {
+  "rids": [
+   "crawler-scraper/spider"
+  ]
+ },
+ "origin": "20261101-1811-verify-crawler-scraper-efed/u16",
+ "created": "2026-11-02T01:02:36Z"
+}

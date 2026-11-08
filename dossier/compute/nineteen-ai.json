@@ -1,0 +1,111 @@
+{
+  "topic": "compute",
+  "slug": "nineteen-ai",
+  "provider": "Nineteen AI",
+  "url": "https://nineteen.ai/",
+  "category": "inference API",
+  "free_tier": {
+    "stated": "Bittensor subnet 19 (Rayon Labs) advertises Llama 3.1 8B at 'Less Than $0.00 / M Tokens', footnoted 'currently'. The app exposes an API key page and an OpenAI-compatible endpoint at api.nineteen.ai/v1.",
+    "unit": "none",
+    "metered_on": "wall-clock",
+    "source_url": "https://nineteen.ai/",
+    "read_on": "2026-10-22",
+    "notes": "perpetual"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://nineteen.ai/",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+  },
+  "retention": {
+    "stated": "not applicable: the unit is a machine or an account, not stored bytes",
+    "days": null,
+    "source_url": "https://nineteen.ai/",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+  },
+  "egress": {
+    "terms": "not published on the page read: no egress term was found, so nothing is asserted",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://nineteen.ai/"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "REST API: an OpenAI-style chat completions endpoint at https://api.nineteen.ai/v1/chat/completions with a bearer API key, documented at nineteen.ai/app/api with curl, Python SDK and JavaScript SDK examples.",
+  "tooling": "curl against https://api.nineteen.ai/v1/chat/completions; the API page lists Python SDK and JavaScript SDK examples.",
+  "chaining": "A free OpenAI-compatible endpoint is a drop-in for any agent loop that expects a base_url and a key, so it chains with local tooling without a gateway.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "The price is zero while the subnet subsidises it; no limit is published, so the first real limit is an undocumented per-key rate limit and the second is the subsidy ending.",
+      "source": "https://nineteen.ai/"
+    }
+  ],
+  "limits_note": "The price is zero while the subnet subsidises it; no limit is published, so the first real limit is an undocumented per-key rate limit and the second is the subsidy ending.",
+  "binding": "request-rate",
+  "binding_note": "The price is zero while the subnet subsidises it; no limit is published, so the first real limit is an undocumented per-key rate limit and the second is the subsidy ending.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "as stated by the provider's signup page",
+    "country": null
+  },
+  "reliability_note": "no reliability event observed in this session",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20260518235026/https://nineteen.ai/?provider=wayback",
+      "date": "2026-10-22",
+      "proved": "Wayback capture of 2026-05-18 reads 'Llama 3.1 8b Less Than $0.00* / M Tokens * currently'"
+    },
+    {
+      "url": "https://app.sn19.ai/app",
+      "date": "2026-10-22",
+      "proved": "search index of the live app on 2026-10-22 still shows 'Less Than $0.00 /M Tokens' and an operational status line"
+    },
+    {
+      "url": "https://nineteen.ai/app/api",
+      "date": "2026-10-22",
+      "proved": "API key page with a bearer token and an OpenAI-style chat/completions endpoint"
+    },
+    {
+      "url": "https://nineteen.ai/app/api",
+      "date": "2026-11-04",
+      "proved": "an HTTP chat-completions endpoint is documented with curl, Python and JavaScript SDK examples",
+      "capture": "sha256:586036fd96310932330bd35958fe1526241d4b4b7986843ccdd2ca257d153f32",
+      "quote": "curl \"https://api.nineteen.ai/v1/chat/completions\""
+    },
+    {
+      "url": "https://nineteen.ai/app/api",
+      "date": "2026-11-04",
+      "proved": "the API page documents an HTTP chat-completions endpoint with curl examples",
+      "capture": "sha256:586036fd96310932330bd35958fe1526241d4b4b7986843ccdd2ca257d153f32",
+      "quote": "curl \"https://api.nineteen.ai/v1/chat/completions\""
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T06:40:26.615Z",
+  "notes": "The origin answered the broker with a 429 bot challenge on / and /pricing, so the live page could not be read; the 2026-05-18 capture is the quotable source and the live figure is only a search-index snippet. Whether signup needs an email alone or an OAuth account was not verified. What would settle the quota is one authenticated request per minute for an hour.",
+  "extras": {
+    "wave2": {
+      "provider_as_written": "Nineteen AI",
+      "class": "decentralized-free-inference",
+      "category_as_written": "inference API",
+      "free_tier_kind": "perpetual",
+      "shape": null,
+      "seen_routes": [
+        "broker read 409 challenge nineteen.ai",
+        "broker read 409 challenge app.sn19.ai/pricing",
+        "broker archive 200 wayback 2026-05-18",
+        "broker read 200 replay",
+        "broker search 200"
+      ],
+      "agents": [
+        "decentralized"
+      ],
+      "promoted_from": ".tmp/wave2"
+    }
+  }
+}

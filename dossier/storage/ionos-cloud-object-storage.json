@@ -1,0 +1,104 @@
+{
+  "topic": "storage",
+  "slug": "ionos-cloud-object-storage",
+  "provider": "IONOS CLOUD Object Storage",
+  "url": "https://cloud.ionos.com/storage/object-storage",
+  "category": "S3-compatible object storage",
+  "free_tier": {
+    "stated": "Per-GB-month; \"Just 4.99 Dollar per TB for 30 days\"; multi-region redundant",
+    "unit": "GB",
+    "metered_on": "unstated",
+    "source_url": "https://cloud.ionos.com/storage/object-storage",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://cloud.ionos.com/storage/object-storage",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://cloud.ionos.com/storage/object-storage",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "NOT free, and this is the trap. Verbatim from the price list: \"Outgoing public traffic | For the first 2 TB (<= 2 TB) | Free / The next 8 TB (> 2 TB <= 10 TB) | $0.036/GB / The next 40 TB (> 10 TB <= 50 TB) | $0.030/GB\". All reads, writes (\"Data Storage (write)\") and requests are free — only egress is metered. Outgoing traffic from user-owned buckets is always charged as regular public traffic.",
+    "metered": true
+  },
+  "interface": [
+    "s3-compatible",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "S3 API",
+  "tooling": "AWS CLI, rclone, S3 SDKs",
+  "chaining": "Only viable behind Cloudflare, which converts the $36/TB egress into CF's free egress.",
+  "limits": [],
+  "limits_note": "`per-object`/class limits not the issue — the tiered egress ladder is. Above 150 TB it drops to $0.018/GB but never reaches zero.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "card",
+    "country": null
+  },
+  "reliability_note": "Solid multi-region EU/US infrastructure; the pricing model simply assumes you do not read your data.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://cloud.ionos.com/storage/object-storage",
+      "date": "2026-10-21",
+      "proved": "\"Unbeatable price-performance ratio at $4.99/TB\"; \"Data Storage (write) | Free\", \"Data Retrieval (read) | Free\", \"PUT / COPY / POST / LIST | Free\", \"GET | Free\"; \"Data transmission costs are not included and will be added according to the current pricing\""
+    },
+    {
+      "url": "https://cloud.ionos.com/prices",
+      "date": "2026-10-21",
+      "proved": "\"Outgoing public traffic: first 2 TB Free; next 8 TB $0.036/GB; next 40 TB $0.030/GB; next 100 TB $0.024/GB; over 150 TB $0.018/GB\"; \"Outgoing Object Storage traffic from user-owned buckets is always charged as regular public traffic\""
+    }
+  ],
+  "verdict": "fails-egress",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "price_per_tb_month": "$4.99/TB at 5 TB and 20 TB for storage — but serving 20 TB/month costs $648 in egress alone (2 TB free + 18 TB x $36/TB), i.e. effective $32/TB+.",
+  "notes": "Per-GB-month; \"Just 4.99 Dollar per TB for 30 days\"; multi-region redundant",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "A-P3-object-storage-nonbig3.json",
+    "seed_area": "A/P3",
+    "seed_verdict": [
+      {
+        "value": "fails-egress",
+        "area": "A/P3"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "Per-GB-month; \"Just 4.99 Dollar per TB for 30 days\"; multi-region redundant",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area A/P3"
+    },
+    "target_document": "docs/storage/paid/object-storage.md",
+    "document_section": "S3-compatible object storage below the big three",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 2,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "Per-GB-month; \"Just 4.99 Dollar per TB for 30 days\"; multi-region redundant",
+    "limits_verbatim": "`per-object`/class limits not the issue — the tiered egress ladder is. Above 150 TB it drops to $0.018/GB but never reaches zero.",
+    "egress_verbatim": "NOT free, and this is the trap. Verbatim from the price list: \"Outgoing public traffic | For the first 2 TB (<= 2 TB) | Free / The next 8 TB (> 2 TB <= 10 TB) | $0.036/GB / The next 40 TB (> 10 TB <= 50 TB) | $0.030/GB\". All reads, writes (\"Data Storage (write)\") and requests are free — only egress is metered. Outgoing traffic from user-owned buckets is always charged as regular public traffic.",
+    "chaining_verbatim": "Only viable behind Cloudflare, which converts the $36/TB egress into CF's free egress.",
+    "identity_verbatim": "card",
+    "tooling_verbatim": "AWS CLI, rclone, S3 SDKs",
+    "interface_verbatim": "S3 API",
+    "price_verbatim": "$4.99/TB at 5 TB and 20 TB for storage — but serving 20 TB/month costs $648 in egress alone (2 TB free + 18 TB x $36/TB), i.e. effective $32/TB+.",
+    "agent_focus": "Cheap-paid lane: S3-compatible object storage outside AWS/Azure/GCP/Alibaba/Cloudflare/B2/IDrive-e2. Target = true $/TB/month floor with free-or-generous egress, computed at the 5 TB and 20 TB tiers. EUR->USD at 1.1234 (frankfurter.app, 2026-10-21)."
+  },
+  "binding": "none",
+  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

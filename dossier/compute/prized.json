@@ -1,0 +1,230 @@
+{
+  "topic": "compute",
+  "slug": "prized",
+  "provider": "Prized",
+  "url": "https://prized.dev/docs/billing",
+  "category": "dev environment",
+  "free_tier": {
+    "stated": "'New workspaces get $30 of free credit, once per person ... and the tour starts a box on it with no card. It does not refill.' While on the credit alone: sizes Nano to Small only, one box at a time, no process at full CPU for more than 30 minutes.",
+    "unit": "mixed",
+    "metered_on": "wall-clock",
+    "source_url": "https://prized.dev/docs/billing",
+    "read_on": "2026-10-24",
+    "notes": "Smallest grant in the lane, but the only one whose meters let a single credit run a box for multiple months."
+  },
+  "per_object_cap": {
+    "stated": "On the free credit 'Nano, Micro, Extra Small, or Small only'; Medium and larger answer `409 tier_unavailable`. A Nano is 2 vCPU / 2 GB / 40 GB at USD 0.014 an hour awake.",
+    "bytes": null,
+    "source_url": "https://prized.dev/docs/billing",
+    "notes": "A Small is 4 vCPU / 16 GB / 300 GB at USD 0.137 an hour, which burns the whole USD 30 in nine days."
+  },
+  "retention": {
+    "stated": "Asleep, a box costs only its disk at USD 0.0001 per GB-hour; a Small asleep for a month is about USD 22. Credit rolls over up to two months of the plan.",
+    "days": null,
+    "source_url": "https://prized.dev/docs/billing"
+  },
+  "egress": {
+    "terms": "not published: the billing, machines, sandboxes and pricing pages state no egress allowance and no overage price; outbound traffic from a box is not filtered",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://prized.dev/docs/billing"
+  },
+  "interface": [
+    "ssh",
+    "cli",
+    "rest"
+  ],
+  "interface_detail": "SSH to the box (plain ssh or prized ssh); the prized CLI (macOS, Linux, Windows); an HTTP API for boxes and sandboxes; a browser dashboard",
+  "tooling": "not stated in the source card",
+  "chaining": "not established; the source card prices a machine, not a route into one",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "USD 30 one-time free credit, once per person",
+      "source": "https://prized.dev/docs/billing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "one box at a time on the credit",
+      "source": "https://prized.dev/docs/billing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "no process at full CPU for more than 30 minutes on the credit",
+      "source": "https://prized.dev/docs/billing"
+    }
+  ],
+  "limits_note": "The 30-minute full-CPU rule can pause the workspace and answer 409 workspace_held on the next create or wake; it is a use cap that no other provider here imposes.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "'the tour starts a box on it with no card' and the credit is once per person by email or by Google or GitHub account. No card, no phone, no ID at signup; paid plans use Stripe Checkout, cards only.",
+    "country": null
+  },
+  "reliability_note": "On the credit a box auto-pauses itself after 2 hours idle unless the window is changed or switched off per box; it never pauses in its first 24 hours.",
+  "confidence": "documented",
+  "confidence_note": "Every number is from the billing page read today. Not observed: whether the 30-minute CPU rule is enforced by cgroup throttling or by pausing, which decides whether a long build is slowed or killed.",
+  "evidence": [
+    {
+      "url": "https://prized.dev/docs/billing",
+      "date": "2026-10-02",
+      "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
+    },
+    {
+      "url": "https://prized.dev/docs/billing",
+      "date": "2026-10-22",
+      "proved": "'Nano (nano) 2 vCPU / 2 GB, 40 GB, $0.014 an hour awake, $0.004 an hour asleep, $10 a month to run 24/7' with 'Pausing keeps the money' and 'While the workspace runs on the free credit alone: One box at a time' and 'Credit rolls over up to two months', quoted"
+    },
+    {
+      "url": "https://prized.dev/docs/billing",
+      "date": "2026-10-24",
+      "proved": "quoted: 'New workspaces get $30 of free credit, once per person, as the owner walks through onboarding or first signs in with `prized login` through the browser; it spends like paid credit, and the tour starts a box on it with no card.'; 'Awake around the clock, the credit lasts about three months on a Nano, five weeks on a Micro, nine days on a Small'; 'No process at full CPU for more than 30 minutes'."
+    },
+    {
+      "url": "https://prized.dev/docs/billing",
+      "date": "2026-10-24",
+      "proved": "quoted box table: 'Nano (`nano`) | 2 vCPU / 2 GB | 40 GB | $0.014 an hour | $0.004 an hour | $10 a month'; 'Small (`flow`) | 4 vCPU / 16 GB | 300 GB | $0.137 an hour'."
+    },
+    {
+      "url": "https://prized.dev/docs/machines",
+      "date": "2026-11-03",
+      "proved": "outbound traffic is unfiltered; no allowance or price is stated",
+      "capture": "sha256:ca43284b6e8ba73e1a26f9adff6b0b5358d540a1bf6457f18a6533b969a97f04",
+      "quote": "| Outbound | Not filtered |"
+    },
+    {
+      "url": "https://prized.dev/docs",
+      "date": "2026-11-03",
+      "proved": "SSH access is documented",
+      "capture": "sha256:aa291e2ea0d1872eec5eb3a985188183f266f7399fcdb306262c5201c8159be1",
+      "quote": "You edit and run everything on the box over SSH."
+    },
+    {
+      "url": "https://prized.dev/",
+      "date": "2026-11-03",
+      "proved": "an HTTP API and a CLI exist",
+      "capture": "sha256:54772d4da94f3b9ecd5b36bd42171d01f2233ea103811c66d879bd314d262878",
+      "quote": "through the HTTP API or the `prized` CLI."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-04T05:24:12.407Z",
+  "price_per_tb_month": null,
+  "notes": "USD 30 / USD 0.014 = 2,143 hours, which is 89 days of a 2 vCPU / 2 GB box with no card. The page's own claim of 'about three months on a Nano' matches. This is the longest no-card calendar coverage in the lane and it is a real VM, not a sandbox, but a 2 vCPU / 2 GB box is also the smallest shape any row here offers for a full month.",
+  "extras": {
+    "seed_status": "ranked",
+    "talaria_m10h_usd": 10.27,
+    "talaria_m24h_usd": 24.66,
+    "nemo_m10h_usd": 10.27,
+    "keep_rate": 1.0,
+    "keep_rate_basis": "billed for uptime (no suspension feature published)",
+    "billing_model": "per-second while awake, per GB-hour while asleep",
+    "shape": {
+      "vcpu": 2,
+      "ram_gib": 2,
+      "disk_gib": 40,
+      "gpu_class": null,
+      "gpu_count": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": 7200,
+      "restart_required": false,
+      "note": "2-hour idle auto-pause by default on the credit; can be changed per box or switched off"
+    },
+    "persistent_storage": null,
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "all",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "price_note": "a price without a shape and a horizon is not a price; both columns are kept because the two seed models disagree and neither is wrong",
+    "free_tier_kind": "one-time-credit",
+    "burst_x": 1.0,
+    "minimum_bill_source": "sources/p/61/61bc225f00bd19a0d4dadbd308c5efa5efaf054cee81e3ce0e701dfe7cd005ed.json.gz and sources/p/5c/5c76c170ac901d25964c9a0ad470bc2c046bd1c98be534ce2a8c3d445da9271e.json.gz, both 2026-10-02; restored 2026-10-22",
+    "free_tier_kind_basis": "decided from the page read on 2026-10-22",
+    "ps": {
+      "gib": 40,
+      "price": "$0.0001 a GB-hour while asleep",
+      "durability": "disk survives a pause",
+      "on_stop": true,
+      "on_destroy": false,
+      "retention": "until deleted"
+    },
+    "net": null,
+    "shape_max_on_credit": {
+      "vcpu": 4,
+      "ram_gib": 16,
+      "disk_gib": 300
+    },
+    "term": "one-time credit",
+    "m10h_usd": 4.2,
+    "m24h_usd": 10.22,
+    "price_arithmetic": "0.014/h x 730 = 10.22 a month; 30 / 0.014 = 2143 h = 89.3 days",
+    "credit_usd": 30,
+    "credit_months_at_shape": 2.9,
+    "credit_hours_at_shape": 2143,
+    "credit_expiry": "does not refill; rollover on a paid plan is two months",
+    "superseded": {
+      "free_tier": {
+        "stated": "free credit that allows one box at a time; a Nano is 2 vCPU, 2 GB and 40 GB at $0.014 an hour awake and $0.004 asleep, and the credit rolls over for up to two months",
+        "unit": "mixed",
+        "metered_on": "wall-clock",
+        "source_url": "https://prized.dev/docs/billing",
+        "read_on": "2026-10-22"
+      },
+      "per_object_cap": {
+        "stated": "not stated in the source card",
+        "bytes": null,
+        "source_url": "https://prized.dev/docs/billing",
+        "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
+      },
+      "retention": {
+        "stated": "not stated in the source card",
+        "days": null,
+        "source_url": "https://prized.dev/docs/billing",
+        "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+      },
+      "egress": {
+        "terms": "not published on the source card",
+        "metered": false,
+        "free_allowance": null,
+        "price_per_tb": null,
+        "source_url": "https://prized.dev/docs/billing"
+      },
+      "limits": [
+        {
+          "kind": "request-rate",
+          "value": "one box at a time on free credit; a plan raises the cap to 100",
+          "source": "https://prized.dev/docs/billing"
+        },
+        {
+          "kind": "retention-clamped",
+          "value": "an asleep box bills $0.0001 a GB-hour of the disk it has, so a Small asleep for a month is about $22",
+          "source": "https://prized.dev/docs/billing"
+        },
+        {
+          "kind": "per-object-cap",
+          "value": "credit rolls over for up to two months and the excess lapses",
+          "source": "https://prized.dev/docs/billing"
+        }
+      ],
+      "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+      "binding": "request-rate",
+      "identity_cost": {
+        "kind": "email",
+        "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+        "country": null
+      },
+      "reliability_note": "no reliability event recorded in the source passes",
+      "confidence_note": "the billing documentation was read on 2026-10-22 and states the free-credit rules, the size ladder with awake and asleep rates, and the rollover. The asleep rate is the keeper cost and no record carried it",
+      "verified_at": "2026-10-22T04:47:48.000Z"
+    }
+  },
+  "binding": "volume-quota",
+  "tier": "free credit (no plan)",
+  "binding_note": "The 30-minute full-CPU rule is what fails first for any real build; the credit itself is generous at the Nano size."
+}

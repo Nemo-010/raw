@@ -1,0 +1,198 @@
+{
+  "topic": "storage",
+  "slug": "hydroshare",
+  "provider": "HydroShare (CUAHSI)",
+  "url": "https://www.hydroshare.org",
+  "category": "research-data-repository",
+  "free_tier": {
+    "stated": "20 GB automatic on account creation, with an increase process that is explicitly designed to succeed: 'if needed, request reasonable quota increase … all reasonable requests will be approved subject to system capacity limitations'. No absolute ceiling is published — the only stated limit is capacity. So the honest number is 20 GB default with an unbounded-by-documentation increase path, and any 500 GB+ claim depends on a human granting it. A second lever: on publish, the storage is transferred off the author's quota — 'CUAHSI will assume the burden of storage for published resources' — so publishing frees the quota for reuse.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://help.hydroshare.org/about-hydroshare/policies/quota/",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://help.hydroshare.org/about-hydroshare/policies/quota/",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://help.hydroshare.org/about-hydroshare/policies/quota/",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free and anonymous. Verified: the resource data endpoint serves a bagit zip to a logged-out client with no credentials.",
+    "metered": false
+  },
+  "interface": [
+    "s3",
+    "rest"
+  ],
+  "interface_detail": "rest",
+  "tooling": "HS REST API at /hsapi/ (I got 137,978 bytes of JSON from /hsapi/resource/?format=json with no auth). There is also a documented external-storage mount feature that lets you register a resource whose bytes live in your own S3/iRODS instead of HydroShare — that is the interesting chaining primitive, because it makes HydroShare a metadata/DOI layer over storage you already have.",
+  "chaining": "Resources are unlimited; quota is per-user and transferable ('The quota holder … can be transferred between owner[s]'). Publishing moves the bytes off your quota onto CUAHSI's, then the freed 20 GB is reusable — so the pattern is publish-then-refill, repeated. Community/group resources can pool several members' quotas.",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "approved subject to system capacity limitations'",
+      "source": "https://help.hydroshare.org/about-hydroshare/policies/quota/"
+    },
+    {
+      "kind": "write-gated",
+      "value": "reviewed' but are a manual queue",
+      "source": "https://help.hydroshare.org/about-hydroshare/policies/quota/"
+    }
+  ],
+  "limits_note": "write-gated on the increase (email a human), and the quota is small by default. Discipline mismatch: it is a hydrology repository, so non-hydrology payloads are off-genre even though nothing technically enforces it.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "US NSF-funded via CUAHSI; anonymous bagit download verified working this session. Increase requests are 'promptly reviewed' but are a manual queue.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://help.hydroshare.org/about-hydroshare/policies/quota/",
+      "date": "2026-10-21",
+      "proved": "opened: 'The automatic quota allocation upon account creation is 20 gigabytes … request reasonable quota increase … all reasonable requests will be approved subject to system capacity limitations'; 'once a resource is published … CUAHSI will assume the burden of storage for published resources.'"
+    },
+    {
+      "url": "https://casrai.org/guides/cuahsi-hydroshare-hydrology-data-repository",
+      "date": "2026-10-21",
+      "proved": "opened: 'Browsing and downloading public resources requires no account, and creating an account to upload, manage, and publish resources is also free.'"
+    },
+    {
+      "url": "https://www.hydroshare.org/hsapi/resource/?format=json",
+      "date": "2026-10-21",
+      "proved": "PROBED: curl -> HTTP 200, 137,978 bytes of JSON. Anonymous REST read works."
+    },
+    {
+      "url": "https://www.hydroshare.org/hsapi/resource/999b9319ec304924b3f3113ad75ffc23/?format=json",
+      "date": "2026-10-21",
+      "proved": "PROBED: curl -> HTTP 200, 211,663 bytes, body begins with the ZIP magic 'PK\\x03\\x04' and contains 999b9319…/bagit.txt. So the metadata endpoint returns a real bagit archive, not a stub — the object comes back."
+    },
+    {
+      "url": "https://www.hydroshare.org/resource/999b9319ec304924b3f3113ad75ffc23/data/contents/",
+      "date": "2026-10-21",
+      "proved": "PROBED: curl -> 200 but content-type application/json, 143 bytes — this specific path is an API descriptor, not the bytes. Distinguishing the two endpoints matters: /hsapi/resource/<id>/?format=json is the one that yields the archive."
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "20 GB automatic on account creation, with an increase process that is explicitly designed to succeed: 'if needed, request reasonable quota increase … all reasonable requests will be approved subject to system capacity limitations'. No absolute ceiling is published — the only stated limit is capacity. So the honest number is 20 GB default with an unbounded-by-documentation increase path, and any 500 GB+ claim depends on a human granting it. A second lever: on publish, the storage is transferred off the author's quota — 'CUAHSI will assume the burden of storage for published resources' — so publishing frees the quota for reuse.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D10-preprint-and-data-2026.json",
+    "seed_area": "D/D10",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D10"
+      },
+      {
+        "value": "fails-quota",
+        "area": "E/E15"
+      }
+    ],
+    "seed_confidence": "medium",
+    "merged_spellings": [
+      "HydroShare (CUAHSI)",
+      "HydroShare"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area D/D10",
+            "evidence": "quota: 20 GB automatic on account creation, with an increase process that is"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md row, area E/E15",
+            "evidence": "quota: 20 GB per account on creation, 'request reasonable quota increase' by"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area E/E15) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "20 GB automatic on account creation, with an increase process that is",
+            "source": "table.md row, area D/D10",
+            "evidence": null
+          },
+          {
+            "value": "20 GB per account on creation, 'request reasonable quota increase' by",
+            "source": "table.md row, area E/E15",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area D/D10)"
+          },
+          {
+            "value": "fails-quota",
+            "source": "table.md (area E/E15)"
+          }
+        ],
+        "resolution": "fails-quota: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies-with-caveat. The table.md (area E/E15) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies-with-caveat it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "20 GB automatic on account creation, with an increase process that is",
+            "source": "table.md (area D/D10)"
+          },
+          {
+            "value": "20 GB per account on creation, 'request reasonable quota increase' by",
+            "source": "table.md (area E/E15)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "dead_end": {
+      "failure_class": "quota",
+      "why": "20 GB automatic on account creation, with an increase process that is explicitly designed to succeed: 'if needed, request reasonable quota increase … all reasonable requests will be approved subject to system capacity limitations'. No absolute ceiling is published — the only stated limit is capacity. So the honest number is 20 GB default with an unbounded-by-documentation increase path, and any 500 GB+ claim depends on a human granting it. A second lever: on publish, the storage is transferred off the author's quota — 'CUAHSI will assume the burden of storage for published resources' — so publishing frees the quota for reuse.",
+      "retry_when": "if the free allowance rises above 500 GiB per unit",
+      "first_recorded": "2026-10-21",
+      "source": "table.md verdict for area D/D10"
+    },
+    "target_document": "docs/storage/free/academic.md",
+    "document_section": "Preprint and data repositories, 2026",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "20 GB automatic on account creation, with an increase process that is explicitly designed to succeed: 'if needed, request reasonable quota increase … all reasonable requests will be approved subject to system capacity limitations'. No absolute ceiling is published — the only stated limit is capacity. So the honest number is 20 GB default with an unbounded-by-documentation increase path, and any 500 GB+ claim depends on a human granting it. A second lever: on publish, the storage is transferred off the author's quota — 'CUAHSI will assume the burden of storage for published resources' — so publishing frees the quota for reuse.",
+    "limits_verbatim": "write-gated on the increase (email a human), and the quota is small by default. Discipline mismatch: it is a hydrology repository, so non-hydrology payloads are off-genre even though nothing technically enforces it.",
+    "egress_verbatim": "Free and anonymous. Verified: the resource data endpoint serves a bagit zip to a logged-out client with no credentials.",
+    "chaining_verbatim": "Resources are unlimited; quota is per-user and transferable ('The quota holder … can be transferred between owner[s]'). Publishing moves the bytes off your quota onto CUAHSI's, then the freed 20 GB is reusable — so the pattern is publish-then-refill, repeated. Community/group resources can pool several members' quotas.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "HS REST API at /hsapi/ (I got 137,978 bytes of JSON from /hsapi/resource/?format=json with no auth). There is also a documented external-storage mount feature that lets you register a resource whose bytes live in your own S3/iRODS instead of HydroShare — that is the interesting chaining primitive, because it makes HydroShare a metadata/DOI layer over storage you already have.",
+    "interface_verbatim": "rest",
+    "agent_focus": "2026-era research-data and data-marketplace platforms, deliberately judged on the BINDING constraint (does a person with only an email get past the write gate?) rather than on the marketing quota. Coverage: IEEE DataPort (the wave-7 discovery this slot confirms and extends), Mozilla Data Collective (2025 launch, the only new ≥100 GB-per-file free host found), Source Cooperative re-probed at the byte level, the French national Dataverse (Recherche Data Gouv) as the one genuinely EU-funded space with a self-serve email account, plus the 2026 data-marketplace entrants (Snowflake, Databricks Free Edition, data.world, Datarade, Tableland, Spice.ai, DataChain), the EU Data Spaces (Gaia-X / Catena-X / EOSC EU Node / DICE) and ResearchGate/Academia.edu data upload. Two structural results dominate: (a) the 'data marketplace' category is uniformly not storage — they are catalogues, and every one of them fails on per-object size by two to three orders of magnitude; (b) the EU Data Spaces are real and large but gated on eduGAIN/eIDAS identity, so they are closed on identity exactly like CSC Allas and LUMI-O before them."
+  },
+  "binding": "write-gated",
+  "binding_note": "the write is a queue with a person or a rule in it, so the upload rate is set by somebody else",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

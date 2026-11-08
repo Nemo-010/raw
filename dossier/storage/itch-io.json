@@ -1,0 +1,210 @@
+{
+  "topic": "storage",
+  "slug": "itch-io",
+  "provider": "itch.io (butler / Wharf)",
+  "url": "https://itch.io/docs/butler/pushing.html",
+  "category": "paas",
+  "free_tier": {
+    "stated": "30 GB uncompressed per build ('the itch.io backend will reject builds with a total uncompressed size that exceeds 30GB'). No documented total-account storage cap; project pages have a soft limit of 20, raisable on request. Free to host, unlimited downloads.",
+    "unit": "GB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://itch.io/docs/butler/pushing.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "per-object-cap: 30 GB",
+    "bytes": 30000000000,
+    "source_url": "https://itch.io/docs/butler/pushing.html",
+    "notes": "extracted from the quota or limits prose"
+  },
+  "retention": {
+    "stated": "per-object-cap: 30 GB uncompressed per build/channel; per-object-cap on HTML5 embeds: 500 MB total extracted and 200 MB per single extracted file; web uploader caps at 2 GB (500 MB default) but butler has no such limit; request-rate not a practical constraint. Retention: builds persist until deleted; no TTL.",
+    "source_url": "https://itch.io/docs/butler/pushing.html",
+    "notes": "extracted from the seed prose"
+  },
+  "egress": {
+    "terms": "Free and unmetered — 'There is no limit to downloads' (itch.io support reply). Files served from itch.zone CDN.",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "rsync",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "`butler` CLI (butler push / butler download / butler status) plus the Wharf HTTP API — GET https://api.itch.io/wharf/latest?target=user/game&channel_name=X returns the build manifest. butler does rsync-style block diffing so re-pushes are cheap.",
+  "chaining": "30 GB per build x unlimited channels per project (channel name is arbitrary: windows, osx, bonus, dlc-1, shard-01...) x up to 20+ projects per free account. 1 project x 20 channels = 600 GB on one free account. Each build is independently addressable and downloadable.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "per-object-cap: 30 GB",
+      "source": "https://itch.io/docs/butler/pushing.html"
+    }
+  ],
+  "limits_note": "per-object-cap: 30 GB uncompressed per build/channel; per-object-cap on HTML5 embeds: 500 MB total extracted and 200 MB per single extracted file; web uploader caps at 2 GB (500 MB default) but butler has no such limit; request-rate not a practical constraint. Retention: builds persist until deleted; no TTL.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: stinct builds rather than overwriting; butler auth uses an API key, and a project can be taken down by moderation (technical effect: URL 404s, data gone). 30 GB per build x unlimited",
+    "country": null
+  },
+  "reliability_note": "Pushing the same directory twice is a no-op, so versions accumulate as distinct builds rather than overwriting; butler auth uses an API key, and a project can be taken down by moderation (technical effect: URL 404s, data gone).",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://itch.io/docs/butler/pushing.html",
+      "date": "2026-10-21",
+      "proved": "'Limits: currently, the itch.io backend will reject builds with a total uncompressed size that exceeds 30GB.'"
+    },
+    {
+      "url": "https://itch.io/t/46291/uploading-large-games-faq",
+      "date": "2026-10-21",
+      "proved": "'butler is a more advanced uploader and has no such technical limits'; web uploader 2 GB ceiling"
+    },
+    {
+      "url": "https://itch.io/t/6077449/more-project-space",
+      "date": "2026-10-21",
+      "proved": "'There is no limit to downloads'; butler raises per-project limit to 2 GB instantly, further on request"
+    },
+    {
+      "url": "https://api.itch.io/wharf/latest?target=test/test&channel_name=windows",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200 {\"errors\":[\"invalid game\"]} — endpoint is live and validating, i.e. the manifest read path is public"
+    },
+    {
+      "url": "https://img.itch.zone/aW1nLzE2ODI3NDY4LnBuZw==/original/ljN55Y.png",
+      "date": "2026-10-21",
+      "proved": "probe: GET -> 200, 39871 bytes, image/png — itch.zone CDN serves originals anonymously, no referer chain"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "30 GB uncompressed per build ('the itch.io backend will reject builds with a total uncompressed size that exceeds 30GB'). No documented total-account storage cap; project pages have a soft limit of 20, raisable on request. Free to host, unlimited downloads.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "F-F6-game-cloud-saves.json",
+    "seed_area": "F/F6",
+    "seed_verdict": [
+      {
+        "value": "qualifies",
+        "area": "F/F6"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H14"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H6"
+      }
+    ],
+    "seed_confidence": "high",
+    "merged_spellings": [
+      "itch.io (butler / Wharf)",
+      "itch.io (butler CLI)",
+      "itch.io"
+    ],
+    "conflicts": [
+      {
+        "field": "verdict",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md row, area F/F6",
+            "evidence": "quota: 30 GB uncompressed per build ('the itch.io backend will reject builds"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area H/H14",
+            "evidence": "quota: 30 GB per build via butler. Official docs: 'Lets you upload builds up"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md row, area H/H6",
+            "evidence": "quota: 30 GB total uncompressed size per pushed build ('the itch.io backend w"
+          }
+        ],
+        "resolution": "qualifies-with-caveat: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies. The table.md (area H/H14) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "30 GB uncompressed per build ('the itch.io backend will reject builds",
+            "source": "table.md row, area F/F6",
+            "evidence": null
+          },
+          {
+            "value": "30 GB per build via butler. Official docs: 'Lets you upload builds up",
+            "source": "table.md row, area H/H14",
+            "evidence": null
+          },
+          {
+            "value": "30 GB total uncompressed size per pushed build ('the itch.io backend w",
+            "source": "table.md row, area H/H6",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "verdict",
+        "class": "same provider, different verdict in table.md",
+        "claims": [
+          {
+            "value": "qualifies",
+            "source": "table.md (area F/F6)"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area H/H14)"
+          },
+          {
+            "value": "qualifies-with-caveat",
+            "source": "table.md (area H/H6)"
+          }
+        ],
+        "resolution": "qualifies-with-caveat: the record's own quota, identity, egress and retention fields support this verdict, and the seed's table also carried qualifies. The table.md (area H/H14) row is the later wave and the one that read the provider's gate rather than the headline, so it wins; a verdict is a conclusion drawn from the record's fields, not an independent claim, and the losing reading is kept in claims[] rather than deleted. Where a document printed qualifies it has been corrected to this verdict. Policy: .tmp/work/fx-storage-residual/VERDICT-POLICY.md, 2026-10-22."
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "30 GB uncompressed per build ('the itch.io backend will reject builds",
+            "source": "table.md (area F/F6)"
+          },
+          {
+            "value": "30 GB per build via butler. Official docs: 'Lets you upload builds up",
+            "source": "table.md (area H/H14)"
+          },
+          {
+            "value": "30 GB total uncompressed size per pushed build ('the itch.io backend w",
+            "source": "table.md (area H/H6)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/free/social-and-fediverse.md",
+    "document_section": "Game platforms and cloud saves",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 0,
+    "quota_verbatim": "30 GB uncompressed per build ('the itch.io backend will reject builds with a total uncompressed size that exceeds 30GB'). No documented total-account storage cap; project pages have a soft limit of 20, raisable on request. Free to host, unlimited downloads.",
+    "limits_verbatim": "per-object-cap: 30 GB uncompressed per build/channel; per-object-cap on HTML5 embeds: 500 MB total extracted and 200 MB per single extracted file; web uploader caps at 2 GB (500 MB default) but butler has no such limit; request-rate not a practical constraint. Retention: builds persist until deleted; no TTL.",
+    "egress_verbatim": "Free and unmetered — 'There is no limit to downloads' (itch.io support reply). Files served from itch.zone CDN.",
+    "chaining_verbatim": "30 GB per build x unlimited channels per project (channel name is arbitrary: windows, osx, bonus, dlc-1, shard-01...) x up to 20+ projects per free account. 1 project x 20 channels = 600 GB on one free account. Each build is independently addressable and downloadable.",
+    "tooling_verbatim": "`butler` CLI (butler push / butler download / butler status) plus the Wharf HTTP API — GET https://api.itch.io/wharf/latest?target=user/game&channel_name=X returns the build manifest. butler does rsync-style block diffing so re-pushes are cheap.",
+    "interface_verbatim": "rest",
+    "agent_focus": "game platforms as storage: cloud saves, game backends, mod hosting. Per-user total caps and whether save data is retrievable via API."
+  },
+  "binding": "per-object-cap",
+  "binding_note": "the per-object cap sets the shard size and therefore the object count; it bounds the total more tightly than any headline quota",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

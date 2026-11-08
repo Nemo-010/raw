@@ -1,0 +1,159 @@
+{
+  "topic": "storage",
+  "slug": "sciencedb-re-verified-write-path",
+  "provider": "ScienceDB (Science Data Bank, CAS / CNIC) — re-verified write path",
+  "url": "https://www.scidb.cn/en",
+  "category": "research-data-repository",
+  "free_tier": {
+    "stated": "No data-volume limit. A 2025 peer-reviewed comparison of Zenodo and ScienceDB in Journal of Agricultural Big Data states it plainly: for ScienceDB the 数据大小 row reads '没有数据量的限制，用户可以上传任意大小的数据集' (no limit on data volume; users may upload datasets of any size), against Zenodo's 'max 50 GB, can be raised to 200 GB in one step'. Datasets above 2,000 files or above 1 TB are merely flagged 'restricted' pending an email — a negotiable ceiling, not a hard one.",
+    "unit": "objects",
+    "metered_on": "unstated",
+    "source_url": "http://agbigdata.aiijournal.com/EN/Y2025/V7/I2/193",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "http://agbigdata.aiijournal.com/EN/Y2025/V7/I2/193",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "http://agbigdata.aiijournal.com/EN/Y2025/V7/I2/193",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free, anonymous for public datasets. DOI resolution works (302 to the dataset page).",
+    "metered": false
+  },
+  "interface": [
+    "ftp"
+  ],
+  "interface_detail": "web + ftp",
+  "tooling": "Explicitly two upload paths: '浏览器在线上传和FTP客户端在线上传' — browser and FTP client. FTP is the one that matters at TB scale and is unusual among research repositories. There is also an Open API and OAI-PMH listed in the help centre. Login accepts a native account or third-party GitHub / ORCID / CAS / WeChat — and the English help page lists GitHub explicitly, which is the route that avoids Chinese identity requirements entirely.",
+  "chaining": "Unlimited datasets per account with no per-user aggregate cap, so capacity is datasets × a negotiable per-dataset ceiling. FTP ingest means an unattended rclone or lftp job.",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "reviewed comparison of Zenodo and ScienceDB in Journal of Agricultural Big Data states i",
+      "source": "http://agbigdata.aiijournal.com/EN/Y2025/V7/I2/193"
+    },
+    {
+      "kind": "write-gated",
+      "value": "review' (形式审核) of upload completeness, accessibility and the data-availability stateme",
+      "source": "http://agbigdata.aiijournal.com/EN/Y2025/V7/I2/193"
+    }
+  ],
+  "limits_note": "write-gated by 'formal review' (形式审核) of upload completeness, accessibility and the data-availability statement — light-touch but still a human queue. Every dataset must have a subject category from the PRC GB/T 13745-2009 classification and at least three keywords. Metadata is mandatory and detailed (data generation procedure, temporal/spatial scope, per-file description). Some submission flows route through a CAS email or CSD account, which for the foreign client means using the GitHub/ORCID button rather than the native form.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "email",
+    "country": null
+  },
+  "reliability_note": "API probing shows the public JSON endpoints are not the same shape as Zenodo's — /api/v1/dataset/... and /api/download/... both returned 404 with a 9-byte body this session, while the HTML page for the same DOI loaded fine. Rule 1 applies: the download path must be discovered from the UI, not guessed. DOI resolution (302 -> /detail?dataSetId=…) is the reliable programmatic handle.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "http://agbigdata.aiijournal.com/EN/Y2025/V7/I2/193",
+      "date": "2026-10-21",
+      "proved": "opened: Table 1 row 数据大小, Zenodo '最多50 GB，可以一次性增加配额至200 GB' vs ScienceDB '没有数据量的限制，用户可以上传任意大小的数据集'; row 数据提交方式 for ScienceDB '浏览器在线上传和FTP客户端在线上传'; row 登录方式 'ScienceDB平台提供的登录界面；第三方账号，如中国科技云、Github、ORCID、Google账号等'. This is an independent 2025 academic comparison, not vendor copy."
+    },
+    {
+      "url": "https://www.scidb.cn/en/help",
+      "date": "2026-10-21",
+      "proved": "opened: registration via native account or 'third-party authentication such as CAS email/CSD account, GitHub account, ORCID and WeChat account'; four-step flow metadata -> review -> publish."
+    },
+    {
+      "url": "https://doi.org/10.57760/sciencedb.0142q",
+      "date": "2026-10-21",
+      "proved": "PROBED: curl -qsS -o /dev/null -w '%{http_code}' -> 302 with redirect to https://www.scidb.cn/detail?dataSetId=3ac806eb277c4fecb37a55d472b1e82f. DOI routing is live."
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "PROBED: that detail page read via the broker returns the real record — title, 'Published on 2026-10-21', CSTR/DOI, PACKAGE type, abstract, keywords. A dataset published this week is retrievable, so the platform is active."
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "PROBED (negative, recorded honestly): /api/v1/dataset/detail?doi=… -> HTTP 404, 9 bytes; /api/download/<doi> -> 404, 9 bytes; /api/download?dataSetId=…&fileId=1 -> 404, 9 bytes. The guessed API paths do not exist. Trust HTTP 200 only after a hash, and here even the status was wrong."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-10-21T00:00:00.000Z",
+  "notes": "No data-volume limit. A 2025 peer-reviewed comparison of Zenodo and ScienceDB in Journal of Agricultural Big Data states it plainly: for ScienceDB the 数据大小 row reads '没有数据量的限制，用户可以上传任意大小的数据集' (no limit on data volume; users may upload datasets of any size), against Zenodo's 'max 50 GB, can be raised to 200 GB in one step'. Datasets above 2,000 files or above 1 TB are merely flagged 'restricted' pending an email — a negotiable ceiling, not a hard one.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "D-D10-preprint-and-data-2026.json",
+    "seed_area": "D/D10",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "D/D10"
+      },
+      {
+        "value": "qualifies-with-caveat",
+        "area": "E/E15"
+      }
+    ],
+    "seed_confidence": "medium",
+    "merged_spellings": [
+      "ScienceDB (Science Data Bank, CAS / CNIC) — re-verified write path",
+      "ScienceDB (Science Data Bank, CAS)"
+    ],
+    "conflicts": [
+      {
+        "field": "free_tier.stated",
+        "claims": [
+          {
+            "value": "No data-volume limit. A 2025 peer-reviewed comparison of Zenodo and Sc",
+            "source": "table.md row, area D/D10",
+            "evidence": null
+          },
+          {
+            "value": "front page: 'Please describe your data and upload data files, in the m",
+            "source": "table.md row, area E/E15",
+            "evidence": null
+          }
+        ],
+        "resolution": null
+      },
+      {
+        "field": "quota",
+        "class": "same provider, different quota text in table.md",
+        "claims": [
+          {
+            "value": "No data-volume limit. A 2025 peer-reviewed comparison of Zenodo and Sc",
+            "source": "table.md (area D/D10)"
+          },
+          {
+            "value": "front page: 'Please describe your data and upload data files, in the m",
+            "source": "table.md (area E/E15)"
+          }
+        ],
+        "resolution": null
+      }
+    ],
+    "target_document": "docs/storage/free/academic.md",
+    "document_section": "Preprint and data repositories, 2026",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 5,
+    "evidence_carrying_a_source_date": 1,
+    "quota_verbatim": "No data-volume limit. A 2025 peer-reviewed comparison of Zenodo and ScienceDB in Journal of Agricultural Big Data states it plainly: for ScienceDB the 数据大小 row reads '没有数据量的限制，用户可以上传任意大小的数据集' (no limit on data volume; users may upload datasets of any size), against Zenodo's 'max 50 GB, can be raised to 200 GB in one step'. Datasets above 2,000 files or above 1 TB are merely flagged 'restricted' pending an email — a negotiable ceiling, not a hard one.",
+    "limits_verbatim": "write-gated by 'formal review' (形式审核) of upload completeness, accessibility and the data-availability statement — light-touch but still a human queue. Every dataset must have a subject category from the PRC GB/T 13745-2009 classification and at least three keywords. Metadata is mandatory and detailed (data generation procedure, temporal/spatial scope, per-file description). Some submission flows route through a CAS email or CSD account, which for the foreign client means using the GitHub/ORCID button rather than the native form.",
+    "egress_verbatim": "Free, anonymous for public datasets. DOI resolution works (302 to the dataset page).",
+    "chaining_verbatim": "Unlimited datasets per account with no per-user aggregate cap, so capacity is datasets × a negotiable per-dataset ceiling. FTP ingest means an unattended rclone or lftp job.",
+    "identity_verbatim": "email",
+    "tooling_verbatim": "Explicitly two upload paths: '浏览器在线上传和FTP客户端在线上传' — browser and FTP client. FTP is the one that matters at TB scale and is unusual among research repositories. There is also an Open API and OAI-PMH listed in the help centre. Login accepts a native account or third-party GitHub / ORCID / CAS / WeChat — and the English help page lists GitHub explicitly, which is the route that avoids Chinese identity requirements entirely.",
+    "interface_verbatim": "web + ftp",
+    "agent_focus": "2026-era research-data and data-marketplace platforms, deliberately judged on the BINDING constraint (does a person with only an email get past the write gate?) rather than on the marketing quota. Coverage: IEEE DataPort (the wave-7 discovery this slot confirms and extends), Mozilla Data Collective (2025 launch, the only new ≥100 GB-per-file free host found), Source Cooperative re-probed at the byte level, the French national Dataverse (Recherche Data Gouv) as the one genuinely EU-funded space with a self-serve email account, plus the 2026 data-marketplace entrants (Snowflake, Databricks Free Edition, data.world, Datarade, Tableland, Spice.ai, DataChain), the EU Data Spaces (Gaia-X / Catena-X / EOSC EU Node / DICE) and ResearchGate/Academia.edu data upload. Two structural results dominate: (a) the 'data marketplace' category is uniformly not storage — they are catalogues, and every one of them fails on per-object size by two to three orders of magnitude; (b) the EU Data Spaces are real and large but gated on eduGAIN/eIDAS identity, so they are closed on identity exactly like CSC Allas and LUMI-O before them."
+  },
+  "binding": "write-gated",
+  "binding_note": "the write is a queue with a person or a rule in it, so the upload rate is set by somebody else",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}

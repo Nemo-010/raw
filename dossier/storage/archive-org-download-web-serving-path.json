@@ -1,0 +1,152 @@
+{
+  "topic": "storage",
+  "slug": "archive-org-download-web-serving-path",
+  "provider": "archive.org /download web serving path (the free CDN)",
+  "url": "https://archive.org/download/<identifier>/<filename>",
+  "category": "academic",
+  "free_tier": {
+    "stated": "Serving is unmetered and free; no per-file download cap and no egress fee. Practical ceiling is throughput, not quota.",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://archive.org/developers/items.html",
+    "read_on": "2026-10-21",
+    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "source_url": "https://archive.org/developers/items.html",
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+  },
+  "retention": {
+    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "source_url": "https://archive.org/developers/items.html",
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+  },
+  "egress": {
+    "terms": "Free / unmetered. Docs: 'high performance downloads are achieved via the archive web infrastructure' — i.e. GET https://archive.org/download/<item>/<file>, which 302s to an iaNNNNNN.us.archive.org datanode. BitTorrent webseeds supplement it.",
+    "metered": false,
+    "source_url": "https://archive.org/download/<item>/<file>"
+  },
+  "interface": [
+    "rest",
+    "rclone",
+    "cli"
+  ],
+  "interface_detail": "rest",
+  "tooling": "plain HTTPS GET with Range (measured: 206 + accept-ranges: bytes); ia CLI download w/ --checksum resume; rclone 'internetarchive' reads back through the same front end",
+  "chaining": "Parallelise across items — different items can be pinned to different iaNNNNNN datanodes, so aggregate throughput scales with item count rather than with connections to one item. Put Cloudflare in front (replay responses carry cache-control: max-age=1800) so repeated fetches of the hot working set never touch IA at all.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "1.19 MB/s",
+      "source": "https://archive.org/developers/items.html"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "1.66 MB/s",
+      "source": "https://archive.org/developers/items.html"
+    }
+  ],
+  "limits_note": "Canonical URLs 302 at least once (clients need --location-trusted when sending Authorization); do NOT link iaNNNNNN.us.archive.org directly (nodes move); 429/503 under load; no auth on GET, so everything is world-readable.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "no credential is needed to read: an anonymous GET of archive.org/download/<identifier>/<filename> redirects once to a datanode and serves the file. Uploading needs an Internet Archive account whose form asks an email address, a screen name and a password, and asks no phone number",
+    "country": null
+  },
+  "reliability_note": "Throughput is the binding constraint, not quota: measured 1.19 MB/s on one 90s stream and 1.66 MB/s aggregate across 8 parallel range requests to one datanode from one IP (~145 GB/day) — against a local link calibrated at 27.6 MB/s, so this is server-side shaping, not the client.",
+  "confidence": "reported",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "evidence": [
+    {
+      "url": "https://archive.org/developers/ias3.html",
+      "date": "2026-10-21",
+      "proved": "'Fast GET downloads ... high performance downloads are achieved via the archive web infrastructure: curl --location http://archive.org/download/sam-s3-test-08/demo-intro-to-k.pdf'"
+    },
+    {
+      "url": "https://archive.org/developers/items.html",
+      "date": "2026-10-21",
+      "proved": "(snapshot 2025-11-08) — 'A particular file can always be downloaded from https://archive.org/download/<identifier>/<filename>'"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: curl -r 0-1048575 web.archive.org replay of a 406MB ISO -> HTTP 206, content-range honoured, accept-ranges: bytes, cache-control: max-age=1800"
+    },
+    {
+      "url": "probe:unspecified",
+      "date": "2026-10-21",
+      "proved": "probe: 8 parallel 5MB range GETs to one replay target -> 40,000,000 bytes in 23s = ~1.7 MB/s aggregate; single 90s stream -> 1.19 MB/s; Cloudflare 50MB control download -> 27.6 MB/s"
+    },
+    {
+      "url": "probe:archive.org",
+      "date": "2026-11-01",
+      "proved": "an unauthenticated GET of an archive.org/download URL answered 200 after one redirect",
+      "capture": "sha256:2344ace3e7bab201e26cff36d7f3fd40f9e4df12bcb0b0420d93f7faa75ffe7b",
+      "quote": "\"status\": 200"
+    },
+    {
+      "url": "https://archive.org/developers/items.html",
+      "date": "2026-11-01",
+      "proved": "the download URL is a public URL, with no account named",
+      "capture": "sha256:f876449c8138dfef8cb710c3be34f15c757af8eb026d9e538a006f6257df504e",
+      "quote": "A particular file can always be downloaded from:"
+    },
+    {
+      "url": "probe:archive.org",
+      "date": "2026-11-01",
+      "proved": "an unauthenticated GET of an archive.org/download URL answered 200, so the read path needs no identity",
+      "capture": "sha256:2344ace3e7bab201e26cff36d7f3fd40f9e4df12bcb0b0420d93f7faa75ffe7b",
+      "quote": "\"status\": 200"
+    },
+    {
+      "url": "https://archive.org/account/signup",
+      "date": "2026-11-01",
+      "proved": "an upload account asks a screen name, an email address and a password",
+      "capture": "sha256:b64a400f01d831157d788d8375563bd617f1248e0d53a3cf9f3805097ffce4a2",
+      "quote": "Choose a screen name3 to 40 characters"
+    },
+    {
+      "url": "https://archive.org/developers/items.html",
+      "date": "2026-11-01",
+      "proved": "the download URL redirects to a datanode",
+      "capture": "sha256:f876449c8138dfef8cb710c3be34f15c757af8eb026d9e538a006f6257df504e",
+      "quote": "The resultant URL is **not** a permalink."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-01T18:05:15.762Z",
+  "notes": "Serving is unmetered and free; no per-file download cap and no egress fee. Practical ceiling is throughput, not quota.",
+  "history": [],
+  "extras": {
+    "seed_source": "storage-research",
+    "seed_wave": "H-H5-internet-archive.json",
+    "seed_area": "H/H5",
+    "seed_verdict": [
+      {
+        "value": "qualifies-with-caveat",
+        "area": "H/H5"
+      }
+    ],
+    "seed_confidence": "high",
+    "conflicts": [],
+    "target_document": "docs/storage/free/media-and-archives.md",
+    "document_section": "Internet Archive",
+    "conversion": "mechanical",
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "evidence_dated_by_seed": 0,
+    "evidence_dated_to_seed_pass": 4,
+    "evidence_carrying_a_source_date": 0,
+    "identity_cost_defaulted": false,
+    "quota_verbatim": "Serving is unmetered and free; no per-file download cap and no egress fee. Practical ceiling is throughput, not quota.",
+    "limits_verbatim": "Canonical URLs 302 at least once (clients need --location-trusted when sending Authorization); do NOT link iaNNNNNN.us.archive.org directly (nodes move); 429/503 under load; no auth on GET, so everything is world-readable.",
+    "egress_verbatim": "Free / unmetered. Docs: 'high performance downloads are achieved via the archive web infrastructure' — i.e. GET https://archive.org/download/<item>/<file>, which 302s to an iaNNNNNN.us.archive.org datanode. BitTorrent webseeds supplement it.",
+    "chaining_verbatim": "Parallelise across items — different items can be pinned to different iaNNNNNN datanodes, so aggregate throughput scales with item count rather than with connections to one item. Put Cloudflare in front (replay responses carry cache-control: max-age=1800) so repeated fetches of the hot working set never touch IA at all.",
+    "tooling_verbatim": "plain HTTPS GET with Range (measured: 206 + accept-ranges: bytes); ia CLI download w/ --checksum resume; rclone 'internetarchive' reads back through the same front end",
+    "interface_verbatim": "rest",
+    "agent_focus": "Internet Archive deep dive: IAS3 S3-like API, per-item unlimited size, upload API, metadata, derivatives, CDX, the web archive as a CDN, practical throughput/rate limits for 20TB"
+  },
+  "binding": "per-ip-shaping",
+  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "stale": false,
+  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+}
