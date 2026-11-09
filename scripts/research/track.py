@@ -32,6 +32,16 @@ PUBLIC_LABELS = {"report": ("c5def5", "a report from the issue forms"),
                  "queued": ("bfdadc", "queued for verification in the research repository")}
 
 
+def _forge(args):
+    """The broker's answer to a read shape, or None. forgeread refuses every shape that is not a read, so a write is
+    never sent to it."""
+    try:
+        import forgeread
+    except ImportError:
+        return None
+    return forgeread.read(with_repo(args, strip=True), GITHUB_REPO)
+
+
 def gh_run(args, repo=REPO, input_text=None):
     """-> (exit code, stdout). gh exits non-zero for some answers that still carry JSON (8: checks pending), so
     a caller that reads such a command sees both. (None, "") without gh or with RQ_NO_GITHUB, unless the call is one
@@ -42,13 +52,16 @@ def gh_run(args, repo=REPO, input_text=None):
     rule 15)."""
     if not shutil.which("gh") or os.environ.get("RQ_NO_GITHUB"):
         # read-only: a write has no fallback, and keeps the message its caller already writes
-        try:
-            import forgeread
-        except ImportError:
-            return None, ""
-        got = forgeread.read(with_repo(args, strip=True), GITHUB_REPO)
+        got = _forge(args)
         return (0, got) if got is not None else (None, "")
-    return gh_retry(with_repo(args), repo, input_text)
+    rc, out = gh_retry(with_repo(args), repo, input_text)
+    if rc == 0 or out:
+        return rc, out
+    # gh is installed but answered nothing: a machine with no token of its own, or a token without the scope. A read
+    # the broker serves must still answer there, or a contributor with no account cannot see the queue at all. A
+    # write is not one of those shapes, so it keeps the failure its caller already reports.
+    got = _forge(args)
+    return (0, got) if got is not None else (rc, out)
 
 
 def gh_once(args, repo=REPO, input_text=None):

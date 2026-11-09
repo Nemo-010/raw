@@ -1551,6 +1551,32 @@ def forge_read_case():
     finally:
         forgeread._get = real
 
+    # gh is installed but answers nothing: a machine with no token of its own, or a token without the scope. A read
+    # the broker serves must still answer there, or a contributor with no account cannot read the queue at all.
+    import track
+    real_which, real_retry, real_read = track.shutil.which, track.gh_retry, forgeread.read
+    seen2 = []
+
+    def empty_gh(args, r):
+        seen2.append(list(args))
+        return '[{"number": 7}]' if args[:2] == ["issue", "list"] else None
+    track.shutil.which = lambda name: "gh" if name == "gh" else real_which(name)
+    track.gh_retry = lambda args, repo_=None, input_text=None: (1, "")
+    forgeread.read = empty_gh
+    saved = os.environ.pop("RQ_NO_GITHUB", None)
+    try:
+        rc, out = track.gh_run(["issue", "list", "--repo", "o/r", "--label", "rq:research"])
+        ok(rc == 0 and out == '[{"number": 7}]',
+           "gh_run: an installed gh that answers nothing falls back to the broker for a read (%s %r)" % (rc, out))
+        ok(seen2 and "--repo" not in seen2[0], "the fallback strips --repo, which the broker does not take (%s)" % seen2)
+        rc, out = track.gh_run(["issue", "comment", "7", "--repo", "o/r", "--body", "x"])
+        ok(rc == 1 and out == "", "gh_run: a write keeps its own failure, and no write reaches the broker (%s %r)"
+           % (rc, out))
+    finally:
+        track.shutil.which, track.gh_retry, forgeread.read = real_which, real_retry, real_read
+        if saved is not None:
+            os.environ["RQ_NO_GITHUB"] = saved
+
 
 def primitives_case(repo):
     """TreeView, the loose-object writer, write_tree and commit_on (section 2.1; G-07, G-09)."""
@@ -5773,13 +5799,89 @@ def collect_hint_case(repo):
     ok(u["status"] == "integrated", "the same run integrates after collect (%s)" % u["status"])
     sh(repo, "close", run, "--reason", "selftest done")
     let_go()
-
-
+def import_case(repo, tmp):
+    """A bundle carries a contributor's run folder, and that contributor's progress is not this repository's: every
+    unit is re-run here. An audit unit that arrives `ready` and `scored` is stuck, because land waits for a score that
+    the score skips, so the importer must drop the contributor's score."""
+    import zipfile
+    x = "storage/0x0-st-2"
+    run = new_run(repo, "verify", "storage", "import case")
+    if not run:
+        ok(False, "import: a run opens")
+        return
+    ids, r = plan_units(repo, run, [{"kind": "verify", "question": "import case", "scope": {"rids": [x]}}])
+    if not ids:
+        ok(False, "import: a unit planned (%s)" % (r.stdout + r.stderr)[-300:])
+        return
+    uid = ids[0]
+    verify_lane(repo, run, uid, x, "Import case page: the free plan states 10 GB of storage with no expiry.",
+                "10 GB of storage with no expiry")
+    sh(repo, "collect", run)
+    r = sh(repo, "integrate", run)
+    sj = json.load(open(os.path.join(lane_dir(repo, run, uid), "unit.json"), encoding="utf-8"))
+    ok(r.returncode == 0 and sj["status"] == "integrated" and sj.get("commit"),
+       "import: the source unit integrates (%s)" % (r.stdout + r.stderr)[-200:])
+    r = sh(repo, "audit", run)
+    aid = next((ln.split()[0] for ln in r.stdout.splitlines() if ln.endswith("audits " + uid)), None)
+    if not aid:
+        ok(False, "import: an audit unit is planned (%s)" % (r.stdout + r.stderr)[-300:])
+        sh(repo, "close", run, "--reason", "selftest done")
+        return
+    L2 = lane_dir(repo, run, aid)
+    claims = json.load(open(os.path.join(L2, "claims.json"), encoding="utf-8"))
+    write_lines(os.path.join(L2, "verdicts.jsonl"),
+                [{"cid": c["cid"], "verdict": "supported", "capture": (c.get("evidence") or {}).get("capture"),
+                  "quote": (c.get("evidence") or {}).get("quote"), "note": ""} for c in claims])
+    receipt(L2, run, aid)
+    sh(repo, "collect", run)
+    r = sh(repo, "audit", run, "--score")
+    a = json.load(open(os.path.join(L2, "unit.json"), encoding="utf-8"))
+    ok(r.returncode == 0 and a.get("scored"),
+       "import: the source audit unit is scored, so the bundle carries a score (%s)" % (r.stdout + r.stderr)[-200:])
+    bz = os.path.join(tmp, "bundle-%s.zip" % run)
+    # a lane's scratch header dump, as broker.sh fetch --dump-headers leaves it: the cf-ray suffix and the
+    # cf-placement value name the machine that read the page, which is the contributor's network identity
+    dump = os.path.join(lane_dir(repo, run, uid), "tmp", "page.txt")
+    os.makedirs(os.path.dirname(dump), exist_ok=True)
+    with open(dump, "w", encoding="utf-8", newline="\n") as f:
+        f.write("HTTP/2 403\nCF-RAY: a52755de7bfacc10-KTM\ncf-placement: local-KTM\nserver: cloudflare\n")
+    with zipfile.ZipFile(bz, "w", zipfile.ZIP_DEFLATED) as zf:
+        for root, _dirs, names in os.walk(os.path.join(repo, ".tmp", run)):
+            for n in names:
+                p = os.path.join(root, n)
+                zf.write(p, os.path.relpath(p, repo).replace("\\", "/"))
+    r = sh(repo, "import-bundle", bz)
+    new = next((ln.split()[-1] for ln in r.stdout.splitlines() if ln.startswith("imported ") and " into run " in ln),
+               None)
+    ok(r.returncode == 0 and new, "import: the bundle applies to a fresh run (%s)" % (r.stdout + r.stderr)[-300:])
+    if not new:
+        sh(repo, "close", run, "--reason", "selftest done")
+        return
+    imported = os.path.join(repo, ".tmp", new, "units", uid, "tmp", "page.txt")
+    body = open(imported, encoding="utf-8").read() if os.path.exists(imported) else ""
+    ok(body and "KTM" not in body and "a52755de7bfacc10-[redacted]" in body and "cf-placement: [redacted]" in body,
+       "an imported lane dump carries no Cloudflare location (%r)" % body[:120])
+    d = os.path.join(repo, ".tmp", new, "units")
+    na = [json.load(open(os.path.join(d, n, "unit.json"), encoding="utf-8"))
+          for n in sorted(os.listdir(d)) if os.path.exists(os.path.join(d, n, "unit.json"))]
+    na = [u for u in na if u["kind"] == "audit"]
+    ok(len(na) == 1 and na[0]["status"] == "ready" and not na[0].get("scored"),
+       "an imported audit unit arrives ready and unscored, so the maintainer's score can take it (%s)"
+       % [(u["id"], u["status"], u.get("scored")) for u in na])
+    r = sh(repo, "audit", new, "--score")
+    after = [json.load(open(os.path.join(d, u["id"], "unit.json"), encoding="utf-8")) for u in na]
+    ok(r.returncode == 0 and after and all(a["status"] == "integrated" and (a.get("score") or {}).get("decided")
+                                           for a in after),
+       "the score of the imported run takes its audit unit, so land is not stuck (%s)"
+       % [(a["id"], a["status"], (a.get("score") or {}).get("decided")) for a in after])
+    sh(repo, "close", new, "--reason", "selftest done")
+    sh(repo, "close", run, "--reason", "selftest done")
 REPO_CASES = ("flow", "primitives_case", "overlay_case", "generated_conflict_case", "store_lock_case", "lock_case",
               "no_cap_case", "research_checkout_case", "lease_review_case", "crash_case", "land_tree_case",
               "parallel_runs_case", "followup_case", "state_save_case", "round2_case", "round3_case", "round4_case",
               "round5_case", "round6_case", "round7_case", "claim_case", "round8_case", "closing_case", "swarm_case",
-              "queue_plan_case", "relet_case", "phase_case", "forge_read_case", "push_soft_case", "collect_hint_case")
+              "queue_plan_case", "relet_case", "phase_case", "forge_read_case", "import_case", "push_soft_case",
+              "collect_hint_case")
 ALL_CASES = ("basics", "git_guard_case", "doc_rules_case", "followup_body_case") + REPO_CASES + ("wipe_case",
                                                                                                 "one_tree_load_case")
 
@@ -5859,6 +5961,8 @@ def main(argv=None):
                 push_soft_case(repo)
             if want("collect_hint_case"):
                 collect_hint_case(repo)
+            if want("import_case"):
+                import_case(repo, tmp)
             if want("forge_read_case"):
                 forge_read_case()
             if want("round2_case"):

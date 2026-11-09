@@ -57,7 +57,7 @@ Azure calculator.
 | **Datalix** | AS218841, which announces **zero prefixes** | AS58087 |
 
 ⛔ **Any record that writes one ASN for a multi-location host is a defect.** The
-`compute` topic's 1,336 records carry no ASN field at all.
+`compute` topic's 1,411 records carry no ASN field at all.
 
 ⚠ **A "cheap VPS" is not a distinct network just because the brand is different.**
 Four of the nine hosts surveyed are reselling somebody else's transit.
