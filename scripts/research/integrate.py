@@ -337,7 +337,13 @@ def integrate(run, repo=REPO, only=None):
         view = units.run_tree(run, repo)
         report = recovered + _integrate(r, run, view, conflicts_path, repo, only)
         r = units.load_run(run, repo)
-        r["phase"] = "integrated" if r.get("phase") in ("open", "planned", "collected", "integrated") else r.get("phase")
+        # a phase moves forward only on a change of state: an integrate that took no unit leaves the phase where it
+        # was, so `status` never says integrated beside units that are still planned. collect reads the phase the same
+        # way (units.collect). A recovered unit did integrate, so an attempt that left a commit counts.
+        after = units.units_of(run, repo)
+        took = any(u.get("status") in units.UNIT_DONE and u.get("commit") for u in after)
+        if took and r.get("phase") in ("open", "planned", "collected", "integrated"):
+            r["phase"] = "integrated"
         units.save_run(r, repo)
     return report, read_jsonl(conflicts_path)
 
