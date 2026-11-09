@@ -4,7 +4,7 @@
 - **Status:** decided
 - **Supersedes:** the warn severity of rules C01, C03 and C18 in `scripts/research/checks.py`; the `free_tier.unit` and `topic` enums in `scripts/dossier/schema.json` as they were before 2026-10-28; the policy paragraph of `docs/research-protocol.md` section 8
 - **Superseded by:** `scripts/research/checks.py` (`RULES`), `scripts/research/baseline.tsv`, `scripts/dossier/schema.json`, `scripts/dossier/staleness.policy.json`, `docs/dev-services/README.md`, `docs/data-apis/README.md`, `AGENTS.md` section 2 rule 12, `docs/conventions/README.md` sections 2.2 and 6.3
-- **Evidence:** the operator's ruling comments of 2026-10-28 on issues #10, #11, #12, #13, #20, #31 and #43 of `Azathothas/f-research`
+- **Evidence:** the operator's ruling comments of 2026-10-28 on issues #10, #11, #12, #13, #20, #31 and #43 of the research repository
 - **Confidence:** documented
 
 ## What we believed

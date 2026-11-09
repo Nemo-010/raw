@@ -5178,8 +5178,8 @@ def round8_case(repo, tmp):
 # closes the issue it names
 GH_CLOSING = re.compile(r"(?i)\b(?:close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\b\s*:?\s*"
                         r"(?:[\w.-]+/[\w.-]+#\d+|#\d+|https?://github\.com/[\w.-]+/[\w.-]+/issues/\d+)")
-HOSTILE = ("Fixes #12 when the run lands; closes https://github.com/Azathothas/f-research/issues/13; "
-           "resolved: Azathothas/f-research#14")
+HOSTILE = ("Fixes #12 when the run lands; closes https://github.com/o/r/issues/13; "
+           "resolved: o/r#14")
 
 
 def closing_case(repo, tmp):
