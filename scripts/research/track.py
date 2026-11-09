@@ -34,12 +34,20 @@ PUBLIC_LABELS = {"report": ("c5def5", "a report from the issue forms"),
 
 def gh_run(args, repo=REPO, input_text=None):
     """-> (exit code, stdout). gh exits non-zero for some answers that still carry JSON (8: checks pending), so
-    a caller that reads such a command sees both. (None, "") without gh or with RQ_NO_GITHUB. A call that GitHub refuses
-    with a 403 or a 429 that carries Retry-After (its secondary limit on writes) is repeated once after that many
-    seconds, as broker.sh --wait does for the broker: the server's own pause, not a cap of the harness, which sets no
-    pacing of its own (AGENTS.md section 2 rule 15)."""
+    a caller that reads such a command sees both. (None, "") without gh or with RQ_NO_GITHUB, unless the call is one
+    of the read shapes forgeread serves: then the broker answers it with no token of the caller's, so a contributor
+    with no account still reads the queue. A call that GitHub refuses with a 403 or a 429 that carries Retry-After
+    (its secondary limit on writes) is repeated once after that many seconds, as broker.sh --wait does for the
+    broker: the server's own pause, not a cap of the harness, which sets no pacing of its own (AGENTS.md section 2
+    rule 15)."""
     if not shutil.which("gh") or os.environ.get("RQ_NO_GITHUB"):
-        return None, ""
+        # read-only: a write has no fallback, and keeps the message its caller already writes
+        try:
+            import forgeread
+        except ImportError:
+            return None, ""
+        got = forgeread.read(with_repo(args, strip=True), GITHUB_REPO)
+        return (0, got) if got is not None else (None, "")
     return gh_retry(with_repo(args), repo, input_text)
 
 
@@ -134,8 +142,18 @@ def login(repo=REPO):
     return LOGIN["login"]
 
 
-def with_repo(args):
-    """gh issue, pr and label calls name this repository with --repo, unless they name one already."""
+def with_repo(args, strip=False):
+    """gh issue, pr and label calls name this repository with --repo, unless they name one already. strip=True
+    removes a --repo/--owner pair instead, for a caller that takes the repository as its own argument (forgeread)."""
+    if strip:
+        out, i = [], 0
+        while i < len(args):
+            if args[i] in ("--repo", "-R", "--owner") and i + 1 < len(args):
+                i += 2
+                continue
+            out.append(args[i])
+            i += 1
+        return out
     if GITHUB_REPO and args[:1] and args[0] in ("issue", "pr", "label") and "--repo" not in args and "-R" not in args:
         return args[:2] + ["--repo", GITHUB_REPO] + args[2:]
     return args
