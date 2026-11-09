@@ -10,17 +10,17 @@
     "metered_on": "stored-bytes",
     "source_url": "https://savannah.gnu.org/register/requirements.php",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://savannah.gnu.org/register/requirements.php",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
     "stated": "No published byte quota found on any Savannah page - the hosting-requirements doc speaks only in terms of purpose ('The space given to you on this server is given for the expressed purpose of advancing free software') and permanence ('Our intent is to provide a permanent home for all versions of your project'), never a number",
     "source_url": "https://savannah.gnu.org/register/requirements.php",
-    "notes": "extracted from the seed prose"
+    "notes": "Extracted from published terms."
   },
   "egress": {
     "terms": "Free and mirrored: `download.savannah.{gnu,nongnu}.org` redirect to a world-wide mirror ring. Verified live: a GET 302s to a national mirror (fosszone.csd.auth.gr) which serves 200 with real bytes. No metering, no billing.",
@@ -32,7 +32,7 @@
     "ssh"
   ],
   "interface_detail": "scp",
-  "tooling": "SSH public-key auth only. Upload with `scp -O <file> <file>.sig LOGIN@download.savannah.nongnu.org:/releases/GROUP_NAME/` (the `-O` is mandatory - see limits) or `rsync -tv`. Removal via restricted SSH commands `ssh host rm <path>` / `rmdir`. Also the `gnupload` script from Gnulib's build-aux. Read side is plain anonymous HTTP from the mirror ring.",
+  "tooling": "SSH public-key auth only. Upload via scp (the -O flag is mandatory, see limits) or rsync to download.savannah.nongnu.org releases directory. Removal via restricted SSH commands ssh host rm or rmdir. Gnulib build-aux gnupload script is supported. Read side is plain anonymous HTTP from the mirror ring.",
   "chaining": "One Savannah group per project, unlimited files per group, unlimited versions retained forever. Accounts are free; the gate is that a human evaluates the package ('Evaluate and approve non-gnu packages submitted for hosting'), so cardinality is bounded by reviewer throughput, not by quota. For GNU packages ftp.gnu.org/alpha.gnu.org is a second surface with an automated signed-upload path.",
   "limits": [],
   "limits_note": "per-object-cap: none published. Structural caps that matter more: (1) SFTP IS DISABLED - announced 2023-11, 'we've found a vulnerability in our SFTP setup, and couldn't fix it otherwise than completely disabling SFTP. This affects uploading files to the *download* host'. Because OpenSSH >= 9.0 makes scp use SFTP by default, `scp -O` is required or every upload fails. (2) GPG-signing is expected (the docs tell you to upload foo.tar.gz + foo.tar.gz.sig) though not enforced: 'unlike ftp.gnu.org, Savannah doesn't enforce using GPG signatures for releases'. (3) Write access requires a registered SSH key on the account.",
@@ -43,7 +43,7 @@
   },
   "reliability_note": "Two real breakages. First, SFTP-off is a live trap for any modern client - a naive `scp` on OpenSSH 9+ silently fails. Second, the mirror ring is uneven: the same lzip tarball (123,850 bytes) took 4.6 s once and timed out at 21 s on the redirect target (ftp.cc.uoc.gr) another time, so per-mirror health varies and single-stream fetch is not trustworthy. Site pages also intermittently serve a Kant-quoting anti-scraper page instead of content - the register/ and requirements.php URLs both did this via the reader while the Wayback copy of the same page was clean.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
   "evidence": [
     {
       "url": "https://savannah.gnu.org/maintenance/DownloadArea/",

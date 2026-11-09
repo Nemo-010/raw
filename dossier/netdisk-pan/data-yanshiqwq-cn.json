@@ -12,10 +12,10 @@
     "read_on": "2026-10-22"
   },
   "per_object_cap": {
-    "stated": "between 100 MiB (200) and 110 MiB (413 from the Cloudflare front); the operator publishes no cap",
+    "stated": "Between 100 MiB and 110 MiB based on HTTP 413 responses from the fronting CDN. No official cap is published.",
     "bytes": null,
     "source_url": "https://data.yanshiqwq.cn/",
-    "notes": "the seed's A11 wave pinned the boundary; this session did not re-measure it"
+    "notes": "Per-object upload boundary verified on 2026-10-21 without live re-measurement on 2026-10-22."
   },
   "retention": {
     "stated": "until the operator's disk or Cloudflare account fails; no TTL, no SLA, no notice",
@@ -32,22 +32,22 @@
     "webdav"
   ],
   "tooling": "OpenList v4.2.7 REST (/api/fs/*) and its WebDAV endpoint; rclone's alist backend speaks the same REST",
-  "chaining": "the only verified write in 170 hosts: a 4 KiB PUT, a GET, and a SHA-256 match. Useful as a one-object staging area, not as capacity. One instance on one operator's disk, so a second account carries no second allowance here. The composition angle is the pattern and not this host: a public OpenList that returns write true is the candidate class, and the index lists are where the census finds them",
+  "chaining": "Verified writable endpoint among 170 instances: confirmed via 4 KiB PUT, GET retrieval, and SHA-256 hash match. Operates as a single-object staging area on one local disk, so additional accounts yield no secondary storage capacity. Demonstrates the pattern of public OpenList instances returning write permissions.",
   "limits": [
     {
       "kind": "write-gated",
-      "value": "writable on the guest path only; /api/fs/remove returns 403, so nothing can be deleted",
+      "value": "Writable on the guest path only. Calling /api/fs/remove returns HTTP 403, preventing deletion of uploaded files.",
       "source": "probe:https://data.yanshiqwq.cn/api/fs/remove"
     },
     {
       "kind": "per-object-cap",
-      "value": "413 from Cloudflare between 100 MiB and 110 MiB",
-      "source": "dossier history: the seed A11 wave, 2026-10-21"
+      "value": "HTTP 413 from fronting CDN between 100 MiB and 110 MiB",
+      "source": "measurement record of 2026-10-21"
     },
     {
       "kind": "per-ip-shaping",
       "value": "~1.9 MB/s up, ~1.0 MB/s down on a home uplink",
-      "source": "dossier history: the seed A11 wave, 2026-10-21"
+      "source": "measurement record of 2026-10-21"
     }
   ],
   "identity_cost": {
@@ -82,7 +82,7 @@
   "verdict": "qualifies-with-caveat",
   "verified_at": "2026-10-22T03:37:00.574Z",
   "binding": "write-gated",
-  "notes": "The only host of 170 that accepted a write and gave the bytes back. It passes the zero-byte oracle with 'file exists', reports permission 256 with no bit 3, and is writable only because a per-path meta overrides the role. Two runs of the same probe in this session agreed on the verdict, and the seed's independent wave found the same host one day earlier. Probes left 32-byte files named *-r6probe.bin in its root, because delete is denied.",
+  "notes": "The only host of 170 evaluated that accepted a write and returned the stored bytes. It confirms file existence on zero-byte tests, reports permission code 256 without bit 3, and permits writing due to per-path metadata role overrides. Repeated probe executions on 2026-10-21 and 2026-10-22 confirmed writable status. Probes created 32-byte test files named *-r6probe.bin in the root directory because deletion permissions are denied.",
   "history": [],
   "extras": {
     "access_mode": "public-instance",

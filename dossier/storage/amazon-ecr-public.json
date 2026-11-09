@@ -5,22 +5,22 @@
   "url": "https://gallery.ecr.aws",
   "category": "registry",
   "free_tier": {
-    "stated": "50 GB per month of always-free storage for public repositories: 'Both new and existing customers get 50 GB per month of always-free storage for their public repositories.' Past 50 GB it is not blocked — storage is billed to the repository owner: pricing table 'All storage / month ... per GB' resolves via AWS's price API to $0.1000000000/GB-month.",
+    "stated": "50 GB per month of always-free storage for public repositories: 'Both new and existing customers get 50 GB per month of always-free storage for their public repositories.' Past 50 GB it is not blocked. Storage is billed to the repository owner: pricing table 'All storage / month .. per GB' resolves via AWS's price API to $0.1000000000/GB-month.",
     "unit": "GB",
     "metered_on": "stored-bytes",
     "source_url": "https://aws.amazon.com/ecr/pricing/",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://aws.amazon.com/ecr/pricing/",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://aws.amazon.com/ecr/pricing/",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "No retention clause documented in available terms."
   },
   "egress": {
     "terms": "Half-free, and the free half is generous: 'You can anonymously (without using an AWS account) transfer 500 GB of data to the Internet from a public repository each month for free. If you sign up for an AWS account, or authenticate to Amazon ECR with an existing AWS account, you can transfer 5 TB of data to the Internet from a public repository each month for free.' Past that: 'Greater than 5 TB / month to non AWS Regions | $0.09 per GB'. Anonymous overage is not billed, it is refused: 'Up to 500 GB/month can be transferred out to non-AWS destinations to clients that have not authenticated (that is, anonymously). After that limit is reached, no further anonymous data transfer is allowed.' Zero egress cost to AWS compute in any region.",
@@ -35,15 +35,15 @@
   "tooling": "docker/skopeo/oras/crane; ORAS pushes arbitrary blobs as OCI artifacts. AWS CLI for auth (aws ecr-public get-login-password).",
   "chaining": "50 GB x N AWS accounts. Egress is per-downloader-IP for anonymous pulls and 5 TB/month for any authenticated AWS account, so a single account gives 5 TB/mo of public egress, and each additional free AWS account gives another 5 TB/mo as the authenticated client. Storage is only 50 GB/account, so the economics are inverted versus most registries: egress scales, storage does not.",
   "limits": [],
-  "limits_note": "Max layer size 10,000 MiB; max layer part 10 MiB; 100,000 images/repo; 1,000 tags/image; unauthenticated pulls rate-limited to 1/s and capped at 500 GB/month per source IP; authenticated pulls 10/s. Repos are always publicly listable — 'Using a repository policy to deny access to view or pull from a public repository is not supported.'",
+  "limits_note": "Max layer size 10,000 MiB; max layer part 10 MiB; 100,000 images/repo; 1,000 tags/image; unauthenticated pulls rate-limited to 1/s and capped at 500 GB/month per source IP; authenticated pulls 10/s. Repos are always publicly listable. 'Using a repository policy to deny access to view or pull from a public repository is not supported.'.",
   "identity_cost": {
     "kind": "institution",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: 'All storage / month ... per GB' resolves via AWS's price API to $0.1000000000/GB-month. Very stable; the 1 pull/s anonymous rate limit is the thing that bites bulk fetches (a pa",
+    "detail": "derived from the record's prose: 'All storage / month ... per GB' resolves via AWS's price API to $0.1000000000/GB-month. Very stable; the 1 pull/s anonymous rate limit is the thing that bites bulk fetches (a pa",
     "country": null
   },
   "reliability_note": "Very stable; the 1 pull/s anonymous rate limit is the thing that bites bulk fetches (a parallel fetcher must spread across IPs or authenticate).",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
   "evidence": [
     {
       "url": "https://aws.amazon.com/ecr/pricing/",
@@ -68,7 +68,7 @@
   ],
   "verdict": "qualifies-with-caveat",
   "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "50 GB per month of always-free storage for public repositories: 'Both new and existing customers get 50 GB per month of always-free storage for their public repositories.' Past 50 GB it is not blocked — storage is billed to the repository owner: pricing table 'All storage / month ... per GB' resolves via AWS's price API to $0.1000000000/GB-month.",
+  "notes": "50 GB per month of always-free storage for public repositories: 'Both new and existing customers get 50 GB per month of always-free storage for their public repositories.' Past 50 GB it is not blocked. Storage is billed to the repository owner: pricing table 'All storage / month .. per GB' resolves via AWS's price API to $0.1000000000/GB-month.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",

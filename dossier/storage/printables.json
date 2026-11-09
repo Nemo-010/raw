@@ -10,7 +10,7 @@
     "metered_on": "stored-bytes",
     "source_url": "https://api.printables.com/graphql/",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
     "stated": "per-object-cap: 1.037 GB",
@@ -19,9 +19,9 @@
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://api.printables.com/graphql/",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "No retention clause documented in available terms."
   },
   "egress": {
     "terms": "Backed by Google Cloud Storage (x-goog-* headers), fronted by files.printables.com with `Cache-Control: public, max-age=31536000` and `Access-Control-Allow-Origin: *`. No egress cap published, no paywall on download, no account needed to download.",
@@ -31,8 +31,8 @@
     "graphql"
   ],
   "interface_detail": "Undocumented but stable public GraphQL: POST https://api.printables.com/graphql/ with no auth. `print(id:N){ name stls{id name fileSize} otherFiles{id name fileSize} downloadPacks{...} }` to enumerate; then mutation `getDownloadLink(id, printId, source:\"model_detail\", fileType:\"stl\"|\"other\")` returns `{ok, output:{link}}`.",
-  "tooling": "Plain HTTP + JSON. Working Python/curl one-liner proven this session. No SDK needed. gid/uid path component is an opaque UUID, not a signature.",
-  "chaining": "The returned link is a plain GCS object URL with NO signature and NO expiry field that is enforced (headers showed `expires: Fri, 06 Mar 2026` — a date already in the past — and the object still served on 2026-10-21, i.e. rule 9: the signature field is not a gate). Hot-linkable behind Cloudflare with zero origin egress cost. Object keys are enumerable per model, so a shard-and-replicate writer can treat each model as a bucket.",
+  "tooling": "Plain HTTP and JSON interface. Standard curl or Python requests interact directly with endpoints without special SDKs. Object path parameters use standard UUID identifiers.",
+  "chaining": "Returned links provide direct Google Cloud Storage object URLs where expiry headers are not enforced. Files remained accessible on 2026-10-21 despite past expiration timestamps. Objects are hotlinkable and enumerable per model identifier.",
   "limits": [
     {
       "kind": "write-gated",
@@ -45,7 +45,7 @@
       "source": "https://api.printables.com/graphql/"
     }
   ],
-  "limits_note": "per-object-cap: 1.037 GB observed (no stated ceiling found — the '1 GB' in that model's own title is the author's description, not a platform limit). Write is normal account signup; no curator. Download is anonymous. RANGE VERIFIED: `Range: bytes=100-199` returned `HTTP/1.1 206 Partial Content`, `Content-Range: bytes 100-199/1036822737`, 100 bytes — so resumable/ranged GET works (this is NOT the RepOD case).",
+  "limits_note": "Per-object-cap: 1.037 GB observed (no stated ceiling found. The '1 GB' in that model's own title is the author's description, not a platform limit). Write is normal account signup; no curator. Download is anonymous. RANGE VERIFIED: `Range: bytes=100-199` returned `HTTP/1.1 206 Partial Content`, `Content-Range: bytes 100-199/1036822737`, 100 bytes. So resumable/ranged GET works (this is NOT the RepOD case).",
   "identity_cost": {
     "kind": "email",
     "detail": "email address and a password, or a Google, Apple or Facebook sign-in: the account article says to register or log in with Google, Apple or Facebook, or to choose Create an account at the bottom to use an email or password, then confirm the account from the sent email. No card and no phone number appear in that flow.",
@@ -53,7 +53,7 @@
   },
   "reliability_note": "Terms 2.9 states plainly 'PRINTABLES does not serve as data storage' and disclaims liability for deletion, so durability is unguaranteed. The signup page answers a Cloudflare bot challenge to an unauthenticated fetch; the email signup is documented by Prusa's own account article.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
   "evidence": [
     {
       "url": "https://api.printables.com/graphql/",

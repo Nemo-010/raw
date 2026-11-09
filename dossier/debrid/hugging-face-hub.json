@@ -40,7 +40,7 @@
   "interface_detail": "GET https://huggingface.co/<repo>/resolve/<rev>/<path> for a file; the API at /api/models and /api/datasets; the dataset viewer at datasets-server.huggingface.co (rows, parquet, size); hf CLI and git for repo-level sync.",
   "endpoint": "https://huggingface.co/api/models",
   "tooling": "hf CLI, huggingface_hub python, git-lfs, plain curl on /resolve/. rclone reads it through the HTTP remote. The dataset viewer's /parquet endpoint hands back per-file parquet URLs that a client can fetch directly.",
-  "chaining": "The fastest measured pipe in this lane and the only one whose content is current ML data rather than a fixed corpus: pull a dataset's parquet parts for training, and mirror the same files to storage with rclone. Common Crawl now mirrors selected crawls into an HF Storage Bucket, so both paths can share one client.",
+  "chaining": "The fastest measured pipe among debrid providers and the only one whose content is current ML data rather than a fixed corpus: pull a dataset's parquet parts for training, and mirror the same files to storage with rclone. Common Crawl now mirrors selected crawls into an HF Storage Bucket, so both paths can share one client.",
   "limits": [
     {
       "kind": "request-rate",
@@ -100,7 +100,7 @@
   "verified_at": "2026-10-23T03:24:34.450Z",
   "price_per_tb_month": "USD 0",
   "history": [],
-  "notes": "The lane's answer sits here: about 40 MiB/s over one connection with no account, which is 3.3 TiB/day if the rate held for a day. The eight-connection run is the trap - it is half the speed, so a client that opens eight streams to go faster gets there slower.",
+  "notes": "Single connection transfers measured at approximately 40 MiB/s without an account. Increasing to eight parallel streams reduced throughput in testing.",
   "extras": {
     "full_file_sha256": "7c5d3f4b8b76583b422fcb9189ad6c89d5d97a094541ce8932dce3ecabde1421",
     "full_file_bytes": 548118077,

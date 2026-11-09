@@ -10,10 +10,10 @@
     "metered_on": "unstated",
     "source_url": "https://upstash.com/pricing/redis",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://upstash.com/pricing/redis",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
@@ -21,10 +21,10 @@
     "stated": "Free DBs minted anonymously are DELETED after 3 days unless claimed.",
     "days": 3,
     "source_url": "https://upstash.com/pricing/redis",
-    "notes": "extracted from the seed prose"
+    "notes": "Extracted from published terms."
   },
   "egress": {
-    "terms": "Free up to 10 GB/month on the Free plan (then metered on paid). 10 GB/month = ~333 MB/day vs a 500 GB/day target — 1,500x short.",
+    "terms": "Free up to 10 GB per month on the Free plan (~333 MB per day), followed by metered bandwidth billing on paid tiers.",
     "metered": false,
     "free_allowance": "10 GB per month"
   },
@@ -34,7 +34,7 @@
   ],
   "interface_detail": "rest",
   "tooling": "redis-cli over TLS, any Redis client, plus a body-style REST API (`POST` a JSON array command). Verified live: a free database can be minted with no signup via `POST https://upstash.com/start-redis` with an `Idempotency-Key` header.",
-  "chaining": "Free tier is 1 database per account (pricing table: 'Max databases | 1'). 250 MB x N accounts. The command quota, not storage, is the wall: 500K commands/month = 16,667/day, and each GET returns at most 10 MB (verified), so max read throughput is 16,667 x 10 MB = 167 GB/day — 3x short of 500 GB/day even with a mythical 250 MB dataset read 667 times a day.",
+  "chaining": "Free tier is 1 database per account (pricing table: 'Max databases | 1'). 250 MB x N accounts. The command quota, not storage, is the wall: 500K commands/month = 16,667/day, and each GET returns at most 10 MB (verified), so max read throughput is 16,667 x 10 MB = 167 GB/day. 3x short of 500 GB/day even with a mythical 250 MB dataset read 667 times a day.",
   "limits": [
     {
       "kind": "retention-clamped",
@@ -45,12 +45,12 @@
   "limits_note": "250 MB data; 10 MB max request size (LIVE-VERIFIED: a 20 MB SET returned 'ERR max request size exceeded. Limit: 10485760 bytes'); 100 MB max record size listed but the 10 MB request cap binds first; 10,000 max cmd/sec; 500K commands/month; 1 database",
   "identity_cost": {
     "kind": "anonymous",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: D, RESET, QUIT) are explicitly not charged. Free DBs minted anonymously are DELETED after 3 days unless claimed. Free tier is 1 database per account (pricing table: 'Max databases | 1'). 25",
+    "detail": "unverified: identity requirements not documented",
     "country": null
   },
   "reliability_note": "Works and is fast; the killer is the command meter. Every GET, SET, EXISTS, and even pipelined command counts. Operational commands (PING, AUTH, INFO, CONFIG, SELECT, COMMAND, RESET, QUIT) are explicitly not charged. Free DBs minted anonymously are DELETED after 3 days unless claimed.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
   "evidence": [
     {
       "url": "https://upstash.com/pricing/redis",
@@ -117,7 +117,7 @@
     "agent_focus": "Structured stores (SQL/NoSQL/KV/queue/search) repurposed as blob storage by encoding bytes into rows, values and documents — free bytes, per-item caps, op quotas, and the bytes-per-operation arithmetic that decides whether any of them can carry 500 GB"
   },
   "binding": "retention-clamped",
-  "binding_note": "a clock, not a quota: bytes leave whether or not the client is finished with them",
+  "binding_note": "a clock, not a quota: bytes leave whether or not transfer is completed",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z"
 }

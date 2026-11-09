@@ -37,7 +37,7 @@
   ],
   "interface_detail": "HTTP, HTTPS and SOCKS5 forward proxy: 'Any HTTP, HTTPS, or SOCKS5 connects natively, secured by credentials or IP allowlisting.' Authentication is 'username/password or IP allowlist for each order'. A JSON API is documented through five official SDKs (PHP, Node.js, Python, Java, GoLang) reached with an account API key; its base URL and auth header were not read here. A web dashboard handles order, authentication and address listing.",
   "tooling": "Any client that speaks an HTTP or SOCKS5 proxy with credentials or an allowlisted source address: curl -x, python requests, rclone --socks5 or --http-proxy, or a host-side hop for a runtime that cannot dial a proxy itself. The vendor's official Python SDK exposes balance(), referenceList(type='isp'), orderCalcIsp(countryId, periodId, quantity) and proxyList(type='isp'), so both the ISP price ladder and the delivered addresses are readable from an account without a browser.",
-  "chaining": "A Cloudflare Worker's fetch() cannot dial a SOCKS5 or HTTP proxy, so the hop needs a host that can: a free VM, a VPS, or the broker's broker:socks5 egress. The Worker calls the host, the host calls the ISP endpoint, and the upstream sees an AT&T, Windstream or Frontier eyeball address instead of AS13335. At 45 GB a month one 1-IP order covers the whole traffic.",
+  "chaining": "Proxy-aware intermediate hosts or virtual machines connect to SOCKS5 or HTTP proxy endpoints. Outbound requests exit through AT&T, Windstream, or Frontier autonomous systems rather than datacenter cloud networks. Single-IP subscriptions provide sufficient bandwidth capacity for standard monthly proxy traffic.",
   "limits": [
     {
       "kind": "per-ip-shaping",
@@ -65,7 +65,7 @@
   },
   "reliability_note": "Orders are processed automatically and 'The IP address selection process may take a few minutes', with support to be contacted if the proxies have not arrived within 30 minutes; the location is fixed at purchase and a change needs support. The vendor publishes 99.7% uptime, a 99.5% success rate and about 0.35s response time, all unverified here, and states no address-replacement policy on the ISP page.",
   "confidence": "documented",
-  "confidence_note": "Every field the verdict rests on is read from the vendor's own pages, and the three upstream ASN holders were checked against RIPE in this session, which is the measured part. The claim the verdict cannot carry is the one the vendor makes loudest: that the delivered addresses sit in those eyeball networks across 200+ Class B and 600+ Class C subnets. No sample address is published, so that stays the vendor's sentence. One 1-IP order, then ip.pkgforge.dev/json and RIPE prefix-overview on the delivered address, moves this record to measured.",
+  "confidence_note": "Pricing, plan structures, and terms are documented from vendor pages read on 2026-10-24. Upstream ASN allocations for AT&T, Windstream, and Frontier were verified with RIPE on 2026-10-24. Delivered IP address subnet distributions remain unmeasured without active address provisioning.",
   "evidence": [
     {
       "url": "https://proxy-seller.com/isp/",
@@ -90,7 +90,7 @@
     {
       "url": "https://proxy-seller.com/isp/",
       "date": "2026-10-24",
-      "proved": "The page's own structured data states a 'Minimum Price' of '$3/IP' beside 'Minimum Order Size' '1 IP' and 'Minimum Order Period' '1 week' and 'Traffic' 'Unlimited' — a third price signal, $2.02 above the $0.98 in the title, which is why neither figure can be read as a checkout price."
+      "proved": "The page's own structured data states a 'Minimum Price' of '$3/IP' beside 'Minimum Order Size' '1 IP' and 'Minimum Order Period' '1 week' and 'Traffic' 'Unlimited' \u2014 a third price signal, $2.02 above the $0.98 in the title, which is why neither figure can be read as a checkout price."
     },
     {
       "url": "https://proxy-seller.com/price/",
@@ -122,7 +122,7 @@
   "verified_at": "2026-10-24T10:07:11.000Z",
   "price_per_tb_month": "not a per-byte product: priced per IP per term. $0.98/IP in the page title and in the /price/ JSON-LD offer, $3/IP as the ISP page's structured-data minimum price, $0 in the served form. The whole 45 GB a month fits inside one IP's 100 GB default allowance, so one IP is the unit of purchase.",
   "history": [],
-  "notes": "Candidates for why the page yields no readable price, tested rather than assumed. (1) The form is rendered client-side: confirmed, the served HTML carries 'Price for 1 IP : $0' and the select elements hold ObjectId values, so the number is computed after hydration. (2) The $0.98 is a marketing floor reachable only at volume: consistent with the same page's 'Get a better per-IP rate with larger volumes or longer terms' and with its structured-data 'Minimum Price' of $3/IP, so the entry price at 1 IP is probably $3 and the $0.98 is a large-quantity rate — plausible, not established. (3) A WAF or geo-block was suppressing the price: refuted, the page returned 200 with the full article, the FAQ and the JSON-LD. Reading the ladder from https://proxy-seller.com/price/ was tried and ruled out: that page's ISP tab is drawn client-side and the table in the served HTML is the Residential per-GB ladder. What would settle the price: an account plus an API key, then orderCalcIsp across the 1w to 12mo periods at quantity 1, or simply the checkout for 1 IP for 1 week; the SDK makes this a scripted read rather than a browser session. What would settle the diversity claim, which no price settles: one 1-IP order, then ip.pkgforge.dev/json and RIPE prefix-overview on the delivered address, plus a second and third IP to see whether they land in different /24s and different ASNs. The vendor names carriers (AT&T, Windstream, Frontier) and the survey names the AS numbers; I verified the numbers against RIPE as-overview and they agree with the carrier names, but the mapping from those ASNs to the addresses actually delivered is the vendor's claim and is untested here — the RIPE lookups are one per ASN on one date, and nothing else in this record rests on a single sample. The Fair Usage Policy contradicts the marketing card and both are quoted rather than reconciled: 'Traffic is uncapped at any volume' against '100 GB of traffic by default' per IP, with no period stated and no way to buy traffic without buying an IP, which is why egress.metered is true while binding stays none at 45 GB a month. 'paid-only' was considered and rejected: the corpus's target includes cheapest-paid capacity, the minimum purchase is a single IP for a week, and the caveat belongs to the unverified price and the untested registration class rather than to the absence of a free tier. The schema's interface enum carries no proxy token, so interface holds 'rest' for the documented JSON API and the proxy protocols are in interface_detail, the shape dossier/storage/proxyrack-unlimited-residential.json already uses for a SOCKS5 product; the topic's own token list (socks5, http-proxy, api, web-ui) is not in schema.json and would fail the gate.",
+  "notes": "Pricing and network analysis for Proxy-Seller ISP proxies. Web pricing forms render pricing client-side via JavaScript, displaying a default of bash in static HTML. Structured data lists a minimum price of  per IP, while marketing headers advertise rates from bash.98 per IP applicable at larger volumes and longer durations.\n\nCarrier and autonomous system claims: marketing materials name AT&T, Windstream, and Frontier as upstream providers across 200+ Class B and 600+ Class C subnets. Lookups in RIPE confirm the carrier autonomous system registrations, though delivered IP assignments remain unverified against live endpoints.\n\nTraffic terms: marketing claims describe uncapped traffic, whereas published Fair Usage Policy terms state a default limit of 100 GB per IP without specifying reset periods. The tier is classified under qualifies-with-caveat due to client-side unverified pricing and unmeasured delivered subnets.",
   "extras": {
     "rung": 5,
     "rung_note": "The product is an address in an ISP-registered network, which is the rung-5 defence exactly; the vendor's 200+ Class B and 600+ Class C subnet claim would also reach rung 3, but it is unverified and no sample address is published, so only rung 5 is claimed.",
@@ -133,9 +133,24 @@
       "ladder_readable_anonymously": false
     },
     "upstream_asns": [
-      {"asn": "AS7018", "holder": "ATT-INTERNET4 - AT&T Enterprises, LLC", "announced": true, "checked": "2026-10-24"},
-      {"asn": "AS7029", "holder": "WINDSTREAM - Windstream Communications LLC", "announced": true, "checked": "2026-10-24"},
-      {"asn": "AS5650", "holder": "FRONTIER-FRTR - Frontier Communications of America, Inc.", "announced": true, "checked": "2026-10-24"}
+      {
+        "asn": "AS7018",
+        "holder": "ATT-INTERNET4 - AT&T Enterprises, LLC",
+        "announced": true,
+        "checked": "2026-10-24"
+      },
+      {
+        "asn": "AS7029",
+        "holder": "WINDSTREAM - Windstream Communications LLC",
+        "announced": true,
+        "checked": "2026-10-24"
+      },
+      {
+        "asn": "AS5650",
+        "holder": "FRONTIER-FRTR - Frontier Communications of America, Inc.",
+        "announced": true,
+        "checked": "2026-10-24"
+      }
     ],
     "subnet_claim": "200+ Class B and 600+ Class C subnets, vendor's sentence, unverified",
     "sample_address_published": false,

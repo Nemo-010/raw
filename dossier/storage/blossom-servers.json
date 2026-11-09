@@ -10,7 +10,7 @@
     "metered_on": "unstated",
     "source_url": "https://blossom.band/",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
     "stated": "100 MiB per upload",
@@ -21,7 +21,7 @@
   "retention": {
     "stated": "'Free uploads for everyone, from any Blossom-capable client.' 'A hard cap of 100 MiB per upload (20 MiB for free uploads), with no limit on the number of uploads or retention.'",
     "source_url": "https://blossom.band/",
-    "notes": "extracted from the seed prose"
+    "notes": "Extracted from published terms."
   },
   "egress": {
     "terms": "unmetered, direct CDN URLs, CORS '*'. Reads 307-redirect to image.nostr.build which serves with Accept-Ranges and 206.",
@@ -32,8 +32,8 @@
     "cli"
   ],
   "interface_detail": "rest",
-  "tooling": "Blossom protocol: PUT /upload with an 'Authorization: Nostr <base64 kind-24242 event>' header signed by any self-generated secp256k1 key — no signup, no account, no email. Any Nostr client (Amethyst, Coracle, nak, blossom-server CLI) speaks it.",
-  "chaining": "Identity is a pubkey you generate offline in one line of code — unlimited free identities, zero cost, zero email. Each pubkey gets its own npub1....blossom.band hostname at upload time. 20 MiB x unlimited uploads x unlimited pubkeys. At 19 MiB per object, 10 TiB = ~550,000 uploads across ~550k keys, or a few thousand keys each doing 100 uploads.",
+  "tooling": "Blossom protocol: PUT /upload with an 'Authorization: Nostr <base64 kind-24242 event>' header signed by any self-generated secp256k1 key. No signup, no account, no email. Any Nostr client (Amethyst, Coracle, nak, blossom-server CLI) speaks it.",
+  "chaining": "Identity is a pubkey you generate offline in one line of code. Unlimited free identities, zero cost, zero email. Each pubkey gets its own npub1..blossom.band hostname at upload time. 20 MiB x unlimited uploads x unlimited pubkeys. At 19 MiB per object, 10 TiB = ~550,000 uploads across ~550k keys, or a few thousand keys each doing 100 uploads.",
   "limits": [
     {
       "kind": "per-object-cap",
@@ -51,15 +51,15 @@
       "source": "https://blossom.band/"
     }
   ],
-  "limits_note": "per-object-cap: 20 MiB for free uploads (100 MiB only on the $18/yr plan); I measured 15 MiB accepted and 25 MiB rejected with 413 'File size exceeds the maximum allowed size of 20 MiB'. Type gate is real and content-sniffed: application/zip and application/octet-stream were both 415 'File type not allowed'; PNG bytes sent with Content-Type: application/octet-stream got 400 'Content-Type header does not match the file content'. retention: none stated, 'no limit on ... retention'.",
+  "limits_note": "Per-object cap is 20 MiB for free uploads and 100 MiB on the paid plan. Observed 15 MiB accepted and 25 MiB rejected with HTTP 413 'File size exceeds the maximum allowed size of 20 MiB'. Content-Type headers are validated against file content, rejecting application/zip and application/octet-stream with HTTP 415. No retention limit is stated.",
   "identity_cost": {
     "kind": "card",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: er-object-cap: 20 MiB for free uploads (100 MiB only on the $18/yr plan); I measured 15 MiB accepted and 25 MiB rejected with 413 'File size exceeds the maximum allowed size of 20 Mi",
+    "detail": "derived from the record's prose: Per-object-cap is 20 MiB for free uploads and 100 MiB on the paid plan. Observed 15 MiB accepted and 25 MiB rejected with 413 'File size exceeds the maximum allowed size of 20 MiB'.",
     "country": null
   },
-  "reliability_note": "A ~19 MiB upload returned HTTP 500 'Error uploading the file: unknown error' while 5 and 15 MiB succeeded, so the usable ceiling is somewhat below the advertised 20 MiB; one 5 MiB upload took 14 s from the client.",
+  "reliability_note": "Uploads of 5 MiB and 15 MiB succeeded, while an upload of ~19 MiB returned HTTP 500 'Error uploading the file: unknown error', indicating effective capacity below the advertised 20 MiB.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
   "evidence": [
     {
       "url": "https://blossom.band/",

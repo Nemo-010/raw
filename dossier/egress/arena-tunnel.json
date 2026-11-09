@@ -49,7 +49,7 @@
   },
   "reliability_note": "new and lightly used; client needs root for the TUN device; one WebSocket per session means a dropped TCP connection restarts the tunnel",
   "confidence": "documented",
-  "confidence_note": "a measured run behind a free Cloudflare Tunnel would raise it, and is the single most useful measurement this lane leaves open",
+  "confidence_note": "Software design documented. Live throughput over WebSocket tunnels through Cloudflare remains unmeasured.",
   "evidence": [
     {
       "url": "https://github.com/dc-holdings-spa/arena-tunnel",
@@ -76,7 +76,7 @@
   "verified_at": "2026-10-23T00:00:00.000Z",
   "price_per_tb_month": "USD 0",
   "history": [],
-  "notes": "The clearest statement of the lane's central problem: \"Most free CDNs (Cloudflare Free, Fastly, Bunny) only proxy HTTP/WS\", so WireGuard has to be framed into WebSocket to use them. Released two days before this read, four stars, single purpose. It still needs the WireGuard server host, so its claim of no VPS rental assumes the reader already has somewhere to put the server half. Frame-per-datagram framing avoids putting a length-prefixed stream in the datagram path, but the websocket still rides TCP.",
+  "notes": "Encapsulates WireGuard in WebSocket connections to traverse HTTP/WebSocket CDNs such as Cloudflare Free, Fastly and Bunny. Requires an external WireGuard server host. Frame-per-datagram framing avoids length-prefixed stream framing, while operating over TCP transport.",
   "extras": {
     "wg_path": "none",
     "wg_detail": "\"encapsulating each WireGuard UDP datagram inside one binary WebSocket frame\"; the client runs wireguard-go locally and the server hands frames to a local WireGuard interface",

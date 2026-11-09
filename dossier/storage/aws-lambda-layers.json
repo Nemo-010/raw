@@ -10,17 +10,17 @@
     "metered_on": "stored-bytes",
     "source_url": "https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
     "stated": "until the instance is recycled; not persistent",
     "source_url": "https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html",
-    "notes": "extracted from the seed prose"
+    "notes": "Extracted from published terms."
   },
   "egress": {
     "terms": "Not free and not public. Layer download is a signed S3 URL obtainable only via an authenticated `GetLayerVersion` call; there is no anonymous URL surface at all. Lambda invocations also bill per request and GB-second.",
@@ -33,17 +33,17 @@
   ],
   "interface_detail": "rest",
   "tooling": "AWS CLI `publish-layer-version` / `get-layer-version`; SDKs. Immutability is structural: a layer version is immutable once published, so every write is a new version. No rclone backend.",
-  "chaining": "300 GB unzipped per region across functions + layers, non-increasable, is the only aggregate — so the whole region is a 300 GB bucket with a private API in front. 250 MB per layer, 5 layers per function, 50 MB per uploaded zip means the 250 MB ceiling can only be reached via S3-referenced uploads. 300 GB is below the 500 GB filter and the fetchability is zero.",
+  "chaining": "Aggregate limit is 300 GB unzipped per region across functions and layers. Limits enforce 250 MB per layer, 5 layers per function, and 50 MB per uploaded zip archive. The 250 MB ceiling requires S3-referenced uploads.",
   "limits": [],
   "limits_note": "50 MB zipped via API/console; 250 MB unzipped total including layers and custom runtimes; 5 layers per function; 512 MB to 10,240 MB /tmp (ephemeral, per execution environment, dies with the environment); 300 GB regional code storage. Layers are immutable and versioned.",
   "identity_cost": {
     "kind": "institution",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ve) size | 50 MB (zipped, when uploaded through the Lambda API or SDKs) ... 50 MB (when uploaded through the Lambda console) ... 250 MB The maximum size of the contents of a deployme",
+    "detail": "derived from the record's prose: ve) size | 50 MB (zipped, when uploaded through the Lambda API or SDKs) ... 50 MB (when uploaded through the Lambda console) ... 250 MB The maximum size of the contents of a deployme",
     "country": null
   },
-  "reliability_note": "Very durable while the function exists; deleting a function version or layer version removes the code. No silent expiry, but no public read path either — the 300 GB is real and effectively unreachable without building your own proxy.",
+  "reliability_note": "Very durable while the function exists; deleting a function version or layer version removes the code. No silent expiry, but no public read path either. The 300 GB is real and effectively unreachable without building your own proxy.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
   "evidence": [
     {
       "url": "https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html",

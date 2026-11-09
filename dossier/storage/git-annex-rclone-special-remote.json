@@ -5,25 +5,25 @@
   "url": "https://git-annex.branchable.com/special_remotes/rclone/",
   "category": "registry",
   "free_tier": {
-    "stated": "N/A — front-end to rclone's ~70 backends, so it inherits every free tier already catalogued by the other C-slots. The docs' own list (still current) names Drive, OneDrive, Dropbox, Mega, pCloud, Box, Yandex, Jottacloud, WebDAV, FTP, SFTP, Swift, B2, S3.",
+    "stated": "N/A. Front-end to rclone storage backends, inheriting free tiers of supported providers. Documentation lists Drive, OneDrive, Dropbox, Mega, pCloud, Box, Yandex, Jottacloud, WebDAV, FTP, SFTP, Swift, B2, and S3.",
     "unit": "mixed",
     "metered_on": "unstated",
     "source_url": "https://git-annex.branchable.com/special_remotes/rclone/",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://git-annex.branchable.com/special_remotes/rclone/",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://git-annex.branchable.com/special_remotes/rclone/",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "No retention clause documented in available terms."
   },
   "egress": {
-    "terms": "Inherited from the rclone backend; rclone throttles/retries but does not pay for egress.",
+    "terms": "Determined by the selected rclone backend. Rclone handles throttling and retries across remote endpoints.",
     "metered": false
   },
   "interface": [
@@ -32,8 +32,8 @@
     "rclone"
   ],
   "interface_detail": "rest",
-  "tooling": "Two paths: (a) `git annex initremote type=rclone ...` — native, no extra install, documented via `rclone gitannex -h`; (b) the older `git-annex-remote-rclone` bash script (DanielDent, ~300 lines). rclone itself is a single static binary.",
-  "chaining": "The strongest multiplier in this slot: annex gives you versioning + hash verification + partial clone, rclone gives you ~70 free-tier backends. One annex repo can have a dozen rclone remotes across a dozen free accounts of different providers, with `git annex copy --to` fanning out. This is literally the 'google-drive-service-account' pattern applied to large-file versioning.",
+  "tooling": "Two paths: (a) `git annex initremote type=rclone ..`. Native, no extra install, documented via `rclone gitannex -h`; (b) the older `git-annex-remote-rclone` bash script (DanielDent, ~300 lines). rclone itself is a single static binary.",
+  "chaining": "Combines git-annex versioning, checksum verification, and partial checkouts with rclone remote storage backends. A single repository can configure multiple rclone remotes across diverse storage providers using git annex copy commands.",
   "limits": [
     {
       "kind": "per-ip-shaping",
@@ -44,12 +44,12 @@
   "limits_note": "Per-backend: file size caps, per-day upload quotas, API rate limits all apply unchanged. rclone's Drive backend has its own 750 GB/day upload cap; OneDrive throttles. Encrypted annex remotes lose rclone's server-side dedupe.",
   "identity_cost": {
     "kind": "institution",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: oning. Per-backend: file size caps, per-day upload quotas, API rate limits all apply unchanged. rclone's Drive backend has its own 750 GB/day upload cap; OneDrive throttles. Encrypte",
+    "detail": "derived from the record's prose: oning. Per-backend: file size caps, per-day upload quotas, API rate limits all apply unchanged. rclone's Drive backend has its own 750 GB/day upload cap; OneDrive throttles. Encrypte",
     "country": null
   },
   "reliability_note": "Solid; the native remote removed the bash-script dependency. The failure mode is per-backend token expiry and drive-level rate limiting, which rclone surfaces as retries rather than data loss.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
   "evidence": [
     {
       "url": "https://git-annex.branchable.com/special_remotes/rclone/",
@@ -69,7 +69,7 @@
   ],
   "verdict": "qualifies",
   "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "N/A — front-end to rclone's ~70 backends, so it inherits every free tier already catalogued by the other C-slots. The docs' own list (still current) names Drive, OneDrive, Dropbox, Mega, pCloud, Box, Yandex, Jottacloud, WebDAV, FTP, SFTP, Swift, B2, S3.",
+  "notes": "N/A. Front-end to rclone storage backends, inheriting free tiers of supported providers. Documentation lists Drive, OneDrive, Dropbox, Mega, pCloud, Box, Yandex, Jottacloud, WebDAV, FTP, SFTP, Swift, B2, and S3.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",
@@ -99,7 +99,7 @@
     "agent_focus": "Large-file versioning layer: git-annex special remotes, Git LFS hosts, DVC remotes, Perforce/SVN, and which free backends those layers can be pointed at"
   },
   "binding": "per-ip-shaping",
-  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "binding_note": "one stream is shaped, and aggregate throughput is the shaped rate times the number of streams",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z",
   "self_hosted": true

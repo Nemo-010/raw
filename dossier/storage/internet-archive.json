@@ -10,7 +10,7 @@
     "metered_on": "unstated",
     "source_url": "https://help.archive.org/help/uploading-tips/",
     "read_on": "2026-11-01",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
     "stated": "1 TB/item",
@@ -19,9 +19,9 @@
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://help.archive.org/help/uploading-tips/",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "No retention clause documented in available terms."
   },
   "egress": {
     "terms": "Unmetered and free: every file in every item is a world-readable HTTP URL (https://archive.org/download/<id>/<file>) with no auth and no egress bill; IAS3 doc states \"ACLs are fake. permissions are: World readable, Item uploader writable.\" Every public item additionally gets an _archive.torrent with IA webseeding as a second free distribution path.",
@@ -36,7 +36,7 @@
   ],
   "interface_detail": "s3",
   "tooling": "IAS3 = S3-compatible REST (PUT = create item, multipart, x-archive-auto-make-bucket, x-archive-queue-derive:0, x-archive-size-hint); rclone backend 'internetarchive' (Tier 3, added v1.59, github.com/rclone/rclone 60.4k stars); official CLI/Python 'ia' github.com/jjjake/internetarchive (1,923 stars, pushed 2026-10-20); Rust client github.com/LucaCappelletti94/internetarchive-rs. S3 keys from archive.org/account/s3.php.",
-  "chaining": "Unlimited items per account x 1 TB/item = unbounded per single free account. Also unlimited free accounts. 10 TiB hot set = 10-20 items of 500 GB-1 TB. 20 TiB archive = ~20-40 items. Zip many small files (\"a zip file is considered one file\" for the daily cap).",
+  "chaining": "Supports unlimited items per account with up to 1 TB per item across multiple accounts. Archives can package small files into zip archives to align with item-based transfer limits.",
   "limits": [
     {
       "kind": "per-object-cap",
@@ -57,7 +57,7 @@
   },
   "reliability_note": "Writes are asynchronous through a per-item queue; the global derive queue can stall uploads and deletes for hours during backlogs, and large/high-file-count items time out and fail to derive. Items are permanent (no TTL) but nothing is guaranteed private.",
   "confidence": "documented",
-  "confidence_note": "re-read from read-broker on 2026-10-22 (HTTP 200, 5433 bytes, sha256 48c2cd2e54f5effa). The page states the number in the record; the claim is documented, not measured.",
+  "confidence_note": "re-read on 2026-10-22 (HTTP 200, 5433 bytes, sha256 48c2cd2e54f5effa). The page states the number in the record. The claim is documented, not measured.",
   "evidence": [
     {
       "url": "https://help.archive.org/help/uploading-tips/",

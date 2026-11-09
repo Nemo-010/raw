@@ -16,7 +16,7 @@
     "stated": "not applicable: the unit is a machine, not an object",
     "bytes": null,
     "source_url": "https://prices.azure.com/api/retail/prices",
-    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+    "notes": "The primary constraint is the virtual machine hardware specification."
   },
   "retention": {
     "stated": "not applicable: the unit is a machine or an account, not stored bytes",
@@ -46,7 +46,7 @@
     "detail": "a phone number, a credit or debit card that is not prepaid, and a Microsoft account or a GitHub account. 'We don't charge your credit card or debit card anything when you sign up for Azure, but you may see a one-dollar (or equivalent) verification hold'; the hold 'is removed within three to five days'. The offer page adds 'Your card will not be charged initially except for a temporary authorization hold', and 'We do not accept prepaid or virtual credit cards'.",
     "country": null
   },
-  "reliability_note": "no reliability event observed in this session",
+  "reliability_note": "no reliability event observed",
   "confidence": "inferred",
   "evidence": [
     {
@@ -164,7 +164,7 @@
   ],
   "verdict": "qualifies",
   "verified_at": "2026-11-02T02:17:36.635Z",
-  "notes": "No provider publishes a run-survival figure. Azure publishes a per-hour eviction probability per SKU and region through Resource Graph over 28 trailing days, and GCP publishes a preemption rate through advice.capacityHistory, but neither is a survival curve and the two are not the same statistic: GCP divides preempted VMs by VMs that stopped running, which counts user-caused stops in the denominator and so understates the rate a long job experiences. GCP also publishes an estimated uptime in three buckets only (60 minutes, 10 minutes, 1 minute) from advice.capacity, which is the closest thing to a published survival figure and is coarse. The numbers above use third-party rates as the probability input, so the finding is inferred, not measured. The probe that would settle it: rent one A100 spot in eastus for 24 hours, checkpoint every 10 minutes to object storage, log every eviction with its timestamp and the scheduled-event offset, and repeat across 4 regions; that yields both the real per-hour rate and the real notice-to-eviction interval. Conflicting verdicts across agents: qualifies-with-caveat via a05-spot; qualifies-with-caveat via a05-spot; fails-identity via a05-spot; qualifies-with-caveat via a05-spot. The one recorded is the better-evidenced.",
+  "notes": "No provider publishes a run-survival figure. Azure publishes a per-hour eviction probability per SKU and region through Resource Graph over 28 trailing days, and GCP publishes a preemption rate through advice.capacityHistory, but neither is a survival curve and the two are not the same statistic: GCP divides preempted VMs by VMs that stopped running, which counts user-caused stops in the denominator and so understates the rate a long job experiences. GCP also publishes an estimated uptime in three buckets only (60 minutes, 10 minutes, 1 minute) from advice.capacity, which is the closest thing to a published survival figure and is coarse. The numbers above use third-party rates as the probability input, so the finding is inferred, not measured. The probe that would verify the terms: rent one A100 spot in eastus for 24 hours, checkpoint every 10 minutes to object storage, log every eviction with its timestamp and the scheduled-event offset, and repeat across 4 regions; that yields both the real per-hour rate and the real notice-to-eviction interval. qualifies-with-caveat via a05-spot; fails-identity via a05-spot; qualifies-with-caveat via a05-spot. The one recorded is the better-evidenced.",
   "extras": {
     "wave2": {
       "provider_as_written": "Microsoft Azure Spot Virtual Machines",

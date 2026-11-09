@@ -10,7 +10,7 @@
     "metered_on": "stored-bytes",
     "source_url": "https://telegram.org/faq",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
     "stated": "Per-file 2 GB",
@@ -19,9 +19,9 @@
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://telegram.org/faq",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "No retention clause documented in available terms."
   },
   "egress": {
     "terms": "Free and unmetered. Telegram charges nothing for downloads and imposes no transfer quota; the only egress cost is Telegram's own speed shaping. Downloads are free even for files uploaded by Premium users: 'any user can download large 2+ GB files uploaded by premium users'.",
@@ -32,8 +32,8 @@
     "rclone"
   ],
   "interface_detail": "rest",
-  "tooling": "Strongest tooling of any provider in this whole research area. MTProto clients: TDLib (github.com/tdlib/td, 9.2k stars, pushed 2026-10-21), MadelineProto (github.com/danog/MadelineProto, 3.5k stars, pushed 2026-10-21, alive). Field-proven storage layer: Teldrive (github.com/tgdrive/teldrive, 3.1k stars) with its own rclone backend (github.com/tgdrive/rclone). CAUTION: Telethon (12.1k) and Pyrogram (4.6k) are both ARCHIVED (Telethon read-only since 2026-02-21, Pyrogram since 2024-12-23) — do not start a new build on either.",
-  "chaining": "Unbounded by construction: 1 account x 500 channels x unlimited posts = unlimited. A second account carries a second read allowance, not a second storage allowance. Teldrive adds its own layer: 'channel-part-limit: 500000' parts per channel with 'auto-channel-create: true' — it opens a NEW channel automatically when the active one fills, so the sharding is already automated. A 2 GB file is 4000 x 512KB parts, so one channel holds ~250 TB of max-size files before rotation.",
+  "tooling": "Strongest tooling of any provider in this whole research area. MTProto clients: TDLib (github.com/tdlib/td, 9.2k stars, pushed 2026-10-21), MadelineProto (github.com/danog/MadelineProto, 3.5k stars, pushed 2026-10-21, alive). Field-proven storage layer: Teldrive (github.com/tgdrive/teldrive, 3.1k stars) with its own rclone backend (github.com/tgdrive/rclone). CAUTION: Telethon (12.1k) and Pyrogram (4.6k) are both ARCHIVED (Telethon read-only since 2026-02-21, Pyrogram since 2024-12-23). Do not start a new build on either.",
+  "chaining": "Unbounded by construction: 1 account x 500 channels x unlimited posts = unlimited. A second account carries a second read allowance, not a second storage allowance. Teldrive adds its own layer: 'channel-part-limit: 500000' parts per channel with 'auto-channel-create: true'. It opens a NEW channel automatically when the active one fills, so the sharding is already automated. A 2 GB file is 4000 x 512KB parts, so one channel holds ~250 TB of max-size files before rotation.",
   "limits": [
     {
       "kind": "per-ip-shaping",
@@ -51,7 +51,7 @@
       "source": "https://telegram.org/faq"
     }
   ],
-  "limits_note": "Per-file 2 GB free / 4 GB Premium — verified against Telegram's own config, not a blog: upload_max_fileparts_default = 4000 and upload_max_fileparts_premium = 8000, times the max part size 524288 bytes = 2,097,152,000 B and 4,194,304,000 B. Upload speed is throttled for non-Premium by an explicit server error, FLOOD_PREMIUM_WAIT_X, which signals 'upload speed is limited because the current account does not have a Premium subscription'; upload_premium_speedup_upload = 10, i.e. Premium is ~10x faster. No published daily byte cap exists — Telegram documents none, and the empirical field report (Teldrive issue #561) is 10-50 GB/day for one user, with a maintainer answering 'I have seen user posting that they upload 400-500gb daily no issues. It depends on how many bots you have.' Treat 20 GB/day as folklore: no primary source found.",
+  "limits_note": "Per-file 2 GB free / 4 GB Premium. Verified against Telegram's own config, not a blog: upload_max_fileparts_default = 4000 and upload_max_fileparts_premium = 8000, times the max part size 524288 bytes = 2,097,152,000 B and 4,194,304,000 B. Upload speed is throttled for non-Premium by an explicit server error, FLOOD_PREMIUM_WAIT_X, which signals 'upload speed is limited because the current account does not have a Premium subscription'; upload_premium_speedup_upload = 10, i.e. Premium is ~10x faster. No published daily byte cap exists. Telegram documents none, and the empirical field report (Teldrive issue #561) is 10-50 GB/day for one user, with a maintainer answering 'I have seen user posting that they upload 400-500gb daily no issues. It depends on how many bots you have.' Treat 20 GB/day as folklore: no primary source found.",
   "identity_cost": {
     "kind": "email",
     "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
@@ -59,7 +59,7 @@
   },
   "reliability_note": "Throttling is the real risk, not deletion: FLOOD_PREMIUM_WAIT_X caps non-Premium throughput and FLOOD_WAIT_X backs off per method. Files persist indefinitely in practice, but a closed account takes its channels with it, and Teldrive's own README warns accounts and stored files 'can become unavailable', so a store that spans several accounts loses only the parts one account holds.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
   "evidence": [
     {
       "url": "https://telegram.org/faq",

@@ -41,10 +41,10 @@
   "limits": [],
   "limits_note": "",
   "binding": "none",
-  "binding_note": "the constraint that decides this tool is outside the seven-kind vocabulary: a host with a public address at the far end, which the corpus treats as a paid resource rather than a free one",
+  "binding_note": "Requires an external server host running wstunnel with a public IP address.",
   "identity_cost": {
     "kind": "anonymous",
-    "detail": "no account; the client dials a wstunnel server the client or somebody else runs",
+    "detail": "No account required. The client connects to an independently operated wstunnel server.",
     "country": "None"
   },
   "reliability_note": "the udp tunnel auto-closes after 30 s idle unless timeout_sec=0; the client sends websocket pings every 30 s by default; MTU must drop to about 1300 or packets fragment",
@@ -71,7 +71,7 @@
   "verified_at": "2026-10-23T00:00:00.000Z",
   "price_per_tb_month": "USD 0",
   "history": [],
-  "notes": "The most maintained wrapper in the lane. It is not a WireGuard implementation: it forwards udp:// flows over a websocket or HTTP/2 connection, so the far end needs a wstunnel server. The README states HTTP/2 fails behind a buffering reverse proxy or CDN and that only a directly exposed server works, which makes websocket the usable transport behind a CDN.",
+  "notes": "Tunneling software forwarding TCP and UDP over WebSocket or HTTP/2. Designed to traverse firewalls and reverse proxies; WebSocket mode supports traversal through CDNs.",
   "extras": {
     "wg_path": "none",
     "wg_detail": "the README ships a WireGuard recipe: server 'wstunnel server --restrict-to localhost:51820 wss://[::]:443' and client \"wstunnel client -L 'udp://51820:localhost:51820?timeout_sec=0' wss://my.server.com:443\", with the WireGuard peer Endpoint changed to localhost:51820",

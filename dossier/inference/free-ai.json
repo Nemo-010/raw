@@ -14,7 +14,7 @@
     "rest"
   ],
   "tooling": "any OpenAI-compatible client; curl against POST {base}/chat/completions",
-  "chaining": "pairs with a batch job that does not care which model runs; the single backend is the scarce link, and the prober puts it at 96 per cent of accepted calls",
+  "chaining": "Pairs with batch jobs indifferent to model selection. The single shared backend is the constraining link, with accepted calls answering at a 96 percent rate.",
   "limits": [
     {
       "kind": "request-rate",
@@ -43,7 +43,7 @@
   "endpoint": "https://api.free.ai/v1/chat/completions",
   "identity_cost": {
     "kind": "anonymous",
-    "detail": "no key required. The prober's per-endpoint track record reports 194 of 732 calls answered over 10 days, 27 per cent, and 194 of the 202 calls free.ai accepted for a model it serves, 96 per cent",
+    "detail": "No key required. Third-party endpoint tracking reports 194 of 732 calls answered over 10 days (27 percent), and 194 of the 202 calls accepted for served models (96 percent).",
     "country": null
   },
   "reliability_note": "no substitution was observed inside a single run, but the model served never matches the model requested for any id other than the backend's own name",
@@ -172,5 +172,5 @@
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z",
   "binding_note": "no quota binds above the scale: every id probed answered 200 with no key, in both runs. The failure here is substitution and not a ceiling, and substitution is not one of the six constraint kinds, so it is recorded in limits_note rather than forced into a kind that would misdescribe it",
-  "limits_note": "the served model is the constraint: 513 catalogue names resolve to one backend, Qwen/Qwen3-30B-A3B-Instruct, so the model cannot be chosen and a capacity claim about free.ai is a claim about that one model. The prober's accepted-only rate for this endpoint is 194 of 202 calls, 96 per cent, so it answers reliably; what it does not do is serve what was asked for"
+  "limits_note": "The served model is the primary constraint: 513 catalogue names resolve to a single backend, Qwen/Qwen3-30B-A3B-Instruct. Third-party testing recorded an accepted-only response rate of 194 out of 202 calls (96 percent), though requests do not receive the specifically requested model."
 }

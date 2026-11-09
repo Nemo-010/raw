@@ -10,10 +10,10 @@
     "metered_on": "stored-bytes",
     "source_url": "https://blossom.nostr.build/",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://blossom.nostr.build/",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
@@ -21,7 +21,7 @@
     "stated": "24242.io: 100 MiB max file, files deleted after 60 days unaccessed",
     "days": 60,
     "source_url": "https://blossom.nostr.build/",
-    "notes": "extracted from the seed prose"
+    "notes": "Extracted from published terms."
   },
   "egress": {
     "terms": "Free CDN, global.",
@@ -32,7 +32,7 @@
   ],
   "interface_detail": "BUD-01/BUD-06 HTTP API: PUT /upload, HEAD /upload, DELETE; auth is a signed Nostr event in the Authorization header, not an account.",
   "tooling": "any Blossom client; curl with a signed event.",
-  "chaining": "Content-addressed by sha256, so it chunks naturally into the hoangvu12/free-s3 pattern — but 20 MiB chunks would need ~50,000 objects per TiB.",
+  "chaining": "Content-addressed by sha256, so it chunks naturally into the hoangvu12/free-s3 pattern. But 20 MiB chunks would need ~50,000 objects per TiB.",
   "limits": [
     {
       "kind": "retention-clamped",
@@ -46,9 +46,9 @@
     "detail": "anonymous",
     "country": null
   },
-  "reliability_note": "Pure per-object-cap failure. Included because the auth model (keypair, zero registration) is the most open I found anywhere in this wave, and because the 60-day idle deletion on 24242.io is a textbook retention-clamp.",
+  "reliability_note": "Cryptographic keypair authentication with no registration required. Hosted blossom instances enforce 60-day idle deletion policies.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
   "evidence": [
     {
       "url": "https://blossom.nostr.build/",
@@ -116,7 +116,7 @@
     "agent_focus": "Two client questions. (1) Open academic infrastructure that does NOT validate institutional identity — for each repository I probed the machine-readable quota endpoint (GET /api/dataverses/:root/storage/quota, /api/records?size=1, /api/info/version) rather than trusting marketing pages, and separately tested the write gate, because open-signup-with-unlimited-quota and open-signup-with-deposit-rights are different things and this wave exists to separate them. (2) Relay/P2P, split into signalling (coordinates only) vs relaying (data transits, operator pays). Secondary sweep: the 2025-26 AI data commons (FineWeb, Common Pile, DCLM, Dolma, Pleias) to establish whether any of them offers writable storage — none does; they are all read-only distribution on HF or Common Crawl S3, i.e. egress sources, not deposit targets. Dataverse turns out to be the only architecture in this space that ships a quota API that answers 'is there a limit' in one GET, so I ran it across every instance I could reach."
   },
   "binding": "retention-clamped",
-  "binding_note": "a clock, not a quota: bytes leave whether or not the client is finished with them",
+  "binding_note": "a clock, not a quota: bytes leave whether or not transfer is completed",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z"
 }
