@@ -2818,6 +2818,26 @@ def followup_case(repo):
     let_go()
 
 
+def phase_case(repo):
+    """An integrate that takes no unit leaves the phase where it was: status must not say integrated beside planned
+    units, and land must not be the next step of a run that did nothing."""
+    run = sh(repo, "open", "amend", "storage", "phase case: nothing integrated", "--no-issue").stdout.split()[1]
+    plan = os.path.join(repo, ".tmp", run, "plan-phase.json")
+    with open(plan, "w", encoding="utf-8") as f:
+        json.dump([{"kind": "verify", "question": "a unit whose lane never answered", "scope": {"rids": ["storage/0x0-st-2"]}}], f)
+    r = sh(repo, "plan", run, "--file", plan)
+    ok(r.returncode == 0 and "1 unit(s) planned" in r.stdout, "phase case: a unit is planned (%s)" % (r.stdout + r.stderr)[-200:])
+    before = (json.load(open(os.path.join(repo, ".tmp", run, "run.json"), encoding="utf-8")) or {}).get("phase")
+    r = sh(repo, "integrate", run)
+    after = (json.load(open(os.path.join(repo, ".tmp", run, "run.json"), encoding="utf-8")) or {}).get("phase")
+    ok(r.returncode == 0 and after == before and after != "integrated",
+       "an integrate that takes no unit leaves the phase where it was (%s -> %s; %s)"
+       % (before, after, (r.stdout + r.stderr).strip()[-160:]))
+    st = sh(repo, "status", run).stdout
+    ok("phase integrated" not in st, "status does not say integrated beside a unit that is still planned")
+    sh(repo, "close", run, "--reason", "selftest done")
+
+
 def state_save_case(repo):
     """G-05 and G-06: when the save of an integrated unit fails after its commit (a rename Windows refuses while another
     process reads the file), the unit keeps its attempt and its conflict lines, and the next integrate settles it."""
@@ -5634,7 +5654,7 @@ REPO_CASES = ("flow", "primitives_case", "overlay_case", "generated_conflict_cas
               "no_cap_case", "research_checkout_case", "lease_review_case", "crash_case", "land_tree_case",
               "parallel_runs_case", "followup_case", "state_save_case", "round2_case", "round3_case", "round4_case",
               "round5_case", "round6_case", "round7_case", "claim_case", "round8_case", "closing_case", "swarm_case",
-              "queue_plan_case", "relet_case")
+              "queue_plan_case", "relet_case", "phase_case")
 ALL_CASES = ("basics", "git_guard_case", "doc_rules_case", "followup_body_case") + REPO_CASES + ("wipe_case",
                                                                                                 "one_tree_load_case")
 
@@ -5708,6 +5728,8 @@ def main(argv=None):
                 followup_case(repo)
             if want("state_save_case"):
                 state_save_case(repo)
+            if want("phase_case"):
+                phase_case(repo)
             if want("round2_case"):
                 round2_case(repo, tmp)
             if want("round3_case"):
