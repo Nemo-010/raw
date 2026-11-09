@@ -1,7 +1,7 @@
 # The free tier that actually opens, and what it costs in identity
 
 The question is whether a provider places a hold of about USD 50 on a credit card. Measured across the
-**3,984 records** in `dossier/`, **no provider places a USD 50 hold.** The largest anywhere is
+**4,862 records** in `dossier/`, **no provider places a USD 50 hold.** The largest anywhere is
 **Koyeb's USD 29**, cancelled at once and released over 7 to 21 days, and Koyeb takes a
 prorated Pro charge at the same moment. The typical hold is
 **USD 1**: Oracle, Tencent, Linode and Alibaba each publish that figure, CloudCone states
@@ -43,7 +43,7 @@ rate. The record's identity is `email`; its signup form was not read, so a card 
 paid.** No provider in this corpus sells an always-free VM with a routable IPv4 to an adult
 with an email address. Every always-free machine here that takes no card is IPv6-only,
 clocked, ephemeral or age-gated, and the four are named below. That is a result for this
-corpus, not a market census: it rests on the 3,984 records and on no signup attempt.
+corpus, not a market census: it rests on the 4,862 records and on no signup attempt.
 Tencent Cloud International's Lighthouse `2 vCPU / 2 GiB / 40 GB` is **USD 10.08 for the
 first year, USD 4.20 a month at renewal**, behind a USD 1.00 pre-authorisation and no document
 outside the Chinese Mainland (`tencent-lighthouse-intl`). That is the closest thing to a
