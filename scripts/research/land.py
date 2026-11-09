@@ -537,10 +537,12 @@ def update_branch(r, repo=REPO, again="land"):
 REJECTED_RE = re.compile(r"\[rejected\]|non-fast-forward|fetch first|stale info|\(rejected\)", re.I)
 
 
-def push_branch(r, repo=REPO, again="land"):
+def push_branch(r, repo=REPO, again="land", soft=False):
     """Push the run branch to origin with no -u and no force, so integrated work survives the loss of this checkout.
     A non-fast-forward rejection brings the branch level with origin (update_branch) and pushes once more; a second
-    one stops the command. Any other failure (network, authentication) says so: the branch is intact locally.
+    one stops the command. Any other failure (network, authentication) says so: the branch is intact locally. soft=True
+    turns that failure into a line instead of an error, for a caller whose own work is already done: a contributor
+    who cloned upstream read-only cannot push, and their integrate must not fail after it integrated.
     -> a line, or None when there is nothing to push (no target, or a branch still at its base that origin lacks)."""
     if not push_target(repo):
         return None
@@ -555,6 +557,9 @@ def push_branch(r, repo=REPO, again="land"):
             return "pushed rq/%s to %s (no pull request yet)" % (run, REMOTE)
         msg = (err or out).strip()
         if not REJECTED_RE.search(msg):
+            if soft:
+                return ("rq/%s was not pushed: %s. The run branch is intact locally, and a contributor who cannot "
+                        "push hands the run in as a zip (CONTRIBUTING.md)" % (run, msg[:300]))
             raise Fail("the push of rq/%s failed: %s. The run branch is intact locally; RQ_NO_PUSH=1 goes on without a "
                        "push, and a later step pushes it" % (run, msg[:300]), 1)
         if attempt == 1:
