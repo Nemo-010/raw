@@ -111,7 +111,12 @@ def import_bundle(path, repo=REPO):
             u = json.load(open(up, encoding="utf-8"))
             u["run"] = run
             u["status"] = "ready"
-            u.pop("attempt", None)
+            # the contributor's progress is not this repository's: every unit is re-run here, so its attempt, its
+            # commit on the contributor's branch, its lint problems and its audit score go. A score left in place
+            # wedges an audit unit: it arrives `ready` and `scored`, land waits for a score that the score skips,
+            # and nothing can advance it. `audit --score` is mechanical, so the maintainer's score decides.
+            for k in ("attempt", "commit", "problems", "scored", "score"):
+                u.pop(k, None)
             units.save_unit(u, repo)
         copied += 1
     report, conflicts = integrate.integrate(run, repo)
