@@ -1551,6 +1551,32 @@ def forge_read_case():
     finally:
         forgeread._get = real
 
+    # gh is installed but answers nothing: a machine with no token of its own, or a token without the scope. A read
+    # the broker serves must still answer there, or a contributor with no account cannot read the queue at all.
+    import track
+    real_which, real_retry, real_read = track.shutil.which, track.gh_retry, forgeread.read
+    seen2 = []
+
+    def empty_gh(args, r):
+        seen2.append(list(args))
+        return '[{"number": 7}]' if args[:2] == ["issue", "list"] else None
+    track.shutil.which = lambda name: "gh" if name == "gh" else real_which(name)
+    track.gh_retry = lambda args, repo_=None, input_text=None: (1, "")
+    forgeread.read = empty_gh
+    saved = os.environ.pop("RQ_NO_GITHUB", None)
+    try:
+        rc, out = track.gh_run(["issue", "list", "--repo", "o/r", "--label", "rq:research"])
+        ok(rc == 0 and out == '[{"number": 7}]',
+           "gh_run: an installed gh that answers nothing falls back to the broker for a read (%s %r)" % (rc, out))
+        ok(seen2 and "--repo" not in seen2[0], "the fallback strips --repo, which the broker does not take (%s)" % seen2)
+        rc, out = track.gh_run(["issue", "comment", "7", "--repo", "o/r", "--body", "x"])
+        ok(rc == 1 and out == "", "gh_run: a write keeps its own failure, and no write reaches the broker (%s %r)"
+           % (rc, out))
+    finally:
+        track.shutil.which, track.gh_retry, forgeread.read = real_which, real_retry, real_read
+        if saved is not None:
+            os.environ["RQ_NO_GITHUB"] = saved
+
 
 def primitives_case(repo):
     """TreeView, the loose-object writer, write_tree and commit_on (section 2.1; G-07, G-09)."""
