@@ -53,7 +53,7 @@
     "detail": "a GitHub account; GitHub Packages only supports authentication using a personal access token (classic)",
     "country": null
   },
-  "reliability_note": "an unauthenticated GET of a public package on the npm registry endpoint npm.pkg.github.com answers 401 with a 46-byte body, {\"error\":\"authentication token not provided\"}; a token is required to read even a public npm package, the opposite of the container registry at ghcr.io, whose public packages pull anonymously",
+  "reliability_note": "an unauthenticated GET of a public package on the npm registry endpoint npm.pkg.github.com answers 401 with a 46-byte body; a token is required to read even a public npm package, the opposite of the container registry at ghcr.io, whose public packages pull anonymously",
   "confidence": "documented",
   "confidence_note": "the billing page was read today.",
   "evidence": [
@@ -110,10 +110,17 @@
       "proved": "the control: a package name that does not exist under that owner answers 404 with 72 bytes, so the 401 is the read gate and not a missing package",
       "capture": "sha256:c70d20350d394aaa3c88831d92e700b7b4d9079fbe27c1eaaad5b8c51d39d6ff",
       "quote": "\"status\": 404,\n  \"bytes\": 72,"
+    },
+    {
+      "url": "https://docs.github.com/en/billing/concepts/product-billing/github-packages",
+      "date": "2026-11-09",
+      "proved": "GitHub Free is 500MB of storage and 1GB of data transfer a month, and the storage is shared with Actions artifacts",
+      "capture": "sha256:e86d8202da6424d7fe777a09cf7daa8f56612d3bd02b7fe08da73f46ea4aa5a2",
+      "quote": "The storage amounts shown are **shared** with GitHub Actions artifacts."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-09T11:27:06.336Z",
+  "verified_at": "2026-11-09T11:30:55.240Z",
   "price_per_tb_month": null,
   "history": [],
   "notes": "Recorded separately from GHCR because the two are routinely counted as if they were two allowances; container image storage and bandwidth are currently free.",
