@@ -80,10 +80,24 @@
       "url": "https://www.agent37.com/docs/agents-api/instance-sizing.md",
       "date": "2026-10-24",
       "proved": "quoted: '4 vCPU is the ceiling on every instance type.'"
+    },
+    {
+      "url": "https://www.agent37.com/docs/agents-api/instance-auto-sleep.md",
+      "date": "2026-11-09",
+      "proved": "the idle reap defaults to 900 seconds and is configurable from 300 to 86400 seconds",
+      "capture": "sha256:c9756708e4356330e6974ee4f15d10daad186a4cd54557ec0926cd5397135dfc",
+      "quote": "Once no bytes have moved through any of its URLs for `idle_timeout_seconds` (default 900, from five minutes to a day), the platform checkpoints it and `status` becomes `sleeping`"
+    },
+    {
+      "url": "https://www.agent37.com/docs/agents-api/instance-auto-sleep.md",
+      "date": "2026-11-09",
+      "proved": "the default idle timeout is 900 seconds",
+      "capture": "sha256:c9756708e4356330e6974ee4f15d10daad186a4cd54557ec0926cd5397135dfc",
+      "quote": "Once no bytes have moved through any of its URLs for `idle_timeout_seconds` (default 900, from five minutes to a day), the platform checkpoints it"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-24T02:11:00.000Z",
+  "verified_at": "2026-11-09T13:25:35.684Z",
   "price_per_tb_month": null,
   "history": [],
   "notes": "Two rows live in this provider and the shape decides the verdict. Default (container) 2 vCPU / 4 GB / 4 GB disk: 2 x 0.80 + 4 x 0.70 + 4 x 0.09 = USD 4.76 a month at 730 running hours - the cheapest 2 vCPU / 4 GiB found, but it is a shared-kernel instance. VM 2 vCPU / 4 GB / 4 GB disk: 2.5 x (1.60 + 2.80) + 0.36 = USD 11.36. A VM under USD 5 is impossible because the smallest VM shape is 2 vCPU / 4 GB. Ingress is the other catch: ports are published as HTTPS at {id}-{port}.agent37.app, so no raw TCP listener and no UDP - it cannot be a WireGuard node.",
@@ -112,7 +126,7 @@
     },
     "session_cap": {
       "wall_clock_min": null,
-      "idle_reap_s": null,
+      "idle_reap_s": 900,
       "restart_required": false,
       "note": "no wall-clock cap; auto-sleep is optional and cuts billing to the disk rate"
     }
