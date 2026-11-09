@@ -165,7 +165,7 @@ breaking change.
 | ACCESS | Explore ACCESS provides up to 400,000 ACCES... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/access.json` |
 | AccuWeb Hosting | no free tier; VPS Mellite is USD 79.99/mont... | paid-only | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/accuweb-windows.json` |
 | AceCloud | No standing free tier. The L40S page says n... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | any-phone | `dossier/compute/acecloud.json` |
-| Adaptable | nothing reachable: every path on adaptable.... | dead | documented | not applicable: the service doe... | historical catalog re... | email | `dossier/compute/adaptable.json` |
+| Adaptable | nothing reachable: every path on adaptable.... | dead | documented | not applicable: the service doe... | the free Starter plan... | email | `dossier/compute/adaptable.json` |
 | AdminVPS | Seven days of any VPS tariff free, obtained... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/adminvps.json` |
 | Aeza | no free tier; the smallest general plan is... | paid-only | documented | not applicable: the unit is a m... | hourly or monthly bil... | email | `dossier/compute/aeza.json` |
 | Aéza | no free tier; the entry shared plan is 'WAW... | paid-only | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/aeza-waws-1.json` |
@@ -299,7 +299,7 @@ breaking change.
 | Bolt | Bolt Free: "Monthly AI Tokens 1M", "Daily T... | qualifies | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/bolt.json` |
 | Botkeep | A perpetual free container that runs 24/7 w... | qualifies-with-caveat | documented | not applicable: the unit is a m... | An inactivity rule th... | email | `dossier/compute/botkeep.json` |
 | boxd | €30 of free credits to start; RAM is billed... | qualifies-with-caveat | documented | not stated | not stated | card | `dossier/compute/boxd.json` |
-| BoxedTux | A free student vServer: '1 vCPU', '1 GB DDR... | fails-identity | documented | not applicable: the unit is a v... | 'Renew each semester.... | institution | `dossier/compute/boxedtux.json` |
+| BoxedTux | A free student vServer: '1 vCPU', '1 GB DDR... | fails-identity | documented | not applicable: the unit is a v... | 'Renew each semester... | institution | `dossier/compute/boxedtux.json` |
 | boxes.dev | Trial plan, $0: 20 hours of compute include... | trial-only | documented | not stated | not stated | email | `dossier/compute/boxes-dev.json` |
 | BoxLite Cloud | USD 100 in free credits, so you can build a... | paid-only | documented | per-box ceiling of 4 vCPU, 32 G... | Around 10 GiB of real... | card | `dossier/compute/boxlite-cloud.json` |
 | BoxyBSD | Personal plan: EUR 0 a month for 1 vCPU, 1... | qualifies-with-caveat | documented | not applicable: the unit is a v... | Quoted: 'BoxyBSD rese... | email | `dossier/compute/boxybsd.json` |
