@@ -5768,6 +5768,12 @@ def import_case(repo, tmp):
     ok(r.returncode == 0 and a.get("scored"),
        "import: the source audit unit is scored, so the bundle carries a score (%s)" % (r.stdout + r.stderr)[-200:])
     bz = os.path.join(tmp, "bundle-%s.zip" % run)
+    # a lane's scratch header dump, as broker.sh fetch --dump-headers leaves it: the cf-ray suffix and the
+    # cf-placement value name the machine that read the page, which is the contributor's network identity
+    dump = os.path.join(lane_dir(repo, run, uid), "tmp", "page.txt")
+    os.makedirs(os.path.dirname(dump), exist_ok=True)
+    with open(dump, "w", encoding="utf-8", newline="\n") as f:
+        f.write("HTTP/2 403\nCF-RAY: a52755de7bfacc10-KTM\ncf-placement: local-KTM\nserver: cloudflare\n")
     with zipfile.ZipFile(bz, "w", zipfile.ZIP_DEFLATED) as zf:
         for root, _dirs, names in os.walk(os.path.join(repo, ".tmp", run)):
             for n in names:
@@ -5780,6 +5786,10 @@ def import_case(repo, tmp):
     if not new:
         sh(repo, "close", run, "--reason", "selftest done")
         return
+    imported = os.path.join(repo, ".tmp", new, "units", uid, "tmp", "page.txt")
+    body = open(imported, encoding="utf-8").read() if os.path.exists(imported) else ""
+    ok(body and "KTM" not in body and "a52755de7bfacc10-[redacted]" in body and "cf-placement: [redacted]" in body,
+       "an imported lane dump carries no Cloudflare location (%r)" % body[:120])
     d = os.path.join(repo, ".tmp", new, "units")
     na = [json.load(open(os.path.join(d, n, "unit.json"), encoding="utf-8"))
           for n in sorted(os.listdir(d)) if os.path.exists(os.path.join(d, n, "unit.json"))]
