@@ -1500,6 +1500,58 @@ def generated_conflict_case(repo, tmp):
 
 
 
+def forge_read_case():
+    """The read-only forge fallback: a contributor with no gh reads the queue, and no write is ever sent (AGENTS.md
+    section 2 rule 15 is not touched: the broker sets the pace, not this code)."""
+    import forgeread
+    seen = []
+
+    def fake(path, params=None):
+        seen.append(path)
+        if path.endswith("/issues"):
+            return 200, json.dumps([{"number": 7, "title": "T", "body": "B", "state": "open",
+                                     "labels": [{"name": "rq:research"}]},
+                                    {"number": 8, "title": "a pull request", "pull_request": {"url": "x"}}])
+        if path.endswith("/issues/7"):
+            return 200, json.dumps({"number": 7, "state": "open", "body": "B",
+                                    "labels": [{"name": "rq:research"}]})
+        if path.endswith("/issues/7/comments"):
+            return 200, json.dumps([{"body": "rq claimed", "created_at": "2026-11-09T00:00:00Z",
+                                     "user": {"login": "a"}}])
+        if path.endswith("/labels"):
+            return 200, json.dumps([{"name": "rq:research"}, {"name": "rq:active"}])
+        if path.endswith("/pulls/3"):
+            return 200, json.dumps({"state": "open", "head": {"ref": "rq/x"}})
+        return 404, ""
+
+    real = forgeread._get
+    forgeread._get = fake
+    try:
+        out = json.loads(forgeread.read(["issue", "list", "--label", "rq:research", "--state", "open",
+                                         "--limit", "10", "--json", "number,title,body,labels,comments"], "o/r"))
+        ok(len(out) == 1 and out[0]["number"] == 7, "forgeread: issue list drops a pull request and keeps an issue")
+        ok(out[0]["comments"][0]["body"] == "rq claimed", "forgeread: issue list carries the comment bodies")
+        one = json.loads(forgeread.read(["issue", "view", "7", "--json", "state,labels,comments,body"], "o/r"))
+        ok(one["state"] == "OPEN", "forgeread: issue view raises the state to OPEN, as gh prints it")
+        ok([x["name"] for x in one["labels"]] == ["rq:research"], "forgeread: issue view carries the labels")
+        names = forgeread.read(["label", "list", "--limit", "500", "--json", "name", "--jq", ".[].name"], "o/r")
+        ok(names == "rq:research" + chr(10) + "rq:active", "forgeread: label list answers the names, one per line")
+        st = forgeread.read(["pr", "view", "3", "--json", "state", "--jq", ".state"], "o/r")
+        ok(st == "OPEN", "forgeread: pr view answers the state in capitals")
+        for args in (["issue", "comment", "7", "--body", "x"], ["issue", "edit", "7", "--add-label", "l"],
+                     ["pr", "create", "--base", "main"], ["pr", "merge", "1", "--merge"],
+                     ["label", "create", "x"], ["api", "repos/o/r/issues/7/comments", "--method", "POST"],
+                     ["api", "repos/o/r/issues/7", "-X", "DELETE"],
+                     ["api", "repos/o/r/issues/7/comments", "-f", "body=x"]):
+            ok(forgeread.read(args, "o/r") is None,
+               "forgeread refuses the write %s, so no write is ever sent to the broker" % " ".join(args[:2]))
+        ok(forgeread.read(["api", "repos/o/r/issues/7", "--method", "GET"], "o/r") is not None,
+           "forgeread still serves a GET through api")
+        ok(not any("POST" in p or "DELETE" in p for p in seen), "forgeread sent no write to the transport")
+    finally:
+        forgeread._get = real
+
+
 def primitives_case(repo):
     """TreeView, the loose-object writer, write_tree and commit_on (section 2.1; G-07, G-09)."""
     import common
@@ -5654,7 +5706,7 @@ REPO_CASES = ("flow", "primitives_case", "overlay_case", "generated_conflict_cas
               "no_cap_case", "research_checkout_case", "lease_review_case", "crash_case", "land_tree_case",
               "parallel_runs_case", "followup_case", "state_save_case", "round2_case", "round3_case", "round4_case",
               "round5_case", "round6_case", "round7_case", "claim_case", "round8_case", "closing_case", "swarm_case",
-              "queue_plan_case", "relet_case", "phase_case")
+              "queue_plan_case", "relet_case", "phase_case", "forge_read_case")
 ALL_CASES = ("basics", "git_guard_case", "doc_rules_case", "followup_body_case") + REPO_CASES + ("wipe_case",
                                                                                                 "one_tree_load_case")
 
@@ -5730,6 +5782,8 @@ def main(argv=None):
                 state_save_case(repo)
             if want("phase_case"):
                 phase_case(repo)
+            if want("forge_read_case"):
+                forge_read_case()
             if want("round2_case"):
                 round2_case(repo, tmp)
             if want("round3_case"):
