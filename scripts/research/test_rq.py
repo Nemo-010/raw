@@ -5754,6 +5754,9 @@ def push_soft_case(repo):
     os.makedirs(os.path.dirname(hook), exist_ok=True)
     with open(hook, "w", encoding="utf-8", newline="\n") as f:
         f.write("#!/bin/sh\necho 'denied: this clone has no write access' >&2\nexit 1\n")
+    # git runs a hook only when it is executable, and a file written on Windows carries no execute bit: without this
+    # the push succeeds on Linux, where CI runs, and the case then asserts the opposite of what happened
+    os.chmod(hook, 0o755)
     try:
         rr = sh(repo, "integrate", run)
         u = json.load(open(os.path.join(lane_dir(repo, run, ids[0]), "unit.json"), encoding="utf-8"))
