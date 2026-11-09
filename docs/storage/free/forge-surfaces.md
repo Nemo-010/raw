@@ -194,7 +194,7 @@ Verdict: `qualifies-with-caveat`.
 
 ### CurseForge (Overwolf) author file hosting
 
-> No published total quota and no published per-file number that could be verified this session - the author docs, the ideas board and the support KB were all behind SSO or Cloudflare. What IS verifiable is the observed size distribution:...
+> No published total quota and no published per-file number that could be verified on 2026-10-21 - the author docs, the ideas board and the support KB were all behind SSO or Cloudflare. What IS verifiable is the observed size distribution:...
 
 That is the record's own wording (`reported`, 2026-10-21). The constraint that binds is `request-rate`: not published. The record states no identity cost. Observed behaviour: Reads are hotlink-gated (403 from S3 on constructed URLs) and the whole author surface is SSO-walled, so this is the least auditable of the game hosts.
 

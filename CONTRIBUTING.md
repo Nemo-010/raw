@@ -56,10 +56,13 @@ when your account has triage rights. Without those rights the comment alone is t
 `run.json` records `claim_unlabelled: true`.
 
 Work the lanes. A parent agent may dispatch one agent per lane; a solo agent walks the briefs in
-order. Nothing in the harness requires subagents: a brief is a file under `.tmp/<run>/units/`, and
-`scripts/rq integrate` collects whatever is there.
+order. Nothing in the harness requires subagents: a brief is a file under `.tmp/<run>/units/`.
+
+Collect, then integrate. They are two steps: `collect` reads each lane's files and lints them, and
+`integrate` takes only a collected unit. `integrate` on its own applies nothing, and now says so.
 
 ```bash
+scripts/rq collect
 scripts/rq integrate
 scripts/rq land RUN
 ```
@@ -74,9 +77,13 @@ The same run, handed over as a zip:
 ```bash
 scripts/rq open amend TOPIC "RID: what is wrong" --no-issue
 # work the lanes, then:
+scripts/rq collect
 scripts/rq integrate
-zip -r fshy-<run-id>.zip .tmp/<run>/
+zip -r fshy-<run-id>.zip .tmp/<run>/          # Windows: Compress-Archive .tmp/<run> fshy-<run-id>.zip
 ```
+
+`integrate` tries to push the run branch, and a read-only clone cannot: it says so and goes on, because the
+branch is intact locally and the zip carries it. Nothing is lost.
 
 Hand the zip to the maintainer by any channel. The bundle is data, not code. The maintainer imports
 it with `scripts/rq import-bundle`, validates every record against the schema, applies it to a fresh
