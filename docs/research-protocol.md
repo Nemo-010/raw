@@ -418,9 +418,12 @@ in `scripts/research/baseline.tsv`. `audit --score` prints both commands. `scrip
 line, 1 for the first. `land` copies the issue's "Done when" lines into the pull request as a checklist, ticks
 those lines, and writes "Part of #N". ⚠ A line that says a merge session ticks it (a tools pull request, "Every
 topic of the list has a merged run") is never ticked by a run; `land` says so when `--meets` names it. The line
-"CI's `gate` job is green on the pull request", with nothing after it but what the job runs and its comparison
-with `main`, is ticked by `land` itself, whether `--meets` names it or not: `rq merge` merges only a head whose CI
-is green, so the merge makes it true. A line that asks for more than that (no new baseline row, a repaired record
+"CI's `gate` job is green on the pull request that carries the work to `main`", with nothing after it but what the
+job runs and its comparison with `main`, is ticked by `land` itself, whether `--meets` names it or not: `rq merge`
+merges only a head whose CI is green, so the merge makes it true. It is worded for both contributor paths on
+purpose: a contributor with an account opens the pull request, and a contributor who sends a zip cannot, so the
+maintainer opens it when the bundle is imported. The older wording, "green on the pull request", is still accepted
+by `land` and `rq merge` for issues written before the change. A line that asks for more than that (no new baseline row, a repaired record
 that leaves the baseline) is an ordinary line: name it in `--meets` when it holds, and the merge session checks the
 tick. It comments
 `rq landed: run RUN topic TOPIC, pull request URL` on the issue; the claim holds until a merge session merges or
