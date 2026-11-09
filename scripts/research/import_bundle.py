@@ -58,8 +58,25 @@ def extract(path, dest):
             os.makedirs(os.path.dirname(target), exist_ok=True)
             with zf.open(m) as src, open(target, "wb") as out:
                 shutil.copyfileobj(src, out)
+            if name.split("/")[-2:-1] == ["tmp"] and name.lower().endswith((".txt", ".html", ".xml", ".md")):
+                # a lane's scratch dump is not a record, and it can carry the machine that read the page: the
+                # Cloudflare location in a cf-ray suffix and a cf-placement value name the contributor's network
+                # identity. A registered capture is scrubbed when it is registered; the dump that fed it was not,
+                # and CONTRIBUTING.md tells a contributor to zip the whole run folder.
+                scrub_file(target)
             n += 1
     return n
+
+
+def scrub_file(path):
+    """Replace the reading machine's location in a captured header dump, in place. The capture that a lane
+    registers is scrubbed by `rq capture`; this is the raw file beside it."""
+    import capture
+    text = open(path, encoding="utf-8", errors="replace").read()
+    clean = capture.scrub_location(text)
+    if clean != text:
+        with open(path, "wb") as f:
+            f.write(clean.encode("utf-8"))
 
 
 def find_run(stage):

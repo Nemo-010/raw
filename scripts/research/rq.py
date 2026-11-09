@@ -395,9 +395,10 @@ def cmd_integrate(a):
     track.comment(r, "integrated:\n" + "\n".join("- %s %s %s" % (u, s, json.dumps(t)) for u, s, t, _ in rep) +
                   "\nopen conflicts: %d" % len(open_c))
     with run_lock(a.run):
-        pushed = land.push_branch(r, again="integrate")
+        pushed = land.push_branch(r, again="integrate", soft=True)
     if pushed:
-        print(pushed + ", so the integrated work survives the loss of this checkout")
+        print(pushed + (", so the integrated work survives the loss of this checkout"
+                        if pushed.startswith("pushed ") else ""))
     if open_c and r.get("rounds", 0) < 2:
         print("next: scripts/rq plan %s --conflicts, start those lanes, collect and integrate" % a.run)
     else:
@@ -412,6 +413,12 @@ def next_after_integrate(run):
     if ready:
         # a unit that integrate left ready (a ref lock, or another writer moved the ref) is taken by the next call
         return "next: scripts/rq integrate %s again (units %s are still ready)" % (run, ", ".join(ready))
+    waiting = [u["id"] for u in units.units_of(run) if u["kind"] != "audit" and u["status"] in ("planned", "running")]
+    if waiting:
+        # integrate takes only a collected unit: a lane's files are read and linted by collect, and a run whose lanes
+        # are still planned would otherwise print land as its next step and look finished
+        return ("next: scripts/rq collect %s (units %s are not collected yet: collect reads and lints the lane's "
+                "files, and integrate takes only a collected unit)" % (run, ", ".join(waiting)))
     lost = [u["id"] for u in units.units_of(run) if u["status"] == "lease-lost"]
     if lost:
         # another run holds a key of their scope: integrate lets the lease again once that run merges or closes
@@ -462,7 +469,7 @@ def cmd_audit(a):
             for c in uns:
                 write_json(os.path.join(run_dir(a.run), "unsupported", "%s-%s.json" % (c["audit"], c["cid"])), c)
         with run_lock(a.run):
-            pushed = land.push_branch(units.load_run(a.run), again="audit --score")
+            pushed = land.push_branch(units.load_run(a.run), again="audit --score", soft=True)
         if pushed:
             print(pushed)
         unaudited, unscored = units.audit_todo(a.run)
