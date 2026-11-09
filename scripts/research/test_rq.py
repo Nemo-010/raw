@@ -5122,11 +5122,18 @@ def round8_case(repo, tmp):
     good = ["CI's `gate` job is green on the pull request.",
             "CI's `gate` job is green on the pull request: no check fails that passes on `main`.",
             "CI's `gate` job is green on the pull request (it runs `scripts/rq check --gate`): no new error violation, "
-            "and no check fails that passes on `main`."]
+            "and no check fails that passes on `main`.",
+            # the wording a contributor who sends a zip can meet: the maintainer opens the pull request
+            "CI's `gate` job is green on the pull request that carries the work to `main`.",
+            "CI's `gate` job is green on the pull request that carries the work to `main` (the maintainer opens it "
+            "when the work arrives as a zip).",
+            "CI's `gate` job is green on the pull request that carries the work to `main`: no check fails that "
+            "passes on `main`."]
     bad = ["CI's gate `sources` check passes on the pull request.",
            "CI's gate `sources` check passes on the pull request, and CI's `gate` job is green on the pull request: no "
            "check fails that passes on `main`.",
            "CI's `gate` job is green on the pull request (it runs `scripts/rq check --gate`), with no new baseline row.",
+           "CI's `gate` job is green on the pull request that carries the work to `main`, with no new baseline row.",
            "After the merge (A merge session ticks this line.) CI's `gate` job is green on the pull request."]
     ok(all(track.ci_line(x) for x in good) and not any(track.ci_line(x) for x in bad),
        "land ticks only the line of CI's gate comparison, not a line that names the sources check or the baseline "
