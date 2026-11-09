@@ -18,6 +18,14 @@ cd raw
 git fetch upstream && git merge --ff-only upstream/main && git push origin main
 ```
 
+Set the address your commits carry before the first one. A run branch keeps the author of every commit it
+holds, and a merge does not rewrite them, so an address you would not publish reaches the public history
+with the merge:
+
+```bash
+git config user.email "$(gh api user --jq '"\(.id)+\(.login)@users.noreply.github.com"')"
+```
+
 Without an account, clone the upstream read-only:
 
 ```bash
