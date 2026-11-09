@@ -49,7 +49,7 @@
     "detail": "a GitLab account",
     "country": null
   },
-  "reliability_note": "a public image pulls anonymously: the token endpoint at gitlab.com/jwt/auth answered 200 with a token JSON for a pull scope, and that token listed the tags of gitlab-org/gitlab-runner and fetched the alpine-v16.11.0 image index at 200 with 3,117 bytes",
+  "reliability_note": "a public image pulls anonymously: the alpine-v16.11.0 image index of gitlab-org/gitlab-runner answered 200 with 3,117 bytes to a token issued for an unauthenticated pull scope",
   "confidence": "documented",
   "confidence_note": "the storage-quota doc was read today and states the exclusion.",
   "evidence": [
@@ -85,10 +85,17 @@
       "proved": "the token endpoint answers an unauthenticated pull scope with a 2,596-byte token JSON",
       "capture": "sha256:f57e9af954e4634cc0ebf398ac01af53e9d4b42bcfca2be26719f3bff91d12fd",
       "quote": "\"status\": 200,\n  \"bytes\": 2596,"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+      "date": "2026-11-09",
+      "proved": "the storage-quota page states that the container registry is outside the project storage limit; the Free limit is 10 GiB of repository and LFS storage",
+      "capture": "sha256:32cb9b13bd82d6395449b56d639b10c9214fbcf89a1a5fa1493dad8fe2e46c49",
+      "quote": "The container registry, package registry, and build artifacts are not included in the limit."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-09T11:27:06.381Z",
+  "verified_at": "2026-11-09T11:30:55.282Z",
   "price_per_tb_month": null,
   "history": [],
   "notes": "An exclusion is not an allowance. The doc says the registry does not count against 10 GiB; it does not say the registry is free, and no separate free figure is published.",
