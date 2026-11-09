@@ -597,7 +597,9 @@ DONE_ITEM_RE = re.compile(r"^(?:- |\d+\. )(.*)$")
 # check of the gate (`sources`, red on main while any registry row is overdue, whatever the run diffed), or no new
 # baseline row (the `baseline` job turns green with the label rq:baseline); the parent ticks such a line with --meets
 # when it holds, and the merge session checks the tick (F-03).
-CI_LINE_RE = re.compile(r"^CI's `gate` job is green on the pull request(?: \(it runs `scripts/rq check --gate`\))?"
+CI_LINE_RE = re.compile(r"^CI's `gate` job is green on the (?:pull request that carries the work to `main`"
+                        r"(?: \(the maintainer opens it when the work arrives as a zip\))?|pull request"
+                        r"(?: \(it runs `scripts/rq check --gate`\))?)"
                         r"(?:: no (?:new error violation, and no )?check fails that passes on `main`)?\.?$")
 
 
