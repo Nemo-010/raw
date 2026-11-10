@@ -21,7 +21,7 @@
   "retention": {
     "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.together.ai/docs/fine-tuning/data-preparation",
-    "notes": "No retention clause documented in available terms."
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
     "terms": "No egress fee on the Files API. Their separate Managed Storage product is explicitly advertised with 'zero egress fees'.",
@@ -32,7 +32,7 @@
   ],
   "interface_detail": "POST https://api.together.xyz/v1/files/upload (and /v1/files/{id}/content); OpenAI-ish, `purpose` in {fine-tune, calibration, eval, batch-api}",
   "tooling": "together-python (`tg files upload`), curl multipart",
-  "chaining": "Supports up to 100 GB per single object upload, compared to typical 512 MB limits across model provider file APIs.",
+  "chaining": "100 GB single objects are the largest per-object cap found in the entire LLM-provider lane — 200x OpenAI's 512 MB. If a total quota is genuinely absent, this is the highest-leverage per-object number in this dossier. Unverified.",
   "limits": [
     {
       "kind": "per-object-cap",
@@ -46,9 +46,9 @@
     "detail": "card",
     "country": null
   },
-  "reliability_note": "Requires a $5 minimum prepaid credit without free trial tiers. Read path endpoint `/v1/files/{id}/content` requires authentication. Managed storage is billed at $0.16 per GiB monthly ($163.84 per TB per month) with free egress.",
+  "reliability_note": "Together has no free tier — 'no free trials', $5 minimum prepaid credit required. That already fails the constraint. Read path unverified: /v1/files/{id}/content exists but every probe returns 401. Managed Storage is $0.16/GiB/month = $163.84/TB/month, which is 40-80x the cheap-paid lane and therefore useless even though egress is free.",
   "confidence": "reported",
-  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [
     {
       "url": "https://docs.together.ai/docs/fine-tuning/data-preparation",

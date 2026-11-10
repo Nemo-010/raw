@@ -14,7 +14,7 @@
     "rest"
   ],
   "tooling": "any OpenAI-compatible client; curl against POST {base}/chat/completions",
-  "chaining": "Pairs with a deployed Cloudflare Worker. The 300,000-neuron monthly allowance represents the constraining limit.",
+  "chaining": "pairs with a Cloudflare Worker already deployed; the 300,000-neuron monthly allowance is the scarce link, and it covers 42 per cent of the target workload",
   "limits": [
     {
       "kind": "request-rate",
@@ -129,7 +129,7 @@
   ],
   "verdict": "qualifies-with-caveat",
   "verified_at": "2026-10-28T05:28:29.330Z",
-  "notes": "The free allowance is 300,000 Neurons a month (10,000 daily allowance across 30 days). At 2,457 neurons per million input tokens on llama-3.2-1b-instruct, this provides up to 122.1 million input tokens a month or 4.07 million daily. Output tokens consume 18,252 neurons per million tokens. The allocation is model-dependent, and figures beyond the 10,000 daily base are derived calculations documented in free_tier.stated.",
+  "notes": "300,000 Neurons a month, not 375 million: 10,000 a day times 30. At 2,457 neurons per million input tokens that is 122.1 million input tokens a month and 4.07 million a day. The target of 15 million input and 37.5 million output tokens a month on llama-3.2-1b-instruct needs 15 x 2,457 + 37.5 x 18,252 = 721,305 neurons, which is 2.4 times the whole free allowance; the output half alone is 2.3 times it. The allocation is real, it is model-dependent, and it cannot carry the target workload, which is why the row is a fallback. Every figure beyond the page's own 10,000 a day is arithmetic on it and is labelled as such in free_tier.stated.",
   "binding": "request-rate",
   "stale": false,
   "stale_checked_at": "2026-10-22T04:31:58.000Z"

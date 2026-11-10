@@ -21,7 +21,7 @@
   "retention": {
     "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://www.kaggle.com/product-announcements/512322",
-    "notes": "No retention clause documented in available terms."
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
     "terms": "Free. Files come from Kaggle's Google-hosted CDN (storage.googleapis.com) with no egress meter. Downloads require a Kaggle API token.",
@@ -32,7 +32,7 @@
     "git"
   ],
   "interface_detail": "rest + git",
-  "tooling": "kagglehub and the Kaggle API. Endpoints GET /api/v1/models/list and GET /api/v1/models/google/bert/get return HTTP 200 with model records. Datasets endpoint /api/v1/datasets/list returns JSON with totalBytesNullable per dataset. Model uploading via API is restricted to designated accounts, and kagglehub limits repositories to 50 files before creating archives.",
+  "tooling": "kagglehub and the Kaggle API. Verified live this session: GET /api/v1/models/list?search=bert and ?search=qwen both returned 200 with real model records (ref, title, author, vote counts); GET /api/v1/models/google/bert/get returned 200, 72,158 bytes. Datasets: /api/v1/datasets/list returns 200 JSON with totalBytesNullable per dataset. Note the upload side is narrower than the read side — 'The ability to upload models via the Kaggle API was introduced to a select group of Kaggle accounts starting in version 1.5.18', and kagglehub caps at 50 files per repo and auto-zips beyond that.",
   "chaining": "Models and datasets are separate quota pools, so the ceiling is 200 GB private models + 200 GB private datasets + 200 GB per public model × N public models + 200 GB per public dataset × N public datasets. Public items are the real multiplier. Each model can carry multiple variations and frameworks, but they share the model's 200 GB.",
   "limits": [
     {
@@ -49,7 +49,7 @@
   },
   "reliability_note": "Kaggle is Google-owned and long-lived; the risk is policy drift on public storage, not disappearance. The 200 GB private pool is enforced hard ('if you exceed this, either make your datasets public or delete unused datasets').",
   "confidence": "reported",
-  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [
     {
       "url": "https://www.kaggle.com/product-announcements/512322",
