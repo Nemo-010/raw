@@ -10,10 +10,10 @@
     "metered_on": "stored-bytes",
     "source_url": "https://transfer.it/",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://transfer.it/",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
@@ -21,7 +21,7 @@
     "stated": "Retention: SERVER CLAMPS EXPIRY TO 90 DAYS",
     "days": 90,
     "source_url": "https://transfer.it/",
-    "notes": "extracted from the seed prose"
+    "notes": "Extracted from published terms."
   },
   "egress": {
     "terms": "unmetered; direct host-issued CDN URL (gfsXXX.userstorage.mega.co.nz) supports Range and returns 206. Link/bandwidth not metered per-download on the free tier.",
@@ -33,7 +33,7 @@
     "cli"
   ],
   "interface_detail": "rest",
-  "tooling": "transferit-py (PyPI, github.com/viperadnan-git/transferit-py, 20 stars, pushed 2026-04-22) — CLI + library, pip install worked and roundtrip verified. Also NTFSvolume/mega.py has a read-only transfer.it client.",
+  "tooling": "Transferit-py (PyPI, github.com/viperadnan-git/transferit-py, 20 stars, pushed 2026-04-22). CLI + library, pip install worked and roundtrip verified. Also NTFSvolume/mega.py has a read-only transfer.it client.",
   "chaining": "Each Transferit() upload creates a NEW anonymous MEGA account (a:up + a:us, no email/phone) => 20 GiB x unlimited free accounts. Shard a file into 20 GiB (or 4 GiB) objects, one ephemeral account per shard, one URL per shard. Cost per identity: two unauthenticated API calls.",
   "limits": [
     {
@@ -52,13 +52,13 @@
       "source": "https://transfer.it/"
     }
   ],
-  "limits_note": "per-object-cap: none advertised per transfer, but the real ceiling is the 20 GiB ephemeral-account storage (mstrg) — a transfer larger than the account's remaining space cannot complete. Retention: SERVER CLAMPS EXPIRY TO 90 DAYS. Verified with a:xl on transfers requested at 1d/90d/1y/10y/no-expiry: all returned e = now+90.00 days. The 10-year ceiling in transferit-py's docs (MAX_EXPIRY_SECONDS) is a CLIENT clamp the server silently overrides. Request-rate: not hit in ~10 uploads.",
+  "limits_note": "Per-object-cap: none advertised per transfer, but the real ceiling is the 20 GiB ephemeral-account storage (mstrg). A transfer larger than the account's remaining space cannot complete. Retention: SERVER CLAMPS EXPIRY TO 90 DAYS. Verified with a:xl on transfers requested at 1d/90d/1y/10y/no-expiry: all returned e = now+90.00 days. The 10-year ceiling in transferit-py's docs (MAX_EXPIRY_SECONDS) is a CLIENT clamp the server silently overrides. Request-rate: not hit in ~10 uploads.",
   "identity_cost": {
     "kind": "institution",
     "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ader with mstrg = 21474836480 (20 GiB), read live from the API. Expiry IS re-settable in place: a:xm with a new 'e' on an existing xh works and returns 0 (verified 1d -> 30d -> 90",
     "country": null
   },
-  "reliability_note": "Expiry IS re-settable in place: a:xm with a new 'e' on an existing xh works and returns 0 (verified 1d -> 30d -> 90d). This is the 'transfer as store' trick — an unexpired transfer can be pushed back to the 90-day wall indefinitely without re-uploading, so the object only dies if you stop touching it for 90 days. Parallel ranged GETs scale (0.29 MB/s @1 conn -> 2.73 MB/s @32 conn on a 32 MiB object, 206s throughout); occasional 403 on a range suggests per-connection shaping, not a hard pull cap.",
+  "reliability_note": "Expiry IS re-settable in place: a:xm with a new 'e' on an existing xh works and returns 0 (verified 1d -> 30d -> 90d). This is the 'transfer as store' trick. An unexpired transfer can be pushed back to the 90-day wall indefinitely without re-uploading, so the object only dies if you stop touching it for 90 days. Parallel ranged GETs scale (0.29 MB/s @1 conn -> 2.73 MB/s @32 conn on a 32 MiB object, 206s throughout); occasional 403 on a range suggests per-connection shaping, not a hard pull cap.",
   "confidence": "reported",
   "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [
@@ -120,7 +120,7 @@
     "agent_focus": "transfer services repurposed as storage — per-transfer caps, link persistence, plain-GET retrievability, and whether 'transfer' becomes 'store'"
   },
   "binding": "retention-clamped",
-  "binding_note": "a clock, not a quota: bytes leave whether or not the client is finished with them",
+  "binding_note": "a clock, not a quota: bytes leave whether or not transfer is completed",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z"
 }

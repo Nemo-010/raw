@@ -21,7 +21,7 @@
   "retention": {
     "stated": "a forward token lives at most 72 hours from minting; a reverse pair and its three tokens live at most 72 hours. Expiry is checked when a session is established, not per frame",
     "days": 3,
-    "notes": "both lifetimes were measured at 72.0 hours in this session, on a mint and on a pair",
+    "notes": "Forward token lifetime and reverse pair lifetime both measured at 72.0 hours on 2026-10-22.",
     "source_url": "https://tcp.ssh.relay.ajam.dev/llms-full.txt"
   },
   "egress": {
@@ -71,7 +71,7 @@
       "source": "https://tcp.ssh.relay.ajam.dev/llms-full.txt"
     }
   ],
-  "limits_note": "the two numbers a reader plans against are the 64 MiB session cap and the 720-minute session life, and both were measured or read on the operator's own specification page in this session. The 180,000 ms idle close was measured at 180.7 s. The 64 MiB cap is the one that decides the serving question: at the 9.605 MiB/s the cap test sustained, one day at 1 TiB needs 16,384 sessions of 64 MiB, which is one new session every 5.3 seconds.. the 64 MiB cap is per session and a session is not an object, so per-object-cap is the nearest kind rather than an exact one: the relayed unit is the session",
+  "limits_note": "The 64 MiB session cap and 720-minute session life were measured or read in documentation on 2026-10-22. The 180,000 ms idle close was measured at 180.7 s. At 9.605 MiB/s sustained, moving 1 TiB in 24 hours requires 16,384 sessions of 64 MiB, or one new session every 5.3 seconds. The 64 MiB cap applies per session.",
   "binding": "per-object-cap",
   "binding_note": "the 64 MiB per-session cap binds before the rate and before the clock: a session can carry 64 MiB and then must be replaced, so the volume a reader can move is a session count rather than a bandwidth figure. The 720-minute life binds only workloads that are idle rather than full.",
   "identity_cost": {
@@ -79,7 +79,7 @@
     "detail": "no account, no card and no email: POST /v1/mint returns a forward token and POST /v1/pair returns a name with a node, connect and stop token. The token is the identity, and the relay authenticates tokens rather than people",
     "country": null
   },
-  "reliability_note": "no reliability event was observed in this session. Both tokens on a reverse pair and the forward token are bearer credentials, so anyone who reads one can open a session, and the relay carries the plaintext byte stream it forwards",
+  "reliability_note": "No reliability event recorded. Both tokens on a reverse pair and the forward token are bearer credentials, so anyone who reads one can open a session, and the relay carries the plaintext byte stream it forwards.",
   "confidence": "measured",
   "confidence_note": "the version, the 37-entry pool, the policy block, the six per-colo egress addresses, the forward banner, the 64 MiB session cap, the 180 s idle close, the 72 h token life and both transports were measured from this host on 2026-10-22. The 720-minute session cap and the 120/minute admission brake are documented on the relay's own specification and were not measured, so the record's weakest rung is measured for the fields the verdict rests on and documented for those two",
   "evidence": [

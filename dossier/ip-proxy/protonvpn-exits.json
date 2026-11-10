@@ -6,7 +6,7 @@
   "category": "VPN subscription (exit source)",
   "tier": "paid",
   "free_tier": {
-    "stated": "Free plan, quoted from the pricing page: Connect to servers in 10 countries (randomly selected) and Secure 1 device at a time; the same page answers Can I try Proton VPN for free? with a Free plan with no data limits, no artificial speed limits.",
+    "stated": "Free plan, quoted from the pricing page: 'Connect to servers in 10 countries (randomly selected) and Secure 1 device at a time' with 'no data limits, no artificial speed limits'.",
     "unit": "users",
     "metered_on": "identity-count",
     "source_url": "https://protonvpn.com/pricing",
@@ -39,7 +39,7 @@
   "interface_detail": "The Linux CLI and the authenticated REST API at /vpn/logicals. The desktop and mobile apps and a web UI reach the same servers, and WireGuard and OpenVPN configurations are offered. The topic vocabulary's api, socks5, http-proxy, wireguard, openvpn and web-ui tokens are not in the interface enum of scripts/dossier/schema.json, so they are recorded in this sentence rather than as interface values.",
   "endpoint": "/vpn/logicals — requires an authenticated session: HTTP 400 with Code 5002 Missing x-pm-appversion header when the app-version header is absent, HTTP 422 when it is present and the token is not valid.",
   "tooling": "A Cloudflare Worker fetches through the exit with plain HTTP; nothing bespoke is needed and no wrapper exists for exit selection. The CLI and generated WireGuard or OpenVPN configurations reach the same servers, but picking a specific exit needs an authenticated session, because /vpn/logicals refuses unauthenticated reads.",
-  "chaining": "The Worker is the client and Proton supplies the only non-Cloudflare hop: the request leaves Cloudflare's ASN and reaches the target from AS212238, so the target sees a Datacamp address rather than a Cloudflare one. Secure Core is a hop topology, not a class change: it inserts an entry hop and leaves the exit's registration class where it was.",
+  "chaining": "Proton provides the egress hop outside Cloudflare: traffic exits Cloudflare autonomous systems and reaches destinations from AS212238, presenting a Datacamp address. Secure Core routing inserts an intermediate entry hop without altering the exit registration class.",
   "limits": [
     {
       "kind": "volume-quota",
@@ -54,7 +54,7 @@
   ],
   "limits_note": "Three constraints were found that the vocabulary has no kind for: the Free plan allows one device at a time; its server pool is 10 countries selected at random, so the exit cannot be chosen; and /vpn/logicals requires an authenticated session, so the 21,202-server fleet cannot be enumerated without an account. The measured exit sits in a hosting ASN (AS212238), which is why the record stops at rung 4.",
   "binding": "none",
-  "binding_note": "Nothing in the vocabulary fails at 45 GB/month across about 599,000 requests: the vendor states no data limit, no rate was observed to be shaped, and the exit answered a Worker request at HTTP 200. What does bind sits outside the vocabulary — the Free plan's one device at a time, its random 10-country pool, and an authenticated session for /vpn/logicals. The caveat that keeps this off rung 5 is the ASN's class, not a quota.",
+  "binding_note": "Nothing in the vocabulary fails at 45 GB/month across about 599,000 requests: the vendor states no data limit, no rate was observed to be shaped, and the exit answered a Worker request at HTTP 200. Binding constraints sit outside the standard vocabulary, including the Free plan limit of one device at a time, its random 10-country pool, and an authenticated session for /vpn/logicals. The caveat that keeps this off rung 5 is the ASN's class, not a quota.",
   "identity_cost": {
     "kind": "email",
     "detail": "An account registered with an email address. The facts record email as the only registration cost and name no second gate; the paid plans are sold against that account.",

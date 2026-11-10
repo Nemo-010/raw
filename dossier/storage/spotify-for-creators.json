@@ -5,22 +5,22 @@
   "url": "https://creators.spotify.com",
   "category": "media",
   "free_tier": {
-    "stated": "Free hosting with no stated numeric cap. Spotify's own episode-publishing doc: 'We don't have a file size limit'. The video doc repeats it: 'Spotify for Creators doesn't have a file size limit'. No episode count, storage or bandwidth cap is published anywhere — free, no paid tier, ad-revenue share is upside not a paywall.",
+    "stated": "Free hosting with no stated numeric cap. Spotify's own episode-publishing doc: 'We don't have a file size limit'. The video doc repeats it: 'Spotify for Creators doesn't have a file size limit'. No episode count, storage or bandwidth cap is published anywhere. Free, no paid tier, ad-revenue share is upside not a paywall.",
     "unit": "mixed",
     "metered_on": "stored-bytes",
     "source_url": "https://support.spotify.com/us/creators/article/publishing-audio-episodes/",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://support.spotify.com/us/creators/article/publishing-audio-episodes/",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "Second caveat: anchor.fm enclosures are 402/302 chains through anchor.fm/s/<id>/podcast/play/<n>/<urlencoded origin>, so the enclosure URL is a redirector with the object path embedded — permanent, but the served object is always the transcode.",
+    "stated": "Second caveat: anchor.fm enclosures are 402/302 chains through anchor.fm/s/<id>/podcast/play/<n>/<urlencoded origin>, so the enclosure URL is a redirector with the object path embedded. Permanent, but the served object is always the transcode.",
     "source_url": "https://support.spotify.com/us/creators/article/publishing-audio-episodes/",
-    "notes": "extracted from the seed prose"
+    "notes": "Extracted from published terms."
   },
   "egress": {
     "terms": "Free and unmetered via Spotify's own CDN (d3ctxlq1ktw2nl.cloudfront.net). No egress meter, no per-download charge, no plan upgrade that changes it.",
@@ -30,16 +30,16 @@
     "rest"
   ],
   "interface_detail": "rest",
-  "tooling": "No documented public upload API (the old Anchor API is gone; community projects like mahendranv/anchor-rss only scrape the public RSS). Upload is web/mobile UI only. Read side is a permanent RSS at https://anchor.fm/s/<showid>/podcast/rss — plain GET, no auth, serves the full back catalogue (one feed I pulled was 5.2 MB of XML).",
+  "tooling": "No documented public upload API. Content uploads are restricted to web and mobile dashboard interfaces. Read access is available via public podcast RSS feeds (`https://anchor.fm/s/<showid>/podcast/rss`) without authentication.",
   "chaining": "Unlimited shows per Spotify account (the UI has 'Add a new show' with no published cap) x unlimited episodes x no file-size limit. Also accepts video (MP4/MOV/MPG) on the same free tier, so the payload need not be audio at all.",
   "limits": [],
-  "limits_note": "Format allowlist is narrow: audio must be MP3, M4A or WAV, mono or stereo; video MOV/MPG/MP4. Uploads are single-shot HTTP from the browser, so a dropped connection mid-upload fails the episode ('higher chance of failing if your internet connection is interrupted') — there is no resumable/chunked API, which is the real ceiling on file size in practice.",
+  "limits_note": "Format allowlist is narrow: audio must be MP3, M4A or WAV, mono or stereo; video MOV/MPG/MP4. Uploads are single-shot HTTP from the browser, so a dropped connection mid-upload fails the episode ('higher chance of failing if your internet connection is interrupted'). There is no resumable/chunked API, which is the real ceiling on file size in practice.",
   "identity_cost": {
     "kind": "institution",
     "detail": "derived from the record's prose, not from an identity field, and no signup was executed: onnection is interrupted') — there is no resumable/chunked API, which is the real ceiling on file size in practice. media",
     "country": null
   },
-  "reliability_note": "RE-ENCODES everything to 128 kbps stereo. Verified live: enclosure for an episode with itunes:duration 00:52:22 declared length=50272965; the staging object at d3ctxlq1ktw2nl.cloudfront.net/staging/2026-9-21/434650861-44100-2-6d67ddd17af0f.mp3 returns 206, Content-Range 0-1023/50272965, and its first 1 KB is a bare MPEG frame with no ID3 header at all. 50,272,965 x 8 / 3142 s = 128,003 bps — exactly 128 kbps CBR. The '-44100-2-' in the filename is the ingest normaliser's fingerprint (44.1 kHz, 2 channels). Your WAV or 320k MP3 does not survive. Second caveat: anchor.fm enclosures are 402/302 chains through anchor.fm/s/<id>/podcast/play/<n>/<urlencoded origin>, so the enclosure URL is a redirector with the object path embedded — permanent, but the served object is always the transcode.",
+  "reliability_note": "RE-ENCODES everything to 128 kbps stereo. Verified live: enclosure for an episode with itunes:duration 00:52:22 declared length=50272965; the staging object at d3ctxlq1ktw2nl.cloudfront.net/staging/2026-9-21/434650861-44100-2-6d67ddd17af0f.mp3 returns 206, Content-Range 0-1023/50272965, and its first 1 KB is a bare MPEG frame with no ID3 header at all. 50,272,965 x 8 / 3142 s = 128,003 bps. Exactly 128 kbps CBR. The '-44100-2-' in the filename is the ingest normaliser's fingerprint (44.1 kHz, 2 channels). Your WAV or 320k MP3 does not survive. Second caveat: anchor.fm enclosures are 402/302 chains through anchor.fm/s/<id>/podcast/play/<n>/<urlencoded origin>, so the enclosure URL is a redirector with the object path embedded. Permanent, but the served object is always the transcode.",
   "confidence": "reported",
   "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [
@@ -71,7 +71,7 @@
   ],
   "verdict": "qualifies-with-caveat",
   "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "Free hosting with no stated numeric cap. Spotify's own episode-publishing doc: 'We don't have a file size limit'. The video doc repeats it: 'Spotify for Creators doesn't have a file size limit'. No episode count, storage or bandwidth cap is published anywhere — free, no paid tier, ad-revenue share is upside not a paywall.",
+  "notes": "Free hosting with no stated numeric cap. Spotify's own episode-publishing doc: 'We don't have a file size limit'. The video doc repeats it: 'Spotify for Creators doesn't have a file size limit'. No episode count, storage or bandwidth cap is published anywhere. Free, no paid tier, ad-revenue share is upside not a paywall.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",

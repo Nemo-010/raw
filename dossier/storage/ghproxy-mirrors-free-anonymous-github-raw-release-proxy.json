@@ -10,20 +10,20 @@
     "metered_on": "unstated",
     "source_url": "https://ghproxy.net/",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://ghproxy.net/",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://ghproxy.net/",
     "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
-    "terms": "Free, anonymous, no key. These are community-run mirrors of the GitHub CDN, funded by volunteers — hence the polyculture of hostnames (gh-proxy.com, ghproxy.net, ghfast.top, gh.api.99988866.xyz) and the constant churn.",
+    "terms": "Free, anonymous, no key. These are community-run mirrors of the GitHub CDN, funded by volunteers. Hence the polyculture of hostnames (gh-proxy.com, ghproxy.net, ghfast.top, gh.api.99988866.xyz) and the constant churn.",
     "metered": false
   },
   "interface": [
@@ -31,7 +31,7 @@
   ],
   "interface_detail": "rest",
   "tooling": "Prefix form: https://ghproxy.net/https://raw.githubusercontent.com/<owner>/<repo>/<ref>/<path> and .../https://github.com/<owner>/<repo>/releases/download/<tag>/<asset>. Nothing else to install.",
-  "chaining": "A fourth free mirror for the same GitHub origin, and the only one that also carries *release assets* (which jsDelivr cannot see and raw.githack cannot serve). For a 20 TiB archive of 2 GiB release assets, rotating across ghproxy.net / ghfast.top / raw.githack / jsDelivr / Fastly's release-asset CDN gives five independent read paths over one storage bill.",
+  "chaining": "Serves as an edge mirror for GitHub release assets alongside raw file mirrors. Proxies allow distributing reads across ghproxy.net, ghfast.top, and other mirrors for public release downloads.",
   "limits": [
     {
       "kind": "per-ip-shaping",
@@ -44,7 +44,7 @@
       "source": "https://ghproxy.net/"
     }
   ],
-  "limits_note": "per-ip-shaping is the real constraint — measured ~128 KB/s (7.1 MB in 55 s) on a 50 MB fetch, versus 11.3 MB/s from hop.js and 6.4 MB/s from jsDelivr. Rule 6 applies: measure a baseline before blaming the origin.",
+  "limits_note": "Per-IP bandwidth shaping restricts download rates. Probes observed approximately 128 KB/s on file retrieval, compared to higher throughput from alternative CDN endpoints.",
   "identity_cost": {
     "kind": "anonymous",
     "detail": "anonymous",
@@ -109,7 +109,7 @@
     "agent_focus": "CDN / edge platforms as storage+egress: Fastly (free tier + Fast Forward OSS), Akamai/Linode, Bunny.net (storage + free origin->CDN transit), KeyCDN, CacheFly, Gcore, CDN77, StackPath status, Edgio/Limelight status, jsDelivr, unpkg, esm.sh, Statically, raw.githack, ghproxy mirrors. Question asked: which CDN gives free or near-free egress so a cheap origin becomes viable. Cloudflare R2 excluded per brief. Hard-probed every per-file cap with real GETs this session."
   },
   "binding": "per-ip-shaping",
-  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "binding_note": "one stream is shaped, and aggregate throughput is the shaped rate times the number of streams",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z"
 }

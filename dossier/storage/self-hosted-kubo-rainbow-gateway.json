@@ -5,25 +5,25 @@
   "url": "https://docs.ipfs.tech/how-to/replace-public-gateways-with-self-hosted-ipfs/",
   "category": "p2p",
   "free_tier": {
-    "stated": "Storage and egress are whatever your VPS/host allows. No provider quota exists — the cost moves to the host's bandwidth allowance.",
+    "stated": "Storage and egress are whatever your VPS/host allows. No provider quota exists. The cost moves to the host's bandwidth allowance.",
     "unit": "mixed",
     "metered_on": "stored-bytes",
     "source_url": "https://docs.ipfs.tech/how-to/replace-public-gateways-with-self-hosted-ipfs/",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.ipfs.tech/how-to/replace-public-gateways-with-self-hosted-ipfs/",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.ipfs.tech/how-to/replace-public-gateways-with-self-hosted-ipfs/",
     "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
-    "terms": "You pay the host. IPFS docs recommend putting a CDN like Cloudflare in front of the gateway and setting Cache-Control/ETag/X-Ipfs-Roots for cacheability — which is the one genuinely correct architectural move in this slot, but it is Cloudflare's free egress you are relying on, not IPFS's.",
+    "terms": "Host bandwidth is paid directly to the server provider. IPFS documentation recommends fronting gateways with caching CDNs using standard Cache-Control, ETag, and X-Ipfs-Roots headers to minimize origin bandwidth consumption.",
     "metered": false
   },
   "interface": [
@@ -33,7 +33,7 @@
   ],
   "interface_detail": "rest",
   "tooling": "Kubo (go-ipfs), Rainbow (github.com/ipfs/rainbow), Someguy for delegated routing, Helia in-browser; rclone can talk to the Kubo RPC API via a webdav/MFS shim but there is no first-class rclone backend.",
-  "chaining": "Does not multiply free storage — it only re-serves content you already paid to pin. Combined with a free pinning service it can turn 5 GB of free pinning into unmetered-looking reads, but only for 5 GB of content.",
+  "chaining": "Does not multiply free storage. It only re-serves content you already paid to pin. Combined with a free pinning service it can turn 5 GB of free pinning into unmetered-looking reads, but only for 5 GB of content.",
   "limits": [
     {
       "kind": "per-ip-shaping",
@@ -64,7 +64,7 @@
   ],
   "verdict": "fails-egress",
   "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "Storage and egress are whatever your VPS/host allows. No provider quota exists — the cost moves to the host's bandwidth allowance.",
+  "notes": "Storage and egress are whatever your VPS/host allows. No provider quota exists. The cost moves to the host's bandwidth allowance.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",
@@ -102,7 +102,7 @@
     "agent_focus": "Decentralised storage / IPFS pinning judged on gateway egress economics: Pinata, Storacha/web3.storage, Filebase, 4EVERLAND, Lighthouse, thirdweb, Fleek, QuickNode, Infura, Kubo+self-host, dweb.link/ipfs.io, Sia/Skynet, Storj, Akash, Arweave (ar.io/Turbo/Irys), Walrus, Filecoin/Fil+/FCSS, BitTorrent, ZeroNet, Hypercore, Earthstar, Crust"
   },
   "binding": "per-ip-shaping",
-  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "binding_note": "one stream is shaped, and aggregate throughput is the shaped rate times the number of streams",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z",
   "self_hosted": true

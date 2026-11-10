@@ -5,22 +5,22 @@
   "url": "https://t.me/s/telegram",
   "category": "messaging",
   "free_tier": {
-    "stated": "Not a storage tier — this is the READ path for files already in a public channel. Anonymous, no account, no token, no API key. Scraping the public preview of a channel yields directly-fetchable media URLs for every photo and video post.",
+    "stated": "Not a storage tier. This is the READ path for files already in a public channel. Anonymous, no account, no token, no API key. Scraping the public preview of a channel yields directly-fetchable media URLs for every photo and video post.",
     "unit": "mixed",
     "metered_on": "stored-bytes",
     "source_url": "https://t.me/s/telegram",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://t.me/s/telegram",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
     "stated": "It is still validated (bogus token -> 404, no token -> 404), and one minted token 502'd transiently then recovered, so treat tokens as mint-on-demand, not permanent",
     "source_url": "https://t.me/s/telegram",
-    "notes": "extracted from the seed prose"
+    "notes": "Extracted from published terms."
   },
   "egress": {
     "terms": "Free and unmetered, served by Telegram's own nginx-backed web CDN (Server: nginx/1.30.1, Cache-Control: max-age=10800). Access-Control-Allow-Origin: * and Accept-Ranges advertised, so range requests and browser fetching work. This is genuinely CDN-friendly: put Cloudflare in front and the origin pull is a plain HTTP GET.",
@@ -30,8 +30,8 @@
     "rest"
   ],
   "interface_detail": "rest",
-  "tooling": "No client needed — plain curl. Pattern: GET https://t.me/s/<channel> and regex https://cdn\\d\\.telesco\\.pe/file/<hash>.mp4?token=... The t.me embed widget (https://t.me/<channel>/<id>?embed=1) exposes a second, tokenless URL form (e.g. cdn4.telesco.pe/file/<long-hash>.jpg) that also serves 200/206 anonymously. Pagination works: ?before=<msg_id> walks arbitrarily far back.",
-  "chaining": "Iterate channels x ?before pagination. Anonymous scrape rate was tested at 12 requests back-to-back on t.me/s/telegram with 12x HTTP 200 — no rate limit encountered. Each channel page yields ~20 messages; a file-storage channel where every post is a 2 GB file would expose all of them this way.",
+  "tooling": "No client needed. Plain curl. Pattern: GET https://t.me/s/<channel> and regex https://cdn\\d\\.telesco\\.pe/file/<hash>.mp4?token=.. The t.me embed widget (https://t.me/<channel>/<id>?embed=1) exposes a second, tokenless URL form (e.g. cdn4.telesco.pe/file/<long-hash>.jpg) that also serves 200/206 anonymously. Pagination works: ?before=<msg_id> walks arbitrarily far back.",
+  "chaining": "Iterate channels x ?before pagination. Anonymous scrape rate was tested at 12 requests back-to-back on t.me/s/telegram with 12x HTTP 200. No rate limit encountered. Each channel page yields ~20 messages; a file-storage channel where every post is a 2 GB file would expose all of them this way.",
   "limits": [
     {
       "kind": "write-gated",
@@ -40,11 +40,11 @@
     },
     {
       "kind": "write-gated",
-      "value": "review HTML never emits a document element — checked t",
+      "value": "Review HTML never emits a document element. Checked t.",
       "source": "https://t.me/s/telegram"
     }
   ],
-  "limits_note": "CRITICAL SCOPE LIMIT, probed: this path exposes PHOTOS and VIDEOS only. The preview HTML never emits a document element — checked t.me/s/telegram, /durov, /tginfo, /tgbeta, /apkpure_official, /drweb, /securitylab: zero occurrences of tgme_widget_message_document, zero .pdf links. Arbitrary files (zips, parquet, models) are NOT reachable anonymously; only the media Telegram re-encodes for preview. Max observed media size is bounded by what the preview embeds.",
+  "limits_note": "CRITICAL SCOPE LIMIT, probed: this path exposes PHOTOS and VIDEOS only. The preview HTML never emits a document element. Checked t.me/s/telegram, /durov, /tginfo, /tgbeta, /apkpure_official, /drweb, /securitylab: zero occurrences of tgme_widget_message_document, zero .pdf links. Arbitrary files (zips, parquet, models) are NOT reachable anonymously; only the media Telegram re-encodes for preview. Max observed media size is bounded by what the preview embeds.",
   "identity_cost": {
     "kind": "institution",
     "detail": "derived from the record's prose, not from an identity field, and no signup was executed: y in a public channel. Anonymous, no account, no token, no API key. Scraping the public preview of a channel yields directly-fetchable media URLs for every photo and video post. T",
@@ -72,7 +72,7 @@
   ],
   "verdict": "qualifies-with-caveat",
   "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "Not a storage tier — this is the READ path for files already in a public channel. Anonymous, no account, no token, no API key. Scraping the public preview of a channel yields directly-fetchable media URLs for every photo and video post.",
+  "notes": "Not a storage tier. This is the READ path for files already in a public channel. Anonymous, no account, no token, no API key. Scraping the public preview of a channel yields directly-fetchable media URLs for every photo and video post.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",

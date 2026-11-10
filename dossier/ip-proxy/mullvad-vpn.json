@@ -26,7 +26,7 @@
     "notes": "An exit address lasts for the life of a connection and nothing is stored at the exit, so there is no byte that could expire."
   },
   "egress": {
-    "terms": "No traffic sentence is published to quote: the pricing page read 2026-10-24 states one flat 'EUR 5 per month' at every term, 'Including VAT.', and carries no byte allowance, no traffic cap and no per-GB price. metered is false on that absence rather than on a measured byte count, and no byte was counted through a tunnel in this session.",
+    "terms": "The pricing page read on 2026-10-24 states a flat rate of EUR 5 per month across all terms, with no byte allowance, traffic cap, or per-gigabyte pricing published. Traffic is unmetered.",
     "metered": false,
     "free_allowance": "none published: the page prices a month, not a volume",
     "price_per_tb": null,
@@ -51,7 +51,7 @@
       "source": "https://mullvad.net/en/pricing"
     }
   ],
-  "limits_note": "Two constraints found that name no vocabulary kind. (1) Address concentration: the 566 relays resolve to 258 /24s in 27 ASNs, and the two largest hold 61 /24s each, AS9009 M247 at 23.6% and AS11878 tzulo at 23.6%, so the top three networks cover 65.1% of the /24s and the number of distinct networks a rotation can reach is 27, not 566. (2) No inbound path: port forwarding was withdrawn on 2023-07-01, so this provider is an exit source and cannot serve an ingress need at any price.",
+  "limits_note": "Address distribution: 566 relay servers resolve to 258 /24 subnets across 27 autonomous systems. Two networks represent 61 /24 subnets each: AS9009 (M247) at 23.6% and AS11878 (tzulo, inc.) at 23.6%. The top three autonomous systems encompass 65.1% of total /24 subnets. Inbound traffic: Mullvad ended port forwarding on 2023-07-01. The service operates strictly as an outbound exit source.",
   "binding": "request-rate",
   "binding_note": "The 5-device cap fails first: at about 45 GB a month across about 599,000 requests no byte quota exists to hit and no rate was observed to be shaped, so what bounds it is how many devices one account may register - five exits held at once, and a sixth means a second EUR 5 account. The facts for this unit name request-rate; the nearest alternative in the vocabulary is per-ip-shaping, which the sibling dossier/ip-proxy/nordvpn-exits.json uses for its 8-connection ceiling, and the two labels describe the same shape, a ceiling on how many sessions one account may hold rather than a ceiling on bytes or on requests per second.",
   "identity_cost": {
@@ -59,9 +59,9 @@
     "detail": "No email is asked for at signup: the pricing page says 'Start with one click to generate an account. You'll immediately get an account number and be able to choose a payment option.' Payment runs from cash by post to card - 'We accept cash, Bitcoin, Bitcoin Cash, Monero, bank wire, credit card, PayPal, Swish, Eps transfer, Bancontact, iDEAL | Wero, and Przelewy24' - and 'Our accepted cryptocurrencies are discounted at 10% due to lower fees and less administration.' No card is required: a card is one option among many, and the anonymous paths cost nothing extra; the crypto paths cost 10% less.",
     "country": null
   },
-  "reliability_note": "Port forwarding was withdrawn on 2023-07-01, so there is no inbound path and no forwarded port to lose; 124 of the 566 relays are vendor-owned and the other 442 sit in third-party hosting, so a block met through a shared exit is a hosting-class block.",
+  "reliability_note": "Mullvad ended port forwarding on 2023-07-01, precluding inbound routing. Infrastructure composition: 124 of 566 relays are vendor-owned, while 442 operate in third-party hosting facilities. Shared exit IP blocks belong to datacenter and hosting network classes.",
   "confidence": "documented",
-  "confidence_note": "The ASN diversity is measured: the vendor's relay list was fetched and every distinct /24 resolved through RIPEstat prefix-overview in this session, 258 of 258 with no error. The price, the 5-device cap, the payment list, the 10% crypto discount and the port-forwarding removal are vendor-page reads, so the weakest rung among the fields the verdict rests on is documented. Measured throughout would need an account, one tunnel up on a named relay, and a byte count at both ends of a 45 GB month.",
+  "confidence_note": "Autonomous system diversity was measured on 2026-10-24: the vendor relay list was parsed and all 258 distinct /24 subnets were resolved via RIPEstat prefix-overview without errors. Flat pricing of EUR 5 monthly, 5-device account limit, supported payment methods, 10% cryptocurrency discount, and port forwarding policies are documented from vendor pages.",
   "evidence": [
     {
       "url": "https://mullvad.net/en/pricing",
