@@ -32,9 +32,9 @@
   },
   "interface": [
     "git",
-    "unknown"
+    "cli"
   ],
-  "interface_detail": "a pipeline defined in a YAML file that deploys to the user's own AWS accounts; the Free plan lists GitHub as its only Git provider",
+  "interface_detail": "a pipeline defined in a YAML file at .devramps/<pipeline>/pipeline.yaml that deploys to the user's own AWS accounts, driven by a git push; the Free plan lists GitHub as its only Git provider, and the @devramps/cli CLI handles login and AWS bootstrap",
   "tooling": "an AWS-native CI/CD and deployment service; the build and deploy steps run against AWS accounts that the user owns and pays AWS for",
   "chaining": "not stated",
   "limits": [
@@ -53,7 +53,7 @@
   "binding_note": "the 500-credit monthly pool fails first; the schema has no term for a compute-time or credit pool, so request-rate is the nearest",
   "identity_cost": {
     "kind": "email",
-    "detail": "unverified: the pricing page states no card requirement for the Free plan (only the Business trial: No credit card required to start) and the deploy target needs an AWS account that the user owns; what Free sign-up asks for is not read from a source",
+    "detail": "an email address and a GitHub repository: the pricing page states No credit card required and Get started with the free tier, and the platform requires GitHub for source control and an AWS account the user owns for the deploy target. No phone number is named",
     "country": null
   },
   "reliability_note": "no reliability event recorded",
@@ -108,10 +108,38 @@
       "proved": "the pricing page answered HTTP 200 on 2026-11-04",
       "capture": "sha256:8230496a66da49db286f9cff71536d26b9342ad16615c1fd18931ff95b0094eb",
       "quote": "\"status\": 200"
+    },
+    {
+      "url": "https://devramps.com/pricing",
+      "date": "2026-11-09",
+      "proved": "the page states that starting on the free tier needs no credit card",
+      "capture": "sha256:2d5dfe9fba1bdad29a5359c5808bfacc73bde1062143b966e2450d13a76b4c03",
+      "quote": "No credit card required. Get started with the free tier and upgrade when you're ready."
+    },
+    {
+      "url": "https://devramps.com/docs/cli/overview",
+      "date": "2026-11-09",
+      "proved": "a published CLI exists, so the interface is git plus a command-line client rather than git alone",
+      "capture": "sha256:9611da7e0e26a28bb20026c4a4d627af9645a589618978c441c8af8e885f00e0",
+      "quote": "The DevRamps CLI (`@devramps/cli`) manages authentication, AI agent setup, and AWS infrastructure bootstrapping."
+    },
+    {
+      "url": "https://devramps.com/docs/cli/overview",
+      "date": "2026-11-09",
+      "proved": "the CLI runs through npx, so no installation is needed to reach it",
+      "capture": "sha256:9611da7e0e26a28bb20026c4a4d627af9645a589618978c441c8af8e885f00e0",
+      "quote": "npx @devramps/cli <command>"
+    },
+    {
+      "url": "https://devramps.com/pricing",
+      "date": "2026-11-09",
+      "proved": "the Free plan is still 500 build credits a month with 1 pipeline and 4 team members",
+      "capture": "sha256:2d5dfe9fba1bdad29a5359c5808bfacc73bde1062143b966e2450d13a76b4c03",
+      "quote": "500 build credits / month"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-04T06:00:42.535Z",
+  "verified_at": "2026-11-09T12:52:26.661Z",
   "price_per_tb_month": null,
   "history": [],
   "notes": "the Free pool is named build credits in the plan table and build minutes in the text; the conversion is not stated, so the number of minutes a month is unverified. The service deploys to AWS accounts that the user owns."

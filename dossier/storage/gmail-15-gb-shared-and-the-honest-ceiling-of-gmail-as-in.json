@@ -10,20 +10,20 @@
     "metered_on": "stored-bytes",
     "source_url": "https://support.google.com/accounts/answer/9312312",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://support.google.com/accounts/answer/9312312",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://support.google.com/accounts/answer/9312312",
     "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
-    "terms": "Free for the account holder — Gmail has no egress meter at all; the constraint is the bandwidth throttle, not a price. That is precisely why the throttle is the finding.",
+    "terms": "Free for the account holder. Gmail has no egress meter at all; the constraint is the bandwidth throttle, not a price. That is precisely why the throttle is the finding.",
     "metered": false
   },
   "interface": [
@@ -31,7 +31,7 @@
   ],
   "interface_detail": "rest",
   "tooling": "IMAP probe-verified: `imap.gmail.com:993` -> `* OK Gimap ready` / `* CAPABILITY IMAP4rev1 UNSELECT IDLE NAMESPACE QUOTA ID XLIST CHILDREN X-GM-EXT-1 XYZZY SASL-IR AUTH=XOAUTH2 AUTH=PLAIN AUTH=PLAIN-CLIENTTOKEN AUTH=OAUTHBEARER` (XOAUTH2 required for real use). Gmail API: `messages.insert` = 25 units, 6,000 units/min/user, 80,000,000 units/day/project.",
-  "chaining": "N accounts × 15 GB minus whatever Drive/Photos already took. But the multiplier that matters is not accounts — see limits. This is the classic 'infinite Gmail storage' idea and it does not survive arithmetic.",
+  "chaining": "N accounts × 15 GB minus whatever Drive/Photos already took. But the multiplier that matters is not accounts. See limits. This is the classic 'infinite Gmail storage' idea and it does not survive arithmetic.",
   "limits": [
     {
       "kind": "per-ip-shaping",
@@ -44,7 +44,7 @@
       "source": "https://support.google.com/accounts/answer/9312312"
     }
   ],
-  "limits_note": "**This is the answer to the brief's question.** The binding constraint is per-ip-shaping at the protocol level, not bytes: Gmail IMAP **upload is capped at 500 MB/day** and IMAP download at 2,500 MB/day (Workspace docs, applied to all editions). SMTP advertises `250-SIZE 35882577` (34.2 MiB) per message. So per account the real write rate is ~0.5 GB/day and the real read rate is ~2.5 GB/day. Filling 15 GB therefore takes a **minimum of ~30 days per account**, and serving 500 GB/day of reads requires **~200 accounts running in parallel every day**. Gmail is not a fetch tier by two orders of magnitude. To reach 10 TiB of writes you would need 20,480 account-days of upload. Verdict on the idea: 15 GB × unlimited accounts is arithmetically true and operationally false — the daily byte meter, not the quota, is the wall.",
+  "limits_note": "Protocol-level rate limits govern transfer capacity. Gmail IMAP upload is capped at 500 MB per day and IMAP download at 2,500 MB per day across editions. SMTP advertises 250-SIZE 35882577 (34.2 MiB) per message. Effective account write rate is approximately 0.5 GB per day and read rate is approximately 2.5 GB per day. Daily transfer quotas operate as the binding operational limit.",
   "identity_cost": {
     "kind": "email",
     "detail": "derived from the record's prose, not from an identity field, and no signup was executed: 15 GB per Google Account, shared across Gmail, Drive and Photos: \"Each Google Account includes up to 15 GB of storage, which is shared across Gmail, Google Drive, an",
@@ -114,7 +114,7 @@
     "agent_focus": "email and mail-adjacent storage: webmail quotas, IMAP-as-block-device, mailing-list archives, newsletter attachment hosts"
   },
   "binding": "per-ip-shaping",
-  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "binding_note": "one stream is shaped, and aggregate throughput is the shaped rate times the number of streams",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z"
 }

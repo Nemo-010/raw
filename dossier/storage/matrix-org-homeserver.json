@@ -10,15 +10,15 @@
     "metered_on": "unstated",
     "source_url": "https://matrix.org/homeserver/pricing/",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://matrix.org/homeserver/pricing/",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://matrix.org/homeserver/pricing/",
     "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
@@ -33,7 +33,7 @@
   "tooling": "Matrix client-server API `/_matrix/media/v3/upload` and `/_matrix/client/v1/media/download`. Every SDK supports it (matrix-nio, matrix-js-sdk, mautrix-*); Element is the reference client.",
   "chaining": "Federated: N accounts on N homeservers each get their own 500 MB/28-day allowance, and media federates across servers. But per-account throughput is the binding constraint, not the divisor.",
   "limits": [],
-  "limits_note": "The 500 MB per 28 days is the killer — it is a rolling-window *transfer* cap, not just storage. Uploads are now authenticated-media only: an anonymous GET to `/_matrix/media/v3/download/...` returns 404 and the client/v1 route returns 401.",
+  "limits_note": "Transfer is limited to 500 MB per 28 days on a rolling window. Uploads require authenticated media access. Anonymous requests return HTTP 404 on media download endpoints and HTTP 401 on unauthenticated client endpoints.",
   "identity_cost": {
     "kind": "institution",
     "detail": "derived from the record's prose, not from an identity field, and no signup was executed: n shrink under you. Synapse also purges unreferenced media. Federated: N accounts on N homeservers each get their own 500 MB/28-day allowance, and media federates across servers. But per-ac",

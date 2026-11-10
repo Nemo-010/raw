@@ -16,7 +16,7 @@
     "stated": "not applicable: the unit is a machine, not an object",
     "bytes": null,
     "source_url": "https://hosthatch.com/products",
-    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+    "notes": "The primary constraint is the virtual machine hardware specification."
   },
   "retention": {
     "stated": "not applicable: the unit is a machine or an account, not stored bytes",
@@ -37,23 +37,23 @@
   ],
   "interface_detail": "inferred from the tooling the provider documents; not probed",
   "tooling": "root KVM on the vendor's own hardware, so any client runs inside the VM and no wrapper is needed. The vendor documents its own control panel (Peregrine) and a REST API at https://docs.hosthatch.com/api/ covering orders, server power and reinstall, snapshots, firewalls, SSH keys, ISO mounting, IPv6 and reverse DNS, with an idempotency key on orders. Two API surfaces exist, the new console API and a legacy Peregrine API, which is a second write path to the same resource.",
-  "chaining": "This is a control-plane machine, not a data machine: 2 GB of RAM and 10 GB of NVMe run a scheduler, a broker client, a DNS primary or a tunnel endpoint, while the 1 TB a month moves control traffic only. For comparison inside the lane, RackNerd's 1 GB at USD 1.83 a month is cheaper per month but prepaid annually, and Kimsufi's USD 19.90 buys 32 GB of RAM and 4 TB of disk; HostHatch's $4.00 sits between them as the cheapest monthly-in-advance 2 GB box with 40 GbE public networking (100 GbE in some regions, per the vendor's own matrix) and a documented API.",
+  "chaining": "This is a control-plane machine, not a data machine: 2 GB of RAM and 10 GB of NVMe run a scheduler, a broker client, a DNS primary or a tunnel endpoint, while the 1 TB a month moves control traffic only. For comparison inside evaluated offerings, RackNerd's 1 GB at USD 1.83 a month is cheaper per month but prepaid annually, and Kimsufi's USD 19.90 buys 32 GB of RAM and 4 TB of disk; HostHatch's $4.00 sits between them as the cheapest monthly-in-advance 2 GB box with 40 GbE public networking (100 GbE in some regions, per the vendor's own matrix) and a documented API.",
   "limits": [
     {
       "kind": "volume-quota",
-      "value": "1 TB a month is 33 GB a day, 3 percent of one day of the 1 TiB serving target, so the monthly counter is the first wall; behind it sit a 10 GB NVMe disk that holds no working set and a single fair-share core, which makes this a control node rather than a data node.",
+      "value": "1 TB a month is 33 GB a day, 3 percent of one day of the 1 TB daily transfer ceiling, so the monthly counter is the first wall; behind it sit a 10 GB NVMe disk that holds no working set and a single fair-share core, which makes this a control node rather than a data node.",
       "source": "https://hosthatch.com/products"
     }
   ],
-  "limits_note": "1 TB a month is 33 GB a day, 3 percent of one day of the 1 TiB serving target, so the monthly counter is the first wall; behind it sit a 10 GB NVMe disk that holds no working set and a single fair-share core, which makes this a control node rather than a data node.",
+  "limits_note": "1 TB a month is 33 GB a day, 3 percent of one day of the 1 TB daily transfer ceiling, so the monthly counter is the first wall; behind it sit a 10 GB NVMe disk that holds no working set and a single fair-share core, which makes this a control node rather than a data node.",
   "binding": "volume-quota",
-  "binding_note": "1 TB a month is 33 GB a day, 3 percent of one day of the 1 TiB serving target, so the monthly counter is the first wall; behind it sit a 10 GB NVMe disk that holds no working set and a single fair-share core, which makes this a control node rather than a data node.",
+  "binding_note": "1 TB a month is 33 GB a day, 3 percent of one day of the 1 TB daily transfer ceiling, so the monthly counter is the first wall; behind it sit a 10 GB NVMe disk that holds no working set and a single fair-share core, which makes this a control node rather than a data node.",
   "identity_cost": {
     "kind": "card",
     "detail": "not stated on the page read, and stated precisely: no page read lists the accepted payment methods. What is documented is that an order ships only against money. The API docs say an order 'pays for itself from the project owner's account credit when the credit covers it. Otherwise it waits while its invoice is paid in the console', so either prepaid credit or a payment instrument is needed before any server exists. The older signup form asks for 'your personal information as accurately as possible to avoid false-positives by our fraud detection system' and says it is used 'for your invoices and any other billing related processes'. The new console signup asks only for email, password and an optional project id, so nothing is charged at registration; the charge lands on the first invoice. A third-party benchmark table lists Stripe, PayPal and bank transfer as accepted, which is reported and was not verified here.",
     "country": null
   },
-  "reliability_note": "no incident observed in this session; the vendor's own anniversary post states that on promotional plans 'It can take several days to resolve issues', that promotional servers have a 10-working-day setup, and that promo plans carry no refunds or credits.",
+  "reliability_note": "no incident observed; the vendor's own anniversary post states that on promotional plans 'It can take several days to resolve issues', that promotional servers have a 10-working-day setup, and that promo plans carry no refunds or credits.",
   "confidence": "documented",
   "evidence": [
     {

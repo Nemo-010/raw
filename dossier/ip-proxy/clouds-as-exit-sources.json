@@ -11,7 +11,7 @@
     "metered_on": "wall-clock",
     "source_url": "https://www.oracle.com/cloud/free/",
     "read_on": "2026-10-24",
-    "notes": "The unit is genuinely mixed: Oracle's and AWS's free allowances are hour-denominated (OCPU-hours, GB-hours, 750 hours) and the egress allowances are byte-denominated (10 TB/month, 1 GB/month). metered_on names the hour because that is the shape of the headline quota; the schema has no mixed token for it, and the byte allowances are stated here rather than folded into the hour."
+    "notes": "Allowances combine compute time and bandwidth limits: Oracle and AWS provide hour-denominated allowances (OCPU-hours, GB-hours, 750 hours) alongside byte-denominated egress limits (10 TB monthly, 1 GB monthly). metered_on reflects compute hours as the headline quota, while byte allowances are documented separately."
   },
   "per_object_cap": {
     "stated": "not applicable: an address, not an object",
@@ -37,7 +37,7 @@
     "cli"
   ],
   "interface_detail": "Each provider exposes its own REST API and CLI for address objects, so rest is the nearest token in the closed set and cli is the other half. The schema's enum has no token for a cloud provider API and none for a subnet product. The address is a resource in the account: an external IPv4 on Google Cloud, a public IPv4 on AWS, a public IP prefix on Azure, a subnet on Hetzner, a public IP on an Oracle VNIC.",
-  "tooling": "The provider's own REST API, SDK and CLI. No third-party wrapper exists or is needed, because the address is a resource in the account rather than a product with its own protocol. The work is a small driver that creates an instance, attaches the address, and recreates it when the provider takes the machine back — access is not the problem here.",
+  "tooling": "The provider's own REST API, SDK and CLI. No third-party wrapper exists or is needed, because the address is a resource in the account rather than a product with its own protocol. The work is a small driver that creates an instance, attaches the address, and recreates it when the provider takes the machine back. Access is not the problem here.",
   "chaining": "One of these sits behind the Workers AI gateway as the egress hop: the Worker calls the instance, the instance dials out from a cloud address, and because every one of the five is a single ASN the chain buys a second provider rather than a second network.",
   "limits": [
     {
@@ -66,12 +66,12 @@
       "source": "https://cloud.google.com/vpc/pricing"
     }
   ],
-  "limits_note": "Three constraints fit none of the seven. Cost: Hetzner's /29 is EUR 13.60 a month plus EUR 34.90 setup, EUR 2.27 per usable IP, and AWS and Google Cloud charge USD 0.005/h per address, USD 3.65 a month. Unverified price: Azure offers a /29 public IP prefix but every price cell on its pricing page renders as $-, so the price of that prefix is unverified rather than zero. Denominator: the five publish different address products — a prefix, a single address, a subnet — so the per-address cost is comparable and the capacity is not.",
+  "limits_note": "Three constraints fit none of the seven. Cost: Hetzner's /29 is EUR 13.60 a month plus EUR 34.90 setup, EUR 2.27 per usable IP, and AWS and Google Cloud charge USD 0.005/h per address, USD 3.65 a month. Unverified price: Azure offers a /29 public IP prefix but every price cell on its pricing page renders as hBc, so the price of that prefix is unverified rather than zero. Denominator: the five publish different address products, such as a prefix, a single address, or a subnet, so per-address cost is comparable while capacity is not.",
   "binding": "retention-clamped",
   "binding_note": "At 45 GB a month across about 599,000 requests nothing here is near a byte or request ceiling except Google Cloud's 1 GB/month free egress, and crossing that produces a bill rather than a stop; Oracle's 7-day p95 idle reclaim is the only constraint that removes the address, so it is the one that ends the arrangement.",
   "identity_cost": {
     "kind": "card",
-    "detail": "Oracle's Always Free tier takes a card and reverses a USD 1.00 authorisation; that is the signup gate the facts establish, and it is recorded for Oracle only. The other four providers' signup gates were not re-tested in this session, so nothing here claims they are lighter or heavier.",
+    "detail": "Oracle Always Free tier requires a credit card and executes a reversible USD 1.00 authorization. Registration requirements for other listed providers are unverified against recent signup flows.",
     "country": null
   },
   "reliability_note": "All five are datacenter ranges registered to the cloud provider itself or to one of its own entities (ARIN DIRECT ALLOCATION for Oracle, Google Cloud and Azure; ARIN ALLOCATION for AWS; RIPE ASSIGNED PA for Hetzner), so an exit carries that cloud ASN's reputation, and on Oracle the address disappears with the reclaimed machine.",

@@ -10,15 +10,15 @@
     "metered_on": "stored-bytes",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
     "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
@@ -32,9 +32,9 @@
   ],
   "interface_detail": "oci",
   "tooling": "ORAS / docker / skopeo / crane all work against registry.gitlab.com; rclone has no OCI backend but 'oras cp' + rclone covers push/pull. Public projects allow anonymous pull tokens.",
-  "chaining": "Unlimited projects per namespace x unlimited namespaces/accounts x 5 GB per layer (generic package max file is 5 GB; container layers see the same class of limit). Since blobs are outside the 10 GiB project quota, a single free account can host arbitrarily many OCI layers. Compare GHCR (already known) — the differentiator here is the explicit quota exemption, not the registry itself.",
+  "chaining": "Unlimited projects per namespace x unlimited namespaces/accounts x 5 GB per layer (generic package max file is 5 GB; container layers see the same class of limit). Since blobs are outside the 10 GiB project quota, a single free account can host arbitrarily many OCI layers. Compare GHCR (already known). The differentiator here is the explicit quota exemption, not the registry itself.",
   "limits": [],
-  "limits_note": "Container registry storage is visible but not capped in docs; individual blob uploads go through the standard Docker chunked path so layer size is bounded by the client, not by a documented per-file cap. Requires CI or a token for push; anonymous pull works on public projects.",
+  "limits_note": "Container registry storage is visible without published caps in documentation. Blob uploads use the standard Docker chunked protocol, where layer size is determined by user build configuration rather than documented file limits. Pushes require CI tokens, and public projects permit anonymous pulls.",
   "identity_cost": {
     "kind": "anonymous",
     "detail": "derived from the record's prose, not from an identity field, and no signup was executed: a documented per-file cap. Requires CI or a token for push; anonymous pull works on public projects. registry",

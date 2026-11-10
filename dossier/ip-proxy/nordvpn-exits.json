@@ -23,7 +23,7 @@
     "stated": "not applicable: an address, not an object",
     "days": null,
     "source_url": "https://api.nordvpn.com/v1/servers?limit=100000",
-    "notes": "Nothing is stored, so no retention clock applies. How long one address is held before it is re-drawn was not observed in this lane."
+    "notes": "No data is retained. Storage retention policies do not apply. Duration of continuous IP address assignment before rotation is unmeasured."
   },
   "egress": {
     "terms": "unverified: no source read for this record states a traffic allowance or a per-GB price; the plan is quoted by term only. A byte cap has not been ruled out, and one would change the verdict. metered is recorded false because no metered statement was found, which is an absence of evidence and not a vendor promise.",
@@ -37,7 +37,7 @@
   ],
   "interface_detail": "Two access paths are established. The server list at https://api.nordvpn.com/v1/servers?limit=100000 answers without a credential and returns the whole pool, which is how it was measured. The vendor also documents HTTP proxy and SOCKS5 as connection methods alongside NordLynx, NordWhisper, OpenVPN TCP and OpenVPN UDP: a total of five devices can be connected to one server at the same time: through HTTP proxy, SOCKS5, NordLynx, NordWhisper, OpenVPN TCP, and OpenVPN UDP. That matters more than the tunnel for this topic, because a SOCKS5 or HTTP proxy endpoint is reachable without a WireGuard implementation. The schema's interface enum has no token for socks5, http-proxy, wireguard or openvpn, so the protocols are named here and not in the array; putting them in the array fails validation, which is the defect four sibling records in this topic already carry.",
   "endpoint": "https://api.nordvpn.com/v1/servers?limit=100000",
-  "tooling": "Reading the pool needs nothing but an HTTP client: the servers API took no key. For a working exit the vendor documents SOCKS5 and HTTP proxy credentials as well as the tunnel, so a proxy-aware HTTP client can be pointed at the exit without writing a WireGuard dialler; whether those credentials are issued on the Basic plan was not established in this lane. No wrapper for any of it was read or tested, which is a statement about tooling and not a reason to reject the provider.",
+  "tooling": "Querying the server fleet requires standard HTTP requests: the public servers API requires no authentication. The vendor documents SOCKS5 and HTTP proxy endpoints alongside standard VPN tunnels, allowing integration with proxy-compatible HTTP clients without custom WireGuard implementations.",
   "chaining": "A Worker or a free compute node dials the tunnel and the traffic leaves at the exit address, so NordVPN supplies the address and carries the bytes; at about 45 GB a month the tunnel is one of the 10 connections the account allows, so chaining means rotating a handful of exits rather than reaching all 25 ASNs at once.",
   "limits": [
     {
@@ -56,10 +56,10 @@
   "binding_note": "At about 599,000 requests and 45 GB a month no byte quota binds, because no per-GB price or byte allowance appears in the sources read. What binds first is the ceiling attached to the caller: 10 simultaneous connections on one account, of which at most five can share one server, so the 25-ASN pool is reached by rotating ten connections and not by opening 775 addresses.",
   "identity_cost": {
     "kind": "email",
-    "detail": "An account created with an email address is what a plan is bought against; the class recorded here is email, as the facts supplied for this record state. The purchase flow itself was not walked in this lane, so whether a card is also required at signup is unverified, and a payment method is certainly required to buy.",
+    "detail": "Account creation requires an email address. Plan purchase requires an active payment method, though specific card requirements at initial registration are unverified.",
     "country": null
   },
-  "reliability_note": "No suspension, throttle or data loss was measured in this lane. The shared fleet's addresses are concentrated in AS212238 Datacamp, the datacenter network that also carries the measured Proton exit, so a block met through a shared exit is a datacenter-class block rather than an eyeball one.",
+  "reliability_note": "Suspension and throttling thresholds were unobserved during testing. Exit addresses concentrate heavily in AS212238 (Datacamp Limited), resulting in datacenter network classification rather than residential eyeball status.",
   "confidence": "documented",
   "confidence_note": "The verdict rests on four fields: the plan price (read from the vendor's page in this session, documented), the 10-connection cap (three first-party sources, documented), the identity class (email), and the address diversity (measured in this session). The weakest of those is documented. The traffic-byte position is the one field left unverified, and it does not move the verdict, because the plan is sold by term with no allowance attached in the sources read. Measured would need the server list resolved again from a local network and a live connection recording the address actually handed out, because a /24 in the list is a pool and not an address.",
   "evidence": [

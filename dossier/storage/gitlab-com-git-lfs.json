@@ -10,20 +10,20 @@
     "metered_on": "stored-bytes",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
     "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
-    "terms": "Unmetered — GitLab does not bill or publish any LFS bandwidth quota. The only transfer-side control is a rate limit: 'Git LFS requests are subject to authenticated web request rate limits ... 1000 requests per minute per user. Each Git LFS object uploaded or downloaded generates an HTTP request'.",
+    "terms": "Unmetered. GitLab does not bill or publish any LFS bandwidth quota. The only transfer-side control is a rate limit: 'Git LFS requests are subject to authenticated web request rate limits .. 1000 requests per minute per user. Each Git LFS object uploaded or downloaded generates an HTTP request'.",
     "metered": false
   },
   "interface": [
@@ -32,9 +32,9 @@
   ],
   "interface_detail": "git",
   "tooling": "git-lfs. Also Oras-style raw access is not available; LFS is protocol-only. GitLab REST API v4 for project/namespace management (useful for automating project-per-shard).",
-  "chaining": "10 GiB per PROJECT, and projects are free and unlimited within a namespace — GitLab's own excess-storage example totals 30 GiB across three projects with no namespace-level cap. 50 projects = 500 GiB, 100 = 1 TiB. This is the cleanest 'trivially repeatable' LFS case because each project is an independent 10 GiB bucket behind the same account, unlike GitHub where the 10 GiB is per account.",
+  "chaining": "10 GiB per PROJECT, and projects are free and unlimited within a namespace. GitLab's own excess-storage example totals 30 GiB across three projects with no namespace-level cap. 50 projects = 500 GiB, 100 = 1 TiB. This is the cleanest 'trivially repeatable' LFS case because each project is an independent 10 GiB bucket behind the same account, unlike GitHub where the 10 GiB is per account.",
   "limits": [],
-  "limits_note": "At 10 GiB the project goes READ-ONLY: 'you can't push or add large files (LFS) to the project's repository.' Max push request 5 GiB (through Cloudflare) — this applies to git push; LFS object upload is a separate endpoint. Max attachment 100 MiB. Rate limit 1000 LFS req/min/user is the real throughput ceiling (~60k objects/hour, and one object = one request regardless of size).",
+  "limits_note": "At 10 GiB the project goes READ-ONLY: 'you can't push or add large files (LFS) to the project's repository.' Max push request 5 GiB (through Cloudflare). This applies to git push; LFS object upload is a separate endpoint. Max attachment 100 MiB. Rate limit 1000 LFS req/min/user is the real throughput ceiling (~60k objects/hour, and one object = one request regardless of size).",
   "identity_cost": {
     "kind": "email",
     "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",

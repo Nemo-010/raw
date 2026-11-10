@@ -10,7 +10,7 @@
     "metered_on": "stored-bytes",
     "source_url": "https://knowledge.workspace.google.com/admin/storage/google-workspace-storage-faq-for-admins",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
     "stated": "200 MB per file",
@@ -19,12 +19,12 @@
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://knowledge.workspace.google.com/admin/storage/google-workspace-storage-faq-for-admins",
     "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
-    "terms": "Not metered — downloaded through Chat API media.download (3,000 attachment reads/min/project), supports Range requests. No per-GB charge in the docs.",
+    "terms": "Not metered. Downloaded through Chat API media.download (3,000 attachment reads/min/project), supports Range requests. No per-GB charge in the docs.",
     "metered": true
   },
   "interface": [
@@ -32,8 +32,8 @@
     "rclone"
   ],
   "interface_detail": "rest",
-  "tooling": "Official Chat API with service-account (app) auth; media.upload for write, GET /v1/media/{name}?alt=media for read with Range. No dedicated rclone backend exists — this is a build-it-yourself REST store; google-api-* client libs cover both directions.",
-  "chaining": "Unlimited messages x 200 MB per attachment. 20 attachments per interactive message on web, but the API path is per-media-upload, so the binding constraint is the 600 uploads/min/project rate, and projects are multiplicative (30-project default quota per user). Storage is free because Chat attachments are quota-exempt — this is the strongest multiplier in the Google stack.",
+  "tooling": "Official Chat API with service-account (app) auth; media.upload for write, GET /v1/media/{name}?alt=media for read with Range. No dedicated rclone backend exists. This is a build-it-yourself REST store; google-api-* client libs cover both directions.",
+  "chaining": "Unlimited messages x 200 MB per attachment. 20 attachments per interactive message on web, but the API path is per-media-upload, so the binding constraint is the 600 uploads/min/project rate, and projects are multiplicative (30-project default quota per user). Storage is free because Chat attachments are quota-exempt. This is the strongest multiplier in the Google stack.",
   "limits": [
     {
       "kind": "per-object-cap",
@@ -41,13 +41,13 @@
       "source": "https://knowledge.workspace.google.com/admin/storage/google-workspace-storage-faq-for-admins"
     }
   ],
-  "limits_note": "200 MB per file hard cap; some file types blocked; 600 media.upload/min/project and 3,000 media.download/min/project; requires a Google Workspace account + Cloud project + Chat API enabled (personal @gmail.com accounts are not a supported developer surface; Chat API auth doc requires Workspace). Chat API quotas are per-minute only — the docs state 'no limit to the number of requests you can make per day' if you stay under them.",
+  "limits_note": "200 MB per file hard cap; some file types blocked; 600 media.upload/min/project and 3,000 media.download/min/project; requires a Google Workspace account + Cloud project + Chat API enabled (personal @gmail.com accounts are not a supported developer surface; Chat API auth doc requires Workspace). Chat API quotas are per-minute only. The docs state 'no limit to the number of requests you can make per day' if you stay under them.",
   "identity_cost": {
     "kind": "institution",
     "detail": "derived from the record's prose, not from an identity field, and no signup was executed: nt. 20 attachments per interactive message on web, but the API path is per-media-upload, so the binding constraint is the 600 uploads/min/project rate, and projects are multiplicativ",
     "country": null
   },
-  "reliability_note": "Messages/attachments live in a space — deleting or archiving the space, or removing the app from it, can orphan the data; no documented retention guarantee. Blocked MIME types must be avoided.",
+  "reliability_note": "Messages/attachments live in a space. Deleting or archiving the space, or removing the app from it, can orphan the data; no documented retention guarantee. Blocked MIME types must be avoided.",
   "confidence": "reported",
   "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [

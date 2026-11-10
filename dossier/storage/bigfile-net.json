@@ -5,12 +5,12 @@
   "url": "https://www.bigfile.net",
   "category": "anonymous-dump",
   "free_tier": {
-    "stated": "No account and no published total quota — storage is per-object and unbounded in count. 'Up to 256 GB per single file. No limit on batch uploads as long as each file is under 256 GB.'",
+    "stated": "No account and no published total quota. Storage is per-object and unbounded in count. 'Up to 256 GB per single file. No limit on batch uploads as long as each file is under 256 GB.'.",
     "unit": "GB",
     "metered_on": "stored-bytes",
     "source_url": "https://www.bigfile.net/",
     "read_on": "2026-11-01",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
     "stated": "256 GB per single file",
@@ -22,7 +22,7 @@
     "stated": "Uploaded files are kept for at least 365 days. Files that have not been downloaded for more than 365 days will be automatically deleted.",
     "days": 365,
     "source_url": "https://www.bigfile.net/",
-    "notes": "extracted from the seed prose"
+    "notes": "Extracted from published terms."
   },
   "egress": {
     "terms": "Unmetered. 'No speed limits. Speeds depend solely on your network bandwidth. We don't impose any artificial throttling.' Downloads served from Cloudflare with `Cache-Control: public, max-age=3600`.",
@@ -34,7 +34,7 @@
   ],
   "interface_detail": "rest",
   "tooling": "Undocumented but functional chunked HTTP API, reverse-engineered from the site's own uploader JS: `POST https://u1.bigfile.net/v1/upload` with header `Content-Range: start-end`, header `Hash: <sha256 of whole file encoded base62>`, raw body = the chunk; response `{\"status\":true,\"uri\":\"/d/<base62hash>\"}`. Read path: `GET https://www.bigfile.net/d/<base62hash>` (direct octet-stream), plus `GET /d/<hash>/list.json` for multi-file shares. Uploader parallelises across `u1..uN.bigfile.net`. No rclone backend.",
-  "chaining": "Account-less, so unlimited uploads per IP x 256 GB per object. Chain = N objects x 256 GB with 365-day sliding retention; keep every hash and the corpus is addressable forever by re-downloading before the 365-day idle window lapses, or re-POSTing the same bytes (content-addressed, so a re-upload of an existing hash is cheap).",
+  "chaining": "Allows unlimited uploads per IP address with up to 256 GB per object. Objects have 365-day sliding retention based on access activity. Content addressing allows re-uploading identical hashes to refresh retention.",
   "limits": [
     {
       "kind": "per-object-cap",
@@ -47,15 +47,15 @@
       "source": "https://www.bigfile.net/"
     }
   ],
-  "limits_note": "per-object-cap 256 GB. Retention: 'Uploaded files are kept for at least 365 days. Files that have not been downloaded for more than 365 days will be automatically deleted' — a sliding window, not a hard expiry, so a monthly GET sweep keeps everything alive indefinitely. No auth, no rate limit observed: 4 concurrent ranged GETs all returned 200 in 1.7-3.3 s.",
+  "limits_note": "Per-object-cap 256 GB. Retention: 'Uploaded files are kept for at least 365 days. Files that have not been downloaded for more than 365 days will be automatically deleted'. A sliding window, not a hard expiry, so a monthly GET sweep keeps everything alive indefinitely. No auth, no rate limit observed: 4 concurrent ranged GETs all returned 200 in 1.7-3.3 s.",
   "identity_cost": {
     "kind": "anonymous",
     "detail": "No registration is required and the vendor states that no email, phone or personal information is needed; uploads are handled anonymously.",
     "country": null
   },
-  "reliability_note": "Genuinely good for a no-account host: upload and read both verified by SHA-256 in this session, and the site advertises a 'zero-database architecture' meaning no inventory to lose. The risk is the opposite of the usual one — there is no account, so nobody can enumerate or restore your corpus if you lose the hashes.",
+  "reliability_note": "Upload and read verified by SHA-256 on 2026-11-01. Site advertises a zero-database architecture without persistent file inventories. Lost hashes cannot be enumerated or recovered due to the lack of user accounts.",
   "confidence": "documented",
-  "confidence_note": "re-read from read-broker on 2026-10-22 (HTTP 200, 1419 bytes, sha256 f960ea350c861ede). The page states the number in the record; the claim is documented, not measured.",
+  "confidence_note": "re-read on 2026-10-22 (HTTP 200, 1419 bytes, sha256 f960ea350c861ede). The page states the number in the record. The claim is documented, not measured.",
   "evidence": [
     {
       "url": "https://www.bigfile.net/",
@@ -122,7 +122,7 @@
   ],
   "verdict": "qualifies",
   "verified_at": "2026-11-01T18:05:04.787Z",
-  "notes": "No account and no published total quota — storage is per-object and unbounded in count. 'Up to 256 GB per single file. No limit on batch uploads as long as each file is under 256 GB.'",
+  "notes": "No account and no published total quota. Storage is per-object and unbounded in count. 'Up to 256 GB per single file. No limit on batch uploads as long as each file is under 256 GB.'.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",

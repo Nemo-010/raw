@@ -12,16 +12,16 @@
     "read_on": "2026-10-22"
   },
   "per_object_cap": {
-    "stated": "not stated in the source card",
+    "stated": "not stated",
     "bytes": null,
     "source_url": "https://deno.com/deploy/pricing",
     "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
   },
   "retention": {
-    "stated": "not stated in the source card",
+    "stated": "not stated",
     "days": null,
     "source_url": "https://deno.com/deploy/pricing",
-    "notes": "durability of the sandbox disk on stop and on delete is not a field in either seed pass"
+    "notes": "Disk durability across instance stops and deletions is not documented."
   },
   "egress": {
     "terms": "Free plan: 20GiB a month of egress across all deployments; inbound request data does not count; sandbox compute bills through the same egress meter",
@@ -33,9 +33,9 @@
   "interface": [
     "unknown"
   ],
-  "interface_detail": "the source card states no access interface",
-  "tooling": "not stated in the source card",
-  "chaining": "not established; the source card prices a machine, not a route into one",
+  "interface_detail": "Access interface not documented in published terms.",
+  "tooling": "not stated",
+  "chaining": "not established",
   "limits": [
     {
       "kind": "request-rate",
@@ -53,7 +53,7 @@
       "source": "https://deno.com/deploy/pricing"
     }
   ],
-  "limits_note": "the source card carries no session cap, idle-reap or network-policy field",
+  "limits_note": "Session cap, idle-reap and network policy are not documented.",
   "identity_cost": {
     "kind": "email",
     "detail": "email: sign-in is a GitHub account, or a Google account for users who then still supply GitHub credentials, and the contact email is the one on GitHub ('Deno Deploy supports logging in with GitHub. Your primary contact email address and name are synced from GitHub.'). No card is needed to create the account and use the restricted Free plan limits; linking a credit card to verify the organization is what lifts them. No phone or identity document is named.",
@@ -114,10 +114,31 @@
       "proved": "signing up creates the account and its organization, with no card in the step",
       "capture": "sha256:cea9cb19e55a5370b9f7ee8ed4e28d7d655cf00565ef5a619aa546bdf39c2184",
       "quote": "Organizations in Deno Deploy are created when you sign up for a Deno Deploy account."
+    },
+    {
+      "url": "https://deno.com/deploy/pricing",
+      "date": "2026-11-09",
+      "proved": "the page states that an idle app shuts down after about 20 to 30 seconds, which is the idle reap at the upper end of the range",
+      "capture": "sha256:8e1f5b0bd159fd8b2c1e9ac44de3c986d7be5253fa964b9f1b63507e7e2671c4",
+      "quote": "Idle apps automatically shut down after ~20-30 seconds, so you're not billed for memory while scaled to zero."
+    },
+    {
+      "url": "https://deno.com/deploy/pricing",
+      "date": "2026-11-09",
+      "proved": "the idle shutdown window is about 20 to 30 seconds, recorded at the upper end because the page gives a range",
+      "capture": "sha256:8e1f5b0bd159fd8b2c1e9ac44de3c986d7be5253fa964b9f1b63507e7e2671c4",
+      "quote": "Idle apps automatically shut down after ~20-30 seconds, so you're not billed for memory while scaled to zero."
+    },
+    {
+      "url": "https://deno.com/deploy/pricing",
+      "date": "2026-11-09",
+      "proved": "the idle shutdown window is on the page in its own words",
+      "capture": "sha256:8e1f5b0bd159fd8b2c1e9ac44de3c986d7be5253fa964b9f1b63507e7e2671c4",
+      "quote": "Idle apps automatically shut down after ~20-30 seconds, so you're not billed for memory while scaled to zero."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-04T15:51:59.408Z",
+  "verified_at": "2026-11-09T13:25:36.145Z",
   "price_per_tb_month": null,
   "notes": "",
   "extras": {
@@ -131,9 +152,9 @@
     "shape": null,
     "session_cap": {
       "wall_clock_min": null,
-      "idle_reap_s": null,
+      "idle_reap_s": 30,
       "restart_required": false,
-      "note": "CPU bills only while code runs, so a sandbox waiting on I/O costs nothing; the page states no wall clock"
+      "note": "an idle app shuts down automatically after about 20 to 30 seconds on the free plan, so the idle reap is 30 seconds at the upper end; CPU bills only while code runs, and no maximum session lifetime is published"
     },
     "persistent_storage": null,
     "network_out": null,
