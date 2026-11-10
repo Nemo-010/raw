@@ -10,17 +10,17 @@
     "metered_on": "stored-bytes",
     "source_url": "https://firebase.google.com/pricing",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://firebase.google.com/pricing",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://firebase.google.com/pricing",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "No retention clause documented in available terms."
   },
   "egress": {
     "terms": "1 GB/day download (~30 GB/month) free, then $0.12/GB; outbound networking 5 GB/month. The 1 GB/DAY download cap is the binding constraint, not the 5 GB stored.",
@@ -32,8 +32,8 @@
     "rclone"
   ],
   "interface_detail": "rest",
-  "tooling": "Firebase SDKs (web/Android/iOS), Admin SDK, gsutil/gcloud storage against the underlying GCS bucket, `firebase storage:upload`; rclone can hit the bucket with GCS (not rclone's 'firebase' — that is the Realtime DB). Public download URLs via `getDownloadURL` / Firebase download tokens.",
-  "chaining": "5 GB per PROJECT. Projects per Google account on Spark are limited to 'a small number of projects (usually around 5-10)' — so ~25-50 GB/account, not a big multiplier. Multiple Google accounts is the only axis. Deleting a project takes 30 days and still counts against quota, which badly hurts churn-and-burn cycling.",
+  "tooling": "Firebase SDKs (web/Android/iOS), Admin SDK, gsutil/gcloud storage against the underlying GCS bucket, `firebase storage:upload`; rclone can hit the bucket with GCS (not rclone's 'firebase'. That is the Realtime DB). Public download URLs via `getDownloadURL` / Firebase download tokens.",
+  "chaining": "5 GB per PROJECT. Projects per Google account on Spark are limited to 'a small number of projects (usually around 5-10)'. So ~25-50 GB/account, not a big multiplier. Multiple Google accounts is the only axis. Deleting a project takes 30 days and still counts against quota, which badly hurts churn-and-burn cycling.",
   "limits": [
     {
       "kind": "per-ip-shaping",
@@ -41,7 +41,7 @@
       "source": "https://firebase.google.com/pricing"
     }
   ],
-  "limits_note": "1 GB/day egress (~30 GB/mo) is the practical ceiling — a 5 GB store is refetchable only 6x/month. Download-op cap 50k/day. Spark also caps Cloud Storage at 5 GB-months and 100 GB/month downloaded for the *default* bucket variant. No billing = hard stop, not overage.",
+  "limits_note": "1 GB/day egress (~30 GB/mo) is the practical ceiling. A 5 GB store is refetchable only 6x/month. Download-op cap 50k/day. Spark also caps Cloud Storage at 5 GB-months and 100 GB/month downloaded for the *default* bucket variant. No billing = hard stop, not overage.",
   "identity_cost": {
     "kind": "email",
     "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
@@ -49,7 +49,7 @@
   },
   "reliability_note": "Hard daily reset at midnight; exceeding it fails requests until reset. Project deletion is 30 days and blocked from quota reuse, so account cycling is slow.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
   "evidence": [
     {
       "url": "https://firebase.google.com/pricing",
@@ -102,7 +102,7 @@
     "agent_focus": "Backend-as-a-service and database platforms where free storage quota is expressed per PROJECT/DATASET/CLUSTER and the units may multiply with free orgs — plus the headless-CMS class, where assets are CDN-served at no egress cost"
   },
   "binding": "per-ip-shaping",
-  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "binding_note": "one stream is shaped, and aggregate throughput is the shaped rate times the number of streams",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z"
 }

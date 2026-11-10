@@ -173,7 +173,7 @@ lookups.
 | OnesProxy | No standing free tier. New users can ask cu... | paid-only | documented | not applicable: an address or a... | not applicable: an ad... | email | `dossier/ip-proxy/onesproxy-static-residential.json` |
 | Oxylabs | One-time USD 5.00 Welcome Credit on registr... | qualifies-with-caveat | documented | not applicable: an address, not... | not applicable: an ad... | card | `dossier/ip-proxy/oxylabs-isp-proxies.json` |
 | Private Internet Access | No free tier. The buy page lists 1 Month at... | paid-only | measured | not applicable: an address, not... | not applicable: an ad... | email | `dossier/ip-proxy/private-internet-access-exits.json` |
-| Proton VPN | Free plan, quoted from the pricing page: Co... | qualifies-with-caveat | documented | not applicable: an exit address... | not applicable: a liv... | email | `dossier/ip-proxy/protonvpn-exits.json` |
+| Proton VPN | Free plan, quoted from the pricing page: 'C... | qualifies-with-caveat | documented | not applicable: an exit address... | not applicable: a liv... | email | `dossier/ip-proxy/protonvpn-exits.json` |
 | Proxy001 | No free allowance on the pricing page. Regu... | paid-only | documented | not applicable: an address or a... | purchased traffic is... | email | `dossier/ip-proxy/proxy001-residential.json` |
 | Proxy001 | No free tier on the pricing page. The page... | paid-only | documented | not applicable: an address or a... | not applicable: a pro... | email | `dossier/ip-proxy/proxy001-rotating-residential.json` |
 | Proxy-Seller | No free tier: 'A standard free trial is not... | qualifies-with-caveat | documented | not applicable: an address, not... | not applicable: an ad... | card | `dossier/ip-proxy/proxyseller-isp-proxy.json` |

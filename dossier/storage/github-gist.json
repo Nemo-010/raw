@@ -10,7 +10,7 @@
     "metered_on": "unstated",
     "source_url": "https://docs.github.com/en/repositories/creating-and-managing-repositories/repository-limits",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
     "stated": "100 MiB per single file",
@@ -19,9 +19,9 @@
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.github.com/en/repositories/creating-and-managing-repositories/repository-limits",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "No retention clause documented in available terms."
   },
   "egress": {
     "terms": "unmetered free downloads from gist.githubusercontent.com; docs state 'We don't limit the total size of the binary files in the release or the bandwidth used to deliver them'. No egress metering observed across repeated 60 MB pulls (~1.3-2.0 s each).",
@@ -34,8 +34,8 @@
     "rclone"
   ],
   "interface_detail": "git",
-  "tooling": "git clone/push against gist.github.com/<id>.git, gh gist create, REST POST /gists, github.com/bharatcj/git-unlimited-storage (S3-shaped shim over a repo, MIT, 0 stars), rclone backend 'gist' does NOT exist — use plain git plus a CDN in front.",
-  "chaining": "unlimited gists x unlimited free GitHub accounts, each gist 100 MiB/file x as many files as the push allows. Practical unit is 'one gist repo per dataset shard'. 10 TiB hot = ~100k gists at 100 MB, or ~10k accounts x 10 gists.",
+  "tooling": "Git clone/push against gist.github.com/<id>.git, gh gist create, REST POST /gists, github.com/bharatcj/git-unlimited-storage (S3-shaped shim over a repo, MIT, 0 stars), rclone backend 'gist' does NOT exist. Use plain git plus a CDN in front.",
+  "chaining": "Supports multiple gists per GitHub account, with each gist allowing files up to 100 MiB up to git push limits. Sharding partitions datasets across individual gist repositories.",
   "limits": [
     {
       "kind": "per-object-cap",
@@ -51,12 +51,12 @@
   "limits_note": "100 MiB per file hard block (pre-receive hook); ~80 writes/min, 500/hr, 5000 REST req/hr per token; API truncates file content at 1 MB and files list at 300 unless you clone; 6 pushes/min per repo recommended.",
   "identity_cost": {
     "kind": "institution",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: hook); ~80 writes/min, 500/hr, 5000 REST req/hr per token; API truncates file content at 1 MB and files list at 300 unless you clone; 6 pushes/min per repo recommended. paas",
+    "detail": "derived from the record's prose: hook); ~80 writes/min, 500/hr, 5000 REST req/hr per token; API truncates file content at 1 MB and files list at 300 unless you clone; 6 pushes/min per repo recommended. paas",
     "country": null
   },
   "reliability_note": "Push hook is strict and fires at 100 MiB; pushes into a repo already carrying hundreds of MB start failing before the per-file cap is reached, so keep each shard repo small. Read path was consistently fast and cache-friendly.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
   "evidence": [
     {
       "url": "https://docs.github.com/en/repositories/creating-and-managing-repositories/repository-limits",

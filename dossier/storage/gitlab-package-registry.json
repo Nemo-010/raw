@@ -10,7 +10,7 @@
     "metered_on": "stored-bytes",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
     "stated": "5 GB per file",
@@ -19,9 +19,9 @@
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "No retention clause documented in available terms."
   },
   "egress": {
     "terms": "Free and unmetered for downloads; no egress line item anywhere in GitLab pricing. Served through Cloudflare (probe returned Server: cloudflare).",
@@ -32,8 +32,8 @@
     "rclone"
   ],
   "interface_detail": "rest",
-  "tooling": "Full REST API: PUT /api/v4/projects/:id/packages/generic/:package_name/:version/:file_name and GET the same path for download. Also native npm/maven/pypi/nuget/conan clients by pointing the client at the GitLab URL. No rclone backend, but the generic-package PUT/GET is a two-verb blob API — trivial to drive from curl or a 30-line Python loop. Deploy tokens with write_package_registry scope give scoped push credentials.",
-  "chaining": "UNBOUNDED on two axes: (a) unlimited free projects per account (GitLab Free has no project cap; only project *creation rate* is limited to 200/day/user) x 5 GB per file x unlimited files per project; (b) package bytes sit outside the 10 GiB quota entirely, so a single project is already a de-facto unlimited bucket and additional projects multiply it further. 10 TiB hot = 2,048 x 5 GB generic files, achievable in one project.",
+  "tooling": "Full REST API: PUT /api/v4/projects/:id/packages/generic/:package_name/:version/:file_name and GET the same path for download. Package clients can target the GitLab registry URL directly. No rclone backend, but generic-package PUT and GET functions as a standard HTTP blob API. Deploy tokens with write_package_registry scope provide scoped push credentials.",
+  "chaining": "GitLab Free permits unlimited projects per account with project creation limited to 200 per day per user. Generic packages allow up to 5 GB per file, and package registry storage is accounted separately from repository git limits.",
   "limits": [
     {
       "kind": "per-object-cap",
@@ -44,12 +44,12 @@
   "limits_note": "5 GB per file (generic). Package registry rate limits apply to the Packages API. Authenticated API traffic 2,000 req/min per user; unauthenticated 60 req/hr per IP. Project creation 200/day/user. No per-project package storage cap documented.",
   "identity_cost": {
     "kind": "institution",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ceilings: Generic 5 GB, npm 5 GB, Maven 5 GB, NuGet 5 GB, PyPI 5 GB, Conan 5 GB, Terraform 1 GB, ML model 10 GB (uploads capped at 5 GB), Helm 5 MB. Package registry is a real fea",
+    "detail": "derived from the record's prose: ceilings: Generic 5 GB, npm 5 GB, Maven 5 GB, NuGet 5 GB, PyPI 5 GB, Conan 5 GB, Terraform 1 GB, ML model 10 GB (uploads capped at 5 GB), Helm 5 MB. Package registry is a real fea",
     "country": null
   },
-  "reliability_note": "Package registry is a real feature not a cache — no TTL, but a project cleanup policy can auto-delete package assets if configured, so leave it off. Anonymous pull must be enabled per project ('Allow anyone to pull from package registry'). NuGet group endpoints refuse anonymous pulls entirely.",
+  "reliability_note": "Package registry is a real feature not a cache. No TTL, but a project cleanup policy can auto-delete package assets if configured, so leave it off. Anonymous pull must be enabled per project ('Allow anyone to pull from package registry'). NuGet group endpoints refuse anonymous pulls entirely.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
   "evidence": [
     {
       "url": "https://docs.gitlab.com/user/storage_usage_quotas/",

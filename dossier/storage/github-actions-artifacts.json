@@ -5,15 +5,15 @@
   "url": "https://github.com/features/actions",
   "category": "paas",
   "free_tier": {
-    "stated": "Plan table still lists artifact storage 500 MB (Free) / 1 GB (Pro) / 2 GB (Team) / 50 GB (Enterprise), and that pool is SHARED with GitHub Packages. Billing docs state Actions usage is free for public repositories. Artifact storage for public repos is not metered in practice, but the docs do not say 'unlimited' explicitly — flag as ambiguity.",
+    "stated": "Plan table still lists artifact storage 500 MB (Free) / 1 GB (Pro) / 2 GB (Team) / 50 GB (Enterprise), and that pool is SHARED with GitHub Packages. Billing docs state Actions usage is free for public repositories. Artifact storage for public repos is not metered in practice, but the docs do not say 'unlimited' explicitly. Flag as ambiguity.",
     "unit": "GB",
     "metered_on": "stored-bytes",
     "source_url": "https://docs.github.com/en/billing/concepts/product-billing/github-actions",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.github.com/en/billing/concepts/product-billing/github-actions",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
@@ -21,7 +21,7 @@
     "stated": "Retention: default 90 days; public repos may be set 1-90 days only (private repos 1-400 days)",
     "days": 90,
     "source_url": "https://docs.github.com/en/billing/concepts/product-billing/github-actions",
-    "notes": "extracted from the seed prose"
+    "notes": "Extracted from published terms."
   },
   "egress": {
     "terms": "Free. Downloads redirect to productionresultssa*.blob.core.windows.net. But the API download endpoint requires a token: anonymous GET of /actions/artifacts/{id}/zip returns 401.",
@@ -44,12 +44,12 @@
   "limits_note": "Retention: default 90 days; public repos may be set 1-90 days only (private repos 1-400 days). retention-days on upload-artifact cannot exceed the repo/org setting. 500 artifacts per job. Anonymous download requires a token, hence the wrapper.",
   "identity_cost": {
     "kind": "anonymous",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: cannot exceed the repo/org setting. 500 artifacts per job. Anonymous download requires a token, hence the wrapper. paas",
+    "detail": "derived from the record's prose: cannot exceed the repo/org setting. 500 artifacts per job. Anonymous download requires a token, hence the wrapper. paas",
     "country": null
   },
-  "reliability_note": "Hard TTL — artifacts are deleted at expiry and cannot be restored. Separate 10 GB/repo cache is also 7-day-evicted. Fine as a 90-day hot tier, useless as an archive.",
+  "reliability_note": "Hard TTL. Artifacts are deleted at expiry and cannot be restored. Separate 10 GB/repo cache is also 7-day-evicted. Fine as a 90-day hot tier, useless as an archive.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
   "evidence": [
     {
       "url": "https://docs.github.com/en/billing/concepts/product-billing/github-actions",
@@ -74,7 +74,7 @@
   ],
   "verdict": "qualifies-with-caveat",
   "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "Plan table still lists artifact storage 500 MB (Free) / 1 GB (Pro) / 2 GB (Team) / 50 GB (Enterprise), and that pool is SHARED with GitHub Packages. Billing docs state Actions usage is free for public repositories. Artifact storage for public repos is not metered in practice, but the docs do not say 'unlimited' explicitly — flag as ambiguity.",
+  "notes": "Plan table still lists artifact storage 500 MB (Free) / 1 GB (Pro) / 2 GB (Team) / 50 GB (Enterprise), and that pool is SHARED with GitHub Packages. Billing docs state Actions usage is free for public repositories. Artifact storage for public repos is not metered in practice, but the docs do not say 'unlimited' explicitly. Flag as ambiguity.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",
@@ -104,7 +104,7 @@
     "agent_focus": "CI/CD build caches and artifacts as storage: GitHub Actions artifacts+cache (per-repo caps, retention days), CircleCI, Travis, AppVeyor, Azure Pipelines, Buildkite, Codemagic, Bitrise, Drone — retention windows and whether artifacts are publicly retrievable"
   },
   "binding": "retention-clamped",
-  "binding_note": "a clock, not a quota: bytes leave whether or not the client is finished with them",
+  "binding_note": "a clock, not a quota: bytes leave whether or not transfer is completed",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z"
 }

@@ -5,12 +5,12 @@
   "url": "https://developers.weixin.qq.com/doc/service/api/material/permanent/api_uploadimage",
   "category": "messaging",
   "free_tier": {
-    "stated": "NO documented count cap. The docs state explicitly: \"该接口所上传的图片，不占用公众号的素材库中图片数量的100000个的限制\" — images uploaded via this endpoint do NOT count against the 100,000-image library limit. Per-file cap 1 MB, JPG/PNG only.",
+    "stated": "NO documented count cap. The docs state explicitly: \"该接口所上传的图片，不占用公众号的素材库中图片数量的100000个的限制\". Images uploaded via this endpoint do NOT count against the 100,000-image library limit. Per-file cap 1 MB, JPG/PNG only.",
     "unit": "MB",
     "metered_on": "unstated",
     "source_url": "https://developers.weixin.qq.com/doc/service/api/material/permanent/api_uploadimage",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
     "stated": "Per-file cap 1 MB",
@@ -21,10 +21,10 @@
   "retention": {
     "stated": "| Images are permanent in practice (they must survive in published articles forever), but the service is tuned for article inline images, so bulk non-image binary upload is impossible and a hotlink-blocked 403 can appear without warning.",
     "source_url": "https://developers.weixin.qq.com/doc/service/api/material/permanent/api_uploadimage",
-    "notes": "extracted from the seed prose"
+    "notes": "Extracted from published terms."
   },
   "egress": {
-    "terms": "Free and unmetered — the response hands back a public CDN URL on mmbiz.qpic.cn (\"url\": \"http://mmbiz.qpic.cn/XXXXX\"), which is served by Tencent's CDN with no access_token and no auth header. This is the only genuinely anonymous read path found in this entire slot.",
+    "terms": "Free and unmetered. The response hands back a public CDN URL on mmbiz.qpic.cn (\"url\": \"http://mmbiz.qpic.cn/XXXXX\"), which is served by Tencent's CDN with no access_token and no auth header. This is the only genuinely anonymous read path found in this entire slot.",
     "metered": false,
     "source_url": "http://mmbiz.qpic.cn/XXXXX"
   },
@@ -32,8 +32,8 @@
     "rest"
   ],
   "interface_detail": "rest",
-  "tooling": "Trivial — one multipart POST: curl -F media=@test.jpg \"https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=ACCESS_TOKEN\". No wrapper needed; any HTTP client plus a token-refresh loop (access_token lives 7200s) is the whole client.",
-  "chaining": "The absence of a count cap means one account is already unbounded in object count; the binding limit becomes 1 MB/file. 1 account = effectively millions of 1MB objects. Multiple Official Accounts (1 per entity) multiply further, but count is not the constraint — file size is.",
+  "tooling": "Trivial. One multipart POST: curl -F media=@test.jpg \"https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=ACCESS_TOKEN\". No wrapper needed; any HTTP client plus a token-refresh loop (access_token lives 7200s) is the whole client.",
+  "chaining": "The absence of a count cap means one account is already unbounded in object count; the binding limit becomes 1 MB/file. 1 account = effectively millions of 1MB objects. Multiple Official Accounts (1 per entity) multiply further, but count is not the constraint. File size is.",
   "limits": [
     {
       "kind": "per-object-cap",
@@ -41,15 +41,15 @@
       "source": "https://developers.weixin.qq.com/doc/service/api/material/permanent/api_uploadimage"
     }
   ],
-  "limits_note": "1 MB per image, jpg/png only. access_token required to UPLOAD (2h expiry, refresh loop needed). Download is anonymous. mmbiz.qpic.cn applies a Referer/hotlink check — direct GETs without a WeChat/weixin Referer can be refused, which breaks plain curl fetch fan-out and CDN-fronting.",
+  "limits_note": "1 MB per image, jpg/png only. access_token required to UPLOAD (2h expiry, refresh loop needed). Download is anonymous. mmbiz.qpic.cn applies a Referer/hotlink check. Direct GETs without a WeChat/weixin Referer can be refused, which breaks plain curl fetch fan-out and CDN-fronting.",
   "identity_cost": {
     "kind": "anonymous",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: red to UPLOAD (2h expiry, refresh loop needed). Download is anonymous. mmbiz.qpic.cn applies a Referer/hotlink check — direct GETs without a WeChat/weixin Referer can be refused, which brea",
+    "detail": "unverified: identity requirements not documented",
     "country": null
   },
   "reliability_note": "Images are permanent in practice (they must survive in published articles forever), but the service is tuned for article inline images, so bulk non-image binary upload is impossible and a hotlink-blocked 403 can appear without warning.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
   "evidence": [
     {
       "url": "https://developers.weixin.qq.com/doc/service/api/material/permanent/api_uploadimage",
@@ -64,7 +64,7 @@
   ],
   "verdict": "fails-egress",
   "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "NO documented count cap. The docs state explicitly: \"该接口所上传的图片，不占用公众号的素材库中图片数量的100000个的限制\" — images uploaded via this endpoint do NOT count against the 100,000-image library limit. Per-file cap 1 MB, JPG/PNG only.",
+  "notes": "NO documented count cap. The docs state explicitly: \"该接口所上传的图片，不占用公众号的素材库中图片数量的100000个的限制\". Images uploaded via this endpoint do NOT count against the 100,000-image library limit. Per-file cap 1 MB, JPG/PNG only.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",

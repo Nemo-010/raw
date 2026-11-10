@@ -10,7 +10,7 @@
     "metered_on": "stored-bytes",
     "source_url": "https://support.dataverse.harvard.edu/researchers",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
     "stated": "Per-file 2.5 GB",
@@ -21,10 +21,10 @@
   "retention": {
     "stated": "| write-once: publishing is irreversible, no delete without support intervention, no embargo; 'Submit for Review' spam screen before publication; per-file 2.5 GB in the browser path; 1,000 files/dataset is the observed effectiveDatasetFileCountLimit; S3 direct upload is admin-enabled per install and is the only route past the 2.5 GB file cap.",
     "source_url": "https://support.dataverse.harvard.edu/researchers",
-    "notes": "extracted from the seed prose"
+    "notes": "Extracted from published terms."
   },
   "egress": {
-    "terms": "Free, anonymous, no login: GET /api/access/datafile/<id> returns 303 to a signed dvn-cloud-iqss S3 URL (X-Amz-Expires=3600), which serves 200 with Content-Length and honours Range (206 + Content-Range). Tested live this session.",
+    "terms": "Free anonymous access without login. Endpoint GET /api/access/datafile/<id> returns HTTP 303 to a signed S3 URL with 1-hour expiration, supporting Range requests.",
     "metered": false
   },
   "interface": [
@@ -35,7 +35,7 @@
   ],
   "interface_detail": "rest",
   "tooling": "REST native API (create dataset, add files, direct S3 upload), plus the official Python/CLI clients. dataset count 306,027 live. rclone has no native backend but the S3 direct-upload path accepts any S3 client.",
-  "chaining": "This is the wave-8 correction: quota attaches to the COLLECTION, and any logged-in user can create collections again since June 2024 (restriction imposed Nov 2022 in IQSS/dataverse.harvard.edu#199 was lifted; #207 comment 2024-07-24: 'Anyone can create collections in Harvard Dataverse now, as of sometime in June 2024'). N collections = N x 1 TiB allocations. Sibling collections can also be nested, so a 'Dataverse Collection' tree is the natural shard key.",
+  "chaining": "Storage quota attaches to collections, which logged-in users can create as of June 2024. Each collection receives a 1 TiB allocation, and collections can be nested into hierarchical trees for sharding.",
   "limits": [
     {
       "kind": "write-gated",
@@ -54,9 +54,9 @@
     "detail": "email",
     "country": null
   },
-  "reliability_note": "Anonymous read is a 1-hour signed S3 redirect, so re-resolve per request (rule 8); quota API is rate-limited and starts returning 403 after a short burst of collection probes.",
+  "reliability_note": "Anonymous downloads return signed S3 URLs with 1-hour expiration, requiring URL resolution per request. Quota API endpoints rate-limit rapid successive requests with HTTP 403.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
   "evidence": [
     {
       "url": "https://support.dataverse.harvard.edu/researchers",

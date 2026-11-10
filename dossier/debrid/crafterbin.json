@@ -38,7 +38,7 @@
   "interface_detail": "POST multipart/form-data to the bare host with field 'file', or field 'url' to have the server fetch a link. 'secret' (no value) asks for a long unguessable id; 'expires' takes hours or an ms epoch.",
   "endpoint": "https://crafterbin.glennstack.dev",
   "tooling": "curl -F'file=@x' or curl -F'url=https://...' https://crafterbin.glennstack.dev; the service is 0x0.st-shaped, so an existing 0x0.st client works after a hostname change",
-  "chaining": "It is the only anonymous host in this lane that both stores a local file and pulls a URL server-side, so a client can hand it a URL and never upload the bytes itself, and its size-scaled retention gives small files the longest life of anything measured here.",
+  "chaining": "It is the only anonymous host among debrid providers that both stores a local file and pulls a URL server-side, so a user can hand it a URL and never upload the bytes itself, and its size-scaled retention gives small files the longest life of anything measured here.",
   "limits": [
     {
       "kind": "per-object-cap",
@@ -66,7 +66,7 @@
   },
   "reliability_note": "A single hobby instance behind Caddy on Hunchentoot, with no published rate limit; the service runs on one privately operated server, so an outage is silent and unannounced.",
   "confidence": "measured",
-  "confidence_note": "Both paths measured in this session: a multipart local upload and a 'url' field pull from a Catbox link, each read back at 1 048 576 bytes with a matching SHA-256.",
+  "confidence_note": "Both paths measured in on 2026-10-23: a multipart local upload and a 'url' field pull from a Catbox link, each read back at 1 048 576 bytes with a matching SHA-256.",
   "evidence": [
     {
       "url": "probe:https://crafterbin.glennstack.dev",
@@ -100,7 +100,7 @@
     "status": 200
   },
   "history": [],
-  "notes": "The lane's best technical find: a remote pull that works, measured, with no account. The risk is that it is one hobby instance, so a client should treat every stored object as likely to vanish without notice.",
+  "notes": "Remote URL retrieval operating without account registration. Files are stored on a single community instance, so retention depends on server availability.",
   "extras": {
     "remote_pull_measured": true,
     "management": "X-Token response header, used with the delete endpoint",

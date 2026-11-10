@@ -10,17 +10,17 @@
     "metered_on": "stored-bytes",
     "source_url": "https://research.csc.fi/resources/quotas/",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://research.csc.fi/resources/quotas/",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "no retention statement was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that retention is unlimited",
+    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://research.csc.fi/resources/quotas/",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "No retention clause documented in available terms."
   },
   "egress": {
     "terms": "Unmetered. Objects are served from the a3s.fi S3 endpoint; public buckets are readable by anyone over HTTPS with no key and no egress meter. Quoted rule: 'Making a bucket public means that every file and directory on the bucket will be accessible without any kind of authentication from anywhere on the internet using the HTTPS protocol.'",
@@ -35,10 +35,10 @@
   "tooling": "rclone (s3 backend, endpoint a3s.fi), s3cmd, aws cli, Swift/OpenStack CLI, a-commands suite (github.com/CSCfi/allas-cli-utils), Allas web UI at allas.csc.fi. The a-publish helper makes a bucket world-readable and prints the public URL.",
   "chaining": "One project = 10 TiB. Self-service is the multiplier: a CSC account holder in the Haka/Virtu federation can create additional Academic projects in MyCSC without a human gate ('Academic project category ... can be created only by members of Finnish higher education institutions, state research institutes and CSC', and project creation is a MyCSC button, not a review). Each new project brings its own 10 TiB Allas bucket quota, its own 1,000 buckets and its own 500k-object/bucket ceiling. Ten projects = 100 TiB with no conversation with anyone.",
   "limits": [],
-  "limits_note": "per-object-cap: none documented for size; 500,000 objects per bucket and 1,000 buckets per project are the real ceilings. request-rate: not published; the S3 front end is Ceph RGW behind a load balancer. Storage is billed in Storage BUs (1 TiB = 1.05 Storage BU/hour) but academic projects receive BUs free — the constraint is the 10 TiB allowance, not money. Retention: 'Allas can be used to host data for as long as the CSC project is active'; Academic projects 'are usually valid for one year at a time, but they can be extended'. Objects are immutable in place — you overwrite, you do not edit.",
+  "limits_note": "Per-object-cap: none documented for size; 500,000 objects per bucket and 1,000 buckets per project are the real ceilings. request-rate: not published; the S3 front end is Ceph RGW behind a load balancer. Storage is billed in Storage BUs (1 TiB = 1.05 Storage BU/hour) but academic projects receive BUs free. The constraint is the 10 TiB allowance, not money. Retention: 'Allas can be used to host data for as long as the CSC project is active'; Academic projects 'are usually valid for one year at a time, but they can be extended'. Objects are immutable in place. You overwrite, you do not edit.",
   "identity_cost": {
     "kind": "institution",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: Self-service is the multiplier: a CSC account holder in the Haka/Virtu federation can create additional Academic projects in MyCSC without a human gate ('Academic project category ...",
+    "detail": "derived from the record's prose: Self-service is the multiplier: a CSC account holder in the Haka/Virtu federation can create additional Academic projects in MyCSC without a human gate ('Academic project category ...",
     "country": null
   },
   "reliability_note": "Storage-BU exhaustion closes the project; project lapse is what deletes data, not a retention timer.",

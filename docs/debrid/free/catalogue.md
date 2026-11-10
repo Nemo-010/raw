@@ -65,7 +65,7 @@ makes every record citable.
 | CloudDrive2 (self-hosted) | 基础会员 free: 最多 2 个云盘, 最多 1 个本地挂载, 2 devices,... | qualifies | documented | Encrypted upload is capped at 2... | Not applicable: it is... | email | `dossier/debrid/clouddrive2.json` |
 | Decypharr (self-hosted) | MIT-licensed and self-hosted, no account of... | qualifies | documented | not applicable to the gateway;... | not applicable: it pr... | anonymous | `dossier/debrid/decypharr.json` |
 | Jackett (self-hosted) | The software is free and the API key is gen... | qualifies | documented | not applicable: Torznab results | the instance caches r... | anonymous | `dossier/debrid/jackett.json` |
-| RDT-Client (self-hosted) | The client is free; the README is explicit... | qualifies | documented | not applicable to the caller; t... | not applicable: it ma... | anonymous | `dossier/debrid/rdt-client.json` |
+| RDT-Client (self-hosted) | Free software; the README specifies that th... | qualifies | documented | not applicable to the caller; t... | not applicable: it ma... | anonymous | `dossier/debrid/rdt-client.json` |
 | Vidi · Media Center (self-hosted) | No free tier: 'USD 4.99 · Designed for iPad... | qualifies | documented | not applicable: a player | not applicable: progr... | card | `dossier/debrid/vidi-media-center.json` |
 <!-- generated:end -->
 
@@ -224,7 +224,7 @@ makes every record citable.
 | ProLeech.Link | A free service is advertised ('try our free... | qualifies-with-caveat | documented | unverified: not stated | unverified: not state... | email | `dossier/debrid/proleech.json` |
 | Proxy-Cheap | No free allowance read; the cheapest entry... | qualifies-with-caveat | documented | not applicable: an address and... | not applicable: a liv... | card | `dossier/debrid/proxy-cheap.json` |
 | ProxyEmpire | 'Try residential and mobile proxies for $1.... | qualifies-with-caveat | documented | not applicable: a byte stream a... | not applicable: a liv... | card | `dossier/debrid/proxyempire.json` |
-| Public Mirror Leech (@pub... | The operator's own limits post: "Mirror: up... | qualifies-with-caveat | reported | 80 GB per link on every mode: m... | Not stated. A mirror... | any-phone | `dossier/debrid/publicmirrorbot.json` |
+| Public Mirror Leech (@pub... | Published limits post: "Mirror: upto 80 GB/... | qualifies-with-caveat | reported | 80 GB per link on every mode: m... | Not stated. A mirror... | any-phone | `dossier/debrid/publicmirrorbot.json` |
 | Puffbin | Upload files up to 10GB each. Password prot... | qualifies-with-caveat | documented | Upload files up to 10GB each | The uploader chooses... | anonymous | `dossier/debrid/puffbin-com.json` |
 | PullFiles | 'Grab any file from a link or URL instantly... | qualifies-with-caveat | documented | 1 GB per file ('Max. File size:... | not applicable in the... | anonymous | `dossier/debrid/pullfiles.json` |
 | PureVPN | No free plan on the order page; a 31-day mo... | qualifies-with-caveat | reported | not applicable: a tunnel, not a... | not applicable: a liv... | card | `dossier/debrid/purevpn.json` |
@@ -319,18 +319,18 @@ makes every record citable.
 | Workupload | 2 GB per file ('A file can not be larger th... | qualifies-with-caveat | reported | 2 GB per file | 30 d | anonymous | `dossier/debrid/workupload.json` |
 | World-Debrid | Compte free à vie : 1 débridage offert chaq... | qualifies-with-caveat | documented | not applicable: a URL or magnet... | not applicable: no st... | email | `dossier/debrid/world-debrid.json` |
 | WtfNZB | Reported as no registration and unlimited N... | qualifies-with-caveat | reported | not applicable: an NZB pointer... | not stated on any pag... | anonymous | `dossier/debrid/wtfnzb.json` |
-| xREL.v3 | The release lists are readable without an a... | qualifies-with-caveat | documented | not applicable: release metadat... | records persist; the... | anonymous | `dossier/debrid/xrel.json` |
+| xREL.v3 | Release lists are readable without an accou... | qualifies-with-caveat | documented | not applicable: release metadat... | records persist; the... | anonymous | `dossier/debrid/xrel.json` |
 | 迅雷超级会员 (Xunlei SVIP) | 超级会员 is sold by the month. The vendor's own... | qualifies-with-caveat | reported | Not published. 云添加 accepts up t... | 60 d | any-phone | `dossier/debrid/xunlei-super-member.json` |
 | YouDebrid | 'YouDebrid premium link generator is free a... | qualifies-with-caveat | documented | 'We don't have irritating file... | 'Auto-shred technolog... | anonymous | `dossier/debrid/youdebrid.json` |
 | YourImageShare URL uploader | 'This URL uploader takes a link to an image... | qualifies-with-caveat | documented | 'Maximum file size / 200MB per... | unverified: the page... | anonymous | `dossier/debrid/yourimageshare.json` |
 | ZeroUpload | Uploading and downloading are 100% free; th... | qualifies-with-caveat | documented | 5 GB per file for free or non-a... | 120 d | anonymous | `dossier/debrid/zeroupload.json` |
 | JDownloader 2 (self-hosted) | 'JDownloader is a free, open-source downloa... | qualifies-with-caveat | documented | not applicable to the tool: the... | not applicable: JD do... | anonymous | `dossier/debrid/jdownloader.json` |
-| MegaBasterd (self-hosted) | 'Yet another unofficial (and ugly) cross-pl... | qualifies-with-caveat | documented | MEGA publishes no per-file cap:... | not applicable: the c... | anonymous | `dossier/debrid/megabasterd.json` |
+| MegaBasterd (self-hosted) | 'Yet another unofficial (and ugly) cross-pl... | qualifies-with-caveat | documented | MEGA publishes no per-file cap:... | not applicable: the u... | anonymous | `dossier/debrid/megabasterd.json` |
 | megatools (self-hosted) | 'Megatools is a collection of programs for... | qualifies-with-caveat | documented | not applicable: MEGA states it... | not applicable: write... | anonymous | `dossier/debrid/megatools.json` |
 | MyJDownloader (self-hosted) | Registration is free and the free account i... | qualifies-with-caveat | documented | not applicable: MyJDownloader r... | not applicable: no fi... | email | `dossier/debrid/myjdownloader.json` |
 | NeoPan (app.neopan.cn) (self-hosted) | No free tier of the batch features is price... | qualifies-with-caveat | documented | Not applicable: it drives the p... | Not applicable: nothi... | card | `dossier/debrid/neopan.json` |
 | pyLoad (self-hosted) | 'pyLoad is a lightweight, pure-Python downl... | qualifies-with-caveat | documented | not applicable to the software:... | not applicable: local... | anonymous | `dossier/debrid/pyload.json` |
-| rclone - premiumizeme bac... (self-hosted) | The client is free software with no account... | qualifies-with-caveat | documented | not applicable to the caller; t... | not applicable: a mou... | anonymous | `dossier/debrid/rclone-premiumizeme.json` |
+| rclone - premiumizeme bac... (self-hosted) | Free software with no account and no quota... | qualifies-with-caveat | documented | not applicable to the caller; t... | not applicable: a mou... | anonymous | `dossier/debrid/rclone-premiumizeme.json` |
 | Teldrive (self-hosted) | No fee. 'Teldrive requires PostgreSQL and a... | qualifies-with-caveat | documented | Inherits Telegram's per-object... | As long as the Telegr... | any-phone | `dossier/debrid/teldrive.json` |
 | Telegram Bot API server (... (self-hosted) | No fee to Telegram. The cost is a host: the... | qualifies-with-caveat | documented | In local mode the server 'Uploa... | Not applicable: a gat... | any-phone | `dossier/debrid/telegram-bot-api-local-server.json` |
 | Telegram Drive (desktop,... (self-hosted) | 'Every feature is free. The optional $5 lic... | qualifies-with-caveat | documented | 'The application caps a Telegra... | Until deleted from th... | any-phone | `dossier/debrid/telegram-drive-desktop-caamer20.json` |
@@ -465,7 +465,7 @@ makes every record citable.
 | BeDrive.ru | Free upload and download with ads, a wait,... | fails-identity | documented | not stated on the pages read | not stated on the pag... | card | `dossier/debrid/bedrive-ru.json` |
 | Bitport.io | Free: 1 GB cloud storage, 1 download slot,... | fails-quota | documented | No per-torrent cap is published... | Not stated on the pri... | email | `dossier/debrid/bitport-io.json` |
 | CloudPipe | 'Free $0/month ... 5 jobs / day ... 3GB max... | fails-quota | documented | '3GB max file size' on the free... | '6hr server storage (... | email | `dossier/debrid/cloudpipe.json` |
-| CoreHost | A USD 5 starting credit, not a free tier: t... | fails-quota | documented | not applicable: apps and their... | data persists while t... | email | `dossier/debrid/corehost.json` |
+| CoreHost | A USD 5 starting credit: the pricing page m... | fails-quota | documented | not applicable: apps and their... | data persists while t... | email | `dossier/debrid/corehost.json` |
 | DaoFile | Free downloads run through a capped 'free d... | fails-quota | documented | not published on the payment page | not published on the... | email | `dossier/debrid/daofile.json` |
 | DASAN | 'Try a Magnet, Torrent or NZB free. One fre... | fails-quota | documented | 500 MB per free job ('up to 500... | unverified: files are... | anonymous | `dossier/debrid/dasan.json` |
 | Deepbrid | Five files a day and a 1.2 GB maximum file... | fails-quota | documented | 1.2 GB per file generally; 300... | not applicable: no st... | email | `dossier/debrid/deepbrid-free.json` |

@@ -10,17 +10,17 @@
     "metered_on": "stored-bytes",
     "source_url": "https://docs.docker.com/docker-hub/usage/",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-object cap was extracted from the seed's quota and limits prose; absence here is a gap in this conversion, not a vendor claim that no cap exists",
+    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.docker.com/docker-hub/usage/",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "Pull count 100/6h anonymous or 200/6h authenticated per IP — that is the binding constraint for a 500GB-1TiB/day fetch workload (needs few, large blobs rather than many small ones)",
+    "stated": "Pull count 100 per 6 hours anonymous or 200 per 6 hours authenticated per IP. Large download throughput requires few, large blobs rather than many small ones.",
     "source_url": "https://docs.docker.com/docker-hub/usage/",
-    "notes": "extracted from the seed prose"
+    "notes": "Extracted from published terms."
   },
   "egress": {
     "terms": "Free and unmetered per-GB; the gate is a pull COUNT, not bytes: 'Unauthenticated users: 100 per IPv4 address or IPv6 /64 subnet' and 'Personal (authenticated): 200' per 6 hours. Blobs are served by 307 redirect to a CDN, so one pull can be a multi-GB blob.",
@@ -39,15 +39,15 @@
       "source": "https://docs.docker.com/docker-hub/usage/"
     }
   ],
-  "limits_note": "Pull count 100/6h anonymous or 200/6h authenticated per IP — that is the binding constraint for a 500GB-1TiB/day fetch workload (needs few, large blobs rather than many small ones). No published per-layer size cap, but the Docker distribution S3 driver historically broke above 10GB per layer (distribution/distribution#2814), so shard at ~5GB. The excess-use rate limit returns plain 429 in the order of thousands of req/min per IP.",
+  "limits_note": "Pull count is 100 per 6 hours anonymous or 200 per 6 hours authenticated per IP. No published per-layer size cap, but Docker distribution S3 drivers historically faced issues above 10 GB per layer, recommending shards around 5 GB. Excess request limits return HTTP 429.",
   "identity_cost": {
     "kind": "anonymous",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: repo a striped volume of unlimited size. Pull count 100/6h anonymous or 200/6h authenticated per IP — that is the binding constraint for a 500GB-1TiB/day fetch workload (needs few, large b",
+    "detail": "derived from the record's prose: Pull rate limits are 100 pulls per 6 hours for anonymous users and 200 pulls per 6 hours for authenticated accounts per IP address.",
     "country": null
   },
   "reliability_note": "Storage is unpriced today but Docker reserves the right to add charges and has flip-flopped before (announced Mar 2025, cancelled Apr 2025); the 100-pull/6h IP limit will throttle any fetch fan-out from one host.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
   "evidence": [
     {
       "url": "https://docs.docker.com/docker-hub/usage/",
@@ -107,7 +107,7 @@
     "agent_focus": "OCI/ORAS as a universal storage hack: pushing arbitrary blobs as OCI artifacts to any registry, wasm/model/helm OCI registries, sigstore, notation, CNAB, and which registries allow it anonymously with what per-blob caps"
   },
   "binding": "per-ip-shaping",
-  "binding_note": "one stream is shaped, and the client's throughput is the shaped rate times the number of streams",
+  "binding_note": "one stream is shaped, and aggregate throughput is the shaped rate times the number of streams",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z"
 }

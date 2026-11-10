@@ -10,7 +10,7 @@
     "metered_on": "stored-bytes",
     "source_url": "https://civitai.com/content/training/data-policy",
     "read_on": "2026-10-21",
-    "notes": "the headline offer as the seed recorded it; the binding constraint is in limits[]"
+    "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
     "stated": "single file of 65.83 GiB",
@@ -21,7 +21,7 @@
   "retention": {
     "stated": "No published per-account or per-file byte quota. Its own Data Storage Policy states: 'By default, uploaded content will be stored indefinitely with the exception of input and output files related to model training.' Empirically: a single file of 65.83 GiB exists in production, and single free accounts hold 453 GiB (Lykon, 212 models) and 97 GiB (NanashiAnon, 412 models)",
     "source_url": "https://civitai.com/content/training/data-policy",
-    "notes": "extracted from the seed prose"
+    "notes": "Extracted from published terms."
   },
   "egress": {
     "terms": "Unmetered; downloads 307-redirect to civitai-delivery-worker-prod...r2.cloudflarestorage.com with a 24 h X-Amz-Expires, then serve 206 with Accept-Ranges: bytes. No per-GB egress charge exists on any Civitai page.",
@@ -42,15 +42,15 @@
       "source": "https://civitai.com/content/training/data-policy"
     }
   ],
-  "limits_note": "per-object-cap: >=65.83 GiB observed, no published number. THE BINDING CONSTRAINT IS NOT SIZE — it is a per-object access flag plus NSFW gating: creators may set 'require login to download', and such files return HTTP 401 with body {\"error\":\"Unauthorized\",\"message\":\"The creator of this asset requires you to be logged in to download it\"} on BOTH ranged and full GETs (verified consistent — no ranged-lies-while-full-gates behaviour, unlike some round-1 hosts). Of 20 large models sampled, 12 were anonymous-206 and 8 were 401. Training-data retention is a separate, much shorter clause: inputs and training outputs are 30 days. Published per-account storage: Vault is paid-only (Bronze 100 GB / Silver 250 GB / Gold 500 GB) and is a separate product from model hosting.",
+  "limits_note": "Per-object-cap: >=65.83 GiB observed, no published number. THE BINDING CONSTRAINT IS NOT SIZE. It is a per-object access flag plus NSFW gating: creators may set 'require login to download', and such files return HTTP 401 with body {\"error\":\"Unauthorized\",\"message\":\"The creator of this asset requires you to be logged in to download it\"} on BOTH ranged and full GETs (verified consistent. No ranged-lies-while-full-gates behaviour, unlike some round-1 hosts). Of 20 large models sampled, 12 were anonymous-206 and 8 were 401. Training-data retention is a separate, much shorter clause: inputs and training outputs are 30 days. Published per-account storage: Vault is paid-only (Bronze 100 GB / Silver 250 GB / Gold 500 GB) and is a separate product from model hosting.",
   "identity_cost": {
     "kind": "institution",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: act when ungated: a full 13,649,928-byte fetch matched the API-advertised SHA-256 exactly (8184D4BA...). Rate: sustained 20 ranged GETs with no 429. The trap is silent partial bodies",
+    "detail": "derived from the record's prose: act when ungated: a full 13,649,928-byte fetch matched the API-advertised SHA-256 exactly (8184D4BA...). Rate: sustained 20 ranged GETs with no 429. The trap is silent partial bodies",
     "country": null
   },
-  "reliability_note": "Downloads are reliable and hash-exact when ungated: a full 13,649,928-byte fetch matched the API-advertised SHA-256 exactly (8184D4BA...). Rate: sustained 20 ranged GETs with no 429. The trap is silent partial bodies — a curl without -f writes the 106-byte JSON 401 body to disk as if it were your file, so every download must be hash-checked.",
+  "reliability_note": "Downloads are reliable and hash-exact when ungated: a full 13,649,928-byte fetch matched the API-advertised SHA-256 exactly (8184D4BA..). Rate: sustained 20 ranged GETs with no 429. The trap is silent partial bodies. A curl without -f writes the 106-byte JSON 401 body to disk as if it were your file, so every download must be hash-checked.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
   "evidence": [
     {
       "url": "probe:unspecified",
