@@ -96,25 +96,25 @@ Exit codes follow [`../README.md`](../README.md): 0 done, 1 a defect or a refusa
 
 ## The rules
 
-Counts measured on 2026-10-29 at the commit this table was last changed in. They rot: `scripts/rq check` prints
+Counts measured on 2026-11-10 at commit 19d5dd2d. They rot: `scripts/rq check` prints
 the counts of today. A rule fires only on stated values: a defaulted placeholder is not a claim, so it never
 makes a contradiction.
 
 | rule | severity | name | fires when | count |
 |---|---|---|---|---|
-| C01 | error | qualifies-no-free-tier | a qualifying verdict while the record's own free tier says there is none | 184 |
-| C03 | error in `storage` and `netdisk-pan`, warn elsewhere | qualifies-no-probe | verdict `qualifies` with no probe evidence | 167 (58 errors) |
-| C04 | warn | duplicate-disagreement | two records of one topic, domain and name disagree on verdict or a stated identity; two records whose `tier` differs are two offers and never a pair | 191 |
-| C07 | error | unit-system | `free_tier.unit` names one unit system and the stated text uses only the other | 314 |
+| C01 | error | qualifies-no-free-tier | a qualifying verdict while the record's own free tier says there is none | 179 |
+| C03 | error in `storage` and `netdisk-pan`, warn elsewhere | qualifies-no-probe | verdict `qualifies` with no probe evidence | 163 (54 errors) |
+| C04 | warn | duplicate-disagreement | two records of one topic, domain and name disagree on verdict or a stated identity; two records whose `tier` differs are two offers and never a pair | 119 |
+| C07 | error | unit-system | `free_tier.unit` names one unit system and the stated text uses only the other | 303 |
 | C09 | error | binding-not-in-limits | `binding` names a kind that no `limits[]` row has | 37 |
-| C10 | error | evidence-after-verified | an evidence row is dated after `verified_at` | 28 |
-| C14 | warn | source-not-in-evidence | `free_tier.source_url` is not among the evidence URLs | 189 |
-| C15 | error | price-no-iso-currency | a price with a number and no ISO 4217 code | 113 |
-| C16 | info | provenance-flags | evidence with a synthetic date or a placeholder probe | 993 |
-| C17 | warn | fails-egress-not-assessed | verdict `fails-egress` while egress was never assessed | 68 |
-| C18 | error | qualifies-gated-identity | verdict `qualifies` behind an institution, a national ID or a country phone | 16 |
-| C19 | error | measured-no-probe | `confidence: measured` with no probe | 14 |
-| C20 | error | narrative-in-field | process narrative or personal wording in a record field, by the public projection rules of class `narrative` or `personal`; a rule of class `pointer` (a path of a private file, such as a stored copy in `sources/p/`) is withheld from the public build and not counted | 18,614 |
+| C10 | error | evidence-after-verified | an evidence row is dated after `verified_at` | 15 |
+| C14 | warn | source-not-in-evidence | `free_tier.source_url` is not among the evidence URLs | 171 |
+| C15 | error | price-no-iso-currency | a price with a number and no ISO 4217 code | 93 |
+| C16 | info | provenance-flags | evidence with a synthetic date or a placeholder probe | 992 |
+| C17 | warn | fails-egress-not-assessed | verdict `fails-egress` while egress was never assessed | 16 |
+| C18 | error | qualifies-gated-identity | verdict `qualifies` behind an institution, a national ID or a country phone | 14 |
+| C19 | error | measured-no-probe | `confidence: measured` with no probe | 11 |
+| C20 | error | narrative-in-field | process narrative or personal wording in a record field, by the public projection rules of class `narrative` or `personal`; a rule of class `pointer` (a path of a private file, such as a stored copy in `sources/p/`) is withheld from the public build and not counted | 2,811 |
 | C21 | error | evidence-needs-capture | an `http` evidence row dated 2026-10-28 or later, or a `probe:` row dated 2026-10-30 or later, without a capture that holds its quote | 0 |
 
 ⭐ **Errors ratchet.** The gate (`contradictions`, through `scripts/rq check --gate`) fails only on an error
