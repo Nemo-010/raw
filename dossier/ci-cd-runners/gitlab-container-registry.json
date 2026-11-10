@@ -12,7 +12,7 @@
     "metered_on": "stored-bytes"
   },
   "per_object_cap": {
-    "stated": "no separate published cap; storage above the namespace's purchased amount is billed",
+    "stated": "no separate published cap: the container registry is not included in the project storage limit, and the page publishes no cap for it",
     "bytes": null,
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/"
   },
@@ -49,7 +49,7 @@
     "detail": "a GitLab account",
     "country": null
   },
-  "reliability_note": "no suspension, throttle or data-loss event is recorded on the pages read",
+  "reliability_note": "the token endpoint answers a pull scope requested without a credential with a 2,596-byte token JSON",
   "confidence": "documented",
   "confidence_note": "the storage-quota doc was read today and states the exclusion.",
   "evidence": [
@@ -57,10 +57,45 @@
       "url": "https://docs.gitlab.com/user/storage_usage_quotas/",
       "date": "2026-10-22",
       "proved": "the container registry is excluded from the namespace repository storage quota"
+    },
+    {
+      "url": "probe:https://gitlab.com/jwt/auth?service=container_registry&scope=repository:gitlab-org/gitlab-runner:pull",
+      "date": "2026-11-09",
+      "proved": "the token endpoint answers a pull scope requested without a credential with a 2,596-byte token JSON, which is the fact the reliability note states",
+      "capture": "sha256:f57e9af954e4634cc0ebf398ac01af53e9d4b42bcfca2be26719f3bff91d12fd",
+      "quote": "\"status\": 200,\n  \"bytes\": 2596,"
+    },
+    {
+      "url": "probe:https://registry.gitlab.com/v2/gitlab-org/gitlab-runner/manifests/alpine-v16.11.0",
+      "date": "2026-11-09",
+      "proved": "the token fetches a real image index: 200 and 3,117 bytes",
+      "capture": "sha256:01451980c94562be9c5b5d017a3edd3371df93738efc5caf5da0d73a285c793c",
+      "quote": "\"status\": 200,\n  \"bytes\": 3117,"
+    },
+    {
+      "url": "probe:https://registry.gitlab.com/v2/gitlab-org/gitlab-runner/tags/list",
+      "date": "2026-11-09",
+      "proved": "the namespace exists: the anonymous token lists its tags, so the manifest pull answered a real project",
+      "capture": "sha256:a2dbfb2e43d9d9f53b86ca50cdee4b53901999daba2139956a29eb03b8d7704f",
+      "quote": "\"status\": 200,\n  \"bytes\": 1145,"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+      "date": "2026-11-09",
+      "proved": "the storage-quota page states that the container registry is outside the project storage limit; the Free limit is 10 GiB of repository and LFS storage",
+      "capture": "sha256:32cb9b13bd82d6395449b56d639b10c9214fbcf89a1a5fa1493dad8fe2e46c49",
+      "quote": "The container registry, package registry, and build artifacts are not included in the limit."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+      "date": "2026-11-09",
+      "proved": "the storage-quota page excludes the container registry from the project storage limit and publishes no cap for the registry itself",
+      "capture": "sha256:32cb9b13bd82d6395449b56d639b10c9214fbcf89a1a5fa1493dad8fe2e46c49",
+      "quote": "The container registry, package registry, and build artifacts are not included in the limit."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-22T03:05:00.000Z",
+  "verified_at": "2026-11-09T12:09:21.557Z",
   "price_per_tb_month": null,
   "history": [],
   "notes": "An exclusion is not an allowance. The doc says the registry does not count against 10 GiB; it does not say the registry is free, and no separate free figure is published.",

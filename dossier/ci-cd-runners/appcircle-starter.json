@@ -31,9 +31,9 @@
     "source_url": "https://appcircle.io/pricing"
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "a hosted mobile CI/CD service with build, signing, distribution and store-publishing modules; the pricing page names no API or CLI",
+  "interface_detail": "a hosted mobile CI/CD service with build, signing, distribution and store-publishing modules, and a REST API at api.appcircle.io authenticated by a Personal Access Key or an API Key, with the API reference published as an OpenAPI document",
   "tooling": "builds for iOS, Android, React Native and Flutter on Apple Silicon machines, with a clean isolated environment for every build",
   "chaining": "not stated",
   "limits": [
@@ -57,7 +57,7 @@
   "binding_note": "the 20-builds-a-month pool fails first (at most 600 build minutes a month, which is a compute pool counted in builds); the schema has no term for a build-count or compute-time pool, so request-rate is the nearest",
   "identity_cost": {
     "kind": "email",
-    "detail": "unverified: the pricing page and the home page do not state what registration asks for, and the sign-up page was not readable; email is the lowest kind and is not read from a source",
+    "detail": "registration is by email address and password at my.appcircle.io, signing up with the Sign up with Company E-mail button and then verifying the address; common and disposable email domains cannot be used, so a company address is required. No card and no phone number is named on the registration page",
     "country": null
   },
   "reliability_note": "no reliability event recorded",
@@ -112,10 +112,38 @@
       "proved": "the pricing page answered HTTP 200 on 2026-11-04",
       "capture": "sha256:388447d86c9801dc66dbf221897f3ee7e876e4431df0bdc09b52d218b12047ae",
       "quote": "\"status\": 200"
+    },
+    {
+      "url": "https://docs.appcircle.io/account/my-account/sign-up-login",
+      "date": "2026-11-09",
+      "proved": "registration is by email with verification, and common or disposable email domains are refused, so a company address is required",
+      "capture": "sha256:2712f4bd507abe82e4c50f3a6a4c5ef02c7a592cf5d2b9648f67909254b5a77f",
+      "quote": "You cannot use common and disposable email domains for registration; instead, please register using your company email account."
+    },
+    {
+      "url": "https://docs.appcircle.io/appcircle-api/api-authentication",
+      "date": "2026-11-09",
+      "proved": "the service publishes a REST API with personal-access-key and API-key authentication, so its interface is not unknown",
+      "capture": "sha256:b4385a4292cc2d26cb98b63177f3ae3d5249b674f4b6fb4817c015d1b2e9c74c",
+      "quote": "The Appcircle API supports authentication with a *Personal Access Key*."
+    },
+    {
+      "url": "https://docs.appcircle.io/appcircle-api/api-authentication",
+      "date": "2026-11-09",
+      "proved": "the API base is api.appcircle.io and a bearer token from the auth endpoint authorises a call",
+      "capture": "sha256:b4385a4292cc2d26cb98b63177f3ae3d5249b674f4b6fb4817c015d1b2e9c74c",
+      "quote": "curl -X GET \"https://api.appcircle.io/distribution/v2/profiles\" -H  \"accept: application/json\" -H  \"Authorization: Auth-Token-Goes-Here\""
+    },
+    {
+      "url": "https://appcircle.io/pricing",
+      "date": "2026-11-09",
+      "proved": "the Starter plan is still labelled Always Free with 20 builds a month, 1 concurrent build and a 30 minute maximum per build",
+      "capture": "sha256:b930e55ffa7115e5bb214f95e4bce2b1c4e4609203253450279036d04b0bb206",
+      "quote": "20 builds per month"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-04T06:00:42.533Z",
+  "verified_at": "2026-11-09T12:52:26.539Z",
   "price_per_tb_month": null,
   "history": [],
   "notes": "a mobile-only CI service: builds run on Apple Silicon machines, so the Starter pool is also a route to macOS build time. 20 builds of at most 30 minutes is a ceiling of 600 build minutes a month.",
