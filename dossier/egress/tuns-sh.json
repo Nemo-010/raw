@@ -55,7 +55,7 @@
   },
   "reliability_note": "UDP forwarding requires a tun interface and root privileges on the host system; unprivileged containers cannot create it.",
   "confidence": "documented",
-  "confidence_note": "Protocol forwarding features and pico+ pricing tiers are verified from official documentation.",
+  "confidence_note": "A free tuns allocation would make this the best UDP ingress in the corpus. The pico+ page lists tuns under 'EVERYTHING IN STARTER, PLUS:' with no free mention.",
   "evidence": [
     {
       "url": "https://tuns.sh/pricing",
@@ -72,7 +72,7 @@
   "verified_at": "2026-10-23T00:00:00.000Z",
   "price_per_tb_month": "USD 2/month billed yearly",
   "history": [],
-  "notes": "Provides raw public UDP and TCP port forwarding over SSH. Forwarding requires root access to manage local tun/tap network interfaces.",
+  "notes": "The only entry in this sweep that documents a raw public UDP port without WireGuard tooling, and it is behind USD 2/month. Two caveats from the same page: the client side needs root ('This needs to be done as root', 'sudo ssh -w 0:0'), and the hard mode uses a tap interface the vendor says it does not process ARP for.",
   "extras": {
     "wg_path": "inside-udp",
     "wg_detail": "A public UDP port is mapped to a local UDP port over an SSH tun interface: 'sudo ssh -w 0:0 tuns.sh udp-forward=10000:local-ip:5553' then 'nc -u tuns.sh 10000'. A WireGuard listener on the local port is reachable at tuns.sh:10000, so this is a udp port forward rather than an overlay.",

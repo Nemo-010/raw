@@ -629,7 +629,7 @@ breaking change.
 | h3llo.cloud year-free pac... | A withdrawn offer that was the largest free... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | country-phone | `dossier/compute/h3llo-cloud-year-free-package.json` |
 | Haidian District Elastic | District government guideline, verbatim: 'T... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | national-id | `dossier/compute/haidian-district-elastic.json` |
 | Halluminate | no free tier published | paid-only | documented | not stated | not stated | email | `dossier/compute/halluminate.json` |
-| harvis.dev | Harvis.dev provides a perpetual free allowa... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | anonymous | `dossier/compute/harvis-dev.json` |
+| harvis.dev | Batch 1 recorded harvis.dev as a perpetual... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | anonymous | `dossier/compute/harvis-dev.json` |
 | hashbang | a free shared shell account; per-user limit... | qualifies-with-caveat | documented | not applicable: the unit is a m... | 30 d | email | `dossier/compute/hashbang.json` |
 | Hashnix.Club | 'Hashnix is a non-commercial, free to join... | qualifies-with-caveat | documented | not applicable: the unit is a h... | not stated: no inacti... | email | `dossier/compute/hashnix.json` |
 | Hatchet | no credit card, and the first 100,000 runs... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/hatchet-run.json` |
@@ -698,7 +698,7 @@ breaking change.
 | IBM Cloud | The free page states: 'You get credit for y... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/ibm-cloud.json` |
 | IBM Cloud VPC | no free tier: new VPC clients get 70% off f... | trial-only | documented | not stated | not stated | card | `dossier/compute/ibm-cloud-vpc.json` |
 | IBM LinuxONE Community | A free virtual machine on real IBM LinuxONE... | trial-only | documented | not applicable: the unit is a m... | 120 d | email | `dossier/compute/ibm-linuxone-community.json` |
-| IBM Quantum Open | The Open Plan provides 10 minutes of QPU ru... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/ibm-quantum-open.json` |
+| IBM Quantum Open | Batch 1 recorded the Open Plan at 10 minute... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/ibm-quantum-open.json` |
 | IDCloudHost | No free VM. IDCloudHost gives a bonus balan... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/idcloudhost.json` |
 | IDreg Net | No free tier. NAT-1 is Rp 8,500.00 a month:... | qualifies | documented | not applicable: the unit is a m... | 2 d | email | `dossier/compute/idreg-nat-1.json` |
 | iExec | TEE compute on workerpools paid per executi... | fails-quota | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/iexec.json` |
@@ -880,7 +880,7 @@ breaking change.
 | netcup | no free tier; VPS 1000 G12.5 is EUR 14.50 a... | paid-only | documented | not applicable: the unit is a m... | the disk persists for... | card | `dossier/compute/netcup-vps-1000.json` |
 | netcup | no free tier; the smallest listed VPS is 'V... | paid-only | documented | not applicable: the unit is a m... | the disk persists for... | card | `dossier/compute/netcup-vps-500-g12-5.json` |
 | netcup | no free tier; VPS 2000 G12.5 is EUR 26.92 a... | qualifies-with-caveat | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/netcup-windows.json` |
-| Netlen | no free tier; the entry plan is 'VPS - 1...... | qualifies | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/netlen-vps-2.json` |
+| Netlen | no free tier; the entry plan is 'VPS - 1 ..... | qualifies | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/netlen-vps-2.json` |
 | Netlify | Free at USD 0 forever with a 300-credit mon... | qualifies-with-caveat | documented | not stated on the pricing page;... | not stated on the pri... | email | `dossier/compute/netlify.json` |
 | Netlify Open Source | 'Our Open Source plan includes: 10,000 cred... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/netlify-open-source.json` |
 | NetMind | No amount is stated on the live page: https... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/netmind.json` |
@@ -905,7 +905,7 @@ breaking change.
 | NVIDIA DGX Cloud | No self-serve free tier. The product's own... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/nvidia-dgx-cloud.json` |
 | NVIDIA Inception | A free program with no application fees, de... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/nvidia-inception.json` |
 | NVIDIA LaunchPad | Withdrawn. The 2024-02-29 capture states 'N... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/nvidia-launchpad.json` |
-| O'Shaughnessy Fellowship | '1 Year. Up to $100,000.' Published terms s... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/o-shaughnessy-fellowship.json` |
+| O'Shaughnessy Fellowship | '1 Year. Up to $100,000.' The site states '... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/o-shaughnessy-fellowship.json` |
 | OakHost | no free tier: dedicated Mac mini hosting fr... | paid-only | documented | not stated | not stated | email | `dossier/compute/oakhost.json` |
 | oblako.kz | A free test server for up to 5 days for leg... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | any-phone | `dossier/compute/oblako-kz.json` |
 | Oblivus | no free GPU tier is published; on-demand ra... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/oblivus.json` |
@@ -941,7 +941,7 @@ breaking change.
 | Oracle Cloud Free Trial (... | Oracle Cloud Free Tier allows you to sign u... | trial-only | documented | not applicable: the offer is a... | 30 d | card | `dossier/compute/oracle-cloud-trial.json` |
 | Oracle Cloud Always Free | up to two VM.Standard.E2.1.Micro instances,... | qualifies-with-caveat | documented | 200 GB of combined boot and blo... | 7 d | card | `dossier/compute/oracle-cloud-vpn-node.json` |
 | Oracle Startup Growth | Oracle may provide selected participants wi... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/oracle-startup-growth.json` |
-| Ori Global Cloud | No free tier or self-serve signup. Ori Indu... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/ori-global-cloud.json` |
+| Ori Global Cloud | no free lane and no self-serve signup. Ori... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/ori-global-cloud.json` |
 | orkestr Sandboxes | free to start with no credit card, on per-s... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/orkestr.json` |
 | OSPool | "The OSPool is a source of computing capaci... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/ospool.json` |
 | Outreachy | 'Paid - $7,000 USD total internship stipend... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/outreachy.json` |
@@ -1020,7 +1020,7 @@ breaking change.
 | Remote Browser | 1 browser-hour a month on Free with no card... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/remote-browser.json` |
 | RemoteHost | Starter is USD 20 per month and includes 61... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/remotehost.json` |
 | Render | A Free web service with an ephemeral filesy... | qualifies-with-caveat | documented | no per-object cap; the free tie... | the filesystem is eph... | email | `dossier/compute/render.json` |
-| Render Hobby | Hobby plan includes 5 GB of monthly outboun... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/render-hobby.json` |
+| Render Hobby | Batch 1 recorded Render's Hobby plan at 5 G... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/render-hobby.json` |
 | Render Network | The credit offer is withdrawn. Page quoted:... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/render-network.json` |
 | RentaMac (rentamac.io) | no free tier: continuous 24/7 Mac access bi... | paid-only | documented | not stated | not stated | email | `dossier/compute/rentamac.json` |
 | Replicas | $100 of free usage with no card required | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/replicas.json` |
@@ -1039,7 +1039,7 @@ breaking change.
 | Runcrate | no free GPU tier is published; the live rat... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/runcrate.json` |
 | RunKit | a Node.js notebook in the browser with ever... | paid-only | documented | not stated | not stated | email | `dossier/compute/runkit.json` |
 | Runloop | 'Start Your Free Pro Trial', 'No credit car... | trial-only | documented | No devbox shape is published on... | '100 GB Free Storage'... | email | `dossier/compute/runloop.json` |
-| RunMyJob | RunMyJob rebranded to RunJob at runjob.eu,... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/runmyjob.json` |
+| RunMyJob | Batch 1 recorded RunMyJob as a perpetual fr... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/runmyjob.json` |
 | RunPod | no free GPU tier is published; the on-deman... | paid-only | documented | not applicable: the unit is a m... | network storage is bi... | card | `dossier/compute/runpod.json` |
 | Runsite | The free tier is static sites only: 'Static... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/runsite.json` |
 | Runta | $50 trial balance with no payment method, c... | trial-only | documented | not stated | not stated | email | `dossier/compute/runta.json` |
@@ -1164,7 +1164,7 @@ breaking change.
 | SURF | A Small Compute application can request "up... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/surf.json` |
 | Surfsky | free credit at signup with no card, 10 conc... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/surfsky.json` |
 | SwedenDedi | NVMe SSD VPS 2 GB at EUR 10.00 per month in... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/swedendedi.json` |
-| Swiss AI Initiative | Small project grants of 'typically... betwe... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/swiss-ai-initiative.json` |
+| Swiss AI Initiative | Small project grants of 'typically ... betw... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/swiss-ai-initiative.json` |
 | Tabnine | no free lane and no self-serve price: tabni... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/tabnine.json` |
 | tama | no free tier: machines from 1 to 32 vCPU an... | paid-only | documented | not stated | not stated | email | `dossier/compute/tama.json` |
 | TAPGPU (listed as Stabili... | No free tier stated; GPU instances are bill... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | country-phone | `dossier/compute/tapgpu.json` |
@@ -1188,7 +1188,7 @@ breaking change.
 | Texel.ai | no price is published: the home page descri... | paid-only | documented | not stated | not stated | email | `dossier/compute/texel-ai.json` |
 | The Catalyst | A ten-week in-person incubation in Riyadh f... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/the-catalyst.json` |
 | The Eigenprize | 'No-strings-attached prize money for talent... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/the-eigenprize.json` |
-| the.hosting | Homepage publishes entry pricing: 'Uniform... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | national-id | `dossier/compute/the-hosting.json` |
+| the.hosting | The selling brand publishes one price floor... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | national-id | `dossier/compute/the-hosting.json` |
 | THE.Hosting review-for-da... | 'Mevcut VPS'yi en az 1 ay i in sipari edin... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/the-hosting-review-for-days-scheme.json` |
 | The Vibe Hosting | A root Ubuntu container on an HTTPS subdoma... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | anonymous | `dossier/compute/the-vibe-hosting.json` |
 | TheAI Cloud | No free tier and no single-GPU rental: whol... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/theai-cloud.json` |

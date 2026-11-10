@@ -20,7 +20,7 @@
   "retention": {
     "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://ttl.sh/",
-    "notes": "No retention clause documented in available terms."
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
     "terms": "Unmetered and anonymous: blobs are 307-redirected to a presigned S3 URL (s3.us-east-1.storage.sh, X-Amz-Expires=1200), so bytes come off object storage, not the registry host. Range requests work.",
@@ -40,15 +40,15 @@
       "source": "https://ttl.sh/"
     }
   ],
-  "limits_note": "Advertised maximum TTL is 24 hours (:5m, :1h, :6h, :24h), defaulting to 1 hour. No per-blob size cap documented: testing confirmed monolithic uploads of 256 MB and 1.5 GB without chunking. Observed upload speed reached ~11 MB/s. Catalog endpoint is restricted by HTTP 401 while tag listings remain open.",
+  "limits_note": "TTL max 24h advertised (:5m/:1h/:6h/:24h), default 1h. No per-blob size cap found: I pushed 256MB and then 1.5GB monolithically with zero chunking and both were accepted (202 then 201). Upload is slow (~11 MB/s observed: 1.5GB in 2m11s), so throughput is the practical per-connection cap. _catalog is blocked by nginx (401), tags/list is open.",
   "identity_cost": {
     "kind": "anonymous",
-    "detail": "unverified: identity requirements not documented",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: No account, no quota. \"Free forever. Zero sign-up. Push any OCI artifact with a TTL.\" Storage is bounded only by the TTL, max adve",
     "country": null
   },
   "reliability_note": "Expiry is best-effort: the deployment repo states 'Tag expiry is handled separately and is not yet wired up in this repo', and open issue #151 reports images not expiring. Data WILL vanish at TTL; do not treat as durable. Intermittent connect timeouts observed from this network.",
   "confidence": "reported",
-  "confidence_note": "Unverified: carried from historical research records without live verification. A first-party page read confirms documentation.",
+  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [
     {
       "url": "https://ttl.sh/",

@@ -1,14 +1,14 @@
 {
   "topic": "egress",
   "slug": "ajam-ssh-relay",
-  "provider": "tcp.ssh.relay.sshrelay.net",
-  "url": "https://tcp.ssh.relay.sshrelay.net/",
+  "provider": "tcp.ssh.relay.ajam.dev",
+  "url": "https://tcp.ssh.relay.ajam.dev/",
   "category": "relay (WebSocket to raw TCP, self-operated deployment)",
   "free_tier": {
     "stated": "no price is published for the relay itself. Forward tokens are self-minted with no account, and reverse pairs are self-created with no account, so a caller pays nothing to use it. Its own cost is the Cloudflare Worker, Durable Object and Workers VPC bill of the account that deploys it, and that figure is not published",
     "unit": "none",
     "metered_on": "wall-clock",
-    "source_url": "https://tcp.ssh.relay.sshrelay.net/llms-full.txt",
+    "source_url": "https://tcp.ssh.relay.ajam.dev/llms-full.txt",
     "read_on": "2026-10-22",
     "notes": "the specification closes with 'Cost: check current Cloudflare Workers, Durable Objects, and Workers VPC pricing before changing scale assumptions', which is a documented absence of a cost figure"
   },
@@ -16,59 +16,59 @@
     "stated": "64 MiB per session in both directions combined, enforced by a close with code 1009 and reason 'session byte cap'",
     "bytes": 67108864,
     "notes": "measured: a 67,107,029-byte download stopped at 64.0 MiB with close 1009 'session byte cap' after 6.66 s",
-    "source_url": "https://tcp.ssh.relay.sshrelay.net/llms-full.txt"
+    "source_url": "https://tcp.ssh.relay.ajam.dev/llms-full.txt"
   },
   "retention": {
     "stated": "a forward token lives at most 72 hours from minting; a reverse pair and its three tokens live at most 72 hours. Expiry is checked when a session is established, not per frame",
     "days": 3,
     "notes": "Forward token lifetime and reverse pair lifetime both measured at 72.0 hours on 2026-10-22.",
-    "source_url": "https://tcp.ssh.relay.sshrelay.net/llms-full.txt"
+    "source_url": "https://tcp.ssh.relay.ajam.dev/llms-full.txt"
   },
   "egress": {
     "terms": "the caller's traffic leaves through the relay's own address, not the caller's. Six colos answered with six distinct addresses, all inside Cloudflare's 104.28.0.0/16. Every session took the vpc road",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
-    "source_url": "https://tcp.ssh.relay.sshrelay.net/llms-full.txt"
+    "source_url": "https://tcp.ssh.relay.ajam.dev/llms-full.txt"
   },
   "interface": [
     "cli",
     "rest"
   ],
-  "tooling": "Any RFC 6455 client. Forward path: wss://<host>/connect/<target-host>/<port>. Reverse path: wss://<host>/v1/node/<name> for the node and wss://<host>/v1/connect/<name> for the remote connection.",
+  "tooling": "any RFC 6455 client: the forward path is wss://<host>/connect/<target-host>/<port>; the reverse path is wss://<host>/v1/node/<name> for the node and wss://<host>/v1/connect/<name> for the operator. dropssh v0.2.3 is the client the seed used",
   "interface_detail": "forward: WebSocket upgrade on /connect/<host>/<port> with a forward token in X-Relay-Token, then binary frames carry raw TCP bytes both ways. reverse: /v1/pair mints a name and three tokens, /v1/node/<name> for the node, /v1/connect/<name> for the operator, /v1/status/<name> and POST /v1/stop/<name> for control",
-  "endpoint": "https://tcp.ssh.relay.sshrelay.net/v1/mint",
+  "endpoint": "https://tcp.ssh.relay.ajam.dev/v1/mint",
   "chaining": "the sealed-sandbox reach-in: a host that cannot bind a port dials out to /v1/node, an operator dials /v1/connect, and the pair is joined by a 128-bit name. It composes after a sandbox whose inbound policy is unpublished, and it does not compose with bulk serving because 64 MiB per session is the cap.",
   "limits": [
     {
       "kind": "per-object-cap",
       "value": "64 MiB per session, both directions combined; the relay closes with 1009 'session byte cap'",
-      "source": "probe:https://tcp.ssh.relay.sshrelay.net/connect/ftp.funet.fi/80"
+      "source": "probe:https://tcp.ssh.relay.ajam.dev/connect/ftp.funet.fi/80"
     },
     {
       "kind": "per-object-cap",
       "value": "262,144 bytes per WebSocket frame on the forward path, and 65,568 bytes per operator frame on the reverse path (32-byte session id plus 65,536 payload)",
-      "source": "https://tcp.ssh.relay.sshrelay.net/llms-full.txt"
+      "source": "https://tcp.ssh.relay.ajam.dev/llms-full.txt"
     },
     {
       "kind": "retention-clamped",
       "value": "a session caps at 720 minutes and 64 MiB; an idle session closes after 180,000 ms of payload inactivity and transport keepalives do not reset that clock",
-      "source": "https://tcp.ssh.relay.sshrelay.net/llms-full.txt"
+      "source": "https://tcp.ssh.relay.ajam.dev/llms-full.txt"
     },
     {
       "kind": "request-rate",
       "value": "120 admissions per minute from one address, applied only to unauthenticated forward WebSocket attempts and to public mint and pair creation. Authenticated sessions, authenticated reverse requests and diagnostics do not share that bucket",
-      "source": "https://tcp.ssh.relay.sshrelay.net/llms-full.txt"
+      "source": "https://tcp.ssh.relay.ajam.dev/llms-full.txt"
     },
     {
       "kind": "request-rate",
       "value": "reverse path only: 1 MiB of queued bytes per receiver, past which the relay drops the undelivered frame and closes 1011 'relay backpressure'",
-      "source": "https://tcp.ssh.relay.sshrelay.net/llms-full.txt"
+      "source": "https://tcp.ssh.relay.ajam.dev/llms-full.txt"
     },
     {
       "kind": "pull-count",
       "value": "one name holds one node socket: a second node connection on the same name is refused with HTTP 409 before accept",
-      "source": "https://tcp.ssh.relay.sshrelay.net/llms-full.txt"
+      "source": "https://tcp.ssh.relay.ajam.dev/llms-full.txt"
     }
   ],
   "limits_note": "The 64 MiB session cap and 720-minute session life were measured or read in documentation on 2026-10-22. The 180,000 ms idle close was measured at 180.7 s. At 9.605 MiB/s sustained, moving 1 TiB in 24 hours requires 16,384 sessions of 64 MiB, or one new session every 5.3 seconds. The 64 MiB cap applies per session.",
@@ -84,67 +84,67 @@
   "confidence_note": "the version, the 37-entry pool, the policy block, the six per-colo egress addresses, the forward banner, the 64 MiB session cap, the 180 s idle close, the 72 h token life and both transports were measured from this host on 2026-10-22. The 720-minute session cap and the 120/minute admission brake are documented on the relay's own specification and were not measured, so the record's weakest rung is measured for the fields the verdict rests on and documented for those two",
   "evidence": [
     {
-      "url": "probe:https://tcp.ssh.relay.sshrelay.net/health?detail=1",
+      "url": "probe:https://tcp.ssh.relay.ajam.dev/health?detail=1",
       "date": "2026-10-22",
       "proved": "200, 1,436 bytes, sha256 31c2de2d146b2c488b2a382e1789b05ef2ec894bd95499cb315f4f802bb5b320: version 2026-10-03-r2, a 37-entry pool, reverse enabled, and policy token_required true with max_frame_bytes 262144"
     },
     {
-      "url": "probe:https://tcp.ssh.relay.sshrelay.net/v1/mint",
+      "url": "probe:https://tcp.ssh.relay.ajam.dev/v1/mint",
       "date": "2026-10-22",
       "proved": "200 in 160 bytes: a token of the form ephm1.<exp>.forward.<mac> whose expires field was 2026-10-25T03:58:12Z, which is 72.0 hours after the mint"
     },
     {
-      "url": "probe:https://tcp.ssh.relay.sshrelay.net/v1/pair",
+      "url": "probe:https://tcp.ssh.relay.ajam.dev/v1/pair",
       "date": "2026-10-22",
       "proved": "200 in 312 bytes: name p-22fee8f06aba97d626d62af75494c5d2 and node, connect and stop tokens of 64 hexadecimal characters each, expiring 2026-10-25T04:04:15Z, which is 72.0 hours after the call. No account was created"
     },
     {
-      "url": "probe:https://tcp.ssh.relay.sshrelay.net/trace?egress=1&format=text",
+      "url": "probe:https://tcp.ssh.relay.ajam.dev/trace?egress=1&format=text",
       "date": "2026-10-22",
       "proved": "seven colos, seven distinct observed egress addresses: default 104.28.196.82, aws:eu-central-1 104.28.197.9, gcp:us-central1 104.28.248.184, aws:us-east-1 104.28.196.79, aws:eu-west-3 104.28.211.192, aws:ap-south-1 104.28.200.92, azure:westeurope 104.28.219.140, all address_family 6 and all egress.road vpc"
     },
     {
-      "url": "probe:https://tcp.ssh.relay.sshrelay.net/trace?target=github.com:22&banner=1&format=text",
+      "url": "probe:https://tcp.ssh.relay.ajam.dev/trace?target=github.com:22&banner=1&format=text",
       "date": "2026-10-22",
       "proved": "the relay dialed github.com:22 at 140.82.121.3 over the vpc road, connect 0 ms, first byte 255 ms, 18 bytes seen, verdict live, banner SSH-2.0-6615c807"
     },
     {
-      "url": "probe:wss://tcp.ssh.relay.sshrelay.net/connect/example.com/80",
+      "url": "probe:wss://tcp.ssh.relay.ajam.dev/connect/example.com/80",
       "date": "2026-10-22",
       "proved": "a raw WebSocket client that is not dropssh opened the forward session, sent HTTP/1.1 and read 1,010 bytes back in three binary frames beginning 'HTTP/1.1 200 OK', then close 1000 'target closed'. The forward path delivers the client's own bytes, not only the target's greeting"
     },
     {
-      "url": "probe:wss://tcp.ssh.relay.sshrelay.net/connect/github.com/22",
+      "url": "probe:wss://tcp.ssh.relay.ajam.dev/connect/github.com/22",
       "date": "2026-10-22",
       "proved": "the target's 18-byte SSH banner arrived before any client byte, then the 15-byte client identification string drew 824 bytes of key-exchange payload, so a whole SSH handshake is deliverable in both directions over the forward path"
     },
     {
-      "url": "probe:wss://tcp.ssh.relay.sshrelay.net/connect/ftp.funet.fi/80",
+      "url": "probe:wss://tcp.ssh.relay.ajam.dev/connect/ftp.funet.fi/80",
       "date": "2026-10-22",
       "proved": "a 67,107,029-byte download stopped at exactly 64.0 MiB with close 1009 'session byte cap' after 6.66 s, which is 9.605 MiB/s sustained to the cap. This is the measurement of the documented per-session byte cap"
     },
     {
-      "url": "probe:wss://tcp.ssh.relay.sshrelay.net/connect/github.com/22",
+      "url": "probe:wss://tcp.ssh.relay.ajam.dev/connect/github.com/22",
       "date": "2026-10-22",
       "proved": "a forward session held open with no payload after the greeting closed after 180.7 s with close 1001 'idle timeout', which is the documented 180,000 ms idle close measured for the first time"
     },
     {
-      "url": "probe:wss://tcp.ssh.relay.sshrelay.net/v1/node/p-22fee8f06aba97d626d62af75494c5d2",
+      "url": "probe:wss://tcp.ssh.relay.ajam.dev/v1/node/p-22fee8f06aba97d626d62af75494c5d2",
       "date": "2026-10-22",
       "proved": "a node that is not dropbear and not SSH answered the relay's hello, open and close controls, sent ready and one data frame, and an operator on /v1/connect read its 44 bytes back. The reverse transport is not SSH-specific"
     },
     {
-      "url": "https://tcp.ssh.relay.sshrelay.net/llms-full.txt",
+      "url": "https://tcp.ssh.relay.ajam.dev/llms-full.txt",
       "date": "2026-10-22",
       "proved": "18,359 bytes, sha256 88eb1b0b8571b829daab17614ea2e27966ba5611951ea28db84660fc41cfa5a8: session caps of 720 min and 64 MiB, an idle close at 180,000 ms of payload inactivity, a 120/minute address brake on unauthenticated forward and public mint and pair calls, a 72 h token life, a 4 KiB control-frame cap, a 1 MiB backpressure queue, and the statement that no cost figure is published"
     },
     {
-      "url": "https://tcp.ssh.relay.sshrelay.net/llms.txt",
+      "url": "https://tcp.ssh.relay.ajam.dev/llms.txt",
       "date": "2026-10-22",
       "proved": "3,595 bytes, sha256 7907c56dabb4739e03b7bddb0589faaaf9660d4ced4c647cab2208819abd5d30: the short form of the same contract"
     },
     {
-      "url": "probe:https://tcp.ssh.relay.sshrelay.net/trace?egress=1&format=text",
+      "url": "probe:https://tcp.ssh.relay.ajam.dev/trace?egress=1&format=text",
       "date": "2026-10-22",
       "proved": "three placements returned the same egress address as the seed's 2026-10-02 measurement: aws:ap-south-1 104.28.200.92, aws:eu-central-1 104.28.197.9, aws:us-east-1 104.28.196.79. The client-nearest default differs, 104.28.204.8 then against 104.28.196.82 now"
     }
@@ -152,7 +152,7 @@
   "verdict": "qualifies-with-caveat",
   "verified_at": "2026-10-22T04:06:00.000Z",
   "price_per_tb_month": null,
-  "notes": "Version 2026-10-03-r2 measured with a 37-entry pool on 2026-10-22. The forward path is wss://<host>/connect/<target-host>/<port>; the reverse path is wss://<host>/v1/node/<name>.",
+  "notes": "The relay in the seed pass, and the version has moved: the seed measured 2026-10-01-r2 with a four-entry pool, and this session found 2026-10-03-r2 with 37 entries. The seed's central negative result does not reproduce. Its forward path 'delivers the target's first bytes and cannot deliver the client's bytes past that point, for any protocol', tested on example.com:80, neverssl.com:80 and example.com:443. On 2026-10-22 a raw WebSocket client that was not dropssh sent an HTTP request through /connect/example.com/80 and read the whole response, and a 67 MB download ran to the 64 MiB cap at 9.605 MiB/s. Two explanations fit and this session did not separate them: the relay fixed it between versions, or the fault was always dropssh's client, which is what review R25 said was not established. The second is the likelier one, because R25 also recorded that no SSH was involved in its failing probes while a raw WebSocket client was never tried. Three of the seed's four colo addresses are unchanged twenty days later: aws:ap-south-1, aws:eu-central-1 and aws:us-east-1 all returned the same address on 2026-10-22 as on 2026-10-02. The fourth is the client-nearest default, which differs because the caller's edge colo differs. That closes the seed's own open question about whether a colo's egress is stable, and two probes are still not a series.",
   "history": [
     "history/2026-10-22T040700Z/ssh-relay-measurement-restored.md"
   ],
@@ -210,7 +210,7 @@
     "reverse_enabled": true,
     "colos_measured": [
       {
-        "host": "tcp.ssh.relay.sshrelay.net",
+        "host": "tcp.ssh.relay.ajam.dev",
         "name": "default",
         "region": null,
         "egress_ip": "104.28.196.82",

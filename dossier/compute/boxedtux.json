@@ -1,221 +1,221 @@
 {
-  "topic": "compute",
-  "slug": "boxedtux",
-  "provider": "BoxedTux",
-  "url": "https://boxedtux.com/",
-  "category": "dev environment",
-  "free_tier": {
-    "stated": "A free student vServer: '1 vCPU', '1 GB DDR5', '10 GB NVMe', 'IPv4 address', 'IPv6 /64 block included', 'Monthly bandwidth 200 GB', 'Port speed 50 Mbit/s', full root SSH, web console and VNC. The home page states 'Cost · no card needed'.",
-    "unit": "GB",
-    "metered_on": "downloaded-bytes",
+ "topic": "compute",
+ "slug": "boxedtux",
+ "provider": "BoxedTux",
+ "url": "https://boxedtux.com/",
+ "category": "dev environment",
+ "free_tier": {
+  "stated": "A free student vServer: '1 vCPU', '1 GB DDR5', '10 GB NVMe', 'IPv4 address', 'IPv6 /64 block included', 'Monthly bandwidth 200 GB', 'Port speed 50 Mbit/s', full root SSH, web console and VNC. The home page states 'Cost · no card needed'.",
+  "unit": "GB",
+  "metered_on": "downloaded-bytes",
+  "source_url": "https://boxedtux.com/",
+  "read_on": "2026-10-24",
+  "notes": "registration is stopped on the day read; the shape is what the page advertises for when it reopens"
+ },
+ "per_object_cap": {
+  "stated": "not applicable: the unit is a virtual server, not an object"
+ },
+ "retention": {
+  "stated": "'Renew each semester — 30-second re-verification every 6 months. Active learners can request extensions at any time.' No inactivity-deletion clock is published.",
+  "days": null,
+  "source_url": "https://boxedtux.com/",
+  "notes": "a six-month re-verification cadence, not an idle clock"
+ },
+ "egress": {
+  "terms": "'Monthly bandwidth 200 GB' and 'Port speed 50 Mbit/s'",
+  "metered": true,
+  "free_allowance": "200 GB",
+  "source_url": "https://boxedtux.com/"
+ },
+ "interface": [
+  "ssh"
+ ],
+ "interface_detail": "inferred from the tooling the provider documents; not probed",
+ "tooling": "Root SSH, web console, VNC, Docker allowed, distributions from Debian to Gentoo. /register returned a broker-side 500, so the signup path itself was not read.",
+ "chaining": "Complements BoxyBSD inside one operator: BoxyBSD runs the BSD images, BoxedTux runs Ubuntu, Debian and Rocky, which is the distribution set most tooling assumes. The chain is closed because both halves need an affiliation: BoxyBSD needs a sponsor's invitation, BoxedTux needs an institution.",
+ "limits": [
+  {
+   "kind": "volume-quota",
+   "value": "200 GB of monthly bandwidth on a 50 Mbit/s port",
+   "source": "https://boxedtux.com/"
+  },
+  {
+   "kind": "volume-quota",
+   "value": "1 vCPU, 1 GB RAM, 10 GB NVMe",
+   "source": "https://boxedtux.com/"
+  },
+  {
+   "kind": "write-gated",
+   "value": "academic email address or proof of student/educator status, plus a six-monthly re-verification",
+   "source": "https://boxedtux.com/register"
+  },
+  {
+   "kind": "write-gated",
+   "value": "new registrations are stopped: 'Due to resource limits new account registrations are currently stopped!'",
+   "source": "https://boxedtux.com/register"
+  }
+ ],
+ "limits_note": "Boxes run for 6-month terms with 'There isn't any grace-period! ... Expired boxes will be immediately deleted', so the term ends with no recovery window; but the eligibility gate, an institutional address, fails first.",
+ "binding": "write-gated",
+ "binding_note": "two gates stack: the account requires academic affiliation, and on the day read the registration form itself was closed for capacity",
+ "identity_cost": {
+  "kind": "institution",
+  "detail": "'Only academic email addresses are allowed. Not having an academic address? Contact us with proof of your student or educator status.' No card and no hold: the home page says 'Cost · no card needed'. This gate cannot be cleared at any price.",
+  "country": null
+ },
+ "reliability_note": "no reliability event observed; the home page advertises 99.7% uptime and names DDoS protection as optional.",
+ "confidence": "documented",
+ "evidence": [
+  {
+   "url": "https://boxedtux.com/",
+   "date": "2026-10-22",
+   "proved": "the spec block reads 'vCPU cores 1 vCPU / Memory 1 GB DDR5 / Storage 10 GB NVMe / IPv4 address 0 / IPv6 /64 block included / Monthly bandwidth 200 GB / Port speed 50 Mbit/s', and the cost line reads '0 EUR Cost - no card needed'; probe 200, 31698 bytes, sha256 69b56eb86c57d18fd2fef4cc62bac17c95dc3d8cceb9438bbd674eed67ef0c21"
+  },
+  {
+   "url": "https://boxedtux.com/",
+   "date": "2026-10-22",
+   "proved": "the '// eligible' list contains only academic categories, and the FAQ states 'We will provide additional ways for legitimations wihout.edu domain at a later time', quoted"
+  },
+  {
+   "url": "https://boxedtux.com/",
+   "date": "2026-10-22",
+   "proved": "'Servers are granted for 6-month terms aligned with semesters. You'll get an email 2 weeks before expiry. Renewal takes 30 seconds with a quick student re-verification.', 'There isn't any grace-period! ... Expired boxes will be immediately deleted.', 'No! There aren't any upgrade options available.', quoted"
+  },
+  {
+   "url": "https://nostr.at/nevent1qqsy0rhaeqmysfgm9u6qmlwse36p40pd74cqjfxp53j900x40nhghsgzyr0stxvm4ksd6w83r5u8pw49x4v274luzwdznlwwgetn5rt5z5pz62zns5q",
+   "date": "2026-05-04",
+   "proved": "the operator announces boxedtux.com as a new free Linux VPS project built on Proxmox clusters, beside BoxyBSD, quoted"
+  },
+  {
+   "url": "https://boxedtux.com/register",
+   "date": "2026-10-24",
+   "proved": "quoted: 'Free Linux servers for students for educational purposes. Only academic email addresses are allowed.' and 'Important: Due to resource limits new account registrations are currently stopped! Please do not mail us for invite codes at this time.'"
+  },
+  {
+   "url": "https://boxedtux.com/",
+   "date": "2026-10-24",
+   "proved": "quoted: '1 vCPU', '1 GB DDR5', '10 GB NVMe', 'IPv4 address', 'IPv6 /64 block included', 'Monthly bandwidth 200 GB', 'Port speed 50 Mbit/s', 'Cost · no card needed'"
+  },
+  {
+   "url": "https://boxedtux.com/",
+   "date": "2026-10-24",
+   "proved": "quoted: 'Renew each semester', '30-second re-verification every 6 months. Active learners can request extensions at any time.'"
+  },
+  {
+   "url": "https://boxedtux.com/imprint",
+   "date": "2026-10-24",
+   "proved": "the imprint states 'BoxedTux Education Platform (non-profit project)', operated by a named individual at a postal address in Germany, and 'VAT ID (USt-IdNr.): not applicable'"
+  }
+ ],
+ "verdict": "fails-identity",
+ "verified_at": "2026-10-24T06:17:00.000Z",
+ "notes": "Not in dossier/compute before this record. Worth recording rather than skipping: this is the best-specified free machine found in this class (1 GB DDR5, 10 GB NVMe, real IPv4, 200 GB traffic, 50 Mbit/s, root SSH) and it is entirely out of reach on two independent grounds. No academic affiliation, and a closed register. If the operator ever opens a non-academic programme the home page hints at ('running a non-profit or OSS project outside academia? reach out — separate program available'), the row would be worth re-testing.",
+ "extras": {
+  "wave2": {
+   "provider_as_written": "BoxedTux",
+   "class": "perpetual-vps",
+   "category_as_written": "free Linux VPS for students (sibling of BoxyBSD)",
+   "free_tier_kind": "perpetual-6-month-renewable",
+   "shape": {
+    "vcpu": 1,
+    "ram_gib": 1,
+    "disk_gib": 10,
+    "gpu_class": null,
+    "gpu_count": 0
+   },
+   "seen_routes": [
+    "broker read 200 (boxedtux.com)",
+    "broker read 200 (tos)",
+    "broker fetch 404 (faq)",
+    "broker fetch 500 broker-side (register, login)",
+    "probe 200 31698 bytes"
+   ],
+   "agents": [
+    "b01-boxybsd"
+   ],
+   "promoted_from": ".tmp/wave2"
+  },
+  "shape": {
+   "vcpu": 1,
+   "ram_gib": 1,
+   "disk_gib": 10,
+   "gpu_class": null,
+   "gpu_count": null
+  },
+  "billing_model": "free",
+  "term": "semester, re-verified every 6 months",
+  "m10h_usd": 0.0,
+  "m24h_usd": 0.0,
+  "price_arithmetic": "no price: 'Cost · no card needed' and '0 €'",
+  "free_tier_kind": "perpetual",
+  "network_out": {
+   "allow_outbound": true,
+   "allow_inbound_listen": true,
+   "ports": "a real public IPv4 and an IPv6 /64",
+   "static_ip": true,
+   "ipv6": true,
+   "per_session_bytes": null
+  },
+  "session_cap": {
+   "wall_clock_min": null,
+   "idle_reap_s": null,
+   "restart_required": false,
+   "note": "none published; re-verification every 6 months"
+  },
+  "operator": "BoxedTux Education Platform, a non-profit project operated by an individual in Germany; no VAT id and no commercial register entry, stated as 'a private, non-commercial, non-profit project'",
+  "registration_state": {
+   "as_read": "2026-10-24",
+   "state": "closed",
+   "quoted": "new account registrations are currently stopped"
+  },
+  "superseded": {
+   "free_tier": {
+    "stated": "1 vCPU, 1 GiB DDR5, 10 GB NVMe, 'IPv4 address 0', an IPv6 /64 block, 'Monthly bandwidth 200 GB', 50 Mbit/s port, full root SSH, free, in 6-month terms aligned with semesters, for students and educators.",
+    "unit": "seconds",
+    "metered_on": "wall-clock",
     "source_url": "https://boxedtux.com/",
-    "read_on": "2026-10-24",
-    "notes": "registration is stopped on the day read; the shape is what the page advertises for when it reopens"
-  },
-  "per_object_cap": {
-    "stated": "not applicable: the unit is a virtual server, not an object"
-  },
-  "retention": {
-    "stated": "'Renew each semester — 30-second re-verification every 6 months. Active learners can request extensions at any time.' No inactivity-deletion clock is published.",
+    "read_on": "2026-10-22",
+    "notes": "perpetual-6-month-renewable"
+   },
+   "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://boxedtux.com/",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+   },
+   "retention": {
+    "stated": "Boxes run for 6-month terms with 'There isn't any grace-period! ... Expired boxes will be immediately deleted', so the term ends with no recovery window; but the eligibility gate fails first without an institutional address.",
     "days": null,
     "source_url": "https://boxedtux.com/",
-    "notes": "a six-month re-verification cadence, not an idle clock"
-  },
-  "egress": {
-    "terms": "'Monthly bandwidth 200 GB' and 'Port speed 50 Mbit/s'",
-    "metered": true,
-    "free_allowance": "200 GB",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+   },
+   "egress": {
+    "terms": "the spec block reads 'vCPU cores 1 vCPU / Memory 1 GB DDR5 / Storage 10 GB NVMe / IPv4 address 0 / IPv6 /64 block included / Monthly bandwidth 200 GB / Port speed 50 Mbit/s', and the cost line reads '0 EUR Cost - no card needed'; probe 200, 31698 bytes, sha256 69b56eb86c57d18fd2fef4cc62bac17c95dc3d8cceb9438bbd674eed67ef0c21",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
     "source_url": "https://boxedtux.com/"
-  },
-  "interface": [
-    "ssh"
-  ],
-  "interface_detail": "inferred from the tooling the provider documents; not probed",
-  "tooling": "Root SSH, web console, VNC, Docker allowed, distributions from Debian to Gentoo. Registration endpoint returned HTTP 500, leaving sign-up requirements unconfirmed.",
-  "chaining": "Complements BoxyBSD inside one operator: BoxyBSD runs the BSD images, BoxedTux runs Ubuntu, Debian and Rocky, which is the distribution set most tooling assumes. The chain is closed because both halves need an affiliation: BoxyBSD needs a sponsor's invitation, BoxedTux needs an institution.",
-  "limits": [
+   },
+   "limits": [
     {
-      "kind": "volume-quota",
-      "value": "200 GB of monthly bandwidth on a 50 Mbit/s port",
-      "source": "https://boxedtux.com/"
-    },
-    {
-      "kind": "volume-quota",
-      "value": "1 vCPU, 1 GB RAM, 10 GB NVMe",
-      "source": "https://boxedtux.com/"
-    },
-    {
-      "kind": "write-gated",
-      "value": "academic email address or proof of student/educator status, plus a six-monthly re-verification",
-      "source": "https://boxedtux.com/register"
-    },
-    {
-      "kind": "write-gated",
-      "value": "new registrations are stopped: 'Due to resource limits new account registrations are currently stopped!'",
-      "source": "https://boxedtux.com/register"
+     "kind": "retention-clamped",
+     "value": "Boxes run for 6-month terms with 'There isn't any grace-period! ... Expired boxes will be immediately deleted', so the term ends with no recovery window; but the eligibility gate fails first without an institutional address.",
+     "source": "https://boxedtux.com/"
     }
-  ],
-  "limits_note": "Boxes run for 6-month terms with 'There isn't any grace-period! ... Expired boxes will be immediately deleted', so the term ends with no recovery window; but the eligibility gate, an institutional address, fails first.",
-  "binding": "write-gated",
-  "binding_note": "two gates stack: the account requires academic affiliation, and on the day read the registration form itself was closed for capacity",
-  "identity_cost": {
+   ],
+   "binding": "retention-clamped",
+   "binding_note": "Boxes run for 6-month terms with 'There isn't any grace-period! ... Expired boxes will be immediately deleted', so the term ends with no recovery window; but the eligibility gate fails first without an institutional address.",
+   "identity_cost": {
     "kind": "institution",
-    "detail": "'Only academic email addresses are allowed. Not having an academic address? Contact us with proof of your student or educator status.' No card and no hold: the home page says 'Cost · no card needed'. This gate cannot be cleared at any price.",
+    "detail": "Eligibility names enrolled university and college students, teachers, academic research projects, bootcamp participants and high-school IT programmes, and the FAQ says 'We will provide additional ways for legitimations wihout.edu domain at a later time', which makes an institutional address the present gate. Without an affiliation, 200 GB a month is unreachable. A discretionary door exists: 'running a non-profit or OSS project outside academia? reach out - separate program available'.",
     "country": null
-  },
-  "reliability_note": "no reliability event observed; the home page advertises 99.7% uptime and names DDoS protection as optional.",
-  "confidence": "documented",
-  "evidence": [
-    {
-      "url": "https://boxedtux.com/",
-      "date": "2026-10-22",
-      "proved": "the spec block reads 'vCPU cores 1 vCPU / Memory 1 GB DDR5 / Storage 10 GB NVMe / IPv4 address 0 / IPv6 /64 block included / Monthly bandwidth 200 GB / Port speed 50 Mbit/s', and the cost line reads '0 EUR Cost - no card needed'; probe 200, 31698 bytes, sha256 69b56eb86c57d18fd2fef4cc62bac17c95dc3d8cceb9438bbd674eed67ef0c21"
-    },
-    {
-      "url": "https://boxedtux.com/",
-      "date": "2026-10-22",
-      "proved": "the '// eligible' list contains only academic categories, and the FAQ states 'We will provide additional ways for legitimations wihout.edu domain at a later time', quoted"
-    },
-    {
-      "url": "https://boxedtux.com/",
-      "date": "2026-10-22",
-      "proved": "'Servers are granted for 6-month terms aligned with semesters. You'll get an email 2 weeks before expiry. Renewal takes 30 seconds with a quick student re-verification.', 'There isn't any grace-period! ... Expired boxes will be immediately deleted.', 'No! There aren't any upgrade options available.', quoted"
-    },
-    {
-      "url": "https://nostr.at/nevent1qqsy0rhaeqmysfgm9u6qmlwse36p40pd74cqjfxp53j900x40nhghsgzyr0stxvm4ksd6w83r5u8pw49x4v274luzwdznlwwgetn5rt5z5pz62zns5q",
-      "date": "2026-05-04",
-      "proved": "the operator announces boxedtux.com as a new free Linux VPS project built on Proxmox clusters, beside BoxyBSD, quoted"
-    },
-    {
-      "url": "https://boxedtux.com/register",
-      "date": "2026-10-24",
-      "proved": "quoted: 'Free Linux servers for students for educational purposes. Only academic email addresses are allowed.' and 'Important: Due to resource limits new account registrations are currently stopped! Please do not mail us for invite codes at this time.'"
-    },
-    {
-      "url": "https://boxedtux.com/",
-      "date": "2026-10-24",
-      "proved": "quoted: '1 vCPU', '1 GB DDR5', '10 GB NVMe', 'IPv4 address', 'IPv6 /64 block included', 'Monthly bandwidth 200 GB', 'Port speed 50 Mbit/s', 'Cost · no card needed'"
-    },
-    {
-      "url": "https://boxedtux.com/",
-      "date": "2026-10-24",
-      "proved": "quoted: 'Renew each semester', '30-second re-verification every 6 months. Active learners can request extensions at any time.'"
-    },
-    {
-      "url": "https://boxedtux.com/imprint",
-      "date": "2026-10-24",
-      "proved": "the imprint states 'BoxedTux Education Platform (non-profit project)', operated by a named individual at a postal address in Germany, and 'VAT ID (USt-IdNr.): not applicable'"
-    }
-  ],
-  "verdict": "fails-identity",
-  "verified_at": "2026-10-24T06:17:00.000Z",
-  "notes": "Not in dossier/compute before this record. Worth recording rather than skipping: this is the best-specified free machine found in this class (1 GB DDR5, 10 GB NVMe, real IPv4, 200 GB traffic, 50 Mbit/s, root SSH) and it is entirely out of reach on two independent grounds. No academic affiliation, and a closed register. If the operator ever opens a non-academic programme the home page hints at ('running a non-profit or OSS project outside academia? reach out — separate program available'), the row would be worth re-testing.",
-  "extras": {
-    "wave2": {
-      "provider_as_written": "BoxedTux",
-      "class": "perpetual-vps",
-      "category_as_written": "free Linux VPS for students (sibling of BoxyBSD)",
-      "free_tier_kind": "perpetual-6-month-renewable",
-      "shape": {
-        "vcpu": 1,
-        "ram_gib": 1,
-        "disk_gib": 10,
-        "gpu_class": null,
-        "gpu_count": 0
-      },
-      "seen_routes": [
-        "broker read 200 (boxedtux.com)",
-        "broker read 200 (tos)",
-        "broker fetch 404 (faq)",
-        "broker fetch 500 broker-side (register, login)",
-        "probe 200 31698 bytes"
-      ],
-      "agents": [
-        "b01-boxybsd"
-      ],
-      "promoted_from": ".tmp/wave2"
-    },
-    "shape": {
-      "vcpu": 1,
-      "ram_gib": 1,
-      "disk_gib": 10,
-      "gpu_class": null,
-      "gpu_count": null
-    },
-    "billing_model": "free",
-    "term": "semester, re-verified every 6 months",
-    "m10h_usd": 0.0,
-    "m24h_usd": 0.0,
-    "price_arithmetic": "no price: 'Cost · no card needed' and '0 €'",
-    "free_tier_kind": "perpetual",
-    "network_out": {
-      "allow_outbound": true,
-      "allow_inbound_listen": true,
-      "ports": "a real public IPv4 and an IPv6 /64",
-      "static_ip": true,
-      "ipv6": true,
-      "per_session_bytes": null
-    },
-    "session_cap": {
-      "wall_clock_min": null,
-      "idle_reap_s": null,
-      "restart_required": false,
-      "note": "none published; re-verification every 6 months"
-    },
-    "operator": "BoxedTux Education Platform, a non-profit project operated by an individual in Germany; no VAT id and no commercial register entry, stated as 'a private, non-commercial, non-profit project'",
-    "registration_state": {
-      "as_read": "2026-10-24",
-      "state": "closed",
-      "quoted": "new account registrations are currently stopped"
-    },
-    "superseded": {
-      "free_tier": {
-        "stated": "1 vCPU, 1 GiB DDR5, 10 GB NVMe, 'IPv4 address 0', an IPv6 /64 block, 'Monthly bandwidth 200 GB', 50 Mbit/s port, full root SSH, free, in 6-month terms aligned with semesters, for students and educators.",
-        "unit": "seconds",
-        "metered_on": "wall-clock",
-        "source_url": "https://boxedtux.com/",
-        "read_on": "2026-10-22",
-        "notes": "perpetual-6-month-renewable"
-      },
-      "per_object_cap": {
-        "stated": "not applicable: the unit is a machine, not an object",
-        "bytes": null,
-        "source_url": "https://boxedtux.com/",
-        "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
-      },
-      "retention": {
-        "stated": "Boxes run for 6-month terms with 'There isn't any grace-period! ... Expired boxes will be immediately deleted', so the term ends with no recovery window; but the eligibility gate fails first without an institutional address.",
-        "days": null,
-        "source_url": "https://boxedtux.com/",
-        "notes": "a machine record: what is lost is the running process, not a stored object"
-      },
-      "egress": {
-        "terms": "the spec block reads 'vCPU cores 1 vCPU / Memory 1 GB DDR5 / Storage 10 GB NVMe / IPv4 address 0 / IPv6 /64 block included / Monthly bandwidth 200 GB / Port speed 50 Mbit/s', and the cost line reads '0 EUR Cost - no card needed'; probe 200, 31698 bytes, sha256 69b56eb86c57d18fd2fef4cc62bac17c95dc3d8cceb9438bbd674eed67ef0c21",
-        "metered": false,
-        "free_allowance": null,
-        "price_per_tb": null,
-        "source_url": "https://boxedtux.com/"
-      },
-      "limits": [
-        {
-          "kind": "retention-clamped",
-          "value": "Boxes run for 6-month terms with 'There isn't any grace-period! ... Expired boxes will be immediately deleted', so the term ends with no recovery window; but the eligibility gate fails first without an institutional address.",
-          "source": "https://boxedtux.com/"
-        }
-      ],
-      "binding": "retention-clamped",
-      "binding_note": "Boxes run for 6-month terms with 'There isn't any grace-period! ... Expired boxes will be immediately deleted', so the term ends with no recovery window; but the eligibility gate fails first without an institutional address.",
-      "identity_cost": {
-        "kind": "institution",
-        "detail": "Eligibility names enrolled university and college students, teachers, academic research projects, bootcamp participants and high-school IT programmes, and the FAQ says 'We will provide additional ways for legitimations wihout.edu domain at a later time', which makes an institutional address the present gate. Without an affiliation, 200 GB a month is unreachable. A discretionary door exists: 'running a non-profit or OSS project outside academia? reach out - separate program available'.",
-        "country": null
-      },
-      "reliability_note": "no reliability event observed in this session",
-      "confidence": "measured",
-      "notes": "Recorded because it is the sibling the assignment asked for, and because its 200 GB a month is the only hard egress number published anywhere in this family. Real and generous for a student; unreachable without an academic affiliation, so the number is written with the door named. BoxedTux also publishes 'IPv4 address 0', so it is IPv6-only like BoxyBSD. Pages /register and /login returned broker 500, which establishes nothing about the target.",
-      "verified_at": "2026-10-22T00:00:00.000Z"
-    }
-  },
-  "tier": "EduCloud student vServer",
-  "confidence_note": "shape, traffic and the academic gate are quoted from first-party pages read today; the registration closure is quoted from the register page as served; account creation was not performed; published numbers are unmeasured against live endpoints."
+   },
+   "reliability_note": "no reliability event observed in this session",
+   "confidence": "measured",
+   "notes": "Recorded because it is the sibling the assignment asked for, and because its 200 GB a month is the only hard egress number published anywhere in this family. Real and generous for a student; unreachable without an academic affiliation, so the number is written with the door named. BoxedTux also publishes 'IPv4 address 0', so it is IPv6-only like BoxyBSD. Pages /register and /login returned broker 500, which establishes nothing about the target.",
+   "verified_at": "2026-10-22T00:00:00.000Z"
+  }
+ },
+ "tier": "EduCloud student vServer",
+ "confidence_note": "shape, traffic and the academic gate are quoted from first-party pages read today; the registration closure is quoted from the register page as served; no account was created"
 }

@@ -5,7 +5,7 @@
   "url": "https://registry.ollama.ai",
   "category": "registry",
   "free_tier": {
-    "stated": "No published byte quota, no published per-file cap, and no paid storage tier exists to upsell to. The only paid Ollama product is inference compute ('Pricing': Free $0 'Use any cloud model with pay-as-you-go usage credits', Pro $20/mo). Nothing on that page meters model storage. Manifest summation on 2026-10-22 confirmed one free namespace holds 3,270 GiB across 89 working repositories. A single repository holds 455.5 GiB in one layer.",
+    "stated": "No published byte quota, no published per-file cap, and no paid storage tier exists to upsell to — the only paid Ollama product is inference compute ('Pricing': Free $0 'Use any cloud model with pay-as-you-go usage credits', Pro $20/mo; nothing on that page meters model storage). Empirically established this session by summing manifests: ONE free namespace holds 3,270 GiB across 89 working repos. A single repo holds 455.5 GiB in one layer.",
     "unit": "GiB",
     "metered_on": "stored-bytes",
     "source_url": "https://registry.ollama.com/pricing",
@@ -40,10 +40,10 @@
       "source": "https://registry.ollama.com/pricing"
     }
   ],
-  "limits_note": "per-object-cap: Not published, and not 2 GiB like GitHub. Verified live at 489,088,538,784 bytes in one blob. Practical upload ceiling is governed by HTTP 413 responses. A user report (issue #13740, opened 2026-01-16) shows a 109 GB push receiving '413 Request Entity Too Large' after 1 GB, suggesting approximately 100 GB as a plausible ceiling without push credentials. Client-side chunking uses 100 MB to 1 GB parts (server/upload.go). Retention: none. Objects persist until deleted with no TTL documented. request-rate: not published. Twenty consecutive ranged GET requests returned HTTP 206 without throttling.",
+  "limits_note": "per-object-cap: NOT published, and NOT 2 GiB like GitHub — verified live at 489,088,538,784 bytes in one blob. Practical upload ceiling is the server's 413: a user report (issue #13740, opened 2026-01-16) shows a 109 GB push getting '413 Request Entity Too Large' after 1 GB, so ~100 GB is a plausible hard wall but is unverified by me (I have no push credentials). client-side chunking is 100 MB-1 GB parts (server/upload.go). Retention: none — objects persist until deleted; no TTL anywhere in the docs. request-rate: not published; 20 consecutive ranged GETs all returned 206 with no throttling.",
   "identity_cost": {
     "kind": "card",
-    "detail": "unverified: identity requirements not documented",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: y paid Ollama product is inference compute ('Pricing': Free $0 'Use any cloud model with pay-as-you-go usage credits', Pro $20/mo; nothing on that page meters model storage). Empiric",
     "country": null
   },
   "reliability_note": "Pushes to large blobs are flaky: issue #6466 reports 502 Bad Gateway at 40-50% of an 8.5 GB upload, and #13740 reports 413 on 100 GB. Resume/retry is required, and `ollama push` is not resumable by default. Reads were 100% stable in every probe.",
@@ -93,7 +93,7 @@
   ],
   "verdict": "qualifies-with-caveat",
   "verified_at": "2026-10-22T00:00:00.000Z",
-  "notes": "No published byte quota, no published per-file cap, and no paid storage tier exists to upsell to. The only paid Ollama product is inference compute ('Pricing': Free $0 'Use any cloud model with pay-as-you-go usage credits', Pro $20/mo). Nothing on that page meters model storage. Manifest summation on 2026-10-22 confirmed one free namespace holds 3,270 GiB across 89 working repositories. A single repository holds 455.5 GiB in one layer.",
+  "notes": "No published byte quota, no published per-file cap, and no paid storage tier exists to upsell to — the only paid Ollama product is inference compute ('Pricing': Free $0 'Use any cloud model with pay-as-you-go usage credits', Pro $20/mo; nothing on that page meters model storage). Empirically established this session by summing manifests: ONE free namespace holds 3,270 GiB across 89 working repos. A single repo holds 455.5 GiB in one layer.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",

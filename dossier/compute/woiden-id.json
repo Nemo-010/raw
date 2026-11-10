@@ -1,225 +1,225 @@
 {
-  "topic": "compute",
-  "slug": "woiden-id",
-  "provider": "Woiden.id",
-  "url": "https://woiden.id/",
-  "category": "cloud VM",
-  "free_tier": {
-    "stated": "A free NAT VPS with a shared IPv4 and a dedicated IPv6: 'NAT VPS is almost similar to other VPS but uses the NAT method so that a single IPv4 can be shared to many VPS and then assigns a different port for each user.' The site states 'Full SSH access', 'Unmetered Bandwidth — All data centers provide Unlimited bandwidth' and 'Shared IPv4 — VPS comes with Shared IPv4 and Dedicated IPv6'. No CPU, RAM or disk figure is published on any page read.",
-    "unit": "none",
+ "topic": "compute",
+ "slug": "woiden-id",
+ "provider": "Woiden.id",
+ "url": "https://woiden.id/",
+ "category": "cloud VM",
+ "free_tier": {
+  "stated": "A free NAT VPS with a shared IPv4 and a dedicated IPv6: 'NAT VPS is almost similar to other VPS but uses the NAT method so that a single IPv4 can be shared to many VPS and then assigns a different port for each user.' The site states 'Full SSH access', 'Unmetered Bandwidth — All data centers provide Unlimited bandwidth' and 'Shared IPv4 — VPS comes with Shared IPv4 and Dedicated IPv6'. No CPU, RAM or disk figure is published on any page read.",
+  "unit": "none",
+  "metered_on": "wall-clock",
+  "source_url": "https://woiden.id/",
+  "read_on": "2026-10-24",
+  "notes": "a third-party review from 2022 reports 450 MB RAM, 3 GB disk and 8 forwarded ports; that is reported, not documented, and is four years old"
+ },
+ "per_object_cap": {
+  "stated": "not applicable: the unit is a virtual machine, not an object"
+ },
+ "retention": {
+  "stated": "'You can renew your VPS at least 3 days before it expires'. The site describes itself as 'Renewable — Extend your server duration to keep your free server online'. The interval a renewal adds is not stated on any page read; a third-party review of 2022 says 'Must renew every 7 days'.",
+  "source_url": "https://woiden.id/vps-renew/",
+  "notes": "the renewal window is documented as opening 3 days before expiry; the period added is reported only"
+ },
+ "egress": {
+  "terms": "'Unmetered Bandwidth — All data centers provide Unlimited bandwidth'",
+  "metered": false,
+  "free_allowance": "unlimited",
+  "source_url": "https://woiden.id/"
+ },
+ "interface": [
+  "ssh"
+ ],
+ "interface_detail": "The register page documents SSH access to the VPS, plus a web panel (VPS info, reinstall, reset password, power control) and a web-based terminal at ssh.hax.co.id.",
+ "tooling": "No CLI, SDK or API library is named: the woiden.id register page was read and lists the web panel and web terminal beside plain SSH.",
+ "chaining": "Same composition as Hax: an IPv6-only root box needs an IPv4 front, and the daily renewal is the part that cannot be automated without an external scheduler and stored credentials.",
+ "limits": [
+  {
+   "kind": "retention-clamped",
+   "value": "the VPS expires and must be renewed, with the renewal window opening 3 days before expiry; the period added is not published",
+   "source": "https://woiden.id/vps-renew/"
+  },
+  {
+   "kind": "write-gated",
+   "value": "registration requires a Telegram numeric ID, obtained by messaging @HaxTG_bot with /getid",
+   "source": "https://woiden.id/register/"
+  }
+ ],
+ "limits_note": "The instance is reclaimed unless renewed daily, so the server is only always-on while a human logs in every day; a missed weekend loses the machine and its data.",
+ "binding": "retention-clamped",
+ "binding_note": "the machine expires on a short clock that only a human can reset, so it cannot be an always-on node",
+ "identity_cost": {
+  "kind": "any-phone",
+  "detail": "Registration requires a Telegram ID obtained via bot interaction. No email, card, authorization hold, or identity document is required on the registration form.",
+  "country": null
+ },
+ "reliability_note": "no reliability event observed; the vendor routes support through a Telegram group and channel",
+ "confidence": "documented",
+ "evidence": [
+  {
+   "url": "https://woiden.id/",
+   "date": "2026-10-22",
+   "proved": "the vendor page advertises a free Nat VPS, a web panel with reinstall and usage monitoring, and a renew action to keep the server online, quoted"
+  },
+  {
+   "url": "https://misc.zz.ac/2026/01/26/hax-woiden-%e5%85%8d%e8%b4%b9vps/",
+   "date": "2026-10-22",
+   "proved": "comparison table gives Woiden.id at 1000 MB RAM, 8 GB disk, OpenVZ, IPv6 only, with a daily renewal requirement, and describes the instant-reclaim mechanism on a missed day"
+  },
+  {
+   "url": "https://woiden.id/",
+   "date": "2026-10-24",
+   "proved": "quoted: 'NAT VPS is almost similar to other VPS but uses the NAT (Network Address Translation) method so that a single IPv4 can be shared to many VPS and then assigns a different port for each user.', 'Full SSH access', 'Unmetered Bandwidth', 'Shared IPv4'"
+  },
+  {
+   "url": "https://woiden.id/vps-renew/",
+   "date": "2026-10-24",
+   "proved": "quoted: 'You can renew your VPS at least 3 days before it expires'"
+  },
+  {
+   "url": "https://woiden.id/register/",
+   "date": "2026-10-24",
+   "proved": "the served markup: one input, name='telegram_id', placeholder='12345678', required; label 'Telegram ID:'; and the instruction 'Send private message to @HaxTG_bot, type this command: /getid'"
+  },
+  {
+   "url": "https://woiden.id/",
+   "date": "2026-10-24",
+   "proved": "the sibling service is named on the register page: 'Create a free IPv6 only VPS at HAX.co.id'"
+  },
+  {
+   "url": "https://lowendspirit.com/discussion/4045/free-nat-vps-dedicated-ipv6-shared-ipv4",
+   "date": "2026-10-24",
+   "proved": "reported, third party, April 2022: '-450MB RAM -3GB Disk -Unlimited Data Transfer -Dedicated IPv6 -Shared IPv4+8 Ports -5 OS Reinstalls/Month' and '-Must renew every 7 days'"
+  },
+  {
+   "url": "https://woiden.id/register/",
+   "date": "2026-11-03",
+   "proved": "SSH is an access interface",
+   "capture": "sha256:afbfd73408aafc42c37aaec69f3271b7d6966c6f8a1ccdeea88187815e89d674",
+   "quote": "Full SSH access to manage and install your application"
+  },
+  {
+   "url": "https://woiden.id/register/",
+   "date": "2026-11-03",
+   "proved": "egress is unmetered, no overage price",
+   "capture": "sha256:afbfd73408aafc42c37aaec69f3271b7d6966c6f8a1ccdeea88187815e89d674",
+   "quote": "All data centers provide Unlimited bandwidth"
+  },
+  {
+   "url": "https://woiden.id/register/",
+   "date": "2026-11-04",
+   "proved": "SSH access is the documented interface",
+   "capture": "sha256:afbfd73408aafc42c37aaec69f3271b7d6966c6f8a1ccdeea88187815e89d674",
+   "quote": "Full SSH access to manage and install your application"
+  },
+  {
+   "url": "https://woiden.id/register/",
+   "date": "2026-11-04",
+   "proved": "a web panel and a web-based terminal are listed beside SSH",
+   "capture": "sha256:afbfd73408aafc42c37aaec69f3271b7d6966c6f8a1ccdeea88187815e89d674",
+   "quote": "[Web Base Terminal](https://ssh.hax.co.id/)"
+  }
+ ],
+ "verdict": "qualifies-with-caveat",
+ "verified_at": "2026-11-04T05:24:47.109Z",
+ "notes": "Woiden.id provides free NAT IPv4 and IPv6 VPS hosting accounts managed through Telegram bot authentication, requiring active renewal validation.",
+ "extras": {
+  "wave2": {
+   "provider_as_written": "Woiden.id",
+   "class": "perpetual-renewal-gated",
+   "category_as_written": "free VPS, IPv6 only",
+   "free_tier_kind": "perpetual-renewable",
+   "shape": {
+    "vcpu": null,
+    "ram_gib": 1,
+    "gpu_class": null,
+    "gpu_count": null
+   },
+   "seen_routes": [
+    "broker read 200 on woiden.id, product and renew links visible",
+    "zh search for the renewal cadence",
+    "single third-party comparison read"
+   ],
+   "agents": [
+    "b08-perpetual-free-vm"
+   ],
+   "promoted_from": ".tmp/wave2"
+  },
+  "shape": {
+   "vcpu": null,
+   "ram_gib": null,
+   "disk_gib": null,
+   "gpu_class": null,
+   "gpu_count": null
+  },
+  "billing_model": "free",
+  "term": "renewable, period unstated",
+  "m10h_usd": 0.0,
+  "m24h_usd": 0.0,
+  "price_arithmetic": "no price: the service is free and the register form collects no payment detail",
+  "free_tier_kind": "renewable-free",
+  "network_out": {
+   "allow_outbound": true,
+   "allow_inbound_listen": true,
+   "ports": "shared IPv4 with per-user port mapping; the count is not published",
+   "static_ip": false,
+   "ipv6": true,
+   "per_session_bytes": null
+  },
+  "session_cap": {
+   "wall_clock_min": null,
+   "idle_reap_s": null,
+   "restart_required": false,
+   "note": "expires; renewal opens 3 days before expiry"
+  },
+  "operator": "Woiden.id, the NAT sibling of Hax.co.id; the terms name the Netherlands as the governing law but no company or individual is named",
+  "shape_reported": "450 MB RAM, 3 GB disk, 8 forwarded ports and 5 reinstalls a month, from a LowEndSpirit review of April 2022 — reported, four years old, not used in the record's fields",
+  "superseded": {
+   "free_tier": {
+    "stated": "Quoted from the site: \"Free Nat VPS - Get Virtual Servers provisioned and running in minutes\", with a web panel and \"Renewable - Extend your server duration to keep your free server online\". The site's own description is \"Free Nat VPS for those interested in learning Linux and server\". Size is reported at 1 GiB RAM and 8 GB disk.",
+    "unit": "GiB",
     "metered_on": "wall-clock",
     "source_url": "https://woiden.id/",
-    "read_on": "2026-10-24",
-    "notes": "a third-party review from 2022 reports 450 MB RAM, 3 GB disk and 8 forwarded ports; that is reported, not documented, and is four years old"
-  },
-  "per_object_cap": {
-    "stated": "not applicable: the unit is a virtual machine, not an object"
-  },
-  "retention": {
-    "stated": "'You can renew your VPS at least 3 days before it expires'. The site describes itself as 'Renewable — Extend your server duration to keep your free server online'. The interval a renewal adds is not stated on any page read; a third-party review of 2022 says 'Must renew every 7 days'.",
-    "source_url": "https://woiden.id/vps-renew/",
-    "notes": "the renewal window is documented as opening 3 days before expiry; the period added is reported only"
-  },
-  "egress": {
-    "terms": "'Unmetered Bandwidth — All data centers provide Unlimited bandwidth'",
+    "read_on": "2026-10-22",
+    "notes": "perpetual-renewable"
+   },
+   "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object",
+    "bytes": null,
+    "source_url": "https://woiden.id/",
+    "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
+   },
+   "retention": {
+    "stated": "The instance is reclaimed unless renewed daily, so the server is only always-on while a human logs in every day; a missed weekend loses the machine and its data.",
+    "days": null,
+    "source_url": "https://woiden.id/",
+    "notes": "a machine record: what is lost is the running process, not a stored object"
+   },
+   "egress": {
+    "terms": "not published on the page read: no egress term was found, so nothing is asserted",
     "metered": false,
-    "free_allowance": "unlimited",
+    "free_allowance": null,
+    "price_per_tb": null,
     "source_url": "https://woiden.id/"
-  },
-  "interface": [
-    "ssh"
-  ],
-  "interface_detail": "The register page documents SSH access to the VPS, plus a web panel (VPS info, reinstall, reset password, power control) and a web-based terminal at ssh.hax.co.id.",
-  "tooling": "No CLI, SDK or API library is named: the woiden.id register page was read and lists the web panel and web terminal beside plain SSH.",
-  "chaining": "Same composition as Hax: an IPv6-only root box needs an IPv4 front, and the daily renewal is the part that cannot be automated without an external scheduler and stored credentials.",
-  "limits": [
+   },
+   "limits": [
     {
-      "kind": "retention-clamped",
-      "value": "the VPS expires and must be renewed, with the renewal window opening 3 days before expiry; the period added is not published",
-      "source": "https://woiden.id/vps-renew/"
-    },
-    {
-      "kind": "write-gated",
-      "value": "registration requires a Telegram numeric ID, obtained by messaging @HaxTG_bot with /getid",
-      "source": "https://woiden.id/register/"
+     "kind": "retention-clamped",
+     "value": "The instance is reclaimed unless renewed daily, so the server is only always-on while a human logs in every day; a missed weekend loses the machine and its data.",
+     "source": "https://woiden.id/"
     }
-  ],
-  "limits_note": "The instance is reclaimed unless renewed daily, so the server is only always-on while a human logs in every day; a missed weekend loses the machine and its data.",
-  "binding": "retention-clamped",
-  "binding_note": "the machine expires on a short clock that only a human can reset, so it cannot be an always-on node",
-  "identity_cost": {
-    "kind": "any-phone",
-    "detail": "Registration requires a Telegram ID obtained via bot interaction. No email, card, authorization hold, or identity document is required on the registration form.",
+   ],
+   "binding_note": "The instance is reclaimed unless renewed daily, so the server is only always-on while a human logs in every day; a missed weekend loses the machine and its data.",
+   "identity_cost": {
+    "kind": "institution",
+    "detail": "as stated by the provider's signup page",
     "country": null
-  },
-  "reliability_note": "no reliability event observed; the vendor routes support through a Telegram group and channel",
-  "confidence": "documented",
-  "evidence": [
-    {
-      "url": "https://woiden.id/",
-      "date": "2026-10-22",
-      "proved": "the vendor page advertises a free Nat VPS, a web panel with reinstall and usage monitoring, and a renew action to keep the server online, quoted"
-    },
-    {
-      "url": "https://misc.zz.ac/2026/01/26/hax-woiden-%e5%85%8d%e8%b4%b9vps/",
-      "date": "2026-10-22",
-      "proved": "comparison table gives Woiden.id at 1000 MB RAM, 8 GB disk, OpenVZ, IPv6 only, with a daily renewal requirement, and describes the instant-reclaim mechanism on a missed day"
-    },
-    {
-      "url": "https://woiden.id/",
-      "date": "2026-10-24",
-      "proved": "quoted: 'NAT VPS is almost similar to other VPS but uses the NAT (Network Address Translation) method so that a single IPv4 can be shared to many VPS and then assigns a different port for each user.', 'Full SSH access', 'Unmetered Bandwidth', 'Shared IPv4'"
-    },
-    {
-      "url": "https://woiden.id/vps-renew/",
-      "date": "2026-10-24",
-      "proved": "quoted: 'You can renew your VPS at least 3 days before it expires'"
-    },
-    {
-      "url": "https://woiden.id/register/",
-      "date": "2026-10-24",
-      "proved": "the served markup: one input, name='telegram_id', placeholder='12345678', required; label 'Telegram ID:'; and the instruction 'Send private message to @HaxTG_bot, type this command: /getid'"
-    },
-    {
-      "url": "https://woiden.id/",
-      "date": "2026-10-24",
-      "proved": "the sibling service is named on the register page: 'Create a free IPv6 only VPS at HAX.co.id'"
-    },
-    {
-      "url": "https://lowendspirit.com/discussion/4045/free-nat-vps-dedicated-ipv6-shared-ipv4",
-      "date": "2026-10-24",
-      "proved": "reported, third party, April 2022: '-450MB RAM -3GB Disk -Unlimited Data Transfer -Dedicated IPv6 -Shared IPv4+8 Ports -5 OS Reinstalls/Month' and '-Must renew every 7 days'"
-    },
-    {
-      "url": "https://woiden.id/register/",
-      "date": "2026-11-03",
-      "proved": "SSH is an access interface",
-      "capture": "sha256:afbfd73408aafc42c37aaec69f3271b7d6966c6f8a1ccdeea88187815e89d674",
-      "quote": "Full SSH access to manage and install your application"
-    },
-    {
-      "url": "https://woiden.id/register/",
-      "date": "2026-11-03",
-      "proved": "egress is unmetered, no overage price",
-      "capture": "sha256:afbfd73408aafc42c37aaec69f3271b7d6966c6f8a1ccdeea88187815e89d674",
-      "quote": "All data centers provide Unlimited bandwidth"
-    },
-    {
-      "url": "https://woiden.id/register/",
-      "date": "2026-11-04",
-      "proved": "SSH access is the documented interface",
-      "capture": "sha256:afbfd73408aafc42c37aaec69f3271b7d6966c6f8a1ccdeea88187815e89d674",
-      "quote": "Full SSH access to manage and install your application"
-    },
-    {
-      "url": "https://woiden.id/register/",
-      "date": "2026-11-04",
-      "proved": "a web panel and a web-based terminal are listed beside SSH",
-      "capture": "sha256:afbfd73408aafc42c37aaec69f3271b7d6966c6f8a1ccdeea88187815e89d674",
-      "quote": "[Web Base Terminal](https://ssh.hax.co.id/)"
-    }
-  ],
-  "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-04T05:24:47.109Z",
-  "notes": "Woiden.id provides free NAT IPv4 and IPv6 VPS hosting accounts managed through Telegram bot authentication, requiring active renewal validation.",
-  "extras": {
-    "wave2": {
-      "provider_as_written": "Woiden.id",
-      "class": "perpetual-renewal-gated",
-      "category_as_written": "free VPS, IPv6 only",
-      "free_tier_kind": "perpetual-renewable",
-      "shape": {
-        "vcpu": null,
-        "ram_gib": 1,
-        "gpu_class": null,
-        "gpu_count": null
-      },
-      "seen_routes": [
-        "broker read 200 on woiden.id, product and renew links visible",
-        "zh search for the renewal cadence",
-        "single third-party comparison read"
-      ],
-      "agents": [
-        "b08-perpetual-free-vm"
-      ],
-      "promoted_from": ".tmp/wave2"
-    },
-    "shape": {
-      "vcpu": null,
-      "ram_gib": null,
-      "disk_gib": null,
-      "gpu_class": null,
-      "gpu_count": null
-    },
-    "billing_model": "free",
-    "term": "renewable, period unstated",
-    "m10h_usd": 0.0,
-    "m24h_usd": 0.0,
-    "price_arithmetic": "no price: the service is free and the register form collects no payment detail",
-    "free_tier_kind": "renewable-free",
-    "network_out": {
-      "allow_outbound": true,
-      "allow_inbound_listen": true,
-      "ports": "shared IPv4 with per-user port mapping; the count is not published",
-      "static_ip": false,
-      "ipv6": true,
-      "per_session_bytes": null
-    },
-    "session_cap": {
-      "wall_clock_min": null,
-      "idle_reap_s": null,
-      "restart_required": false,
-      "note": "expires; renewal opens 3 days before expiry"
-    },
-    "operator": "Woiden.id, the NAT sibling of Hax.co.id; the terms name the Netherlands as the governing law but no company or individual is named",
-    "shape_reported": "450 MB RAM, 3 GB disk, 8 forwarded ports and 5 reinstalls a month, from a LowEndSpirit review of April 2022 — reported, four years old, not used in the record's fields",
-    "superseded": {
-      "free_tier": {
-        "stated": "Quoted from the site: \"Free Nat VPS - Get Virtual Servers provisioned and running in minutes\", with a web panel and \"Renewable - Extend your server duration to keep your free server online\". The site's own description is \"Free Nat VPS for those interested in learning Linux and server\". Size is reported at 1 GiB RAM and 8 GB disk.",
-        "unit": "GiB",
-        "metered_on": "wall-clock",
-        "source_url": "https://woiden.id/",
-        "read_on": "2026-10-22",
-        "notes": "perpetual-renewable"
-      },
-      "per_object_cap": {
-        "stated": "not applicable: the unit is a machine, not an object",
-        "bytes": null,
-        "source_url": "https://woiden.id/",
-        "notes": "the ceiling that matters is the machine shape, parked in extras.wave2.shape"
-      },
-      "retention": {
-        "stated": "The instance is reclaimed unless renewed daily, so the server is only always-on while a human logs in every day; a missed weekend loses the machine and its data.",
-        "days": null,
-        "source_url": "https://woiden.id/",
-        "notes": "a machine record: what is lost is the running process, not a stored object"
-      },
-      "egress": {
-        "terms": "not published on the page read: no egress term was found, so nothing is asserted",
-        "metered": false,
-        "free_allowance": null,
-        "price_per_tb": null,
-        "source_url": "https://woiden.id/"
-      },
-      "limits": [
-        {
-          "kind": "retention-clamped",
-          "value": "The instance is reclaimed unless renewed daily, so the server is only always-on while a human logs in every day; a missed weekend loses the machine and its data.",
-          "source": "https://woiden.id/"
-        }
-      ],
-      "binding_note": "The instance is reclaimed unless renewed daily, so the server is only always-on while a human logs in every day; a missed weekend loses the machine and its data.",
-      "identity_cost": {
-        "kind": "institution",
-        "detail": "as stated by the provider's signup page",
-        "country": null
-      },
-      "reliability_note": "no reliability event observed in this session",
-      "confidence": "reported",
-      "notes": "The vendor page confirms the product and the renew mechanic but publishes no CPU, RAM or disk figure and no renewal interval, so the 1 GiB, 8 GB and daily cadence come from a third-party comparison and the record stays at reported. The name Nat VPS indicates a shared NAT address rather than a routable one. If the daily-renewal claim is wrong, the record is a normal free IPv6 VPS with a longer window. Registration is reported to need a Telegram account, the same as Hax.",
-      "verified_at": "2026-10-22T00:00:00.000Z"
-    }
-  },
-  "tier": "free NAT VPS",
-  "confidence_note": "the interface list, the renewal rule, the unlimited-bandwidth statement and the Telegram-ID form are quoted from first-party pages read today. The shape is not published by the vendor at all, so it is left null rather than filled from a 2022 review"
+   },
+   "reliability_note": "no reliability event observed in this session",
+   "confidence": "reported",
+   "notes": "The vendor page confirms the product and the renew mechanic but publishes no CPU, RAM or disk figure and no renewal interval, so the 1 GiB, 8 GB and daily cadence come from a third-party comparison and the record stays at reported. The name Nat VPS indicates a shared NAT address rather than a routable one. If the daily-renewal claim is wrong, the record is a normal free IPv6 VPS with a longer window. Registration is reported to need a Telegram account, the same as Hax.",
+   "verified_at": "2026-10-22T00:00:00.000Z"
+  }
+ },
+ "tier": "free NAT VPS",
+ "confidence_note": "the interface list, the renewal rule, the unlimited-bandwidth statement and the Telegram-ID form are quoted from first-party pages read today. The shape is not published by the vendor at all, so it is left null rather than filled from a 2022 review"
 }
