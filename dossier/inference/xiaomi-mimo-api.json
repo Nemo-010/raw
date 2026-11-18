@@ -18,8 +18,8 @@
     "rest"
   ],
   "history": [],
-  "verified_at": "2026-11-03T11:30:43.059Z",
-  "tooling": "not stated",
+  "verified_at": "2026-11-18T04:36:14.847Z",
+  "tooling": "OpenAI Python SDK (pip install -U openai) with base_url=\"https://api.xiaomimimo.com/v1\", Anthropic Python SDK with base_url=\"https://api.xiaomimimo.com/anthropic\", or curl against POST https://api.xiaomimimo.com/v1/chat/completions with the api-key header.",
   "chaining": "mainland and overseas accounts have separate base URLs and keys, so usage and credit do not aggregate across regions",
   "free_tier": {
     "stated": "One-time free credits for all new and existing users, collected on the console Balance page, announced with the start of billing. No vendor page read states the amount of this credit. The promotions FAQ states that bonus credit from new user registration or Refer & Earn is currently valid for 40 days; the expiry of the January 2026 one-time credit itself is not stated. Calls deduct the complimentary free quota first and then the recharged balance, and an account with insufficient balance cannot use the API",
@@ -45,7 +45,7 @@
   },
   "reliability_note": "an automatic keyword-based protection mechanism can block an account as abnormal usage until the vendor reviews it on request",
   "confidence": "documented",
-  "confidence_note": "the billing notice is dated January 23, 2026; whether the credit is still granted is unverified",
+  "confidence_note": "the endpoint, routes, method and auth scheme are documented on first-party pages and confirmed by keyless probes on 2026-11-18; the probe raises confidence in endpoint liveness only, not in the credit amount or the key value.",
   "evidence": [
     {
       "url": "https://mimo.mi.com/docs/en-US/news/previous-news/billing",
@@ -116,8 +116,45 @@
       "proved": "a news site reports a user received 20 yuan of the free balance; not stated by the vendor",
       "capture": "sha256:0af7bd06ac21e6162ff3790250eafd595b8f40c95ea6b82354ef9b7b00da7835",
       "quote": "有IT之家小伙伴已经领取到了 20 元赠送余额"
+    },
+    {
+      "url": "https://mimo.mi.com/docs/en-US/quick-start/summary/first-api-call",
+      "date": "2026-11-18",
+      "proved": "first-party quickstart states the platform is compatible with OpenAI and Anthropic API formats",
+      "capture": "sha256:4ab9961eedf7733f7a27f4b61e0d74c401a8549e153280be630a967161e2d0d4",
+      "quote": "Xiaomi MiMo API Open Platform is compatible with OpenAI API and Anthropic API formats. You can use existing SDKs to access model inference services."
+    },
+    {
+      "url": "https://mimo.mi.com/docs/en-US/api/chat/openai-api-post",
+      "date": "2026-11-18",
+      "proved": "the first-party chat request address",
+      "capture": "sha256:4c58cbc6b10dc6751d9ad81cca9df073920fbd015cf97d2690d638d65216a68a",
+      "quote": "https://api.xiaomimimo.com/v1/chat/completions"
+    },
+    {
+      "url": "https://mimo.mi.com/docs/en-US/api/model/list-models-get",
+      "date": "2026-11-18",
+      "proved": "the first-party model-list request address",
+      "capture": "sha256:6b0cede614cab4012766622b73f412d5f173196e5688db3e7b748c4c65511cf7",
+      "quote": "https://api.xiaomimimo.com/v1/models"
+    },
+    {
+      "url": "https://mimo.mi.com/docs/en-US/api/chat/anthropic-api-post",
+      "date": "2026-11-18",
+      "proved": "the first-party Anthropic messages address",
+      "capture": "sha256:ef0e181796c3d33a6e88d718a726d68f0acb2cc77a9dfc37ede5a20663d75c0a",
+      "quote": "https://api.xiaomimimo.com/anthropic/v1/messages"
+    },
+    {
+      "url": "https://mimo.mi.com/docs/en-US/quick-start/faq/api-integration",
+      "date": "2026-11-18",
+      "proved": "the two accepted auth header forms and the key gate",
+      "capture": "sha256:b8fef2a3efa97b5fa262ac35bf6d0ca701686882b6f05a600c67b4e8eba14c61",
+      "quote": "When using the model via API, please include your API Key in the request header:`api-key: $MIMO_API_KEY` or `Authorization: Bearer $MIMO_API_KEY`."
     }
   ],
   "verdict": "trial-only",
-  "notes": "overseas first-recharge bonus: USD 0.72 once per account on a first top-up of any amount, valid 40 days; it needs a payment so it is not a card-free credit"
+  "notes": "overseas first-recharge bonus: USD 0.72 once per account on a first top-up of any amount, valid 40 days; it needs a payment so it is not a card-free credit. The first-party inference endpoint is https://api.xiaomimimo.com/v1 (OpenAI) and https://api.xiaomimimo.com/anthropic (Anthropic), confirmed by keyless probes on 2026-11-18; Token Plan and Batch use separate purchase-gated base URLs; the endpoint finding does not change the free-credit verdict.",
+  "endpoint": "https://api.xiaomimimo.com/v1 (OpenAI-compatible); https://api.xiaomimimo.com/anthropic (Anthropic-compatible)",
+  "interface_detail": "The platform is served by the first-party Xiaomi MiMo inference API, compatible with OpenAI Chat Completions and Anthropic Messages formats; chat at POST https://api.xiaomimimo.com/v1/chat/completions, models at GET https://api.xiaomimimo.com/v1/models, Anthropic messages at POST https://api.xiaomimimo.com/anthropic/v1/messages; auth is api-key: $MIMO_API_KEY or Authorization: Bearer $MIMO_API_KEY, with a pay-as-you-go key of format sk-xxxxx created on the Console - API Keys page after sign-in. Token Plan uses token-plan-cn.xiaomimimo.com/v1 and Batch Inference uses batch-api-cn.xiaomimimo.com/v1, and regional base URLs and keys are not interoperable."
 }
