@@ -16,7 +16,7 @@
   "limits_note": "At USD 0.0324 an hour a Medium sandbox costs USD 23.65 for a month, which is more than the USD 19 credit, so the plan cannot hold a Medium up for 730 hours either.",
   "reliability_note": "When the credit is spent, running apps, databases and Sandboxes pause and no new ones can be created; the data is kept but the service stops.",
   "confidence": "documented",
-  "verified_at": "2026-10-24T01:52:56.000Z",
+  "verified_at": "2026-11-18T04:45:12.575Z",
   "price_per_tb_month": null,
   "history": [
     "history/2026-10-22T030705Z/compute-seed-claims-superseded.md"
@@ -97,6 +97,13 @@
       "url": "https://lizard.build/pricing",
       "date": "2026-10-24",
       "proved": "quoted: 'Pro costs $19 a month and includes $19 in monthly credits'; 'Pro starts with a 7-day trial and $5 in trial credits. You need a card to start it, but we charge nothing during the 7 days'; 'Small (2 vCPU, 4 GB RAM) at $0.0162/hour, Medium (4 vCPU, 8 GB RAM) at $0.0324/hour, and Large (8 vCPU, 16 GB RAM) at $0.0648/hour'; 'the included allowance is 2 TB per account over a rolling 30 days'."
+    },
+    {
+      "url": "https://lizard.build/docs/platform/limits/",
+      "date": "2026-11-18",
+      "proved": "the page states the session clock and idle reap recorded here, or states that it publishes none",
+      "capture": "sha256:ccde1a8bec302d0e1d02077793f7c1282fd428a7b44dd93a5ecbc6bc6f92f401",
+      "quote": "A create or fork that sets no lifetime (`timeoutMs` `0`, absent, or Never) gets 1 hour; a longer lifetime returns HTTP 403 with `code` set to `TRIAL_SANDBOX_LIFETIME` and `maxTimeoutMs: 3600000`."
     }
   ],
   "verdict": "trial-only",
@@ -115,10 +122,10 @@
       "rounding_s": 1
     },
     "session_cap": {
-      "wall_clock_min": null,
+      "wall_clock_min": 60,
       "idle_reap_s": null,
       "restart_required": false,
-      "note": "billed 'including idle time'; a pause stops compute charges"
+      "note": "1 hour trial lifetime; the SDK default lifetime is 5 minutes and the timeout is not an idle timer"
     },
     "keep_rate": {
       "value": 0.0,
