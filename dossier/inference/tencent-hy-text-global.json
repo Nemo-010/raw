@@ -18,8 +18,8 @@
     "rest"
   ],
   "history": [],
-  "verified_at": "2026-11-03T11:30:41.454Z",
-  "tooling": "not stated",
+  "verified_at": "2026-11-18T04:36:14.046Z",
+  "tooling": "Tencent Cloud SDK 3.0 (Python/Java/PHP/Go/Node.js/.NET) and CLI 3.0; API Explorer at console.tencentcloud.com/api/explorer?Product=hunyuan&Version=2023-09-01&Action=ChatTranslations. First-party intl SDK: github.com/TencentCloud/tencentcloud-sdk-go-intl-en and tencentcloud-sdk-python-intl-en.",
   "chaining": "the free package covers one translation model only: the product's API lists hunyuan-translation as its model. The other Tencent HY text models (Hy4 preview, Hy3, Hy-MT2-Pro, Hy-MT2-Plus, Hy-MT2-Lite) are sold on TokenHub, whose international edition grants each root account a one-time free trial of 1 million tokens for every language model, valid 1 year on the billing page (a promotion page states a shorter validity), and freezes 10 USD against the account balance or credit limit on each claim",
   "free_tier": {
     "stated": "A one-time free resource package of 1M tokens for Hunyuan-translation only, shared consumption, valid for 1 year from service activation and deducted before postpaid billing. After the package is used up or expires the service does not switch to postpaid on its own, and calls return a billing error until postpaid is enabled",
@@ -39,6 +39,11 @@
       "kind": "retention-clamped",
       "value": "the package expires 1 year after service activation and unused tokens become invalid",
       "source": "https://staticintl.cloudcachetci.com/doc/pdf/product/pdf/1284_75280_en.pdf"
+    },
+    {
+      "kind": "request-rate",
+      "value": "documented default per-account concurrency 5 and frequency limit 20 requests/second on the ChatTranslations action, as stated in the API docs",
+      "source": "https://intl.cloud.tencent.com/document/api/1284/77188"
     }
   ],
   "binding": "volume-quota",
@@ -50,7 +55,7 @@
   },
   "reliability_note": "not assessed: no request was sent to the endpoint",
   "confidence": "documented",
-  "confidence_note": "the quota terms are read from the vendor's own purchase-guide PDF dated 2026-01-27 for the global product; the sign-up pages were read, and whether the activation enforces identity verification for a non-mainland account is unverified: behind a sign-up",
+  "confidence_note": "endpoint domain, method, action, version and TC3 auth are quoted from first-party Tencent Cloud docs and the API PDF; two unauthenticated probes returned Tencent Cloud API v3 MissingParameter errors, confirming live hosts; the API key, activation/identity gate and any successful translation response are unverified: behind a sign-up.",
   "evidence": [
     {
       "url": "https://staticintl.cloudcachetci.com/doc/pdf/product/pdf/1284_75280_en.pdf",
@@ -226,8 +231,45 @@
       "proved": "the Chinese edition of the global purchase guide gives the Hunyuan-translation package as 100万 (1,000,000) tokens, shared, valid 1 year",
       "capture": "sha256:6136600a2a26f66b07f20f944bed6fdaad3ccde41517c424ee3963e337d50d2f",
       "quote": "Hunyuan-translation 共100万 tokens，共享消耗。 资源包有效期为1年，⾃开通服务之⽇起1年内若免费资源包未使⽤完，则过期作废。"
+    },
+    {
+      "url": "https://intl.cloud.tencent.com/document/api/1284/77188",
+      "date": "2026-11-18",
+      "proved": "the first-party API page names the request domain for the ChatTranslations (hunyuan-translation) action",
+      "capture": "sha256:072705017d1e4dad6b9f6319288778306b1206e7e690f3395f89bca99a1ad17d",
+      "quote": "Domain name for API request: hunyuan.ai.intl.tencentcloudapi.com."
+    },
+    {
+      "url": "https://intl.cloud.tencent.com/document/api/1284/77188",
+      "date": "2026-11-18",
+      "proved": "the worked example uses POST / with X-TC-Action: ChatTranslations and the nearest-region host",
+      "capture": "sha256:072705017d1e4dad6b9f6319288778306b1206e7e690f3395f89bca99a1ad17d",
+      "quote": "POST / HTTP/1.1\nHost: hunyuan.intl.tencentcloudapi.com\nContent-Type: application/json\nX-TC-Action: ChatTranslations"
+    },
+    {
+      "url": "https://www.tencentcloud.com/document/product/1284/75533",
+      "date": "2026-11-18",
+      "proved": "the global/nearest-region host and fixed-region alternatives are documented",
+      "capture": "sha256:45a823c276ee877a02fee6373ec51d350b8d68920db16afe3753cadc351e93a6",
+      "quote": "The API supports access from either a nearby region (at hunyuan.intl.tencentcloudapi.com) or a specified region (at hunyuan.ap-guangzhou.tencentcloudapi.com for Guangzhou, for example)."
+    },
+    {
+      "url": "https://www.tencentcloud.com/document/product/1284/75534",
+      "date": "2026-11-18",
+      "proved": "auth is the TC3-HMAC-SHA256 signature placed in HTTP headers, with a SecretId/SecretKey pair",
+      "capture": "sha256:87a36fb92eaac49af7091a95886fc29584a21b56a2c390c2988c382a121f9231",
+      "quote": "When the TC3-HMAC-SHA256 algorithm is used, the common parameters should be uniformly placed in the HTTP request header"
+    },
+    {
+      "url": "https://intl.cloud.tencent.com/zh/document/product/1284/77188",
+      "date": "2026-11-18",
+      "proved": "the Chinese-language first-party page states the same request domain",
+      "capture": "sha256:463ade0f5774ab84b1ba9030d2d6cd74f04b219f454ee01d347f5f6be0f367b7",
+      "quote": "接口请求域名： hunyuan.ai.intl.tencentcloudapi.com 。"
     }
   ],
   "verdict": "trial-only",
-  "notes": "postpaid list price after the package: USD 0.2571 input and USD 0.7714 output per million tokens for Hunyuan-translation; the English edition's free-quota table reads 100M tokens, while the Chinese edition reads 100万 (1,000,000) tokens and the English worked example consumes the package at 1 million tokens, so 1M is the figure held"
+  "notes": "the endpoint was identified as the Hunyuan Cloud API 3.0 gateway; the worked example uses Host: hunyuan.intl.tencentcloudapi.com while the API-Description domain is hunyuan.ai.intl.tencentcloudapi.com; both probed live with unauthenticated MissingParameter errors. The mainland counterpart (hunyuan.ai.tencentcloudapi.com, product 1729) is in pre-decommission state per the Chinese docs and is not this global product.",
+  "endpoint": "https://hunyuan.ai.intl.tencentcloudapi.com/ (API request domain); nearest-region alternative https://hunyuan.intl.tencentcloudapi.com/; POST / with X-TC-Action: ChatTranslations, Version 2023-09-01, TC3-HMAC-SHA256 auth; fixed-region forms like hunyuan.ap-guangzhou.tencentcloudapi.com exist",
+  "interface_detail": "Tencent Cloud API 3.0 (TC3-HMAC-SHA256 signed REST, JSON over HTTPS), not OpenAI-compatible. Action ChatTranslations serves model hunyuan-translation (Chinese page also lists hunyuan-translation-lite). Body carries Model, Stream, Text, Source, Target, Field, References.N, GlossaryIDs.N; streaming uses SSE."
 }
