@@ -18,8 +18,8 @@
     "rest"
   ],
   "history": [],
-  "verified_at": "2026-11-03T11:30:35.839Z",
-  "tooling": "not stated",
+  "verified_at": "2026-11-18T04:36:11.716Z",
+  "tooling": "official arkruntime SDK (Python/Go/Java) or any OpenAI-compatible client, each configured with base URL https://ark.ap-southeast.bytepluses.com/api/v3 and an API key",
   "chaining": "each model carries its own quota, so one account holds several separate pools; Free Tokens Only mode stops service at the quota and cannot accrue a charge",
   "free_tier": {
     "stated": "A one-time free inference quota per model, 500K tokens per model, granted to new users on registration. It is calculated separately for each model and shared under the primary account, offsets pay-as-you-go online inference tokens only, and in Free Tokens Only mode the service is suspended near the quota so no fee accrues. The activity page states the quota does not expire but is subject to change",
@@ -45,12 +45,12 @@
   "binding_note": "the per-model 500K token quota is the only stated cap",
   "identity_cost": {
     "kind": "email",
-    "detail": "The sign-up form asks for email, username and password, or Google or GitHub sign-in. The quota page says to register and authenticate as a BytePlus user; the help centre says individual accounts reach a limited subset of products, business accounts need a business license and company details, and a valid credit card may be required to activate pay-as-you-go models; Free Tokens Only mode is open to identity-verified personal accounts and enterprise accounts; the campaign terms require enterprise information submission and judge uniqueness from email verification, ID documents, domain names, mobile numbers, devices and IP addresses. unverified: whether a card, phone number or identity verification is required before the quota is granted, which only an account shows",
+    "detail": "Obtaining an API key and activating a model is required before any inference call. The sign-up form asks for email, username and password, or Google or GitHub sign-in. The quota page says to register and authenticate as a BytePlus user; the help centre says individual accounts reach a limited subset of products, business accounts need a business license and company details, and a valid credit card may be required to activate pay-as-you-go models; Free Tokens Only mode is open to identity-verified personal accounts and enterprise accounts; the campaign terms require enterprise information submission and judge uniqueness from email verification, ID documents, domain names, mobile numbers, devices and IP addresses. unverified: whether a card, phone number or identity verification is required before the quota is granted, which only an account shows",
     "country": null
   },
   "reliability_note": "a separate Data Collaboration Rewards Campaign advertising 5M tokens daily per model behind real-name verification: the campaign page calls it an ongoing benefit while the activity page carries an earlier stated end date; daily resource pack distribution for 18 models, among them Seed 2.0 pro, lite and mini, Seed 1.6, 1.8, DeepSeek V3.2 and V4 pro and flash GA, ended on October 8, 2026",
   "confidence": "documented",
-  "confidence_note": "quota size and scope are documented; the identity requirement is unverified beyond the quoted terms",
+  "confidence_note": "The endpoint, method and auth are first-party documented and the unauthenticated 401 was observed, while the keyed 400 on the old Coding Plan path and all account-only quota values remain unverified: behind a sign-up.",
   "evidence": [
     {
       "url": "https://ai.byteplus.com/ark/region:ap-southeast-1/docs/free-inference-quota",
@@ -261,8 +261,31 @@
       "proved": "the quota is per model and shared under the primary account",
       "capture": "sha256:bdd3ccfbd3d7380bddce592db7a52659680f90b35e99c31e30c73181221750a8",
       "quote": "Free inference quota is calculated separately for different models and shared under the primary account."
+    },
+    {
+      "url": "https://ai.byteplus.com/ark/region:ap-southeast-1/docs/free-inference-quota",
+      "date": "2026-11-18",
+      "proved": "the quota requires registration",
+      "capture": "sha256:bdd3ccfbd3d7380bddce592db7a52659680f90b35e99c31e30c73181221750a8",
+      "quote": "ModelArk offers new users a free inference trial quota, allowing them to get started at no cost. Simply register BytePlus to get a certain amount of free calls to the model inference service."
+    },
+    {
+      "url": "https://ai.byteplus.com/ark/region:ap-southeast-1/docs/free-inference-quota",
+      "date": "2026-11-18",
+      "proved": "the quota page makes the sign-up gate explicit",
+      "capture": "sha256:bdd3ccfbd3d7380bddce592db7a52659680f90b35e99c31e30c73181221750a8",
+      "quote": "[Register and authenticate](https://console.byteplus.com/auth/signup) as a BytePlus user."
+    },
+    {
+      "url": "https://ai.byteplus.com/ark/region:ap-southeast-1/docs/free-tokens-only-mode",
+      "date": "2026-11-18",
+      "proved": "Free Tokens Only mode is account-scoped and consumes only the 500k platform quota",
+      "capture": "sha256:f83a88050792368328ac696be5582be26c01789e3ca5825963fac1a483dae9f8",
+      "quote": "In this mode, calls to the inference API consume only the 500k free tokens granted by the platform. When the free quota is nearly exhausted, the service will be automatically paused to prevent any additional charges."
     }
   ],
   "verdict": "trial-only",
-  "notes": "the quota is per model and per primary account; the free-trial page lists DeepSeek V3.1 and GPT-OSS-120B among the 500K-token models"
+  "notes": "the quota is per model and per primary account; the free-trial page lists DeepSeek V3.1 and GPT-OSS-120B among the 500K-token models The correct free-quota endpoint is the data-plane /api/v3 base, not the Coding Plan /api/coding/v3 base; an old/incorrect Coding Plan path returns `400 InvalidSubscription Coding Plan is not active` for a free key per a third-party report (unverified here, no keyed call made), while unauthenticated probing of both paths returns 401.",
+  "endpoint": "https://ark.ap-southeast.bytepluses.com/api/v3",
+  "interface_detail": "The free quota is spent through the OpenAI-compatible Chat API POST /api/v3/chat/completions (and the Responses API POST /api/v3/responses), with Content-Type: application/json and Authorization: Bearer <ARK_API_KEY>; the model field takes an activated model ID or custom endpoint ID. The EU equivalent base URL is https://ark.eu-west.bytepluses.com/api/v3 and endpoints are region-isolated. The Coding Plan base https://ark.ap-southeast.bytepluses.com/api/coding/v3 is a different, wrong endpoint for this key type."
 }
