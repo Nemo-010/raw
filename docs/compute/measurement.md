@@ -122,7 +122,7 @@ answered for the records that were read and carried as a gap for the rest. The t
 counts below are rendered from the records.
 
 <!-- generated:start topic=compute kind=totals fields=has:extras.network_out,has:extras.session_cap,has:extras.persistent_storage labels=network_out,session_cap,persistent_storage -->
-network_out 298; session_cap 542; persistent_storage 77
+network_out 298; session_cap 552; persistent_storage 77
 <!-- generated:end -->
 
 **Egress.** The schema has an `egress` field, structured rather than the string
