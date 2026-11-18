@@ -172,14 +172,14 @@ store for the list: `scripts/fr sql "SELECT rid, verdict FROM record WHERE topic
 <!-- generated:start topic=inference kind=breakdown field=verdict label=verdict sort=value order=qualifies,qualifies-with-caveat,trial-only,fails-quota,fails-identity,paid-only,dead -->
 | verdict | Records |
 | --- | --- |
-| `qualifies` | 1 |
-| `qualifies-with-caveat` | 39 |
-| `trial-only` | 26 |
+| `qualifies` | 4 |
+| `qualifies-with-caveat` | 41 |
+| `trial-only` | 32 |
 | `fails-quota` | 3 |
-| `fails-identity` | 7 |
-| `paid-only` | 20 |
+| `fails-identity` | 8 |
+| `paid-only` | 21 |
 | `dead` | 12 |
-| **all** | 108 |
+| **all** | 121 |
 <!-- generated:end -->
 
 ## Records that no other document names
@@ -190,34 +190,46 @@ Each `measured` or `documented` record of this topic that no other document of `
 | record | provider | verdict | confidence |
 | --- | --- | --- | --- |
 | `aion-labs` | Aion Labs | qualifies-with-caveat | documented |
+| `augure` | Augure | qualifies | documented |
 | `bazaarlink` | BazaarLink | qualifies-with-caveat | documented |
 | `contextual-ai-rerank` | Contextual AI reranker API | trial-only | documented |
 | `coze` | Coze | trial-only | documented |
 | `dahl-inference` | Dahl Inference | trial-only | documented |
 | `deepl-api-developer` | DeepL API (Developer plan) | trial-only | documented |
 | `deepl-api-free` | DeepL API (Free plan) | dead | documented |
+| `empiriolabs` | EmpirioLabs AI | qualifies | documented |
 | `fireworks-ai-serverless` | Fireworks AI | paid-only | documented |
+| `freemodel` | FreeModel | qualifies | documented |
 | `friendli-ai` | FriendliAI Model APIs | paid-only | documented |
 | `glhf` | GLHF (glhf.chat) | dead | measured |
 | `google-cloud-translation` | Google Cloud Translation | qualifies-with-caveat | documented |
+| `graphn` | GraphN | trial-only | documented |
+| `greenpt` | GreenPT | trial-only | documented |
 | `grokified` | Grokified | trial-only | documented |
+| `helicone` | Helicone | trial-only | documented |
 | `ibm-watsonx-ai-free` | IBM watsonx.ai (Free / Lite plan) | qualifies-with-caveat | documented |
+| `infersia` | Infersia | qualifies-with-caveat | documented |
 | `iteracompute` | IteraCompute | qualifies-with-caveat | documented |
 | `jina-ai-embeddings-reranker` | Jina AI embeddings and reranker API | trial-only | documented |
 | `lambda-inference` | Lambda Inference API | dead | measured |
 | `langsearch-rerank-api` | LangSearch Rerank API | dead | documented |
 | `libretranslate-hosted` | LibreTranslate hosted (libretranslate... | paid-only | documented |
 | `llamaparse-free` | LlamaParse | qualifies-with-caveat | documented |
+| `mallard` | Mallard AI | trial-only | documented |
 | `mathpix-ocr-api` | Mathpix OCR API | paid-only | documented |
+| `meragpt` | meraGPT | trial-only | documented |
 | `mixedbread-search-starter` | Mixedbread (managed search with reran... | trial-only | documented |
+| `modelis` | Modelis | qualifies-with-caveat | documented |
 | `moonshot-kimi-api-international` | Moonshot Kimi API Platform international | paid-only | documented |
 | `nebius-token-factory` | Nebius Token Factory | trial-only | documented |
+| `neuralwatt` | Neuralwatt | fails-identity | documented |
 | `nlp-cloud` | NLP Cloud | fails-identity | documented |
 | `nous-portal-free` | Nous Portal | qualifies-with-caveat | documented |
 | `novita-llm-api` | Novita LLM API | qualifies-with-caveat | documented |
 | `onomeo` | onomeo | paid-only | documented |
 | `pinecone-inference` | Pinecone Inference (embeddings and re... | qualifies-with-caveat | documented |
 | `qdrant-cloud-inference` | Qdrant Cloud Inference (free models o... | qualifies-with-caveat | documented |
+| `qiniu-ai` | Qiniu | paid-only | documented |
 | `reducto-standard` | Reducto | trial-only | documented |
 | `tetrate-agent-router-service` | Tetrate Agent Router Service | trial-only | documented |
 | `token-harbor` | Token Harbor | qualifies-with-caveat | documented |
