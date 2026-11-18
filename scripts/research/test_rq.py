@@ -833,6 +833,20 @@ def tools_inbox_case():
         ok(not inbox.due(d, minutes=30) and inbox.due(d, minutes=0), "inbox: a read is due only after inbox_minutes")
         ok("1 open [raw] issue" in (inbox.line(s2) or "") and inbox.line(s3) is None,
            "inbox: one line when an issue is open, none when the inbox is empty")
+        import contextlib
+        import io
+        w = tempfile.mkdtemp(prefix="rq-watch-", dir=d)
+        one = rows()[:1]
+        plan = [[("f", lambda: one)], [("f", bad)], [("f", bad)],
+                [("f", lambda: [dict(one[0], updated_at="2026-11-19T00:00:00Z")])], [("f", lambda: [])], [("f", lambda: [])]]
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            inbox.watch(w, minutes=0, plan=plan)
+        got = buf.getvalue().splitlines()
+        ok(len(got) == 5 and "#7 new" in got[0] and got[1].startswith("inbox: unread") and "read again" in got[2]
+           and "#7 changed" in got[3] and "#7 closed" in got[4],
+           "inbox --watch: one line per event (the open issue, an outage once, the recovery, an edit, a close), none "
+           "for a read that changed nothing (%s)" % got)
     finally:
         shutil.rmtree(d, ignore_errors=True)
 

@@ -238,7 +238,48 @@ def auto(repo=REPO):
         print(ln, file=sys.stderr)
 
 
+def watch(repo=REPO, minutes=None, plan=None):
+    """The merge session's background job: read the inbox every inbox_minutes, for as long as it runs, and print one
+    line on stdout per event (an issue new, edited or closed since the last read, or the inbox unread, or read again),
+    flushed at once, so a monitor that turns each line into a notification wakes the session. Nothing is printed for a
+    read that changed nothing. It never exits on a failed read."""
+    minutes = float(SETTINGS.get("inbox_minutes", 30) if minutes is None else minutes)
+    was_unread = False
+    first = True
+    while plan is None or plan:
+        routes = plan.pop(0) if plan is not None else None
+        try:
+            st = check(repo, force=True, routes=routes)
+            ev = []
+            if was_unread:
+                ev.append("inbox: read again via %s" % st.get("route"))
+            was_unread = False
+            items = st.get("items") or {}
+            # the first read names every open issue, so a session that starts the watcher learns what waits
+            shown = sorted(items, key=int) if first else [str(n) for n in (st.get("new") or []) + (st.get("changed") or [])]
+            for n in shown:
+                it = items[n]
+                tag = "new" if it["number"] in (st.get("new") or []) else "changed" if it["number"] in (st.get("changed") or []) else "open"
+                ev.append("inbox: #%s %s, updated %s: %s %s" % (n, tag, it["updated_at"], it["title"], it["url"]))
+            for n in st.get("gone") or []:
+                ev.append("inbox: #%d closed or retitled since the last read" % n)
+            if first and not items:
+                ev.append("inbox: watching %s for open [raw] issues every %g min; none open now" % (PUBLIC, minutes))
+        except Fail as e:
+            ev = [] if was_unread else ["inbox: unread: %s" % str(e)[:300]]
+            was_unread = True
+        first = False
+        for ln in ev:
+            print(ln, flush=True)
+        if plan is not None:
+            continue
+        time.sleep(minutes * 60)  # wait: poll, the watcher's cadence (inbox_minutes); scripts/rq inbox reads at any time
+
+
 def cmd(a):
+    if a.watch:
+        watch(REPO, a.minutes)
+        return 0
     st = check(REPO, force=not a.cached)
     if a.json:
         print(json.dumps(st, ensure_ascii=False, indent=2))

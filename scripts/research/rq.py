@@ -1011,6 +1011,9 @@ def main(argv=None):
     p = sp.add_parser("inbox", help="the open [raw] issues of the public repository: work filed there for this one")
     p.add_argument("--json", action="store_true", help="the whole record, bodies included")
     p.add_argument("--cached", action="store_true", help="read again only when inbox_minutes have passed")
+    p.add_argument("--watch", action="store_true", help="the merge session's background job: read every inbox_minutes "
+                   "and print one line per new, edited or closed [raw] issue, for a monitor to notify on")
+    p.add_argument("--minutes", type=float, help="with --watch: the cadence, default inbox_minutes")
     p.set_defaults(f=inbox.cmd)
     a = ap.parse_args(argv)
     try:
