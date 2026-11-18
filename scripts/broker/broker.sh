@@ -63,6 +63,19 @@ BROKER_STATUS="${BROKER_STATUS:-https://web.pkgforge.dev/status.json}"
 
 CURL_TIMEOUT="${BROKER_TIMEOUT:-45}"
 CURL_CONNECT_TIMEOUT="${BROKER_CONNECT_TIMEOUT:-10}"
+# The route to the broker. curl follows the environment's proxy (https_proxy, HTTPS_PROXY, all_proxy) and its
+# NO_PROXY list, so a machine whose only way out is a proxy reaches the broker; a machine with no proxy set goes
+# direct, as before. Loopback is never sent to a proxy, so a local stub (the selftests) is reached direct.
+# BROKER_PROXY=URL sends every request through that proxy; BROKER_NOPROXY=1 sends every request direct, whatever
+# the environment says.
+if [ "${BROKER_NOPROXY:-0}" = "1" ]; then
+  CURL_PROXY=(--noproxy '*')
+elif [ -n "${BROKER_PROXY:-}" ]; then
+  CURL_PROXY=(--proxy "$BROKER_PROXY" --noproxy '127.0.0.1,localhost,::1')
+else
+  BROKER_NP="${NO_PROXY:-${no_proxy:-}}"
+  CURL_PROXY=(--noproxy "${BROKER_NP:+$BROKER_NP,}127.0.0.1,localhost,::1")
+fi
 # $PYTHON when set, else python3 when the shell finds one that is not the Windows Store stub (Debian, Ubuntu and
 # macOS ship only python3), else python. No Python is started to test one: every start costs a process.
 PY="${PYTHON:-}"
@@ -128,7 +141,7 @@ require_http_url() {
 # The broker's own refusals are RFC 9457 problem+json; an origin's are passed through.
 classify_body() {
   local status="$1" body="$2" headers="$3" ctype
-  ctype="$(awk 'BEGIN{IGNORECASE=1} /^content-type:/{sub(/^[^:]*:[ ]*/,"");print;exit}' "$headers" 2>/dev/null | tr -d '\r')"
+  ctype="$(awk 'tolower($0) ~ /^content-type:/{sub(/^[^:]*:[ ]*/,"");print;exit}' "$headers" 2>/dev/null | tr -d '\r')"
   case "$status" in
     200|201|202|206|204|301|302|303|304|307|308|401|403|404|405|409|410|413|415|416|422|451)
       return 0 ;;
@@ -174,7 +187,7 @@ classify_body() {
 # from now), or nothing when there is none. The only pacing of this script comes from the server.
 retry_after() {
   local v then now
-  v="$(awk 'BEGIN{IGNORECASE=1} /^retry-after:/{sub(/^[^:]*:[ ]*/,"");gsub(/\r/,"");print;exit}' "$1" 2>/dev/null)"
+  v="$(awk 'tolower($0) ~ /^retry-after:/{sub(/^[^:]*:[ ]*/,"");gsub(/\r/,"");print;exit}' "$1" 2>/dev/null)"
   [ -n "$v" ] || return 0
   case "$v" in
     *[!0-9]*) ;;
@@ -192,7 +205,7 @@ http_get() {
   local url="$1" out="${2:-}" hdr="$TMPDIR_BROKER/h"
   local status rc_c ra
   while :; do
-    status="$(curl -q -sS -L --noproxy '*' \
+    status="$(curl -q -sS -L "${CURL_PROXY[@]}" \
         --connect-timeout "$CURL_CONNECT_TIMEOUT" --max-time "$CURL_TIMEOUT" \
         -D "$hdr" -w '%{http_code}' -o "${out:-$TMPDIR_BROKER/b}" "$url" 2>"$TMPDIR_BROKER/e")" || {
       local rc=$?
@@ -288,7 +301,7 @@ cmd_fetch() {
   # fetch is the one subcommand that must emit raw bytes, so it drives curl
   # itself rather than going through http_get's captured-body path.
   local status
-  status="$(curl -q -sS -L --noproxy '*' \
+  status="$(curl -q -sS -L "${CURL_PROXY[@]}" \
      --connect-timeout "$CURL_CONNECT_TIMEOUT" --max-time "$CURL_TIMEOUT" \
      "${cargs[@]}" "${extra[@]}" -D "$TMPDIR_BROKER/fh" \
      -w '%{http_code}' -o "$TMPDIR_BROKER/fb" "${BROKER_FETCH}${q}")" || exit 3
@@ -393,7 +406,7 @@ cmd_archive() {
     closest)
       http_get "${BROKER_ARCHIVE}/closest?${q}" ;;
     save)
-      curl -q -sS --noproxy '*' --max-time "$CURL_TIMEOUT" -X POST \
+      curl -q -sS "${CURL_PROXY[@]}" --max-time "$CURL_TIMEOUT" -X POST \
         -D "$TMPDIR_BROKER/ah" -o "$TMPDIR_BROKER/ab" -w '%{http_code}' \
         "${BROKER_ARCHIVE}/save?${q}" > "$TMPDIR_BROKER/as" || exit 3
       classify_body "$(cat "$TMPDIR_BROKER/as")" "$TMPDIR_BROKER/ab" "$TMPDIR_BROKER/ah" || true
@@ -475,7 +488,7 @@ PY
   local addp=""
   [ -n "$provider" ] && addp="?provider=$provider"
   local status
-  status="$(curl -q -sS --noproxy '*' --max-time "$CURL_TIMEOUT" -X POST \
+  status="$(curl -q -sS "${CURL_PROXY[@]}" --max-time "$CURL_TIMEOUT" -X POST \
     -H 'content-type: application/json' -d "$body" \
     -D "$TMPDIR_BROKER/ch" -o "$TMPDIR_BROKER/cb" -w '%{http_code}' \
     "${BROKER_CRAWL}/crawl${addp}")" || exit 3
@@ -483,7 +496,7 @@ PY
   if [ "$poll" = "0" ]; then cat "$TMPDIR_BROKER/cb"; printf '\n'; return 0; fi
 
   local loc
-  loc="$(awk 'BEGIN{IGNORECASE=1} /^location:/{sub(/^[^:]*:[ ]*/,"");gsub(/\r/,"");print;exit}' "$TMPDIR_BROKER/ch")"
+  loc="$(awk 'tolower($0) ~ /^location:/{sub(/^[^:]*:[ ]*/,"");gsub(/\r/,"");print;exit}' "$TMPDIR_BROKER/ch")"
   if [ -z "$loc" ]; then
     "$PY" -c 'import json,sys; d=json.load(open(sys.argv[1])); print(d.get("job_id") or d.get("id") or "")' \
       "$TMPDIR_BROKER/cb" > "$TMPDIR_BROKER/loc" 2>/dev/null
@@ -495,7 +508,7 @@ PY
   local waited=0 state="" pause="$interval" ra
   while :; do
     sleep "$pause"; waited=$((waited + pause))  # wait: poll, the crawl job runs on the broker (its Retry-After when it sends one)
-    status="$(curl -q -sS --noproxy '*' --max-time "$CURL_TIMEOUT" \
+    status="$(curl -q -sS "${CURL_PROXY[@]}" --max-time "$CURL_TIMEOUT" \
       -D "$TMPDIR_BROKER/ph" -o "$TMPDIR_BROKER/pb" -w '%{http_code}' "$poll_url")" || exit 3
     classify_body "$status" "$TMPDIR_BROKER/pb" "$TMPDIR_BROKER/ph" || true
     ra="$(retry_after "$TMPDIR_BROKER/ph")"
