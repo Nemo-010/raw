@@ -19,8 +19,8 @@
   ],
   "history": [],
   "reliability_note": "anonymous requests are the first restricted under high load, and a job not served within the time limit times out",
-  "confidence": "documented",
-  "verified_at": "2026-10-28T04:36:19.314Z",
+  "confidence": "measured",
+  "verified_at": "2026-11-18T04:36:11.147Z",
   "free_tier": {
     "stated": "Text generation on volunteer GPUs with no account: the README gives API key 0000000000 for anonymous use and 'No need to register'. Anonymous requests have the lowest priority and the service 'may be restricted for anonymous users during high load'. Kudos never expire.",
     "unit": "none",
@@ -28,8 +28,8 @@
     "source_url": "https://raw.githubusercontent.com/Haidra-Org/AI-Horde/main/README.md",
     "read_on": "2026-10-28"
   },
-  "endpoint": "https://aihorde.net/api/",
-  "tooling": "REST API at https://aihorde.net/api/; any client that sends the key 0000000000 for anonymous use",
+  "endpoint": "https://aihorde.net/api/v2/generate/text/async",
+  "tooling": "REST/curl POST with apikey: 0000000000 for anonymous use; Python horde-sdk or any HTTP client; base URL https://aihorde.net/api",
   "chaining": "text jobs are served by whichever volunteer worker hosts the requested model, so the per-model queue ETA, not a quota, decides latency",
   "limits": [
     {
@@ -41,6 +41,11 @@
       "kind": "request-rate",
       "value": "per-model queue ETA across the 28 listed text models ran from 0 seconds to 516 seconds",
       "source": "https://aihorde.net/api/v2/status/models?type=text"
+    },
+    {
+      "kind": "request-rate",
+      "value": "2 submits a second and 90 a minute from one address, 2 submits a second for one personal key, and 60 status reads a minute for one request from one address; Retry after the Retry-After header. Anonymous clients share one limit on concurrent requests and can get 429 TooManyPrompts.",
+      "source": "https://haidra-org.github.io/AI-Horde/how-to/send_text_generation_requests/"
     }
   ],
   "binding": "request-rate",
@@ -50,7 +55,7 @@
     "detail": "the API key 0000000000 needs no registration; a registered account (OAuth2 login or a pseudonymous key) gets higher priority",
     "country": null
   },
-  "confidence_note": "that an anonymous generation completes with the key 0000000000 is documented and not measured; the pool figures are first-party API listings read once",
+  "confidence_note": "Route, method, request shape and anonymous key are quoted from first-party pages read 2026-11-18; the OpenAPI spec was captured. A dry-run POST answered HTTP 200 and a real submit with the anonymous key answered HTTP 202 and reached done true with a state ok generation, so an anonymous completion is measured. The pool figures in limits[] remain point-in-time listings read once.",
   "evidence": [
     {
       "url": "https://raw.githubusercontent.com/Haidra-Org/AI-Horde/main/README.md",
@@ -128,8 +133,37 @@
       "proved": "a keyless POST on 2026-11-10 answered HTTP 405 at the recorded base URL, so the endpoint is not a completion route",
       "capture": "sha256:5539492a46abeb2fe344ac04c19c43d195a6688a22cef999ef8dbef766e611e2",
       "quote": "\"status\": 405"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Haidra-Org/AI-Horde/main/README_integration.md",
+      "date": "2026-11-18",
+      "proved": "the first-party integration README names the text submit route",
+      "capture": "sha256:092e70e696437a953c8be4b4df33417f298a9631b6de1d4a0f8d139ca1b1b6b9",
+      "quote": "1. Initiate the request: `api/v2/generate/text/async`"
+    },
+    {
+      "url": "https://haidra-org.github.io/AI-Horde/how-to/send_text_generation_requests/",
+      "date": "2026-11-18",
+      "proved": "submit route, poll route and where the generated text is read",
+      "capture": "sha256:2b9204cdf67f7303c3b60d136582232bcf0bc703f3c6f0608defb4dd8dc6e74c",
+      "quote": "The client submits it with `POST /v2/generate/text/async`, polls `GET /v2/generate/text/status/<id>` until `done` is true, and reads the text from `generations`."
+    },
+    {
+      "url": "https://aihorde.net/api/swagger.json",
+      "date": "2026-11-18",
+      "proved": "the first-party OpenAPI spec defines the POST operation at /v2/generate/text/async; no synchronous /generate/text path is defined",
+      "capture": "sha256:27461672509050a4ce92e8b245aab915b0231828cc85e52219b5aa65f018eb3c",
+      "quote": "Initiate an Asynchronous request to generate text"
+    },
+    {
+      "url": "https://haidra-org.github.io/AI-Horde/how-to/send_text_generation_requests/",
+      "date": "2026-11-18",
+      "proved": "the apikey header is required and the anonymous key is 0000000000",
+      "capture": "sha256:2b9204cdf67f7303c3b60d136582232bcf0bc703f3c6f0608defb4dd8dc6e74c",
+      "quote": "| `apikey` | Your API key, or `0000000000` for anonymous use. The header is required, so an anonymous client sends the anonymous key explicitly. |"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "notes": "Image generation on the same network is a separate offer (compute/ai-horde). The text catalogue changes with whichever volunteers are online."
+  "notes": "Image generation on the same network is a separate offer (compute/ai-horde). The text catalogue changes with whichever volunteers are online. The HTTP 405 recorded against https://aihorde.net/api/ is a wrong-method response from the API docs root; the text completion route is POST https://aihorde.net/api/v2/generate/text/async. An anonymous completion was obtained on 2026-11-18 with the public key 0000000000.",
+  "interface_detail": "REST async text generation; POST a JSON body with prompt and params to https://aihorde.net/api/v2/generate/text/async with an apikey header (0000000000 for anonymous), then GET https://aihorde.net/api/v2/generate/text/status/<id> to read generations[].text; DELETE the same status path cancels; an OpenAI-compatible chat front is also served at https://oai.aihorde.net/v1"
 }
