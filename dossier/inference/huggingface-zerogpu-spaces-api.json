@@ -26,8 +26,8 @@
   "interface": [
     "rest"
   ],
-  "interface_detail": "the Gradio API of a public Space, called with gradio_client.Client(space_id, token=...).predict()",
-  "tooling": "gradio_client (pip install --upgrade gradio_client); huggingface_hub for the token",
+  "interface_detail": "the Gradio API of a public Space, called with gradio_client.Client(space_id, token=...).predict(); gradio_client resolves a Space id to *.hf.space. Raw REST routes are schema GET /gradio_api/info or /gradio_api/openapi.json, call POST /gradio_api/call/v2/<api_name>, poll GET /gradio_api/call/<api_name>/<event_id>.",
+  "tooling": "gradio_client (pip install --upgrade gradio_client); huggingface_hub for the token; raw curl against the *.hf.space host",
   "chaining": "the hosting side of the same GPU pool is recorded at compute/huggingface-spaces-zerogpu; duplicating a Space to a private one moves the cost to the caller's account",
   "limits": [
     {
@@ -37,7 +37,7 @@
     },
     {
       "kind": "request-rate",
-      "value": "a public Space used as an API may be rate limited by Hugging Face if too many requests are made; no number is published",
+      "value": "a public Space used as an API may be rate limited by Hugging Face if too many requests are made; no number is published. An Authorization: Bearer token gives better rate limits on public Spaces and charges the caller's GPU quota; anonymous calls use a shared pool with stricter limits.",
       "source": "https://www.gradio.app/guides/getting-started-with-the-python-client"
     }
   ],
@@ -50,7 +50,7 @@
   },
   "reliability_note": "quota left lowers queue priority, and whether a gradio_client call made with a token is counted against that account's quota is not stated on the pages read",
   "confidence": "documented",
-  "confidence_note": "the daily quota table is quoted from the vendor documentation; no Space was called",
+  "confidence_note": "the endpoint pattern is quoted from first-party HF docs and confirmed on a live ZeroGPU Space schema; no completion was called, which does not raise confidence above documented.",
   "evidence": [
     {
       "url": "https://huggingface.co/docs/hub/en/spaces-zerogpu",
@@ -93,9 +93,38 @@
       "capture": "sha256:8a90d469d8566c355d893f13f1aad48eb103eca956ffcd588f05e9c923a6bf0b",
       "quote": "client = Client(\"abidlabs/my-private-space\", token=\"...\")",
       "proved": "the Gradio client takes a Hugging Face token with the token parameter"
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/en/spaces-api-endpoints",
+      "date": "2026-11-18",
+      "proved": "the per-Space Gradio API host is the endpoint",
+      "capture": "sha256:52aac4ee84caa27c9f387b6a2f8af89ae2b0a28b96f4fa78386d6b291bf7484e",
+      "quote": "Every Gradio Space on Hugging Face is automatically available as an API endpoint. You can call it from Python, JavaScript, or any HTTP client. If you can use a Space in your browser, you can call it as an API."
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/en/spaces-api-endpoints",
+      "date": "2026-11-18",
+      "proved": "the OpenAPI schema route pattern",
+      "capture": "sha256:52aac4ee84caa27c9f387b6a2f8af89ae2b0a28b96f4fa78386d6b291bf7484e",
+      "quote": "https://<space-subdomain>.hf.space/gradio_api/openapi.json"
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/en/spaces-api-endpoints",
+      "date": "2026-11-18",
+      "proved": "a token raises rate limits on public Spaces",
+      "capture": "sha256:52aac4ee84caa27c9f387b6a2f8af89ae2b0a28b96f4fa78386d6b291bf7484e",
+      "quote": "The Authorization header is required for private Spaces and gives better rate limits on public Spaces."
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/en/spaces-api-endpoints",
+      "date": "2026-11-18",
+      "proved": "authenticated and anonymous calls draw on different quota pools",
+      "capture": "sha256:52aac4ee84caa27c9f387b6a2f8af89ae2b0a28b96f4fa78386d6b291bf7484e",
+      "quote": "When you authenticate with your token, your account's GPU quota is consumed. Unauthenticated requests use a shared pool with stricter limits."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-28T04:36:19.143Z",
-  "notes": "Whether the Gradio API path draws on the same daily quota as the web page is unverified."
+  "verified_at": "2026-11-18T04:36:12.222Z",
+  "notes": "Whether the Gradio API path draws on the same daily quota as the web page is unverified. A successful end-to-end ZeroGPU inference completion through gradio_client is unverified; only schema routes were probed.",
+  "endpoint": "https://<owner>-<space>.hf.space/gradio_api/info (pattern, per Space); live example https://openhtr-openhtr-gen.hf.space/gradio_api/info"
 }
