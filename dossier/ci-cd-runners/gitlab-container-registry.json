@@ -32,7 +32,7 @@
     "oci",
     "rest"
   ],
-  "interface_detail": "the OCI distribution API at registry.gitlab.com; docker login with a deploy token or CI job token",
+  "interface_detail": "the OCI distribution API at registry.gitlab.com; Bearer pull tokens come from the https://gitlab.com/jwt/auth realm",
   "tooling": "docker, podman, skopeo",
   "chaining": "the only free registry here that does not count image layers against the same quota as the code",
   "limits": [
@@ -49,7 +49,7 @@
     "detail": "a GitLab account",
     "country": null
   },
-  "reliability_note": "the token endpoint answers a pull scope requested without a credential with a 2,596-byte token JSON",
+  "reliability_note": "the pull-token endpoint answers an unauthenticated pull-scope request for the public gitlab-org/gitlab-runner namespace with a 200 and a 2,596-byte token JSON whose auth_type is none",
   "confidence": "documented",
   "confidence_note": "the storage-quota doc was read today and states the exclusion.",
   "evidence": [
@@ -92,10 +92,24 @@
       "proved": "the storage-quota page excludes the container registry from the project storage limit and publishes no cap for the registry itself",
       "capture": "sha256:32cb9b13bd82d6395449b56d639b10c9214fbcf89a1a5fa1493dad8fe2e46c49",
       "quote": "The container registry, package registry, and build artifacts are not included in the limit."
+    },
+    {
+      "url": "probe:https://gitlab.com/jwt/auth?service=container_registry&scope=repository:gitlab-org/gitlab-runner:pull",
+      "date": "2026-11-18",
+      "proved": "an unauthenticated pull-scope request for gitlab-org/gitlab-runner answers 200 with a 2,596-byte token JSON",
+      "capture": "sha256:60d0fbc141afd57587a9d90db016c3ddadae476db3610d8bdd19d3038fd9209d",
+      "quote": "\"status\": 200, \"bytes\": 2596,"
+    },
+    {
+      "url": "https://registry.gitlab.com/v2/gitlab-org/gitlab-runner/manifests/alpine-v16.11.0",
+      "date": "2026-11-18",
+      "proved": "the token fetches the alpine-v16.11.0 image index: 200, 3,117 bytes, digest sha256:4c0393cf585ec501c830ec385879985e529bdd93203ec67cd4a65cb19443778a",
+      "capture": "sha256:4c0393cf585ec501c830ec385879985e529bdd93203ec67cd4a65cb19443778a",
+      "quote": "\"mediaType\":\"application/vnd.oci.image.index.v1+json\""
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-09T12:09:21.557Z",
+  "verified_at": "2026-11-18T04:36:08.479Z",
   "price_per_tb_month": null,
   "history": [],
   "notes": "An exclusion is not an allowance. The doc says the registry does not count against 10 GiB; it does not say the registry is free, and no separate free figure is published.",
