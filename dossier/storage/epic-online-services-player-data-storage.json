@@ -5,11 +5,11 @@
   "url": "https://dev.epicgames.com/docs/epic-online-services/player-and-game-data/player-data-storage-interface/player-data-storage-overview",
   "category": "paas",
   "free_tier": {
-    "stated": "400 MB total storage per user, 200 MB maximum per file, 1,000 files per user. No published product-level or title-level byte cap.",
+    "stated": "400 MB total storage space per user, 200 MB maximum individual file size, 1000 files per user",
     "unit": "MB",
     "metered_on": "stored-bytes",
     "source_url": "https://dev.epicgames.com/docs/epic-online-services/player-and-game-data/player-data-storage-interface/player-data-storage-overview",
-    "read_on": "2026-10-21",
+    "read_on": "2026-11-09",
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
@@ -19,9 +19,9 @@
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
+    "stated": "Files that exceed the auto-delete file size are deleted following the upload.",
     "source_url": "https://dev.epicgames.com/docs/epic-online-services/player-and-game-data/player-data-storage-interface/player-data-storage-overview",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "the auto-delete file size is 400 MB"
   },
   "egress": {
     "terms": "No per-GB egress meter documented for Player Data Storage; access is metered as API requests. EOS itself is free for all developers.",
@@ -41,7 +41,7 @@
       "source": "https://dev.epicgames.com/docs/epic-online-services/player-and-game-data/player-data-storage-interface/player-data-storage-overview"
     }
   ],
-  "limits_note": "Per-object-cap: 200 MB per file and 64-character filename limit; request-rate: ~1,000 read or write requests per minute per user, then EOS_PlayerDataStorage_UserThrottled; per-object-cap: 1,000 files per user. Retention: none stated. Files persist until explicitly deleted; no expiry found. Data is encrypted at rest with a client-side key EOS never stores, so losing the key loses the bytes.",
+  "limits_note": "per-object-cap: 200 MB maximum individual file size; request-rate: 1000 read or write requests per minute; per-object-cap: 1000 files per user",
   "identity_cost": {
     "kind": "anonymous",
     "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ductUserId x unlimited free player identities. EOS supports anonymous/device auth, so identities are mintable at will; each new ProductUserId is a fresh 400 MB bucket. 2,500 identities = 1",
@@ -49,7 +49,7 @@
   },
   "reliability_note": "Throttles writes (not errors) once the 400 MB per-user total is reached until files are deleted; quota is per-deployment so a busy title can hit service-level allocation failures.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "the cited page was read on 2026-11-09",
   "evidence": [
     {
       "url": "https://dev.epicgames.com/docs/epic-online-services/player-and-game-data/player-data-storage-interface/player-data-storage-overview",
@@ -65,11 +65,25 @@
       "url": "https://dev.epicgames.com/docs/epic-online-services/working-with-the-eos-sdk/conventions-and-limitations",
       "date": "2026-10-21",
       "proved": "'Each service applies usage quotas on a per-deployment basis'"
+    },
+    {
+      "url": "https://dev.epicgames.com/docs/epic-online-services/player-and-game-data/player-data-storage-interface/player-data-storage-overview",
+      "date": "2026-11-09",
+      "proved": "the Usage Limitations table gives the per-file cap, the auto-delete size, the per-user total, the file-count cap and the request rate",
+      "capture": "sha256:5db07007d00e6efcf9b23fb4d63b95dcb88ecea52d3577f0632ee16c081e95ab",
+      "quote": "| Usage Type | Limitation |\n| --- | --- |\n| Read or write | 1000 requests per minute |\n| Maximum individual file size (see note below) | 200 MB |\n| Auto-delete file size | 400 MB |\n| Total storage space per user | 400 MB |\n| Maximum files per user | 1000 |"
+    },
+    {
+      "url": "https://dev.epicgames.com/docs/epic-online-services/player-and-game-data/player-data-storage-interface/player-data-storage-overview",
+      "date": "2026-11-09",
+      "proved": "a file above the auto-delete size is deleted after upload",
+      "capture": "sha256:5db07007d00e6efcf9b23fb4d63b95dcb88ecea52d3577f0632ee16c081e95ab",
+      "quote": "Files that exceed the auto-delete file size are deleted following the upload."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "400 MB total storage per user, 200 MB maximum per file, 1,000 files per user. No published product-level or title-level byte cap.",
+  "verified_at": "2026-11-10T00:50:14.805Z",
+  "notes": "400 MB total storage space per user, 200 MB maximum individual file size, 1000 files per user",
   "history": [],
   "extras": {
     "seed_source": "storage-research",
@@ -86,7 +100,7 @@
     "target_document": "docs/storage/free/social-and-fediverse.md",
     "document_section": "Game platforms and cloud saves",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "the cited page was read on 2026-11-09",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 3,
     "evidence_carrying_a_source_date": 0,

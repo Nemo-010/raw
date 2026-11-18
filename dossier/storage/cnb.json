@@ -5,7 +5,7 @@
   "url": "https://cnb.cool",
   "category": "paas",
   "free_tier": {
-    "stated": "Per top-level org, free tier per month: '仓库存储 100 GiB' + '对象存储 100 GiB' (object storage covers '制品、LFS 对象、图片及附件'), plus 160 build-CPU core-hours and 1600 dev-CPU core-hours. Over-quota is metered at ¥1/GiB/month, and storage is billed on daily average minus the free allowance. So staying under 100+100 GiB per org is genuinely free.",
+    "stated": "**对象存储：** 制品、LFS 对象、图片及附件占用的存储空间，免费额度 `100GiB`。",
     "unit": "GiB",
     "metered_on": "stored-bytes",
     "source_url": "https://docs.cnb.cool/zh/pricing.html",
@@ -13,9 +13,9 @@
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "256 MB per file",
-    "bytes": 256000000,
-    "source_url": "https://docs.cnb.cool/zh/pricing.html",
+    "stated": "64 GB per attachment upload",
+    "bytes": 64000000000,
+    "source_url": "https://cnb.cool/wmde/attachments",
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
@@ -39,8 +39,8 @@
   "limits": [
     {
       "kind": "per-object-cap",
-      "value": "256 MB per file",
-      "source": "https://docs.cnb.cool/zh/pricing.html"
+      "value": "64 GB per attachment upload",
+      "source": "https://cnb.cool/wmde/attachments"
     }
   ],
   "limits_note": "Per-object-cap: 64 GB per release/commit attachment (provider's own plugin README: '目前暂支持 64GB 以内的文件上传'). repo-blob cap: 256 MB per file in the git tree, with the maintainers explicitly steering large files to release attachments ('此256M之限制..当以附件方式为之'). request-rate: none documented. Billing: over the free 100 GiB the org is charged ¥1/GiB/month at month start. Silent overage, not a hard stop.",
@@ -51,7 +51,7 @@
   },
   "reliability_note": "Community edition launched public beta 2025-08; beta-free extras expired 2025-08-31, so the 100+100 GiB figures are the steady state. No ban/wipe reports found; overage is billed rather than blocked, which is the real hazard.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "the pricing page states a free allowance of 100 GiB of object storage",
   "evidence": [
     {
       "url": "https://docs.cnb.cool/zh/pricing.html",
@@ -67,10 +67,24 @@
       "url": "https://github.com/OpenListTeam/OpenList/tree/main/drivers/cnb_releases",
       "date": "2026-10-21",
       "proved": "maintained driver with release-attachment upload/download, proving a working non-web client"
+    },
+    {
+      "url": "https://docs.cnb.cool/zh/pricing.html",
+      "date": "2026-11-09",
+      "proved": "object storage for artifacts, LFS objects, images and attachments has a free allowance of 100GiB",
+      "capture": "sha256:b99d2bb60fa5744f2c4267651d73e0b00e0279d93cb86fe538884a8a2f2e1865",
+      "quote": "**对象存储：** 制品、LFS 对象、图片及附件占用的存储空间，免费额度 `100GiB`。"
+    },
+    {
+      "url": "https://cnb.cool/wmde/attachments",
+      "date": "2026-11-09",
+      "proved": "an attachment upload is capped at 64GB",
+      "capture": "sha256:b08b86ea1bbeb5d83d483934c5fb35c67994626033a2074bdaedaebfb41ab87a",
+      "quote": "支持 commit 和 release 上传或下载附件，目前暂支持 64GB 以内的文件上传。"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-10T00:50:12.223Z",
   "notes": "Per top-level org, free tier per month: '仓库存储 100 GiB' + '对象存储 100 GiB' (object storage covers '制品、LFS 对象、图片及附件'), plus 160 build-CPU core-hours and 1600 dev-CPU core-hours. Over-quota is metered at ¥1/GiB/month, and storage is billed on daily average minus the free allowance. So staying under 100+100 GiB per org is genuinely free.",
   "history": [],
   "extras": {
@@ -88,7 +102,7 @@
     "target_document": "docs/storage/free/forge-surfaces.md",
     "document_section": "The GitHub keyword sweep, and what it proved",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "the pricing page states a free allowance of 100 GiB of object storage",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 3,
     "evidence_carrying_a_source_date": 0,

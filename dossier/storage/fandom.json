@@ -5,11 +5,11 @@
   "url": "https://www.fandom.com",
   "category": "media",
   "free_tier": {
-    "stated": "10 MB per file, no file-count cap: 'The maximum size of uploads is 10 MB. The maximum image resolution is 12.5 megapixels.' and 'There is no limit to the number of files you can upload' (with the caveat 'they shouldn't be used just as file stores').",
+    "stated": "The maximum size of uploads is 10 MB. The maximum image resolution is 12.5 megapixels.\n\nThere is no limit to the number of files you can upload, but images and other files should be uploaded for use on the wiki - they shouldn't be used just as file stores!",
     "unit": "MB",
     "metered_on": "stored-bytes",
     "source_url": "https://community.fandom.com/wiki/Help:Uploading_files",
-    "read_on": "2026-10-21",
+    "read_on": "2026-11-09",
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
@@ -19,7 +19,7 @@
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "request-rate: MediaWiki edit-rate limits per IP; anon upload needs a CSRF token (probe returned `badtoken`). Retention: permanent, but Fandom never deletes content even on community request.",
+    "stated": "unverified: the cited upload help page states no retention period",
     "source_url": "https://community.fandom.com/wiki/Help:Uploading_files",
     "notes": "Extracted from published terms."
   },
@@ -49,7 +49,7 @@
   },
   "reliability_note": "Two read-path traps in one host. (1) `static.wikia.nocookie.net` returns `403 Cf-Mitigated: challenge` to any non-browser. A hard read gate. (2) When it does serve, it RE-ENCODES: a request for a .png returned `Content-Type: image/webp`, 6,326 bytes, sha1 ada19fa5.. NOT the 9,979-byte original whose sha1 ce3dee8b.. matches the API. You must append `&format=original` to get your bytes back. Textbook 'gives you storage but not your bytes'.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "the cited page was read on 2026-11-09",
   "evidence": [
     {
       "url": "https://community.fandom.com/wiki/Help:Uploading_files",
@@ -70,11 +70,18 @@
       "url": "probe:unspecified",
       "date": "2026-10-21",
       "proved": "probe: same URL with `&format=original` -> 200, image/png, 9,979 bytes, sha1 ce3dee8bd03c3a66eedef6e710491cf9f4f11e2b == API sha1. Original IS retrievable, but only on the explicit original path."
+    },
+    {
+      "url": "https://community.fandom.com/wiki/Help:Uploading_files",
+      "date": "2026-11-09",
+      "proved": "uploads are capped at 10 MB per file and 12.5 megapixels, with no file-count limit",
+      "capture": "sha256:87222c4cf62a6097d0f66016815e27073ff0c946da5638b87c027f7770d377cf",
+      "quote": "The maximum size of uploads is 10 MB. The maximum image resolution is 12.5 megapixels.\n\nThere is no limit to the number of files you can upload, but images and other files should be uploaded for use on the wiki - they shouldn't be used just as file stores!"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "10 MB per file, no file-count cap: 'The maximum size of uploads is 10 MB. The maximum image resolution is 12.5 megapixels.' and 'There is no limit to the number of files you can upload' (with the caveat 'they shouldn't be used just as file stores').",
+  "verified_at": "2026-11-10T00:50:14.806Z",
+  "notes": "The maximum size of uploads is 10 MB. The maximum image resolution is 12.5 megapixels.\n\nThere is no limit to the number of files you can upload, but images and other files should be uploaded for use on the wiki - they shouldn't be used just as file stores!",
   "history": [],
   "extras": {
     "seed_source": "storage-research",
@@ -91,7 +98,7 @@
     "target_document": "docs/storage/free/registries.md",
     "document_section": "Docs, wiki and knowledge-base hosts",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "the cited page was read on 2026-11-09",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 4,
     "evidence_carrying_a_source_date": 0,

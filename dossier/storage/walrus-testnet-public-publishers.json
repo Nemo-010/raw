@@ -5,7 +5,7 @@
   "url": "https://docs.wal.app/docs/system-overview/public-aggregators-and-publishers",
   "category": "p2p",
   "free_tier": {
-    "stated": "No account, no key, no quota. Docs quote only a per-request limit: 'Most aggregators and publishers limit requests to 10 MiB by default'. In practice the reference publisher accepted 300 MiB and 1 GiB. Max storage duration is 53 epochs; on Testnet 1 epoch = 1 day.",
+    "stated": "Most public aggregators and publishers limit requests to 10 MiB.",
     "unit": "mixed",
     "metered_on": "stored-bytes",
     "source_url": "https://docs.wal.app/docs/network-reference",
@@ -19,8 +19,8 @@
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "retention: 53 epochs max, 1 day per epoch on Testnet = 53 days, and 'Walrus wipes the data periodically without warning'",
-    "days": 1,
+    "stated": "Maximum number of epochs for which storage can be bought: 53.",
+    "days": 53,
     "source_url": "https://docs.wal.app/docs/network-reference",
     "notes": "Extracted from published terms."
   },
@@ -38,7 +38,7 @@
   "limits": [
     {
       "kind": "retention-clamped",
-      "value": "retention: 53 epochs max, 1 day",
+      "value": "retention: 53 epochs max",
       "source": "https://docs.wal.app/docs/network-reference"
     },
     {
@@ -55,7 +55,7 @@
   },
   "reliability_note": "Testnet is periodically wiped without warning and publishers are volunteer-run (2 of 5 tested endpoints were down: h2o-nodes 502, atalma connection refused); treat as ephemeral, not archive.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "the request limit is quoted from the first-party network-reference page",
   "evidence": [
     {
       "url": "https://docs.wal.app/docs/system-overview/public-aggregators-and-publishers",
@@ -81,10 +81,24 @@
       "url": "probe:unspecified",
       "date": "2026-10-21",
       "proved": "probe: 16 parallel 3 MiB ranged GETs of a 50 MiB blob -> 200/206, 50,331,648 bytes in 1.98 s (25.4 MB/s) vs 3.97 MB/s single-stream (13.2 s) — 6.4x from concurrency"
+    },
+    {
+      "url": "https://docs.wal.app/docs/network-reference",
+      "date": "2026-11-10",
+      "proved": "the network-reference page states a 10 MiB request limit for most public aggregators and publishers",
+      "capture": "sha256:4fccddd5da1881cecb9741a2b59d4ea06dbe894e6b5d1883c2b130a6ce556a82",
+      "quote": "Most public aggregators and publishers limit requests to 10 MiB."
+    },
+    {
+      "url": "https://docs.wal.app/docs/network-reference",
+      "date": "2026-11-10",
+      "proved": "the reference table states a 53-epoch maximum storage duration",
+      "capture": "sha256:4fccddd5da1881cecb9741a2b59d4ea06dbe894e6b5d1883c2b130a6ce556a82",
+      "quote": "| Maximum number of epochs for which storage can be bought | 53 | 53 |"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-10T00:50:35.597Z",
   "notes": "No account, no key, no quota. Docs quote only a per-request limit: 'Most aggregators and publishers limit requests to 10 MiB by default'. In practice the reference publisher accepted 300 MiB and 1 GiB. Max storage duration is 53 epochs; on Testnet 1 epoch = 1 day.",
   "history": [],
   "extras": {
@@ -103,7 +117,7 @@
     "target_document": "docs/storage/free/cloud-tenants.md",
     "document_section": "Crypto and Web3 drives",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "the network-reference page states a 10 MiB request limit for most public aggregators and publishers",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 5,
     "evidence_carrying_a_source_date": 0,

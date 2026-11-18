@@ -5,23 +5,23 @@
   "url": "https://www.atlassian.com/teams/nonprofits/discount-pricing",
   "category": "paas",
   "free_tier": {
-    "stated": "Confluence Premium = 'Unlimited file storage'. Atlassian's Feb 2026 announcement grants eligible nonprofits and social enterprises 100% off Confluence 'Standard or Premium up to 25 users' under the Social Impact License. So a verified nonprofit gets a 25-seat Confluence Premium site with no storage cap, for free.",
+    "stated": "Confluence Premium- Unlimited storage",
     "unit": "unlimited",
     "metered_on": "stored-bytes",
     "source_url": "https://support.atlassian.com/confluence-cloud/docs/manage-your-storage-usage/",
-    "read_on": "2026-10-21",
+    "read_on": "2026-11-09",
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "per-object-cap is the binding constraint: 'The default size limit is 100 MB",
-    "bytes": 100000000,
+    "stated": "The default is 100 megabytes, expressed as 104857600 bytes.",
+    "bytes": 104857600,
     "source_url": "https://support.atlassian.com/confluence-cloud/docs/manage-your-storage-usage/",
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
+    "stated": "| Free, Standard, Premium or Enterprise plan | 60 days |",
     "source_url": "https://support.atlassian.com/confluence-cloud/docs/manage-your-storage-usage/",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "At the end of this data retention period, your app’s data will be permanently deleted and cannot be recovered."
   },
   "egress": {
     "terms": "No egress meter on Confluence attachment downloads. Attachments are served from api.media.atlassian.com / the site's CDN with no bandwidth line item in the plan comparison.",
@@ -38,19 +38,19 @@
   "limits": [
     {
       "kind": "per-object-cap",
-      "value": "per-object-cap is the binding constraint: 'The default size limit is 100 MB",
+      "value": "The default is 100 megabytes, expressed as 104857600 bytes.",
       "source": "https://support.atlassian.com/confluence-cloud/docs/manage-your-storage-usage/"
     }
   ],
   "limits_note": "Per-object-cap is the binding constraint: 'The default size limit is 100 MB' per attachment, and Atlassian's own migration doc says the limit 'can be configured for Legacy editor pages, but not for the default editor' (feature request CONFCLOUD-72157 still open). So 20 TB = ~200,000 objects of <=100 MB. request-rate: Atlassian does not publish a Confluence Cloud REST request rate on these pages — unverified; the storage page itself is only refreshed 'every 4 hours'. retention: none published; archiving a page does NOT free storage because Atlassian 'stores all attachments for version history purposes'. Deletes are the only way to reclaim.",
   "identity_cost": {
-    "kind": "card",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ition also removes the 250 GB Standard ceiling for the same $0 — the licence tier is the multiplier, not the seat count. per-object-cap is the binding constraint: 'The default size l",
+    "kind": "institution",
+    "detail": "Recognized as a nonprofit",
     "country": null
   },
   "reliability_note": "Free Confluence sites can be deactivated for inactivity (login is the counter). Premium removes the storage cap but not the 100 MB object cap, and archived content is billed forever. Anonymous read of a public space works; anonymous write does not (probed: 200 read, 403 write).",
-  "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence": "documented",
+  "confidence_note": "Confluence Premium- Unlimited storage",
   "evidence": [
     {
       "url": "https://support.atlassian.com/confluence-cloud/docs/manage-your-storage-usage/",
@@ -81,10 +81,52 @@
       "url": "probe:unspecified",
       "date": "2026-10-21",
       "proved": "probe: POST meltedmensoftware.atlassian.net/wiki/rest/api/content/293437441/child/attachment -> 403 (anonymous write rejected)"
+    },
+    {
+      "url": "https://support.atlassian.com/confluence-cloud/docs/manage-your-storage-usage/",
+      "date": "2026-11-09",
+      "proved": "the page states the Premium allowance and the note restates it",
+      "capture": "sha256:3d8f2ab66e107251fde5402fce9c20db4a177b5226780e16ff8855bdb24b4f93",
+      "quote": "Confluence Premium- Unlimited storage"
+    },
+    {
+      "url": "https://support.atlassian.com/confluence-cloud/docs/configure-attachment-size/",
+      "date": "2026-11-09",
+      "proved": "the configure-attachment-size page states the default and its byte value",
+      "capture": "sha256:376872fed4a938ab052608f1590b92427134c0025d021fe1e78c516bd7c3446d",
+      "quote": "The default is 100 megabytes, expressed as 104857600 bytes."
+    },
+    {
+      "url": "https://www.atlassian.com/teams/nonprofits/discount-pricing",
+      "date": "2026-11-09",
+      "proved": "the licence is granted to nonprofit and social-enterprise organisations",
+      "capture": "sha256:34c2f490af56b6389d1aa90b8f702e391aee6e04c57987c37ab9238d32d0c961",
+      "quote": "50% - 100% off discounts are available for nonprofits and social enterprises that are:"
+    },
+    {
+      "url": "https://www.atlassian.com/teams/nonprofits/discount-pricing",
+      "date": "2026-11-09",
+      "proved": "the discount requires recognition as a nonprofit",
+      "capture": "sha256:34c2f490af56b6389d1aa90b8f702e391aee6e04c57987c37ab9238d32d0c961",
+      "quote": "Recognized as a nonprofit"
+    },
+    {
+      "url": "https://support.atlassian.com/organization-administration/docs/track-storage-and-move-data-across-products/",
+      "date": "2026-11-09",
+      "proved": "the storage tracking page states a 60-day data retention period for Premium",
+      "capture": "sha256:21fd9eead27c42adee4e9662175ef66ddc68815e6ca6cdd14a23d82f4aa7076f",
+      "quote": "| Free, Standard, Premium or Enterprise plan | 60 days |"
+    },
+    {
+      "url": "https://support.atlassian.com/organization-administration/docs/track-storage-and-move-data-across-products/",
+      "date": "2026-11-09",
+      "proved": "the page states what happens at the end of the retention period",
+      "capture": "sha256:21fd9eead27c42adee4e9662175ef66ddc68815e6ca6cdd14a23d82f4aa7076f",
+      "quote": "At the end of this data retention period, your app’s data will be permanently deleted and cannot be recovered."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-10T00:50:09.749Z",
   "notes": "Confluence Premium = 'Unlimited file storage'. Atlassian's Feb 2026 announcement grants eligible nonprofits and social enterprises 100% off Confluence 'Standard or Premium up to 25 users' under the Social Impact License. So a verified nonprofit gets a 25-seat Confluence Premium site with no storage cap, for free.",
   "history": [],
   "extras": {

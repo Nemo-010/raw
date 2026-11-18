@@ -5,7 +5,7 @@
   "url": "https://www.kaggle.com/datasets",
   "category": "ml-hub",
   "free_tier": {
-    "stated": "200 GB per dataset (hard, public or private), 50 top-level files per dataset, 200 GB max total PRIVATE datasets. There is NO documented aggregate cap on public datasets. The docs' 'Technical Specifications' section states only '200GB per dataset limit', '200GB max private datasets', 'A max of 50 top-level files'. Public total is therefore effectively unlimited per account, and the 200 GB/dataset ceiling is raised on request (see quota-program candidate).",
+    "stated": "200GB per dataset limit; 200GB max private datasets (if you exceed this, either make your datasets public or delete unused datasets); a max of 50 top-level files.",
     "unit": "GB",
     "metered_on": "unstated",
     "source_url": "https://www.kaggle.com/docs/datasets#technical-specifications",
@@ -43,7 +43,7 @@
   },
   "reliability_note": "Stable, corporate-owned (Google), no history of quota clawback; the failure modes are ingestion flakiness on very large uploads and un-deletable old versions, not data loss.",
   "confidence": "documented",
-  "confidence_note": "re-read on 2026-10-22 (HTTP 200, 29944 bytes, sha256 1d2b0cd026b1e3a6). The page states the number in the record. The claim is documented, not measured.",
+  "confidence_note": "The Kaggle datasets documentation was read on 2026-11-09 and states the dataset size, private-dataset and top-level-file limits.",
   "evidence": [
     {
       "url": "https://www.kaggle.com/docs/datasets",
@@ -74,11 +74,18 @@
       "url": "probe:unspecified",
       "date": "2026-10-21",
       "proved": "probe: GET /api/v1/datasets/list?user=[account]&pageSize=100 -> 23 public datasets, 1,197.7 GB aggregate, max 163.0 GB single dataset"
+    },
+    {
+      "url": "https://www.kaggle.com/docs/datasets",
+      "date": "2026-11-09",
+      "proved": "the Technical Specifications section states 200GB per dataset, 200GB max private datasets and a max of 50 top-level files",
+      "capture": "sha256:fec2c7c446b40c4b66769a3661a8088e6fcfdf0c8b7f51d973e191074e55d794",
+      "quote": "- 200GB per dataset limit\n\n  - 200GB max private datasets (if you exceed this, either make your datasets public or delete unused datasets)\n\n  - A max of 50 top-level files (if you have more, use a directory structure and upload an archive)"
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-10-22T00:00:00.000Z",
-  "notes": "200 GB per dataset (hard, public or private), 50 top-level files per dataset, 200 GB max total PRIVATE datasets. There is NO documented aggregate cap on public datasets. The docs' 'Technical Specifications' section states only '200GB per dataset limit', '200GB max private datasets', 'A max of 50 top-level files'. Public total is therefore effectively unlimited per account, and the 200 GB/dataset ceiling is raised on request (see quota-program candidate).",
+  "verified_at": "2026-11-10T00:50:22.849Z",
+  "notes": "200GB per dataset limit; 200GB max private datasets (if you exceed this, either make your datasets public or delete unused datasets); a max of 50 top-level files.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",
@@ -95,7 +102,7 @@
     "target_document": "docs/storage/free/models-and-media.md",
     "document_section": "ML platform datasets",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "checked against the live service on 2026-11-09",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 5,
     "evidence_carrying_a_source_date": 0,

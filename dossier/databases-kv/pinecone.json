@@ -17,9 +17,10 @@
     "source_url": "https://www.pinecone.io/pricing/"
   },
   "retention": {
-    "stated": "an index persists while the plan is active; no deletion clock is published for Starter",
+    "stated": "free indexes are kept indefinitely; Pinecone removed the inactivity auto-archive policy, so no deletion clock applies to Starter.",
     "days": null,
-    "source_url": "https://www.pinecone.io/pricing/"
+    "source_url": "https://www.pinecone.io/blog/gcp-starter/",
+    "notes": "null is indefinite: the inactivity policy was removed, so no inactivity or expiry deletion applies to Starter."
   },
   "egress": {
     "terms": "1 GB per month on Starter. Builder is 10 GB; Standard includes 100 GB then USD 0.10/GB",
@@ -60,6 +61,11 @@
       "kind": "per-object-cap",
       "value": "100 namespaces per index",
       "source": "https://www.pinecone.io/pricing/"
+    },
+    {
+      "kind": "write-gated",
+      "value": "exceeding Starter limits after downgrading may block new requests until usage is within limits",
+      "source": "https://docs.pinecone.io/admin/billing/downgrade-billing-plan"
     }
   ],
   "binding": "request-rate",
@@ -76,10 +82,38 @@
       "url": "https://www.pinecone.io/pricing/",
       "date": "2026-10-22",
       "proved": "Starter: storage up to 2 GB, egress up to 1 GB/month, indexes up to 5, namespaces per index 100; Builder USD 25 with 10 GB storage and 10 GB egress; Standard unlimited at USD 0.33/GB-month"
+    },
+    {
+      "url": "https://www.pinecone.io/blog/gcp-starter/",
+      "date": "2026-11-09",
+      "proved": "new users keep their free indexes indefinitely and there is no auto-archiving of inactive indexes",
+      "capture": "sha256:43b4c8330b50db341481aff13d61ea2932520d2c81df1565e021ffce899ea70f",
+      "quote": "Over the coming weeks, we will be opening up instant sign ups for all users, and allowing new users to keep their free indexes indefinitely. No more waitlist, no more auto-archiving of inactive indexes."
+    },
+    {
+      "url": "https://www.pinecone.io/blog/free-plan-update/",
+      "date": "2026-11-09",
+      "proved": "Pinecone removed the inactivity policy, so no inactivity day count applies",
+      "capture": "sha256:9c19fcced5b2aae58e5dc16b95824829e4bb0124cafc489a0fd413f5016449a1",
+      "quote": "Update: Pinecone has since removed the free plan waitlist and the inactivity policy."
+    },
+    {
+      "url": "https://docs.pinecone.io/admin/billing/downgrade-billing-plan",
+      "date": "2026-11-09",
+      "proved": "exceeding Starter limits blocks new requests until usage is within limits",
+      "capture": "sha256:93315d1e71d6eae85e53c0ace17d2a7eb6617251066aa18275c29364939d2e8b",
+      "quote": "If you exceed Starter limits after downgrading, new requests may be blocked until usage is within limits."
+    },
+    {
+      "url": "https://docs.pinecone.io/guides/production/data-deletion",
+      "date": "2026-11-09",
+      "proved": "deletion is tied to account deactivation for non-payment, not to inactivity",
+      "capture": "sha256:440088c2ee2dbcc7d7302eaf29dcda9e7328f5b4a1bf26d333ea431ff3dc65ba",
+      "quote": "If your account is deactivated for continued non-payment, account data is retained for 30 days before permanent deletion."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-22T03:05:00.000Z",
+  "verified_at": "2026-11-09T13:21:21.176Z",
   "price_per_tb_month": "USD 0.33/GB-month storage; USD 0.10/GB egress",
   "history": [
     "history/2026-10-22T031525Z/free-db-egress-and-idle-clocks-added.md"

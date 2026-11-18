@@ -5,7 +5,7 @@
   "url": "https://www.kaggle.com",
   "category": "iaas",
   "free_tier": {
-    "stated": "Notebooks: '20 Gigabytes of auto-saved disk space (/kaggle/working)' per notebook version. Datasets: '200GB per dataset limit', '200GB max private datasets'. The 200 GB private cap is the only account-level storage number published; public datasets are capped per-dataset, not per-account.",
+    "stated": "20 Gigabytes of auto-saved disk space (/kaggle/working)",
     "unit": "GB",
     "metered_on": "stored-bytes",
     "source_url": "https://www.kaggle.com/docs/notebooks",
@@ -43,7 +43,7 @@
   },
   "reliability_note": "Notebook output survives session end as a versioned artifact. The closest thing here to real object storage. But it is write-once per version, and you cannot run a listener (no inbound ports, no server).",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "The Kaggle notebooks documentation was read on 2026-11-09 and states the auto-saved disk space per Notebook editing session.",
   "evidence": [
     {
       "url": "https://www.kaggle.com/docs/notebooks",
@@ -64,11 +64,25 @@
       "url": "probe:unspecified",
       "date": "2026-10-21",
       "proved": "probe: GET /api/v1/datasets/download/uciml/iris?datasetVersionNumber=2 -> 302 then 200, Content-Type: application/zip, Content-Length: 3687 (anonymous, no auth)"
+    },
+    {
+      "url": "https://www.kaggle.com/docs/notebooks",
+      "date": "2026-11-09",
+      "proved": "20 Gigabytes of auto-saved disk space is provided in /kaggle/working",
+      "capture": "sha256:d6b4c75f3be7b69d55afcd46bd6749550a7a61d5114d84f5c89c68ba8102d25a",
+      "quote": "20 Gigabytes of auto-saved disk space (/kaggle/working)"
+    },
+    {
+      "url": "https://www.kaggle.com/docs/datasets",
+      "date": "2026-11-09",
+      "proved": "the datasets documentation states 200GB per dataset and 200GB max private datasets",
+      "capture": "sha256:fec2c7c446b40c4b66769a3661a8088e6fcfdf0c8b7f51d973e191074e55d794",
+      "quote": "- 200GB per dataset limit\n\n  - 200GB max private datasets (if you exceed this, either make your datasets public or delete unused datasets)\n\n  - A max of 50 top-level files (if you have more, use a directory structure and upload an archive)"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "Notebooks: '20 Gigabytes of auto-saved disk space (/kaggle/working)' per notebook version. Datasets: '200GB per dataset limit', '200GB max private datasets'. The 200 GB private cap is the only account-level storage number published; public datasets are capped per-dataset, not per-account.",
+  "verified_at": "2026-11-10T00:50:22.850Z",
+  "notes": "Datasets: 200GB per dataset limit; 200GB max private datasets.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",
@@ -85,7 +99,7 @@
     "target_document": "docs/storage/free/odd-substrates.md",
     "document_section": "Notebook disks and compute-attached storage",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "checked against the live service on 2026-11-09",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 4,
     "evidence_carrying_a_source_date": 0,

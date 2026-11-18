@@ -5,15 +5,15 @@
   "url": "https://www.axfc.net",
   "category": "anonymous-dump",
   "free_tier": {
-    "stated": "No account, no total quota. Per-object only. '1ファイル最大128 GiB。複数ファイルも順番にアップロードできます' (max 128 GiB per file, multiple files uploaded in sequence). Upload form constant `data-max=\"137438953472\"` = 128 GiB, confirming the number in the markup.",
+    "stated": "1ファイル最大128 GiB。最大3ファイルを同時にアップロードできます。",
     "unit": "GiB",
     "metered_on": "unstated",
     "source_url": "https://www.axfc.net/upload",
-    "read_on": "2026-10-21",
+    "read_on": "2026-11-09",
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "128 GiB per file",
+    "stated": "1ファイル最大128 GiB。最大3ファイルを同時にアップロードできます。",
     "bytes": 137438953472,
     "source_url": "https://www.axfc.net/upload",
     "notes": "extracted from the quota or limits prose"
@@ -21,7 +21,7 @@
   "retention": {
     "stated": "per-object-cap 128 GiB. Retention is client-chosen (published-until field showed 'No limit' on a live file) and additionally bounded by a download-count cap the uploader may set",
     "source_url": "https://www.axfc.net/upload",
-    "notes": "Extracted from published terms."
+    "notes": "unverified: the cited axfc share page now answers HTTP 404, so the recorded 'No limit' retention statement cannot be re-read"
   },
   "egress": {
     "terms": "No egress meter or paid bandwidth product; the whole service is stated free ('本サービスは、別途明示する場合を除き無料です').",
@@ -37,25 +37,20 @@
   "limits": [
     {
       "kind": "per-object-cap",
-      "value": "128 GiB per file",
+      "value": "1ファイル最大128 GiB。最大3ファイルを同時にアップロードできます。",
       "source": "https://www.axfc.net/upload"
     }
   ],
   "limits_note": "Per-object cap is 128 GiB. Retention is user-selected with optional download-count limits. Read path requires POST operations: GET requests to /download return HTTP 405 with Allow: POST, and a tokenized POST returns HTTP 302 redirecting to the share page requiring form interaction.",
   "identity_cost": {
     "kind": "anonymous",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: No account, no total quota — per-object only. '1ファイル最大128 GiB。複数ファイルも順番にアップロードできます' (max 128 GiB per file, multiple files uploaded",
+    "detail": "登録不要",
     "country": null
   },
   "reliability_note": "This is the legendary Japanese uploader and it is emphatically alive: the public file list was showing uploads from minutes earlier on the day of this run. But it has already had at least one near-death outage that lost voicebanks (UTAU Wiki recorded the site going dark and coming back with a broken certificate), and its own terms say no-expiry is 'not a promise of permanent storage'. Treat it as a live service with a history of vanishing.",
   "confidence": "documented",
   "confidence_note": "re-read on 2026-10-22 (HTTP 200, 1911 bytes, sha256 313b5538c03c1b34). The page states the number in the record. The claim is documented, not measured.",
   "evidence": [
-    {
-      "url": "https://www.axfc.net/",
-      "date": "2026-10-22",
-      "proved": "128 GiB per file, no registration. Re-read https://www.axfc.net/: HTTP 200, 1911 bytes, sha256 313b5538c03c1b34. Quoted: 登録不要。小さな資料から大きなファイルまで。リンクひとつで、いつものように。 [ファイルを共有する ↗](https://www.axfc.net/upload)[ファイルを探す →](https://www.axfc.net/files) ✓ 会員登録なし✓ リンクで限定共有 **ファイルをドラッグ＆ドロップ**またはファイルを選ぶ1ファイル最大128 GiB。複数ファイルも順番にアップロードできます。 広告 ## 最近の公開ファイル [一覧を見る →](https://www.axfc.net/files) アップロードした人が公開一覧への掲載を選んだファイルです。 [ZIP**MedaBotsMugen.zip**e17.7 MBOct 21, 2026, 23:07 UTC ↗](https://www.axfc.net/u/f_WH2-GZn7xyM_yFqIUbsiAw) [ZIP**261021-6.zip**261021-6237.1 M"
-    },
     {
       "url": "https://www.axfc.net/upload",
       "date": "2026-10-21",
@@ -75,10 +70,38 @@
       "url": "probe:unspecified",
       "date": "2026-10-21",
       "proved": "probe: GET /download?tg=4144979 -> HTTP 405, Allow: POST; POST with a valid _token -> 302 back to /u/4144979 (needs a JS-driven second step)"
+    },
+    {
+      "url": "https://www.axfc.net/upload",
+      "date": "2026-11-09",
+      "proved": "the upload page states the 128 GiB per-file cap and three files at a time",
+      "capture": "sha256:d1880ca8f26344af561f37732c6642118c96181ded9d9e68684dc6b36929cd7e",
+      "quote": "1ファイル最大128 GiB。最大3ファイルを同時にアップロードできます。"
+    },
+    {
+      "url": "https://www.axfc.net/",
+      "date": "2026-11-09",
+      "proved": "the homepage states the service is free and needs no registration",
+      "capture": "sha256:b21d363cc10b2d9177c95c61a16c3a544d63a0fd408612f65d01c47497bf75c9",
+      "quote": "ファイルの作成・編集も、送受信・共有も、登録不要・無料で利用できます。"
+    },
+    {
+      "url": "https://www.axfc.net/u/4144979",
+      "date": "2026-11-09",
+      "proved": "the share page cited for retention is gone and answered HTTP 404",
+      "capture": "sha256:183731f1c5315725e34e9183fd5eeb9ec9be47907ec1ece17668e301a1dd2da9",
+      "quote": "HTTP 404"
+    },
+    {
+      "url": "https://www.axfc.net/files",
+      "date": "2026-11-09",
+      "proved": "the public listing shows uploads dated 2026-11-09, so the service is active",
+      "capture": "sha256:9ab8cf4a9096a2ca309de2caace91c74a819555f948bb054a0089b9098e865d0",
+      "quote": "ZIP**261109-6.zip**261109-6111.5 MBNov 9, 2026, 14:08 UTC ↗"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-22T00:00:00.000Z",
+  "verified_at": "2026-11-10T00:50:09.752Z",
   "notes": "No account, no total quota. Per-object only. '1ファイル最大128 GiB。複数ファイルも順番にアップロードできます' (max 128 GiB per file, multiple files uploaded in sequence). Upload form constant `data-max=\"137438953472\"` = 128 GiB, confirming the number in the markup.",
   "history": [],
   "extras": {

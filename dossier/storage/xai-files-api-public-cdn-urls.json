@@ -19,7 +19,7 @@
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "Per-file 512 MB (some pages say 50 MB for the upload reference and 50 MiB for public URLs). Files are PERMANENT by default. `expires_after` is opt-in.",
+    "stated": "Files default to permanent storage until you delete them.",
     "source_url": "https://docs.x.ai/developers/files",
     "notes": "Extracted from published terms."
   },
@@ -36,7 +36,7 @@
   "limits": [
     {
       "kind": "per-object-cap",
-      "value": "100 MB/file",
+      "value": "512 MB/file",
       "source": "https://docs.x.ai/developers/files"
     }
   ],
@@ -48,7 +48,7 @@
   },
   "reliability_note": "The absence of a published total quota is the finding, not an oversight. A third-party comparison site says outright 'no storage limit is stated. xAI says only that limits may vary slightly by platform or subscription'. Treat unverified. Files persist 'until you delete them'. Collections is a separate product with a 100 MB/file cap and requires credits in the account. Public URLs only cover image/png, image/jpeg, image/gif, image/webp, video/mp4, video/webm. So the CDN path is media-only; arbitrary blobs must go through the authenticated content endpoint.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "the per-file ceiling is quoted from the first-party files page",
   "evidence": [
     {
       "url": "https://docs.x.ai/developers/files/managing-files",
@@ -84,10 +84,24 @@
       "url": "https://api.x.ai/v1/files",
       "date": "2026-10-21",
       "proved": "PROBE: curl -D - -> 401, Content-Length 35, body {\"code\":\"unauthenticated:no-credentials\"}; /v1/files/abc/content -> 401/35; /v1/collections -> 401/77; https://files-cdn.x.ai/test/file_abc.png -> 404 from Cloudflare (host live, CF-fronted)"
+    },
+    {
+      "url": "https://docs.x.ai/developers/files/managing-files",
+      "date": "2026-11-10",
+      "proved": "the managing-files page states permanent storage by default",
+      "capture": "sha256:a32a2451cb838a3ce7af9f6c9faf5cd51dbf642e1108bd0a74d40e8d432248fb",
+      "quote": "Files default to permanent storage until you delete them."
+    },
+    {
+      "url": "https://docs.x.ai/developers/files",
+      "date": "2026-11-10",
+      "proved": "the page states the 512 MB ceiling the basis names",
+      "capture": "sha256:19da60bcccf156f5bf1e5184c0f9316b6f17de6fbce5a3755485359f6c6dca80",
+      "quote": "* **File size**: Maximum 512 MB per file"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-10T00:50:35.599Z",
   "notes": "No published total-storage quota. Per-file 512 MB (some pages say 50 MB for the upload reference and 50 MiB for public URLs). Files are PERMANENT by default. `expires_after` is opt-in.",
   "history": [],
   "extras": {
@@ -106,7 +120,7 @@
     "target_document": "docs/storage/free/social-and-fediverse.md",
     "document_section": "Search and AI notebooks",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "the files page states a maximum file size of 512 MB per file",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 7,
     "evidence_carrying_a_source_date": 0,

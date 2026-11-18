@@ -5,22 +5,22 @@
   "url": "https://nostrmedia.com/",
   "category": "p2p-blob-storage",
   "free_tier": {
-    "stated": "free plan max_byte_size 26,214,400 (25 MiB); paid 'purple'/'onyx' 104,857,600 (100 MiB). `file_expiration: [0,0]` on every plan = never expires.",
-    "unit": "mixed",
+    "stated": "Nostr Media has no free tier.",
+    "unit": "none",
     "metered_on": "unstated",
-    "source_url": "https://nostrmedia.com/.well-known/nostr/nip96.json",
+    "source_url": "https://nostrmedia.com/docs/pricing.md",
     "read_on": "2026-10-21",
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "per-object-cap 25 MiB",
-    "bytes": 26214400,
-    "source_url": "https://nostrmedia.com/.well-known/nostr/nip96.json",
+    "stated": "5 GB per file on every tier.",
+    "bytes": 5000000000,
+    "source_url": "https://nostrmedia.com/docs/api.md",
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
-    "source_url": "https://nostrmedia.com/.well-known/nostr/nip96.json",
+    "stated": "Uploads never expire while the subscription is active.",
+    "source_url": "https://nostrmedia.com/llms.txt",
     "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
@@ -36,19 +36,19 @@
   "limits": [
     {
       "kind": "per-object-cap",
-      "value": "per-object-cap 25 MiB",
-      "source": "https://nostrmedia.com/.well-known/nostr/nip96.json"
+      "value": "5 GB per file",
+      "source": "https://nostrmedia.com/docs/api.md"
     }
   ],
   "limits_note": "Per-object-cap 25 MiB free. 125 MB on the direct /upload, 5 GB via /presigned (per llms.txt). The /presigned path is the one that matters and it is far above the free plan's advertised 25 MiB.",
   "identity_cost": {
     "kind": "anonymous",
-    "detail": "anonymous",
+    "detail": "Subscriptions are tied to a Nostr public key, not to an email address.",
     "country": null
   },
   "reliability_note": "Transforms media at ingest on some paths (resizing, format_conversion, compression, metadata_stripping are all listed in the manifest). Verify that originals come back byte-identical.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "the pricing page states there is no free tier and an active subscription is required",
   "evidence": [
     {
       "url": "https://nostrmedia.com/.well-known/nostr/nip96.json",
@@ -64,11 +64,46 @@
       "url": "https://nostrmedia.com/docs/api.md",
       "date": "2026-10-21",
       "proved": "'/upload answers 413 above 125 MB because the request would outlive the worker'"
+    },
+    {
+      "url": "https://nostrmedia.com/docs/pricing.md",
+      "date": "2026-11-09",
+      "proved": "the pricing page is the source that states no free tier",
+      "capture": "sha256:26a750e973db1cb247d6a575ce823b746ed32e860e64db6184eea20a6bdc273b",
+      "quote": "Nostr Media has **no free tier**."
+    },
+    {
+      "url": "https://nostrmedia.com/docs/api.md",
+      "date": "2026-11-09",
+      "proved": "the stated 5 GB ceiling converts to 5,000,000,000 bytes",
+      "capture": "sha256:aa7f77e4860f489cba62005396e54910efed78e4d31902f45bf3691a0f2e762f",
+      "quote": "Per-file ceiling on every tier is 5 GB."
+    },
+    {
+      "url": "https://nostrmedia.com/llms.txt",
+      "date": "2026-11-09",
+      "proved": "the llms.txt page is the source that states the retention",
+      "capture": "sha256:17ed3d34cbb82dbb863535abd7a22bb504f032581f9efb5a815b1bf6dac864b4",
+      "quote": "Uploads never expire while the subscription is active."
+    },
+    {
+      "url": "https://nostrmedia.com/docs/pricing.md",
+      "date": "2026-11-09",
+      "proved": "a subscription is keyed to a Nostr public key, not an email address",
+      "capture": "sha256:26a750e973db1cb247d6a575ce823b746ed32e860e64db6184eea20a6bdc273b",
+      "quote": "Subscriptions are tied to a Nostr public key, not to an email address."
+    },
+    {
+      "url": "https://nostrmedia.com/docs/pricing.md",
+      "date": "2026-11-09",
+      "proved": "an active paid subscription is required to upload or store files",
+      "capture": "sha256:26a750e973db1cb247d6a575ce823b746ed32e860e64db6184eea20a6bdc273b",
+      "quote": "An active subscription is required to upload or store files."
     }
   ],
-  "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "free plan max_byte_size 26,214,400 (25 MiB); paid 'purple'/'onyx' 104,857,600 (100 MiB). `file_expiration: [0,0]` on every plan = never expires.",
+  "verdict": "paid-only",
+  "verified_at": "2026-11-10T00:50:27.597Z",
+  "notes": "An active subscription is required to upload or store files.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",
@@ -86,7 +121,7 @@
     "target_document": "docs/storage/free/relays-and-transports.md",
     "document_section": "Hole-punch and relay networks",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "checked against the live service on 2026-11-10",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 3,
     "evidence_carrying_a_source_date": 0,

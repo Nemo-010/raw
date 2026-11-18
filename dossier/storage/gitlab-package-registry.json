@@ -5,7 +5,7 @@
   "url": "https://gitlab.com",
   "category": "registry",
   "free_tier": {
-    "stated": "Explicitly EXCLUDED from the project storage quota. GitLab docs, verbatim: 'GitLab projects have a storage limit for their Git repository and Large File Storage (LFS). Only the project's repository and LFS are included in the storage limit. The container registry, package registry, and build artifacts are not included in the limit.' The 10 GiB figure (pricing page: 'Storage 10 GiB') therefore applies only to git+LFS; package bytes are unquota'd. Per-file ceilings: Generic 5 GB, npm 5 GB, Maven 5 GB, NuGet 5 GB, PyPI 5 GB, Conan 5 GB, Terraform 1 GB, ML model 10 GB (uploads capped at 5 GB), Helm 5 MB.",
+    "stated": "GitLab projects have a storage limit for their Git repository and Large File Storage (LFS). Only the project’s repository and LFS are included in the storage limit. The container registry, package registry, and build artifacts are not included in the limit.",
     "unit": "GiB",
     "metered_on": "stored-bytes",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
@@ -49,7 +49,7 @@
   },
   "reliability_note": "Package registry is a real feature not a cache. No TTL, but a project cleanup policy can auto-delete package assets if configured, so leave it off. Anonymous pull must be enabled per project ('Allow anyone to pull from package registry'). NuGet group endpoints refuse anonymous pulls entirely.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "the storage-usage-quotas page states that the package registry is not included in the project storage limit",
   "evidence": [
     {
       "url": "https://docs.gitlab.com/user/storage_usage_quotas/",
@@ -75,10 +75,31 @@
       "url": "https://docs.gitlab.com/user/packages/generic_packages/",
       "date": "2026-10-21",
       "proved": "'To interact with the package registry, you must authenticate' for upload; download paths documented as GET"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+      "date": "2026-11-09",
+      "proved": "the package registry is excluded from the project storage limit",
+      "capture": "sha256:32cb9b13bd82d6395449b56d639b10c9214fbcf89a1a5fa1493dad8fe2e46c49",
+      "quote": "GitLab projects have a storage limit for their Git repository and Large File Storage (LFS). Only the project’s repository and LFS are included in the storage limit. The container registry, package registry, and build artifacts are not included in the limit."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+      "date": "2026-11-09",
+      "proved": "the page states the package registry is outside the storage limit",
+      "capture": "sha256:32cb9b13bd82d6395449b56d639b10c9214fbcf89a1a5fa1493dad8fe2e46c49",
+      "quote": "The container registry, package registry, and build artifacts are not included in the limit."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/gitlab_com/",
+      "date": "2026-11-09",
+      "proved": "the GitLab.com maximum file size for a generic package is 5 GB",
+      "capture": "sha256:f7809a7fec95052d845307fbe5d0f3a240751780a9f354afc7195428119dfe02",
+      "quote": "for a package uploaded to the [GitLab package registry](https://docs.gitlab.com/user/packages/package_registry/) varies by format:\n\n| Package type | GitLab.com |\n| --- | --- |\n| Conan | 5 GB |\n| Generic | 5 GB |"
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-10T00:50:17.323Z",
   "notes": "Explicitly EXCLUDED from the project storage quota. GitLab docs, verbatim: 'GitLab projects have a storage limit for their Git repository and Large File Storage (LFS). Only the project's repository and LFS are included in the storage limit. The container registry, package registry, and build artifacts are not included in the limit.' The 10 GiB figure (pricing page: 'Storage 10 GiB') therefore applies only to git+LFS; package bytes are unquota'd. Per-file ceilings: Generic 5 GB, npm 5 GB, Maven 5 GB, NuGet 5 GB, PyPI 5 GB, Conan 5 GB, Terraform 1 GB, ML model 10 GB (uploads capped at 5 GB), Helm 5 MB.",
   "history": [],
   "extras": {
@@ -96,7 +117,7 @@
     "target_document": "docs/storage/free/registries.md",
     "document_section": "Language package ecosystems",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "checked against the live service on 2026-11-10",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 5,
     "evidence_carrying_a_source_date": 0,

@@ -5,23 +5,23 @@
   "url": "https://transfer.it",
   "category": "cloud-drive",
   "free_tier": {
-    "stated": "No per-transfer size limit (MEGA blog: 'Send 100 GB, 1 TB, or even more, all for free'). Backing store is a fresh ANONYMOUS ephemeral MEGA account per uploader with mstrg = 21474836480 (20 GiB), read live from the API.",
-    "unit": "TB",
+    "stated": "No file size limits. Send 100 GB, 1 TB, or even more, all for free.",
+    "unit": "mixed",
     "metered_on": "stored-bytes",
-    "source_url": "https://transfer.it/",
-    "read_on": "2026-10-21",
+    "source_url": "https://blog.mega.io/introducing-transfer-it",
+    "read_on": "2026-11-09",
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
-    "source_url": "https://transfer.it/",
+    "stated": "No file size limits.",
+    "source_url": "https://blog.mega.io/introducing-transfer-it",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
     "stated": "Retention: SERVER CLAMPS EXPIRY TO 90 DAYS",
     "days": 90,
     "source_url": "https://transfer.it/",
-    "notes": "Extracted from published terms."
+    "notes": "unverified: https://transfer.it/ is a 900-byte JavaScript single-page app and states no retention period"
   },
   "egress": {
     "terms": "unmetered; direct host-issued CDN URL (gfsXXX.userstorage.mega.co.nz) supports Range and returns 206. Link/bandwidth not metered per-download on the free tier.",
@@ -54,13 +54,13 @@
   ],
   "limits_note": "Per-object-cap: none advertised per transfer, but the real ceiling is the 20 GiB ephemeral-account storage (mstrg). A transfer larger than the account's remaining space cannot complete. Retention: SERVER CLAMPS EXPIRY TO 90 DAYS. Verified with a:xl on transfers requested at 1d/90d/1y/10y/no-expiry: all returned e = now+90.00 days. The 10-year ceiling in transferit-py's docs (MAX_EXPIRY_SECONDS) is a CLIENT clamp the server silently overrides. Request-rate: not hit in ~10 uploads.",
   "identity_cost": {
-    "kind": "institution",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ader with mstrg = 21474836480 (20 GiB), read live from the API. Expiry IS re-settable in place: a:xm with a new 'e' on an existing xh works and returns 0 (verified 1d -> 30d -> 90",
+    "kind": "anonymous",
+    "detail": "Use [Transfer.it](https://transfer.it/) without an account, or sign in with your MEGA credentials to manage your transfers in one place.",
     "country": null
   },
   "reliability_note": "Expiry IS re-settable in place: a:xm with a new 'e' on an existing xh works and returns 0 (verified 1d -> 30d -> 90d). This is the 'transfer as store' trick. An unexpired transfer can be pushed back to the 90-day wall indefinitely without re-uploading, so the object only dies if you stop touching it for 90 days. Parallel ranged GETs scale (0.29 MB/s @1 conn -> 2.73 MB/s @32 conn on a 32 MiB object, 206s throughout); occasional 403 on a range suggests per-connection shaping, not a hard pull cap.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "the blog.mega.io page states no file size limits, with 100 GB or 1 TB sent for free",
   "evidence": [
     {
       "url": "https://transfer.it/t/JzZzzDxj2JCS",
@@ -86,11 +86,32 @@
       "url": "https://blog.mega.io/introducing-transfer-it",
       "date": "2026-10-21",
       "proved": "(archived 2025-07-21) — 'No file size limits. Send 100 GB, 1 TB, or even more, all for free'"
+    },
+    {
+      "url": "https://blog.mega.io/introducing-transfer-it",
+      "date": "2026-11-09",
+      "proved": "the MEGA blog states the free transfer has no file size limit",
+      "capture": "sha256:4d9b11bab9bfa148998de848daa3b8a2bc806647cba344be6fd8eec501e77b1d",
+      "quote": "No file size limits. Send 100 GB, 1 TB, or even more, all for free."
+    },
+    {
+      "url": "https://blog.mega.io/introducing-transfer-it",
+      "date": "2026-11-09",
+      "proved": "the blog says Transfer.it can be used without an account",
+      "capture": "sha256:4d9b11bab9bfa148998de848daa3b8a2bc806647cba344be6fd8eec501e77b1d",
+      "quote": "Use [Transfer.it](https://transfer.it/) without an account, or sign in with your MEGA credentials to manage your transfers in one place."
+    },
+    {
+      "url": "https://transfer.it/",
+      "date": "2026-11-09",
+      "proved": "the transfer.it response is a 900-byte HTML page",
+      "capture": "sha256:1e339c391337e73e5de8aa5624b9cfd6b0fd073522757d166db87bb8942cc9ec",
+      "quote": "content-length: 900"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "No per-transfer size limit (MEGA blog: 'Send 100 GB, 1 TB, or even more, all for free'). Backing store is a fresh ANONYMOUS ephemeral MEGA account per uploader with mstrg = 21474836480 (20 GiB), read live from the API.",
+  "verified_at": "2026-11-10T00:50:34.758Z",
+  "notes": "No file size limits. Send 100 GB, 1 TB, or even more, all for free.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",
@@ -107,7 +128,7 @@
     "target_document": "docs/storage/free/transfer-services.md",
     "document_section": "Transfer services",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "the blog.mega.io page states no file size limits, with 100 GB or 1 TB sent for free",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 5,
     "evidence_carrying_a_source_date": 1,

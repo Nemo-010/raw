@@ -18,7 +18,7 @@
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "| Cannot delete = every mistake is permanent on the LFS side, and the host's month-storage accounting (GitHub) means you keep paying for it in quota",
+    "stated": "The git-lfs protocol does not support deleting content, so git-annex cannot delete anything from a git-lfs special remote.",
     "source_url": "https://git-annex.branchable.com/special_remotes/git-lfs/",
     "notes": "Extracted from published terms."
   },
@@ -30,10 +30,10 @@
     "git"
   ],
   "interface_detail": "git",
-  "tooling": "`git annex initremote lfstest type=git-lfs url=... encryption=shared`. Supports gcrypt:: URL prefix for encrypting the git side too.",
+  "tooling": "To encrypt your git pushes, you can use git-remote-gcrypt and prefix the repository url with \"gcrypt::\". To make git-annex encrypt the data it stores, you can use the encryption= configuration.",
   "chaining": "Because annex can hold the same content on several LFS remotes, you can stack the 10 GiB/project GitLab allowance and the 10 GiB GitHub allowance as tiers of one logical dataset, with annex tracking which objects live where. Sharding a 1 TiB corpus across 100 GitLab projects becomes a `git annex copy --to` loop.",
   "limits": [],
-  "limits_note": "Hard, documented limitations: 'The git-lfs protocol does not support deleting content, so git-annex cannot delete anything from a git-lfs special remote'; no upload resume; 'git-annex doesn't do batching. This may cause it to fall afoul of rate limiting of git-lfs servers' — which directly collides with GitLab's 1000 req/min LFS limit. Requires SHA256 backend for efficiency.",
+  "limits_note": "The git-lfs protocol is designed around batching of transfers, but git-annex doesn't do batching. This may cause it to fall afoul of rate limiting of git-lfs servers when transferring a lot of files.",
   "identity_cost": {
     "kind": "email",
     "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
@@ -52,10 +52,31 @@
       "url": "https://git-annex.branchable.com/special_remotes/git-lfs/",
       "date": "2026-10-21",
       "proved": "example: 'git annex initremote lfstest type=git-lfs url=gcrypt::git@github.com:username/somerepo.git encryption=shared'"
+    },
+    {
+      "url": "https://git-annex.branchable.com/special_remotes/git-lfs/",
+      "date": "2026-11-11",
+      "proved": "the encryption notes state the gcrypt:: URL prefix for git pushes and the encryption= setting for stored data",
+      "capture": "sha256:6cd7913de3cf31ee4819c538d7094a9058e5acb29defed56b55be2345a736861",
+      "quote": "To encrypt your git pushes, you can use git-remote-gcrypt and prefix the repository url with \"gcrypt::\"\nTo make git-annex encrypt the data it stores, you can use the encryption= configuration."
+    },
+    {
+      "url": "https://git-annex.branchable.com/special_remotes/git-lfs/",
+      "date": "2026-11-11",
+      "proved": "the limitations section states that git-annex does not batch transfers and that this may hit git-lfs server rate limits",
+      "capture": "sha256:6cd7913de3cf31ee4819c538d7094a9058e5acb29defed56b55be2345a736861",
+      "quote": "The git-lfs protocol is designed around batching of transfers, but git-annex doesn't do batching. This may cause it to fall afoul of rate limiting of git-lfs servers when transferring a lot of files."
+    },
+    {
+      "url": "https://git-annex.branchable.com/special_remotes/git-lfs/",
+      "date": "2026-11-11",
+      "proved": "the limitations section states that the git-lfs protocol does not support deleting content",
+      "capture": "sha256:6cd7913de3cf31ee4819c538d7094a9058e5acb29defed56b55be2345a736861",
+      "quote": "The git-lfs protocol does not support deleting content, so git-annex cannot delete anything from a git-lfs special remote."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-11T05:33:48.336Z",
   "notes": "N/A. A protocol adapter. Turns ANY git-lfs server (GitHub, GitLab, Bitbucket, a self-hosted Gitea) into an annex special remote, so the LFS host's quota applies but annex adds hash-verified partial clone and `whereis` across mirrors.",
   "history": [],
   "extras": {

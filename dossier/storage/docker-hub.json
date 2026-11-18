@@ -5,12 +5,12 @@
   "url": "https://hub.docker.com",
   "category": "registry",
   "free_tier": {
-    "stated": "Unlimited public repositories on the free Personal plan; NO documented storage cap on public repositories. Docker's own limits table lists only pull-rate and repository counts, with no storage row. Docker's Feb 2025 policy post says storage-based billing is 'indefinitely delayed' with a promised six-month notice.",
-    "unit": "unlimited",
+    "stated": "Personal (authenticated): 200, Unlimited, Up to 1",
+    "unit": "mixed",
     "metered_on": "stored-bytes",
     "source_url": "https://docs.docker.com/docker-hub/usage/",
-    "read_on": "2026-10-21",
-    "notes": "Headline offer; binding constraint specified in limits."
+    "read_on": "2026-11-09",
+    "notes": "The table columns are pull rate limit per 6 hours, number of public repositories and number of private repositories."
   },
   "per_object_cap": {
     "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
@@ -35,7 +35,7 @@
   "limits": [
     {
       "kind": "per-ip-shaping",
-      "value": "1TiB/day",
+      "value": "200 pulls per 6 hours for Docker Personal users",
       "source": "https://docs.docker.com/docker-hub/usage/"
     }
   ],
@@ -46,8 +46,8 @@
     "country": null
   },
   "reliability_note": "Storage is unpriced today but Docker reserves the right to add charges and has flip-flopped before (announced Mar 2025, cancelled Apr 2025); the 100-pull/6h IP limit will throttle any fetch fan-out from one host.",
-  "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence": "documented",
+  "confidence_note": "the usage table states the Personal plan's figures",
   "evidence": [
     {
       "url": "https://docs.docker.com/docker-hub/usage/",
@@ -73,11 +73,39 @@
       "url": "https://github.com/Androsh7/layerstash",
       "date": "2026-10-21",
       "proved": "read live: 'I have stored a total of 1.8TB in a public repository on Docker Hub androsh7/archive'"
+    },
+    {
+      "url": "https://docs.docker.com/docker-hub/usage/",
+      "date": "2026-11-09",
+      "proved": "the usage table row for Personal (authenticated) gives 200, Unlimited and Up to 1",
+      "capture": "sha256:6fdd0586d1c96313389d7b53a1a39b24939f9ad8ecd97de52e5e5e244ad954ed",
+      "quote": "| Personal (authenticated) | 200                                     | Unlimited                     | Up to 1                        |"
+    },
+    {
+      "url": "https://docs.docker.com/docker-hub/usage/",
+      "date": "2026-11-09",
+      "proved": "the usage table columns are pull rate limit per 6 hours, number of public repositories and number of private repositories",
+      "capture": "sha256:6fdd0586d1c96313389d7b53a1a39b24939f9ad8ecd97de52e5e5e244ad954ed",
+      "quote": "| User type                | Pull rate limit per 6 hours             | Number of public repositories | Number of private repositories |"
+    },
+    {
+      "url": "https://www.docker.com/blog/revisiting-docker-hub-policies-prioritizing-developer-experience/",
+      "date": "2026-11-09",
+      "proved": "the blog states the current pull limits are 100 per 6 hours unauthenticated and 200 per 6 hours for Docker Personal users",
+      "capture": "sha256:b3651536b191c8dd81315ce7f3704d9dbae3ba94635928cb2d4df062d6e9ab01",
+      "quote": "The current limits—100 pulls per 6 hours for unauthenticated users and 200 pulls per 6 hours for Docker Personal users—will remain in place as we continue to evaluate developer feedback and identify appropriate long-term limits."
+    },
+    {
+      "url": "https://www.docker.com/blog/revisiting-docker-hub-policies-prioritizing-developer-experience/",
+      "date": "2026-11-09",
+      "proved": "the blog states storage-based billing is indefinitely delayed",
+      "capture": "sha256:b3651536b191c8dd81315ce7f3704d9dbae3ba94635928cb2d4df062d6e9ab01",
+      "quote": "**Storage Charges Delayed Indefinitely** – Previously, we announced plans to introduce **storage-based billing**, but we have decided to **indefinitely delay any storage charges**."
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "Unlimited public repositories on the free Personal plan; NO documented storage cap on public repositories. Docker's own limits table lists only pull-rate and repository counts, with no storage row. Docker's Feb 2025 policy post says storage-based billing is 'indefinitely delayed' with a promised six-month notice.",
+  "verified_at": "2026-11-10T00:50:14.094Z",
+  "notes": "**Storage Charges Delayed Indefinitely** – Previously, we announced plans to introduce **storage-based billing**, but we have decided to **indefinitely delay any storage charges**.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",
@@ -94,7 +122,7 @@
     "target_document": "docs/storage/free/registries.md",
     "document_section": "ORAS and arbitrary OCI artifacts",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "the usage table states the Personal plan's figures",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 5,
     "evidence_carrying_a_source_date": 0,

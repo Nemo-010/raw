@@ -5,12 +5,12 @@
   "url": "probe:seed/DEAD-ENDS.md",
   "category": "rejected-provider",
   "free_tier": {
-    "stated": "mail.tm API: free with no API key and no sign-up, limited to 8 queries per second per IP address; the per-account storage quota is not printed",
+    "stated": "Completely free. No API key, no signup, no paid tiers.",
     "unit": "requests",
     "metered_on": "request-count",
     "source_url": "https://docs.mail.tm/",
-    "read_on": "2026-10-30",
-    "notes": "the API schema at https://api.mail.tm/docs.jsonld gives each Account an integer quota; its value is returned only for a created inbox account"
+    "read_on": "2026-11-09",
+    "notes": "The general quota limit is 8 queries per second (QPS) per IP address."
   },
   "per_object_cap": {
     "stated": "not recorded; the provider was rejected before its per-object cap mattered",
@@ -19,7 +19,7 @@
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "mail.tm stores incoming messages for 7 days",
+    "stated": "We store messages for 7 days only. Sorry, we can't keep them indefinitely.",
     "days": 7,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
@@ -37,7 +37,7 @@
   "limits": [
     {
       "kind": "retention-clamped",
-      "value": "mail.tm stores incoming messages for 7 days",
+      "value": "We store messages for 7 days only. Sorry, we can't keep them indefinitely.",
       "source": "https://mail.tm/en/faq/"
     }
   ],
@@ -49,7 +49,7 @@
   },
   "reliability_note": "api.mail.tm/domains answers HTTP 200 with one active receiving domain (fldubai.com, replacing maxxspace.com); api.guerrillamail.com answers HTTP 200 with a JSON session; www.1secmail.com fails TLS verification (certificate not valid for the hostname), so its API could not be read",
   "confidence": "documented",
-  "confidence_note": "mail.tm and Guerrilla Mail retention is read from their own pages; API reachability is probed; the mail.tm per-account quota value and the 1secmail API are unverified",
+  "confidence_note": "the mail.tm documentation states the API is free with no signup",
   "evidence": [
     {
       "url": "probe:seed/DEAD-ENDS.md",
@@ -153,11 +153,39 @@
       "proved": "the Guerrilla Mail API returned a new inbox address on a guerrillamailblock.com domain, with a creation timestamp, as JSON",
       "capture": "sha256:8f48661cfcfdb6d3d3454927a22b19a3d35eb14ad69f79f3d69b1cc253ac4234",
       "quote": "@guerrillamailblock.com\",\"email_timestamp\":1793668516"
+    },
+    {
+      "url": "https://docs.mail.tm/",
+      "date": "2026-11-09",
+      "proved": "the mail.tm documentation states the API is completely free with no API key, no signup and no paid tiers",
+      "capture": "sha256:8388471c99b33765bda923cbd8bd39e71da90f75722b6d3eb33b521e5c433d6c",
+      "quote": "Completely free. No API key, no signup, no paid tiers."
+    },
+    {
+      "url": "https://docs.mail.tm/",
+      "date": "2026-11-09",
+      "proved": "the mail.tm documentation states the quota is 8 queries per second per IP address",
+      "capture": "sha256:8388471c99b33765bda923cbd8bd39e71da90f75722b6d3eb33b521e5c433d6c",
+      "quote": "The general quota limit is 8 queries per second (QPS) per IP address."
+    },
+    {
+      "url": "https://mail.tm/en/faq/",
+      "date": "2026-11-09",
+      "proved": "the mail.tm FAQ states messages are stored for 7 days",
+      "capture": "sha256:edfb9fcdc3862ebe4a8a19aab535c3fd720dc6a902b5cfeb2416f8888b2a4e43",
+      "quote": "We store messages for 7 days only. Sorry, we can't keep them indefinitely."
+    },
+    {
+      "url": "https://mail.tm/en/faq/",
+      "date": "2026-11-09",
+      "proved": "the mail.tm FAQ states a disposable mailbox is anonymous and requires no registration",
+      "capture": "sha256:edfb9fcdc3862ebe4a8a19aab535c3fd720dc6a902b5cfeb2416f8888b2a4e43",
+      "quote": "A disposable mailbox is a temporary, completely anonymous email address that requires no registration."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-03T01:28:33.737Z",
-  "notes": "APIs tested on 2026-11-03 returned gateway errors. Endpoint api.mail.tm/domains returned HTTP 502, POST api.mail.tm/accounts returned HTTP 502 with 0 bytes, and api.guerrillamail.com/ajax.php?f=get_email_address failed.",
+  "verified_at": "2026-11-10T00:50:14.093Z",
+  "notes": "mail.tm states it is completely free with no API key, no signup and no paid tiers.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",
@@ -171,7 +199,7 @@
       "first_recorded": "2026-10-21",
       "source": "DEAD-ENDS.md + the dossier wave that recorded it"
     },
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this rejection was not re-checked against the live service"
+    "verified_at_basis": "the mail.tm documentation states the API is free with no signup"
   },
   "binding": "retention-clamped",
   "binding_note": "mail.tm stores incoming messages for 7 days, so held bytes do not persist; the per-account byte quota is an integer returned only for a created account and is unverified here",

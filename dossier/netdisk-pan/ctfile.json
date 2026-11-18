@@ -57,7 +57,7 @@
   ],
   "identity_cost": {
     "kind": "email",
-    "detail": "the register page offers email and password as the primary path with 'Sign up with phone instead' as the alternative; no card, no ID, no +86 requirement stated",
+    "detail": "the email path asks for an email address, a password and a 5-character image verification code, then acceptance of the terms; 'Sign up with phone instead' is the alternative; no card, no ID document and no PRC phone number are asked for on the email path",
     "country": null
   },
   "reliability_note": "Over-quota triggers deletion of the excess without prior notice, and the inactivity clock deletes a free account's files at 30 days; a monthly sign-in cron keeps it alive and nothing else does.",
@@ -110,10 +110,66 @@
       "proved": "the registration form takes an email and password with a phone alternative",
       "capture": "sha256:166b980491e5ddde53a7620213cb1afa54ac79e6df6e591f5b4ca756c83cdd77",
       "quote": "Sign up with phone instead"
+    },
+    {
+      "url": "https://www.ctfile.com/assets/index-DqUjQ9XK.js",
+      "date": "2026-11-09",
+      "proved": "the current email sign-up form asks for a 5-character verification code; the same page shows the email, password and terms fields and the phone alternative",
+      "capture": "sha256:aa085e0c36b24d6335be4ab545c21e0c24cf1c1a16dd330beb35011c6fe98046",
+      "quote": "input_code:\"Verification Code\",input_code_placeholder:\"Enter code\",input_code_msg:\"Please enter the 5-character verification code.\""
+    },
+    {
+      "url": "https://www.ctfile.com/assets/account-pages-7k0OlWK8.js",
+      "date": "2026-11-09",
+      "proved": "the email registration request carries email, password and a captcha only; no phone, card or identity-document field",
+      "capture": "sha256:38f0b1101ee5d330dc44e3fdbe2ad4ea56454ab52524a984b3e926d4a9d07344",
+      "quote": "body:JSON.stringify({email:i.email,password:i.password,captcha:i.code,captcha_id:c,invite_code:G,ref:f})"
+    },
+    {
+      "url": "https://www.ctfile.com/assets/index-DqUjQ9XK.js",
+      "date": "2026-11-09",
+      "proved": "the free plan is 5 TB of shared space, capped at 20 GB per file and renewed by signing in once a month; the same page states no upload speed limit",
+      "capture": "sha256:aa085e0c36b24d6335be4ab545c21e0c24cf1c1a16dd330beb35011c6fe98046",
+      "quote": "plan_free_feature1:\"5TB Shared Space\",plan_free_feature2:\"Max 20GB per file\",plan_free_feature3:\"Login once a month to renew\""
+    },
+    {
+      "url": "https://www.ctfile.com/assets/index-DqUjQ9XK.js",
+      "date": "2026-11-09",
+      "proved": "registration yields 5 TB of shared space, above 500 GiB; the email-only sign-up opens the identity door, and the shared-space and monthly sign-in conditions make the verdict qualifies-with-caveat",
+      "capture": "sha256:aa085e0c36b24d6335be4ab545c21e0c24cf1c1a16dd330beb35011c6fe98046",
+      "quote": "section_2_step_4_desc:\"After successful registration, you'll get 5TB of free shared space and can start uploading files immediately\""
+    },
+    {
+      "url": "https://www.ctfile.com/assets/legal-pages-D5nM9Fh6.js",
+      "date": "2026-11-09",
+      "proved": "a free account's stored files are deleted after 30 consecutive days without sign-in; paid accounts get 365 days",
+      "capture": "sha256:85b24400ecfd038bf013e624035b7f6475dc22362b638cbd2e15ca4519998261",
+      "quote": "delete stored files after 30 consecutive days without sign-in for a free account, or 365 consecutive days for a paid member"
+    },
+    {
+      "url": "https://www.ctfile.com/assets/legal-pages-D5nM9Fh6.js",
+      "date": "2026-11-09",
+      "proved": "the free 5 TB is shared space, not private storage or long-term private archiving",
+      "capture": "sha256:85b24400ecfd038bf013e624035b7f6475dc22362b638cbd2e15ca4519998261",
+      "quote": "Shared space is a functional area for you to share, transfer or display content to others, rather than private storage or long-term private archiving."
+    },
+    {
+      "url": "https://www.ctfile.com/assets/index-DqUjQ9XK.js",
+      "date": "2026-11-09",
+      "proved": "the help page states registration takes an email address, a password and agreement to the user agreement",
+      "capture": "sha256:aa085e0c36b24d6335be4ab545c21e0c24cf1c1a16dd330beb35011c6fe98046",
+      "quote": "section_2_step_2_desc:\"Enter your email address, set a password, and agree to the user agreement\""
+    },
+    {
+      "url": "https://www.ctfile.com/assets/index-DqUjQ9XK.js",
+      "date": "2026-11-09",
+      "proved": "registration itself grants 5 TB of shared space at no charge",
+      "capture": "sha256:aa085e0c36b24d6335be4ab545c21e0c24cf1c1a16dd330beb35011c6fe98046",
+      "quote": "section_2_tip_text:\"Get 5TB shared space upon registration, completely free!\""
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-04T00:21:08.723Z",
+  "verified_at": "2026-11-09T13:21:23.326Z",
   "binding": "retention-clamped",
   "notes": "5 TB free, 20 GB per file, email-only registration, WebDAV advertised. The 30-day inactivity deletion is the number that decides how it can be used: a monthly cron job keeps it, and nothing else does. Terms section 3.2.7 also caps the account at 200,000 files, which at 20 GB per file is a 4 PB nominal ceiling and therefore not the constraint.",
   "history": [],

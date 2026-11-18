@@ -61,12 +61,75 @@
       "url": "probe:https://zhuifan.link/api/fs/put",
       "date": "2026-10-22",
       "proved": "the zero-byte oracle (PUT at an existing directory with Overwrite:false) returned code 403 with message 'permission denied' inside HTTP 200, so the write permission failed and nothing was written"
+    },
+    {
+      "url": "probe:https://zhuifan.link/",
+      "date": "2026-11-11",
+      "proved": "the fs/list response carries this error text",
+      "capture": "sha256:cce20089b80e5fbb36bb85a0946b12b470058fb5bc35101d1766616d99043293",
+      "quote": "\"list_failure\": \"failed get objs: failed get dir: failed get parent list: failed get dir: failed get parent list: failed get dir: object not found\""
+    },
+    {
+      "url": "probe:https://zhuifan.link/",
+      "date": "2026-11-11",
+      "proved": "this run's probe found no listing, so the count is one",
+      "capture": "sha256:cce20089b80e5fbb36bb85a0946b12b470058fb5bc35101d1766616d99043293",
+      "quote": "\"consecutive_failures\": 1"
+    },
+    {
+      "url": "probe:https://zhuifan.link/",
+      "date": "2026-11-11",
+      "proved": "the settings endpoint answered HTTP 200 while the listing did not",
+      "capture": "sha256:cce20089b80e5fbb36bb85a0946b12b470058fb5bc35101d1766616d99043293",
+      "quote": "\"status\": 200"
+    },
+    {
+      "url": "probe:https://zhuifan.link/",
+      "date": "2026-11-11",
+      "proved": "the settings request for this host answered HTTP 200 at this instant",
+      "capture": "sha256:938704625041850b0c2d8ea8bb83bd99a38160e8845b2ba09c5f890a86df6b0c",
+      "quote": "\"checked_at\": \"2026-11-11T01:56:23.247Z\""
+    },
+    {
+      "url": "probe:https://zhuifan.link/",
+      "date": "2026-11-11",
+      "proved": "the anonymous root listing hashed to this value in this run",
+      "capture": "sha256:938704625041850b0c2d8ea8bb83bd99a38160e8845b2ba09c5f890a86df6b0c",
+      "quote": "\"listing_sha256\": \"4d9849d5\""
+    },
+    {
+      "url": "probe:https://zhuifan.link/",
+      "date": "2026-11-11",
+      "proved": "the probe record states the hash method used for the listing",
+      "capture": "sha256:938704625041850b0c2d8ea8bb83bd99a38160e8845b2ba09c5f890a86df6b0c",
+      "quote": "\"listing_hash_method\": \"sha256 of the canonical JSON array of [name, size, is_dir] triples sorted by name, first 8 hex characters\""
+    },
+    {
+      "url": "probe:https://zhuifan.link/",
+      "date": "2026-11-11",
+      "proved": "the anonymous guest session answered and its root listing returned entries, so the instance is reachable without an account",
+      "capture": "sha256:938704625041850b0c2d8ea8bb83bd99a38160e8845b2ba09c5f890a86df6b0c",
+      "quote": "\"alive\": true"
+    },
+    {
+      "url": "probe:https://zhuifan.link/",
+      "date": "2026-11-11",
+      "proved": "the root listing answered with this entry count and hash in this run",
+      "capture": "sha256:938704625041850b0c2d8ea8bb83bd99a38160e8845b2ba09c5f890a86df6b0c",
+      "quote": "\"listing_note\": \"anonymous POST /api/fs/list on / returned code 200 with 8 root entries (listing sha256 4d9849d5)\""
+    },
+    {
+      "url": "probe:https://zhuifan.link/",
+      "date": "2026-11-11",
+      "proved": "this host answered every request of this run's probe",
+      "capture": "sha256:938704625041850b0c2d8ea8bb83bd99a38160e8845b2ba09c5f890a86df6b0c",
+      "quote": "\"consecutive_failures\": 0"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-22T03:37:00.574Z",
+  "verified_at": "2026-11-11T02:04:47.988Z",
   "binding": "write-gated",
-  "notes": "An anime index on an AList v3.23 build from about 2022, which makes it one of the two oldest instances still listing. base_path is /新番/anime/new, so / in the API is not the instance root. Read-only by design.",
+  "notes": "anonymous POST /api/fs/list on / returned code 200 with 8 root entries (listing sha256 4d9849d5)",
   "history": [],
   "extras": {
     "access_mode": "public-instance",
@@ -78,10 +141,10 @@
     "write_content_bypass": null,
     "permission_bitmask": "256",
     "base_path": "/新番/anime/new",
-    "listing_sha256": "710d5e20",
+    "listing_sha256": "4d9849d5",
     "first_seen": "2024-01-20",
     "first_seen_source": "kuhehe.github.io/20240120224502, whose page was edited in place until 2025-06-17",
-    "last_verified_alive": "2026-10-22T03:37:00.574Z",
+    "last_verified_alive": "2026-11-11T01:56:23.247Z",
     "last_verified_dead": null,
     "consecutive_failures": 0,
     "aliases": [
@@ -100,7 +163,8 @@
     "guest_credentials": [
       "zhuifan:zhuifan",
       "guest:guest"
-    ]
+    ],
+    "listing_hash_method": "sha256 of the canonical JSON array of [name, size, is_dir] triples sorted by name, first 8 hex characters"
   },
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z"

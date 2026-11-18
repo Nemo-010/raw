@@ -5,23 +5,23 @@
   "url": "https://www.atlassian.com/software/confluence",
   "category": "paas",
   "free_tier": {
-    "stated": "2 GB file storage on the Free plan (10 users, unlimited spaces and pages). Crucially: 'Free, Standard, and Premium plans entitle you to one app instance. **You can have as many of these plans as you need.** You'll subscribe to each one separately.' Each instance 'will have its own storage'.",
+    "stated": "Confluence Free- 2 GB",
     "unit": "GB",
     "metered_on": "stored-bytes",
     "source_url": "https://support.atlassian.com/organization-administration/docs/how-many-instances-of-a-product-does-my-organization-need/",
-    "read_on": "2026-10-21",
+    "read_on": "2026-11-09",
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "per-object-cap: attachment default 100 MB",
-    "bytes": 100000000,
+    "stated": "The default is 100 megabytes, expressed as 104857600 bytes.",
+    "bytes": 104857600,
     "source_url": "https://support.atlassian.com/organization-administration/docs/how-many-instances-of-a-product-does-my-organization-need/",
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
+    "stated": "| Free, Standard, Premium or Enterprise plan | 60 days |",
     "source_url": "https://support.atlassian.com/organization-administration/docs/how-many-instances-of-a-product-does-my-organization-need/",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "At the end of this data retention period, your app’s data will be permanently deleted and cannot be recovered."
   },
   "egress": {
     "terms": "No egress meter anywhere in Atlassian Cloud pricing. Attachments are served from the site domain, not a billed CDN bucket.",
@@ -37,19 +37,19 @@
   "limits": [
     {
       "kind": "per-object-cap",
-      "value": "per-object-cap: attachment default 100 MB",
+      "value": "The default is 100 megabytes, expressed as 104857600 bytes.",
       "source": "https://support.atlassian.com/organization-administration/docs/how-many-instances-of-a-product-does-my-organization-need/"
     }
   ],
   "limits_note": "Per-object-cap: attachment default 100 MB, admin-configurable upward ('Enter your preferred maximum size (in bytes)'). Quota is per-site, not per-org. request-rate: Atlassian Cloud REST rate limits apply. Retention: Free sites are DEACTIVATED after a period of inactivity (logging in and viewing a page counts as activity). This is the real hazard, not eviction. Over-quota does not delete data, it restricts editing/creating.",
   "identity_cost": {
     "kind": "email",
-    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "detail": "unverified: the captured pages state the Free plan's quota and attachment cap, not what creating a site requires",
     "country": null
   },
   "reliability_note": "Nothing is deleted at quota. Writes are blocked until you upgrade or free space. But a Free site that goes untouched is deactivated, so a storage-only site needs a periodic login to stay alive.",
-  "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence": "documented",
+  "confidence_note": "Confluence Free- 2 GB",
   "evidence": [
     {
       "url": "https://support.atlassian.com/confluence-cloud/docs/manage-your-storage-usage/",
@@ -70,10 +70,45 @@
       "url": "https://support.atlassian.com/confluence-cloud/docs/configure-attachment-size/",
       "date": "2026-10-21",
       "proved": "'The default is 100 megabytes, expressed as 104857600 bytes', admin-adjustable"
+    },
+    {
+      "url": "https://support.atlassian.com/confluence-cloud/docs/manage-your-storage-usage/",
+      "date": "2026-11-09",
+      "proved": "the captured page states the quota, not the sign-up requirements",
+      "capture": "sha256:3d8f2ab66e107251fde5402fce9c20db4a177b5226780e16ff8855bdb24b4f93",
+      "quote": "Confluence Free- 2 GB"
+    },
+    {
+      "url": "https://support.atlassian.com/confluence-cloud/docs/configure-attachment-size/",
+      "date": "2026-11-09",
+      "proved": "the configure-attachment-size page states the default and its byte value",
+      "capture": "sha256:376872fed4a938ab052608f1590b92427134c0025d021fe1e78c516bd7c3446d",
+      "quote": "The default is 100 megabytes, expressed as 104857600 bytes."
+    },
+    {
+      "url": "https://support.atlassian.com/organization-administration/docs/track-storage-and-move-data-across-products/",
+      "date": "2026-11-09",
+      "proved": "the storage tracking page states a 60-day data retention period for Free",
+      "capture": "sha256:21fd9eead27c42adee4e9662175ef66ddc68815e6ca6cdd14a23d82f4aa7076f",
+      "quote": "| Free, Standard, Premium or Enterprise plan | 60 days |"
+    },
+    {
+      "url": "https://support.atlassian.com/organization-administration/docs/track-storage-and-move-data-across-products/",
+      "date": "2026-11-09",
+      "proved": "the page states what happens at the end of the retention period",
+      "capture": "sha256:21fd9eead27c42adee4e9662175ef66ddc68815e6ca6cdd14a23d82f4aa7076f",
+      "quote": "At the end of this data retention period, your app’s data will be permanently deleted and cannot be recovered."
+    },
+    {
+      "url": "https://support.atlassian.com/confluence-cloud/docs/manage-your-storage-usage/",
+      "date": "2026-11-09",
+      "proved": "storage is consumed by stored content",
+      "capture": "sha256:3d8f2ab66e107251fde5402fce9c20db4a177b5226780e16ff8855bdb24b4f93",
+      "quote": "All pages, live docs, attachments, files, and comments take up storage."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-10T00:50:09.749Z",
   "notes": "2 GB file storage on the Free plan (10 users, unlimited spaces and pages). Crucially: 'Free, Standard, and Premium plans entitle you to one app instance. **You can have as many of these plans as you need.** You'll subscribe to each one separately.' Each instance 'will have its own storage'.",
   "history": [],
   "extras": {
