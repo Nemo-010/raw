@@ -113,13 +113,23 @@
       "proved": "the optional base_url override is restricted to the default origin or a server allowlist",
       "capture": "sha256:f4c02358a101b6c2e1dcb628a5bd9db6298c4afbfaa9a1aaa7501d36493a3f55",
       "quote": "const AllowedBaseURLsEnv = \"MODULES_WEAVIATE_EMBEDDINGS_ALLOWED_BASE_URLS\""
+    },
+    {
+      "url": "probe:https://api.embedding.weaviate.io/v1/embeddings/embed",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://api.embedding.weaviate.io/v1/embeddings/embed returned HTTP 401 with body {'detail':'Missing authentication token. Please provide an API key or OIDC authentication token in the Authori and no completion in 615 ms Probe start 2026-11-18T05:36:39.022Z.",
+      "capture": "sha256:e2961577fe8aad6633bed359aa71ef4db0d89d5b1b0ac470a2efd3ed4856d382",
+      "quote": "a keyless POST to https://api.embedding.weaviate.io/v1/embeddings/embed returned HTTP 401 with body {'detail':'Missing authentication token. Please provide an API key or OIDC authentication token in the Authori and no completion in 615 ms"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-18T04:36:14.247Z",
+  "verified_at": "2026-11-18T05:36:39.022Z",
   "binding": "request-rate",
   "binding_note": "2,000 requests per cluster per day is the only published limit on a free cluster",
-  "notes": "derived: 2,000 requests * 200 objects per batch = 400,000 embeddings per day, as the vendor page states. The embeddings service host and POST route are pinned from Weaviate own server source at commit df6395886859be4020542bfdd0d485dad4829220 (2026-11-09), read 2026-11-18; the host answered HTTP 401 with a Bearer-token guidance body to an unauthenticated GET; a concrete cluster REST host and API key are unverified: behind a sign-up. The 2026-11-03 and 2026-11-18 captures of the overview page differ in bytes but all carried-over quotes match.",
+  "notes": "derived: 2,000 requests * 200 objects per batch = 400,000 embeddings per day, as the vendor page states. The embeddings service host and POST route are pinned from Weaviate own server source at commit df6395886859be4020542bfdd0d485dad4829220 (2026-11-09), read 2026-11-18; the host answered HTTP 401 with a Bearer-token guidance body to an unauthenticated GET; a concrete cluster REST host and API key are unverified: behind a sign-up. The 2026-11-03 and 2026-11-18 captures of the overview page differ in bytes but all carried-over quotes match. On 2026-11-18 one keyless POST of an embedding body to /v1/embeddings/embed returned HTTP 401 missing authentication token, so the embed route is live.",
   "endpoint": "https://api.embedding.weaviate.io/v1/embeddings/embed (POST); called server-side by the cluster text2vec-weaviate vectorizer — callers use their cluster REST endpoint and API key, with no separate embeddings key",
-  "interface_detail": "Weaviate Embeddings is a managed service at POST https://api.embedding.weaviate.io/v1/embeddings/embed with a JSON body of input / model / dimensions / optional is_search_query, authenticated by an Authorization Bearer token (Weaviate Cloud API key or OIDC token) and an X-Weaviate-Cluster-Url header. Callers reach it through a Weaviate Cloud cluster text2vec-weaviate vectorizer over the cluster REST/gRPC API; no separate key is needed (cluster credentials authorize it)."
+  "interface_detail": "Weaviate Embeddings is a managed service at POST https://api.embedding.weaviate.io/v1/embeddings/embed with a JSON body of input / model / dimensions / optional is_search_query, authenticated by an Authorization Bearer token (Weaviate Cloud API key or OIDC token) and an X-Weaviate-Cluster-Url header. Callers reach it through a Weaviate Cloud cluster text2vec-weaviate vectorizer over the cluster REST/gRPC API; no separate key is needed (cluster credentials authorize it).",
+  "probe": {
+    "records": null
+  }
 }

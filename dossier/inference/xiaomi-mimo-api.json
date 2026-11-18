@@ -18,7 +18,7 @@
     "rest"
   ],
   "history": [],
-  "verified_at": "2026-11-18T04:36:14.847Z",
+  "verified_at": "2026-11-18T05:36:15.025Z",
   "tooling": "OpenAI Python SDK (pip install -U openai) with base_url=\"https://api.xiaomimimo.com/v1\", Anthropic Python SDK with base_url=\"https://api.xiaomimimo.com/anthropic\", or curl against POST https://api.xiaomimimo.com/v1/chat/completions with the api-key header.",
   "chaining": "mainland and overseas accounts have separate base URLs and keys, so usage and credit do not aggregate across regions",
   "free_tier": {
@@ -151,10 +151,48 @@
       "proved": "the two accepted auth header forms and the key gate",
       "capture": "sha256:b8fef2a3efa97b5fa262ac35bf6d0ca701686882b6f05a600c67b4e8eba14c61",
       "quote": "When using the model via API, please include your API Key in the request header:`api-key: $MIMO_API_KEY` or `Authorization: Bearer $MIMO_API_KEY`."
+    },
+    {
+      "url": "probe:https://api.xiaomimimo.com/v1/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://api.xiaomimimo.com/v1/chat/completions for mimo-v2-flash returned HTTP 401 with body { 'error': { 'message': 'Invalid API Key', 'param': 'Please provide valid API Key', 'code': '401', 'type': 'in and no completion in 1670 ms Probe start 2026-11-18T05:26:28.409Z.",
+      "capture": "sha256:386cfc95a4682b7546507a3f05291f47312f3eb70181ad70fb1d9ac53fed7407",
+      "quote": "a keyless POST to https://api.xiaomimimo.com/v1/chat/completions for mimo-v2-flash returned HTTP 401 with body { 'error': { 'message': 'Invalid API Key', 'param': 'Please provide valid API Key', 'code': '401', 'type': 'in and no completion in 1670 ms"
+    },
+    {
+      "url": "probe:https://api.xiaomimimo.com/v1/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://api.xiaomimimo.com/v1/chat/completions for mimo-v2-flash returned HTTP 401 with body { 'error': { 'message': 'Invalid API Key', 'param': 'Please provide valid API Key', 'code': '401', 'type': 'in and no completion in 1104 ms Probe start 2026-11-18T05:36:15.025Z.",
+      "capture": "sha256:09153b98b614aac55a091ab8e7c2c21eea3d607133626601717de80160e42903",
+      "quote": "a keyless POST to https://api.xiaomimimo.com/v1/chat/completions for mimo-v2-flash returned HTTP 401 with body { 'error': { 'message': 'Invalid API Key', 'param': 'Please provide valid API Key', 'code': '401', 'type': 'in and no completion in 1104 ms"
     }
   ],
   "verdict": "trial-only",
-  "notes": "overseas first-recharge bonus: USD 0.72 once per account on a first top-up of any amount, valid 40 days; it needs a payment so it is not a card-free credit. The first-party inference endpoint is https://api.xiaomimimo.com/v1 (OpenAI) and https://api.xiaomimimo.com/anthropic (Anthropic), confirmed by keyless probes on 2026-11-18; Token Plan and Batch use separate purchase-gated base URLs; the endpoint finding does not change the free-credit verdict.",
+  "notes": "overseas first-recharge bonus: USD 0.72 once per account on a first top-up of any amount, valid 40 days; it needs a payment so it is not a card-free credit. The first-party inference endpoint is https://api.xiaomimimo.com/v1 (OpenAI) and https://api.xiaomimimo.com/anthropic (Anthropic), confirmed by keyless probes on 2026-11-18; Token Plan and Batch use separate purchase-gated base URLs; the endpoint finding does not change the free-credit verdict. On 2026-11-18 two keyless POSTs returned HTTP 401 Invalid API Key, so the OpenAI-compatible route is live.",
   "endpoint": "https://api.xiaomimimo.com/v1 (OpenAI-compatible); https://api.xiaomimimo.com/anthropic (Anthropic-compatible)",
-  "interface_detail": "The platform is served by the first-party Xiaomi MiMo inference API, compatible with OpenAI Chat Completions and Anthropic Messages formats; chat at POST https://api.xiaomimimo.com/v1/chat/completions, models at GET https://api.xiaomimimo.com/v1/models, Anthropic messages at POST https://api.xiaomimimo.com/anthropic/v1/messages; auth is api-key: $MIMO_API_KEY or Authorization: Bearer $MIMO_API_KEY, with a pay-as-you-go key of format sk-xxxxx created on the Console - API Keys page after sign-in. Token Plan uses token-plan-cn.xiaomimimo.com/v1 and Batch Inference uses batch-api-cn.xiaomimimo.com/v1, and regional base URLs and keys are not interoperable."
+  "interface_detail": "The platform is served by the first-party Xiaomi MiMo inference API, compatible with OpenAI Chat Completions and Anthropic Messages formats; chat at POST https://api.xiaomimimo.com/v1/chat/completions, models at GET https://api.xiaomimimo.com/v1/models, Anthropic messages at POST https://api.xiaomimimo.com/anthropic/v1/messages; auth is api-key: $MIMO_API_KEY or Authorization: Bearer $MIMO_API_KEY, with a pay-as-you-go key of format sk-xxxxx created on the Console - API Keys page after sign-in. Token Plan uses token-plan-cn.xiaomimimo.com/v1 and Batch Inference uses batch-api-cn.xiaomimimo.com/v1, and regional base URLs and keys are not interoperable.",
+  "probe": {
+    "records": [
+      {
+        "probe_id": "xiaomi-mimo-api-20261118",
+        "target": "https://api.xiaomimimo.com/v1/chat/completions",
+        "runs": [
+          {
+            "label": "run1",
+            "probed_at": "2026-11-18T05:26:28.409Z",
+            "status": 401,
+            "completion": false,
+            "capture": "sha256:386cfc95a4682b7546507a3f05291f47312f3eb70181ad70fb1d9ac53fed7407"
+          },
+          {
+            "label": "run2",
+            "probed_at": "2026-11-18T05:36:15.025Z",
+            "status": 401,
+            "completion": false,
+            "capture": "sha256:09153b98b614aac55a091ab8e7c2c21eea3d607133626601717de80160e42903"
+          }
+        ]
+      }
+    ]
+  }
 }

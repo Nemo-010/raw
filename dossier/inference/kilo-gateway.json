@@ -257,6 +257,26 @@
         "reasoning_only": "no",
         "error_run1": "",
         "error_run2": ""
+      },
+      {
+        "probe_id": "kilo-gateway-20261118",
+        "target": "https://api.kilo.ai/api/gateway/chat/completions",
+        "runs": [
+          {
+            "label": "run1",
+            "probed_at": "2026-11-18T05:26:05.575Z",
+            "status": 200,
+            "completion": true,
+            "capture": "sha256:9c6d6274e97ea3dd42da2a709a82c5d370936f89ed0b04cc058b3bf54432789c"
+          },
+          {
+            "label": "run2",
+            "probed_at": "2026-11-18T05:36:00.504Z",
+            "status": 200,
+            "completion": true,
+            "capture": "sha256:b82c86e58494199e4636fcd85903aa7d0def2ba297a525568d58991af2af5f21"
+          }
+        ]
       }
     ],
     "runs": [
@@ -333,11 +353,25 @@
       "proved": "a keyless POST on 2026-11-10 for nvidia/nemotron-3.5-super-vl:free answered 200 twice and echoed nvidia/nemotron-3.5-super-vl:free with empty content and the text in the reasoning field, 56 tokens (24 prompt, 32 completion)",
       "capture": "sha256:6af0673394988b8c28950a8f6aa3a1e9d65fec5f59c77d9c3d7ebb92e02585d6",
       "quote": "\"status\": 200"
+    },
+    {
+      "url": "probe:https://api.kilo.ai/api/gateway/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://api.kilo.ai/api/gateway/chat/completions for nvidia/nemotron-3.5-super-vl:free returned HTTP 200, echoed nvidia/nemotron-3.5-super-vl:free, 41 completion tokens, content pong, in 2561 ms Probe start 2026-11-18T05:26:05.575Z.",
+      "capture": "sha256:9c6d6274e97ea3dd42da2a709a82c5d370936f89ed0b04cc058b3bf54432789c",
+      "quote": "a keyless POST to https://api.kilo.ai/api/gateway/chat/completions for nvidia/nemotron-3.5-super-vl:free returned HTTP 200, echoed nvidia/nemotron-3.5-super-vl:free, 41 completion tokens, content pong, in 2561 ms"
+    },
+    {
+      "url": "probe:https://api.kilo.ai/api/gateway/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://api.kilo.ai/api/gateway/chat/completions for nvidia/nemotron-3.5-super-vl:free returned HTTP 200, echoed nvidia/nemotron-3.5-super-vl:free, 38 completion tokens, content pong, in 1097 ms Probe start 2026-11-18T05:36:00.504Z.",
+      "capture": "sha256:b82c86e58494199e4636fcd85903aa7d0def2ba297a525568d58991af2af5f21",
+      "quote": "a keyless POST to https://api.kilo.ai/api/gateway/chat/completions for nvidia/nemotron-3.5-super-vl:free returned HTTP 200, echoed nvidia/nemotron-3.5-super-vl:free, 38 completion tokens, content pong, in 1097 ms"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-10T01:21:21.204Z",
-  "notes": "openrouter/free is a router id whose served model changes between calls, which makes it the least predictable row in the sweep and the clearest illustration that an echoed model string must be recorded per call rather than per endpoint.",
+  "verified_at": "2026-11-18T05:36:00.504Z",
+  "notes": "openrouter/free is a router id whose served model changes between calls, which makes it the least predictable row in the sweep and the clearest illustration that an echoed model string must be recorded per call rather than per endpoint. On 2026-11-18 two keyless requests 9.5 minutes apart to /api/gateway/chat/completions returned HTTP 200 and echoed the requested id, 41 and 38 completion tokens.",
   "binding": "request-rate",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z",

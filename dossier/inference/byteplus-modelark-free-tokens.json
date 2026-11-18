@@ -18,7 +18,7 @@
     "rest"
   ],
   "history": [],
-  "verified_at": "2026-11-18T04:36:11.716Z",
+  "verified_at": "2026-11-18T05:36:04.329Z",
   "tooling": "official arkruntime SDK (Python/Go/Java) or any OpenAI-compatible client, each configured with base URL https://ark.ap-southeast.bytepluses.com/api/v3 and an API key",
   "chaining": "each model carries its own quota, so one account holds several separate pools; Free Tokens Only mode stops service at the quota and cannot accrue a charge",
   "free_tier": {
@@ -282,10 +282,48 @@
       "proved": "Free Tokens Only mode is account-scoped and consumes only the 500k platform quota",
       "capture": "sha256:f83a88050792368328ac696be5582be26c01789e3ca5825963fac1a483dae9f8",
       "quote": "In this mode, calls to the inference API consume only the 500k free tokens granted by the platform. When the free quota is nearly exhausted, the service will be automatically paused to prevent any additional charges."
+    },
+    {
+      "url": "probe:https://ark.ap-southeast.bytepluses.com/api/v3/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://ark.ap-southeast.bytepluses.com/api/v3/chat/completions for deepseek-v4-pro returned HTTP 401 with body {'error':{'code':'AuthenticationError','message':'the API key or AK/SK in the request is missing or invalid. r and no completion in 1229 ms Probe start 2026-11-18T05:26:10.609Z.",
+      "capture": "sha256:09f05cfdf6d4a244bfd0c842ab5fd7185f902ddfa9cd51faf64781c0efd1510b",
+      "quote": "a keyless POST to https://ark.ap-southeast.bytepluses.com/api/v3/chat/completions for deepseek-v4-pro returned HTTP 401 with body {'error':{'code':'AuthenticationError','message':'the API key or AK/SK in the request is missing or invalid. r and no completion in 1229 ms"
+    },
+    {
+      "url": "probe:https://ark.ap-southeast.bytepluses.com/api/v3/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://ark.ap-southeast.bytepluses.com/api/v3/chat/completions for deepseek-v4-pro returned HTTP 401 with body {'error':{'code':'AuthenticationError','message':'the API key or AK/SK in the request is missing or invalid. r and no completion in 1263 ms Probe start 2026-11-18T05:36:04.329Z.",
+      "capture": "sha256:907ccf1ccddd6a8e7dcc65580d40db0a6d659f7fb0a720bb97e82683502fe4f8",
+      "quote": "a keyless POST to https://ark.ap-southeast.bytepluses.com/api/v3/chat/completions for deepseek-v4-pro returned HTTP 401 with body {'error':{'code':'AuthenticationError','message':'the API key or AK/SK in the request is missing or invalid. r and no completion in 1263 ms"
     }
   ],
   "verdict": "trial-only",
-  "notes": "the quota is per model and per primary account; the free-trial page lists DeepSeek V3.1 and GPT-OSS-120B among the 500K-token models The correct free-quota endpoint is the data-plane /api/v3 base, not the Coding Plan /api/coding/v3 base; an old/incorrect Coding Plan path returns `400 InvalidSubscription Coding Plan is not active` for a free key per a third-party report (unverified here, no keyed call made), while unauthenticated probing of both paths returns 401.",
+  "notes": "the quota is per model and per primary account; the free-trial page lists DeepSeek V3.1 and GPT-OSS-120B among the 500K-token models The correct free-quota endpoint is the data-plane /api/v3 base, not the Coding Plan /api/coding/v3 base; an old/incorrect Coding Plan path returns `400 InvalidSubscription Coding Plan is not active` for a free key per a third-party report (unverified here, no keyed call made), while unauthenticated probing of both paths returns 401. On 2026-11-18 two keyless POSTs to /api/v3/chat/completions returned HTTP 401 AuthenticationError, so the route exists and needs a key.",
   "endpoint": "https://ark.ap-southeast.bytepluses.com/api/v3",
-  "interface_detail": "The free quota is spent through the OpenAI-compatible Chat API POST /api/v3/chat/completions (and the Responses API POST /api/v3/responses), with Content-Type: application/json and Authorization: Bearer <ARK_API_KEY>; the model field takes an activated model ID or custom endpoint ID. The EU equivalent base URL is https://ark.eu-west.bytepluses.com/api/v3 and endpoints are region-isolated. The Coding Plan base https://ark.ap-southeast.bytepluses.com/api/coding/v3 is a different, wrong endpoint for this key type."
+  "interface_detail": "The free quota is spent through the OpenAI-compatible Chat API POST /api/v3/chat/completions (and the Responses API POST /api/v3/responses), with Content-Type: application/json and Authorization: Bearer <ARK_API_KEY>; the model field takes an activated model ID or custom endpoint ID. The EU equivalent base URL is https://ark.eu-west.bytepluses.com/api/v3 and endpoints are region-isolated. The Coding Plan base https://ark.ap-southeast.bytepluses.com/api/coding/v3 is a different, wrong endpoint for this key type.",
+  "probe": {
+    "records": [
+      {
+        "probe_id": "byteplus-modelark-free-tokens-20261118",
+        "target": "https://ark.ap-southeast.bytepluses.com/api/v3/chat/completions",
+        "runs": [
+          {
+            "label": "run1",
+            "probed_at": "2026-11-18T05:26:10.609Z",
+            "status": 401,
+            "completion": false,
+            "capture": "sha256:09f05cfdf6d4a244bfd0c842ab5fd7185f902ddfa9cd51faf64781c0efd1510b"
+          },
+          {
+            "label": "run2",
+            "probed_at": "2026-11-18T05:36:04.329Z",
+            "status": 401,
+            "completion": false,
+            "capture": "sha256:907ccf1ccddd6a8e7dcc65580d40db0a6d659f7fb0a720bb97e82683502fe4f8"
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -73,6 +73,26 @@
         "reasoning_only": "no",
         "error_run1": "",
         "error_run2": ""
+      },
+      {
+        "probe_id": "blockrun-20261118",
+        "target": "https://blockrun.ai/api/v1/chat/completions",
+        "runs": [
+          {
+            "label": "run1",
+            "probed_at": "2026-11-18T05:26:02.230Z",
+            "status": 429,
+            "completion": false,
+            "capture": "sha256:a05f092e864ded011b1af2a5f97873faf4aad557a2cb65e8bbf8635d7b833cf2"
+          },
+          {
+            "label": "run2",
+            "probed_at": "2026-11-18T05:35:58.623Z",
+            "status": 200,
+            "completion": true,
+            "capture": "sha256:bf14f58c88771dac62dbefec94ccf4a7087bb8439e0738c3468ddf9bdf740c99"
+          }
+        ]
       }
     ],
     "runs": [
@@ -171,11 +191,25 @@
       "proved": "a keyless POST on 2026-11-10 for nvidia/nemotron-3.5-lightning answered 200 twice and echoed nvidia/nemotron-3.5-lightning with 56 tokens (24 prompt, 32 completion)",
       "capture": "sha256:4fcea24310d308aa980892921873cfc8567e30e890a7862708b79add745fb6dd",
       "quote": "\"status\": 200"
+    },
+    {
+      "url": "probe:https://blockrun.ai/api/v1/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://blockrun.ai/api/v1/chat/completions for nvidia/nemotron-3.5-lightning returned HTTP 429 with body {'error':{'message':'Free model capacity exhausted — retry shortly, or use a paid model (from $0.002/request). and no completion in 1179 ms Probe start 2026-11-18T05:26:02.230Z.",
+      "capture": "sha256:a05f092e864ded011b1af2a5f97873faf4aad557a2cb65e8bbf8635d7b833cf2",
+      "quote": "a keyless POST to https://blockrun.ai/api/v1/chat/completions for nvidia/nemotron-3.5-lightning returned HTTP 429 with body {'error':{'message':'Free model capacity exhausted — retry shortly, or use a paid model (from $0.002/request). and no completion in 1179 ms"
+    },
+    {
+      "url": "probe:https://blockrun.ai/api/v1/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://blockrun.ai/api/v1/chat/completions for nvidia/nemotron-3.5-lightning returned HTTP 200, echoed nvidia/nemotron-3.5-lightning, 64 completion tokens, content Here's a thinking process: 1. **Analyze User Input:** User s, in 6197 ms Probe start 2026-11-18T05:35:58.623Z.",
+      "capture": "sha256:bf14f58c88771dac62dbefec94ccf4a7087bb8439e0738c3468ddf9bdf740c99",
+      "quote": "a keyless POST to https://blockrun.ai/api/v1/chat/completions for nvidia/nemotron-3.5-lightning returned HTTP 200, echoed nvidia/nemotron-3.5-lightning, 64 completion tokens, content Here's a thinking process: 1. **Analyze User Input:** User s, in 6197 ms"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-10T01:21:20.150Z",
-  "notes": "The relay category's clearest instance. An error body that names a different vendor's API is the cheapest available tell, and the echoed model string is the second. A caller that does not compare the echoed model receives a plausible answer from a model it did not choose.",
+  "verified_at": "2026-11-18T05:35:58.623Z",
+  "notes": "The relay category's clearest instance. An error body that names a different vendor's API is the cheapest available tell, and the echoed model string is the second. A caller that does not compare the echoed model receives a plausible answer from a model it did not choose. On 2026-11-18 the free route returned HTTP 429 with retry-after 30 at 05:26Z and HTTP 200 with 64 completion tokens at 05:36Z for the same request, so the refusal is free-tier capacity that clears rather than a dead route.",
   "binding": "request-rate",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z",

@@ -179,11 +179,14 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `codebuddy` | CodeBuddy (Tencent Cloud, internation... | qualifies-with-caveat | documented |
 | `lingma` | Qoder CN (formerly TONGYI Lingma) | fails-identity | documented |
 | `marscode` | MarsCode (豆包 MarsCode, ByteDance) | dead | documented |
+| `minimax-coding-plan` | MiniMax Token Plan (minimax.io) | paid-only | documented |
 | `mistral-vibe-code` | Mistral Vibe Code (formerly Mistral C... | qualifies-with-caveat | documented |
 | `qoder` | Qoder (Qoder International) | qualifies-with-caveat | documented |
 | `qwencloud-token-plan-personal-edition` | QwenCloud Token Plan (Personal Edition) | paid-only | documented |
 | `qwencloud-token-plan-team-edition` | QwenCloud Token Plan (Team Edition) | paid-only | documented |
+| `scnet-token-plan` | SCNet Token Plan | paid-only | documented |
 | `tabnine-enterprise` | Tabnine | paid-only | documented |
+| `umans-ai-coding-plan` | Umans AI Coding Plan | paid-only | documented |
 | `v0-free` | v0 | qualifies-with-caveat | documented |
 | `v0-plus` | v0 | paid-only | documented |
 | `warp-build` | Warp | paid-only | documented |

@@ -91,6 +91,26 @@
         "reasoning_only": "no",
         "error_run1": "{\"code\": \"FREE_LIMIT\", \"message\": \"Free limit reached: 1 reply every 30 seconds per IP. Retry after 28s, or get unlimited replies with a pollen key at https://enter.pollinations.ai/?ref=classic\", \"tim",
         "error_run2": "{\"code\": \"NOT_FOUND\", \"message\": \"Model \\\"gpt-5-nano\\\" isn't on the Classic API. Free models: https://text.pollinations.ai/models. Every model we offer is on https://enter.pollinations.ai/?ref=classic"
+      },
+      {
+        "probe_id": "pollinations-20261118",
+        "target": "https://text.pollinations.ai/openai/chat/completions",
+        "runs": [
+          {
+            "label": "run1",
+            "probed_at": "2026-11-18T05:26:09.316Z",
+            "status": 200,
+            "completion": true,
+            "capture": "sha256:12e808659cf226bf838702e8ca8963313d5840c51bdcc1f40f0b39d495c42ced"
+          },
+          {
+            "label": "run2",
+            "probed_at": "2026-11-18T05:36:03.003Z",
+            "status": 200,
+            "completion": true,
+            "capture": "sha256:a814bc335106e652edb321b34e565f7129619065092f7bf5d2f66a7a2de2aa31"
+          }
+        ]
       }
     ],
     "runs": [
@@ -139,11 +159,25 @@
       "proved": "a keyless POST on 2026-11-10 for openai-fast answered 200 twice and echoed gpt-oss-20b with content 'pong' and 344 tokens (315 prompt, 29 completion)",
       "capture": "sha256:3a67cc241ac2052d9216edc29069d0bc6b155252dd0869a45577c33b24a441a4",
       "quote": "\"status\": 200"
+    },
+    {
+      "url": "probe:https://text.pollinations.ai/openai/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://text.pollinations.ai/openai/chat/completions for openai-fast returned HTTP 200, echoed gpt-oss-20b, 83 completion tokens, content pong, in 998 ms Probe start 2026-11-18T05:26:09.316Z.",
+      "capture": "sha256:12e808659cf226bf838702e8ca8963313d5840c51bdcc1f40f0b39d495c42ced",
+      "quote": "a keyless POST to https://text.pollinations.ai/openai/chat/completions for openai-fast returned HTTP 200, echoed gpt-oss-20b, 83 completion tokens, content pong, in 998 ms"
+    },
+    {
+      "url": "probe:https://text.pollinations.ai/openai/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://text.pollinations.ai/openai/chat/completions for openai-fast returned HTTP 200, echoed gpt-oss-20b, 83 completion tokens, content pong, in 548 ms Probe start 2026-11-18T05:36:03.003Z.",
+      "capture": "sha256:a814bc335106e652edb321b34e565f7129619065092f7bf5d2f66a7a2de2aa31",
+      "quote": "a keyless POST to https://text.pollinations.ai/openai/chat/completions for openai-fast returned HTTP 200, echoed gpt-oss-20b, 83 completion tokens, content pong, in 548 ms"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-10T01:21:21.471Z",
-  "notes": "openai-fast is an alias for gpt-oss-20b served from OVH, so this endpoint duplicates docs/inference/free's OVH row under a different name and a tighter limit. The 402 is the finding: a keyless endpoint exhausted by per-IP budget with no account in existence.",
+  "verified_at": "2026-11-18T05:36:03.003Z",
+  "notes": "openai-fast is an alias for gpt-oss-20b served from OVH, so this endpoint duplicates docs/inference/free's OVH row under a different name and a tighter limit. The 402 is the finding: a keyless endpoint exhausted by per-IP budget with no account in existence. On 2026-11-18 two keyless requests 9.5 minutes apart asked for openai-fast and both were answered as gpt-oss-20b, matching the alias this record documents.",
   "binding": "request-rate",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z"

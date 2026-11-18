@@ -188,9 +188,47 @@
       "proved": "inference auth is runtime-only inside Netlify compute",
       "capture": "sha256:dae4af0dc0cb5622a5ba06f47ab880d6a78a3e7ea1dc51988d5b2688e0824a72",
       "quote": "**Not browser-callable.** Gateway calls belong in Functions or Edge Functions — never in client-side code. The browser has no injected credentials."
+    },
+    {
+      "url": "probe:https://api.netlify.com/api/v1/ai-gateway/providers",
+      "date": "2026-11-18",
+      "proved": "a keyless GET to https://api.netlify.com/api/v1/ai-gateway/providers returned HTTP 400 with body  and no completion in 856 ms Probe start 2026-11-18T05:26:14.191Z.",
+      "capture": "sha256:d2cd6c7f7654aea2be620afc47d84121c785d32d375f313635448b7bb24860c2",
+      "quote": "a keyless GET to https://api.netlify.com/api/v1/ai-gateway/providers returned HTTP 400 with body  and no completion in 856 ms"
+    },
+    {
+      "url": "probe:https://api.netlify.com/api/v1/ai-gateway/providers",
+      "date": "2026-11-18",
+      "proved": "a keyless GET to https://api.netlify.com/api/v1/ai-gateway/providers returned HTTP 400 with body  and no completion in 431 ms Probe start 2026-11-18T05:36:05.582Z.",
+      "capture": "sha256:bb54164dfc4033bcdfb27055d7567957877b50ce5c056478290b0979497dd3e4",
+      "quote": "a keyless GET to https://api.netlify.com/api/v1/ai-gateway/providers returned HTTP 400 with body  and no completion in 431 ms"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-18T04:36:12.435Z",
-  "notes": "The supported-model list includes openrouter/free and one id ending in :free; whether those ids spend credits is unverified. Discovery GET /ai-gateway/providers returned 200 with data while HEAD on the same URL returned 404; the token routes returned 401 without auth (probed 2026-11-18)."
+  "verified_at": "2026-11-18T05:36:05.582Z",
+  "notes": "The supported-model list includes openrouter/free and one id ending in :free; whether those ids spend credits is unverified. Discovery GET /ai-gateway/providers returned 200 with data while HEAD on the same URL returned 404; the token routes returned 401 without auth (probed 2026-11-18). On 2026-11-18 two keyless GETs to /api/v1/ai-gateway/providers returned HTTP 400 with an empty body, so the host answers and the management route needs a site or account scope.",
+  "probe": {
+    "records": [
+      {
+        "probe_id": "netlify-ai-gateway-20261118",
+        "target": "https://api.netlify.com/api/v1/ai-gateway/providers",
+        "runs": [
+          {
+            "label": "run1",
+            "probed_at": "2026-11-18T05:26:14.191Z",
+            "status": 400,
+            "completion": false,
+            "capture": "sha256:d2cd6c7f7654aea2be620afc47d84121c785d32d375f313635448b7bb24860c2"
+          },
+          {
+            "label": "run2",
+            "probed_at": "2026-11-18T05:36:05.582Z",
+            "status": 400,
+            "completion": false,
+            "capture": "sha256:bb54164dfc4033bcdfb27055d7567957877b50ce5c056478290b0979497dd3e4"
+          }
+        ]
+      }
+    ]
+  }
 }

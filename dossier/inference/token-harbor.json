@@ -14,7 +14,7 @@
   "interface": [
     "rest"
   ],
-  "verified_at": "2026-11-18T04:36:14.159Z",
+  "verified_at": "2026-11-18T05:36:13.257Z",
   "provider": "Token Harbor",
   "url": "https://tokenharbor.ai/pricing",
   "category": "inference gateway, free plan with a rolling 7-day allowance on :free model ids",
@@ -147,11 +147,49 @@
       "proved": "auth scope of the Universal Key across both route families",
       "capture": "sha256:a64d3a247ec0538e7ecf71c128c63486054026375e26b76880755b730d65ba89",
       "quote": "A Universal Key is an OpenAI-shaped bearer token that authenticates every call to `/v1/chat/completions` and the Anthropic-compatible `/v1/messages`."
+    },
+    {
+      "url": "probe:https://tokenharbor.ai/v1/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://tokenharbor.ai/v1/chat/completions for deepseek-v4.1-flash:free returned HTTP 403 with body {'error':{'message':'API access from your region is not available. Token Harbor can't serve regions under sanc and no completion in 879 ms Probe start 2026-11-18T05:26:25.264Z.",
+      "capture": "sha256:c0f7a8dc0ace475329cb297ff01c17620a4f74336e308778258f0333d808e762",
+      "quote": "a keyless POST to https://tokenharbor.ai/v1/chat/completions for deepseek-v4.1-flash:free returned HTTP 403 with body {'error':{'message':'API access from your region is not available. Token Harbor can't serve regions under sanc and no completion in 879 ms"
+    },
+    {
+      "url": "probe:https://tokenharbor.ai/v1/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://tokenharbor.ai/v1/chat/completions for deepseek-v4.1-flash:free returned HTTP 403 with body {'error':{'message':'API access from your region is not available. Token Harbor can't serve regions under sanc and no completion in 960 ms Probe start 2026-11-18T05:36:13.257Z.",
+      "capture": "sha256:454a1a37cb1cec68f3507086037661470ca28f27198caa9af6eb79c05a2b00e9",
+      "quote": "a keyless POST to https://tokenharbor.ai/v1/chat/completions for deepseek-v4.1-flash:free returned HTTP 403 with body {'error':{'message':'API access from your region is not available. Token Harbor can't serve regions under sanc and no completion in 960 ms"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "notes": "the allowance amount needs the dashboard, which is behind a sign-up. Keyless GET /v1/models and keyless POST to both chat routes returned HTTP 401 on 2026-11-18, and HEAD /v1 returned 404; no first-party OpenAPI document is published and /openapi.json returned HTML under HTTP 200.",
+  "notes": "the allowance amount needs the dashboard, which is behind a sign-up. Keyless GET /v1/models and keyless POST to both chat routes returned HTTP 401 on 2026-11-18, and HEAD /v1 returned 404; no first-party OpenAPI document is published and /openapi.json returned HTML under HTTP 200. On 2026-11-18 two keyless POSTs returned HTTP 403 stating that API access from your region is not available, so the route exists and the host refuses this network.",
   "endpoint": "https://tokenharbor.ai/v1 (OpenAI-compatible base URL); https://tokenharbor.ai (Anthropic-compatible base URL)",
   "interface_detail": "OpenAI- and Anthropic-compatible inference gateway. OpenAI shape is POST https://tokenharbor.ai/v1/chat/completions under base URL https://tokenharbor.ai/v1; Anthropic shape is POST https://tokenharbor.ai/v1/messages under base URL https://tokenharbor.ai; the model catalog is GET https://tokenharbor.ai/v1/models and needs a key. Other first-party routes are /v1/responses and /v1/images/generations.",
-  "confidence_note": "endpoint, route, method and auth are from first-party llms.txt, /docs, the Chat APIs page and the live API error body, and keyless probes returned 401 as expected. The key and any per-account allowance were not disclosed without an account."
+  "confidence_note": "endpoint, route, method and auth are from first-party llms.txt, /docs, the Chat APIs page and the live API error body, and keyless probes returned 401 as expected. The key and any per-account allowance were not disclosed without an account.",
+  "probe": {
+    "records": [
+      {
+        "probe_id": "token-harbor-20261118",
+        "target": "https://tokenharbor.ai/v1/chat/completions",
+        "runs": [
+          {
+            "label": "run1",
+            "probed_at": "2026-11-18T05:26:25.264Z",
+            "status": 403,
+            "completion": false,
+            "capture": "sha256:c0f7a8dc0ace475329cb297ff01c17620a4f74336e308778258f0333d808e762"
+          },
+          {
+            "label": "run2",
+            "probed_at": "2026-11-18T05:36:13.257Z",
+            "status": 403,
+            "completion": false,
+            "capture": "sha256:454a1a37cb1cec68f3507086037661470ca28f27198caa9af6eb79c05a2b00e9"
+          }
+        ]
+      }
+    ]
+  }
 }

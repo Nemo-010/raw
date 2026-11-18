@@ -259,6 +259,26 @@
         "reasoning_only": "no",
         "error_run1": "{\"code\": \"model_not_found\", \"message\": \"The model `Qwen3-32B` does not exist.\", \"param\": null, \"type\": \"invalid_request_error\"}",
         "error_run2": "{\"code\": \"model_not_found\", \"message\": \"The model `Qwen3-32B` does not exist.\", \"param\": null, \"type\": \"invalid_request_error\"}"
+      },
+      {
+        "probe_id": "ovh-ai-endpoints-20261118",
+        "target": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1/chat/completions",
+        "runs": [
+          {
+            "label": "run1",
+            "probed_at": "2026-11-18T05:26:08.255Z",
+            "status": 200,
+            "completion": true,
+            "capture": "sha256:e64a7d83fd428ee746fa6b894c7956cdb6cf9d771633c9a7febb2fc6399c672c"
+          },
+          {
+            "label": "run2",
+            "probed_at": "2026-11-18T05:36:02.393Z",
+            "status": 200,
+            "completion": true,
+            "capture": "sha256:9de79f3c07e7511a7172d423f79b3911985360c3af5a0c60b2860cfea697df90"
+          }
+        ]
       }
     ],
     "runs": [
@@ -297,11 +317,25 @@
       "proved": "a keyless POST on 2026-11-10 for Qwen3.8-27B answered 200 twice and echoed Qwen3.8-27B with content 'pong' and 76 tokens (59 prompt, 17 completion)",
       "capture": "sha256:0801b9b6684d814973d50674c82e58893cde24765c90a540680791a7664d703a",
       "quote": "\"status\": 200"
+    },
+    {
+      "url": "probe:https://oai.endpoints.kepler.ai.cloud.ovh.net/v1/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://oai.endpoints.kepler.ai.cloud.ovh.net/v1/chat/completions for Qwen3.8-27B returned HTTP 200, echoed Qwen3.8-27B, 21 completion tokens, content pong, in 1581 ms Probe start 2026-11-18T05:26:08.255Z.",
+      "capture": "sha256:e64a7d83fd428ee746fa6b894c7956cdb6cf9d771633c9a7febb2fc6399c672c",
+      "quote": "a keyless POST to https://oai.endpoints.kepler.ai.cloud.ovh.net/v1/chat/completions for Qwen3.8-27B returned HTTP 200, echoed Qwen3.8-27B, 21 completion tokens, content pong, in 1581 ms"
+    },
+    {
+      "url": "probe:https://oai.endpoints.kepler.ai.cloud.ovh.net/v1/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://oai.endpoints.kepler.ai.cloud.ovh.net/v1/chat/completions for Qwen3.8-27B returned HTTP 200, echoed Qwen3.8-27B, 31 completion tokens, content pong, in 854 ms Probe start 2026-11-18T05:36:02.393Z.",
+      "capture": "sha256:9de79f3c07e7511a7172d423f79b3911985360c3af5a0c60b2860cfea697df90",
+      "quote": "a keyless POST to https://oai.endpoints.kepler.ai.cloud.ovh.net/v1/chat/completions for Qwen3.8-27B returned HTTP 200, echoed Qwen3.8-27B, 31 completion tokens, content pong, in 854 ms"
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-11-10T01:21:21.470Z",
-  "notes": "The endpoint answers without a key but publishes a price per token, so 'keyless' describes the authentication requirement and not the cost. The two guard models are genuinely zero. Qwen3.5-397B-A17B and Qwen3.6-27B return empty content at max_tokens 256 with the reasoning field populated and finish_reason length, which is budget exhaustion and not a failure.",
+  "verified_at": "2026-11-18T05:36:02.393Z",
+  "notes": "The endpoint answers without a key but publishes a price per token, so 'keyless' describes the authentication requirement and not the cost. The two guard models are genuinely zero. Qwen3.5-397B-A17B and Qwen3.6-27B return empty content at max_tokens 256 with the reasoning field populated and finish_reason length, which is budget exhaustion and not a failure. On 2026-11-18 two keyless requests 9.5 minutes apart returned HTTP 200, echoed Qwen3.8-27B and 21 and 31 completion tokens.",
   "binding": "request-rate",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z"

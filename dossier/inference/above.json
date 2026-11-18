@@ -1,0 +1,61 @@
+{
+  "topic": "inference",
+  "slug": "above",
+  "provider": "above.dev",
+  "url": "https://above.dev/docs",
+  "category": "inference gateway",
+  "free_tier": {
+    "stated": "Free-tier routes exist, with the free-tier models glm-5.3-flash-modal and deepseek-v4.1-flash-modal capped at 16,384 output tokens because they share a fixed concurrency pool; paid models run from USD 0.165 to USD 0.33 per 1M input tokens.",
+    "unit": "requests",
+    "metered_on": "request-count",
+    "source_url": "https://above.dev/docs",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "https://api.above.dev/v1",
+  "tooling": "an OpenAI-compatible base URL with a model list at GET /v1/models",
+  "chaining": "the two-minute window on large-context requests is the scarce link, and the cap is silent because max_tokens is reduced rather than rejected",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "one 500k+ token request per 2 minutes on the free tier",
+      "source": "https://above.dev/docs"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "free-tier routes are capped at 16,384 max_tokens",
+      "source": "https://above.dev/docs"
+    }
+  ],
+  "binding": "per-ip-shaping",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "signup is required and the page states no card for the free-tier routes",
+    "country": null
+  },
+  "reliability_note": "an over-cap max_tokens is reduced silently instead of refused, so a run can return shorter output than it asked for",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://above.dev/docs",
+      "date": "2026-11-18",
+      "proved": "free-tier routes are capped at 16,384 max_tokens on a shared concurrency pool and large-context requests are limited to one per two minutes",
+      "capture": "sha256:d012ddafaa252108d45c22d963ef911cbd31eaf6153318618c1f03601338dea9",
+      "quote": "Every model in the catalog accepts up to 131,072 output tokens. The two free-tier routes, `glm-5.3-flash-modal` and `deepseek-v4.1-flash-modal`, are capped at 16,384 instead, because they share a fixed concurrency pool. A `max_tokens` above the cap is reduced to it rather than rejected, and each model reports its own figure as `max_completion_tokens` in `GET /v1/models`."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-18T06:20:00.000Z"
+}

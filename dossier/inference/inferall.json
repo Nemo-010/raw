@@ -1,0 +1,61 @@
+{
+  "topic": "inference",
+  "slug": "inferall",
+  "provider": "InferAll",
+  "url": "https://inferall.ai/docs",
+  "category": "inference gateway",
+  "free_tier": {
+    "stated": "Free NVIDIA NIM open models at USD 0 in and USD 0 out, alongside a free trial whose requests must name a routable model to stay free.",
+    "unit": "tokens",
+    "metered_on": "request-count",
+    "source_url": "https://inferall.ai/docs",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "https://api.inferall.ai/v1",
+  "tooling": "the Anthropic SDK pointed at the gateway with two environment variables",
+  "chaining": "the USD 0 model set is the scarce link, and an unnamed model silently leaves the free path",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "the NVIDIA NIM open models are billed at USD 0 in and USD 0 out",
+      "source": "https://inferall.ai/docs"
+    },
+    {
+      "kind": "request-rate",
+      "value": "a free-trial request must name a model the gateway can route, or it is not free",
+      "source": "https://inferall.ai/docs"
+    }
+  ],
+  "binding": "volume-quota",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "an account for the trial; the USD 0 open models are reached with the same key",
+    "country": null
+  },
+  "reliability_note": "a trial request without a model name is not free, which is a silent cost rather than an error",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://inferall.ai/docs",
+      "date": "2026-11-18",
+      "proved": "NVIDIA NIM open models are USD 0 in and USD 0 out, and a free-trial call must name a routable model",
+      "capture": "sha256:86202baf4524341ecc3ece56d116bf15af07ae145482b49a5a59c7210741f499",
+      "quote": "# Free NVIDIA NIM open models: $0 in, $0 out"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-11-18T06:20:00.000Z"
+}

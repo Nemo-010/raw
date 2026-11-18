@@ -49,7 +49,7 @@
   "confidence": "documented",
   "confidence_note": "Endpoint, routes, auth scheme and the Free 50 RPM / 500,000 TPM limit come from the first-party OpenAPI definition and API docs read on 2026-11-18; the host was probed live with an unkeyed GET /models that returned 200. Model access for a free account remains unverified: behind a sign-up.",
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-18T04:36:12.554Z",
+  "verified_at": "2026-11-18T05:36:05.774Z",
   "evidence": [
     {
       "url": "https://openclawlaunch.com/guides/nous-portal",
@@ -134,11 +134,49 @@
       "proved": "the Hermes Agent integration guide sets the same base URL",
       "capture": "sha256:91ae43c3ede9832d5c07ff2ed3cb3396da8832e74f1ab06747790329fe045ede",
       "quote": "base_url: https://inference-api.nousresearch.com/v1"
+    },
+    {
+      "url": "probe:https://inference-api.nousresearch.com/v1/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://inference-api.nousresearch.com/v1/chat/completions for NousResearch/Hermes-4-405B returned HTTP 403 with body <!DOCTYPE html> <!--[if lt IE 7]> <html class='no-js ie6 oldie' lang='en-US'> <![endif]--> <!--[if IE 7]> <htm and no completion in 549 ms Probe start 2026-11-18T05:26:14.804Z.",
+      "capture": "sha256:3783a597dd1da2a95442118314b82a4951774a676658559a8df83969c85b1e40",
+      "quote": "a keyless POST to https://inference-api.nousresearch.com/v1/chat/completions for NousResearch/Hermes-4-405B returned HTTP 403 with body <!DOCTYPE html> <!--[if lt IE 7]> <html class='no-js ie6 oldie' lang='en-US'> <![endif]--> <!--[if IE 7]> <htm and no completion in 549 ms"
+    },
+    {
+      "url": "probe:https://inference-api.nousresearch.com/v1/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://inference-api.nousresearch.com/v1/chat/completions for NousResearch/Hermes-4-405B returned HTTP 403 with body <!DOCTYPE html> <!--[if lt IE 7]> <html class='no-js ie6 oldie' lang='en-US'> <![endif]--> <!--[if IE 7]> <htm and no completion in 128 ms Probe start 2026-11-18T05:36:05.774Z.",
+      "capture": "sha256:1629f56e462a83f05d235b5b01e3f6defc756fb11834fef85b3c3ebce4dafd18",
+      "quote": "a keyless POST to https://inference-api.nousresearch.com/v1/chat/completions for NousResearch/Hermes-4-405B returned HTTP 403 with body <!DOCTYPE html> <!--[if lt IE 7]> <html class='no-js ie6 oldie' lang='en-US'> <![endif]--> <!--[if IE 7]> <htm and no completion in 128 ms"
     }
   ],
   "endpoint": "https://inference-api.nousresearch.com/v1",
   "interface_detail": "OpenAI-compatible REST. POST /chat/completions and POST /completions for inference; GET /models for the public model list. Auth is an API key as a bearer token in the Authorization header (BearerAuth, HTTP bearer scheme).",
-  "notes": "endpoint filled from first-party OpenAPI definition on 2026-11-18; the free tier uses the same host as paid tiers, distinguished by the 50 RPM / 500,000 TPM limit and FREE model tags.",
+  "notes": "endpoint filled from first-party OpenAPI definition on 2026-11-18; the free tier uses the same host as paid tiers, distinguished by the 50 RPM / 500,000 TPM limit and FREE model tags. On 2026-11-18 two keyless POSTs to /v1/chat/completions returned HTTP 403 with a Cloudflare challenge page, so the host answered and refused the request at the edge.",
   "binding": "request-rate",
-  "binding_note": "the free tier is bounded by the 50 requests a minute and 500,000 tokens a minute limit, not by a credit balance"
+  "binding_note": "the free tier is bounded by the 50 requests a minute and 500,000 tokens a minute limit, not by a credit balance",
+  "probe": {
+    "records": [
+      {
+        "probe_id": "nous-portal-free-20261118",
+        "target": "https://inference-api.nousresearch.com/v1/chat/completions",
+        "runs": [
+          {
+            "label": "run1",
+            "probed_at": "2026-11-18T05:26:14.804Z",
+            "status": 403,
+            "completion": false,
+            "capture": "sha256:3783a597dd1da2a95442118314b82a4951774a676658559a8df83969c85b1e40"
+          },
+          {
+            "label": "run2",
+            "probed_at": "2026-11-18T05:36:05.774Z",
+            "status": 403,
+            "completion": false,
+            "capture": "sha256:1629f56e462a83f05d235b5b01e3f6defc756fb11834fef85b3c3ebce4dafd18"
+          }
+        ]
+      }
+    ]
+  }
 }
