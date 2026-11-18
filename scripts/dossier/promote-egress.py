@@ -38,7 +38,7 @@ KINDS = {"request-rate", "pull-count", "per-ip-shaping", "per-object-cap",
          "write-gated", "retention-clamped", "volume-quota"}
 IFACES = {"s3", "s3-compatible", "rest", "graphql", "webdav", "sftp", "ftp",
           "ftps", "scp", "rsync", "smb", "nfs", "ssh", "graph", "oci", "git",
-          "rclone", "cli", "webdav-proxy", "unknown"}
+          "rclone", "cli", "webdav-proxy", "nntp", "browser", "chat", "unknown"}
 UNITS = {"bytes", "GiB", "TiB", "GB", "TB", "MB", "objects", "requests",
          "seconds", "minutes", "hours", "tokens", "users", "unlimited", "none",
          "mixed"}

@@ -582,7 +582,7 @@ so that a count over them means something.
 | `confidence` | `measured`, `documented`, `reported`, `inferred`, `unverified` |
 | `identity_cost` | `anonymous`, `email`, `any-phone`, `country-phone(<cc>)`, `national-id`, `card`, `institution` |
 | `limits[].kind`, `binding` | `request-rate`, `pull-count`, `per-ip-shaping`, `per-object-cap`, `write-gated`, `retention-clamped`, `volume-quota` (`binding` also takes `none`) |
-| `interface` | `s3`, `s3-compatible`, `rest`, `graphql`, `webdav`, `sftp`, `ftp`, `ftps`, `scp`, `rsync`, `smb`, `nfs`, `ssh`, `graph`, `oci`, `git`, `rclone`, `cli`, `webdav-proxy`, `nntp`, `unknown` |
+| `interface` | `s3`, `s3-compatible`, `rest`, `graphql`, `webdav`, `sftp`, `ftp`, `ftps`, `scp`, `rsync`, `smb`, `nfs`, `ssh`, `graph`, `oci`, `git`, `rclone`, `cli`, `webdav-proxy`, `nntp`, `browser`, `chat`, `unknown` |
 | `free_tier.unit` | `bytes`, `GiB`, `TiB`, `GB`, `TB`, `MB`, `objects`, `requests`, `seconds`, `minutes`, `hours`, `core-hours`, `gpu-hours`, `credits`, `tokens`, `users`, `unlimited`, `none`, `mixed` |
 
 **The compute units.** `core-hours` is the number of cores times the hours: 8 cores for 1 hour is
@@ -594,6 +594,12 @@ machine of a stated size.
 by the route of [`../../AGENTS.md`](../../AGENTS.md) section 2 rule 12: a research agent files an
 `open_question` that names the records, and a rules session in an own clone opens the
 pull request. Until it merges, use `mixed` and name the true unit in `stated`.
+
+`browser` means a client reaches the offer only through a web browser or storefront, with
+no documented API, CLI or protocol; `chat` means through a chat client (a Telegram bot or a
+marketplace seller chat). Both state a confirmed absence of a programmatic path, which is a
+different fact from `unknown` (nobody checked). A record carrying either keeps its verdict:
+this is the interface finding, not a rejection, and `tooling` names the client a reader needs.
 
 ⚠ **`fails-identity` is a verdict, not a note.** A provider whose quota is enormous and whose
 registration cannot be completed has failed, and the verdict says so rather than
