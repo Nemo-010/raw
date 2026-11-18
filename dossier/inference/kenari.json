@@ -1,0 +1,72 @@
+{
+  "topic": "inference",
+  "slug": "kenari",
+  "provider": "Kenari",
+  "url": "https://kenari.id/docs/free-models",
+  "category": "inference gateway, free models plus paid credits",
+  "free_tier": {
+    "stated": "models whose ID ends in :free are billed Rp 0 and callable with a new account and zero balance; a new account gets 50 requests/day and 5 requests/minute, rising to 1,000/day and 10/minute after a qualifying top-up and unlimited daily with 25/minute on an active plan; a keyless GET /v1/models lists them",
+    "unit": "requests",
+    "metered_on": "request-count",
+    "source_url": "https://kenari.id",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "https://kenari.id/v1",
+  "tooling": "an OpenAI- or Anthropic-compatible key; a built-in kenari-free route picks a free model",
+  "chaining": "pairs with any OpenAI-compatible agent through the free :free models; the scarce link is the 50/day and 5/minute ceiling on a new account",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "new account: 50 requests/day and 5 requests/minute on free models; qualifying top-up raises to 1,000/day and 10/minute; active plan gives unlimited daily and 25/minute",
+      "source": "https://kenari.id"
+    },
+    {
+      "kind": "request-rate",
+      "value": "free models run best-effort; exceeding a limit returns HTTP 429",
+      "source": "https://kenari.id/docs/free-models"
+    }
+  ],
+  "binding": "request-rate",
+  "binding_note": "the 50-per-day and 5-per-minute limit on a new zero-balance account binds first",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "free registration at kenari.id/login?daftar=1&next=/keys; top-up via QRIS is optional and no credit card is needed for the free models",
+    "country": null
+  },
+  "reliability_note": "no reliability event stated on the first-party page",
+  "confidence": "documented",
+  "confidence_note": "the Indonesian-language free-models page and apex publish the Rp 0 :free suffix and the tiered request limits; exact numbers for a new account come from the apex page",
+  "evidence": [
+    {
+      "url": "https://kenari.id/docs/free-models",
+      "date": "2026-11-18",
+      "proved": "models ending in :free are billed Rp 0 and callable with a new zero-balance account",
+      "capture": "sha256:8bf0248c5dee175280c204561af11a3bd2071205bce310f17aad257fe96a403b",
+      "quote": "Model yang id-nya berakhiran `:free` ditagih Rp 0. Kamu bisa memanggilnya dengan akun baru dan saldo nol, dalam batas per menit dan batas harian yang naik saat kamu top up atau berlangganan."
+    },
+    {
+      "url": "https://kenari.id",
+      "date": "2026-11-18",
+      "proved": "free model limits: 50/day and 5/minute on a new account, rising with top-up or plan",
+      "capture": "sha256:3db508edfae44e861cfbe862319b20496de7a91882c49b6af01295a49951d041",
+      "quote": "Tanpa top up: 50 request per hari, 5 request per menit.\n- Sudah top up Rp 10.000: 1.000 request per hari, 10 request per menit.\n- Langganan aktif: tanpa batas harian, 25 request per menit."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-18T13:45:48.000Z",
+  "notes": "free models are best-effort and the daily/minute ceilings rise with top-up or a plan; the free public catalog is keyless.",
+  "history": []
+}

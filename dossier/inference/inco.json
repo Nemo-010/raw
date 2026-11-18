@@ -1,0 +1,62 @@
+{
+  "topic": "inference",
+  "slug": "inco",
+  "provider": "Inco",
+  "url": "https://platform.inco.ai/docs",
+  "category": "inference gateway",
+  "free_tier": {
+    "stated": "No free inference allowance is stated. GET /v1/models returns a public catalog without a key; with a key it lists the models the workspace may call, at per-million-token prices.",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://platform.inco.ai/docs",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "https://api.inco.ai/v1",
+  "tooling": "an OpenAI-compatible base URL with an sk-inco- key; OpenAI Chat Completions, Responses and Anthropic Messages are supported",
+  "chaining": "the workspace key and per-token prices bind; model discovery itself is public",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "per-million-token prices in the catalog; an empty balance returns 402 credit_balance_exhausted",
+      "source": "https://platform.inco.ai/docs"
+    },
+    {
+      "kind": "request-rate",
+      "value": "per-minute rate limit and monthly workspace spend limit; a 429 carries Retry-After for the rate limit",
+      "source": "https://platform.inco.ai/docs"
+    }
+  ],
+  "binding": "volume-quota",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "create a key on the API keys page for a workspace; no free inference allowance is stated",
+    "country": null
+  },
+  "reliability_note": "a stream cut at its one-hour limit is billed for the output sent; workspace spend limits reset on the 1st UTC; relayed models may be unavailable in some countries",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://platform.inco.ai/docs",
+      "date": "2026-11-18",
+      "proved": "GET /v1/models returns a public catalog without a key; workspace model access and prices require a key",
+      "capture": "sha256:0fa718d93be99b879651587a1a70afd416ff3d0cc60f4d9dd5864dd571dd27d0",
+      "quote": "Without a key it returns the public catalog; with your key, it lists the models your workspace may call, at its prices."
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-18T14:30:00.000Z",
+  "notes": "no standing free inference allowance is published; model discovery is public but calls require a key and a funded workspace"
+}

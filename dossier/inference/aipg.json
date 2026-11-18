@@ -1,0 +1,67 @@
+{
+  "topic": "inference",
+  "slug": "aipg",
+  "provider": "AI Power Grid",
+  "url": "https://aipowergrid.io/docs/integrations",
+  "category": "inference endpoint, keyed paid credits",
+  "free_tier": {
+    "stated": "no standing free tier: accounts need spendable credit and a request returns HTTP 402 when credit is low; a manually reviewed builder-credit pilot grants USD 5 to USD 20 that expires 60 days after issuance",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://aipowergrid.io/docs/integrations",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "https://api.aipowergrid.io/v1",
+  "tooling": "any OpenAI-compatible client (OpenAI SDK, LiteLLM, LangChain, Vercel AI SDK) with a scoped Grid key",
+  "chaining": "pairs with an OpenAI-compatible agent, but every request spends USD-denominated service credit; the scarce link is a funded account",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "requests need spendable USD credit; HTTP 402 when the account lacks enough credit for the quoted request",
+      "source": "https://aipowergrid.io/docs/integrations"
+    }
+  ],
+  "binding": "volume-quota",
+  "binding_note": "there is no free allowance, so the need for credit binds before any rate",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "a scoped API key with inference.submit (and account.read for quotes) is created in the console; no card field is shown on the docs pages, but credit must be added before a request succeeds",
+    "country": null
+  },
+  "reliability_note": "workers are community-operated and model availability follows connected workers; a discovered model is not an uptime guarantee",
+  "confidence": "documented",
+  "confidence_note": "the verdict rests on the cited first-party evidence; confidence is documented",
+  "evidence": [
+    {
+      "url": "https://aipowergrid.io/docs/integrations",
+      "date": "2026-11-18",
+      "proved": "an HTTP 402 means the account needs more spendable credit",
+      "capture": "sha256:c1b96415f97ddf6395d18f25181ab328e0a4b71ceb25b6c65cf27f34a907b081",
+      "quote": "An HTTP `402` means the account needs more currently spendable credit; it does not mean the key or client configuration is invalid."
+    },
+    {
+      "url": "https://aipowergrid.io/docs/builder-credits",
+      "date": "2026-11-18",
+      "proved": "builder credits are USD 5-20 and expire 60 days after issuance",
+      "capture": "sha256:3badf5ca404a37fc1fc98192ebd4baaf81d0958c47a00ffd54ada143b93cb688",
+      "quote": "Grants expire 60 days after issuance and are issued only while the finite campaign budget and promotional-credit rail are active."
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-18T13:45:48.000Z",
+  "notes": "builder credits are a reviewed pilot capped at USD 5-20 and expiring after 60 days, not a standing free tier.",
+  "history": []
+}

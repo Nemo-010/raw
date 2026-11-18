@@ -1,0 +1,64 @@
+{
+  "topic": "inference",
+  "slug": "neon",
+  "provider": "Neon",
+  "url": "https://neon.com/pricing",
+  "category": "data platform with an inference gateway",
+  "free_tier": {
+    "stated": "AI Gateway is available on all Neon plans including Free, but inference needs prepaid credits (USD 5 minimum, card required); the model page states inference is free during the private preview.",
+    "unit": "credits",
+    "metered_on": "none",
+    "source_url": "https://neon.com/pricing",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "${NEON_AI_GATEWAY_BASE_URL}/v1",
+  "tooling": "OpenAI-compatible clients through the Neon AI Gateway with a Neon key",
+  "chaining": "the prepaid-credit requirement and card gate are the scarce link, despite a private-preview free period",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "AI Gateway needs prepaid credits (USD 5 minimum), card required, even on the Free plan",
+      "source": "https://neon.com/pricing"
+    }
+  ],
+  "binding": "write-gated",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "AI Gateway on the Free plan requires adding a card and buying prepaid credits (USD 5 minimum)",
+    "country": null
+  },
+  "reliability_note": "inference is stated free only during the private preview; when that ends, list-price token charges apply",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://neon.com/pricing",
+      "date": "2026-11-18",
+      "proved": "AI Gateway on the Free plan requires prepaid credits and a card",
+      "capture": "sha256:8632e5161232e811f5f3aa4c55f1982dbbf3e97cad0475a5406a92864f2ffd09",
+      "quote": "AI Gateway                       | Prepaid credits (no markup), card required"
+    },
+    {
+      "url": "https://neon.com/docs/ai-gateway/overview.md",
+      "date": "2026-11-18",
+      "proved": "inference is free during the private preview",
+      "capture": "sha256:6bc089a4dbbfb017c40db9c74f41ef41d7d6cdb9abcce52f0a7683367dd8004d",
+      "quote": "Inference is free during the private preview"
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-11-18T13:00:00.000Z",
+  "notes": "A card is required to use the AI Gateway even on the Free plan; free inference exists only as a private-preview statement, not a standing tier."
+}

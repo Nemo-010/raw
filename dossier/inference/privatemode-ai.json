@@ -1,0 +1,71 @@
+{
+  "topic": "inference",
+  "slug": "privatemode-ai",
+  "provider": "Privatemode AI",
+  "url": "https://docs.privatemode.ai/pricing/",
+  "category": "confidential inference API, one-time free token quota",
+  "free_tier": {
+    "stated": "a one-time free quota of 5 million tokens for new organizations; after it is exhausted, pay-as-you-go or Enterprise is required; rate limits are 200,000 prompt tokens/min, 20,000 completion tokens/min, 500,000 cached prompt tokens/min and 40 requests/min",
+    "unit": "tokens",
+    "metered_on": "request-count",
+    "source_url": "https://docs.privatemode.ai/pricing/",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "http://localhost:8080/v1",
+  "tooling": "the Privatemode SDK, a local proxy (OpenAI- and Anthropic-compatible) at localhost:8080, a desktop proxy app and a browser web app",
+  "chaining": "pairs with OpenAI- and Anthropic-compatible agents through the local proxy; the scarce link is a one-time quota that may need a card to unlock",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "one-time Initial Token Quota of 5,000,000 tokens; HTTP 402 once exhausted",
+      "source": "https://docs.privatemode.ai/rate-limits/"
+    },
+    {
+      "kind": "request-rate",
+      "value": "200,000 prompt tokens/min, 20,000 completion tokens/min, 500,000 cached prompt tokens/min, 100 audio min/min, 40 requests/min",
+      "source": "https://docs.privatemode.ai/rate-limits/"
+    }
+  ],
+  "binding": "volume-quota",
+  "binding_note": "the 5,000,000-token one-time quota is finite and ends the free tier, so it binds before the per-minute rate",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "an account and API key are set up in the portal; the rate-limits page says a payment card may be needed to unlock the initial quota before inference requests",
+    "country": null
+  },
+  "reliability_note": "the free tier is a trial; after the quota is exhausted the API returns HTTP 402 until pay-as-you-go is enabled",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://docs.privatemode.ai/pricing/",
+      "date": "2026-11-18",
+      "proved": "new organizations get a one-time 5 million token free quota",
+      "capture": "sha256:4ff1f6d3bba6799122dfcccc478995a6010f7141da3ad0791f5f1e54901d862a",
+      "quote": "Privatemode uses usage-based pricing. New organizations receive a one-time free quota of 5 million tokens."
+    },
+    {
+      "url": "https://docs.privatemode.ai/rate-limits/",
+      "date": "2026-11-18",
+      "proved": "a card may be needed to unlock the initial quota, after which HTTP 402 is returned",
+      "capture": "sha256:aad67c6c273882c594cc2b91e1b62fbe562b1cea9311d79002c9d4f487a7bd80",
+      "quote": "You may need to add a payment card in the portal to unlock this quota before making inference requests."
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-18T13:45:48.000Z",
+  "notes": "5M one-time tokens is an expiring-style trial quota rather than a standing tier, and the card requirement for unlock is stated in the rate-limits page.",
+  "history": []
+}

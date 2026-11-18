@@ -1,0 +1,57 @@
+{
+  "topic": "inference",
+  "slug": "snowflake-cortex",
+  "provider": "Snowflake Cortex",
+  "url": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-rest-api",
+  "category": "managed inference inside a data platform",
+  "free_tier": {
+    "stated": "No free inference allowance stated: Cortex REST API calls are billed in Snowflake credits (see the Service Consumption Table) and are subject to rate limits.",
+    "unit": "credits",
+    "metered_on": "none",
+    "source_url": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-rest-api",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "https://${SNOWFLAKE_ACCOUNT}.snowflakecomputing.com/api/v2/cortex/v1",
+  "tooling": "REST with a Snowflake Programmatic Access Token or the vendor SDK",
+  "chaining": "Cortex calls are billed in Snowflake credits and are rate-limited; no standing free inference allowance is documented",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "requests subject to Snowflake rate limits; HTTP 429 on excess",
+      "source": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-rest-api"
+    }
+  ],
+  "binding": "request-rate",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "unverified: the captured Cortex REST API page documents only a Snowflake account URL and a Programmatic Access Token (PAT) for authentication; no first-party page read states whether a payment card is required at signup, and usage beyond any allowance is billed in credits. The card kind is a placeholder pending a captured signup page.",
+    "country": null
+  },
+  "reliability_note": "rate limits may be adjusted by Snowflake; request rates above them return 429",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-rest-api",
+      "date": "2026-11-18",
+      "proved": "the Cortex REST APIs share rate limits and a model catalog and are billed per the consumption table",
+      "capture": "sha256:22e747385e65884d959d703d17f4bd0ae5e3ea13b6a62df274c4984bc9343b17",
+      "quote": "All three APIs share the same authentication, model catalog, and rate limits"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-18T13:00:00.000Z",
+  "notes": "The captured page documents billing in credits and rate limits, with no standing free inference tier; a numeric free-credit amount was not on the captured page."
+}

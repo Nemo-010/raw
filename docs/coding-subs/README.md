@@ -168,6 +168,10 @@ Each `measured` or `documented` record of this topic that no other document of `
 | --- | --- | --- | --- |
 | `alibaba-cloud-model-studio-coding-plan` | Alibaba Cloud Model Studio Coding Plan | paid-only | documented |
 | `alibaba-cloud-model-studio-coding-plan-china` | Alibaba Cloud Model Studio Coding Pla... | fails-identity | documented |
+| `alibaba-coding-plan` | Alibaba Coding Plan | paid-only | documented |
+| `alibaba-coding-plan-cn` | Alibaba Coding Plan (China) | paid-only | documented |
+| `alibaba-token-plan` | Alibaba Token Plan | paid-only | documented |
+| `alibaba-token-plan-cn` | Alibaba Token Plan (China) | paid-only | documented |
 | `amp-individual` | Amp | paid-only | documented |
 | `augment-code-business` | Augment Code | paid-only | documented |
 | `augment-code-standard` | Augment Code | paid-only | documented |
@@ -176,23 +180,38 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `bolt-pro` | Bolt | paid-only | documented |
 | `cerebras-code` | Cerebras Code | trial-only | documented |
 | `charm-hyper` | Charm Hyper | paid-only | documented |
+| `cline-pass` | ClinePass | paid-only | documented |
 | `codebuddy` | CodeBuddy (Tencent Cloud, internation... | qualifies-with-caveat | documented |
+| `kimi-code-plan-cn` | Kimi For Coding (kimi.com) | paid-only | documented |
+| `kimi-code-plan-global` | Kimi For Coding (kimi.ai) | paid-only | documented |
+| `kuae-cloud-coding-plan` | KUAE Cloud Coding Plan | trial-only | documented |
 | `lingma` | Qoder CN (formerly TONGYI Lingma) | fails-identity | documented |
+| `llmgateway` | DevPass (LLM Gateway) | qualifies-with-caveat | documented |
 | `marscode` | MarsCode (豆包 MarsCode, ByteDance) | dead | documented |
+| `minimax-cn-coding-plan` | MiniMax Token Plan (minimax.cn) | paid-only | documented |
 | `minimax-coding-plan` | MiniMax Token Plan (minimax.io) | paid-only | documented |
 | `mistral-vibe-code` | Mistral Vibe Code (formerly Mistral C... | qualifies-with-caveat | documented |
 | `qoder` | Qoder (Qoder International) | qualifies-with-caveat | documented |
 | `qwencloud-token-plan-personal-edition` | QwenCloud Token Plan (Personal Edition) | paid-only | documented |
 | `qwencloud-token-plan-team-edition` | QwenCloud Token Plan (Team Edition) | paid-only | documented |
 | `scnet-token-plan` | SCNet Token Plan | paid-only | documented |
+| `stepfun-ai-step-plan` | StepFun Step Plan (Global) | paid-only | documented |
 | `tabnine-enterprise` | Tabnine | paid-only | documented |
+| `tencent-coding-plan` | Tencent Coding Plan (China) | paid-only | documented |
+| `tencent-token-plan` | Tencent Token Plan | paid-only | documented |
 | `umans-ai-coding-plan` | Umans AI Coding Plan | paid-only | documented |
 | `v0-free` | v0 | qualifies-with-caveat | documented |
 | `v0-plus` | v0 | paid-only | documented |
+| `volcengine-coding-plan` | Volcengine Ark Coding Plan | paid-only | documented |
 | `warp-build` | Warp | paid-only | documented |
 | `warp-free` | Warp | qualifies-with-caveat | documented |
 | `warp-max` | Warp | paid-only | documented |
+| `xiaomi-token-plan-ams` | Xiaomi Token Plan (Europe) | paid-only | documented |
+| `xiaomi-token-plan-cn` | Xiaomi Token Plan (China) | paid-only | documented |
+| `xiaomi-token-plan-sgp` | Xiaomi Token Plan (Singapore) | paid-only | documented |
+| `zai-coding-plan` | Z.AI Coding Plan | paid-only | documented |
 | `zed-pro` | Zed | paid-only | documented |
+| `zhipuai-coding-plan` | Zhipu AI Coding Plan | paid-only | documented |
 | `aider` | Aider (self-hosted) | qualifies-with-caveat | documented |
 | `amp-hobby` | Amp (self-hosted) | qualifies-with-caveat | documented |
 | `crush` | Crush (self-hosted) | qualifies-with-caveat | documented |

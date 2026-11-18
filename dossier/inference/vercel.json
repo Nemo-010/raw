@@ -1,0 +1,74 @@
+{
+  "topic": "inference",
+  "slug": "vercel",
+  "provider": "Vercel AI Gateway",
+  "url": "https://vercel.com/docs/ai-gateway/pricing",
+  "category": "inference gateway with a free credit tier",
+  "free_tier": {
+    "stated": "Every Vercel team account gets a free tier of AI Gateway Credits with a subset of models and per-model rate limits; free credits start on the first AI Gateway request, and buying credits moves the team to paid (zero markup).",
+    "unit": "credits",
+    "metered_on": "request-count",
+    "source_url": "https://vercel.com/docs/ai-gateway/pricing",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "https://ai-gateway.vercel.sh/v1",
+  "tooling": "OpenAI-compatible base URL and the Vercel AI SDK",
+  "chaining": "the free credit grant plus a subset of models and lower per-model rate limits is the scarce link",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "free tier includes a subset of models with lower per-model rate limits; 429 on excess",
+      "source": "https://vercel.com/docs/ai-gateway/pricing"
+    }
+  ],
+  "binding": "request-rate",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "a Vercel team account; no card is required to receive the free credits",
+    "country": null
+  },
+  "reliability_note": "requests over a free-tier per-model rate limit return 429; the numeric credit amount is not stated on the captured page",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://vercel.com/docs/ai-gateway/pricing",
+      "date": "2026-11-18",
+      "proved": "every Vercel team account has a free tier of AI Gateway Credits with a model subset",
+      "capture": "sha256:af4024b851d801d84b1a58fc79ff6fa8b1641554812feee5051d53306af00394",
+      "quote": "Every Vercel team account gets access to both a free tier and a paid tier for AI Gateway Credits"
+    },
+    {
+      "url": "https://vercel.com/docs/ai-gateway/pricing",
+      "date": "2026-11-18",
+      "proved": "free credits start on the first request and purchasing credits ends the monthly free credit",
+      "capture": "sha256:af4024b851d801d84b1a58fc79ff6fa8b1641554812feee5051d53306af00394",
+      "quote": "Your free credits start when you make your first AI Gateway request"
+    },
+    {
+      "url": "https://vercel.com/docs/ai-gateway",
+      "date": "2026-11-18",
+      "proved": "the gateway adds no markup to provider token prices",
+      "capture": "sha256:9f84186d645ef1f2ab0924a0d7bbfc6f077aff4d0c3971f7e731d63e1a8425cf",
+      "quote": "AI Gateway adds zero markup to provider token prices"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-18T13:00:00.000Z",
+  "notes": "Free tier exists but is limited to a subset of models and lower per-model rate limits; the numeric monthly credit is not stated on the captured page (unverified).",
+  "extras": {
+    "duplicate_of": "vercel-ai-gateway"
+  }
+}

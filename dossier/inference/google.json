@@ -1,0 +1,74 @@
+{
+  "topic": "inference",
+  "slug": "google",
+  "provider": "Google",
+  "url": "https://ai.google.dev/gemini-api/docs/pricing",
+  "category": "inference API",
+  "free_tier": {
+    "stated": "Free tier: free input and output tokens for limited models, with free request caps such as 'Free of charge, up to 500 RPD (limit shared with Flash-Lite RPD)'; Gemini 4 Carbon is 'not available on the Free tier'.",
+    "unit": "requests",
+    "metered_on": "request-count",
+    "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest",
+    "browser"
+  ],
+  "endpoint": "https://generativelanguage.googleapis.com/v1beta",
+  "tooling": "Google AI Studio, Gemini API keys, OpenAI-compatible client via the Gemini API",
+  "chaining": "a free RPD bucket per model is the scarce link; it is shared across Flash and Flash-Lite",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "up to 500 RPD free on some Flash models (shared)",
+      "source": "https://ai.google.dev/gemini-api/docs/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "Gemini 4 Carbon not available on the Free tier",
+      "source": "https://ai.google.dev/gemini-api/docs/pricing"
+    }
+  ],
+  "binding": "request-rate",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "a Google account and an API key from AI Studio; no card for the Free tier",
+    "country": null
+  },
+  "reliability_note": "free tier is limited to certain models and its requests are shared across model variants",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "date": "2026-11-18",
+      "proved": "the Free tier offers free tokens and some models have a free RPD cap",
+      "capture": "sha256:8fc0f1f3339beaece0a185c3eebccbd38591be3f5a54b6e7635e4cf7f1845ec5",
+      "quote": "Start building free of charge with generous limits, then scale up with prepaid"
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "date": "2026-11-18",
+      "proved": "a named model has a 500 request-per-day free allowance shared across variants",
+      "capture": "sha256:8fc0f1f3339beaece0a185c3eebccbd38591be3f5a54b6e7635e4cf7f1845ec5",
+      "quote": "Free of charge, up to 500 RPD (limit shared with Flash-Lite RPD)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-18T13:00:00.000Z",
+  "binding_note": "The per-model daily request cap binds a sustained workload before token price does.",
+  "notes": "The Free tier is documented with per-model RPD caps; no public read path was probed.",
+  "extras": {
+    "duplicate_of": "google-gemini-api"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "topic": "inference",
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "tooling": "an OpenAI-compatible base URL",
+  "slug": "poe",
+  "provider": "Poe",
+  "url": "https://creator.poe.com/docs/external-applications/openai-compatible-api",
+  "category": "inference gateway",
+  "free_tier": {
+    "stated": "No standing free API allowance is published: all Poe subscribers use their existing subscription points at no extra cost, and extra points must be purchased; rate limit is 500 requests per minute.",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://creator.poe.com/docs/external-applications/openai-compatible-api",
+    "read_on": "2026-11-18"
+  },
+  "endpoint": "https://api.poe.com/v1",
+  "chaining": "the subscription point balance is the scarce link",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "500 requests per minute; usage consumes subscription points",
+      "source": "https://creator.poe.com/docs/external-applications/openai-compatible-api"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "the binding constraint named on the first-party page",
+      "source": "https://creator.poe.com/docs/external-applications/openai-compatible-api"
+    }
+  ],
+  "binding": "volume-quota",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "a paid Poe subscription supplies the points used by the API; add-on points are purchased",
+    "country": null
+  },
+  "reliability_note": "points are shared with the web app and a 402 is returned when the balance is zero",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://creator.poe.com/docs/external-applications/openai-compatible-api",
+      "date": "2026-11-18",
+      "proved": "API use consumes an existing paid Poe subscription's points rather than a free allowance",
+      "capture": "sha256:1903158a618410da9d25bacc99ffbd2ae34c288dd4115bf39db884fae0983ed8",
+      "quote": "All Poe subscribers can use their existing subscription points with the API at no additional cost."
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-18T14:35:33.000Z",
+  "notes": "500 requests per minute is documented in the rate-limit headers section."
+}

@@ -1,0 +1,56 @@
+{
+  "topic": "inference",
+  "slug": "hubris",
+  "provider": "Hubris",
+  "url": "https://hubris.pw/docs/concepts/free-models",
+  "category": "inference gateway",
+  "free_tier": {
+    "stated": "Models with pricing.is_free are 0 RUB per 1M tokens and work without a deposit (even at a 0 RUB balance), with a limit of 100 requests per user per day in a rolling 24-hour window.",
+    "unit": "requests",
+    "metered_on": "request-count",
+    "source_url": "https://hubris.pw/docs/concepts/free-models",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "https://api.hubris.pw/v1",
+  "tooling": "an OpenAI/Anthropic-compatible key (sk-gw-) created in the account",
+  "chaining": "the 100-requests-per-day shared free limit and provider-side 429s are the scarce links",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "100 free requests per user per day, rolling 24h window, shared across all free models",
+      "source": "https://hubris.pw/docs/concepts/free-models"
+    }
+  ],
+  "binding": "request-rate",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "a human creates the key in the account cabinet; free models work with a 0 RUB balance and no deposit",
+    "country": null
+  },
+  "reliability_note": "provider-side free pools are shared and can return 429 even before the 100/day limit is reached",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://hubris.pw/docs/concepts/free-models",
+      "date": "2026-11-18",
+      "proved": "free models need no deposit and are limited to 100 requests per user per day",
+      "capture": "sha256:996d36d75a57912216bbd4c7602762a71cf8fb42d3341ee87375707f08907a9c",
+      "quote": "Лимит 100 запросов в сутки"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-18T13:00:00.000Z"
+}

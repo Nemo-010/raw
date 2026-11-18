@@ -1,0 +1,64 @@
+{
+  "topic": "inference",
+  "slug": "databricks",
+  "provider": "Databricks",
+  "url": "https://docs.databricks.com/aws/en/machine-learning/foundation-model-apis",
+  "category": "managed inference on a data platform",
+  "free_tier": {
+    "stated": "No standing free inference allowance: Foundation Model APIs are pay-per-token. A free Databricks trial grants time-limited credits determined after account creation, and ends when credits are exhausted.",
+    "unit": "credits",
+    "metered_on": "none",
+    "source_url": "https://docs.databricks.com/aws/en/machine-learning/foundation-model-apis",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "https://${DATABRICKS_HOST}/ai-gateway/mlflow/v1",
+  "tooling": "OpenAI-compatible client or the MLflow Deployments SDK with a Databricks API token",
+  "chaining": "trial credits expire and are the scarce link; calls are otherwise pay-per-token",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "trial credits, amount and expiry determined by Databricks after account creation; trial ends when credits are exhausted",
+      "source": "https://www.databricks.com/product/pricing"
+    }
+  ],
+  "binding": "volume-quota",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "a Databricks workspace/account and API token; trial credit eligibility determined after account creation",
+    "country": null
+  },
+  "reliability_note": "if configured in the user's own cloud account, the cloud provider bills for compute during the trial",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://docs.databricks.com/aws/en/machine-learning/foundation-model-apis",
+      "date": "2026-11-18",
+      "proved": "most Foundation Model APIs are OpenAI-compatible",
+      "capture": "sha256:6b46af6aa4cfc60bccf6a76b24679816e1dfffc9f3e359bab935054f1b7db80c",
+      "quote": "Most Foundation Model APIs are compatible with OpenAI"
+    },
+    {
+      "url": "https://www.databricks.com/product/pricing",
+      "date": "2026-11-18",
+      "proved": "Databricks is pay-as-you-go and its trial credits are time-limited and end when exhausted",
+      "capture": "sha256:668555a9bc0e7a2fe588c138ef54ea0ca0b3420c8767f692505257ebf45da871",
+      "quote": "Databricks offers you a pay-as-you-go approach with no up-front costs"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-18T13:00:00.000Z",
+  "notes": "doc URL redirected to /foundation-model-apis; trial credits are not a standing free inference tier."
+}
