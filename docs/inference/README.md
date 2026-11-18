@@ -174,12 +174,12 @@ store for the list: `scripts/fr sql "SELECT rid, verdict FROM record WHERE topic
 | --- | --- |
 | `qualifies` | 5 |
 | `qualifies-with-caveat` | 45 |
-| `trial-only` | 33 |
+| `trial-only` | 34 |
 | `fails-quota` | 3 |
 | `fails-identity` | 8 |
-| `paid-only` | 22 |
+| `paid-only` | 27 |
 | `dead` | 12 |
-| **all** | 128 |
+| **all** | 134 |
 <!-- generated:end -->
 
 ## Records that no other document names
@@ -193,6 +193,7 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `aion-labs` | Aion Labs | qualifies-with-caveat | documented |
 | `augure` | Augure | qualifies | documented |
 | `bazaarlink` | BazaarLink | qualifies-with-caveat | documented |
+| `cloudcode` | CloudCode.ONE | paid-only | documented |
 | `contextual-ai-rerank` | Contextual AI reranker API | trial-only | documented |
 | `coze` | Coze | trial-only | documented |
 | `dahl-inference` | Dahl Inference | trial-only | documented |
@@ -214,6 +215,8 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `infersia` | Infersia | qualifies-with-caveat | documented |
 | `iteracompute` | IteraCompute | qualifies-with-caveat | documented |
 | `jina-ai-embeddings-reranker` | Jina AI embeddings and reranker API | trial-only | documented |
+| `keln` | Keln | paid-only | documented |
+| `korouter` | KoRouter | paid-only | documented |
 | `lambda-inference` | Lambda Inference API | dead | measured |
 | `langsearch-rerank-api` | LangSearch Rerank API | dead | documented |
 | `libretranslate-hosted` | LibreTranslate hosted (libretranslate... | paid-only | documented |
@@ -225,6 +228,7 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `modelis` | Modelis | qualifies-with-caveat | documented |
 | `moonshot-kimi-api-international` | Moonshot Kimi API Platform international | paid-only | documented |
 | `munito` | Munito AI | qualifies-with-caveat | documented |
+| `nano-gpt` | NanoGPT | paid-only | documented |
 | `nebius-token-factory` | Nebius Token Factory | trial-only | documented |
 | `neuralwatt` | Neuralwatt | fails-identity | documented |
 | `nlp-cloud` | NLP Cloud | fails-identity | documented |
@@ -235,6 +239,7 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `qdrant-cloud-inference` | Qdrant Cloud Inference (free models o... | qualifies-with-caveat | documented |
 | `qiniu-ai` | Qiniu | paid-only | documented |
 | `reducto-standard` | Reducto | trial-only | documented |
+| `steadyrouter` | SteadyRouter | trial-only | documented |
 | `tetrate-agent-router-service` | Tetrate Agent Router Service | trial-only | documented |
 | `token-harbor` | Token Harbor | qualifies-with-caveat | documented |
 | `unstructured-transform-free` | Unstructured Transform | trial-only | documented |
