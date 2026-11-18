@@ -75,8 +75,14 @@ def stale_lines(body):
 
 def cmd_open(a):
     if not research_checkout(REPO):
-        print("warning: rq.researchCheckout is not set: this is not a prepared research checkout. A research session stops "
-              "here and tells the operator; an own clone goes on (AGENTS.md section 0)", file=sys.stderr)
+        # an unmarked clone is the normal place for a contributor (CONTRIBUTING.md) and for the operator's own clones;
+        # only an agent the operator started for the shared research checkout stops here
+        print("note: this is an own clone, not the operator's shared research checkout (rq.researchCheckout is unset). "
+              "A contributor, or the operator in an own clone, goes on: CONTRIBUTING.md is the procedure, and the shared-"
+              "checkout rules of AGENTS.md section 2 rule 14 do not apply here. Only an agent that was told to work in "
+              "the operator's research checkout stops and tells the operator", file=sys.stderr)
+        if track.origin_is_upstream(REPO) and track.can_push_upstream(REPO) is False:
+            print("note: " + track.fork_hint() + ". Doing it now saves the step at land", file=sys.stderr)
     if a.issue:
         st = track.issue_state(a.issue)
         for ln in stale_lines(st["body"] if st else "")[:3]:

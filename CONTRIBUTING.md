@@ -16,7 +16,21 @@ With a GitHub account, clone your fork, not the upstream: `gh` names your fork `
 gh repo fork f-shy/raw --clone
 cd raw
 git fetch upstream && git merge --ff-only upstream/main && git push origin main
+git config core.hooksPath .githooks       # the commit hook: refuses a message that credits a tool
 ```
+
+Cloned `f-shy/raw` itself already (`origin` is the upstream)? Keep the clone and make your fork the push target:
+
+```bash
+gh repo fork --remote
+```
+
+That creates the fork, points `origin` at it and renames the old `origin` to `upstream`. A run branch is a local
+ref, so a run you opened before is kept, and `scripts/rq land` then pushes to the fork. `scripts/rq open` and
+`land` print this command when `origin` is the upstream and your account cannot push to it.
+
+⚠ Clone with git; do not download the repository as a zip archive. The harness reads `origin/main` and git
+objects, so a tree with no history (or a new `git init` over it) cannot open, land or be merged.
 
 Set the address your commits carry before the first one. A run branch keeps the author of every commit it
 holds, and a merge does not rewrite them, so an address you would not publish reaches the public history
@@ -37,6 +51,15 @@ Do **not** set `rq.researchCheckout`. That marker belongs to the operator's shar
 makes the writer commands refuse so that thirty agents cannot change one tree. An unmarked clone is
 what a contributor wants: `scripts/fr amend`, `scripts/rq open` and the rest work locally and refuse
 nothing.
+
+⭐ Your clone has no marker, and that is correct: do not stop. `AGENTS.md` and `docs/research-protocol.md`
+tell an agent to stop when the marker is missing only when the operator started it for the shared research
+checkout. `scripts/rq open` prints a note that this is an own clone; it is a note, not a refusal. Everything
+else in `AGENTS.md` section 2 holds here, except the parts of rule 14 about the shared checkout (one tree for
+all agents, no fork, no git configuration).
+
+Behind a proxy (`https_proxy` set, no direct route), `scripts/broker/broker.sh` and `scripts/probe/probe.py`
+use it as they are; `BROKER_NOPROXY=1` and `probe.py --no-env-proxy` go direct.
 
 `scripts/rq plan` builds the SQLite store on first use. It takes about two minutes on a fresh clone.
 That is not a hang.
@@ -69,6 +92,14 @@ scripts/rq land RUN
 
 `land` pushes the branch to your fork and opens the pull request against `f-shy/raw`. The pull
 request triggers no workflow by itself. A maintainer reviews it and starts the gate.
+
+⚠ Hand every run in with `land`, one pull request per run. Do not assemble a pull request by hand, and do not
+squash several runs into one: `integrate` writes the ledger line of every changed value under
+`history/ledger/<run>/`, `land` renders the tables and writes the run manifest, and the body says "Part of #N"
+with the "Done when" lines the run meets (`--meets N,N`). A hand-made pull request carries none of that, so the
+old values have no ledger line, the issue's claim lapses after 24 hours with no pull request it knows, and the
+maintainer cannot merge it with `scripts/rq merge`. If `land` refuses, its message names the fix; a push that
+`origin` refuses names the fork step above.
 
 ### No `gh` and no account
 

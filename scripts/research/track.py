@@ -34,7 +34,10 @@ PUBLIC_LABELS = {"report": ("c5def5", "a report from the issue forms"),
 
 def _forge(args):
     """The broker's answer to a read shape, or None. forgeread refuses every shape that is not a read, so a write is
-    never sent to it."""
+    never sent to it. RQ_NO_FORGE=1 turns the fallback off: the selftest sets it, so a subprocess never reads the real
+    repository's issues through the broker (an issue number a case uses as a fixture exists there sooner or later)."""
+    if os.environ.get("RQ_NO_FORGE"):
+        return None
     try:
         import forgeread
     except ImportError:
@@ -153,6 +156,33 @@ def login(repo=REPO):
     out = (gh(["api", "user", "--jq", ".login"], repo) or "").strip()
     LOGIN["login"] = out or None
     return LOGIN["login"]
+
+
+def origin_is_upstream(repo=REPO):
+    """True when the clone's origin is the repository the pull requests go to (settings.json github_repo), not a fork
+    of it: a contributor who cloned it pushes nothing there without write access."""
+    from common import REMOTE, git, repo_slug
+    url = (git(repo, "remote", "get-url", REMOTE, check=False) or "").strip()
+    return bool(url and GITHUB_REPO) and (repo_slug(url) or "").lower() == GITHUB_REPO.lower()
+
+
+def can_push_upstream(repo=REPO):
+    """True or False when gh says whether the signed-in account may push to github_repo; None when gh cannot answer
+    (no gh, no login, RQ_NO_GITHUB)."""
+    if not GITHUB_REPO or os.environ.get("RQ_NO_GITHUB"):
+        return None
+    out = (gh(["api", "repos/%s" % GITHUB_REPO, "--jq", ".permissions.push"], repo) or "").strip().lower()
+    return {"true": True, "false": False}.get(out)
+
+
+def fork_hint():
+    """What a contributor whose origin is the upstream, with no write access, does so that rq land can push and open the
+    pull request: make a fork the push target once. The run branch is a local ref, so nothing is lost."""
+    return ("origin is %s and this account cannot push to it, so scripts/rq land cannot push the run branch there. "
+            "Make your fork the push target once: gh repo fork --remote (origin becomes your fork, the old origin is "
+            "renamed upstream; the run branch is a local ref and is kept), then run scripts/rq land again: it pushes "
+            "to your fork and opens the pull request against %s. Without a GitHub account, hand the run in as a zip "
+            "(CONTRIBUTING.md, \"No gh and no account\")" % (GITHUB_REPO, GITHUB_REPO))
 
 
 def with_repo(args, strip=False):
@@ -436,10 +466,12 @@ def _claim(n, run, hours, now, repo, topic, info):
     if not ensure_labels(repo):
         raise Fail("issue #%d: the labels of the repository could not be listed or created (gh failed: a refused call, an "
                    "expired login or the network); nothing was written and the issue is not claimed. %s" % (n, again), 1)
+    from common import research_checkout
+    where = "in the research checkout" if research_checkout(repo) else "in a contributor's own clone"
     if gh(["issue", "comment", str(n), "--body-file", "-"], repo, no_close(
-          "%s, in the research checkout. The claim holds until the run lands (its pull request says \"Part of #%d\") and a "
+          "%s, %s. The claim holds until the run lands (its pull request says \"Part of #%d\") and a "
           "merge session merges or closes that pull request, or %d hours with no pull request.%s"
-          % (text, n, hours, "" if why.startswith("no live claim") else " Note: %s." % why))) is None:
+          % (text, where, n, hours, "" if why.startswith("no live claim") else " Note: %s." % why))) is None:
         # a call that failed after GitHub stored the comment (a timeout) leaves a claim behind: give it back
         late = issue_state(n, repo)
         note = ""
