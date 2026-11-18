@@ -172,14 +172,14 @@ store for the list: `scripts/fr sql "SELECT rid, verdict FROM record WHERE topic
 <!-- generated:start topic=inference kind=breakdown field=verdict label=verdict sort=value order=qualifies,qualifies-with-caveat,trial-only,fails-quota,fails-identity,paid-only,dead -->
 | verdict | Records |
 | --- | --- |
-| `qualifies` | 4 |
-| `qualifies-with-caveat` | 41 |
-| `trial-only` | 32 |
+| `qualifies` | 5 |
+| `qualifies-with-caveat` | 45 |
+| `trial-only` | 33 |
 | `fails-quota` | 3 |
 | `fails-identity` | 8 |
-| `paid-only` | 21 |
+| `paid-only` | 22 |
 | `dead` | 12 |
-| **all** | 121 |
+| **all** | 128 |
 <!-- generated:end -->
 
 ## Records that no other document names
@@ -189,6 +189,7 @@ Each `measured` or `documented` record of this topic that no other document of `
 <!-- generated:start topic=inference kind=uncited -->
 | record | provider | verdict | confidence |
 | --- | --- | --- | --- |
+| `agnes` | Agnes AI | paid-only | documented |
 | `aion-labs` | Aion Labs | qualifies-with-caveat | documented |
 | `augure` | Augure | qualifies | documented |
 | `bazaarlink` | BazaarLink | qualifies-with-caveat | documented |
@@ -199,6 +200,7 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `deepl-api-free` | DeepL API (Free plan) | dead | documented |
 | `empiriolabs` | EmpirioLabs AI | qualifies | documented |
 | `fireworks-ai-serverless` | Fireworks AI | paid-only | documented |
+| `fortytwo` | Fortytwo | qualifies-with-caveat | documented |
 | `freemodel` | FreeModel | qualifies | documented |
 | `friendli-ai` | FriendliAI Model APIs | paid-only | documented |
 | `glhf` | GLHF (glhf.chat) | dead | measured |
@@ -208,6 +210,7 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `grokified` | Grokified | trial-only | documented |
 | `helicone` | Helicone | trial-only | documented |
 | `ibm-watsonx-ai-free` | IBM watsonx.ai (Free / Lite plan) | qualifies-with-caveat | documented |
+| `inferall` | InferAll | qualifies | documented |
 | `infersia` | Infersia | qualifies-with-caveat | documented |
 | `iteracompute` | IteraCompute | qualifies-with-caveat | documented |
 | `jina-ai-embeddings-reranker` | Jina AI embeddings and reranker API | trial-only | documented |
@@ -221,6 +224,7 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `mixedbread-search-starter` | Mixedbread (managed search with reran... | trial-only | documented |
 | `modelis` | Modelis | qualifies-with-caveat | documented |
 | `moonshot-kimi-api-international` | Moonshot Kimi API Platform international | paid-only | documented |
+| `munito` | Munito AI | qualifies-with-caveat | documented |
 | `nebius-token-factory` | Nebius Token Factory | trial-only | documented |
 | `neuralwatt` | Neuralwatt | fails-identity | documented |
 | `nlp-cloud` | NLP Cloud | fails-identity | documented |
@@ -234,6 +238,8 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `tetrate-agent-router-service` | Tetrate Agent Router Service | trial-only | documented |
 | `token-harbor` | Token Harbor | qualifies-with-caveat | documented |
 | `unstructured-transform-free` | Unstructured Transform | trial-only | documented |
+| `wallaby` | Wallaby | trial-only | documented |
 | `weaviate-embeddings` | Weaviate Embeddings (Weaviate Cloud f... | qualifies-with-caveat | documented |
 | `zeroentropy-rerank-embeddings` | ZeroEntropy zerank reranker and zembe... | dead | measured |
+| `zro` | Zro | qualifies-with-caveat | documented |
 <!-- generated:end -->
