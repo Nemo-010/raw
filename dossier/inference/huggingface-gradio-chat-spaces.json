@@ -26,13 +26,13 @@
     "read_on": "2026-10-28",
     "notes": "each Space defines its own endpoint names, such as /generate on huggingface-projects/llama-2-13b-chat; there is no OpenAI-shaped route and no model id echo"
   },
-  "endpoint": "https://huggingface-projects-llama-2-13b-chat.hf.space/gradio_api/info",
-  "tooling": "gradio_client or the Space's /gradio_api/call/<api_name> routes; the schema is at /gradio_api/info on current Gradio and /info on older ones",
+  "endpoint": "https://huggingface-projects-llama-2-13b-chat.hf.space/gradio_api/call/v2/generate (completion POST); result GET https://huggingface-projects-llama-2-13b-chat.hf.space/gradio_api/call/generate/{event_id}",
+  "tooling": "gradio_client (Client.predict(..., api_name=...)), @gradio/client, or raw HTTP POST+GET as in the Space's generated bash snippet; the schema is at /gradio_api/info on current Gradio and /info on older ones",
   "chaining": "pairs with ad hoc scripts; the 2 minutes a day of ZeroGPU quota for an unauthenticated caller is the scarce link",
   "limits": [
     {
       "kind": "volume-quota",
-      "value": "2 minutes of ZeroGPU GPU quota per day for an unauthenticated caller, low queue priority; 5 minutes for a free account; the quota resets exactly 24 hours after the first GPU usage",
+      "value": "2 minutes of ZeroGPU GPU quota per day for an unauthenticated caller, low queue priority; 5 minutes for a free account; 40 minutes for PRO; the quota resets exactly 24 hours after the first GPU usage; unauthenticated calls use a shared pool with stricter limits",
       "source": "https://huggingface.co/docs/hub/spaces-zerogpu"
     }
   ],
@@ -40,12 +40,12 @@
   "binding_note": "the 2 minutes a day of GPU quota binds; a Space on CPU hardware has no such quota stated in the page read",
   "identity_cost": {
     "kind": "anonymous",
-    "detail": "an unauthenticated caller is a documented quota tier (Unauthenticated, 2 minutes, Low queue priority); no token was needed to read /gradio_api/info",
+    "detail": "anonymous; a token is optional for public Spaces and improves rate limits, not required; an unauthenticated caller is a documented quota tier (Unauthenticated, 2 minutes, Low queue priority); no token was needed to read /gradio_api/info",
     "country": null
   },
   "reliability_note": "a Space can be paused or in an error state, and an older Gradio Space serves its schema at /info rather than /gradio_api/info",
-  "confidence": "documented",
-  "confidence_note": "the quota is first-party; the schema was read by a keyless GET. No chat call was made because probe.py issues GET and HEAD only, so a completed answer is unverified",
+  "confidence": "measured",
+  "confidence_note": "route and auth verified by first-party docs, a live OpenAPI spec, and a keyless POST+GET completion on 2026-11-18; quota figures are first-party text, not measured here.",
   "probe": {
     "instrument": "scripts/probe/probe.py",
     "records": [
@@ -115,8 +115,38 @@
       "proved": "a keyless POST on 2026-11-10 answered HTTP 405 at the recorded base URL, so the endpoint is not a completion route",
       "capture": "sha256:34290497c30ca8ec0d7d6b252647840952ae57af13184db8350622645602c5e3",
       "quote": "\"status\": 405"
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/en/spaces-api-endpoints",
+      "date": "2026-11-18",
+      "proved": "every public Gradio Space is callable as an API",
+      "capture": "sha256:52aac4ee84caa27c9f387b6a2f8af89ae2b0a28b96f4fa78386d6b291bf7484e",
+      "quote": "Every Gradio Space on Hugging Face is automatically available as an API endpoint. You can call it from Python, JavaScript, or any HTTP client. If you can use a Space in your browser, you can call it as an API."
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/en/spaces-api-endpoints",
+      "date": "2026-11-18",
+      "proved": "a token is not required for a public Space",
+      "capture": "sha256:52aac4ee84caa27c9f387b6a2f8af89ae2b0a28b96f4fa78386d6b291bf7484e",
+      "quote": "The `Authorization` header is required for private Spaces and gives better rate limits on public Spaces."
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/en/spaces-api-endpoints",
+      "date": "2026-11-18",
+      "proved": "the POST /gradio_api/call/<api_name> completion route pattern",
+      "capture": "sha256:52aac4ee84caa27c9f387b6a2f8af89ae2b0a28b96f4fa78386d6b291bf7484e",
+      "quote": "curl -X POST \"https://abidlabs-en2fr.hf.space/gradio_api/call/predict\" \\"
+    },
+    {
+      "url": "https://huggingface-projects-llama-2-13b-chat.hf.space/gradio_api/openapi.json",
+      "date": "2026-11-18",
+      "proved": "this Space publishes a POST call route and a GET result route",
+      "capture": "sha256:3cc7e839fd9fc84860222ef766bf96ba70feaf2b9e76d3f45a97dfab571ec972",
+      "quote": "Output must be fetched from GET /gradio_api/call/generate/{event_id}. Returns an array of 1 elements of the following format: [\"output ({'type': {}, 'description': 'any valid json'})\"]"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-28T04:36:18.974Z"
+  "verified_at": "2026-11-18T04:36:12.169Z",
+  "interface_detail": "two-step Gradio queue API: POST to /gradio_api/call/<api_name> (v2 on Gradio 6.x) returns event_id; GET to /gradio_api/call/<api_name>/<event_id> returns SSE with event: complete. api_name is Space-defined (/generate, /chat); schema at /gradio_api/info or /info; OpenAPI at /gradio_api/openapi.json. No OpenAI-shaped route and no model id echo.",
+  "notes": "The 405 was a method mismatch on a schema route, not a dead provider; the completion route is two-step and Space-defined."
 }
