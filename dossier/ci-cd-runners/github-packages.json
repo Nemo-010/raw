@@ -53,7 +53,7 @@
     "detail": "a GitHub account; GitHub Packages only supports authentication using a personal access token (classic)",
     "country": null
   },
-  "reliability_note": "an unauthenticated GET of a public npm package at npm.pkg.github.com answers 401 with a 46-byte body, so a token is required to read even a public package here",
+  "reliability_note": "an unauthenticated GET of the public npm package @azu/npm-github-package-example at npm.pkg.github.com answers HTTP 401 with a 46-byte body, {\"error\":\"authentication token not provided\"}; a token is required to read a public package here",
   "confidence": "documented",
   "confidence_note": "the billing page was read today.",
   "evidence": [
@@ -103,10 +103,24 @@
       "proved": "the control: a package that does not exist under that owner answers 404, so the 401 is the read gate and not a missing package",
       "capture": "sha256:c70d20350d394aaa3c88831d92e700b7b4d9079fbe27c1eaaad5b8c51d39d6ff",
       "quote": "\"status\": 404,\n  \"bytes\": 72,"
+    },
+    {
+      "url": "probe:https://npm.pkg.github.com/@azu/npm-github-package-example",
+      "date": "2026-11-18",
+      "proved": "an unauthenticated GET of the public npm package @azu/npm-github-package-example answers 401 with a 46-byte body",
+      "capture": "sha256:3fe7d3bbc140b73d9d15f740debba360c554e7d9cc6513a26991696c19806893",
+      "quote": "\"status\": 401, \"bytes\": 46,"
+    },
+    {
+      "url": "probe:https://npm.pkg.github.com/@tsubasa/example-npm-github-package",
+      "date": "2026-11-18",
+      "proved": "a second published public package answers the same 401 with the same 46-byte body, so the gate is the registry's and not one package's",
+      "capture": "sha256:7ce244d9005bdc09faaa4c77e145f3e4abe002cd4cdb0800c649b686bbab61c2",
+      "quote": "\"status\": 401, \"bytes\": 46,"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-09T11:43:22.289Z",
+  "verified_at": "2026-11-18T04:36:08.435Z",
   "price_per_tb_month": null,
   "history": [],
   "notes": "Recorded separately from GHCR because the two are routinely counted as if they were two allowances; container image storage and bandwidth are currently free.",

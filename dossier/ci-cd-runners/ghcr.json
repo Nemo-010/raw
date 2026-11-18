@@ -32,7 +32,7 @@
     "oci",
     "rest"
   ],
-  "interface_detail": "the OCI distribution API at ghcr.io; docker login with a personal access token or GITHUB_TOKEN",
+  "interface_detail": "the OCI distribution API at ghcr.io: an unauthenticated GET to /token with a repository pull scope returns a Bearer token, and a GET to /v2/<repo>/manifests/<tag> with that token and an Accept header that permits OCI image indexes returns the image index",
   "tooling": "docker, podman, skopeo, oras, crane",
   "chaining": "the artifact store for a GitHub Actions build; the 10 GB per-layer size and the 10 minute upload timeout are the limits to watch",
   "limits": [
@@ -54,7 +54,7 @@
     "detail": "a GitHub account; a personal access token with packages scope for a push",
     "country": null
   },
-  "reliability_note": "the pull-token endpoint for catthehacker/ubuntu answers 200 with a 69-byte token JSON to a request that carries no credential",
+  "reliability_note": "an unauthenticated GET of the ghcr.io pull-token endpoint for catthehacker/ubuntu answers HTTP 200 with a 69-byte token JSON body",
   "confidence": "documented",
   "confidence_note": "the storage and transfer figures are a first-party page, and they are the fields the verdict rests on. The anonymous token and manifest probes prove the read path, which does not raise a documented quota. The earlier anonymous-pull measurement used library/hello-world, a Docker Hub namespace rather than a ghcr.io one, so it proved nothing about a public ghcr.io package.",
   "evidence": [
@@ -145,10 +145,38 @@
       "proved": "the billing page states that container image storage and bandwidth are free, with a month's notice of any change",
       "capture": "sha256:e86d8202da6424d7fe777a09cf7daa8f56612d3bd02b7fe08da73f46ea4aa5a2",
       "quote": "Container image storage and bandwidth for the Container registry is currently free."
+    },
+    {
+      "url": "probe:https://ghcr.io/token?scope=repository:catthehacker/ubuntu:pull&service=ghcr.io",
+      "date": "2026-11-18",
+      "proved": "an unauthenticated GET of the pull-token endpoint for catthehacker/ubuntu answers 200 with a 69-byte token JSON body",
+      "capture": "sha256:af5b831c4d2b01422b3e9d4d6686c50b06256c513e57494ffd15b6785f99bf37",
+      "quote": "\"status\": 200, \"bytes\": 69,"
+    },
+    {
+      "url": "https://ghcr.io/v2/catthehacker/ubuntu/manifests/act-latest",
+      "date": "2026-11-18",
+      "proved": "the token fetches the act-latest image index: 200, 528 bytes, digest sha256:a69bc68d691e9e9afd294dbb9ea7a71e38207c2f0a7b689b5dc6a4cacf06f5e6",
+      "capture": "sha256:a69bc68d691e9e9afd294dbb9ea7a71e38207c2f0a7b689b5dc6a4cacf06f5e6",
+      "quote": "\"mediaType\":\"application/vnd.oci.image.index.v1+json\""
+    },
+    {
+      "url": "probe:https://ghcr.io/token?scope=repository:library/hello-world:pull&service=ghcr.io",
+      "date": "2026-11-18",
+      "proved": "the wrong-namespace control: library/hello-world is Docker Hub's namespace and does not exist on ghcr.io, so its 403 answers the path and not the anonymity policy",
+      "capture": "sha256:a265c73224ba518685de90d79f09531c4747dfa09246ae8739e5bedd96cc0905",
+      "quote": "\"status\": 403, \"bytes\": 86,"
+    },
+    {
+      "url": "probe:https://ghcr.io/v2/catthehacker/ubuntu/manifests/act-latest",
+      "date": "2026-11-18",
+      "proved": "the same manifest route without a token answers 401 with a 73-byte body, so the token is what the 200 depends on",
+      "capture": "sha256:d34073fccb777cabe781eb53522154a6dda4d72775b2a043b79c7677d40f6186",
+      "quote": "\"status\": 401, \"bytes\": 73,"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-09T12:09:21.347Z",
+  "verified_at": "2026-11-18T04:36:08.320Z",
   "price_per_tb_month": null,
   "history": [
     "history/2026-10-22T041501Z/ghcr-anonymous-pull-wrong-namespace.md"
