@@ -1,0 +1,72 @@
+{
+  "topic": "inference",
+  "slug": "modelscope",
+  "provider": "ModelScope",
+  "url": "https://www.modelscope.cn/docs/model-service/API-Inference/limits",
+  "category": "managed free inference API (API-Inference)",
+  "free_tier": {
+    "stated": "API-Inference is offered free of charge to registered developers, with real-time dynamic limits on quota and concurrency; calls can also be redeemed by magicubes (0.5 to 2 per call). The official docs state no fixed numeric daily quota on this page.",
+    "unit": "requests",
+    "metered_on": "request-count",
+    "source_url": "https://www.modelscope.cn/docs/model-service/API-Inference/limits",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "https://api-inference.modelscope.cn/v1",
+  "tooling": "OpenAI-compatible and Anthropic-compatible endpoints with a ModelScope access token",
+  "chaining": "dynamic per-model concurrency limits and the real-name gate are the scarce links",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "concurrency is dynamically rate-limited by platform load; no fixed numeric quota stated on this page",
+      "source": "https://www.modelscope.cn/docs/model-service/API-Inference/limits"
+    }
+  ],
+  "binding": "request-rate",
+  "identity_cost": {
+    "kind": "national-id",
+    "detail": "the ModelScope account must be linked to an Alibaba Cloud account that has completed real-name verification before API-Inference can be used",
+    "country": null
+  },
+  "reliability_note": "the service is non-commercial and not for high-concurrency or SLA-dependent online tasks; older models may be removed",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://www.modelscope.cn/docs/model-service/API-Inference/limits",
+      "date": "2026-11-18",
+      "proved": "API Inference is free of charge but imposes dynamic quota and concurrency limits",
+      "capture": "sha256:79822580fe6f8f96aa27fce252cfb03ee4c6eb959569ac6c3405a73d561abba6",
+      "quote": "API Inference implements certain limits on usage quotas and concurrency, with real-time dynamic adjustments based on actual resource utilization."
+    },
+    {
+      "url": "https://www.modelscope.cn/docs/model-service/API-Inference/limits",
+      "date": "2026-11-18",
+      "proved": "the free API requires linking an Alibaba Cloud account that has completed real-name verification",
+      "capture": "sha256:79822580fe6f8f96aa27fce252cfb03ee4c6eb959569ac6c3405a73d561abba6",
+      "quote": "Your ModelScope account must first be"
+    },
+    {
+      "url": "https://www.modelscope.cn/docs/model-service/API-Inference/limits",
+      "date": "2026-11-18",
+      "proved": "the service is not for tasks that require high concurrency or SLA guarantees",
+      "capture": "sha256:79822580fe6f8f96aa27fce252cfb03ee4c6eb959569ac6c3405a73d561abba6",
+      "quote": "Please do not use it for online tasks requiring high concurrency"
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-11-18T13:00:00.000Z",
+  "notes": "The official doc page (modelscope.cn/docs/...) returned broker-exit-1 on every route; the first-party text was captured from resouces.modelscope.cn, ModelScope's official documentation CDN search result. A real-name verified Alibaba Cloud account is required, which a registrant without a PRC identity cannot supply. The commonly cited 2,000-daily-call figure appears only in a community post and is not on the captured official page, so it is not used as a documented number.",
+  "tier": "free (API-Inference)"
+}

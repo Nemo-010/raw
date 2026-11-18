@@ -1,0 +1,62 @@
+{
+  "topic": "inference",
+  "slug": "jad-ai",
+  "provider": "Jad AI",
+  "url": "https://jadai.freesrv.com/docs",
+  "category": "inference gateway",
+  "free_tier": {
+    "stated": "All three model IDs (jad-ai, jad-go, jad-code) are free at USD 0 per million input tokens and USD 0 per million output tokens, with no billing step, no paid tier and no per-request charge.",
+    "unit": "tokens",
+    "metered_on": "request-count",
+    "source_url": "https://jadai.freesrv.com/docs",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "https://jadai.freesrv.com/v1",
+  "tooling": "an OpenAI-compatible Chat Completions endpoint with a jad_ key and a JAD_API_KEY environment variable for OpenCode",
+  "chaining": "the gateway routes only free-tier upstream models, so upstream availability is the scarce link",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "USD 0 per million input and output tokens on all three model IDs",
+      "source": "https://jadai.freesrv.com/docs"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "jad-go and jad-code output clamped to 16,384 tokens; jad-ai capped at 32,000 tokens",
+      "source": "https://jadai.freesrv.com/docs"
+    }
+  ],
+  "binding": "volume-quota",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "create a key in Settings to API keys, shown once; no card or payment step is described",
+    "country": null
+  },
+  "reliability_note": "requests with images return 503 vision_unavailable if no vision-capable provider is configured; the gateway never executes tools itself and rejects unknown model IDs with 400",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://jadai.freesrv.com/docs",
+      "date": "2026-11-18",
+      "proved": "all three model IDs are free at USD 0 per million input and output tokens, routing only free-tier upstream models",
+      "capture": "sha256:97ff90edad1210f236b19ebb78e7a46f531a0021d089f93f957679aff83f79e3",
+      "quote": "All three model IDs are free: **$0 per million input tokens and $0 per million output tokens**. The gateway routes only free-tier upstream models."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-18T14:30:00.000Z",
+  "notes": "a genuinely free USD 0 per-token gateway exists, but it depends on free-tier upstream models and the three IDs are routing aliases, so model availability can change"
+}

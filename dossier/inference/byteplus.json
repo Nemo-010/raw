@@ -1,0 +1,69 @@
+{
+  "topic": "inference",
+  "slug": "byteplus",
+  "provider": "BytePlus ModelArk",
+  "url": "https://www.byteplus.com/activity/free",
+  "category": "inference API",
+  "free_tier": {
+    "stated": "New-user free trial: '500K free tokens per model, with a total of over 10M tokens'; the free quota does not expire but is subject to change and available for eligible customers.",
+    "unit": "tokens",
+    "metered_on": "none",
+    "source_url": "https://www.byteplus.com/activity/free",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "https://ark.ap-southeast.bytepluses.com/api/v3",
+  "tooling": "OpenAI-compatible SDK against the ModelArk endpoint",
+  "chaining": "the per-model 500K token ceiling binds before the 10M aggregate; the quota is non-expiring but can change",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "500K free tokens per model, over 10M total",
+      "source": "https://www.byteplus.com/activity/free"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "ModelArk 5M tokens daily per model via data-collaboration campaign (corporate verification)",
+      "source": "https://www.byteplus.com/activity/free"
+    }
+  ],
+  "binding": "volume-quota",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "a BytePlus account created via the signup link; no card or phone gate stated on this page",
+    "country": null
+  },
+  "reliability_note": "free quota does not expire but is subject to change; higher daily tokens need corporate verification",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://www.byteplus.com/activity/free",
+      "date": "2026-11-18",
+      "proved": "the new-user trial grants 500K tokens per model and over 10M total",
+      "capture": "sha256:31532437e336a8634c126c79ccec7e160240788e9c0705e00456d1867dcaa7af",
+      "quote": "500K free tokens per model, with a total of over 10M tokens"
+    },
+    {
+      "url": "https://www.byteplus.com/activity/free",
+      "date": "2026-11-18",
+      "proved": "the free quota does not expire but is subject to change",
+      "capture": "sha256:31532437e336a8634c126c79ccec7e160240788e9c0705e00456d1867dcaa7af",
+      "quote": "The free quota does not expire, but is subject to change."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-18T13:00:00.000Z",
+  "notes": "A real per-model free token ceiling is documented; no public read path was probed."
+}

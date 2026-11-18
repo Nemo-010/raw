@@ -1,0 +1,64 @@
+{
+  "topic": "inference",
+  "slug": "merge-gateway",
+  "provider": "Merge Gateway",
+  "url": "https://docs.merge.dev/merge-gateway/cost/pricing",
+  "category": "inference gateway with a free plan",
+  "free_tier": {
+    "stated": "Free plan: nothing to pay, signup credit covers requests to the free model list up to a daily request cap; no card required. Pro is vendor cost plus a 5% Merge fee.",
+    "unit": "requests",
+    "metered_on": "request-count",
+    "source_url": "https://docs.merge.dev/merge-gateway/cost/pricing",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "https://api-gateway.merge.dev/v1/ai-sdk",
+  "tooling": "OpenAI/Anthropic-compatible endpoints plus the Merge Gateway SDK",
+  "chaining": "the daily request cap on the free model list is the scarce link",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "Free plan signup credit covers free-model-list requests up to a daily request cap (resets at midnight UTC); card adds Pro and the full catalog",
+      "source": "https://docs.merge.dev/merge-gateway/cost/pricing"
+    }
+  ],
+  "binding": "volume-quota",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "signup needs no card; an email signup at gateway.merge.dev is enough for the Free plan",
+    "country": null
+  },
+  "reliability_note": "a daily cap returns 429 free_tier_daily_limit; models outside the free list return 403 free_tier_model_not_allowed",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://docs.merge.dev/merge-gateway/cost/pricing",
+      "date": "2026-11-18",
+      "proved": "the Free plan covers free-model-list requests up to a daily cap with no payment method",
+      "capture": "sha256:412259e3838565c7e60ebd1a5024a19bb7536d7b9611458de95a589e1969ece2",
+      "quote": "Nothing. Signup credit covers requests to the free model list, up to a daily request cap"
+    },
+    {
+      "url": "https://docs.merge.dev/merge-gateway",
+      "date": "2026-11-18",
+      "proved": "signup needs no card and the Free plan has a daily request cap",
+      "capture": "sha256:ab0c4d2160a9ec15c9c4b2a658e65c815a16fe8eae4e22d655ceec915db83a01",
+      "quote": "Signup needs no card. The Free plan covers a list of free models up to a daily request cap, and adding a card moves you to Pro and the full catalog."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-18T13:00:00.000Z",
+  "notes": "Free plan has a real daily request cap and a model allowlist; numeric cap value is not published on the captured page (unverified)."
+}

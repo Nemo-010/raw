@@ -1,0 +1,62 @@
+{
+  "topic": "inference",
+  "slug": "cheapllm",
+  "provider": "cheapllm.shop",
+  "url": "https://cheapllm.shop/docs",
+  "category": "inference gateway",
+  "free_tier": {
+    "stated": "During beta every account is free with no rate limit; after beta a permanent free tier with no card of at least 5,000 input tokens and 1,000 output tokens per hour (5,000 and 1,000 today), counted per account over a rolling hour across all keys.",
+    "unit": "tokens",
+    "metered_on": "wall-clock",
+    "source_url": "https://cheapllm.shop/docs",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "https://cheapllm.shop/v1",
+  "tooling": "an OpenAI-compatible base URL with an sk-cheap- key; Anthropic Messages and OpenAI Responses formats also work",
+  "chaining": "the rolling-hour token allowance and the one-request-at-a-time rule bind before the per-token price",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "at least 5,000 input and 1,000 output tokens per hour per account, rolling hour, all keys together",
+      "source": "https://cheapllm.shop/docs"
+    },
+    {
+      "kind": "request-rate",
+      "value": "one request at a time per account; 429 while a request is running",
+      "source": "https://cheapllm.shop/docs"
+    }
+  ],
+  "binding": "volume-quota",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "create an account and a dashboard key; the permanent free tier needs no card",
+    "country": null
+  },
+  "reliability_note": "a 429 is returned while another request from the account is running; traffic spikes queue for up to 30 seconds before a 503",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://cheapllm.shop/docs",
+      "date": "2026-11-18",
+      "proved": "a permanent card-free free tier of at least 5,000 input and 1,000 output tokens per hour, counted per account over a rolling hour",
+      "capture": "sha256:0e620efc3b414cf06e1c874578d2f34fe75342457b5eedabd7af008e8ee4f382",
+      "quote": "every account keeps a **permanent free tier**, with no card: **at least 5,000 input tokens and 1,000 output tokens per hour**"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-18T14:30:00.000Z",
+  "notes": "a real standing card-free free tier exists, bounded by a rolling-hour token allowance and a one-request-at-a-time rule"
+}

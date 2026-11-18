@@ -172,14 +172,14 @@ store for the list: `scripts/fr sql "SELECT rid, verdict FROM record WHERE topic
 <!-- generated:start topic=inference kind=breakdown field=verdict label=verdict sort=value order=qualifies,qualifies-with-caveat,trial-only,fails-quota,fails-identity,paid-only,dead -->
 | verdict | Records |
 | --- | --- |
-| `qualifies` | 5 |
-| `qualifies-with-caveat` | 45 |
-| `trial-only` | 34 |
+| `qualifies` | 4 |
+| `qualifies-with-caveat` | 100 |
+| `trial-only` | 60 |
 | `fails-quota` | 3 |
-| `fails-identity` | 8 |
-| `paid-only` | 27 |
-| `dead` | 12 |
-| **all** | 134 |
+| `fails-identity` | 15 |
+| `paid-only` | 170 |
+| `dead` | 13 |
+| **all** | 365 |
 <!-- generated:end -->
 
 ## Records that no other document names
@@ -189,62 +189,238 @@ Each `measured` or `documented` record of this topic that no other document of `
 <!-- generated:start topic=inference kind=uncited -->
 | record | provider | verdict | confidence |
 | --- | --- | --- | --- |
+| `302ai` | 302.AI | paid-only | documented |
+| `abliteratedllm` | AbliteratedLLM | trial-only | documented |
+| `abliteration-ai` | abliteration.ai | paid-only | documented |
+| `adaption` | Adaption | paid-only | documented |
+| `adzuki` | Adzuki AI | paid-only | documented |
+| `agentrouter` | AgentRouter | trial-only | documented |
 | `agnes` | Agnes AI | paid-only | documented |
+| `ai-router` | AI-ROUTER | paid-only | documented |
+| `aiand` | ai& | paid-only | documented |
+| `aigrow` | AIGROW | paid-only | documented |
+| `aihubmix` | AIHubMix | qualifies-with-caveat | documented |
 | `aion-labs` | Aion Labs | qualifies-with-caveat | documented |
+| `aipg` | AI Power Grid | paid-only | documented |
+| `aistupidlevel` | AI Stupid Level | qualifies-with-caveat | documented |
+| `aixy` | Aixy | paid-only | documented |
+| `aki-io` | AKI.IO | paid-only | documented |
+| `alibaba-cn` | Alibaba (China) | qualifies-with-caveat | documented |
+| `amazon-bedrock` | Amazon Bedrock | paid-only | documented |
+| `ambient` | Ambient | paid-only | documented |
+| `anonrouter` | AnonRouter | qualifies-with-caveat | documented |
+| `anyapi` | AnyAPI | qualifies-with-caveat | documented |
+| `apiko` | APIKO | trial-only | documented |
+| `arcee` | Arcee | paid-only | documented |
 | `augure` | Augure | qualifies | documented |
+| `auriko` | Auriko | qualifies-with-caveat | documented |
+| `autarcho` | Autarcho | paid-only | documented |
+| `azure-cognitive-services` | Azure Cognitive Services | trial-only | documented |
+| `bailing` | Bailing | paid-only | documented |
 | `bazaarlink` | BazaarLink | qualifies-with-caveat | documented |
+| `blueclaw` | Blue Claw | paid-only | documented |
+| `bothub` | Bothub | paid-only | documented |
+| `boundless` | Boundless | paid-only | documented |
+| `bumo` | Bumo Router | paid-only | documented |
+| `cedarllm` | CedarLLM | paid-only | documented |
+| `cheapaimodel` | cheapaimodel | paid-only | documented |
+| `cheapest-token` | CheapestToken | paid-only | documented |
+| `cheapllm` | cheapllm.shop | qualifies-with-caveat | documented |
+| `clarifai` | Clarifai | trial-only | documented |
+| `claudinio` | Claudinio | paid-only | documented |
 | `cloudcode` | CloudCode.ONE | paid-only | documented |
+| `confidential-ai` | Confidential AI | paid-only | documented |
 | `contextual-ai-rerank` | Contextual AI reranker API | trial-only | documented |
+| `coralbricks` | CoralBricks | paid-only | documented |
+| `cortecs` | Cortecs | paid-only | documented |
 | `coze` | Coze | trial-only | documented |
+| `crossmodel` | CrossModel | paid-only | documented |
 | `dahl-inference` | Dahl Inference | trial-only | documented |
+| `daoxe` | DaoXE | paid-only | documented |
 | `deepl-api-developer` | DeepL API (Developer plan) | trial-only | documented |
 | `deepl-api-free` | DeepL API (Free plan) | dead | documented |
-| `empiriolabs` | EmpirioLabs AI | qualifies | documented |
+| `dinference` | DInference | paid-only | documented |
+| `dothoosh` | DotHoosh | paid-only | documented |
+| `doubleword` | Doubleword | paid-only | documented |
+| `drun` | D.Run (China) | paid-only | documented |
+| `ebcloud` | EBCloud | trial-only | documented |
+| `edenai` | Eden AI | paid-only | documented |
+| `empiriolabs` | EmpirioLabs AI | qualifies-with-caveat | documented |
+| `engy` | engy | paid-only | documented |
+| `entrim` | Entrim | paid-only | documented |
+| `ezkielyna` | Ezkielyna | paid-only | documented |
+| `fastrouter` | FastRouter | qualifies-with-caveat | documented |
+| `fiftyx` | 50X | paid-only | documented |
+| `fireworks-ai` | Fireworks AI | paid-only | documented |
 | `fireworks-ai-serverless` | Fireworks AI | paid-only | documented |
 | `fortytwo` | Fortytwo | qualifies-with-caveat | documented |
 | `freemodel` | FreeModel | qualifies | documented |
+| `friendli` | Friendli | paid-only | documented |
 | `friendli-ai` | FriendliAI Model APIs | paid-only | documented |
+| `gisoo` | Gisoo | paid-only | documented |
 | `glhf` | GLHF (glhf.chat) | dead | measured |
 | `google-cloud-translation` | Google Cloud Translation | qualifies-with-caveat | documented |
+| `google-vertex` | Vertex | trial-only | documented |
+| `google-vertex-anthropic` | Vertex (Anthropic) | trial-only | documented |
 | `graphn` | GraphN | trial-only | documented |
 | `greenpt` | GreenPT | trial-only | documented |
 | `grokified` | Grokified | trial-only | documented |
-| `helicone` | Helicone | trial-only | documented |
+| `helicone` | Helicone | qualifies-with-caveat | documented |
+| `hopper` | Hopper | trial-only | documented |
+| `hostinger-router` | Hostinger Router | paid-only | documented |
+| `huawei-maas` | Huawei Cloud MAAS | paid-only | documented |
+| `hubris` | Hubris | qualifies-with-caveat | documented |
+| `humain` | HUMAIN | fails-identity | documented |
 | `ibm-watsonx-ai-free` | IBM watsonx.ai (Free / Lite plan) | qualifies-with-caveat | documented |
+| `impossibl` | Impossibl | paid-only | documented |
+| `inco` | Inco | paid-only | documented |
 | `inferall` | InferAll | qualifies | documented |
+| `inference-coop` | Inference Cooperative | paid-only | documented |
+| `inferenceapis` | Inference APIs | paid-only | documented |
+| `inferris` | Inferris | trial-only | documented |
 | `infersia` | Infersia | qualifies-with-caveat | documented |
+| `inferx` | InferX | paid-only | documented |
+| `isoquant` | Isoquant | paid-only | documented |
 | `iteracompute` | IteraCompute | qualifies-with-caveat | documented |
+| `jad-ai` | Jad AI | qualifies-with-caveat | documented |
+| `jalapeno` | Jalapeno Cloud | paid-only | documented |
+| `jiekou` | Jiekou.AI | paid-only | documented |
 | `jina-ai-embeddings-reranker` | Jina AI embeddings and reranker API | trial-only | documented |
+| `joingonka` | JoinGonka | paid-only | documented |
+| `jzstoken` | JZSTOKEN | trial-only | documented |
 | `keln` | Keln | paid-only | documented |
+| `kenari` | Kenari | qualifies-with-caveat | documented |
+| `kitani` | Kitani | paid-only | documented |
+| `klavo` | Klavo AI | paid-only | documented |
+| `klokintegration` | klokintegration.se | trial-only | documented |
 | `korouter` | KoRouter | paid-only | documented |
+| `kosmik` | Kosmik Compute | trial-only | documented |
+| `kunavo` | Kunavo | paid-only | documented |
 | `lambda-inference` | Lambda Inference API | dead | measured |
 | `langsearch-rerank-api` | LangSearch Rerank API | dead | documented |
 | `libretranslate-hosted` | LibreTranslate hosted (libretranslate... | paid-only | documented |
+| `liquid` | Liquid Inference | qualifies-with-caveat | documented |
+| `lithosai` | LithosAI | paid-only | documented |
 | `llamaparse-free` | LlamaParse | qualifies-with-caveat | documented |
+| `llmgateway-providers` | LLM Gateway | qualifies-with-caveat | documented |
+| `llmtech` | LLM Tech | qualifies-with-caveat | documented |
+| `llmtr` | LLMTR | paid-only | documented |
+| `logits` | Logits | paid-only | documented |
+| `lowrouter` | LowRouter | trial-only | documented |
+| `lucidquery` | LucidQuery | paid-only | documented |
 | `mallard` | Mallard AI | trial-only | documented |
 | `mathpix-ocr-api` | Mathpix OCR API | paid-only | documented |
+| `meganova` | Meganova | qualifies-with-caveat | documented |
+| `melious` | Melious | paid-only | documented |
 | `meragpt` | meraGPT | trial-only | documented |
+| `merge-gateway` | Merge Gateway | qualifies-with-caveat | documented |
+| `minimax-cn` | MiniMax (minimax.cn) | paid-only | documented |
 | `mixedbread-search-starter` | Mixedbread (managed search with reran... | trial-only | documented |
+| `mixlayer` | Mixlayer | qualifies-with-caveat | documented |
+| `model-oracle-ai` | Model Oracle AI | paid-only | documented |
 | `modelis` | Modelis | qualifies-with-caveat | documented |
+| `modular` | Modular | paid-only | documented |
+| `moneo` | Moneo | trial-only | documented |
 | `moonshot-kimi-api-international` | Moonshot Kimi API Platform international | paid-only | documented |
+| `moonshotai-cn` | Moonshot AI (China) | paid-only | documented |
 | `munito` | Munito AI | qualifies-with-caveat | documented |
+| `munito-eu` | Munito AI (EU) | fails-identity | documented |
 | `nano-gpt` | NanoGPT | paid-only | documented |
+| `nearai` | NEAR AI Cloud | paid-only | documented |
 | `nebius-token-factory` | Nebius Token Factory | trial-only | documented |
+| `neosmith` | NeoSmith | paid-only | documented |
 | `neuralwatt` | Neuralwatt | fails-identity | documented |
 | `nlp-cloud` | NLP Cloud | fails-identity | documented |
+| `nodecode` | Nodecode | qualifies-with-caveat | documented |
+| `nokeep` | nokeep | paid-only | documented |
 | `nous-portal-free` | Nous Portal | qualifies-with-caveat | documented |
+| `novita-ai` | Novita AI | paid-only | documented |
 | `novita-llm-api` | Novita LLM API | qualifies-with-caveat | documented |
+| `oathbreaker` | Oathbreaker AI | paid-only | documented |
+| `obscurify` | Obscurify.ai | trial-only | documented |
+| `ofox` | Ofox | paid-only | documented |
 | `onomeo` | onomeo | paid-only | documented |
+| `openreason` | OpenReason | paid-only | documented |
+| `opper` | Opper | qualifies-with-caveat | documented |
+| `orcarouter` | OrcaRouter | qualifies-with-caveat | documented |
+| `outerlabs` | Outer Labs | trial-only | documented |
+| `pareto` | Pareto Inference | paid-only | documented |
+| `pendra` | Pendra | paid-only | documented |
+| `perplexity-agent` | Perplexity Agent | paid-only | documented |
 | `pinecone-inference` | Pinecone Inference (embeddings and re... | qualifies-with-caveat | documented |
+| `pioneer` | Pioneer | paid-only | documented |
+| `powerspring` | Powerspring | paid-only | documented |
+| `privatemode-ai` | Privatemode AI | trial-only | documented |
+| `proxystacks` | ProxyStacks Relay | paid-only | documented |
 | `qdrant-cloud-inference` | Qdrant Cloud Inference (free models o... | qualifies-with-caveat | documented |
+| `qihang-ai` | QiHang | paid-only | documented |
 | `qiniu-ai` | Qiniu | paid-only | documented |
+| `rayline` | Rayline | paid-only | documented |
 | `reducto-standard` | Reducto | trial-only | documented |
+| `refuseless` | Refuseless | qualifies-with-caveat | documented |
+| `routing-run` | routing.run | paid-only | documented |
+| `ruapi` | RuAPI | paid-only | documented |
+| `sagg` | SAGG | paid-only | documented |
+| `sakana` | Sakana AI | paid-only | documented |
+| `sandbase` | SandBase | paid-only | documented |
+| `sap-ai-core` | SAP AI Core | paid-only | documented |
+| `sarvam` | Sarvam AI | qualifies-with-caveat | documented |
+| `scx-ai` | SCX.ai | paid-only | documented |
+| `sensenova` | SenseNova (China) | qualifies-with-caveat | documented |
+| `snowflake-cortex` | Snowflake Cortex | paid-only | documented |
+| `sokkan` | SOKKAN Router | paid-only | documented |
+| `sparrowcodes` | SparrowCodes | qualifies-with-caveat | documented |
+| `standardcompute` | Standard Compute | trial-only | documented |
 | `steadyrouter` | SteadyRouter | trial-only | documented |
+| `stepfun-ai` | StepFun (Global) | paid-only | documented |
+| `stepping-stone` | stepping stone AG | paid-only | documented |
+| `subconscious` | Subconscious | paid-only | documented |
+| `submodel` | submodel | qualifies-with-caveat | documented |
+| `superbot-gg` | superbot | qualifies-with-caveat | documented |
+| `synthorai` | Synthorai | paid-only | documented |
+| `teamorouter` | TeamoRouter | paid-only | documented |
+| `teapot-router` | Teapot Router | trial-only | documented |
+| `tencent-tokenhub` | Tencent TokenHub | qualifies-with-caveat | documented |
+| `tensorx` | TensorX | paid-only | documented |
 | `tetrate-agent-router-service` | Tetrate Agent Router Service | trial-only | documented |
+| `the-grid-ai` | The Grid AI | paid-only | documented |
+| `therouter` | TheRouter | paid-only | documented |
+| `thinkingmachines` | Thinking Machines | paid-only | documented |
+| `toapis` | ToAPIs | paid-only | documented |
+| `togetherai` | Together AI | qualifies-with-caveat | documented |
 | `token-harbor` | Token Harbor | qualifies-with-caveat | documented |
+| `tokengo` | TokenGo | paid-only | documented |
+| `tokenify` | Tokenify | trial-only | documented |
+| `tokenlab` | TokenLab | paid-only | documented |
+| `tokenrouter` | TokenRouter | paid-only | documented |
+| `tokenwatt` | TokenWatt | trial-only | documented |
+| `trustedrouter` | TrustedRouter | paid-only | documented |
+| `trustedtokens` | TrustedTokens | fails-identity | documented |
+| `umans-ai` | Umans AI | paid-only | documented |
+| `unbiased` | Pareto by Unbiased | paid-only | documented |
+| `uncensuredai` | UncensuredAI | paid-only | documented |
+| `unorouter` | UnoRouter | qualifies-with-caveat | documented |
 | `unstructured-transform-free` | Unstructured Transform | trial-only | documented |
+| `uplinkswitch` | UplinkSwitch | paid-only | documented |
+| `vancine` | Vancine | paid-only | documented |
+| `vivgrid` | Vivgrid | paid-only | documented |
+| `wafer-ai` | Wafer | paid-only | documented |
 | `wallaby` | Wallaby | trial-only | documented |
+| `wally` | Wally | paid-only | documented |
+| `watsonx` | watsonx.ai | qualifies-with-caveat | documented |
+| `watt` | Watt Cloud | trial-only | documented |
 | `weaviate-embeddings` | Weaviate Embeddings (Weaviate Cloud f... | qualifies-with-caveat | documented |
+| `xpersona` | Xpersona | paid-only | documented |
+| `xxapi` | xxapi | paid-only | documented |
+| `zeldoc` | Zeldoc | fails-identity | documented |
+| `zenifra` | Zenifra | paid-only | documented |
+| `zenmux` | ZenMux | qualifies-with-caveat | documented |
 | `zeroentropy-rerank-embeddings` | ZeroEntropy zerank reranker and zembe... | dead | measured |
+| `zhipuai` | Zhipu AI | qualifies-with-caveat | documented |
 | `zro` | Zro | qualifies-with-caveat | documented |
+| `atomic-chat` | Atomic Chat (self-hosted) | qualifies-with-caveat | documented |
+| `frogbot` | FrogBot (self-hosted) | paid-only | documented |
+| `lmstudio` | LMStudio (self-hosted) | qualifies-with-caveat | documented |
+| `lynkr` | Lynkr (self-hosted) | qualifies-with-caveat | documented |
+| `qvac` | QVAC (self-hosted) | qualifies-with-caveat | documented |
 <!-- generated:end -->

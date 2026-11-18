@@ -5,7 +5,7 @@
   "url": "https://docs.fortytwo.network/docs/models",
   "category": "inference gateway",
   "free_tier": {
-    "stated": "Free models cost nothing and work with any balance, under the Free tier limits; every request to a free model is collected for data handling, and Nemotron 3.5 Super VL is listed as free within those limits.",
+    "stated": "A model whose ID ends in :free is free: requests cost nothing and work with any balance. The Free tier allows 5 requests per minute, 150 per hour, 500,000 uncached input tokens per hour, 100,000 output tokens per hour, 3,000,000 input tokens per day and 1,000,000 output tokens per day. Every request to a free model is collected for data handling.",
     "unit": "requests",
     "metered_on": "request-count",
     "source_url": "https://docs.fortytwo.network/docs/models",
@@ -30,8 +30,13 @@
   "limits": [
     {
       "kind": "request-rate",
-      "value": "free models carry their own limits, published on a separate Tiers and limits page",
-      "source": "https://docs.fortytwo.network/docs/models"
+      "value": "Free tier: 5 requests/minute, 150/hour, 500,000 uncached input tokens/hour, 100,000 output tokens/hour, 3,000,000 input tokens/day, 1,000,000 output tokens/day",
+      "source": "https://docs.fortytwo.network/docs/limits"
+    },
+    {
+      "kind": "request-rate",
+      "value": "an unpublished concurrency cap fails a request at once with 429 concurrency_limit_exceeded",
+      "source": "https://docs.fortytwo.network/docs/limits"
     }
   ],
   "binding": "request-rate",
@@ -49,8 +54,16 @@
       "proved": "free models cost nothing and work with any balance, with separate limits and every request collected",
       "capture": "sha256:bf98390889c7aaf1d31f62425fb9742900d6ce94f41fa8bb8f6bc47db41ab05e",
       "quote": "A model whose ID ends in `:free` is free: requests cost nothing and work with any balance. Free models have their own limits — see [Tiers and limits](https://docs.fortytwo.network/docs/limits.md). Every request to a free model is collected — see [Data handling](https://docs.fortytwo.network/docs/data-handling.md#free-models). Fortytwo can change or withdraw a free model at any time — see [Terms of Service](https://docs.fortytwo.network/legal/terms-of-service.md)."
+    },
+    {
+      "url": "https://docs.fortytwo.network/docs/limits",
+      "date": "2026-11-18",
+      "proved": "the Free tier publishes exact request and token limits",
+      "capture": "sha256:ed3975ff3e5c7be3e804a6c25f2a4032646291b054aaa42e0afae2e6e079344a",
+      "quote": "| Free | 5 | 150 | 500,000 | 100,000 | 3,000,000 | 1,000,000 |"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-18T06:20:00.000Z"
+  "verified_at": "2026-11-18T06:20:00.000Z",
+  "binding_note": "the Free tier is rate-limited on all four windows; the 5 requests/minute and 1,000,000 output tokens/day bind before any other constraint"
 }

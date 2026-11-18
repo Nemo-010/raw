@@ -1,0 +1,56 @@
+{
+  "topic": "inference",
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "tooling": "an OpenAI-compatible base URL",
+  "slug": "orcarouter",
+  "provider": "OrcaRouter",
+  "url": "https://docs.orcarouter.ai/routing/free-models.md",
+  "category": "inference gateway",
+  "free_tier": {
+    "stated": "Models ending in -free are priced at $0 and never touch the wallet; they are limited by per-minute and per-day request ceilings and, on the lowest tier, a per-request prompt-size cap, with an established GitHub account required to avoid an access-denied rejection.",
+    "unit": "requests",
+    "metered_on": "request-count",
+    "source_url": "https://docs.orcarouter.ai/routing/free-models.md",
+    "read_on": "2026-11-18"
+  },
+  "endpoint": "https://api.orcarouter.ai/v1",
+  "chaining": "the per-request prompt cap and the GitHub link gate bind before the rate windows",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "-free ids have rpm/rpd windows and a per-request prompt cap on the lowest tier; numbers published live at GET /api/free-package/public",
+      "source": "https://docs.orcarouter.ai/routing/free-models.md"
+    }
+  ],
+  "binding": "request-rate",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "an established GitHub account linked to the workspace owner is required unless lifetime spend exempts it",
+    "country": null
+  },
+  "reliability_note": "free ids never fall back to paid and the lineup rotates as capacity allows",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://docs.orcarouter.ai/routing/free-models.md",
+      "date": "2026-11-18",
+      "proved": "the -free tier serves models at $0 under a suffix, limited by request windows and a prompt cap",
+      "capture": "sha256:1151d26cc9c31ee0885230b6f9378a1f2afc0eb4e97657832c33ea2436d3a995",
+      "quote": "Some models are served at no charge under a model id ending in"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-18T14:35:33.000Z"
+}

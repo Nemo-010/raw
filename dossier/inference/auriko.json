@@ -1,0 +1,62 @@
+{
+  "topic": "inference",
+  "slug": "auriko",
+  "provider": "Auriko",
+  "url": "https://www.auriko.ai/pricing",
+  "category": "inference router",
+  "free_tier": {
+    "stated": "Free plan at USD 0 plus pay-as-you-go provider costs, with zero price markup: 1K platform RPM, 10K BYOK RPM, 5M BYOK monthly cap. Pro trial is 14 days with no credit card.",
+    "unit": "requests",
+    "metered_on": "request-count",
+    "source_url": "https://www.auriko.ai/pricing",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "https://api.auriko.ai/v1",
+  "tooling": "native Python and TypeScript SDKs, an OpenAI-compatible Chat Completions and Response API, and BYOK",
+  "chaining": "the 5M BYOK monthly cap and the need for the caller's own provider keys bind before the router markup, which is zero",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "Free plan 5M BYOK monthly cap",
+      "source": "https://www.auriko.ai/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "Free plan 1K platform RPM and 10K BYOK RPM",
+      "source": "https://www.auriko.ai/pricing"
+    }
+  ],
+  "binding": "volume-quota",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "signup for the free plan at auriko.ai; the page states no card, and BYOK needs the caller's provider keys",
+    "country": null
+  },
+  "reliability_note": "budget controls can cap spend at workspace or key level; a request over the platform RPM is throttled",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://www.auriko.ai/pricing",
+      "date": "2026-11-18",
+      "proved": "the Free plan has 1,000 platform RPM, 10,000 BYOK RPM and a 5M BYOK monthly cap, at USD 0 with zero provider price markup",
+      "capture": "sha256:2916f8116945b82f96ba6231dfea5f9177a87cfb6820d3cbd7db918a9b093cfe",
+      "quote": "- 1K platform RPM\n- 10K BYOK RPM\n- 5M BYOK monthly cap"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-18T14:30:00.000Z",
+  "notes": "the free plan grants routed requests but the caller supplies provider keys and pays provider token costs, so inference tokens are not free"
+}

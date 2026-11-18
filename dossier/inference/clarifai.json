@@ -1,0 +1,79 @@
+{
+  "topic": "inference",
+  "slug": "clarifai",
+  "provider": "Clarifai",
+  "url": "https://docs.clarifai.com/control/account-billing",
+  "category": "inference endpoint, pay-as-you-go with an expiring welcome credit",
+  "free_tier": {
+    "stated": "a one-time USD 5 welcome credit after phone-number verification, expiring 30 days after claim; up to two bonuses (one personal, one organization); the underlying plan is pay-as-you-go prepaid credit",
+    "unit": "credits",
+    "metered_on": "none",
+    "source_url": "https://docs.clarifai.com/control/account-billing",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "https://api.clarifai.com/v2/ext/openai/v1",
+  "tooling": "an OpenAI-compatible endpoint at api.clarifai.com/v2/ext/openai/v1 plus the Clarifai SDK and CLI",
+  "chaining": "pairs with an OpenAI-compatible agent only while the USD 5 credit lasts; the scarce link is the phone gate and the 30-day expiry",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "the one-time USD 5 welcome bonus expires 30 days after it is claimed",
+      "source": "https://docs.clarifai.com/control/account-billing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "Up to 100 requests per second",
+      "source": "https://docs.clarifai.com/control/account-billing"
+    }
+  ],
+  "binding": "retention-clamped",
+  "binding_note": "the 30-day credit expiry ends the free allowance before any rate limit is reached",
+  "identity_cost": {
+    "kind": "any-phone",
+    "detail": "a phone number is verified by SMS to claim the free USD 5 credit; the same number may verify up to three accounts, but only one personal and one organization account get the bonus; a card is needed only to recharge after that",
+    "country": null
+  },
+  "reliability_note": "no reliability event stated on the first-party page",
+  "confidence": "documented",
+  "confidence_note": "the snapshot is dated 2026-07-20",
+  "evidence": [
+    {
+      "url": "https://docs.clarifai.com/control/account-billing",
+      "date": "2026-11-18",
+      "proved": "the free USD 5 credit requires phone verification and is one-time",
+      "capture": "sha256:42b34a55798f888849f51fca2e29032b2bde5cc40ab41785bfe2ec7efa1c3482",
+      "quote": "After switching, click the notification bar and select **Claim credits** to verify your phone number and receive a one-time, free $5 credits, which can be used to try anything from serverless model access to dedicated deployments."
+    },
+    {
+      "url": "https://docs.clarifai.com/control/account-billing",
+      "date": "2026-11-18",
+      "proved": "the welcome bonus expires after 30 days",
+      "capture": "sha256:42b34a55798f888849f51fca2e29032b2bde5cc40ab41785bfe2ec7efa1c3482",
+      "quote": "The $5 welcome bonus has a 30-day expiration period."
+    },
+    {
+      "url": "https://docs.clarifai.com/control/account-billing",
+      "date": "2026-11-18",
+      "proved": "the Pay-As-You-Go plan allows up to 100 requests per second",
+      "capture": "sha256:42b34a55798f888849f51fca2e29032b2bde5cc40ab41785bfe2ec7efa1c3482",
+      "quote": "Up to 100 requests per second"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-18T13:45:48.000Z",
+  "notes": "credits are expiring, not a standing tier.",
+  "history": []
+}

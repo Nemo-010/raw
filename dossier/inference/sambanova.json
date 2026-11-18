@@ -1,0 +1,71 @@
+{
+  "topic": "inference",
+  "slug": "sambanova",
+  "provider": "SambaNova",
+  "url": "https://docs.sambanova.ai/cloud/docs/models/rate-limits",
+  "category": "inference endpoint, no-card free tier",
+  "free_tier": {
+    "stated": "a Free Tier applied when no payment method is linked: per model 20 requests/minute, 20 requests/day and 200,000 tokens/day (TPD, free tier only) for DeepSeek-V3.1, Meta-Llama-3.3-70B-Instruct, gpt-oss-120b, DeepSeek-V3.2 and gemma-4-31B-it",
+    "unit": "tokens",
+    "metered_on": "request-count",
+    "source_url": "https://docs.sambanova.ai/cloud/docs/models/rate-limits",
+    "read_on": "2026-11-18"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: an inference endpoint stores nothing for the caller"
+  },
+  "retention": {
+    "stated": "not applicable: no stored bytes"
+  },
+  "egress": {
+    "terms": "the response is the payload; no separate egress term is published",
+    "metered": false
+  },
+  "interface": [
+    "rest"
+  ],
+  "endpoint": "https://api.sambanova.ai/v1",
+  "tooling": "an OpenAI-compatible key from the SambaNova Cloud portal",
+  "chaining": "pairs with an OpenAI-compatible agent without a card; the scarce link is the 20 requests/day ceiling",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "Free Tier: 20 RPM, 20 RPD and 200,000 TPD per model",
+      "source": "https://docs.sambanova.ai/cloud/docs/models/rate-limits"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "tokens-per-day applies only to the Free Tier; a payment method moves the account to Developer Tier with no TPD cap",
+      "source": "https://docs.sambanova.ai/cloud/docs/models/rate-limits"
+    }
+  ],
+  "binding": "request-rate",
+  "binding_note": "20 requests per day binds before the 200,000-token daily allowance for typical interactive use",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "an API key is generated in the SambaNova Cloud portal; the Free Tier applies when no payment method is linked, so no card is required",
+    "country": null
+  },
+  "reliability_note": "no reliability event stated on the first-party page",
+  "confidence": "documented",
+  "evidence": [
+    {
+      "url": "https://docs.sambanova.ai/cloud/docs/models/rate-limits",
+      "date": "2026-11-18",
+      "proved": "the Free Tier applies when no payment method is linked",
+      "capture": "sha256:ec13c68f7b4046fef4cb52c739f1c9811df2bb5581a32da379b99492f8e6aa75",
+      "quote": "**Free Tier**: Applied when there is no payment method linked with your account"
+    },
+    {
+      "url": "https://docs.sambanova.ai/cloud/docs/models/rate-limits",
+      "date": "2026-11-18",
+      "proved": "Free Tier per-model rates are 20 RPM, 20 RPD, 200000 TPD",
+      "capture": "sha256:ec13c68f7b4046fef4cb52c739f1c9811df2bb5581a32da379b99492f8e6aa75",
+      "quote": "| **OpenAI** | `gpt-oss-120b` | 20 | 20 | 200000 |"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-18T13:45:48.000Z",
+  "notes": "the first explanation that fits is that a free tier exists; the concrete 20 RPM/20 RPD/200,000 TPD numbers are quoted from the rate-limits page, which is the real constraint.",
+  "history": []
+}
