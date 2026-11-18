@@ -244,6 +244,12 @@ copy the sentence that proves the value. `fr` finds the capture in any `.tmp/*/c
 `.tmp/*/units/*/captures/`. `fr` warns before it writes a row without them, and copies
 the capture into `sources/c/` (a probe record, registered with `--probe`, into `sources/p/`).
 
+`fr amend RID PATH --delete` removes one key (or list element) from the raw record, never from the projected
+`doc` of the store, which strips fields; its ledger line keeps the old value and carries `"deleted": true`. A
+top-level field is refused: set it instead. `fr amend RID --verified`, with no path and no value, refreshes
+`verified_at` alone with the evidence that prompted it (a new capture dated after the old `verified_at`, rule C10),
+and its ledger line names `$.verified_at`, not a field that did not change.
+
 ```text
 scripts/rq capture https://www.hetzner.com/storage/storage-box/ --lane .tmp/session-ID
 scripts/fr amend storage/hetzner-storage-box '$.free_tier.stated' '1 TB (BX11) ...' \
@@ -256,6 +262,11 @@ scripts/fr add storage/example-host --provider "Example Host" --url https://exam
 scripts/fr dead storage/example-host --cause free-tier-removed --observed 2026-10-28 \
     --evidence https://example.com/pricing --proved "pricing page no longer lists a free plan" \
     --capture sha256:HASH --quote "Plans start at USD 5"
+scripts/fr amend debrid/alldebrid '$.extras.merge_conflicts' --delete \
+    --evidence https://alldebrid.com/ --date 2026-11-18 --proved "the conflict is settled in extras.hosts_listed"
+scripts/fr amend debrid/premiumize --verified \
+    --evidence https://www.premiumize.me/services --date 2026-11-18 --capture sha256:HASH \
+    --quote "..." --proved "the services page was read again; nothing changed"
 scripts/fr relate storage/a duplicate_of storage/b --evidence https://example.com/ \
     --date 2026-10-28 --reason "one plan page, two records"
 scripts/fr entity-set storage/a example --name "Example" --reason "same vendor under a second domain"

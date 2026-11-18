@@ -1955,13 +1955,15 @@ def append_line(path, line):
         f.write((line.rstrip("\n") + "\n").encode("utf-8"))
 
 
-def ledger(repo, rid, path, old, new, rung, ev, reason, also=None):
+def ledger(repo, rid, path, old, new, rung, ev, reason, also=None, deleted=False):
     o = collections.OrderedDict()
     o["at"] = utc_stamp_ms()
     o["rid"] = rid
     o["path"] = path
     o["old"] = None if old is ABSENT else old
     o["new"] = new
+    if deleted:
+        o["deleted"] = True
     o["rung"] = rung
     o["evidence"] = ev
     o["reason"] = reason
@@ -2033,10 +2035,42 @@ WRITE_REFUSAL = ("the research checkout changes records only through a run: scri
                  "its own clone.")
 
 
+def del_path(obj, segs):
+    """Remove the key (or list element) that segs names. -> the old value. Fail when it is absent."""
+    cur = obj
+    for k in segs[:-1]:
+        if isinstance(k, int):
+            if not isinstance(cur, list) or k >= len(cur):
+                raise Fail("no element [%d] on the way to %s" % (k, jpath(segs)), 2)
+        elif not isinstance(cur, dict) or k not in cur:
+            raise Fail("%s is absent: nothing to delete" % jpath(segs), 1)
+        cur = cur[k]
+    last = segs[-1]
+    if isinstance(last, int):
+        if not isinstance(cur, list) or last >= len(cur):
+            raise Fail("%s is absent: nothing to delete" % jpath(segs), 1)
+        return cur.pop(last)
+    if not isinstance(cur, dict) or last not in cur:
+        raise Fail("%s is absent: nothing to delete" % jpath(segs), 1)
+    return cur.pop(last)
+
+
 def cmd_amend(args):
     rid = check_rid(args.rid)
+    if args.path is None:
+        # fr amend RID --verified: the clock refresh alone, with its evidence (issue 73)
+        if args.value is not None or args.delete or not args.verified:
+            raise Fail("name a PATH and a VALUE, a PATH with --delete, or neither with --verified (the verified_at "
+                       "refresh alone)", 2)
+        return amend_verified(args, rid)
+    if args.delete and args.value is not None:
+        raise Fail("--delete takes a PATH and no VALUE", 2)
+    if not args.delete and args.value is None:
+        raise Fail("a VALUE is missing: fr amend RID PATH VALUE, or fr amend RID PATH --delete", 2)
     segs = parse_jpath(args.path)
     top = segs[0]
+    if args.delete and len(segs) == 1:
+        raise Fail("refused: --delete removes a key inside a field, never a top-level key; set the field instead", 2)
     if top in REFUSED_PATHS:
         raise Fail("refused: $.%s is not amendable (%s)" % (top, REFUSED_PATHS[top]), 2)
     mod, schema = load_validate(args.repo)
@@ -2044,7 +2078,9 @@ def cmd_amend(args):
         raise Fail("refused: %s is not a schema key; free-form fields go under $.extras" % top, 2)
     if args.rung and args.rung not in LADDER:
         raise Fail("--rung must be one of %s" % ", ".join(reversed(LADDER)), 2)
-    if args.string:
+    if args.delete:
+        value = None
+    elif args.string:
         value = args.value
     else:
         try:
@@ -2054,7 +2090,9 @@ def cmd_amend(args):
     ev = with_capture(args.repo, check_evidence(args.evidence, args.date, args.proved), args)
     path, text, root = read_record(args.repo, rid)
     rec = json.loads(text)
-    old = set_path(rec, segs, value)
+    # a delete removes the key from the raw record, never from the projected doc of the store (issue 72); its ledger
+    # line carries the old value and "deleted": true
+    old = del_path(rec, segs) if args.delete else set_path(rec, segs, value)
     also = {}
     if top == "confidence" and isinstance(value, str) and value in LADDER \
             and isinstance(old, str) and old in LADDER and stronger(value, old):
@@ -2079,12 +2117,45 @@ def cmd_amend(args):
     new_text = write_record(args.repo, path, rid, text, root, rec, args.dry_run, "amend")
     lines = diff_summary(text, new_text, os.path.relpath(path, args.repo).replace("\\", "/"))
     if not args.dry_run:
-        ledger(args.repo, rid, jpath(segs), old, value, args.rung, ev, args.reason, also or None)
+        ledger(args.repo, rid, jpath(segs), old, value, args.rung, ev, args.reason, also or None, deleted=args.delete)
         lines.append("ledger: history/ledger.jsonl +1 line")
     for k, (a, b) in also.items():
         lines.append("also %s: %s -> %s" % (k, a, b))
     t, s = rid.split("/")
-    lines.append("commit subject: " + subject("%s: %s %s amended" % (t, s, short_path(segs))))
+    lines.append("commit subject: " + subject("%s: %s %s %s" % (t, s, short_path(segs),
+                                                              "deleted" if args.delete else "amended")))
+    return after_write(args, lines)
+
+
+def amend_verified(args, rid):
+    """verified_at to the machine clock, alone, with the evidence that prompted it: the record was checked again (a
+    new capture dated after the old verified_at, rule C10). The ledger line names $.verified_at, not another field."""
+    if args.rung and args.rung not in LADDER:
+        raise Fail("--rung must be one of %s" % ", ".join(reversed(LADDER)), 2)
+    load_validate(args.repo)
+    ev = with_capture(args.repo, check_evidence(args.evidence, args.date, args.proved), args)
+    path, text, root = read_record(args.repo, rid)
+    rec = json.loads(text)
+    evl = rec.setdefault("evidence", [])
+    if not any(isinstance(e, dict) and e.get("url") == ev["url"] and e.get("date") == ev["date"]
+               and e.get("proved") == ev["proved"] for e in evl):
+        evl.append(ev)
+    also = {}
+    conf = rec.get("confidence")
+    if args.rung and conf in LADDER and stronger(conf, args.rung):
+        rec["confidence"] = args.rung
+        also["$.confidence"] = [conf, args.rung]
+    va = rec.get("verified_at")
+    rec["verified_at"] = utc_stamp_ms()
+    new_text = write_record(args.repo, path, rid, text, root, rec, args.dry_run, "amend")
+    lines = diff_summary(text, new_text, os.path.relpath(path, args.repo).replace("\\", "/"))
+    if not args.dry_run:
+        ledger(args.repo, rid, "$.verified_at", va, rec["verified_at"], args.rung, ev, args.reason, also or None)
+        lines.append("ledger: history/ledger.jsonl +1 line")
+    for k, (a, b) in also.items():
+        lines.append("also %s: %s -> %s" % (k, a, b))
+    t, s = rid.split("/")
+    lines.append("commit subject: " + subject("%s: %s checked again" % (t, s)))
     return after_write(args, lines)
 
 
@@ -2535,10 +2606,14 @@ def build_parser():
     def wr(p):
         p.add_argument("--dry-run", action="store_true", help="show the change, write nothing")
 
-    p = sp("amend", "change one value of a record, with evidence")
+    p = sp("amend", "change one value of a record, with evidence; --delete removes a key; --verified alone refreshes "
+                    "verified_at")
     p.add_argument("rid")
-    p.add_argument("path", help="$.free_tier.stated, $.limits[2].value, $.extras.\"NAT Start\".price")
-    p.add_argument("value", help="parsed as JSON when it parses, else a string")
+    p.add_argument("path", nargs="?", help="$.free_tier.stated, $.limits[2].value, $.extras.\"NAT Start\".price; "
+                                           "omitted with --verified to refresh verified_at alone")
+    p.add_argument("value", nargs="?", help="parsed as JSON when it parses, else a string; omitted with --delete")
+    p.add_argument("--delete", action="store_true", help="remove the key (or list element) PATH names, from the raw "
+                                                         "record; the ledger line keeps its old value")
     p.add_argument("--evidence", required=True)
     p.add_argument("--date", required=True)
     p.add_argument("--proved", required=True)

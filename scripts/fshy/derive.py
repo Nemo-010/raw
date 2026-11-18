@@ -925,6 +925,9 @@ def parse_ledger(repo):
             reason = o.get("reason")
             if o.get("op") and o.get("op") not in ("set",):
                 reason = "%s%s" % (o["op"], (": " + reason) if reason else "")
+            elif o.get("deleted"):
+                # fr amend --delete: the key is gone, and the line keeps its old value
+                reason = "delete%s" % ((": " + reason) if reason else "")
             # the last column is the op of the line (set, confirm, append_evidence, drop_evidence, add_record, dead,
             # relate, undo, undo_skipped, basis); a line of fr amend, add or dead names none, and its op is NULL
             rows.append((o.get("at"), o.get("rid"), o.get("path"), json.dumps(o.get("old"), ensure_ascii=False),

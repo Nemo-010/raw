@@ -752,6 +752,91 @@ def basics():
         tr.NOREPLY.clear()
 
 
+def tools_inbox_case():
+    """Issues 72-74 and the [raw] inbox: fr amend --delete and --verified alone, the C20 baseline held by its field,
+    and the inbox's routes, filter and record. In process and offline: no route is a real network call."""
+    import checks
+    import inbox
+    from common import Fail
+    # 74: a C20 row is held by its record and field, whatever the hash of the text
+    b = checks.parse_baseline("C20\tdebrid/x|$.notes|aaaa1111\nC01\tdebrid/y|k\n")
+    ok("debrid/x|$.notes|bbbb2222" in b["C20"] and "debrid/x|$.tooling|aaaa1111" not in b["C20"]
+       and "debrid/y|k" in b["C01"] and "debrid/y|z" not in b["C01"],
+       "C20 baseline: an edited field stays held, another field is new, other rules match exactly (issue 74)")
+    now = {("C20", "debrid/x|$.notes|bbbb2222")}
+    ok(checks.keeps("C20", "debrid/x|$.notes|aaaa1111", now) and not checks.keeps("C20", "debrid/x|$.tooling|c", now)
+       and not checks.keeps("C01", "debrid/y|k", now),
+       "a prune keeps a C20 row while its field still breaks the rule, and drops a fixed one (issue 74)")
+    # 72, 73: fr amend --delete, and --verified with no path
+    d = tempfile.mkdtemp(prefix="rq-fr-")
+    try:
+        os.makedirs(os.path.join(d, "dossier", "storage"))
+        os.makedirs(os.path.join(d, "history"))
+        src = json.load(open(os.path.join(REAL, "dossier", "storage", "zenodo.json"), encoding="utf-8"))
+        src.setdefault("extras", {})["merge_conflicts"] = {"x": [1, 2]}
+        src["extras"]["keep_me"] = "kept"
+        with open(os.path.join(d, "dossier", "storage", "zenodo.json"), "w", encoding="utf-8") as f:
+            json.dump(src, f, indent=2, ensure_ascii=False)
+            f.write("\n")
+        ev = ["--evidence", "https://zenodo.org/", "--date", "2026-10-01", "--proved", "a selftest of the tool",
+              "--no-rebuild"]
+        fr_ = [sys.executable, os.path.join(REAL, "scripts", "fshy", "fr.py"), "--repo", d, "amend", "storage/zenodo"]
+        env = dict(ENV)
+        r = subprocess.run(fr_ + ["$.extras.merge_conflicts", "--delete"] + ev, capture_output=True, text=True, env=env)
+        rec = json.load(open(os.path.join(d, "dossier", "storage", "zenodo.json"), encoding="utf-8"))
+        led = [json.loads(x) for x in open(os.path.join(d, "history", "ledger.jsonl"), encoding="utf-8") if x.strip()]
+        ok(r.returncode == 0 and "merge_conflicts" not in rec["extras"] and rec["extras"].get("keep_me") == "kept"
+           and led[-1]["path"] == "$.extras.merge_conflicts" and led[-1].get("deleted") is True
+           and led[-1]["old"] == {"x": [1, 2]},
+           "fr amend --delete removes one key from the raw record, keeps its siblings, and ledgers the old value "
+           "(issue 72; %s)" % (r.stderr or r.stdout).strip()[-160:])
+        r2 = subprocess.run(fr_ + ["$.extras.merge_conflicts", "--delete"] + ev, capture_output=True, text=True, env=env)
+        r3 = subprocess.run(fr_ + ["$.notes", "--delete"] + ev, capture_output=True, text=True, env=env)
+        ok(r2.returncode != 0 and "absent" in r2.stderr and r3.returncode != 0 and "top-level" in r3.stderr,
+           "fr amend --delete refuses an absent key and a top-level field (issue 72)")
+        va0 = rec.get("verified_at")
+        r4 = subprocess.run(fr_ + ["--verified"] + ev, capture_output=True, text=True, env=env)
+        rec2 = json.load(open(os.path.join(d, "dossier", "storage", "zenodo.json"), encoding="utf-8"))
+        led = [json.loads(x) for x in open(os.path.join(d, "history", "ledger.jsonl"), encoding="utf-8") if x.strip()]
+        ok(r4.returncode == 0 and rec2.get("verified_at") != va0 and led[-1]["path"] == "$.verified_at"
+           and led[-1]["old"] == va0 and rec2.get("notes") == rec.get("notes"),
+           "fr amend RID --verified refreshes verified_at alone, and its ledger line names $.verified_at (issue 73; %s)"
+           % (r4.stderr or r4.stdout).strip()[-160:])
+        r5 = subprocess.run(fr_ + ev, capture_output=True, text=True, env=env)
+        ok(r5.returncode == 2, "fr amend with no path and no --verified is a usage error")
+    finally:
+        shutil.rmtree(d, ignore_errors=True)
+    # the [raw] inbox: the first route that answers wins, only open issues titled [raw] count, none answering is exit 3
+    def bad():
+        raise inbox.Unread("selftest")
+
+    def rows():
+        return [{"number": 7, "title": "[raw] a record is wrong", "body": "b", "updated_at": "2026-11-18T00:00:00Z",
+                 "html_url": "u"}, {"number": 8, "title": "site: a bump", "body": "", "updated_at": "t"},
+                {"number": 9, "title": "[RAW] a pull request", "pull_request": {}, "updated_at": "t"}]
+    name, got, tried = inbox.fetch([("forge", bad), ("api.github.com", rows)])
+    ok(name == "api.github.com" and [x["number"] for x in got] == [7] and tried == ["forge: selftest"],
+       "inbox: the next route answers when the first fails, and only open [raw] issues count, no pull request")
+    try:
+        inbox.fetch([("forge", bad), ("api.github.com", bad), ("gh", bad)])
+        ok(False, "inbox: no route answering is exit 3 with the web page named")
+    except Fail as e:
+        ok(e.code == 3 and "github.com/" in str(e), "inbox: no route answering is exit 3 with the web page named")
+    d = tempfile.mkdtemp(prefix="rq-inbox-")
+    try:
+        s1 = inbox.record(rows()[:1], "forge", d)
+        s2 = inbox.record([dict(rows()[0], body="edited", updated_at="2026-11-19T00:00:00Z")], "forge", d)
+        s3 = inbox.record([], "forge", d)
+        ok(s1["new"] == [7] and s2["changed"] == [7] and s3["gone"] == [7]
+           and s2["items"]["7"]["first_seen"] == s1["items"]["7"]["first_seen"] and s2["items"]["7"]["body"] == "edited",
+           "inbox: the record names a new, an edited and a closed issue, and keeps the body and updated_at")
+        ok(not inbox.due(d, minutes=30) and inbox.due(d, minutes=0), "inbox: a read is due only after inbox_minutes")
+        ok("1 open [raw] issue" in (inbox.line(s2) or "") and inbox.line(s3) is None,
+           "inbox: one line when an issue is open, none when the inbox is empty")
+    finally:
+        shutil.rmtree(d, ignore_errors=True)
+
+
 def flow_case(repo, tmp):
     """The main flow of a run in the research checkout: open, plan, lanes, lint, integrate in git objects, check, the
     render that land runs, audit, the manifest, intake, abandon. -> the run id."""
@@ -6296,7 +6381,7 @@ REPO_CASES = ("flow", "primitives_case", "overlay_case", "generated_conflict_cas
               "round5_case", "round6_case", "round7_case", "claim_case", "round8_case", "closing_case", "swarm_case",
               "queue_plan_case", "relet_case", "phase_case", "forge_read_case", "import_case", "push_soft_case",
               "collect_hint_case", "fork_merge_case")
-ALL_CASES = ("basics", "git_guard_case", "doc_rules_case", "followup_body_case") + REPO_CASES + ("wipe_case",
+ALL_CASES = ("basics", "git_guard_case", "doc_rules_case", "followup_body_case", "tools_inbox_case") + REPO_CASES + ("wipe_case",
                                                                                                 "one_tree_load_case")
 
 
@@ -6334,6 +6419,8 @@ def main(argv=None):
             doc_rules_case()
         if want("followup_body_case"):
             followup_body_case()
+        if want("tools_inbox_case"):
+            tools_inbox_case()
         if any(want(c) for c in REPO_CASES):
             repo = setup_clone(tmp)
             if want("primitives_case"):

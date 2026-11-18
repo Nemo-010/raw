@@ -308,8 +308,54 @@ def load_baseline(repo=REPO):
         return parse_baseline(f.read())
 
 
+# rules whose key ends in a hash of the field's text (rid|path|h8): their baseline holds the field, not the text, so a
+# legitimate edit of a baselined field that still breaks the rule is not a new violation (issue 74)
+FIELD_RULES = ("C20",)
+
+
+def field_key(k):
+    """rid|path|h8 -> rid|path: the field a C20 key names."""
+    return k.rsplit("|", 1)[0]
+
+
+class FieldKeys(set):
+    """The baseline rows of a field rule. A key is held when a row names the same record and field, whatever the
+    hash of the text: `k in rows` is true for rid|path|<any hash> once rid|path|<one hash> is in the baseline."""
+
+    def __init__(self, keys=()):
+        set.__init__(self, keys)
+        self.fields = {field_key(k) for k in set.__iter__(self)}
+
+    def add(self, k):
+        set.add(self, k)
+        self.fields.add(field_key(k))
+
+    def __contains__(self, k):
+        return set.__contains__(self, k) or field_key(k) in self.fields
+
+
+def keeps(rule, key, now):
+    """True when a baseline row still names a live violation, for a prune. now is {(rule, key)} of the tree. A field
+    rule's row stays while its record and field still break the rule, also when the text (and its hash) changed."""
+    if (rule, key) in now:
+        return True
+    if rule not in FIELD_RULES:
+        return False
+    memo = _NOW_FIELDS.get(id(now))
+    if memo is None or memo[0] is not now:
+        memo = (now, {(r, field_key(k)) for r, k in now if r in FIELD_RULES})
+        _NOW_FIELDS.clear()
+        _NOW_FIELDS[id(now)] = memo
+    return (rule, field_key(key)) in memo[1]
+
+
+_NOW_FIELDS = {}
+
+
 def parse_baseline(text):
     out = collections.defaultdict(set)
+    for r in FIELD_RULES:
+        out[r] = FieldKeys()
     for ln in (text or "").splitlines():
         if ln.startswith("#") or not ln.strip():
             continue

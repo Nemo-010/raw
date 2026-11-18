@@ -635,7 +635,9 @@ The baseline holds the error violations that existed when the rule was adopted. 
 fixed: in a run, `scripts/rq check --prune --run RUN` removes the rows of the records the run fixed, on the run
 branch (step 9); in an own clone, `scripts/rq check --prune` does the same in the working tree. It grows only
 when a rule is added or widened, in the pull request that changes the rule, with
-`scripts/rq check --write-baseline`. ⛔ Never add a row to the baseline by hand, and never in the change that adds the violation: the gate reads the baseline of
+`scripts/rq check --write-baseline`. A C20 row (narrative in a field) holds its record and field, not the text: its
+key ends in a hash of the text, and an edit of a baselined field that still breaks the rule is not a new violation,
+so it needs no baseline change; a prune keeps the row while the field still breaks the rule. ⛔ Never add a row to the baseline by hand, and never in the change that adds the violation: the gate reads the baseline of
 the same tree, so a row added beside a new violation hides it.
 
 Two checks hold this. `scripts/rq merge` and `scripts/rq ci --pr NUMBER --wait` refuse a pull request that adds

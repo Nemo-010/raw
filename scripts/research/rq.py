@@ -45,6 +45,7 @@ import land  # noqa: E402
 import review  # noqa: E402
 import state  # noqa: E402
 import track  # noqa: E402
+import inbox  # noqa: E402
 import units  # noqa: E402
 from common import (BASE, REPO, RID_RE, SETTINGS, Fail, TreeView, commit_on, git, legacy_dirs, read_capture,  # noqa: E402
                     read_json, read_jsonl,
@@ -100,6 +101,13 @@ def cmd_open(a):
 
 
 def cmd_issues(a):
+    # the work queue's first line: the [raw] inbox of the public repository, read when inbox_minutes have passed
+    if not os.environ.get("RQ_SELFTEST") and not os.environ.get("RQ_NO_INBOX"):
+        try:
+            st = inbox.check(REPO)
+        except Fail as e:
+            st = {"unread": str(e)}
+        print(inbox.line(st) or "inbox: no open [raw] issue of %s" % inbox.PUBLIC)
     lines = track.list_issues(utc_now(), int(SETTINGS.get("claim_hours", 24)))
     if lines is None:
         raise Fail("rq issues needs gh (and no RQ_NO_GITHUB): it reads the open rq:research issues and their claims", 3)
@@ -538,7 +546,7 @@ def prune_on_run(a):
                                                  narrative=not a.no_narrative, view=v)
         base = checks.baseline_of(v, REPO)
         now = {(r, k) for r, k, _ in viol}
-        keep = [(r, k) for r, ks in base.items() for k in ks if k.split("|", 1)[0] not in rids or (r, k) in now]
+        keep = [(r, k) for r, ks in base.items() for k in ks if k.split("|", 1)[0] not in rids or checks.keeps(r, k, now)]
         n0 = sum(len(x) for x in base.values())
         text, _ = checks.baseline_text([(r, k, "") for r, k in keep])
         # rows can only go: every kept row was in the run branch's own baseline
@@ -584,7 +592,7 @@ def cmd_check(a):
     if a.prune:
         base = checks.baseline_of(view, root)
         now = {(r, k) for r, k, _ in viol}
-        keep = [(r, k) for r, ks in base.items() for k in ks if (r, k) in now]
+        keep = [(r, k) for r, ks in base.items() for k in ks if checks.keeps(r, k, now)]
         n0 = sum(len(v) for v in base.values())
         checks.write_baseline([(r, k, "") for r, k in keep], root)
         print("baseline pruned: %d -> %d" % (n0, len(keep)))
@@ -1000,6 +1008,10 @@ def main(argv=None):
     p = sp.add_parser("report", help="a run's counts: units, applied values, audits, abandoned units"); p.add_argument("run"); p.set_defaults(f=cmd_report)
     p = sp.add_parser("status", help="the runs of this checkout, or one run's units and phase"); p.add_argument("run", nargs="?"); p.set_defaults(f=cmd_status)
     p = sp.add_parser("queue", help="the queued questions on main, by topic"); p.add_argument("--topic"); p.set_defaults(f=cmd_queue)
+    p = sp.add_parser("inbox", help="the open [raw] issues of the public repository: work filed there for this one")
+    p.add_argument("--json", action="store_true", help="the whole record, bodies included")
+    p.add_argument("--cached", action="store_true", help="read again only when inbox_minutes have passed")
+    p.set_defaults(f=inbox.cmd)
     a = ap.parse_args(argv)
     try:
         if legacy_dirs(REPO) and a.cmd not in LEGACY_OK:
@@ -1009,6 +1021,9 @@ def main(argv=None):
             c = state.control(REPO, "drain")
             if c:
                 print("rq: " + state.DRAIN_LINE % c[1], file=sys.stderr)
+        if a.cmd not in ("inbox", "issues"):
+            # every session meets the [raw] inbox: read when inbox_minutes have passed, one line when it holds work
+            inbox.auto(REPO)
         return a.f(a)
     except Fail as e:
         print("rq: %s" % e, file=sys.stderr)
