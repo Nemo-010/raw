@@ -5,47 +5,44 @@
   "url": "https://zerofs.link",
   "category": "anonymous-dump",
   "free_tier": {
-    "stated": "Unlimited storage for active files; no file size limit.",
+    "stated": "Unlimited for active files.",
     "unit": "unlimited",
     "metered_on": "stored-bytes",
     "source_url": "https://zerofs.link/faq/",
-    "read_on": "2026-10-21",
+    "read_on": "2026-11-10",
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
+    "stated": "No file size limit.",
     "source_url": "https://zerofs.link/faq/",
-    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+    "notes": "the FAQ answers 'File size limit?' with 'None.'"
   },
   "retention": {
-    "stated": "Files inactive for 15 days are deleted.",
+    "stated": "If a file is inactive for 15 days, it's gone.",
     "days": 15,
     "source_url": "https://zerofs.link/faq/",
-    "notes": "Extracted from published terms."
+    "notes": "the FAQ states a file inactive for 15 days is deleted."
   },
   "egress": {
     "terms": "No stated bandwidth cap; no speed limit claimed on the uploader.",
     "metered": false
   },
   "interface": [
-    "s3",
-    "rest",
-    "webdav",
-    "rclone"
+    "rest"
   ],
   "interface_detail": "rest",
-  "tooling": "Anonymous browser uploader with region selector. No public REST API, rclone, WebDAV, or S3 backend is documented. Optional account identifier tracks uploaded files.",
+  "tooling": "A JSON API answers at https://zerofs.link/api/ with 'files' and 'folders' endpoints.",
   "chaining": "Account-less uploads, so unlimited identities; the binding constraint is the 15-day inactivity deletion, which needs a re-access cron per file. At unlimited file size this is >= 500 GB per 'unit' trivially.",
   "limits": [],
-  "limits_note": "No file size limit. Files inactive for 15 days are deleted. No login required.",
+  "limits_note": "A file inactive for 15 days is deleted.",
   "identity_cost": {
     "kind": "anonymous",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: st retention of any live host I checked. No login required. anonymous-dump",
+    "detail": "No account required.",
     "country": null
   },
   "reliability_note": "Very new, looks like a Buzzheavier-style clone (same 'we only act on local court orders' posture, same lost-ID-never-recovered model). 15-day inactivity window makes it unusable for cold archive without active touching; untested for sustained throughput.",
-  "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence": "documented",
+  "confidence_note": "the FAQ states unlimited storage for active files.",
   "evidence": [
     {
       "url": "https://zerofs.link/faq/",
@@ -56,10 +53,52 @@
       "url": "https://zerofs.link/",
       "date": "2026-10-21",
       "proved": "probe: GET -> 200"
+    },
+    {
+      "url": "https://zerofs.link/faq/",
+      "date": "2026-11-10",
+      "proved": "a first-party ZeroFS page states the storage offer",
+      "capture": "sha256:ad6f42f4bb85ca6734dbbe13fe43edc2c612d7687512fb1b8e3f7bb233f08515",
+      "quote": "Unlimited for active files."
+    },
+    {
+      "url": "https://zerofs.link/faq/",
+      "date": "2026-11-10",
+      "proved": "the FAQ answers that there is no file size limit",
+      "capture": "sha256:ad6f42f4bb85ca6734dbbe13fe43edc2c612d7687512fb1b8e3f7bb233f08515",
+      "quote": "File size limit? None."
+    },
+    {
+      "url": "https://zerofs.link/faq/",
+      "date": "2026-11-10",
+      "proved": "a file inactive for 15 days is deleted",
+      "capture": "sha256:ad6f42f4bb85ca6734dbbe13fe43edc2c612d7687512fb1b8e3f7bb233f08515",
+      "quote": "Yes. If a file is inactive for 15 days, it's gone."
+    },
+    {
+      "url": "https://zerofs.link/",
+      "date": "2026-11-10",
+      "proved": "no form and no email are asked for before an upload",
+      "capture": "sha256:8ada1b7dde14093d88714a8dbb675cb02f2f294c34a89ab970bc91942465c430",
+      "quote": "One click. No forms. No email. Just storage."
+    },
+    {
+      "url": "https://zerofs.link/api",
+      "date": "2026-11-10",
+      "proved": "the service exposes a REST API with files and folders endpoints",
+      "capture": "sha256:d3496e0b95a29ef554db4d8eb1af2fddfba18b8d36637f1c7fb2db138bcd1fd9",
+      "quote": "{\"files\":\"http://zerofs.link/api/files/\",\"folders\":\"http://zerofs.link/api/folders/\"}"
+    },
+    {
+      "url": "https://zerofs.link/",
+      "date": "2026-11-11",
+      "proved": "the ZeroFS home page states that no account is required to use the service",
+      "capture": "sha256:ad81e8fc0e6a2686f215e3b962edd63f6a7cdc84ee138fee351f2745835bb08c",
+      "quote": "No account required."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-11T03:44:15.955Z",
   "notes": "Unlimited storage for active files; no file size limit.",
   "history": [],
   "extras": {
@@ -77,7 +116,7 @@
     "target_document": "docs/storage/free/anonymous-hosts.md",
     "document_section": "Anonymous hosts with durable retention",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "the FAQ states unlimited storage for active files, read on 2026-11-10",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 2,
     "evidence_carrying_a_source_date": 0,

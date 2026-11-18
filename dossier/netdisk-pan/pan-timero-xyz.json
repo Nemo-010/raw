@@ -66,12 +66,96 @@
       "url": "probe:https://pan.timero.xyz/api/fs/put",
       "date": "2026-10-22",
       "proved": "the zero-byte oracle (PUT at an existing directory with Overwrite:false) returned code 403 with message 'permission denied' inside HTTP 200, so the write permission failed and nothing was written"
+    },
+    {
+      "url": "probe:https://pan.timero.xyz/",
+      "date": "2026-11-11",
+      "proved": "the fs/list response carries this error text",
+      "capture": "sha256:cef2cdfc5ec0ae894616ad02973b5c4071bf66181a6b58ba4d0d4af518f61e7c",
+      "quote": "\"list_failure\": \"failed get objs: failed get dir: failed get parent list: failed get dir: object not found\""
+    },
+    {
+      "url": "probe:https://pan.timero.xyz/",
+      "date": "2026-11-11",
+      "proved": "this run's probe found no listing, so the count is one",
+      "capture": "sha256:cef2cdfc5ec0ae894616ad02973b5c4071bf66181a6b58ba4d0d4af518f61e7c",
+      "quote": "\"consecutive_failures\": 1"
+    },
+    {
+      "url": "probe:https://pan.timero.xyz/",
+      "date": "2026-11-11",
+      "proved": "the settings endpoint answered HTTP 200 while the listing did not",
+      "capture": "sha256:cef2cdfc5ec0ae894616ad02973b5c4071bf66181a6b58ba4d0d4af518f61e7c",
+      "quote": "\"status\": 200"
+    },
+    {
+      "url": "probe:https://pan.timero.xyz/",
+      "date": "2026-11-11",
+      "proved": "the settings request for this host answered HTTP 200 at this instant",
+      "capture": "sha256:c1836f3f9c6090eb85a22b4be8a1a0c2e7ec418c0be3b0a00959c78176751c8f",
+      "quote": "\"checked_at\": \"2026-11-11T01:56:23.248Z\""
+    },
+    {
+      "url": "probe:https://pan.timero.xyz/",
+      "date": "2026-11-11",
+      "proved": "the anonymous root listing hashed to this value in this run",
+      "capture": "sha256:c1836f3f9c6090eb85a22b4be8a1a0c2e7ec418c0be3b0a00959c78176751c8f",
+      "quote": "\"listing_sha256\": \"4e972413\""
+    },
+    {
+      "url": "probe:https://pan.timero.xyz/",
+      "date": "2026-11-11",
+      "proved": "the probe record states the hash method used for the listing",
+      "capture": "sha256:c1836f3f9c6090eb85a22b4be8a1a0c2e7ec418c0be3b0a00959c78176751c8f",
+      "quote": "\"listing_hash_method\": \"sha256 of the canonical JSON array of [name, size, is_dir] triples sorted by name, first 8 hex characters\""
+    },
+    {
+      "url": "probe:https://pan.timero.xyz/",
+      "date": "2026-11-11",
+      "proved": "the anonymous guest session answered and its root listing returned entries, so the instance is reachable without an account",
+      "capture": "sha256:c1836f3f9c6090eb85a22b4be8a1a0c2e7ec418c0be3b0a00959c78176751c8f",
+      "quote": "\"alive\": true"
+    },
+    {
+      "url": "probe:https://pan.timero.xyz/",
+      "date": "2026-11-11",
+      "proved": "the root listing answered with this entry count and hash in this run",
+      "capture": "sha256:c1836f3f9c6090eb85a22b4be8a1a0c2e7ec418c0be3b0a00959c78176751c8f",
+      "quote": "\"listing_note\": \"anonymous POST /api/fs/list on / returned code 200 with 200 root entries (listing sha256 4e972413)\""
+    },
+    {
+      "url": "probe:https://pan.timero.xyz/",
+      "date": "2026-11-11",
+      "proved": "this host answered every request of this run's probe",
+      "capture": "sha256:c1836f3f9c6090eb85a22b4be8a1a0c2e7ec418c0be3b0a00959c78176751c8f",
+      "quote": "\"consecutive_failures\": 0"
+    },
+    {
+      "url": "probe:https://pan.timero.xyz/",
+      "date": "2026-11-11",
+      "proved": "the root listing answered with this entry count and hash in this run",
+      "capture": "sha256:bb4f25a338604f30d43ddcd769f3bfbb6e8e3d612eff8c06db1a149ff019f019",
+      "quote": "\"listing_note\": \"anonymous POST /api/fs/list on / returned code 200 with 1724 root entries (listing sha256 780159e3)\""
+    },
+    {
+      "url": "probe:https://pan.timero.xyz/",
+      "date": "2026-11-11",
+      "proved": "the settings request for this host answered HTTP 200 at this instant",
+      "capture": "sha256:bb4f25a338604f30d43ddcd769f3bfbb6e8e3d612eff8c06db1a149ff019f019",
+      "quote": "\"checked_at\": \"2026-11-11T02:29:43.242Z\""
+    },
+    {
+      "url": "probe:https://pan.timero.xyz/",
+      "date": "2026-11-11",
+      "proved": "the anonymous root listing hashed to this value in this run",
+      "capture": "sha256:bb4f25a338604f30d43ddcd769f3bfbb6e8e3d612eff8c06db1a149ff019f019",
+      "quote": "\"listing_sha256\": \"780159e3\""
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-22T03:37:00.574Z",
+  "verified_at": "2026-11-11T02:31:28.844Z",
   "binding": "per-ip-shaping",
-  "notes": "1,724 root entries on an AList v3.43 build, base_path /onedrive/adv_lib_001, provider Onedrive. The largest listing in the population and the clearest example of a pooled tenant re-exported.",
+  "notes": "anonymous POST /api/fs/list on / returned code 200 with 1724 root entries (listing sha256 780159e3)",
   "history": [],
   "extras": {
     "access_mode": "public-instance",
@@ -83,10 +167,10 @@
     "write_content_bypass": null,
     "permission_bitmask": "0",
     "base_path": "/onedrive/adv_lib_001",
-    "listing_sha256": "6e818fb6",
+    "listing_sha256": "780159e3",
     "first_seen": "2024-01-20",
     "first_seen_source": "kuhehe.github.io/20240120224502, whose page was edited in place until 2025-06-17",
-    "last_verified_alive": "2026-10-22T03:37:00.574Z",
+    "last_verified_alive": "2026-11-11T02:29:43.242Z",
     "last_verified_dead": null,
     "consecutive_failures": 0,
     "aliases": [
@@ -102,7 +186,8 @@
       "deferred_name": "pan.timero.xyz (ximu's alist) — public AList, 1,724-entry visual-novel library",
       "folded_from": "dossier/netdisk-pan/pan-timero-xyz-public-alist-1-724-entry-visual-novel-lib.json, written by this pass and folded here"
     },
-    "allow_indexed": true
+    "allow_indexed": true,
+    "listing_hash_method": "sha256 of the canonical JSON array of [name, size, is_dir] triples sorted by name, first 8 hex characters"
   },
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z"

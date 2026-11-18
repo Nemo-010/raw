@@ -18,9 +18,10 @@
     "notes": "the two first-party pages disagree on whether the allowance is per instance or per org"
   },
   "retention": {
-    "stated": "an instance persists while the organization is active; no deletion clock published",
+    "stated": "once the free quota is reached, the read and write operations on the instance are throttled until a monthly spending limit is set or the usage resets at the start of a new month",
     "days": null,
-    "source_url": "https://docs.pingcap.com/tidbcloud/serverless-faqs/"
+    "source_url": "https://docs.pingcap.com/tidbcloud/serverless-faqs/",
+    "notes": "null is indefinite: no inactivity deletion clock is published; new connections are denied and existing connections are throttled until the quota is increased or the usage resets"
   },
   "egress": {
     "terms": "no transfer allowance and no per-GB egress rate is published on the pricing page; recorded as a gap. Traffic is billed through the request-unit and storage meters the page does publish",
@@ -77,10 +78,24 @@
       "url": "https://docs.pingcap.com/tidbcloud/serverless-faqs/",
       "date": "2026-10-22",
       "proved": "'Always-free monthly quota for up to five TiDB Cloud Starter instances per organization (5 GiB row data + 5 GiB columnar data + 50 million RUs per TiDB Cloud Starter instance)'; 'you can create a maximum of five TiDB Cloud Starter instances by default. To create more ... you need to add a credit card'"
+    },
+    {
+      "url": "https://docs.pingcap.com/tidbcloud/serverless-faqs/?plan=starter",
+      "date": "2026-11-09",
+      "proved": "the FAQ states that reaching the free quota throttles read and write operations until a monthly spending limit is set or usage resets at the start of a new month",
+      "capture": "sha256:5baf4b75f4fe1b820bf414fcb1f595e9399f813cd13ec3c6307d49803b73b71a",
+      "quote": "For a free TiDB Cloud Starter instance, once the free quota is reached, the read and write operations on this instance will be throttled until you set a monthly spending limit or the usage is reset upon the start of a new month."
+    },
+    {
+      "url": "https://docs.pingcap.com/tidbcloud/serverless-faqs/?plan=starter",
+      "date": "2026-11-09",
+      "proved": "the FAQ states that reaching the quota denies new connections and throttles existing ones until the quota is increased or usage resets; no deletion is stated",
+      "capture": "sha256:5baf4b75f4fe1b820bf414fcb1f595e9399f813cd13ec3c6307d49803b73b71a",
+      "quote": "Once a TiDB Cloud Starter instance reaches its free quota or spending limit, the instance immediately denies any new connection attempts until the quota is increased or the usage is reset at the start of a new month. Existing connections established before reaching the quota will remain active but will experience throttling."
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-10-22T03:05:00.000Z",
+  "verified_at": "2026-11-09T13:21:21.973Z",
   "price_per_tb_month": "USD 0.10 per million RUs beyond the allowance",
   "history": [
     "history/2026-10-22T031524Z/tidb-allowance-per-instance-or-per-org.md"

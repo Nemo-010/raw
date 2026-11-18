@@ -13,7 +13,7 @@
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
+    "stated": "10 GB size limit for each layer",
     "source_url": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
@@ -72,10 +72,17 @@
       "url": "probe:unspecified",
       "date": "2026-10-21",
       "proved": "probe: GET ghcr.io/token?scope=repository:test/x:pull,push (anonymous) -> {\"errors\":[{\"code\":\"DENIED\"}]}; POST token with user:PAT basic auth -> 200 {\"token\":...} (real login flow)"
+    },
+    {
+      "url": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry",
+      "date": "2026-11-11",
+      "proved": "the page states a 10 GB size limit for each layer, so a per-object cap is documented",
+      "capture": "sha256:d5a19f2418af001e9326cc1ffd8cc4c2e1f6fe899ec3f45ee904a080af843b35",
+      "quote": "The Container registry has a 10 GB size limit for each layer."
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-10-22T00:00:00.000Z",
+  "verified_at": "2026-11-11T05:33:49.719Z",
   "notes": "Container image storage and bandwidth are free: \"Container image storage and bandwidth for the Container registry is currently free. If you use Container registry, you'll be informed at least one month in advance of any change to this policy.\" Ceiling is per-blob, not per-account: \"The Container registry has a 10 GB size limit for each layer\" and \"a 10 minute timeout limit for uploads\".",
   "history": [],
   "extras": {

@@ -16,9 +16,10 @@
     "bytes": null
   },
   "retention": {
-    "stated": "no trial length is stated; billing starts on the day the last credit is used, or on credit expiry, and a 30-day grace period follows if no payment method is added",
-    "days": null,
-    "source_url": "https://www.cockroachlabs.com/docs/cockroachcloud/free-trial"
+    "stated": "trial credits last until used or expired; without a payment method, a 30-day grace period follows in which clusters are throttled and cannot be reconfigured, then all clusters in the organization are deleted and cannot be restored",
+    "days": 30,
+    "source_url": "https://www.cockroachlabs.com/docs/cockroachcloud/free-trial",
+    "notes": "the 30 days is the post-trial grace period before deletion, counted from the day the last credit is used or the credit expires, not from account creation; adding a payment method during the grace period fully restores the clusters"
   },
   "egress": {
     "terms": "data transfer leaving the cluster is billed separately and the free-trial and Basic plan pages publish no included transfer allowance and no per-GB rate; recorded as a gap after checking both",
@@ -60,10 +61,31 @@
       "url": "https://www.cockroachlabs.com/pricing/",
       "date": "2026-10-23",
       "proved": "quoted: Standard '$0.092 per vCPU-hour', footer 'Standard from $0.057 / vCPU-hr' (the page contradicts itself), Mission Critical $0.162"
+    },
+    {
+      "url": "https://www.cockroachlabs.com/docs/cockroachcloud/free-trial",
+      "date": "2026-11-09",
+      "proved": "a 30 day grace period follows the trial when no payment method is added, in which clusters are throttled and cannot be reconfigured, and all clusters are then deleted and cannot be restored",
+      "capture": "sha256:41204f7a65b0554a7a9e495f92ca821f14db475bb63f0be05cdedc33c7e2830e",
+      "quote": "Monthly billing begins when the free trial ends: on the day that the last credit is used, or upon expiration of credit, if any remains. ... If the trial ends and a payment method has not been provided, a 30 day grace period begins where your organization’s clusters are throttled, and you are restricted from modifying their configuration, for example, to scale up or down, or update regions. ... If the end of the grace period is reached and no payment method has been added, all clusters in the organization are deleted. Deleted clusters can not be restored."
+    },
+    {
+      "url": "https://www.cockroachlabs.com/docs/cockroachcloud/free-trial",
+      "date": "2026-11-09",
+      "proved": "billing and the grace period start when the last credit is used or the credit expires, and adding a payment method during the grace period fully restores the clusters",
+      "capture": "sha256:41204f7a65b0554a7a9e495f92ca821f14db475bb63f0be05cdedc33c7e2830e",
+      "quote": "Monthly billing begins when the free trial ends: on the day that the last credit is used, or upon expiration of credit, if any remains. ... If the trial ends and a payment method has not been provided, a 30 day grace period begins where your organization’s clusters are throttled, and you are restricted from modifying their configuration, for example, to scale up or down, or update regions. ... The cluster will be fully restored if a payment method is added."
+    },
+    {
+      "url": "https://www.cockroachlabs.com/docs/cockroachcloud/free-trial",
+      "date": "2026-11-09",
+      "proved": "the page states a 30 day grace period and publishes no trial length",
+      "capture": "sha256:41204f7a65b0554a7a9e495f92ca821f14db475bb63f0be05cdedc33c7e2830e",
+      "quote": "If the trial ends and a payment method has not been provided, a 30 day grace period begins where your organization’s clusters are throttled, and you are restricted from modifying their configuration, for example, to scale up or down, or update regions."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-23T11:10:48.000Z",
+  "verified_at": "2026-11-09T14:11:26.569Z",
   "price_per_tb_month": null,
   "history": [
     "history/2026-10-22T041503Z/cockroachdb-basic-trial-deletes-clusters.md"
@@ -72,7 +94,7 @@
   "stale": false,
   "stale_checked_at": "2026-10-23T11:10:48.000Z",
   "binding_note": "the request-unit counter throttles and the storage cap refuses writes, but both are recoverable. The 30-day deletion after the trial credits end is not: it removes every cluster in the organization and the page states they cannot be restored.",
-  "limits_note": "the trial length is not published; the record's earlier 30 days is not supported by the page",
+  "limits_note": "the trial length is not published; the 30 days in retention.days is the post-trial grace period before deletion, not a trial length",
   "extras": {
     "hourly_usd": {
       "standard_vcpu": 0.092,

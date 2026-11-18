@@ -34,7 +34,7 @@
   ],
   "interface_detail": "the Postgres wire protocol; an API and the avn CLI",
   "tooling": "psql and any Postgres client; the avn CLI",
-  "chaining": "no longer a candidate for a weekly or monthly job: the free service powers off on inactivity and is deleted 180 days after it powers off, so a keep-alive is required and the paid Developer tier is what removes the clock",
+  "chaining": "the free service powers off after periods of inactivity, and the smallest paid step is the Developer tier at USD 5 a month for PostgreSQL and MySQL: a dedicated single node with 1 CPU, 1 GB RAM and 8 GB storage, always on, with a daily backup, Basic support and networking included, but no point-in-time recovery, high availability or uptime SLA",
   "limits": [
     {
       "kind": "per-object-cap",
@@ -91,10 +91,31 @@
       "url": "https://aiven.io/docs/products/postgresql/concepts/pg-free-tier",
       "date": "2026-10-22",
       "proved": "'No connection pooling' and '`max_connections` limit set to `20`' on the free tier"
+    },
+    {
+      "url": "https://aiven.io/developer-tier-pg-mysql",
+      "date": "2026-11-09",
+      "proved": "the smallest paid step is the Developer tier at USD 5/month; the same page lists 1 CPU, 1 GB RAM, 8 GB storage, always-on, daily backups, Basic support and networking included, and no PITR, high availability or uptime SLA",
+      "capture": "sha256:7df345cb1d7a30c5f1c15ac9f42a355e3cb8786043b3e6c48b9310b8c4dcacb7",
+      "quote": "The Developer Tier is a dedicated, single-node PostgreSQL or MySQL database for $5 per month."
+    },
+    {
+      "url": "https://aiven.io/docs/platform/concepts/service-pricing",
+      "date": "2026-11-09",
+      "proved": "the Developer tier is always on; the same page repeats the free-tier power-off triggers and the PostgreSQL Developer limits of no connection pooling and max_connections 20",
+      "capture": "sha256:b4e1e7269d07cab0e6477cbc7fd9cd329bbea9d88c22f9d1030e2a8c045a9ccf",
+      "quote": "Developer tier services are not automatically powered off when inactive."
+    },
+    {
+      "url": "https://aiven.io/docs/products/postgresql/concepts/pg-free-tier",
+      "date": "2026-11-09",
+      "proved": "the free PostgreSQL tier still has no connection pooling and sets max_connections to 20; the record's request-rate limit is unchanged",
+      "capture": "sha256:13e4993bb32d007ab8748f5cd10c163b3a856a2f1395ebf5f53faf9a5d70e2a3",
+      "quote": "No connection pooling ... `max_connections` limit set to `20`"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-22T03:05:00.000Z",
+  "verified_at": "2026-11-09T11:21:34.219Z",
   "price_per_tb_month": null,
   "history": [
     "history/2026-10-22T041500Z/aiven-free-inactivity-power-off.md"
@@ -102,5 +123,8 @@
   "notes": "1 GB is the smallest free Postgres storage in this class, and the free plan powers off on inactivity, so it does not answer the question the class was formed to ask. 5 GB is what the plan used to give and several comparison pages still print it. The paid Developer tier at USD 5 a month is the version of this that stays up: 'Developer tier services are not automatically powered off when inactive'.",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z",
-  "binding_note": "1 GB of storage is small, but the inactivity power-off is what defeats the use a reader would pick this for: an unattended job that runs less often than the inactivity window. The 180-day deletion sets the outer limit."
+  "binding_note": "1 GB of storage is small, but the inactivity power-off is what defeats the use a reader would pick this for: an unattended job that runs less often than the inactivity window. The 180-day deletion sets the outer limit.",
+  "extras": {
+    "monthly_usd": 5
+  }
 }

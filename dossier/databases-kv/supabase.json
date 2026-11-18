@@ -18,7 +18,7 @@
   },
   "retention": {
     "stated": "a Free project is paused after 1 week of low activity, and is restorable for up to 1 year after the pause. A paid project is never paused",
-    "days": 7,
+    "days": null,
     "source_url": "https://supabase.com/docs/guides/platform/free-project-pausing",
     "notes": "the pause trigger is activity, not age: a few user requests a day over the previous week keep it awake"
   },
@@ -67,7 +67,7 @@
   "binding": "retention-clamped",
   "identity_cost": {
     "kind": "email",
-    "detail": "email signup; no card on Free",
+    "detail": "sign-up with an email address and password, or a GitHub, ChatGPT or SSO account",
     "country": null
   },
   "reliability_note": "two warning emails precede an automatic pause, one about a week ahead and one on the pause; restore is a dashboard action, not an API call on the free plan",
@@ -103,13 +103,51 @@
       "url": "https://supabase.com/docs/guides/platform/compute-and-disk",
       "date": "2026-10-22",
       "proved": "Nano compute is the free plan at USD 0 with up to 0.5 GB of RAM and a recommended 500 MB database; 'Database max connections are recommended values and can be customized via max_connections', so the compute size sets the count"
+    },
+    {
+      "url": "https://supabase.com/pricing",
+      "date": "2026-11-09",
+      "proved": "Pro costs USD 25 a month and includes the listed quotas, compute credit and spend caps",
+      "capture": "sha256:1fe5ef1f0e24f26e3d6ac2bf82b29b1bd758e708755830e9d059dd5b3eb964b5",
+      "quote": "Pro: from $25/month, including 8 GB disk size per project and $10/month in compute credits that cover one project on Micro compute."
+    },
+    {
+      "url": "https://supabase.com/dashboard/sign-up",
+      "date": "2026-11-09",
+      "proved": "the sign-up form offers an email address and password, GitHub, ChatGPT and SSO",
+      "capture": "sha256:6806be3ce5703a020fa537448e5b496fc56164b8e8d7f00855dd0f96ab1c4427",
+      "quote": "Create a new account ... Continue with GitHub ... Continue with ChatGPT ... Continue with SSO ... Email ... Password ... Sign up"
+    },
+    {
+      "url": "https://supabase.com/docs/guides/platform/get-set-up-for-billing",
+      "date": "2026-11-09",
+      "proved": "a paid plan requires a credit card on file",
+      "capture": "sha256:d08aa1479af2e7a9a44da5e9e7f5e1d2d52c33a4b3178679a79785193d964ecb",
+      "quote": "Paid plans require a credit card to be on file."
+    },
+    {
+      "url": "https://supabase.com/pricing",
+      "date": "2026-11-09",
+      "proved": "the Free plan includes unlimited API requests, a 500 MB database on Shared CPU with 500 MB RAM, 5 GB egress, 5 GB cached egress and 2 active projects",
+      "capture": "sha256:1fe5ef1f0e24f26e3d6ac2bf82b29b1bd758e708755830e9d059dd5b3eb964b5",
+      "quote": "Unlimited API requests ... 500 MB database size (Shared CPU • 500 MB RAM) ... 5 GB egress ... 5 GB cached egress ... Limit of 2 active projects."
+    },
+    {
+      "url": "https://supabase.com/docs/guides/platform/free-project-pausing",
+      "date": "2026-11-09",
+      "proved": "the 7-day window is the low-activity trigger, restoration is possible for up to 1 year after a pause, and paid projects are never paused; the page states no fixed days-to-loss",
+      "capture": "sha256:2794bb73d71217ba17c5d3fb4ed01ba2feb5bfab23192bb2686f5283ca133d31",
+      "quote": "Supabase pauses Free Plan projects that show low activity over a 7-day period ... You can restore a paused project for up to 1 year after it was paused ... Projects under a paid plan cannot be paused and are not subject to automatic pausing for inactivity."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-22T03:05:00.000Z",
+  "verified_at": "2026-11-09T12:14:25.959Z",
   "price_per_tb_month": null,
   "history": [],
-  "notes": "The pause is the finding, and it is a 7-day activity clock rather than a 30-day deletion. A weekly cron that touches the database keeps it alive; a monthly one loses a week of availability every cycle. The restore window is 1 year, so the data is not at risk the way a deletion would put it at risk.",
+  "notes": "Projects on paid plans are not paused for inactivity, so the smallest paid step removes the Free plan's 1-week inactivity pause. That step is Pro, from USD 25 a month: a single database-only project on Micro compute costs USD 25 a month before usage beyond the included quotas, and additional projects add their full compute cost. Pro includes an 8 GB disk per project (then USD 0.125 per GB), 250 GB egress (then USD 0.09 per GB), 250 GB cached egress (then USD 0.03 per GB), 100 GB file storage (then USD 0.0213 per GB) and 100,000 monthly active users (then USD 0.00325 per MAU), plus daily backups stored for 7 days, 7-day log retention and email support. A USD 10 a month compute credit covers one Micro instance, and spend caps are on by default.",
   "stale": false,
-  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "extras": {
+    "monthly_usd": 25
+  }
 }

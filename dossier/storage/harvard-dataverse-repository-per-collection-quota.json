@@ -5,15 +5,15 @@
   "url": "https://dataverse.harvard.edu/",
   "category": "academic",
   "free_tier": {
-    "stated": "1 TB per Dataverse Collection allocation (2.5 TB for Harvard affiliates). Per-file 2.5 GB through UI/API; larger via the S3 direct-upload path. The 1 TB is enforced as a *collection* allocation, not a per-person cap: GET /api/dataverses/<alias>/storage/quota?showInherited=true returns {\"Total quota allocation for this collection\": 1099511627776} for ordinary collections, and one live collection returns 2748779069440 (2.5 TB).",
-    "unit": "TB",
+    "stated": "Total quota allocation for this collection: 1,099,511,627,776 bytes",
+    "unit": "bytes",
     "metered_on": "stored-bytes",
     "source_url": "https://support.dataverse.harvard.edu/researchers",
     "read_on": "2026-10-21",
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "Per-file 2.5 GB",
+    "stated": "All researchers from any discipline, both inside and out of the Harvard University community, can deposit files of up to 2.5GB, and store up to 1TB of data on the Harvard Dataverse Repository.",
     "bytes": 2500000000,
     "source_url": "https://support.dataverse.harvard.edu/researchers",
     "notes": "extracted from the quota or limits prose"
@@ -51,12 +51,12 @@
   "limits_note": "write-once: publishing is irreversible, no delete without support intervention, no embargo; 'Submit for Review' spam screen before publication; per-file 2.5 GB in the browser path; 1,000 files/dataset is the observed effectiveDatasetFileCountLimit; S3 direct upload is admin-enabled per install and is the only route past the 2.5 GB file cap.",
   "identity_cost": {
     "kind": "email",
-    "detail": "email",
+    "detail": "unverified: the cited pages state the quota and per-file cap, not the registration fields",
     "country": null
   },
   "reliability_note": "Anonymous downloads return signed S3 URLs with 1-hour expiration, requiring URL resolution per request. Quota API endpoints rate-limit rapid successive requests with HTTP 403.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "Total quota allocation for this collection: 1,099,511,627,776 bytes",
   "evidence": [
     {
       "url": "https://support.dataverse.harvard.edu/researchers",
@@ -92,10 +92,31 @@
       "url": "https://github.com/IQSS/dataverse.harvard.edu/issues/199",
       "date": "2026-10-21",
       "proved": "and #207 - collection creation was disabled for :authenticated-users in Nov 2022, reopened June 2024"
+    },
+    {
+      "url": "https://dataverse.harvard.edu/api/dataverses/SEE_Precursors/storage/quota?showInherited=true",
+      "date": "2026-11-09",
+      "proved": "The collection quota endpoint returns the 1 TiB allocation.",
+      "capture": "sha256:0ee5f9ac76c27e70b7b9ba751b202151409e52b145a1429edb0b58387aa7cad5",
+      "quote": "Total quota allocation for this collection: 1,099,511,627,776 bytes"
+    },
+    {
+      "url": "https://support.dataverse.harvard.edu/researchers",
+      "date": "2026-11-09",
+      "proved": "The researchers page states the per-file limit in the same sentence.",
+      "capture": "sha256:9b45075f2690ac95769ab5d3710b5f496354b4b79aafa94c7010a8f2f3624e66",
+      "quote": "All researchers from any discipline, both inside and out of the Harvard University community, can deposit files of up to 2.5GB, and store up to 1TB of data on the Harvard Dataverse Repository."
+    },
+    {
+      "url": "https://dataverse.harvard.edu/api/dataverses/kgwas/storage/quota?showInherited=true",
+      "date": "2026-11-09",
+      "proved": "the kgwas collection quota endpoint reports a 2.5 TB allocation",
+      "capture": "sha256:efc5f8985587623570159fefbc362a570de31738d2b383e73f987586ac2414d3",
+      "quote": "{\"status\":\"OK\",\"data\":{\"message\":\"Total quota allocation for this collection: 2,748,779,069,440 bytes\"}}"
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-10T00:50:18.129Z",
   "notes": "1 TB per Dataverse Collection allocation (2.5 TB for Harvard affiliates). Per-file 2.5 GB through UI/API; larger via the S3 direct-upload path. The 1 TB is enforced as a *collection* allocation, not a per-person cap: GET /api/dataverses/<alias>/storage/quota?showInherited=true returns {\"Total quota allocation for this collection\": 1099511627776} for ordinary collections, and one live collection returns 2748779069440 (2.5 TB).",
   "history": [],
   "extras": {
@@ -113,7 +134,7 @@
     "target_document": "docs/storage/free/academic.md",
     "document_section": "Academic and government bulk hosts",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "checked against the live service on 2026-11-10",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 7,
     "evidence_carrying_a_source_date": 0,

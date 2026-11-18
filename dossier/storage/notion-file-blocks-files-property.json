@@ -5,7 +5,7 @@
   "url": "https://www.notion.com",
   "category": "cloud-drive",
   "free_tier": {
-    "stated": "No total storage cap: 'Unlimited file uploads' on Free, but each file is capped at 5 MiB on Free (5 GiB on paid). Block limit is unlimited for a single-member Free workspace.",
+    "stated": "Free workspaces are limited to 5 MiB (binary megabytes) per file.",
     "unit": "GiB",
     "metered_on": "stored-bytes",
     "source_url": "https://developers.notion.com/guides/data-apis/working-with-files-and-media",
@@ -48,13 +48,13 @@
   ],
   "limits_note": "5 MiB per file on Free (hard, enforced by API); 20 MiB per single-part API upload; parts must be 5-20 MiB; 600 requests/min per workspace (avg 10/s) shared across all connections; only whitelisted MIME types (audio/document/image/video/CAD) - arbitrary binary is rejected",
   "identity_cost": {
-    "kind": "institution",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: p' in the niche. 5 MiB per file on Free (hard, enforced by API); 20 MiB per single-part API upload; parts must be 5-20 MiB; 600 requests/min per workspace (avg 10/s) shared across al",
+    "kind": "email",
+    "detail": "Sign up with your work email",
     "country": null
   },
   "reliability_note": "The MIME whitelist is the killer: no generic octet-stream blobs, so archival datasets must be packed as .zip/.7z/.tar which Notion does accept. Signed URLs expire in one hour, so serving 1 TB/day out of Notion means re-minting continuously.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "the guide states the Free per-file limit and the API example gives the byte count",
   "evidence": [
     {
       "url": "https://developers.notion.com/guides/data-apis/working-with-files-and-media",
@@ -75,11 +75,32 @@
       "url": "https://api.notion.com/v1/users",
       "date": "2026-10-21",
       "proved": "probe: GET -> HTTP 401 (API live, auth-gated)"
+    },
+    {
+      "url": "https://developers.notion.com/guides/data-apis/working-with-files-and-media",
+      "date": "2026-11-09",
+      "proved": "a Free workspace file is capped at 5 MiB",
+      "capture": "sha256:8fc159ffc3217c25730d204f1bacae95435f5f3a998427e96ab35554472d3fed",
+      "quote": "**Free** workspaces are limited to **5 MiB (binary megabytes) per file**"
+    },
+    {
+      "url": "https://www.notion.com/signup",
+      "date": "2026-11-09",
+      "proved": "the sign-up page asks for a work email address",
+      "capture": "sha256:8b172a5e0ce4097a72108a106fce33e9a54c88ad9f9b2976472f335c4d423027",
+      "quote": "Sign up with your work email"
+    },
+    {
+      "url": "https://developers.notion.com/guides/data-apis/working-with-files-and-media",
+      "date": "2026-11-09",
+      "proved": "the API example gives 5242880 bytes for a free workspace",
+      "capture": "sha256:8fc159ffc3217c25730d204f1bacae95435f5f3a998427e96ab35554472d3fed",
+      "quote": "\"max_file_upload_size_in_bytes\": 5242880"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "No total storage cap: 'Unlimited file uploads' on Free, but each file is capped at 5 MiB on Free (5 GiB on paid). Block limit is unlimited for a single-member Free workspace.",
+  "verified_at": "2026-11-10T00:50:27.598Z",
+  "notes": "Free workspaces are limited to 5 MiB (binary megabytes) per file.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",
@@ -96,7 +117,7 @@
     "target_document": "docs/storage/free/messaging.md",
     "document_section": "Team chat",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "checked against the live service on 2026-11-10",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 4,
     "evidence_carrying_a_source_date": 0,

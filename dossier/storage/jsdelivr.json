@@ -5,26 +5,26 @@
   "url": "https://www.jsdelivr.com",
   "category": "registry",
   "free_tier": {
-    "stated": "No storage quota of its own. It is a *serving and permanence* layer over npm and GitHub, so the quota is whatever the origin package holds. Hard limits: packages >150 MB and (for GitHub) single files >20 MB are refused by default, raisable on request.",
+    "stated": "Packages larger than 150 MB or single files larger than 20 MB (in the case of GitHub) are not supported by default; a higher limit can be requested by opening an issue in the repository.",
     "unit": "MB",
     "metered_on": "stored-bytes",
-    "source_url": "https://www.jsdelivr.com/about",
+    "source_url": "https://github.com/jsdelivr/jsdelivr",
     "read_on": "2026-10-21",
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "single files >20 MB",
+    "stated": "single files larger than 20 MB (in the case of GitHub) are not supported by default",
     "bytes": 20000000,
-    "source_url": "https://www.jsdelivr.com/about",
+    "source_url": "https://github.com/jsdelivr/jsdelivr",
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "| Retention is *stronger* than the origin: 'Previously served immutable files may be retained in permanent storage even after upstream deletion",
-    "source_url": "https://www.jsdelivr.com/about",
+    "stated": "Previously served immutable files may be retained in permanent storage even after upstream deletion. We do not accept removal requests simply because a package or version was unpublished, deleted upstream, or is no longer needed.",
+    "source_url": "https://www.jsdelivr.com/terms/acceptable-use-policy",
     "notes": "Extracted from published terms."
   },
   "egress": {
-    "terms": "Fully free and explicitly unmetered. Terms of Use (effective Oct 5, 2026), verbatim: 'using jsDelivr CDN is free for both personal and commercial use, there are no limits on bandwidth or number of requests.' About page: 'There are no bandwidth limits or premium features and its completely free to use by anybody.'",
+    "terms": "using jsDelivr CDN is free for both personal and commercial use, there are no limits on bandwidth or number of requests",
     "metered": false
   },
   "interface": [
@@ -36,8 +36,8 @@
   "limits": [
     {
       "kind": "per-object-cap",
-      "value": "single files >20 MB",
-      "source": "https://www.jsdelivr.com/about"
+      "value": "single files larger than 20 MB (in the case of GitHub), default limit",
+      "source": "https://github.com/jsdelivr/jsdelivr"
     }
   ],
   "limits_note": "150 MB per npm package, 20 MB per single GitHub file (both default, raisable via GitHub issue). Rate limiting applies to purge, not to reads. Terms prohibit 'using jsDelivr CDN as a general-purpose file or media hosting service' and 'hosting videos, file backups, or other files in large quantities'. Enforcement is the technical risk, not the capability.",
@@ -48,7 +48,7 @@
   },
   "reliability_note": "Retention is *stronger* than the origin: 'Previously served immutable files may be retained in permanent storage even after upstream deletion. We do not accept removal requests simply because a package or version was unpublished, deleted upstream, or is no longer needed.' Once a URL has been fetched it keeps working after you delete the npm package. That is a genuine cold-archive property. Counter-risk: a 150 MB package cap means a naive >150 MB npm tarball 403s ('Package size exceeded the configured limit of 150 MB') even though npm itself accepted it.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "The jsDelivr README was read on 2026-11-09 and states the package and file size limits.",
   "evidence": [
     {
       "url": "https://www.jsdelivr.com/about",
@@ -74,11 +74,32 @@
       "url": "https://cdn.jsdelivr.net/npm/onnxruntime-node@1.20.1/bin/napi-v3/win32/x64/onnxruntime.dll",
       "date": "2026-10-21",
       "proved": "probe: GET -> 403, body 'Package size exceeded the configured limit of 150 MB.' (confirms the cap is real and enforced at fetch time)"
+    },
+    {
+      "url": "https://github.com/jsdelivr/jsdelivr",
+      "date": "2026-11-09",
+      "proved": "packages larger than 150 MB and single GitHub files larger than 20 MB are not supported by default, and a higher limit can be requested by opening an issue",
+      "capture": "sha256:4f8bc5367554e1ff5de00822319fde1d734b6fecb1bc391c2f07d9fa06a2ac95",
+      "quote": "Packages larger than 150 MB or single files larger than 20 MB (in the case of GitHub) are not supported by default. We recommend removing files that are not needed from your package when possible. If you need to set a higher limit for your package, open an issue in this repo."
+    },
+    {
+      "url": "https://www.jsdelivr.com/terms/acceptable-use-policy",
+      "date": "2026-11-09",
+      "proved": "the CDN is free for personal and commercial use with no limit on bandwidth or requests",
+      "capture": "sha256:dc9dcd3b153733fe92a76fe217ebc4ba7522728dd9e612d3193bb8c066987496",
+      "quote": "using jsDelivr CDN is free for both personal and commercial use,\n- there are no limits on bandwidth or number of requests,"
+    },
+    {
+      "url": "https://www.jsdelivr.com/terms/acceptable-use-policy",
+      "date": "2026-11-09",
+      "proved": "served immutable files are retained after upstream deletion and removal requests are refused",
+      "capture": "sha256:dc9dcd3b153733fe92a76fe217ebc4ba7522728dd9e612d3193bb8c066987496",
+      "quote": "Previously served immutable files may be retained in permanent storage even after upstream deletion. We do not accept removal requests simply because a package or version was unpublished, deleted upstream, or is no longer needed."
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "No storage quota of its own. It is a *serving and permanence* layer over npm and GitHub, so the quota is whatever the origin package holds. Hard limits: packages >150 MB and (for GitHub) single files >20 MB are refused by default, raisable on request.",
+  "verified_at": "2026-11-10T00:50:22.848Z",
+  "notes": "Packages larger than 150 MB or single files larger than 20 MB (in the case of GitHub) are not supported by default; a higher limit can be requested by opening an issue in the repository.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",
@@ -95,7 +116,7 @@
     "target_document": "docs/storage/free/registries.md",
     "document_section": "Language package ecosystems",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "checked against the live service on 2026-11-09",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 5,
     "evidence_carrying_a_source_date": 0,

@@ -17,10 +17,10 @@
     "source_url": "https://www.thenile.dev/pricing"
   },
   "retention": {
-    "stated": "no deletion clock is published and the free tier does not pause: 'No, the db never pauses. We don't have any cold start time on the free tier.' The page publishes no inactivity or expiry policy for a free database",
+    "stated": "no deletion clock is published and the free tier does not pause: \"No, the db never pauses. We don't have any cold start time on the free tier.\" Hitting a tier limit is handled as an overage, by paying for additional capacity, rather than by suspension or deletion.",
     "days": null,
     "source_url": "https://www.thenile.dev/pricing",
-    "notes": "the free column states 1 day of backup retention; that is a backup window and not a data-retention clock"
+    "notes": "null is unknown: no inactivity, expiry or deletion policy is published for a free database. The vendor states the database never pauses and has no cold start, and hitting a tier limit is an overage rather than a suspension. The free column's 1 day is the retention window for Tenant insights, not for database data."
   },
   "egress": {
     "terms": "no egress allowance and no per-GB transfer line is published; the metered quantity is query tokens and storage",
@@ -77,10 +77,24 @@
       "url": "https://thenile.dev/docs/getting-started",
       "date": "2026-10-22",
       "proved": "the architecture claim the free tier rests on: storage and compute are decoupled and the database 'scales to zero with no cold start time'"
+    },
+    {
+      "url": "https://thenile.dev/pricing",
+      "date": "2026-11-09",
+      "proved": "the free tier never pauses and has no cold start, and the same page states that a tier limit is an overage",
+      "capture": "sha256:031c27bc40f4d171ef9d8f6fef72c5b606e69276227cc62e84eda2e6e3eb83e3",
+      "quote": "No, the db never pauses. We don't have any cold start time on the free tier."
+    },
+    {
+      "url": "https://thenile.dev/pricing",
+      "date": "2026-11-09",
+      "proved": "hitting a tier limit is an overage rather than a suspension, and the free column gives 1 day of backup retention",
+      "capture": "sha256:031c27bc40f4d171ef9d8f6fef72c5b606e69276227cc62e84eda2e6e3eb83e3",
+      "quote": "We will reach out to you when you are nearing your usage limits. You can typically pay for additional capacity without having to move to a higher tier. This is true even when you are on the free tier."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-22T03:05:00.000Z",
+  "verified_at": "2026-11-09T13:21:21.176Z",
   "price_per_tb_month": null,
   "history": [],
   "notes": "A query token is an abstract unit of CPU and memory. The page defines it but does not convert it, so the allowance cannot be expressed in rows or bytes. That is a discretionary meter in the sense that matters. There is no ceiling a reader can design against, only a price per unit. Two properties make the tier more useful than such a ceiling suggests. The limits are per workspace across unlimited databases, so tenant count is not the constraint. Reaching the limit is an overage and not a refusal. No inactivity or expiry policy is published. The free tier is the only one in this topic where the vendor states that it never pauses.",

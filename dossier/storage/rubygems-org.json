@@ -34,7 +34,7 @@
   "tooling": "POST /api/v1/gems with the .gem body (gem push); GET /downloads/<name>-<ver>.gem or /gems/<name>-<ver>.gem. First-class clients (gem push, bundler). Rate-limit config is public in the repo (rack_attack.rb: PUSH_LIMIT = 400 per 60 minutes).",
   "chaining": "400 pushes/hour is the most generous publish rate in the entire niche. 9,600 gems/day, i.e. ~2-9 TB/day if each gem were at a hypothetical 250 MB. If the undocumented size limit is anywhere near npm's, RubyGems becomes the highest-throughput package-registry store found. Confirm the size cap before relying on it.",
   "limits": [],
-  "limits_note": "Rate limits allow 400 push requests per hour per IP address, with failed pushes capped at 300 per 5 minutes and 600 per 25 hours. Package deletions allow 10 yanks per 10 minutes. No published per-gem byte cap in documentation or policy terms. Version strings and gem names are permanent.",
+  "limits_note": "400 requests/1 hour",
   "identity_cost": {
     "kind": "institution",
     "detail": "derived from the record's prose, not from an identity field, and no signup was executed: a byte limit. Per-gem size is exposed per version via the API; large gems (e.g. binaries) do get 413'd in practice. The unknown size cap is the risk — the one public 413 report (",
@@ -42,7 +42,7 @@
   },
   "reliability_note": "The unknown size cap is the risk. The one public 413 report (qtbindings) shows a hard limit exists and is enforced at the proxy, and it is not documented anywhere, so you discover it by probing. Rate limits are the best in class and clearly documented.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "the rate-limits guide states a 400 requests per hour limit on gem push",
   "evidence": [
     {
       "url": "https://guides.rubygems.org/rubygems-org-rate-limits/",
@@ -68,10 +68,17 @@
       "url": "https://www.mail-archive.com/rubygems-developers@rubyforge.org/msg05277.html",
       "date": "2026-10-21",
       "proved": "'Can't push new qtbindings release (413 error)' (confirms an undocumented size ceiling exists)"
+    },
+    {
+      "url": "https://guides.rubygems.org/rubygems-org-rate-limits/",
+      "date": "2026-11-09",
+      "proved": "the rate-limits guide states a 400 requests per hour limit on gem push",
+      "capture": "sha256:b438592f00e6a8bfc0f8cac6cd7dc51f69fe02de6eaf74044d042c9ced1f1637",
+      "quote": "400 requests/1 hour"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-10T00:50:30.562Z",
   "notes": "No documented per-gem size limit and no documented total quota. This is itself the finding: RubyGems publishes its rate limits and its acceptable-use policy but NOT a byte limit. Per-gem size is exposed per version via the API; large gems (e.g. binaries) do get 413'd in practice.",
   "history": [],
   "extras": {
@@ -89,7 +96,7 @@
     "target_document": "docs/storage/free/registries.md",
     "document_section": "Language package ecosystems",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "checked against the live service on 2026-11-10",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 5,
     "evidence_carrying_a_source_date": 0,

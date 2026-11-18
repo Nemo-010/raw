@@ -9,23 +9,23 @@
     "unit": "GB",
     "metered_on": "stored-bytes",
     "source_url": "https://www.terabox.com/",
-    "read_on": "2026-10-22",
-    "notes": "the official site title and the app store listing both state 1024GB free"
+    "read_on": "2026-11-09",
+    "notes": "the free allowance is 1024 GB and the pricing page labels it limited-time"
   },
   "per_object_cap": {
-    "stated": "128 GB per upload is stated for Premium users on the vendor page; the free plan's per-file upload cap is unverified: not stated on the page read",
-    "source_url": "https://play.google.com/store/apps/details?hl=en_US&id=com.dubox.drive",
-    "notes": "128 GB is the sharing figure the app listing states; it is not established as the upload figure"
+    "stated": "4 GB per single file on the web for non-Premium users; Premium users can upload single files up to 128 GB from the app",
+    "source_url": "https://s5.teraboxcdn.com/fe-opera-static/node-static-v4/fe-webv4-main/js/main.ebd09b45.js",
+    "notes": "the vendor FAQ states 4 GB per file for non-Premium users and 128 GB for Premium; the login page's 'Upload and share 20GB files on PC' is a marketing figure not reconciled with the FAQ"
   },
   "retention": {
-    "stated": "Unpublished in accessible landing pages.",
-    "days": null,
-    "source_url": "https://www.terabox.com/"
+    "stated": "inactive files on free accounts are removed after 60 days; Premium files are retained indefinitely",
+    "days": 60,
+    "source_url": "https://s5.teraboxcdn.com/fe-opera-static/node-static-v4/fe-webv4-main/js/main.ebd09b45.js"
   },
   "egress": {
-    "terms": "Unpublished on public pricing documentation. Defaults to unmetered in the absence of explicit per-gigabyte bandwidth fees or caps.",
+    "terms": "multi-file downloads from the web app are limited to 500 MB, while single-file downloads have no size limit",
     "metered": false,
-    "source_url": "https://www.terabox.com/"
+    "source_url": "https://s5.teraboxcdn.com/fe-opera-static/node-static-v4/fe-webv4-main/js/main.ebd09b45.js"
   },
   "interface": [
     "rest"
@@ -35,17 +35,17 @@
   "limits": [
     {
       "kind": "per-object-cap",
-      "value": "128 GB per shared file as stated in the app listing",
-      "source": "https://play.google.com/store/apps/details?hl=en_US&id=com.dubox.drive"
+      "value": "4 GB per file for non-Premium users; 128 GB for Premium from the app",
+      "source": "https://s5.teraboxcdn.com/fe-opera-static/node-static-v4/fe-webv4-main/js/main.ebd09b45.js"
     }
   ],
   "identity_cost": {
     "kind": "email",
-    "detail": "registration is stated to be by email or phone through the app; no account was created in this session",
+    "detail": "the email path submits an email address, a password, a user name, a date of birth and a verification code; the payload carries no phone number, card or identity-document field",
     "country": null
   },
-  "reliability_note": "Automated HTTP retrieval received verification challenge pages on 2026-10-22, preventing direct first-hand inspection of the web dashboard.",
-  "confidence": "reported",
+  "reliability_note": "The landing page served a verification interstitial; the quota was read from the login page and the web app bundle instead.",
+  "confidence": "documented",
   "evidence": [
     {
       "url": "https://www.terabox.com/",
@@ -77,12 +77,110 @@
       "proved": "the OpenList TeraBox driver is reverse-engineered and not actively maintained",
       "capture": "sha256:ce3286ea214026071ec8a91caf6aeb136ad5179c2d9722a71fbbc1ff19ff0b6f",
       "quote": "This interface is a reverse-engineered interface based on legacy products."
+    },
+    {
+      "url": "https://s5.teraboxcdn.com/fe-opera-static/node-static-v4/fe-webv4-main/js/main.ebd09b45.js",
+      "date": "2026-11-09",
+      "proved": "the registration payload names email, password, user name, date of birth and verification code, with no phone, card or identity-document field",
+      "capture": "sha256:f41c9420fba9da96db1fefae6027c398dbeb2566ab634bc12a9eae252cd0f26e",
+      "quote": "verifyParams:{email:\"\",pwd:\"\",uname:\"\",birthday:\"\",vcode:\"\",vcode_str:\"\",thrid_token:\"\"}"
+    },
+    {
+      "url": "https://s5.teraboxcdn.com/fe-opera-static/node-static-v4/fe-webv4-main/js/main.ebd09b45.js",
+      "date": "2026-11-09",
+      "proved": "the sign-up screen offers 'Sign up with Email', so the identity kind is email",
+      "capture": "sha256:f41c9420fba9da96db1fefae6027c398dbeb2566ab634bc12a9eae252cd0f26e",
+      "quote": "emailRegister:\"Sign up with Email\""
+    },
+    {
+      "url": "https://www.terabox.com/cloud-storage-pricing-plans",
+      "date": "2026-11-09",
+      "proved": "the pricing page states a 1024 GB free allowance, labelled limited-time, which is above 500 GiB; the per-file cap and download conditions make the verdict qualifies-with-caveat",
+      "capture": "sha256:6fccb1274246e7473e51617720a2ca7f04dbadddbce0ff8472805111f6aca272",
+      "quote": "1024 GB (limited-time)"
+    },
+    {
+      "url": "https://www.terabox.com/login",
+      "date": "2026-11-09",
+      "proved": "the login page states 1024 GB free, so the quota was readable outside the landing page",
+      "capture": "sha256:fce7086fe7f03be8c65f62a40d613a53bfab2b9b81e6853a1a4c8fd16d0600fc",
+      "quote": "# The first cloud disk providing  1024GB for free"
+    },
+    {
+      "url": "https://s5.teraboxcdn.com/fe-opera-static/node-static-v4/fe-webv4-main/js/main.ebd09b45.js",
+      "date": "2026-11-09",
+      "proved": "the vendor FAQ states a 4 GB single-file upload limit for non-Premium users on the web and 128 GB for Premium from the app",
+      "capture": "sha256:f41c9420fba9da96db1fefae6027c398dbeb2566ab634bc12a9eae252cd0f26e",
+      "quote": "Web: The maximum upload limit for a single file is 4GB. Premium can use the Mobile App and Desktop App to upload single files not exceeding 128GB."
+    },
+    {
+      "url": "https://s5.teraboxcdn.com/fe-opera-static/node-static-v4/fe-webv4-main/js/main.ebd09b45.js",
+      "date": "2026-11-09",
+      "proved": "the vendor FAQ states that inactive files on free accounts are removed after 60 days and Premium files are retained indefinitely",
+      "capture": "sha256:f41c9420fba9da96db1fefae6027c398dbeb2566ab634bc12a9eae252cd0f26e",
+      "quote": "p8:\"Inactive files for individuals using the service at no cost will be removed after a 60-day period, while those with a premium subscription will have their files retained indefinitely.\""
+    },
+    {
+      "url": "https://s5.teraboxcdn.com/fe-opera-static/node-static-v4/fe-webv4-main/js/main.ebd09b45.js",
+      "date": "2026-11-09",
+      "proved": "the sign-up screen offers email, Google, Facebook and Apple registration",
+      "capture": "sha256:f41c9420fba9da96db1fefae6027c398dbeb2566ab634bc12a9eae252cd0f26e",
+      "quote": "titleRegister:\"Sign up\",facebookRegister:\"Sign up with Facebook\",googleRegister:\"Sign up with Google\",appleRegister:\"Sign up with Apple\",emailRegister:\"Sign up with Email\""
+    },
+    {
+      "url": "https://s5.teraboxcdn.com/fe-opera-static/node-static-v4/fe-webv4-main/js/main.ebd09b45.js",
+      "date": "2026-11-09",
+      "proved": "mobile-number login is unavailable to unregistered users and is being discontinued",
+      "capture": "sha256:f41c9420fba9da96db1fefae6027c398dbeb2566ab634bc12a9eae252cd0f26e",
+      "quote": "phoneNumberDiscontinuedDetailText:\"Mobile number login is temporarily unavailable for unregistered users, and this option will be discontinued soon."
+    },
+    {
+      "url": "https://s5.teraboxcdn.com/fe-opera-static/node-static-v4/fe-webv4-main/js/main.ebd09b45.js",
+      "date": "2026-11-09",
+      "proved": "a file over 100 MB must use PC Desktop for high-speed downloads on the web",
+      "capture": "sha256:f41c9420fba9da96db1fefae6027c398dbeb2566ab634bc12a9eae252cd0f26e",
+      "quote": "over100M:\"File exceeds 100MB. Please use PC Desktop for high-speed downloads\""
+    },
+    {
+      "url": "https://s5.teraboxcdn.com/fe-opera-static/node-static-v4/fe-webv4-main/js/main.ebd09b45.js",
+      "date": "2026-11-09",
+      "proved": "the web app's share download string caps multi-file downloads at 500 MB and states that a single file is not limited",
+      "capture": "sha256:f41c9420fba9da96db1fefae6027c398dbeb2566ab634bc12a9eae252cd0f26e",
+      "quote": "shareDownloadExceed:\"The download of multi-file has an upper limit of 500MB, while the download of a single file is not limited\""
+    },
+    {
+      "url": "https://blog.terabox.com/how-do-i-get-a-free-terabox-account",
+      "date": "2026-11-09",
+      "proved": "a registered account gets 1 TB of free cloud space",
+      "capture": "sha256:fc31a1dbe41d33006b83afe040bb8bb57d26c6af987ccbe521bea6bc3d90126e",
+      "quote": "Once you have registered your account and log in, 1 TB of free cloud space will be completely yours!"
+    },
+    {
+      "url": "https://blog.terabox.com/how-to-change-my-password",
+      "date": "2026-11-09",
+      "proved": "phone numbers are no longer supported for registering new accounts",
+      "capture": "sha256:2845eaffdef6862fbc89f1c1439a7a6b84bec90c7f4f4f4e429bec4796a57d50",
+      "quote": "But now TeraBox no longer supports phone numbers to register new accounts."
+    },
+    {
+      "url": "https://blog.terabox.com/how-do-i-register-on-terabox",
+      "date": "2026-11-09",
+      "proved": "registration takes an email address and a password",
+      "capture": "sha256:104eaa0388f1846e632c8929427e0d83a3a3efed3599b29be0651d34a869ff03",
+      "quote": "Enter your email address and password."
+    },
+    {
+      "url": "https://s5.teraboxcdn.com/fe-opera-static/node-static-v4/fe-webv4-main/js/main.ebd09b45.js",
+      "date": "2026-11-09",
+      "proved": "the batch download check compares the size in MB against 500 for type batch, so the enforced multi-file cap is 500 MB; the over500M message text states 3 GB but is display text, not the compared threshold",
+      "capture": "sha256:f41c9420fba9da96db1fefae6027c398dbeb2566ab634bc12a9eae252cd0f26e",
+      "quote": "if(t=this.len/1048576,n=500,!(t>n&&\"batch\"===this.dlinkParams.type))"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-04T00:21:08.723Z",
+  "verified_at": "2026-11-09T15:23:17.027Z",
   "binding": "per-object-cap",
-  "notes": "1024 GB free is stated by the official site title and by the app store listing. The per-file cap of 128 GB is the app listing's sharing figure and is not the same thing as an upload cap. What could not be established: retention, egress terms, and whether an anonymous or email-only registration produces a usable account. The site returned a verification interstitial to the reader on 2026-10-22, so this is `reported` and not `documented`.",
+  "notes": "The free allowance is 1024 GB and the pricing page labels it limited-time.",
   "history": [],
   "extras": {
     "access_mode": "registration-gated",
@@ -92,5 +190,5 @@
       "AList/OpenList"
     ]
   },
-  "binding_note": "The 1 TiB quota is not the constraint; the absence of a documented programmatic interface and of a readable limits page is, because neither the cap nor the retention could be established first-hand."
+  "binding_note": "The 1024 GB quota is not the constraint; the 4 GB per-file cap for non-Premium users and the undocumented programmatic interface are, because the quota must be filled through many objects and no supported API is documented."
 }

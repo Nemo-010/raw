@@ -5,7 +5,7 @@
   "url": "https://developers.cloudflare.com/workers/static-assets/",
   "category": "paas",
   "free_tier": {
-    "stated": "20,000 files per Worker version on Free; 25 MiB per file; 100 Workers per account => ~488 GiB per Worker, ~48.8 TiB per free account. 'There is no additional cost for storing Assets.'",
+    "stated": "20,000 static-asset files per Worker version on the Workers Free plan",
     "unit": "objects",
     "metered_on": "stored-bytes",
     "source_url": "https://developers.cloudflare.com/workers/platform/limits/",
@@ -44,12 +44,12 @@
   "limits_note": "20,000 files and 100 Workers on Free; 25 MiB per file; must stay under the Worker *request* quota only if a script runs (run_worker_first / SSR). Static-only assets do not count against that quota at all.",
   "identity_cost": {
     "kind": "email",
-    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "detail": "A Cloudflare account is created with an email address and a password.",
     "country": null
   },
   "reliability_note": "Free-tier 429s apply to script-invoking routes only; purely static paths keep serving. No eviction window documented for assets. They live as long as the Worker version.",
   "confidence": "documented",
-  "confidence_note": "re-read on 2026-10-22 (HTTP 200, 27086 bytes, sha256 574d5088a914872b). The page states the number in the record. The claim is documented, not measured.",
+  "confidence_note": "the Workers limits page states that Workers Free allows 20,000 static-asset files per Worker version",
   "evidence": [
     {
       "url": "https://developers.cloudflare.com/workers/platform/limits/",
@@ -70,10 +70,31 @@
       "url": "probe:unspecified",
       "date": "2026-10-21",
       "proved": "probe: Server: cloudflare + x-server: Cloudflare Pages on a live pages.dev asset confirms the same edge pipeline; range requests against pages.dev returned 200 not 206, so resume is not guaranteed on that path"
+    },
+    {
+      "url": "https://developers.cloudflare.com/workers/platform/limits/",
+      "date": "2026-11-09",
+      "proved": "Workers Free allows 20,000 static-asset files per Worker version at 25 MiB per file",
+      "capture": "sha256:f508cf190f3a8be3583802a852604ae6d0aba903189c34a9d63c54d26b00c751",
+      "quote": "## Static Assets\n\n| Limit | Workers Free | Workers Paid |\n| --- | --- | --- |\n| Files per Worker version | 20,000 | 100,000 |\n| Individual file size | 25 MiB | 25 MiB |"
+    },
+    {
+      "url": "https://developers.cloudflare.com/fundamentals/account/create-account/",
+      "date": "2026-11-09",
+      "proved": "account sign-up asks for an email address and a password",
+      "capture": "sha256:0165fdf250cc1338d7e7a94dd78c7adc2df6f592133ad72dfcf0651a080c5543",
+      "quote": "2. Enter your **Email** and **Password**."
+    },
+    {
+      "url": "https://developers.cloudflare.com/workers/static-assets/billing-and-limitations/",
+      "date": "2026-11-09",
+      "proved": "requests to static assets are free and unlimited",
+      "capture": "sha256:f817e34be2589dfcc0a4f86588db85440d5c09d19c5a1053622d5022259d8972",
+      "quote": "Requests to static assets are free and unlimited."
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-10-22T00:00:00.000Z",
+  "verified_at": "2026-11-10T00:50:12.222Z",
   "notes": "20,000 files per Worker version on Free; 25 MiB per file; 100 Workers per account => ~488 GiB per Worker, ~48.8 TiB per free account. 'There is no additional cost for storing Assets.'",
   "history": [],
   "extras": {
@@ -91,7 +112,7 @@
     "target_document": "docs/storage/free/cloudflare-edge.md",
     "document_section": "Cloudflare Pages and Workers static assets",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "the Workers limits page states that Workers Free allows 20,000 static-asset files per Worker version",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 3,
     "evidence_carrying_a_source_date": 0,

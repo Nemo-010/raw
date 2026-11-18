@@ -51,9 +51,9 @@
     "detail": "email",
     "country": null
   },
-  "reliability_note": "Small independent operator. Its own homepage says it serves 479M+ requests and 46 TB+ of traffic monthly, which is ~0.2% of the 1 TiB/day requirement, so treat it as a mirror, never the primary. A branch-ref URL 301s to raw.githubusercontent.com (i.e. it silently stops being a CDN and bills GitHub instead).",
+  "reliability_note": "unverified: https://raw.githack.com/ answered HTTP 200 on 2026-11-11 but serves the rawgit.hack homepage, which states no storage quota, per-file cap or traffic figure.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "unverified: https://raw.githack.com/ answered HTTP 200 on 2026-11-11 but serves the rawgit.hack homepage, which states no storage quota, per-file cap or traffic figure.",
   "evidence": [
     {
       "url": "https://raw.githack.com/P3TERX/GeoLite.mmdb/download/GeoLite2-City.mmdb",
@@ -74,11 +74,25 @@
       "url": "https://raw.githack.com/",
       "date": "2026-10-21",
       "proved": "'Serving 479M+ requests and 46TB+ of traffic monthly'; 'Files are cached permanently based on the URL, query string is ignored'"
+    },
+    {
+      "url": "https://raw.githack.com/",
+      "date": "2026-11-11",
+      "proved": "the homepage states the permanent per-URL caching behaviour",
+      "capture": "sha256:458b754ffa07d2f35d335738d37d71f6efb1e97e59ba0ebc1a3cc9ef599f34c8",
+      "quote": "Files are cached permanently based on the URL, query string is ignored"
+    },
+    {
+      "url": "probe:https://raw.githack.com/",
+      "date": "2026-11-11",
+      "proved": "the cited URL answered HTTP 200",
+      "capture": "sha256:a327bc52e25608012ddb803e56be6310d09914ff6b96eb6add561d38eef4a9aa",
+      "quote": "\"status\": 200"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "No quota of its own; ceiling is GitHub's 100 MiB hard repo file block. Probed a 50,901,339-byte GitHub file: HTTP 200, full length, sha256 fd112e5b… . A 3,408,573-byte file came back with sha256 55fb913b… — byte-identical to jsDelivr's copy of the same file, which is the cleanest proof it does not re-encode.",
+  "verified_at": "2026-11-11T07:23:05.683Z",
+  "notes": "Files are cached permanently based on the URL, query string is ignored",
   "history": [],
   "extras": {
     "seed_source": "storage-research",

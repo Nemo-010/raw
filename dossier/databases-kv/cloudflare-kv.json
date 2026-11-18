@@ -18,9 +18,10 @@
     "notes": "keys per namespace are unlimited, so the value size is the object cap"
   },
   "retention": {
-    "stated": "no expiry on a stored key unless the write sets one; the free tier does not delete",
+    "stated": "a stored value persists until it expires or is deleted; a write that sets no expiry leaves the value stored indefinitely",
     "days": null,
-    "source_url": "https://developers.cloudflare.com/kv/platform/limits/"
+    "source_url": "https://developers.cloudflare.com/kv/examples/cache-data-with-workers-kv/",
+    "notes": "the null is indefinite: no free-tier deletion clock is published; the daily limits reset at 00:00 UTC, and an operation over a limit fails with an error"
   },
   "egress": {
     "terms": "reads are counted, not metered by byte; no egress charge on any plan",
@@ -68,10 +69,24 @@
       "url": "https://developers.cloudflare.com/kv/platform/limits/",
       "date": "2026-10-22",
       "proved": "Free column: 100,000 reads/day, 1,000 writes/day to different keys, 1 write/second to the same key, 1,000 namespaces, 1 GB/account, 1 GB/namespace, 512-byte keys, 25 MiB values, 30-second minimum cacheTtl"
+    },
+    {
+      "url": "https://developers.cloudflare.com/kv/examples/cache-data-with-workers-kv/",
+      "date": "2026-11-09",
+      "proved": "a stored value persists until expiry or deletion, and a write with no expiry is stored indefinitely",
+      "capture": "sha256:79303b52992c22a7b16aebee7b83e7dae1d03ee1fec57f719e2500af4c170c3d",
+      "quote": "Data cached in Workers KV is accessible from all other Cloudflare locations as well, and persists until expiry or deletion. ... the expirationTtl option is used to set the expiration time for the cache entry (in seconds), otherwise it will be stored indefinitely"
+    },
+    {
+      "url": "https://developers.cloudflare.com/kv/platform/pricing/",
+      "date": "2026-11-09",
+      "proved": "the daily limits reset at 00:00 UTC and an operation over a limit fails with an error",
+      "capture": "sha256:263f30de3c1e12b828be385ec7915229e9a92072fbe5fc69d11298aab8f27959",
+      "quote": "Daily usage limits reset daily at 00:00 UTC. If you exceed any one of these limits, further operations of that type will fail with an error."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-22T03:05:00.000Z",
+  "verified_at": "2026-11-09T14:11:26.568Z",
   "price_per_tb_month": null,
   "history": [],
   "notes": "The asymmetry is the finding: reads are plentiful and writes are not, by two orders of magnitude. Any design that treats KV as the store hits 1,000 writes a day and stops.",

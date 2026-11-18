@@ -5,22 +5,22 @@
   "url": "https://zenodo.org/api/records/5656641/files/iPS.zip/content",
   "category": "academic",
   "free_tier": {
-    "stated": "Each record has a default storage quota of 50 GB, with an unlimited number of records under 50 GB, plus an additional allowance of up to 150 GB to distribute across uploads; no period is stated.",
+    "stated": "Each record comes with a default storage quota of 50GB and you can upload an unlimited number of records under 50GB. For larger files, you also have an additional allowance of up to 150GB that can be distributed across your uploads as needed.",
     "unit": "GB",
     "metered_on": "stored-bytes",
     "source_url": "https://help.zenodo.org/docs/deposit/manage-quota/",
-    "read_on": "2026-10-30",
+    "read_on": "2026-11-10",
     "notes": "The 50 GB quota applies per record; the 150 GB is one total allowance assigned to records from the storage settings. The per-record cap, the request rate and the retention window are in limits[]."
   },
   "per_object_cap": {
-    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
-    "source_url": "https://help.zenodo.org/docs/deposit/manage-quota/",
-    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+    "stated": "50GB total in the record (and any given file), and up to 100 files in the record.",
+    "source_url": "https://developers.zenodo.org/",
+    "notes": "the developer page states 50GB total per record and per file, and up to 100 files per record."
   },
   "retention": {
-    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
-    "source_url": "https://help.zenodo.org/docs/deposit/manage-quota/",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "stated": "Items will be retained for the lifetime of the repository.",
+    "source_url": "https://zenodo.org/policies",
+    "notes": "the policy page states items are retained for the lifetime of the repository."
   },
   "egress": {
     "terms": "Free and unmetered, and HTTP Range (206) is supported anonymously, which is what makes the parallel read possible: 'accept-ranges: bytes', 'content-range: bytes 0-1023/81165133690'.",
@@ -62,19 +62,14 @@
   ],
   "limits_note": "Bandwidth shaping is enforced per TCP connection rather than per IP address. Sixty-four concurrent HTTP Range requests all returned HTTP 206 and aggregate throughput saturated local network capacity without an aggregate cap.",
   "identity_cost": {
-    "kind": "institution",
-    "detail": "inferred from the category 'academic'; the source record states no identity cost, so this is a class assumption, not evidence",
+    "kind": "email",
+    "detail": "sign-up is through a GitHub, ORCID or OpenAIRE account; the page offers 'Sign up with GitHub', 'Sign up with ORCID' and 'Sign up with OpenAIRE'.",
     "country": null
   },
   "reliability_note": "Single-stream downloads are painfully slow (~215 KB/s on a 100MB range; the same range took 120s to deliver 45MB). Anything that does not parallelise will appear broken. Reading one file sequentially is a ~50x underuse of the link.",
   "confidence": "documented",
-  "confidence_note": "The read path and served byte count were measured on 2026-10-30 against published repository objects. Documented with supporting probe data.",
+  "confidence_note": "the help page states a 50 GB default quota per record, unlimited records under 50 GB and a 150 GB additional allowance.",
   "evidence": [
-    {
-      "url": "https://help.zenodo.org/docs/deposit/manage-quota/",
-      "date": "2026-10-22",
-      "proved": "50 GB per record by default, unlimited records, plus a 150 GB pool. Re-read https://help.zenodo.org/docs/deposit/manage-quota/: HTTP 200, 2413 bytes, sha256 c11445727085cd20. Quoted: l: \"https://help.zenodo.org/docs/deposit/manage-quota/\" fetched_at: \"2026-10-22T02:56:33.001Z\" --- # Manage storage quota --- Each record comes with a default storage quota of **50GB** and you can upload an unlimited number of records under 50GB. For larger files, you also have an additional allowance of up to **150GB** that can be distributed across your uploads as needed. You can view detailed information about your quota usage in your"
-    },
     {
       "url": "https://help.zenodo.org/docs/deposit/manage-quota/",
       "date": "2026-10-22",
@@ -138,10 +133,38 @@
       "proved": "the 150 GB is a total allowance assigned to records",
       "capture": "sha256:ca5c17d3a544ec3b7e5bce9b5946469b1ae8051ce90a4489fa482dee94ecaa5b",
       "quote": "Available quota: Remaining additional quota you can assign out of the 150GB total allowance."
+    },
+    {
+      "url": "https://help.zenodo.org/docs/deposit/manage-quota/",
+      "date": "2026-11-10",
+      "proved": "a record's default quota is 50 GB, records under 50 GB are unlimited, and a 150 GB additional allowance exists",
+      "capture": "sha256:ca5c17d3a544ec3b7e5bce9b5946469b1ae8051ce90a4489fa482dee94ecaa5b",
+      "quote": "Each record comes with a default storage quota of 50GB and you can upload an unlimited number of records under 50GB. For larger files, you also have an additional allowance of up to 150GB that can be distributed across your uploads as needed."
+    },
+    {
+      "url": "https://developers.zenodo.org/",
+      "date": "2026-11-10",
+      "proved": "the new API caps a record and any single file at 50 GB, with at most 100 files per record",
+      "capture": "sha256:84641fc7a48732e489318410048ec433cbf42fffe1ccd3c15ef41aff71e1a9d7",
+      "quote": "While the older API supports 100MB per file, the new one has a limit of 50GB total in the record (and any given file), and up to 100 files in the record."
+    },
+    {
+      "url": "https://zenodo.org/policies",
+      "date": "2026-11-10",
+      "proved": "items are retained for the lifetime of the repository",
+      "capture": "sha256:61cf048c04779872ca7c56bd2dec011328b12c0ecca08e4f7d54ef86d4fe8f6a",
+      "quote": "Retention period: Items will be retained for the lifetime of the repository."
+    },
+    {
+      "url": "https://zenodo.org/signup/",
+      "date": "2026-11-10",
+      "proved": "sign-up is through a GitHub, ORCID or OpenAIRE account and asks for no institutional affiliation",
+      "capture": "sha256:e7b3070ada47a86422ad8ee13ac1b7fa91a40d859b3a44dd5fd195fb08ba4d04",
+      "quote": "Sign up with GitHub ... Sign up with ORCID ... Sign up with OpenAIRE"
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-10-30T18:09:53.249Z",
+  "verified_at": "2026-11-10T00:50:36.120Z",
   "notes": "Documented read path benchmarks for high-throughput data retrieval.",
   "history": [],
   "extras": {
@@ -199,7 +222,7 @@
     "target_document": "docs/storage/free/academic.md",
     "document_section": "Zenodo and CERN",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "the help page states a 50 GB default quota per record, unlimited records under 50 GB and a 150 GB additional allowance, read on 2026-11-10",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 4,
     "evidence_carrying_a_source_date": 0,

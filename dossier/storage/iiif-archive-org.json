@@ -15,7 +15,7 @@
   "per_object_cap": {
     "stated": "1TB/item",
     "bytes": 1000000000000,
-    "source_url": "https://training.iiif.io/iiif-bl-workshop/day-two/image-servers/iiif-hosting-ia.html",
+    "source_url": "https://help.archive.org/help/uploading-tips/",
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
@@ -53,7 +53,7 @@
     "detail": "inferred from the category 'academic'; the source record states no identity cost, so this is a class assumption, not evidence",
     "country": null
   },
-  "reliability_note": "Third-party workshop doc, not IA's own page; no live probe possible this session (iiif.archive.org is on the same blocked network as archive.org) — treat the serving path as unverified.",
+  "reliability_note": "unverified: iiif.archive.org/iiif/nasa/info.json answered HTTP 302 on 2026-11-11 and redirected to /image/iiif/2/None/info.json, where the read timed out; no image was served.",
   "confidence": "inferred",
   "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [
@@ -71,11 +71,32 @@
       "url": "https://iiif.archive.org/iiif/nasa/info.json",
       "date": "2026-10-21",
       "proved": "probe: GET -> connection timeout; via fetch proxy -> 522 (same network block as archive.org)"
+    },
+    {
+      "url": "https://training.iiif.io/iiif-bl-workshop/day-two/image-servers/iiif-hosting-ia.html",
+      "date": "2026-11-11",
+      "proved": "the workshop page states the one-image-per-item constraint",
+      "capture": "sha256:d9e531a80a2cfeb9d0c072f604bd86ab759d5014bc3afb49b454f61c69673752",
+      "quote": "Ensure you only upload 1 image ( if you want multiple images you will need to create multiple items)"
+    },
+    {
+      "url": "probe:https://iiif.archive.org/iiif/nasa/info.json",
+      "date": "2026-11-11",
+      "proved": "the host redirects instead of serving an image info document",
+      "capture": "sha256:cf2ea3e14f4b5e7e40286f7136feb6c4b531debbf8e2031ff23fa60cbb2c730d",
+      "quote": "\"status\": 302"
+    },
+    {
+      "url": "https://help.archive.org/help/uploading-tips/",
+      "date": "2026-11-11",
+      "proved": "the 1TB per-item limit is stated on the Internet Archive help page, not the workshop page",
+      "capture": "sha256:d275db5cf0e45fcf37c38b13a12c1cb3776620ad3e376f2443b89d14bf73354c",
+      "quote": "Currently, there is a 1TB size limit for item pages."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "No separate quota. It is a free image server over items you already hold, one image per item. Capacity therefore follows the 1TB/item rule.",
+  "verified_at": "2026-11-11T06:09:39.445Z",
+  "notes": "Ensure you only upload 1 image ( if you want multiple images you will need to create multiple items)",
   "history": [],
   "extras": {
     "seed_source": "storage-research",

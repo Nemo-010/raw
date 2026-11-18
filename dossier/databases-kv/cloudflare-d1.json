@@ -17,10 +17,10 @@
     "source_url": "https://developers.cloudflare.com/d1/platform/limits/"
   },
   "retention": {
-    "stated": "storage persists; Time Travel point-in-time recovery covers 7 days on Free",
+    "stated": "data is kept until it is deleted; at the included 5 GB storage limit D1 blocks inserts, table changes and index creation until data is deleted",
     "days": null,
-    "source_url": "https://developers.cloudflare.com/d1/platform/limits/",
-    "notes": "the free limits reset daily at 00:00 UTC"
+    "source_url": "https://developers.cloudflare.com/d1/platform/pricing/",
+    "notes": "the null is indefinite: no deletion clock is published; the daily read and write limits reset at 00:00 UTC and refuse queries with an error until then, and the storage limit refuses inserts, table changes and index creation until data is deleted"
   },
   "egress": {
     "terms": "no egress charge; rows read and rows written are the metered quantities",
@@ -77,10 +77,31 @@
       "url": "https://developers.cloudflare.com/d1/platform/pricing/",
       "date": "2026-10-22",
       "proved": "Free: 5 million rows read/day, 100,000 rows written/day, 5 GB total storage; 'Free limits reset daily at 00:00 UTC'; at the storage limit you must delete data before inserting"
+    },
+    {
+      "url": "https://developers.cloudflare.com/d1/platform/pricing/",
+      "date": "2026-11-09",
+      "proved": "the Free plan blocks inserts, table changes and index creation at the included 5 GB storage limit until data is deleted",
+      "capture": "sha256:d0920051e6745a5313cf4100b17c802ce10b10d16eb0cc2a134abee99df95294",
+      "quote": "Once you have reached your included storage limit, you will need to delete unused databases or clean up stale data before you can insert new data, create or alter tables or create indexes and triggers."
+    },
+    {
+      "url": "https://developers.cloudflare.com/d1/platform/pricing/",
+      "date": "2026-11-09",
+      "proved": "the daily read and write limits reset at 00:00 UTC and refuse queries with an error, and the storage limit refuses writes until data is deleted; no deletion of stored data is stated",
+      "capture": "sha256:d0920051e6745a5313cf4100b17c802ce10b10d16eb0cc2a134abee99df95294",
+      "quote": "Free daily usage limits reset at 00:00 UTC. ... When your account hits the daily read and/or write limits, you will not be able to run queries against D1. D1 API will return errors to your client indicating that your daily limits have been exceeded. Once you have reached your included storage limit, you will need to delete unused databases or clean up stale data before you can insert new data, create or alter tables or create indexes and triggers."
+    },
+    {
+      "url": "https://developers.cloudflare.com/d1/platform/limits/",
+      "date": "2026-11-09",
+      "proved": "Time Travel is a point-in-time recovery window of 7 days on Free, not a data-retention clock",
+      "capture": "sha256:bd50f82aed2c4d2387d1eee04fb70f0e269e933f983ebfdd03b97a618ec1facd",
+      "quote": "| [Time Travel](https://developers.cloudflare.com/d1/reference/time-travel/) duration (point-in-time recovery) | 30 days (Workers Paid) / 7 days (Free) |"
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-10-22T03:05:00.000Z",
+  "verified_at": "2026-11-09T14:11:26.568Z",
   "price_per_tb_month": "USD 0.75/GB-month beyond 5 GB on Workers Paid",
   "history": [],
   "notes": "The 100,000 rows written a day is the binding number for any ingest, and it is small: 1.16 rows a second sustained. A full table scan counts every row it scans as a row read, so an unindexed query spends the read budget fast.",

@@ -17,10 +17,10 @@
     "source_url": "https://aws.amazon.com/dynamodb/pricing/"
   },
   "retention": {
-    "stated": "data persists while the table exists; no inactivity pause and no expiry clock is published, and the AWS Free Tier page lists DynamoDB under the allowances available on both the 12-month and the always-free plans",
+    "stated": "a table and its data persist until the table is deleted or the AWS account is deleted; deleting a table is unrecoverable, and deleting the account removes all of that account's data including tables within 90 days",
     "days": null,
-    "source_url": "https://aws.amazon.com/free/",
-    "notes": "the 25 GB and 25/25 RCU-WCU figures are the always-free allowance, not a 12-month one, which is what makes the row usable without a countdown"
+    "source_url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.Basics.html",
+    "notes": "the null is indefinite while the account exists: no inactivity pause or expiry clock is published; data is removed by an explicit DeleteTable (unrecoverable), by deleting the AWS account (all tables within 90 days), or by archiving a table when a customer managed key is lost"
   },
   "egress": {
     "terms": "transfer out is billed; the free tier does not include a transfer allowance for DynamoDB",
@@ -68,10 +68,17 @@
       "url": "https://aws.amazon.com/free/",
       "date": "2026-10-22",
       "proved": "DynamoDB is listed on the Free Tier page as 'Available on both plans', which places its allowance in the always-free category rather than the 12-month one"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.Basics.html",
+      "date": "2026-11-09",
+      "proved": "a table is removed by an explicit DeleteTable, which is unrecoverable, and deleting the AWS account deletes all of that account's data including tables within 90 days",
+      "capture": "sha256:cc8a499e7ab18d586eb6078861e0455ab4ece59e9a6fde3f8eb52fb48b702e14",
+      "quote": "You can remove an unused table with the `DeleteTable` operation. Deleting a table is an unrecoverable operation. ... If an AWS account is deleted, all of that account's data including tables are still deleted within 90 days. If DynamoDB loses access to a customer managed key that was used to encrypt a table, it will still archive the table. Archiving involves making a backup of the table and deleting the original."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-22T03:05:00.000Z",
+  "verified_at": "2026-11-09T14:11:26.569Z",
   "price_per_tb_month": "USD 0.25/GB-month beyond 25 GB",
   "history": [],
   "notes": "25 RCU is the cap, not 25 GB. Twenty-five strongly-consistent reads a second is a prototype's throughput, and 25 GB of storage behind it will never fill.",

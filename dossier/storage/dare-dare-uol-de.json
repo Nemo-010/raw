@@ -5,12 +5,12 @@
   "url": "https://dare.uol.de",
   "category": "academic repository / Dataverse 6.12.1",
   "free_tier": {
-    "stated": "No quota defined at root.",
+    "stated": "No quota defined for this collection",
     "unit": "unlimited",
     "metered_on": "unstated",
     "source_url": "https://dare.uol.de/api/dataverses/:root/storage/quota?showInherited=true",
-    "read_on": "2026-10-21",
-    "notes": "Headline offer; binding constraint specified in limits."
+    "read_on": "2026-11-09",
+    "notes": "No quota defined for this collection"
   },
   "per_object_cap": {
     "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
@@ -32,11 +32,17 @@
   "interface_detail": "REST (native Dataverse API v1), SWORD",
   "tooling": "curl / DVUploader",
   "chaining": "Useful precisely because it is small (78 datasets, 45 collections): an installation this lightly used has had no reason to set a quota, and every one of its collections returns the same 'No quota defined'.",
-  "limits": [],
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "uploads are not possible with a default account",
+      "source": "https://dare.uol.de"
+    }
+  ],
   "limits_note": "No published per-file cap; no quota number returned by the API.",
   "identity_cost": {
     "kind": "email",
-    "detail": "email",
+    "detail": "Contact the repository support address by email.",
     "country": null
   },
   "reliability_note": "Very low dataset count. An untested production instance; do not assume operational maturity.",
@@ -62,11 +68,39 @@
       "url": "https://dare.uol.de/api/search?q=*&type=dataset&per_page=1",
       "date": "2026-10-21",
       "proved": "78 datasets; type=dataverse — 45"
+    },
+    {
+      "url": "https://dare.uol.de/api/dataverses/:root/storage/quota?showInherited=true",
+      "date": "2026-11-09",
+      "proved": "the root collection's quota endpoint states that no quota is defined for this collection",
+      "capture": "sha256:5aaf35e6516e74f75fa6d6248f93a923136e6259992b9ab51eb9d5e8e1b0325c",
+      "quote": "No quota defined for this collection"
+    },
+    {
+      "url": "https://dare.uol.de",
+      "date": "2026-11-09",
+      "proved": "the homepage still states that it is not possible to upload data with a default account",
+      "capture": "sha256:9bfce4a809f82ebf7bb28639a1beea1d1157d30db9e76f0d3438e904dcbe4d82",
+      "quote": "Please be advised that it is not possible to upload data with your default account."
+    },
+    {
+      "url": "https://dare.uol.de",
+      "date": "2026-11-09",
+      "proved": "the homepage still directs users to contact the repository by email to learn how to use DARE",
+      "capture": "sha256:9bfce4a809f82ebf7bb28639a1beea1d1157d30db9e76f0d3438e904dcbe4d82",
+      "quote": "Please feel free to contact us via email to fdm-support@uol.de to learn more about how to use DARE."
+    },
+    {
+      "url": "https://dare.uol.de/dataverseuser.xhtml?editMode=CREATE",
+      "date": "2026-11-09",
+      "proved": "the installation's sign-up form states there are no Terms of Use for this Dataverse installation",
+      "capture": "sha256:0954b986135376884880940c49a310692979d27747830a8f78db67fb84527d6b",
+      "quote": "There are no Terms of Use for this Dataverse installation."
     }
   ],
-  "verdict": "qualifies",
-  "verified_at": "2026-10-21T00:00:00.000Z",
-  "notes": "No quota defined at root.",
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-09T16:25:53.459Z",
+  "notes": "No quota defined for this collection",
   "history": [],
   "extras": {
     "seed_source": "storage-research",
@@ -96,8 +130,8 @@
     "interface_verbatim": "REST (native Dataverse API v1), SWORD",
     "agent_focus": "Systematic sweep of self-hosted academic repository software (Dataverse, DSpace, InvenioRDM, EPrints, Fedora/Islandora) scored on the four client questions: institutional-email requirement, per-file cap, per-collection/dataset cap, and whether the install enforces a quota object at all. Primary method was machine probing, not page reading: /api/info/version and /api/dataverses/:root/storage/quota?showInherited=true against the full official Dataverse installation registry (150 hostnames), the native-signup form probe /dataverseuser.xhtml?editMode=CREATE against all 83 no-quota hosts, and the platform source defaults read out of the upstream config files for DSpace, InvenioRDM, EPrints, libp2p and iroh. Secondary coverage of the relay/P2P half of the slot."
   },
-  "binding": "none",
-  "binding_note": "no constraint in the record binds at this scale; the record carries no limit of a kind the vocabulary names",
+  "binding": "write-gated",
+  "binding_note": "uploads are not possible with a default account",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z"
 }

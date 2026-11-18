@@ -5,7 +5,7 @@
   "url": "https://codefloe.com",
   "category": "registry",
   "free_tier": {
-    "stated": "5 GB Git + 20 GB packages + 10 GB Git LFS + 10 GB attachments per account/organization; unlimited public and private repositories",
+    "stated": "5 GB Git + 20 GB packages + 10 GB Git LFS + 10 GB attachments",
     "unit": "GB",
     "metered_on": "unstated",
     "source_url": "https://docs.codefloe.com/usage-quotas/",
@@ -13,7 +13,7 @@
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
+    "stated": "500 MB per release asset or issue/comment attachment",
     "source_url": "https://docs.codefloe.com/usage-quotas/",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
@@ -24,7 +24,7 @@
     "notes": "Extracted from published terms."
   },
   "egress": {
-    "terms": "Download traffic for packages, container images and LFS is counted per account per month but 'There is no limit today'. Unlimited, and the endpoint is Cloudflare-fronted. Git clones, release assets and attachments are explicitly not counted.",
+    "terms": "There is no limit today.",
     "metered": false
   },
   "interface": [
@@ -39,13 +39,13 @@
   "limits": [],
   "limits_note": "Per-account quotas only (5 GB git / 20 GB packages / 10 GB LFS / 10 GB attachments). Download counter booked hourly at the edge proxy; a limit will be set later (currently 429 only after an as-yet-unset threshold). Uploads and Git ops never blocked by traffic limits. 2500 CI minutes/month.",
   "identity_cost": {
-    "kind": "anonymous",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: cross four subjects, and each further account carries the same 45 GB. Registry blobs are anonymous-pullable, so shard across repos like any OCI store. Per-account quotas only (5 GB git / 20 GB packages / 10 GB LFS / 10",
+    "kind": "email",
+    "detail": "Registration asks for a username, an email address and a password.",
     "country": null
   },
   "reliability_note": "Single small operator on one Hetzner box; nightly off-site backups with 90-day retention described as disaster recovery, not per-account restore. Explicit published policy of monitoring several accounts used to exceed its quota and deleting/suspending. The chaining path is actively watched, unlike GitLab's.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "the usage-quotas page states a 500 MB cap on a release asset or issue/comment attachment",
   "evidence": [
     {
       "url": "https://docs.codefloe.com/usage-quotas/",
@@ -81,10 +81,52 @@
       "url": "https://codefloe.com/api/v1/packages/CodeFloe?limit=5",
       "date": "2026-10-21",
       "proved": "probe: GET -> 200, lists container packages incl. sha256-digest tags (anonymous package enumeration)"
+    },
+    {
+      "url": "https://docs.codefloe.com/usage-quotas/",
+      "date": "2026-11-09",
+      "proved": "the account quotas are 5 GB Git, 20 GB packages, 10 GB Git LFS and 10 GB attachments",
+      "capture": "sha256:09d4ddc82c3e8d6b5513bdd3c2c6d179a1e5bde8a7cd9ac61a7c5b2f13d6f683",
+      "quote": "| Git repo size | “Packages” size | Git LFS size | Attachments size | Actions Artifacts size |\n| --- | --- | --- | --- | --- |\n| 5 GB | 20 GB | 10 GB | 10 GB | 2 GB |"
+    },
+    {
+      "url": "https://docs.codefloe.com/usage-quotas/",
+      "date": "2026-11-09",
+      "proved": "a release asset or issue/comment attachment is capped at 500 MB",
+      "capture": "sha256:09d4ddc82c3e8d6b5513bdd3c2c6d179a1e5bde8a7cd9ac61a7c5b2f13d6f683",
+      "quote": "| Release assets and issue/comment attachments | 500 MB |"
+    },
+    {
+      "url": "https://docs.codefloe.com/usage-quotas/",
+      "date": "2026-11-09",
+      "proved": "downloads are counted but no limit applies today",
+      "capture": "sha256:09d4ddc82c3e8d6b5513bdd3c2c6d179a1e5bde8a7cd9ac61a7c5b2f13d6f683",
+      "quote": "There is no limit today."
+    },
+    {
+      "url": "https://codefloe.com/user/sign_up",
+      "date": "2026-11-09",
+      "proved": "registration asks for a username, an email address and a password",
+      "capture": "sha256:b8a22611096c30f59367a551d23065d3abb60abdeeb535d2b96c3c47db138927",
+      "quote": "#### Register\n\nUsername \n\nEmail address \n\nPassword \n\nConfirm password"
+    },
+    {
+      "url": "https://codefloe.com/pricing",
+      "date": "2026-11-09",
+      "proved": "all functionality is free",
+      "capture": "sha256:6fcae8bfd32bb876a8289532f0eab05d8b4c73fbb5066a3edfafbc26fee0467a",
+      "quote": "All functionality is free."
+    },
+    {
+      "url": "https://docs.codefloe.com/usage-quotas/",
+      "date": "2026-11-11",
+      "proved": "the quota table states 5 GB Git, 20 GB packages, 10 GB Git LFS and 10 GB attachments",
+      "capture": "sha256:575354bec2c72d99aa3d8fe0cf7d5aa5583e34fe6fce210c7aec8a10469e1483",
+      "quote": "| Git repo size | “Packages” size | Git LFS size | Attachments size | Actions Artifacts size |\n| 5 GB | 20 GB | 10 GB | 10 GB | 2 GB |"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-11T02:51:00.984Z",
   "notes": "5 GB Git + 20 GB packages + 10 GB Git LFS + 10 GB attachments per account/organization; unlimited public and private repositories",
   "history": [],
   "extras": {
@@ -102,7 +144,7 @@
     "target_document": "docs/storage/free/registries.md",
     "document_section": "GitLab, Forgejo and forge registries",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "the usage-quotas page states a 500 MB cap on a release asset or issue/comment attachment",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 7,
     "evidence_carrying_a_source_date": 0,

@@ -5,7 +5,7 @@
   "url": "https://crates.io",
   "category": "registry",
   "free_tier": {
-    "stated": "10 MB per .crate file. No limit on versions per crate ('There is no limit to the number of versions which can be published'), no documented cap on total crates or total bytes per account.",
+    "stated": "crates.io currently has a 10MB size limit on the `.crate` file.",
     "unit": "MB",
     "metered_on": "unstated",
     "source_url": "https://doc.rust-lang.org/cargo/reference/publishing.html",
@@ -13,12 +13,12 @@
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
+    "stated": "10 MB per .crate file",
     "source_url": "https://doc.rust-lang.org/cargo/reference/publishing.html",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "| Effectively permanent. 'the code cannot be deleted', 'publish is generally permanent'.",
+    "stated": "The version can never be overwritten, and the code cannot be deleted.",
     "source_url": "https://doc.rust-lang.org/cargo/reference/publishing.html",
     "notes": "Extracted from published terms."
   },
@@ -36,29 +36,29 @@
   "limits": [
     {
       "kind": "request-rate",
-      "value": "1000 downloads/month",
-      "source": "https://doc.rust-lang.org/cargo/reference/publishing.html"
+      "value": "1 new crate every 10 minutes after a burst of 5 new crates",
+      "source": "https://crates.io/docs/rate-limits"
     },
     {
-      "kind": "per-ip-shaping",
-      "value": "1.4 GB/day",
-      "source": "https://doc.rust-lang.org/cargo/reference/publishing.html"
+      "kind": "request-rate",
+      "value": "1 new version per minute after a burst of 30 new versions",
+      "source": "https://crates.io/docs/rate-limits"
     },
     {
-      "kind": "pull-count",
-      "value": "1000 downloads/month",
-      "source": "https://doc.rust-lang.org/cargo/reference/publishing.html"
+      "kind": "retention-clamped",
+      "value": "deletion only if published under 72 hours or single owner and fewer than 1000 downloads per month since publication, and no other crate depends on it",
+      "source": "https://crates.io/policies"
     }
   ],
   "limits_note": "10 MB per .crate. Publish rate: burst 5 new crates, then 1 per 10 min; burst 30 new versions, then 1 per minute (documented, leaky-bucket). No delete after 72h unless <1000 downloads/month-per-month AND no dependents AND single owner. Version numbers can never be reused or overwritten.",
   "identity_cost": {
     "kind": "email",
-    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "detail": "An email address must be provided and verified on the Account Settings page.",
     "country": null
   },
   "reliability_note": "Effectively permanent. 'the code cannot be deleted', 'publish is generally permanent'. Excellent durability, terrible write throughput: ~144 crates/day sustained, i.e. ~1.4 GB/day at 10 MB. Never disappears, but you cannot fill it fast.",
   "confidence": "reported",
-  "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
+  "confidence_note": "the Cargo publishing page states a 10MB size limit on the .crate file",
   "evidence": [
     {
       "url": "https://doc.rust-lang.org/cargo/reference/publishing.html",
@@ -79,10 +79,59 @@
       "url": "https://static.crates.io/crates/serde/serde-1.0.0.crate",
       "date": "2026-10-21",
       "proved": "probe: GET -> 200, Content-Length: 58433, Server: cloudflare, Cache-Control: public,max-age=31536000,immutable"
+    },
+    {
+      "url": "https://doc.rust-lang.org/cargo/reference/publishing.html",
+      "date": "2026-11-09",
+      "proved": "a .crate file is capped at 10MB",
+      "capture": "sha256:df52936a811167cd36d1f5986b35e743facfbca0244ab36f01066226d564a971",
+      "quote": "[crates.io](https://crates.io/) currently has a 10MB size limit on the `.crate` file."
+    },
+    {
+      "url": "https://doc.rust-lang.org/cargo/reference/publishing.html",
+      "date": "2026-11-09",
+      "proved": "a published version can never be overwritten or deleted",
+      "capture": "sha256:df52936a811167cd36d1f5986b35e743facfbca0244ab36f01066226d564a971",
+      "quote": "The version can never be overwritten, and the code cannot be deleted."
+    },
+    {
+      "url": "https://doc.rust-lang.org/cargo/reference/publishing.html",
+      "date": "2026-11-09",
+      "proved": "an email address must be provided and verified",
+      "capture": "sha256:df52936a811167cd36d1f5986b35e743facfbca0244ab36f01066226d564a971",
+      "quote": "You will also need to provide and verify your email address on the [Account Settings](https://crates.io/settings/profile) page."
+    },
+    {
+      "url": "https://crates.io/docs/rate-limits",
+      "date": "2026-11-09",
+      "proved": "new-crate publishing allows a burst of 5, then 1 crate every 10 minutes",
+      "capture": "sha256:275493e8f5665053f4774b267a2e4f542027ca1d3f72007909f16af4d3dc0035",
+      "quote": "For brand new crate publishes, allow a burst of 5 new crates published at once by a single user account, with a\nrate limit of 1 crate every 10 minutes allowed after that burst"
+    },
+    {
+      "url": "https://crates.io/docs/rate-limits",
+      "date": "2026-11-09",
+      "proved": "new-version publishing allows a burst of 30, then 1 version per minute",
+      "capture": "sha256:275493e8f5665053f4774b267a2e4f542027ca1d3f72007909f16af4d3dc0035",
+      "quote": "For new versions of existing crates, allow a burst of 30 new versions published at once by a single user account,\nwith a rate limit of 1 crate per minute allowed after that burst"
+    },
+    {
+      "url": "https://crates.io/policies",
+      "date": "2026-11-09",
+      "proved": "deletion requires publication under 72 hours or a single owner, fewer than 1000 downloads per month since publication, and no dependents",
+      "capture": "sha256:3398843ae7e55b69fe7c80f1c555eb3fd7a8ef266353b2a7c2f4265f3b08fc35",
+      "quote": "Crate owners can delete their crates under certain conditions: the crate has been published for less than 72 hours,\nor the crate only has a single owner, the crate has been downloaded less than 1000 times for each month it has been\npublished, and the crate is not depended upon by any other crate on crates.io."
+    },
+    {
+      "url": "https://crates.io/docs/rate-limits",
+      "date": "2026-11-09",
+      "proved": "rate limits apply to publishing new crates and new versions",
+      "capture": "sha256:275493e8f5665053f4774b267a2e4f542027ca1d3f72007909f16af4d3dc0035",
+      "quote": "Crates.io has rate limits on publishes of new crates and publishes of new versions of existing crates to mitigate"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-10T00:50:12.225Z",
   "notes": "10 MB per .crate file. No limit on versions per crate ('There is no limit to the number of versions which can be published'), no documented cap on total crates or total bytes per account.",
   "history": [],
   "extras": {
@@ -100,7 +149,7 @@
     "target_document": "docs/storage/free/registries.md",
     "document_section": "Language package ecosystems",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "the Cargo publishing page states a 10MB size limit on the .crate file",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 4,
     "evidence_carrying_a_source_date": 0,
@@ -113,8 +162,8 @@
     "interface_verbatim": "rest",
     "agent_focus": "Package ecosystems as blob stores: npm, PyPI, crates.io, Maven Central, NuGet, RubyGems, Packagist, Conda/conda-forge, Hex, Pub.dev, CocoaPods, R, CPAN, Hackage — per-artifact caps, version-unlimited behaviour, retention/deletion policy"
   },
-  "binding": "pull-count",
-  "binding_note": "a per-object fetch counter turns bulk distribution into a counting problem",
+  "binding": "request-rate",
+  "binding_note": "rate limits apply to publishing new crates and new versions",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z"
 }

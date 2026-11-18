@@ -6,7 +6,7 @@
   "category": "consumer-pan",
   "free_tier": {
     "stated": "Free: 50 GB of 专业空间 (own uploads, no deduplication) plus 2 TB of 标准空间 (files saved from other people's shares, deduplicated) for accounts registered before 2026-09-24 14:30. New accounts get 50 GB plus 50 GB until real-name verification, then 2 TB standard",
-    "unit": "TiB",
+    "unit": "mixed",
     "metered_on": "stored-bytes",
     "source_url": "https://www.123pan.com/",
     "read_on": "2026-10-21",
@@ -53,8 +53,8 @@
     }
   ],
   "identity_cost": {
-    "kind": "country-phone",
-    "detail": "the login page offers app or WeChat QR login, or a phone-or-email password login, but the signup path terminates at +86 SMS. A 2026 guide states 'mainland +86 number only, email sign-up stops at phone binding'",
+    "kind": "national-id",
+    "detail": "registration takes a mobile number, a login password and an SMS code; WeChat QR login is also offered, and first binding it needs an SMS verification",
     "country": "86"
   },
   "reliability_note": "Two independent failure modes seen on the same day: 5104 分享已过期 on most public keys, and 5112 分享方提取流量包不足 on live ones. The sharer's traffic pack is the binding constraint, so a valid share with an exhausted pack is unusable by anyone including a logged-in user. The quota regime changed in 2025-11 and again in 2026-09 and the operator blames bulk registration",
@@ -94,10 +94,38 @@
       "url": "probe:https://webdav.123pan.cn/webdav",
       "date": "2026-10-21",
       "proved": "the seed pass recorded, at this URL: 401, so the WebDAV endpoint is live and auth-gated"
+    },
+    {
+      "url": "https://finance.sina.com.cn/tech/discovery/2026-09-25/doc-iniszrtz4465520.shtml",
+      "date": "2026-11-09",
+      "proved": "a new account gets the 2 TB 标准空间 only after 实名认证, so the identity cost that binds the 500 GiB tier is a PRC real-name check, not the phone alone",
+      "capture": "sha256:55d57c5ea74b8cd7da0221d618f3391259d32294db1495d7de64fea3e0b23985",
+      "quote": "9月24日14:30后注册的新用户按是否实名认证区分，未实名新用户免费配额为专业空间50GB加标准空间50GB，完成实名认证后标准空间提升至2TB。"
+    },
+    {
+      "url": "https://www.123pan.com/open",
+      "date": "2026-11-09",
+      "proved": "the sign-up flow asks for a mobile number, a login password and an SMS code; WeChat QR login is an alternative that needs an SMS verification on first binding",
+      "capture": "sha256:4bbf9481e8f877ac6bf009cc7c54234ca60bea7567a4f932f4d1b556369d19e7",
+      "quote": "新用户首次下载安装123云盘，需要输入手机号码，设置登录密码，获取手机验证码后进行123云盘的账号注册，注册完成后即可登录并使用123云盘。"
+    },
+    {
+      "url": "https://www.123pan.com/UserAgreement",
+      "date": "2026-11-09",
+      "proved": "identity elements include the phone number, ID document number and face information, so 实名认证 checks a national ID and face",
+      "capture": "sha256:7946bc4c29729553a2da2e297049c07eef2807aa4bb0fc4f543e4898d3cce73d",
+      "quote": "“身份要素”包括但不限于您的账号名称、密码、短信校验码、手机号码、身份证件号码及人脸信息、指纹信息。"
+    },
+    {
+      "url": "https://www.123pan.com/faq?problem=all",
+      "date": "2026-11-09",
+      "proved": "a non-mainland phone number cannot be used to log in, so the account phone is a mainland +86 number",
+      "capture": "sha256:80adc882dc589f3e104835dc3a98aba0e3a631ad124b62fe4f98316c408b05cd",
+      "quote": "注：请勿修改非大陆地区手机号，此操作将会导致无法登录。"
     }
   ],
-  "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verdict": "fails-identity",
+  "verified_at": "2026-11-09T13:21:22.499Z",
   "history": [],
   "binding": "per-ip-shaping",
   "binding_note": "The capacity is real and large, so the quota is not what stops a plan. 10 GB of extraction traffic a month is 0.03% of the daily target, and the identity gate means the tier cannot even be bought from outside China.",

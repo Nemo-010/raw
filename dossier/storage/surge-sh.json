@@ -5,7 +5,7 @@
   "url": "https://surge.sh",
   "category": "paas",
   "free_tier": {
-    "stated": "Free plan: unlimited projects and unlimited publishes; each project capped at 450 MB and 10,100 files. No account-level byte quota.",
+    "stated": "Unlimited projects and domains, with publishing under rate limits that apply to every plan",
     "unit": "objects",
     "metered_on": "unstated",
     "source_url": "https://surge.sh/docs/cli/publishing",
@@ -13,7 +13,7 @@
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "no per-file cap documented but it inherits the project cap",
+    "stated": "Projects are limited to 10,100 files and 450 MB; a larger project is refused before anything is published.",
     "source_url": "https://surge.sh/docs/cli/publishing",
     "notes": "extracted from the quota or limits prose"
   },
@@ -36,7 +36,7 @@
   "limits": [
     {
       "kind": "per-ip-shaping",
-      "value": "1 TiB/day",
+      "value": "240 per 15 minutes per IP address",
       "source": "https://surge.sh/docs/cli/publishing"
     },
     {
@@ -79,10 +79,31 @@
       "url": "https://surge.sh/",
       "date": "2026-10-21",
       "proved": "probe: curl -D - -> HTTP/1.1 200, Server: cloudflare, Accept-Ranges: bytes (edge is CF-fronted)"
+    },
+    {
+      "url": "https://surge.sh/docs/platform/plans",
+      "date": "2026-11-09",
+      "proved": "the plans page states unlimited projects and domains on the free plan, with publishing rate limits on every plan",
+      "capture": "sha256:b00cde60d35e90b5760286b523f35f3f316ee3755a640945512f56b5e881c0c9",
+      "quote": "Unlimited projects and domains, with publishing under rate limits that apply to every plan"
+    },
+    {
+      "url": "https://surge.sh/docs/cli/publishing",
+      "date": "2026-11-09",
+      "proved": "the publishing page states the 10,100-file and 450 MB project limit and that a larger project is refused before publishing",
+      "capture": "sha256:260e6c40050150810b3d753c280d8a404b66e287bf1de9a8f0a24b43dfd2dfca",
+      "quote": "Projects are limited to 10,100 files and 450 MB; a larger project is refused before anything is published."
+    },
+    {
+      "url": "https://surge.sh/docs/cli/publishing",
+      "date": "2026-11-09",
+      "proved": "the rate-limit table gives 240 requests per 15 minutes per IP address",
+      "capture": "sha256:260e6c40050150810b3d753c280d8a404b66e287bf1de9a8f0a24b43dfd2dfca",
+      "quote": "| Limit | Per 15 minutes | Per 24 hours |\n|-------|----------------|--------------|\n| Each domain | 30 | 200 |\n| Each account | 60 | 500 |\n| Each IP address | 240 | — |"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-10T00:50:33.171Z",
   "notes": "Free plan: unlimited projects and unlimited publishes; each project capped at 450 MB and 10,100 files. No account-level byte quota.",
   "history": [],
   "extras": {
@@ -100,7 +121,7 @@
     "target_document": "docs/storage/free/cloudflare-edge.md",
     "document_section": "Cloudflare Pages and Workers static assets",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "checked against the live service on 2026-11-10",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 4,
     "evidence_carrying_a_source_date": 0,
