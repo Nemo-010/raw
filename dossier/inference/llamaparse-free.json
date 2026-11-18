@@ -218,12 +218,50 @@
       "proved": "the old endpoint maps to POST /api/v2/parse",
       "capture": "sha256:e85737449225bcbf9e5552683fa09cec861a8d44ff16c7fbc663439fca9aef53",
       "quote": "- Replace `POST /api/v1/parsing/upload` → `POST /api/v2/parse` (or `/parse/upload` for multipart)"
+    },
+    {
+      "url": "probe:https://api.cloud.llamaindex.ai/api/v2/parse",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://api.cloud.llamaindex.ai/api/v2/parse for fast returned HTTP 401 with body {'detail':'Not authenticated'} and no completion in 1778 ms",
+      "capture": "sha256:978704563a285d9cd550d8bb8199ca89b46362888648d81faf0d5380b6ebbb07",
+      "quote": "a keyless POST to https://api.cloud.llamaindex.ai/api/v2/parse for fast returned HTTP 401 with body {'detail':'Not authenticated'} and no completion in 1778 ms"
+    },
+    {
+      "url": "probe:https://api.cloud.llamaindex.ai/api/v2/parse",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://api.cloud.llamaindex.ai/api/v2/parse for fast returned HTTP 401 with body {'detail':'Not authenticated'} and no completion in 245 ms",
+      "capture": "sha256:868bfe771abea737416ff9a2a4d944622157c118b383dad903adc019ee698941",
+      "quote": "a keyless POST to https://api.cloud.llamaindex.ai/api/v2/parse for fast returned HTTP 401 with body {'detail':'Not authenticated'} and no completion in 245 ms"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-18T04:36:12.290Z",
+  "verified_at": "2026-11-18T05:36:05.090Z",
   "binding": "volume-quota",
   "binding_note": "10,000 credits a month is the ceiling at 1 to 45 credits a page, far below the 512 MB and 10,000-page per-job caps",
-  "notes": "the Free plan's 10,000 credits are recurring each billing cycle; paid Starter is USD 50 a month with 40,000 credits. Endpoint filled from first-party docs on 2026-11-18: base https://api.cloud.llamaindex.ai, POST /api/v2/parse, Bearer key required. The old route POST /api/v1/parsing/upload is deprecated and returns the same keyless HTTP 401. The legacy host api.llamaindex.ai does not resolve.",
-  "endpoint": "https://api.cloud.llamaindex.ai/api/v2/parse"
+  "notes": "the Free plan's 10,000 credits are recurring each billing cycle; paid Starter is USD 50 a month with 40,000 credits. Endpoint filled from first-party docs on 2026-11-18: base https://api.cloud.llamaindex.ai, POST /api/v2/parse, Bearer key required. The old route POST /api/v1/parsing/upload is deprecated and returns the same keyless HTTP 401. The legacy host api.llamaindex.ai does not resolve. On 2026-11-18 two keyless POSTs to /api/v2/parse returned HTTP 401 Not authenticated, so the parse route exists and needs a key.",
+  "endpoint": "https://api.cloud.llamaindex.ai/api/v2/parse",
+  "probe": {
+    "records": [
+      {
+        "probe_id": "llamaparse-free-20261118",
+        "target": "https://api.cloud.llamaindex.ai/api/v2/parse",
+        "runs": [
+          {
+            "label": "run1",
+            "probed_at": "2026-11-18T05:26:13.271Z",
+            "status": 401,
+            "completion": false,
+            "capture": "sha256:978704563a285d9cd550d8bb8199ca89b46362888648d81faf0d5380b6ebbb07"
+          },
+          {
+            "label": "run2",
+            "probed_at": "2026-11-18T05:36:05.090Z",
+            "status": 401,
+            "completion": false,
+            "capture": "sha256:868bfe771abea737416ff9a2a4d944622157c118b383dad903adc019ee698941"
+          }
+        ]
+      }
+    ]
+  }
 }

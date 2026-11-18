@@ -190,10 +190,48 @@
       "proved": "the first-party getting-started guide confirms the shared auth mechanism",
       "capture": "sha256:b2aba28738cbf61b8a87cd8e7883490986e4ae7371bc848c3b636aa733dc78f6",
       "quote": "All APIs documented on this site use the same authentication mechanism: passing the\nAPI key in via the `Authorization` header."
+    },
+    {
+      "url": "probe:https://api.stability.ai/v1/user/account",
+      "date": "2026-11-18",
+      "proved": "a keyless GET to https://api.stability.ai/v1/user/account returned HTTP 401 with body {'id':'053bae9592878554b7d2bd7439ac78ec','message':'missing authorization header','name':'unauthorized'} and no completion in 2595 ms",
+      "capture": "sha256:c12a77a120963c9a0c5ed96f8cab2e2f97757589519daf8140087dc112431d24",
+      "quote": "a keyless GET to https://api.stability.ai/v1/user/account returned HTTP 401 with body {'id':'053bae9592878554b7d2bd7439ac78ec','message':'missing authorization header','name':'unauthorized'} and no completion in 2595 ms"
+    },
+    {
+      "url": "probe:https://api.stability.ai/v1/user/account",
+      "date": "2026-11-18",
+      "proved": "a keyless GET to https://api.stability.ai/v1/user/account returned HTTP 401 with body {'id':'1c59c6716ba45c8cbfd2d92ef96064e8','message':'missing authorization header','name':'unauthorized'} and no completion in 1164 ms",
+      "capture": "sha256:f1a5eb1dae0242cacef6ff5c9747c10e1352982ea5d98a30ae08a129ddb718eb",
+      "quote": "a keyless GET to https://api.stability.ai/v1/user/account returned HTTP 401 with body {'id':'1c59c6716ba45c8cbfd2d92ef96064e8','message':'missing authorization header','name':'unauthorized'} and no completion in 1164 ms"
     }
   ],
   "verdict": "trial-only",
-  "verified_at": "2026-11-18T04:36:13.766Z",
+  "verified_at": "2026-11-18T05:36:08.308Z",
   "endpoint": "https://api.stability.ai",
-  "notes": "endpoint filled from first-party API reference and OpenAPI spec on 2026-11-18; base URL https://api.stability.ai, current routes under /v2beta; docs https://docs.stability.ai/api-reference. The docs.stability.ai/openapi.json link was a login wall; the equivalent spec at api.stability.ai/v2alpha/openapi was used instead."
+  "notes": "endpoint filled from first-party API reference and OpenAPI spec on 2026-11-18; base URL https://api.stability.ai, current routes under /v2beta; docs https://docs.stability.ai/api-reference. The docs.stability.ai/openapi.json link was a login wall; the equivalent spec at api.stability.ai/v2alpha/openapi was used instead. On 2026-11-18 two keyless GETs to /v1/user/account returned HTTP 401, so the route exists and needs a key.",
+  "probe": {
+    "records": [
+      {
+        "probe_id": "stability-ai-20261118",
+        "target": "https://api.stability.ai/v1/user/account",
+        "runs": [
+          {
+            "label": "run1",
+            "probed_at": "2026-11-18T05:26:19.614Z",
+            "status": 401,
+            "completion": false,
+            "capture": "sha256:c12a77a120963c9a0c5ed96f8cab2e2f97757589519daf8140087dc112431d24"
+          },
+          {
+            "label": "run2",
+            "probed_at": "2026-11-18T05:36:08.308Z",
+            "status": 401,
+            "completion": false,
+            "capture": "sha256:f1a5eb1dae0242cacef6ff5c9747c10e1352982ea5d98a30ae08a129ddb718eb"
+          }
+        ]
+      }
+    ]
+  }
 }

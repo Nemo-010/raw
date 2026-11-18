@@ -18,7 +18,7 @@
     "rest"
   ],
   "history": [],
-  "verified_at": "2026-11-18T04:36:15.068Z",
+  "verified_at": "2026-11-18T05:36:15.599Z",
   "tooling": "any OpenAI SDK with base URL https://open.bigmodel.cn/api/paas/v4/; curl against POST https://open.bigmodel.cn/api/paas/v4/chat/completions with Authorization: Bearer YOUR_API_KEY.",
   "chaining": "a free 200K-context text model and a free vision model are a zero-cost first pass in a two-stage pipeline; only the survivors go to a metered model",
   "free_tier": {
@@ -151,10 +151,48 @@
       "proved": "first-party table separates the GLM Coding Plan base URLs from the general inference endpoint",
       "capture": "sha256:b3aa7e2bacca16a6e748fc8ae658d12b9ff09738d759743a57a5004f01740afa",
       "quote": "| Anthropic Message 协议 | `https://open.bigmodel.cn/api/anthropic` |\n| OpenAI Chat Completion 协议 | `https://open.bigmodel.cn/api/coding/paas/v4` |\n| OpenAI Response 协议 | `https://open.bigmodel.cn/api/v1` |"
+    },
+    {
+      "url": "probe:https://open.bigmodel.cn/api/paas/v4/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://open.bigmodel.cn/api/paas/v4/chat/completions for GLM-4.7-Flash returned HTTP 401 with body {'error':{'code':'1001','message':'Header中未收到Authorization参数，无法进行身份验证。'}} and no completion in 1480 ms",
+      "capture": "sha256:16c5a0c733d623908ccbb303b3b335700aa191e50ec3bb362bf5fdb65712d540",
+      "quote": "a keyless POST to https://open.bigmodel.cn/api/paas/v4/chat/completions for GLM-4.7-Flash returned HTTP 401 with body {'error':{'code':'1001','message':'Header中未收到Authorization参数，无法进行身份验证。'}} and no completion in 1480 ms"
+    },
+    {
+      "url": "probe:https://open.bigmodel.cn/api/paas/v4/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://open.bigmodel.cn/api/paas/v4/chat/completions for GLM-4.7-Flash returned HTTP 401 with body {'error':{'code':'1001','message':'Header中未收到Authorization参数，无法进行身份验证。'}} and no completion in 508 ms",
+      "capture": "sha256:4047936b16dcdfc8f1d0d929127c56da92c17320635afd48a64a8030ec2e4dc8",
+      "quote": "a keyless POST to https://open.bigmodel.cn/api/paas/v4/chat/completions for GLM-4.7-Flash returned HTTP 401 with body {'error':{'code':'1001','message':'Header中未收到Authorization参数，无法进行身份验证。'}} and no completion in 508 ms"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "notes": "a keyless GET or POST to the chat route returns HTTP 401 with body {\"error\":{\"code\":\"1001\",\"message\":\"Header中未收到Authorization参数，无法进行身份验证。\"}}, and a POST with an invalid bearer token returns HTTP 401 with body {\"error\":{\"code\":\"401\",\"message\":\"令牌已过期或验证不正确\"}}.",
+  "notes": "a keyless GET or POST to the chat route returns HTTP 401 with body {\"error\":{\"code\":\"1001\",\"message\":\"Header中未收到Authorization参数，无法进行身份验证。\"}}, and a POST with an invalid bearer token returns HTTP 401 with body {\"error\":{\"code\":\"401\",\"message\":\"令牌已过期或验证不正确\"}}. On 2026-11-18 two keyless POSTs returned HTTP 401 code 1001, so the route is live and needs a key.",
   "endpoint": "https://open.bigmodel.cn/api/paas/v4/",
-  "interface_detail": "OpenAI Chat Completions compatible. The platform is served by the first-party Zhipu inference API, with chat at POST https://open.bigmodel.cn/api/paas/v4/chat/completions and models at GET https://open.bigmodel.cn/api/paas/v4/models; auth is a bearer key in Authorization: Bearer YOUR_API_KEY, created on the API Keys page after sign-in, with a JWT Token scheme also documented. GLM Coding Plan uses separate base URLs and separate keys."
+  "interface_detail": "OpenAI Chat Completions compatible. The platform is served by the first-party Zhipu inference API, with chat at POST https://open.bigmodel.cn/api/paas/v4/chat/completions and models at GET https://open.bigmodel.cn/api/paas/v4/models; auth is a bearer key in Authorization: Bearer YOUR_API_KEY, created on the API Keys page after sign-in, with a JWT Token scheme also documented. GLM Coding Plan uses separate base URLs and separate keys.",
+  "probe": {
+    "records": [
+      {
+        "probe_id": "zhipu-bigmodel-open-platform-20261118",
+        "target": "https://open.bigmodel.cn/api/paas/v4/chat/completions",
+        "runs": [
+          {
+            "label": "run1",
+            "probed_at": "2026-11-18T05:26:29.953Z",
+            "status": 401,
+            "completion": false,
+            "capture": "sha256:16c5a0c733d623908ccbb303b3b335700aa191e50ec3bb362bf5fdb65712d540"
+          },
+          {
+            "label": "run2",
+            "probed_at": "2026-11-18T05:36:15.599Z",
+            "status": 401,
+            "completion": false,
+            "capture": "sha256:4047936b16dcdfc8f1d0d929127c56da92c17320635afd48a64a8030ec2e4dc8"
+          }
+        ]
+      }
+    ]
+  }
 }

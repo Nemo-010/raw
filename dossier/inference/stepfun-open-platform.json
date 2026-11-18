@@ -18,7 +18,7 @@
     "rest"
   ],
   "history": [],
-  "verified_at": "2026-11-18T04:36:13.884Z",
+  "verified_at": "2026-11-18T05:36:08.856Z",
   "tooling": "any OpenAI SDK with base URL https://api.stepfun.ai/v1; curl against POST https://api.stepfun.ai/v1/chat/completions with Authorization: Bearer $STEP_API_KEY.",
   "chaining": "the limited-time free audio preview models are the only zero-priced rows; text reasoning models are paid per token",
   "free_tier": {
@@ -165,10 +165,48 @@
       "proved": "first-party table separates the overseas endpoint (api.stepfun.ai/v1) from the mainland endpoint (api.stepfun.com/v1)",
       "capture": "sha256:54e90b785dcec39bd6a9c141c83cba2a312bd76179277e994236adf6748cb321",
       "quote": "| 国内开放平台按量付费 | `https://api.stepfun.com/v1` |\n| 海外开放平台按量付费 | `https://api.stepfun.ai/v1` |"
+    },
+    {
+      "url": "probe:https://api.stepfun.ai/v1/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://api.stepfun.ai/v1/chat/completions for step-3.5-flash returned HTTP 401 with body {'error':{'message':'Incorrect API key provided','type':'invalid_api_key'}} and no completion in 1172 ms",
+      "capture": "sha256:8b74e9777453aa7776d6c090424b6d67acb6815d6e5c6ee4bfb1b24a405578bf",
+      "quote": "a keyless POST to https://api.stepfun.ai/v1/chat/completions for step-3.5-flash returned HTTP 401 with body {'error':{'message':'Incorrect API key provided','type':'invalid_api_key'}} and no completion in 1172 ms"
+    },
+    {
+      "url": "probe:https://api.stepfun.ai/v1/chat/completions",
+      "date": "2026-11-18",
+      "proved": "a keyless POST to https://api.stepfun.ai/v1/chat/completions for step-3.5-flash returned HTTP 401 with body {'error':{'message':'Incorrect API key provided','type':'invalid_api_key'}} and no completion in 483 ms",
+      "capture": "sha256:97d7cd7ab83e39ccaa63c51d44e1dfb574b55791559afb96a22f91e8e3f083fa",
+      "quote": "a keyless POST to https://api.stepfun.ai/v1/chat/completions for step-3.5-flash returned HTTP 401 with body {'error':{'message':'Incorrect API key provided','type':'invalid_api_key'}} and no completion in 483 ms"
     }
   ],
   "verdict": "trial-only",
   "endpoint": "https://api.stepfun.ai/v1",
   "interface_detail": "OpenAI Chat Completions compatible. The overseas platform is served by the first-party StepFun inference API, with chat at POST https://api.stepfun.ai/v1/chat/completions and models at GET https://api.stepfun.ai/v1/models; auth is a bearer key in Authorization: Bearer $STEP_API_KEY, created on the Interface Keys page after sign-in. The mainland sibling uses https://api.stepfun.com/v1.",
-  "notes": "A keyless GET or POST to the chat route returns HTTP 401 with body {\"error\":{\"message\":\"Incorrect API key provided\",\"type\":\"invalid_api_key\"}}; no OpenAPI JSON endpoint was reachable on 2026-11-18."
+  "notes": "A keyless GET or POST to the chat route returns HTTP 401 with body {\"error\":{\"message\":\"Incorrect API key provided\",\"type\":\"invalid_api_key\"}}; no OpenAPI JSON endpoint was reachable on 2026-11-18. On 2026-11-18 two keyless POSTs to /v1/chat/completions for step-3.5-flash returned HTTP 401 invalid_api_key, so the route is live.",
+  "probe": {
+    "records": [
+      {
+        "probe_id": "stepfun-open-platform-20261118",
+        "target": "https://api.stepfun.ai/v1/chat/completions",
+        "runs": [
+          {
+            "label": "run1",
+            "probed_at": "2026-11-18T05:26:20.849Z",
+            "status": 401,
+            "completion": false,
+            "capture": "sha256:8b74e9777453aa7776d6c090424b6d67acb6815d6e5c6ee4bfb1b24a405578bf"
+          },
+          {
+            "label": "run2",
+            "probed_at": "2026-11-18T05:36:08.856Z",
+            "status": 401,
+            "completion": false,
+            "capture": "sha256:97d7cd7ab83e39ccaa63c51d44e1dfb574b55791559afb96a22f91e8e3f083fa"
+          }
+        ]
+      }
+    ]
+  }
 }
