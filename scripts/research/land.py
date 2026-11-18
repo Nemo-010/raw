@@ -536,6 +536,8 @@ def update_branch(r, repo=REPO, again="land"):
     return "merged origin/rq/%s into rq/%s in git objects" % (run, run)
 
 
+DENIED_RE = re.compile(r"permission to .* denied|403|access denied|not allowed to push|write access|"
+                       r"authentication failed|could not read username", re.I)
 REJECTED_RE = re.compile(r"\[rejected\]|non-fast-forward|fetch first|stale info|\(rejected\)", re.I)
 
 
@@ -558,6 +560,12 @@ def push_branch(r, repo=REPO, again="land", soft=False):
         if rc == 0:
             return "pushed rq/%s to %s (no pull request yet)" % (run, REMOTE)
         msg = (err or out).strip()
+        if not REJECTED_RE.search(msg) and track.origin_is_upstream(repo) and (
+                DENIED_RE.search(msg) or track.can_push_upstream(repo) is False):
+            # a contributor who cloned the upstream: the fix is a fork as the push target, not a retry
+            if soft:
+                return "rq/%s was not pushed: %s" % (run, track.fork_hint())
+            raise Fail("the push of rq/%s was refused (%s). %s" % (run, msg[:200], track.fork_hint()), 1)
         if not REJECTED_RE.search(msg):
             if soft:
                 return ("rq/%s was not pushed: %s. The run branch is intact locally, and a contributor who cannot "

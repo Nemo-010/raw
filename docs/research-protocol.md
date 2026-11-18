@@ -148,14 +148,18 @@ PowerShell, write `python scripts/research/rq.py` for `scripts/rq` and `python s
 
 ```bash
 git config --get core.hooksPath                # prints .githooks
-git config --get rq.researchCheckout           # prints true
+git config --get rq.researchCheckout           # prints true in the research checkout, nothing in a contributor's clone
 git --no-optional-locks status --short
 scripts/rq folder session                      # your folder .tmp/session-<id>/, for RESUME.md and notes
 ```
 
-⛔ If either `git config` line prints nothing, this is not a prepared research checkout: stop and
-report it, and do not set them yourself. `scripts/rq status` prints the marker, and says when the checkout's HEAD
-is not in `origin/main` (a feature branch, where `open` refuses).
+⛔ An agent that the operator started for the shared research checkout and that finds either `git config` line
+empty stops and reports it, and does not set them itself. ⭐ A contributor's own clone has no marker, and that is
+correct: it is not the research checkout, nothing stops, and [`../CONTRIBUTING.md`](../CONTRIBUTING.md) is the
+procedure (set `core.hooksPath` there yourself; never set `rq.researchCheckout`). Every step below is the same in
+that clone, and `scripts/rq land` pushes the run branch to the contributor's fork and opens the pull request
+([`../AGENTS.md`](../AGENTS.md) section 0). `scripts/rq status` prints the marker, and says when the checkout's
+HEAD is not in `origin/main` (a feature branch, where `open` refuses).
 
 ⛔ Do not run the gate, `scripts/rq gatecmp` or the selftest: CI runs them on the pushed head, in the public
 repository's Actions (AGENTS.md section 0), and `scripts/rq ci RUN` shows the result. Do not write git

@@ -37,7 +37,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REAL = os.path.abspath(os.path.join(HERE, "..", ".."))
 FAILS = []
 # the broker's status (read for the provider ids of a next route) is never the real one in a test: a closed local port
-ENV = dict(os.environ, RQ_NO_GITHUB="1", RQ_PUSH_LOCAL="1", RQ_SELFTEST="1", PYTHONIOENCODING="utf-8",
+# RQ_NO_FORGE: no subprocess reads the real repository's issues through the broker's read fallback; a fixture issue
+# number (#70, #71, ...) that exists there, closed or unlabelled, would decide a case
+ENV = dict(os.environ, RQ_NO_GITHUB="1", RQ_NO_FORGE="1", RQ_PUSH_LOCAL="1", RQ_SELFTEST="1", PYTHONIOENCODING="utf-8",
            BROKER_STATUS="http://127.0.0.1:9/status.json")
 
 

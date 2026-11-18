@@ -34,6 +34,20 @@ scripts/rq check
 The commit hook and the checkout marker are set once per checkout. A research session checks them and never
 writes git configuration.
 
+⭐ **Two kinds of checkout, two procedures.** `git config --get rq.researchCheckout` tells them apart.
+
+- It prints `true`: the operator's shared **research checkout**, where 30 or more agents work in one tree. Every
+  rule of this file applies, rule 14 of section 2 included. An agent the operator started for it that finds the
+  marker missing stops and tells the operator.
+- It prints nothing: an **own clone**: a contributor's clone of a fork, or the operator's own clone for tools or
+  rules. This is normal, not an error: do not set the marker, and do not stop. A contributor follows
+  [`CONTRIBUTING.md`](CONTRIBUTING.md): set the commit hook and the commit address once, open the run with
+  `scripts/rq open`, and hand it in with `scripts/rq land`, which pushes to the fork and opens the pull request.
+  Every absolute of section 2 applies except the shared-checkout parts of rule 14 (one tree for all agents, no
+  git configuration, no fork). ⚠ `land` is the hand-in: it writes the ledger lines, renders the tables and puts
+  "Part of #N" in the body, so a pull request assembled by hand misses all three. A clone of `f-shy/raw` itself
+  with no write access needs a fork as its push target first: `scripts/rq open` and `land` print the one command.
+
 ## 1. What this repository is
 
 A **research corpus**, not a codebase. The deliverable is a set of verified
@@ -66,6 +80,7 @@ design makes that rot visible and cheap to repair.
 | open issues labelled `rq:research` | the work queue: one request line per issue, with its evidence, its suggested units and its "Done when" | to choose your next run |
 | [`queue/`](queue/) | the questions that lanes filed, one JSON file each. `scripts/rq queue` lists them; an issue names the ones it covers | when you plan a run with `scripts/rq plan RUN --queue ID` |
 | [`README.md`](README.md) | the front door for a human: what this is, what is covered now, how to read it | when a human asks what this repository is |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | the procedure in a contributor's own clone: fork, the commit hook and address, a run, `land` to the fork, or a zip without an account | when `rq.researchCheckout` prints nothing and you are not the operator (section 0) |
 | [`docs/`](docs/README.md) | the findings, by topic. `docs/<topic>/{free,paid}/<slug>.md` | to answer a question |
 | [`docs/conventions/`](docs/conventions/README.md) | how prose, documents, numbers, timestamps and JSON records are written. Binding on every sentence | before your first sentence |
 | [`dossier/`](dossier/README.md) | one JSON record per provider — **the source of truth**; every table in `docs/` is a view of it | to check or change a fact |
@@ -178,10 +193,13 @@ design makes that rot visible and cheap to repair.
     `unverified: behind a sign-up`, and `scripts/rq merge` lists it in a comment
     on the open issue labelled `rq:operator`. A step that needs an account, a
     purchase or a running resource is the operator's: it goes to that issue.
-14. ⛔ **One working tree for all research, and no heavy work in it.** Research runs
-    with 30 or more agents at the same time, on one machine, in one checkout: the
-    research checkout (`git config --get rq.researchCheckout` prints `true`). A
-    research agent (a parent, a lane or an auditor):
+14. ⛔ **One working tree for all research, and no heavy work in it.** On the
+    operator's machine, research runs with 30 or more agents at the same time, in one
+    checkout: the research checkout (`git config --get rq.researchCheckout` prints
+    `true`). This rule is about that shared checkout. A contributor works in an own
+    clone of a fork and follows [`CONTRIBUTING.md`](CONTRIBUTING.md) (section 0); there
+    the run still goes through `scripts/rq`, and `land` still hands it in. In the
+    research checkout, a research agent (a parent, a lane or an auditor):
     - never makes a git worktree, a clone or a fork, and never starts a subagent
       with an option that gives it a worktree or a clone of its own;
     - never changes the checkout's branch, index, tracked files or git
