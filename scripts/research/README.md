@@ -23,6 +23,8 @@ file an agent makes is under `.tmp/<id>/`. Only the merge session's `scripts/rq 
 | `RQ_BASH` | the bash that runs `broker.sh`, and the gate script in CI or an own clone. On Windows the default is the bash of Git for Windows, never the WSL launcher in System32 |
 | `PYTHON` | the interpreter `scripts/rq`, `scripts/fr`, `broker.sh` and the gate script (in CI or an own clone) use; default the first of `python3` and `python` that runs. `capture` passes its own, so `broker.sh` starts no Python to find one |
 | `BROKER_WAIT=1` | `broker.sh` waits for a broker 429 or 503 with `Retry-After` and repeats only the `curl` call; `scripts/rq capture --wait` sets it |
+| `https_proxy`, `HTTPS_PROXY`, `NO_PROXY` | `broker.sh` and `probe.py` follow the environment's proxy and its `NO_PROXY` list, so a machine whose only way out is a proxy reaches the broker and the hosts it probes; loopback is always direct. A probe record's `route` says `proxy` or `direct`, never the proxy's URL |
+| `BROKER_PROXY=URL`, `BROKER_NOPROXY=1` | `broker.sh` sends every request through that proxy, or every request direct whatever the environment says. `probe.py --proxy URL` and `--no-env-proxy` are the same for a probe |
 | `RQ_SELFTEST`, `RQ_TEST_NOW`, `RQ_TEST_STOP_AFTER` | the selftest only: test refs, a moved clock, a kill at a named point |
 
 ## The commands

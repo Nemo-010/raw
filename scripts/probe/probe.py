@@ -56,7 +56,7 @@ import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 
-PROBE_VERSION = "1.0.0"
+PROBE_VERSION = "1.1.0"
 DEFAULT_UA = "probe.py/1.0 (verification harness)"
 MAX_REDIRECTS = 10
 
@@ -277,19 +277,88 @@ def _ssl_context(insecure):
     return ctx
 
 
+def _proxy_for(url, args):
+    """The proxy URL a request to url goes through, or None for a direct one. --proxy names one; otherwise the
+    environment's (http_proxy, https_proxy and their NO_PROXY list), unless --no-env-proxy. A machine whose only way
+    out is a proxy probes through it; a machine with no proxy set probes direct. Loopback is always direct."""
+    if getattr(args, "proxy", None):
+        return args.proxy
+    if getattr(args, "no_env_proxy", False):
+        return None
+    p = urllib.parse.urlsplit(url)
+    host = p.hostname or ""
+    if not host or host in _LOOPBACK:
+        return None
+    try:
+        if urllib.request.proxy_bypass(host):
+            return None
+    except Exception:  # noqa: BLE001 - a malformed NO_PROXY reads as no bypass
+        pass
+    return urllib.request.getproxies().get(p.scheme)
+
+
+_LOOPBACK = ("127.0.0.1", "localhost", "::1")
+
+
+class _ProxyHandler(urllib.request.ProxyHandler):
+    """urllib's ProxyHandler (the environment's proxies and its NO_PROXY list), except that loopback is always
+    direct: a local stub is never sent to a proxy, whatever NO_PROXY says."""
+
+    def proxy_open(self, req, proxy, type):
+        host = urllib.parse.urlsplit("//" + (req.host or "")).hostname or ""
+        if host in _LOOPBACK:
+            return None
+        return urllib.request.ProxyHandler.proxy_open(self, req, proxy, type)
+
+
 def _build_opener(args):
     handlers = [_NoRedirect()]
     if args.proxy:
-        handlers.append(urllib.request.ProxyHandler({"http": args.proxy, "https": args.proxy}))
-    elif not args.use_env_proxy:
+        handlers.append(_ProxyHandler({"http": args.proxy, "https": args.proxy}))
+    elif getattr(args, "no_env_proxy", False):
         handlers.append(urllib.request.ProxyHandler({}))
+    else:
+        handlers.append(_ProxyHandler())
     handlers.append(urllib.request.HTTPSHandler(context=_ssl_context(args.insecure)))
     return urllib.request.build_opener(*handlers)
 
 
-def tls_probe(url, timeout=10.0):
+def _connect_via_proxy(proxy, host, port, timeout):
+    """A TCP socket to host:port tunnelled through an HTTP proxy with CONNECT (credentials in the proxy URL become
+    Proxy-Authorization). Raises OSError when the proxy refuses."""
+    import base64
+    pp = urllib.parse.urlsplit(proxy if "://" in proxy else "http://" + proxy)
+    s = socket.create_connection((pp.hostname, pp.port or 80), timeout=timeout)
+    try:
+        hostport = "[%s]:%d" % (host, port) if ":" in host else "%s:%d" % (host, port)
+        req = "CONNECT %s HTTP/1.1\r\nHost: %s\r\n" % (hostport, hostport)
+        if pp.username is not None:
+            cred = "%s:%s" % (urllib.parse.unquote(pp.username), urllib.parse.unquote(pp.password or ""))
+            req += "Proxy-Authorization: Basic %s\r\n" % base64.b64encode(cred.encode()).decode()
+        s.sendall((req + "\r\n").encode())
+        buf = b""
+        while b"\r\n\r\n" not in buf:
+            chunk = s.recv(4096)
+            if not chunk:
+                raise OSError("the proxy closed the CONNECT")
+            buf += chunk
+            if len(buf) > 65536:
+                raise OSError("the proxy's CONNECT answer is too long")
+        line = buf.split(b"\r\n", 1)[0].decode("latin-1")
+        parts = line.split()
+        if len(parts) < 2 or not parts[1].startswith("2"):
+            raise OSError("the proxy refused CONNECT: %s" % line[:100])
+        return s
+    except Exception:
+        s.close()
+        raise
+
+
+def tls_probe(url, timeout=10.0, proxy=None):
     """Second, independent handshake: proves the host speaks TLS when the
-    verifying handshake failed. Returns None for non-https or on failure."""
+    verifying handshake failed. Returns None for non-https or on failure. Through
+    proxy (an HTTP proxy URL) the handshake runs in a CONNECT tunnel; a proxy that
+    intercepts TLS then shows its own certificate, which the record's route names."""
     p = urllib.parse.urlsplit(url)
     if p.scheme != "https" or not p.hostname:
         return None
@@ -297,7 +366,11 @@ def tls_probe(url, timeout=10.0):
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE
     try:
-        with socket.create_connection((p.hostname, p.port or 443), timeout=timeout) as s:
+        if proxy:
+            raw = _connect_via_proxy(proxy, p.hostname, p.port or 443, timeout)
+        else:
+            raw = socket.create_connection((p.hostname, p.port or 443), timeout=timeout)
+        with raw as s:
             with ctx.wrap_socket(s, server_hostname=p.hostname) as ss:
                 der = ss.getpeercert(binary_form=True) or b""
                 return {
@@ -415,8 +488,10 @@ def probe_once(url, args):
     }
     if args.range_spec:
         rec["range"] = {"requested": args.range_spec, "honoured": None, "content_range": None}
+    # the route, not the proxy's URL: a proxy URL can carry credentials, and a record is evidence that others read
+    rec["route"] = "proxy" if _proxy_for(url, args) else "direct"
     if args.tls_info:
-        info = tls_probe(url, timeout=min(args.timeout, 10.0))
+        info = tls_probe(url, timeout=min(args.timeout, 10.0), proxy=_proxy_for(url, args))
         if info:
             rec["tls"].update(info)
             rec["tls"]["verified"] = not args.insecure
@@ -462,7 +537,7 @@ def probe_once(url, args):
                 rec["error"] = cls
                 rec["error_detail"] = "%s: %s" % (type(err).__name__, str(err)[:300])
                 if cls in ("tls_untrusted", "tls_error"):
-                    info = tls_probe(cur, timeout=min(args.timeout, 10.0))
+                    info = tls_probe(cur, timeout=min(args.timeout, 10.0), proxy=_proxy_for(cur, args))
                     if info:
                         rec["tls"].update(info)
                     if isinstance(err, ssl.SSLCertVerificationError):
@@ -734,6 +809,7 @@ def probe_parallel(urls, args):
         "error": next((r["error"] for r in recs if r["error"]), None),
         "probed_at": iso_now(),
         "probe_version": PROBE_VERSION,
+        "route": recs[0].get("route") if recs else None,
         "mode": "concurrency",
         "concurrency": workers,
         "shard": shard,
@@ -940,7 +1016,7 @@ def run_selftest(verbose=False):
             method="GET", head_only=False, bytes_limit=None, range_spec=None,
             timeout=5.0, retries=0, insecure=False, body_hash=False, no_hash=False,
             user_agent=DEFAULT_UA, header=[], dump_headers=False, proxy=None,
-            use_env_proxy=False, save_body=None, expect_sha256=None,
+            use_env_proxy=False, no_env_proxy=True, save_body=None, expect_sha256=None,
             expect_bytes=None, compressed=False, concurrency=2, baseline=True,
             tls_info=False, shard_bytes=None,
         )
@@ -1081,6 +1157,27 @@ def run_selftest(verbose=False):
         except ssl.SSLCertVerificationError as e:
             check("classify tls_untrusted", classify_error(e) == "tls_untrusted")
         check("classify dns", classify_error(socket.gaierror(-2, "x")) == "dns")
+        # the route: the environment's proxy by default, loopback and NO_PROXY direct, --no-env-proxy direct
+        saved = {k: os.environ.get(k) for k in ("https_proxy", "HTTPS_PROXY", "no_proxy", "NO_PROXY")}
+        try:
+            for k in saved:
+                os.environ.pop(k, None)
+            os.environ["https_proxy"] = "http://u:p@proxy.invalid:3128"
+            os.environ["no_proxy"] = "skip.invalid"
+            a = args_for(no_env_proxy=False)
+            check("route env proxy", _proxy_for("https://example.invalid/", a) == "http://u:p@proxy.invalid:3128")
+            check("route no_proxy", _proxy_for("https://skip.invalid/", a) is None)
+            check("route loopback", _proxy_for("https://127.0.0.1:9/", a) is None)
+            check("route opt-out", _proxy_for("https://example.invalid/", args_for(no_env_proxy=True)) is None)
+            check("route explicit", _proxy_for("https://x.invalid/", args_for(proxy="http://e.invalid:1")) == "http://e.invalid:1")
+            r = probe_once(base + "/ok", a)
+            check("route loopback probe", r.get("route") == "direct" and r.get("status") == 200, repr((r.get("route"), r.get("status"), r.get("error"))))
+        finally:
+            for k, v in saved.items():
+                if v is None:
+                    os.environ.pop(k, None)
+                else:
+                    os.environ[k] = v
         check("classify refused", classify_error(ConnectionRefusedError()) == "connect_refused")
         check("classify timeout", classify_error(socket.timeout()) == "timeout")
 
@@ -1171,9 +1268,12 @@ def build_parser():
     p.add_argument("--compressed", action="store_true",
                    help="send Accept-Encoding: gzip (breaks byte identity)")
     p.add_argument("--dump-headers", action="store_true", help="record every header")
-    p.add_argument("--proxy", help="explicit proxy URL (default: no proxy, hermetic)")
+    p.add_argument("--proxy", help="explicit proxy URL (default: the environment's, see --no-env-proxy)")
+    p.add_argument("--no-env-proxy", action="store_true",
+                   help="ignore http_proxy/https_proxy and connect direct (default: honour them and NO_PROXY; "
+                        "loopback is always direct). The record's route says which way a probe went")
     p.add_argument("--use-env-proxy", action="store_true",
-                   help="honour http_proxy/https_proxy from the environment")
+                   help="accepted for old callers: honouring the environment is now the default")
     p.add_argument("--save-body", metavar="PATH", help="write the body to PATH")
     p.add_argument("--human", action="store_true", help="human-readable output")
     p.add_argument("--json", action="store_true", help="force JSON (default)")
