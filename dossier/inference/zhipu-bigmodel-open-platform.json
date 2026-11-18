@@ -18,8 +18,8 @@
     "rest"
   ],
   "history": [],
-  "verified_at": "2026-11-03T11:30:44.393Z",
-  "tooling": "not stated",
+  "verified_at": "2026-11-18T04:36:15.068Z",
+  "tooling": "any OpenAI SDK with base URL https://open.bigmodel.cn/api/paas/v4/; curl against POST https://open.bigmodel.cn/api/paas/v4/chat/completions with Authorization: Bearer YOUR_API_KEY.",
   "chaining": "a free 200K-context text model and a free vision model are a zero-cost first pass in a two-stage pipeline; only the survivors go to a metered model",
   "free_tier": {
     "stated": "Two models are free on input, output and cache, with no token cap or expiry stated: the text model GLM-4.7-Flash (200K context) and the vision model GLM-4.6V-Flash. Concurrency per model is the only published constraint and the per-model figure sits behind a login",
@@ -45,7 +45,7 @@
   },
   "reliability_note": "not assessed: no request was sent to the endpoint",
   "confidence": "documented",
-  "confidence_note": "the free-model list is the pricing page's own FAQ answer and the authentication FAQ says API calls do not require real-name authentication; the per-model concurrency figure and the terms of the new-user pack are unverified: behind a sign-up",
+  "confidence_note": "the endpoint, routes and bearer scheme come from first-party docs pages and first-party OpenAPI specs; a keyless request returned HTTP 401 as expected. The key, account quota and per-model concurrency remain unverified behind a sign-up.",
   "evidence": [
     {
       "url": "https://bigmodel.cn/pricing",
@@ -116,8 +116,45 @@
       "proved": "the pricing page FAQ still lists GLM-4.7-Flash as free on input, output and cache",
       "capture": "sha256:2bc19e1dad8a4e0757132c8ed6495c0ee23a1f886687ce00ff8872f78897d428",
       "quote": "文本模型 GLM-4.7-Flash（200K上下文）：输入免费、输出免费、缓存免费"
+    },
+    {
+      "url": "https://docs.bigmodel.cn/cn/guide/develop/http/introduction",
+      "date": "2026-11-18",
+      "proved": "first-party general API base endpoint for bigmodel.cn",
+      "capture": "sha256:754e47a07859e1235caabcadf7912f6cdc96c7c99e662baa6ad4b1e636840660",
+      "quote": "https://open.bigmodel.cn/api/paas/v4/"
+    },
+    {
+      "url": "https://docs.bigmodel.cn/api-reference/%E6%A8%A1%E5%9E%8B-api/%E5%AF%B9%E8%AF%9D%E8%A1%A5%E5%85%A8.md",
+      "date": "2026-11-18",
+      "proved": "first-party OpenAPI server URL and bearer security in the chat-completion API reference",
+      "capture": "sha256:2f7e2b795c218899ff08cbd06dbbead757e15600464ebb4e6e9b1bafbe595ef4",
+      "quote": "servers:\n  - url: https://open.bigmodel.cn/api/\n    description: 开放平台服务\nsecurity:\n  - bearerAuth: []"
+    },
+    {
+      "url": "https://docs.bigmodel.cn/cn/guide/start/quick-start",
+      "date": "2026-11-18",
+      "proved": "first-party POST chat URL, method and bearer auth header",
+      "capture": "sha256:59c1c2a3980b19ae51f80a298c01a3cd81d04babb9ff88d0313fe20563ecdc6a",
+      "quote": "curl -X POST \"https://open.bigmodel.cn/api/paas/v4/chat/completions\" \\\n-H \"Content-Type: application/json\" \\\n-H \"Authorization: Bearer YOUR_API_KEY\" \\"
+    },
+    {
+      "url": "https://docs.bigmodel.cn/openapi/openapi-en.json",
+      "date": "2026-11-18",
+      "proved": "server URL in the first-party English OpenAPI spec, which also defines POST /paas/v4/chat/completions and bearerAuth",
+      "capture": "sha256:51f627346bcf5d68fed3be6a85582a79ddff123357ca3cbdfc84c2fb5c9f015f",
+      "quote": "\"servers\": [{\"url\": \"https://open.bigmodel.cn/api/\", \"description\": \"Open Platform Service\"}]"
+    },
+    {
+      "url": "https://docs.bigmodel.cn/cn/coding-plan/quick-start.md",
+      "date": "2026-11-18",
+      "proved": "first-party table separates the GLM Coding Plan base URLs from the general inference endpoint",
+      "capture": "sha256:b3aa7e2bacca16a6e748fc8ae658d12b9ff09738d759743a57a5004f01740afa",
+      "quote": "| Anthropic Message 协议 | `https://open.bigmodel.cn/api/anthropic` |\n| OpenAI Chat Completion 协议 | `https://open.bigmodel.cn/api/coding/paas/v4` |\n| OpenAI Response 协议 | `https://open.bigmodel.cn/api/v1` |"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "notes": "the international Z.ai site publishes its own free Flash models under a separate account system; this is the bigmodel.cn side"
+  "notes": "a keyless GET or POST to the chat route returns HTTP 401 with body {\"error\":{\"code\":\"1001\",\"message\":\"Header中未收到Authorization参数，无法进行身份验证。\"}}, and a POST with an invalid bearer token returns HTTP 401 with body {\"error\":{\"code\":\"401\",\"message\":\"令牌已过期或验证不正确\"}}.",
+  "endpoint": "https://open.bigmodel.cn/api/paas/v4/",
+  "interface_detail": "OpenAI Chat Completions compatible. The platform is served by the first-party Zhipu inference API, with chat at POST https://open.bigmodel.cn/api/paas/v4/chat/completions and models at GET https://open.bigmodel.cn/api/paas/v4/models; auth is a bearer key in Authorization: Bearer YOUR_API_KEY, created on the API Keys page after sign-in, with a JWT Token scheme also documented. GLM Coding Plan uses separate base URLs and separate keys."
 }

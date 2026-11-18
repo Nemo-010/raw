@@ -14,7 +14,7 @@
   "interface": [
     "rest"
   ],
-  "verified_at": "2026-11-04T06:15:50.267Z",
+  "verified_at": "2026-11-18T04:36:14.159Z",
   "provider": "Token Harbor",
   "url": "https://tokenharbor.ai/pricing",
   "category": "inference gateway, free plan with a rolling 7-day allowance on :free model ids",
@@ -26,7 +26,7 @@
     "read_on": "2026-11-04",
     "notes": "TH-Rudder text chat in Webchat is free and unlimited during a limited-time campaign and does not draw on the allowance; the allowance size is unverified: not printed"
   },
-  "tooling": "OpenAI-compatible client; free routes carry an explicit :free model id",
+  "tooling": "any OpenAI-compatible client with a custom base URL, or an Anthropic SDK with base_url=\"https://tokenharbor.ai\"; official Connect CLI at https://tokenharbor.ai/connect.sh. No client tool is missing.",
   "chaining": "Free plan, then wallet top-ups per token, or an optional Pass from $1.99 a month",
   "limits": [
     {
@@ -98,8 +98,60 @@
       "proved": "the allowance resets on a rolling 7-day period; its size is not on the public pages",
       "capture": "sha256:5f4a90d2e133a69f267690ca6ffb89c461500de64b50488c279fa14a76593d0e",
       "quote": "Resets on a rolling 7-day period"
+    },
+    {
+      "url": "https://tokenharbor.ai/llms.txt",
+      "date": "2026-11-18",
+      "proved": "both first-party base URLs stated in the first-party catalog",
+      "capture": "sha256:3a4897d1e0e6877c7e8b829ecbef6df116b2389cf23d6e358e95cd9c7c786394",
+      "quote": "One key, every model. The OpenAI-compatible base URL is https://tokenharbor.ai/v1 and the Anthropic-compatible base URL is https://tokenharbor.ai."
+    },
+    {
+      "url": "https://tokenharbor.ai/docs/integrations",
+      "date": "2026-11-18",
+      "proved": "model catalog route and its key requirement",
+      "capture": "sha256:3b231e5350f079c871659321417af4898be15446252249a1b30ecf9a295ac27f",
+      "quote": "run `GET https://tokenharbor.ai/v1/models` with your key as the Bearer token (without one it answers `401`)."
+    },
+    {
+      "url": "https://tokenharbor.ai/docs/api/curl",
+      "date": "2026-11-18",
+      "proved": "bearer auth header on the OpenAI-compatible route",
+      "capture": "sha256:da61eecbf6b07bfaeb75bac10e7829684bd560ccef05fe3240a5dde40be7a560",
+      "quote": "Auth header is `Authorization: Bearer thk_…`."
+    },
+    {
+      "url": "https://tokenharbor.ai/docs/api/curl",
+      "date": "2026-11-18",
+      "proved": "full first-party POST route for OpenAI Chat Completions",
+      "capture": "sha256:da61eecbf6b07bfaeb75bac10e7829684bd560ccef05fe3240a5dde40be7a560",
+      "quote": "url=\"https://tokenharbor.ai/v1/chat/completions\","
+    },
+    {
+      "url": "https://tokenharbor.ai/docs/api/curl",
+      "date": "2026-11-18",
+      "proved": "auth headers on the Anthropic-compatible route",
+      "capture": "sha256:da61eecbf6b07bfaeb75bac10e7829684bd560ccef05fe3240a5dde40be7a560",
+      "quote": "Auth accepts either `x-api-key` (Anthropic default) or `Authorization: Bearer` — pass your `thk_live_` key in either header."
+    },
+    {
+      "url": "https://tokenharbor.ai/docs/getting-started/quickstart",
+      "date": "2026-11-18",
+      "proved": "the single base URL a client is told to paste",
+      "capture": "sha256:082d36dbfbc2cdadabe001a337ceefbbf3a5e21753c53bc0421caf822b25b62f",
+      "quote": "| **Base URL** | `https://tokenharbor.ai/v1` |"
+    },
+    {
+      "url": "https://tokenharbor.ai/docs/getting-started/universal-key",
+      "date": "2026-11-18",
+      "proved": "auth scope of the Universal Key across both route families",
+      "capture": "sha256:a64d3a247ec0538e7ecf71c128c63486054026375e26b76880755b730d65ba89",
+      "quote": "A Universal Key is an OpenAI-shaped bearer token that authenticates every call to `/v1/chat/completions` and the Anthropic-compatible `/v1/messages`."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "notes": "the allowance amount needs the dashboard, which is behind a sign-up"
+  "notes": "the allowance amount needs the dashboard, which is behind a sign-up. Keyless GET /v1/models and keyless POST to both chat routes returned HTTP 401 on 2026-11-18, and HEAD /v1 returned 404; no first-party OpenAPI document is published and /openapi.json returned HTML under HTTP 200.",
+  "endpoint": "https://tokenharbor.ai/v1 (OpenAI-compatible base URL); https://tokenharbor.ai (Anthropic-compatible base URL)",
+  "interface_detail": "OpenAI- and Anthropic-compatible inference gateway. OpenAI shape is POST https://tokenharbor.ai/v1/chat/completions under base URL https://tokenharbor.ai/v1; Anthropic shape is POST https://tokenharbor.ai/v1/messages under base URL https://tokenharbor.ai; the model catalog is GET https://tokenharbor.ai/v1/models and needs a key. Other first-party routes are /v1/responses and /v1/images/generations.",
+  "confidence_note": "endpoint, route, method and auth are from first-party llms.txt, /docs, the Chat APIs page and the live API error body, and keyless probes returned 401 as expected. The key and any per-account allowance were not disclosed without an account."
 }

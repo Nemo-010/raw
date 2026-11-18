@@ -26,7 +26,7 @@
     "read_on": "2026-11-03",
     "notes": "the service is called from a cluster, with no separate key: 'you only need a connection to your Weaviate Cloud cluster'"
   },
-  "tooling": "Weaviate client libraries vectorize on import and query; the service is enabled by default for every cluster",
+  "tooling": "Weaviate client libraries vectorize on import and query; the service is enabled by default for every cluster. Enable vector_config Configure.Vectors.text2vec_weaviate() (Python) / text2vecWeaviate (JS, Java, C#); Go has no direct support and must pass X-Weaviate-Api-Key and X-Weaviate-Cluster-Url headers manually. The optional base_url vectorizer parameter overrides the service origin, but the server accepts only https://api.embedding.weaviate.io or an origin in MODULES_WEAVIATE_EMBEDDINGS_ALLOWED_BASE_URLS.",
   "chaining": "embeddings stay inside the same free cluster that stores the vectors",
   "limits": [
     {
@@ -42,7 +42,7 @@
   },
   "reliability_note": "the page calls Weaviate Embeddings a paid service that can be tried free on a free cluster; the data is processed in the United States",
   "confidence": "documented",
-  "confidence_note": "the daily request cap, the batch size and the model list are quoted from the vendor page; the sign-up fields are unverified.",
+  "confidence_note": "the endpoint host and route are quoted from first-party Weaviate server source, corroborated by a live 401 from the host; the documented no-extra-key auth is quoted from Weaviate docs; the concrete per-cluster endpoint and API key are behind a sign-up.",
   "evidence": [
     {
       "url": "https://docs.weaviate.io/cloud/embeddings",
@@ -71,11 +71,55 @@
       "capture": "sha256:9e27698b31eefdc45a797572199a60fd1a2801555116f472dd7214a9f79c1cd9",
       "quote": "- **[`Snowflake/snowflake-arctic-embed-l-v2.0`](https://docs.weaviate.io/cloud/embeddings/models#snowflake-arctic-embed-l-v2.0)**",
       "proved": "snowflake-arctic-embed-l-v2.0 is one of the hosted text embedding models"
+    },
+    {
+      "url": "https://docs.weaviate.io/weaviate/model-providers/weaviate/embeddings",
+      "date": "2026-11-18",
+      "proved": "cluster credentials authorize the embeddings service",
+      "capture": "sha256:c82262da9641546c6d3b32d8530f3df6796ecc07454a2bc2c010d138720df757",
+      "quote": "Your Weaviate Cloud credentials are automatically used to authorize your access to Weaviate Embeddings."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/weaviate/weaviate/main/usecases/modulecomponents/clients/weaviateembed/weaviate_embed.go",
+      "date": "2026-11-18",
+      "proved": "the Weaviate Embeddings service endpoint is https://api.embedding.weaviate.io with path /v1/embeddings/embed",
+      "capture": "sha256:40ef38c86af0a88d904a7f1b30d2c5ce91d5d70fb3349a21de5c7258eb6bc62e",
+      "quote": "const (\n\tDefaultBaseURL = \"https://api.embedding.weaviate.io\"\n\tURLPath        = \"/v1/embeddings/embed\"\n)"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/weaviate/weaviate/main/usecases/modulecomponents/clients/weaviateembed/weaviate_embed.go",
+      "date": "2026-11-18",
+      "proved": "the service route is called with HTTP POST",
+      "capture": "sha256:40ef38c86af0a88d904a7f1b30d2c5ce91d5d70fb3349a21de5c7258eb6bc62e",
+      "quote": "req, err := http.NewRequestWithContext(ctx, \"POST\", url, bytes.NewReader(body))"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/weaviate/weaviate/main/usecases/modulecomponents/clients/weaviateembed/weaviate_embed.go",
+      "date": "2026-11-18",
+      "proved": "auth is an Authorization token plus the X-Weaviate-Cluster-Url header",
+      "capture": "sha256:40ef38c86af0a88d904a7f1b30d2c5ce91d5d70fb3349a21de5c7258eb6bc62e",
+      "quote": "req.Header.Set(\"Authorization\", token)\n\treq.Header.Add(\"X-Weaviate-Cluster-Url\", clusterURL)"
+    },
+    {
+      "url": "https://docs.weaviate.io/cloud/embeddings",
+      "date": "2026-11-18",
+      "proved": "callers need only a cluster connection; no separate embeddings key",
+      "capture": "sha256:9e27698b31eefdc45a797572199a60fd1a2801555116f472dd7214a9f79c1cd9",
+      "quote": "In order to use Weaviate Embeddings you only need a connection to your Weaviate Cloud cluster. No additional authentication is specifically needed, and the Weaviate Embeddings service is enabled by default for all clusters."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/weaviate/weaviate/main/usecases/modulecomponents/clients/weaviateembed/base_url.go",
+      "date": "2026-11-18",
+      "proved": "the optional base_url override is restricted to the default origin or a server allowlist",
+      "capture": "sha256:f4c02358a101b6c2e1dcb628a5bd9db6298c4afbfaa9a1aaa7501d36493a3f55",
+      "quote": "const AllowedBaseURLsEnv = \"MODULES_WEAVIATE_EMBEDDINGS_ALLOWED_BASE_URLS\""
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-03T07:34:03.660Z",
+  "verified_at": "2026-11-18T04:36:14.247Z",
   "binding": "request-rate",
   "binding_note": "2,000 requests per cluster per day is the only published limit on a free cluster",
-  "notes": "derived: 2,000 requests * 200 objects per batch = 400,000 embeddings per day, as the vendor page states"
+  "notes": "derived: 2,000 requests * 200 objects per batch = 400,000 embeddings per day, as the vendor page states. The embeddings service host and POST route are pinned from Weaviate own server source at commit df6395886859be4020542bfdd0d485dad4829220 (2026-11-09), read 2026-11-18; the host answered HTTP 401 with a Bearer-token guidance body to an unauthenticated GET; a concrete cluster REST host and API key are unverified: behind a sign-up. The 2026-11-03 and 2026-11-18 captures of the overview page differ in bytes but all carried-over quotes match.",
+  "endpoint": "https://api.embedding.weaviate.io/v1/embeddings/embed (POST); called server-side by the cluster text2vec-weaviate vectorizer — callers use their cluster REST endpoint and API key, with no separate embeddings key",
+  "interface_detail": "Weaviate Embeddings is a managed service at POST https://api.embedding.weaviate.io/v1/embeddings/embed with a JSON body of input / model / dimensions / optional is_search_query, authenticated by an Authorization Bearer token (Weaviate Cloud API key or OIDC token) and an X-Weaviate-Cluster-Url header. Callers reach it through a Weaviate Cloud cluster text2vec-weaviate vectorizer over the cluster REST/gRPC API; no separate key is needed (cluster credentials authorize it)."
 }

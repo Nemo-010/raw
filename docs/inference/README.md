@@ -213,6 +213,7 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `moonshot-kimi-api-international` | Moonshot Kimi API Platform international | paid-only | documented |
 | `nebius-token-factory` | Nebius Token Factory | trial-only | documented |
 | `nlp-cloud` | NLP Cloud | fails-identity | documented |
+| `nous-portal-free` | Nous Portal | qualifies-with-caveat | documented |
 | `novita-llm-api` | Novita LLM API | qualifies-with-caveat | documented |
 | `onomeo` | onomeo | paid-only | documented |
 | `pinecone-inference` | Pinecone Inference (embeddings and re... | qualifies-with-caveat | documented |

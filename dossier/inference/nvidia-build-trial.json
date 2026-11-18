@@ -13,7 +13,7 @@
   "interface": [
     "rest"
   ],
-  "tooling": "any OpenAI-compatible client; curl against POST {base}/chat/completions",
+  "tooling": "any OpenAI-compatible client (set base_url to https://integrate.api.nvidia.com/v1); curl against POST https://integrate.api.nvidia.com/v1/chat/completions with Authorization: Bearer $NVIDIA_API_KEY",
   "chaining": "pairs with an agent only inside a trial; the scarce link is the trial itself, because the published rate forbids production use",
   "limits": [
     {
@@ -42,7 +42,7 @@
   },
   "reliability_note": "the phone one-time-password step fails for some numbers with 'invalid' or 'exceeded limits' errors; NVIDIA's pinned forum post of 2026-02-17 states verification on build.nvidia.com has been challenging and routes failures to help@build.nvidia.com; the phone form validates a number with libphonenumber isValid only and drops the listed locations, and it offers a Phone Call channel after three SMS resends when the runtime flag killswitches/otp/phone.enabled is true (read true on 2026-11-03), while the WhatsApp and WeChat channels are off (flags read false on 2026-11-03); whether the OTP service accepts VoIP or virtual numbers, and whether a call is delivered where SMS fails, is unverified: behind a sign-up",
   "confidence": "documented",
-  "confidence_note": "the 40 requests per minute figure and the no per-token billing statement are quoted from the build.nvidia.com FAQ; the no-credit-card statement is quoted from build.nvidia.com/llms.txt",
+  "confidence_note": "The endpoint, route and bearer scheme are from first-party llms.txt and the generated API reference; a keyless POST returned 401/403 as expected. Key value and per-account quota unverified behind a sign-up.",
   "evidence": [
     {
       "url": "https://build.nvidia.com/deepseek-ai/deepseek-v4.1-flash",
@@ -307,12 +307,35 @@
       "proved": "a user post of 2026-07-11 reports the API Keys page message shown to an account without the organization's API key permission (reported)",
       "capture": "sha256:c69adc6b6f06ad59d241334fe98ee81fa6776877bcff4873c09fea387d7f1f28",
       "quote": "You do not have permissions to create API Keys in this Organization. Switch Orgs or contact your admin."
+    },
+    {
+      "url": "https://build.nvidia.com/llms.txt",
+      "date": "2026-11-18",
+      "proved": "first-party base URL and bearer auth scheme for the NVIDIA build trial",
+      "capture": "sha256:6a51456b8d9a4a6eedb9f4ee51145e8233e3f218947291a0c1e7d4aa701b7671",
+      "quote": "- **Base URL:** `https://integrate.api.nvidia.com/v1`\n- **Auth:** Bearer token via `Authorization: Bearer $NVIDIA_API_KEY`\n- **API Key:** Generate one at https://build.nvidia.com/settings"
+    },
+    {
+      "url": "https://build.nvidia.com/qc69jvmznzxy/deepseek-v4.1-flash/apireference.md",
+      "date": "2026-11-18",
+      "proved": "generated first-party OpenAPI reference names the POST route, server URL and bearer-only auth",
+      "capture": "sha256:d20b79c8fe75d5846a74b2e060efbd072660bf1abc4a3a4ce8b9ee94325a1c2a",
+      "quote": "- POST `https://integrate.api.nvidia.com/v1/chat/completions`\n\nServer definitions:\n\n```json\n[\n  {\n    \"url\": \"https://integrate.api.nvidia.com/v1/\"\n  }\n]\n```\n\n#### Token\n\n```json\n{\n  \"type\": \"http\",\n  \"scheme\": \"bearer\"\n}\n```"
+    },
+    {
+      "url": "https://build.nvidia.com/llms.txt",
+      "date": "2026-11-18",
+      "proved": "OpenAI Chat Completions compatibility and SDK base-URL usage",
+      "capture": "sha256:6a51456b8d9a4a6eedb9f4ee51145e8233e3f218947291a0c1e7d4aa701b7671",
+      "quote": "All NIM model endpoints at `integrate.api.nvidia.com/v1` implement the OpenAI Chat Completions API. Point an existing OpenAI SDK client at `https://integrate.api.nvidia.com/v1` and set the model name."
     }
   ],
   "verdict": "trial-only",
-  "verified_at": "2026-11-03T01:29:20.039Z",
-  "notes": "Free tier: up to 40 requests per minute (RPM) for most models and no per-token billing; the account's own limit is shown in the dashboard.",
+  "verified_at": "2026-11-18T04:36:13.005Z",
+  "notes": "Free tier: up to 40 requests per minute (RPM) for most models and no per-token billing; the account's own limit is shown in the dashboard. The /v1 root answers 404 to HEAD; individual models retire independently (a POST naming deepseek-ai/deepseek-v4.1-flash returned HTTP 410 on 2026-11-16).",
   "binding": "request-rate",
   "stale": false,
-  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "endpoint": "https://integrate.api.nvidia.com/v1",
+  "interface_detail": "NVIDIA NIM hosted inference API, OpenAI-compatible Chat Completions at POST https://integrate.api.nvidia.com/v1/chat/completions, bearer auth via Authorization: Bearer $NVIDIA_API_KEY (an nvapi- key). Generated per-model API references are under https://build.nvidia.com/<id>/apireference.md."
 }

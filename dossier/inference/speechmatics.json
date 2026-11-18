@@ -25,8 +25,8 @@
   "interface": [
     "rest"
   ],
-  "interface_detail": "Batch REST API and real-time WebSocket API; an API key is created in the web portal; Python and JavaScript batch libraries",
-  "tooling": "Python and JavaScript libraries, or raw HTTP and WebSocket with an API key created in the portal",
+  "interface_detail": "Batch REST API and real-time WebSocket API; an API key is created in the web portal; Python and JavaScript batch libraries. Batch base https://eu1.asr.api.speechmatics.com/v2 (also https://us1.asr.api.speechmatics.com/v2 and https://au1.asr.api.speechmatics.com/v2 for non-enterprise tiers; legacy alias https://asr.api.speechmatics.com/v2), with POST /jobs, GET /jobs, GET /jobs/{jobid}, GET /jobs/{jobid}/transcript and GET /usage under /v2. Realtime WebSocket at wss://eu.rt.speechmatics.com/v2 (also us, au, and wss://global.rt.speechmatics.com/v2). Auth is a Bearer API key in the Authorization header.",
+  "tooling": "speechmatics-batch (Python), speechmatics-rt (Python), @speechmatics/batch-client (JavaScript); raw HTTP POST https://eu1.asr.api.speechmatics.com/v2/jobs and WebSocket wss://eu.rt.speechmatics.com/v2, both with Authorization: Bearer $API_KEY; key created at https://portal.speechmatics.com/settings/api-keys.",
   "chaining": "the credit pays for batch transcription of recorded audio, which a free CI runner can post file by file; pair it with a free object store for the audio. The discounted headline rate on the pricing page needs a Pro plan with model training and a top-tier annual commitment, so a Free account pays the base rate.",
   "limits": [
     {
@@ -49,7 +49,7 @@
   },
   "reliability_note": "the Free plan runs on the granted credit only; adding a payment card moves the account to Pro, where usage beyond the granted credits is charged to the card",
   "confidence": "documented",
-  "confidence_note": "the credit, the card-free Free plan, the signup methods and the real-time and batch limits are quoted from vendor pages; the credit's expiry and the text-to-speech rate are unverified.",
+  "confidence_note": "Endpoint, routes and bearer scheme come from the first-party Swagger spec and auth page read 2026-11-18; a keyless probe returned 401 on each batch host as expected. Key value and per-account behavior remain unverified: behind a sign-up.",
   "evidence": [
     {
       "url": "https://www.speechmatics.com/pricing",
@@ -134,8 +134,52 @@
       "proved": "an API key is created in the portal",
       "capture": "sha256:ccb82a6f095a15ab2a4e7ce5b839d7533dc0ecd329cdb6018165d1cebbe7c3eb",
       "quote": "[Create an API key in the portal here](https://portal.speechmatics.com/settings/api-keys), which you'll use to securely access the API."
+    },
+    {
+      "url": "https://docs.speechmatics.com/batch.yaml",
+      "date": "2026-11-18",
+      "proved": "first-party Swagger spec states the batch base URL and HTTPS scheme",
+      "capture": "sha256:bafed1877d7311e6504e5d9d9eab129e4f46ec33abd858c7f18e50a0aa41cd99",
+      "quote": "basePath: https://eu1.asr.api.speechmatics.com/v2\nschemes:\n  - https"
+    },
+    {
+      "url": "https://docs.speechmatics.com/batch.yaml",
+      "date": "2026-11-18",
+      "proved": "the batch API create-job route is POST /jobs",
+      "capture": "sha256:bafed1877d7311e6504e5d9d9eab129e4f46ec33abd858c7f18e50a0aa41cd99",
+      "quote": "/jobs:\n    post:\n      summary: Create a new job"
+    },
+    {
+      "url": "https://docs.speechmatics.com/batch.yaml",
+      "date": "2026-11-18",
+      "proved": "batch API auth is a Bearer token in the Authorization header",
+      "capture": "sha256:bafed1877d7311e6504e5d9d9eab129e4f46ec33abd858c7f18e50a0aa41cd99",
+      "quote": "securityDefinitions:\n  bearerAuth:\n    type: apiKey\n    in: header\n    name: Authorization\n    description: \"Bearer token authentication. Use the format: Bearer $API_KEY_OR_JWT\""
+    },
+    {
+      "url": "https://docs.speechmatics.com/get-started/authentication.md",
+      "date": "2026-11-18",
+      "proved": "first-party auth example shows the eu1 batch host and Bearer header",
+      "capture": "sha256:1b11d62c97a953456653ff6084bd49608e47d87875bec79cdd409eb013a75cfa",
+      "quote": "curl -X GET \"https://eu1.asr.api.speechmatics.com/v2/jobs/\" \\\n  -H \"Authorization: Bearer $API_KEY\""
+    },
+    {
+      "url": "https://docs.speechmatics.com/get-started/authentication.md",
+      "date": "2026-11-18",
+      "proved": "first-party auth page lists the realtime WebSocket endpoints",
+      "capture": "sha256:1b11d62c97a953456653ff6084bd49608e47d87875bec79cdd409eb013a75cfa",
+      "quote": "| Global (auto-routed) | **global.rt.speechmatics.com** |\n| EU1 (Europe)         | **eu.rt.speechmatics.com**     |\n| US1 (USA)            | **us.rt.speechmatics.com**     |\n| AU1 (Australia)      | **au.rt.speechmatics.com**     |"
+    },
+    {
+      "url": "https://docs.speechmatics.com/speech-to-text/batch/quickstart.md",
+      "date": "2026-11-18",
+      "proved": "the API key is created in the web portal",
+      "capture": "sha256:df923a3e1a12067a9a51295656f81841b1a61e56e8e67d8da50d02c13ddfbe2d",
+      "quote": "[Create an API key in the portal here](https://portal.speechmatics.com/settings/api-keys), which you'll use to securely access the API. Store the key as a managed secret."
     }
   ],
   "verdict": "trial-only",
-  "verified_at": "2026-11-03T07:34:03.379Z"
+  "verified_at": "2026-11-18T04:36:13.603Z",
+  "endpoint": "https://eu1.asr.api.speechmatics.com/v2",
+  "notes": "The batch base URL, routes, regional endpoints and bearer auth were read from the first-party Swagger spec (https://docs.speechmatics.com/batch.yaml) and the first-party auth page on 2026-11-18; keyless HEAD probes on eu1, asr, us1 and trial batch hosts each returned HTTP 401 with a 172-byte body, confirming the key gate."
 }

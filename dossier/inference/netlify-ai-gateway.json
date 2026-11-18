@@ -23,12 +23,12 @@
     "read_on": "2026-10-28",
     "notes": "derived: 300 credits / 180 credits per USD = USD 1.67 of model usage a month, shared with deploys, compute and bandwidth, which draw on the same credits. Derived: 90 credits per minute / 180 credits per USD = USD 0.50 of model usage a minute"
   },
-  "endpoint": "the base URL Netlify injects as NETLIFY_AI_GATEWAY_URL",
+  "endpoint": "https://api.netlify.com/api/v1 (Netlify REST management API: GET /ai-gateway/providers, GET /sites/{site_id}/ai-gateway/token, GET /accounts/{account_id}/ai-gateway/token); inference calls go to the runtime-injected base URL NETLIFY_AI_GATEWAY_URL (per-provider *_BASE_URL), literal host unverified",
   "interface": [
     "rest"
   ],
-  "interface_detail": "provider-native REST for OpenAI, Anthropic, Google Gemini and OpenRouter through base URLs and keys that Netlify injects as environment variables in Netlify Functions, Edge Functions and the Netlify CLI dev server",
-  "tooling": "the official OpenAI, Anthropic, Google GenAI and OpenRouter SDKs read the injected variables; NETLIFY_AI_GATEWAY_KEY and NETLIFY_AI_GATEWAY_URL are always injected",
+  "interface_detail": "provider-native REST for OpenAI, Anthropic, Google Gemini and OpenRouter through base URLs and keys that Netlify injects as environment variables in Netlify compute contexts. Control-plane routes are GET REST under https://api.netlify.com/api/v1; inference is POST REST to provider-specific paths under an injected base URL (/v1/chat/completions for OpenAI, /v1/messages for Anthropic, /v1beta/models/{model}:generateContent for Gemini, /chat/completions for OpenRouter). Both coexist with the existing SDK description. Inference works only inside Netlify Functions/Edge Functions/CLI after at least one production deploy.",
+  "tooling": "the official OpenAI, Anthropic, Google GenAI, OpenRouter and TypeSafe SDKs read the injected variables; no client tool is missing. curl can reach the unauthenticated GET /ai-gateway/providers discovery route. NETLIFY_AI_GATEWAY_KEY and NETLIFY_AI_GATEWAY_URL are injected for third-party or unsupported libraries only.",
   "chaining": "pairs with the Netlify Free plan recorded at compute/netlify, whose 300 credits it shares; a deployed Function can expose the gateway to a script",
   "limits": [
     {
@@ -61,7 +61,7 @@
   },
   "reliability_note": "the gateway activates only after a production deploy, and the injected key exists inside Netlify runtimes rather than as a key created by hand",
   "confidence": "documented",
-  "confidence_note": "the credit pool, conversion rate and per-minute limit are quoted from the vendor pages; no call was made because the gateway needs a deployed site",
+  "confidence_note": "Endpoint family and auth split documented from first-party pages and OpenAPI on 2026-11-18; the literal inference base URL is only returned to an authenticated caller and was not disclosed by the pages read, so it remains unverified.",
   "evidence": [
     {
       "url": "https://docs.netlify.com/build/ai-gateway/overview/",
@@ -132,9 +132,65 @@
       "capture": "sha256:c1a90f7c3c9c3eaacbf78397692c2d2603305c7923be191d75f224ef0441c1f1",
       "quote": "`NETLIFY_AI_GATEWAY_KEY` and `NETLIFY_AI_GATEWAY_URL` environment variables are always injected into the AI Gateway-supported runtimes.",
       "proved": "the key and base URL are injected as environment variables"
+    },
+    {
+      "url": "https://docs.netlify.com/build/ai-gateway/overview/",
+      "date": "2026-11-18",
+      "proved": "the inference base URL and key are injected as runtime environment variables, not published as a literal",
+      "capture": "sha256:82d9ab6ef71da3a7fc9cbacd65ed2a4be16a629d3abc318e834058f2919bc8f3",
+      "quote": "`NETLIFY_AI_GATEWAY_KEY` and `NETLIFY_AI_GATEWAY_URL` environment variables are always injected into the AI Gateway-supported runtimes."
+    },
+    {
+      "url": "https://docs.netlify.com/build/ai-gateway/overview/",
+      "date": "2026-11-18",
+      "proved": "OpenAI-family inference is HTTP POST to /v1/chat/completions under the injected base URL with a Bearer key",
+      "capture": "sha256:82d9ab6ef71da3a7fc9cbacd65ed2a4be16a629d3abc318e834058f2919bc8f3",
+      "quote": "const response = await fetch(`${OPENAI_BASE_URL}/v1/chat/completions`, {\n    method: 'POST',\n    headers: {\n      'Content-Type': 'application/json',\n      'Authorization': `Bearer ${OPENAI_API_KEY}`"
+    },
+    {
+      "url": "https://docs.netlify.com/api-and-cli-guides/api-guides/get-started-with-api/",
+      "date": "2026-11-18",
+      "proved": "concrete first-party REST base URL",
+      "capture": "sha256:6d3ab34af9f123803170e2261d181bf61c665b67eb63d80380139708b0e57ef3",
+      "quote": "All URLs start with `https://api.netlify.com/api/v1/`. **SSL only**."
+    },
+    {
+      "url": "https://docs.netlify.com/api-and-cli-guides/api-guides/get-started-with-api/",
+      "date": "2026-11-18",
+      "proved": "management REST API auth requirement",
+      "capture": "sha256:6d3ab34af9f123803170e2261d181bf61c665b67eb63d80380139708b0e57ef3",
+      "quote": "Netlify uses OAuth2 for authentication. All requests must use HTTPS."
+    },
+    {
+      "url": "https://open-api.netlify.com/openapi.json",
+      "date": "2026-11-18",
+      "proved": "first-party OpenAPI declares the site AI Gateway token route under the api.netlify.com/v1 server",
+      "capture": "sha256:6b58f8bb795d32af89498651d71e4f4d76fea5640dd3f57b952c2a1fcce46205",
+      "quote": "\"/sites/{site_id}/ai-gateway/token\""
+    },
+    {
+      "url": "https://open-api.netlify.com/openapi.json",
+      "date": "2026-11-18",
+      "proved": "the token response carries the inference base URL, disclosed to authenticated callers",
+      "capture": "sha256:6b58f8bb795d32af89498651d71e4f4d76fea5640dd3f57b952c2a1fcce46205",
+      "quote": "\"description\": \"AI gateway base url\""
+    },
+    {
+      "url": "https://api.netlify.com/api/v1/ai-gateway/providers",
+      "date": "2026-11-18",
+      "proved": "live unauthenticated GET returns injected env-var names for OpenAI; confirms discovery route needs no key",
+      "capture": "sha256:4742ca0f35c3bb91bd0ab394245a8b33c556b49848fc3d365f5f532664465e91",
+      "quote": "\"token_env_var\":\"OPENAI_API_KEY\",\"url_env_var\":\"OPENAI_BASE_URL\""
+    },
+    {
+      "url": "https://raw.githubusercontent.com/netlify/context-and-tools/main/skills/netlify-ai-gateway/SKILL.md",
+      "date": "2026-11-18",
+      "proved": "inference auth is runtime-only inside Netlify compute",
+      "capture": "sha256:dae4af0dc0cb5622a5ba06f47ab880d6a78a3e7ea1dc51988d5b2688e0824a72",
+      "quote": "**Not browser-callable.** Gateway calls belong in Functions or Edge Functions — never in client-side code. The browser has no injected credentials."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-28T04:36:19.143Z",
-  "notes": "The supported-model list includes openrouter/free and one id ending in :free; whether those ids spend credits is unverified."
+  "verified_at": "2026-11-18T04:36:12.435Z",
+  "notes": "The supported-model list includes openrouter/free and one id ending in :free; whether those ids spend credits is unverified. Discovery GET /ai-gateway/providers returned 200 with data while HEAD on the same URL returned 404; the token routes returned 401 without auth (probed 2026-11-18)."
 }

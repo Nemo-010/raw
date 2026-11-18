@@ -26,13 +26,18 @@
   "interface": [
     "rest"
   ],
-  "tooling": "OpenAI-compatible endpoint at https://inference-api.nousresearch.com/v1 per a third-party guide; the Hermes Agent CLI logs in through OAuth",
+  "tooling": "OpenAI-compatible endpoint at https://inference-api.nousresearch.com/v1, stated in the first-party OpenAPI definition and API docs; Hermes Agent CLI logs in through OAuth. Routes: POST /chat/completions, POST /completions, GET /models.",
   "chaining": "free models only; paid models and API keys draw on prepaid credits",
   "limits": [
     {
       "kind": "request-rate",
       "value": "50 RPM / 500K TPM per a third-party plan table; unverified on the vendor page, which prints only 'standard rate limits' and no numbers; unverified: behind a sign-up",
       "source": "https://openclawlaunch.com/guides/nous-portal"
+    },
+    {
+      "kind": "request-rate",
+      "value": "50 RPM, 500,000 TPM for the Free tier, stated in the first-party OpenAPI definition under API Key Rate Limits",
+      "source": "https://portal.nousresearch.com/api/openapi"
     }
   ],
   "identity_cost": {
@@ -41,10 +46,10 @@
     "country": null
   },
   "reliability_note": "the free model list rotates and one report found only 6 of 10 listed free models answering",
-  "confidence": "reported",
-  "confidence_note": "plan contents and the card requirement rest on third-party pages; the vendor plan page read shows the plan names and price but not the rate limits or the signup requirement.",
+  "confidence": "documented",
+  "confidence_note": "Endpoint, routes, auth scheme and the Free 50 RPM / 500,000 TPM limit come from the first-party OpenAPI definition and API docs read on 2026-11-18; the host was probed live with an unkeyed GET /models that returned 200. Model access for a free account remains unverified: behind a sign-up.",
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-04T06:15:49.151Z",
+  "verified_at": "2026-11-18T04:36:12.554Z",
   "evidence": [
     {
       "url": "https://openclawlaunch.com/guides/nous-portal",
@@ -87,6 +92,53 @@
       "proved": "third-party plan table gives 50 RPM / 500K TPM",
       "capture": "sha256:8f9d6b027445de62dc3f9c132854e40413d5e212a4d7d33d2bb7da045e3c61c4",
       "quote": "| **Free** | $0 | $0 (free models only) | — | 50 RPM / 500K TPM |"
+    },
+    {
+      "url": "https://portal.nousresearch.com/api/openapi",
+      "date": "2026-11-18",
+      "proved": "first-party OpenAPI definition states the API base URL",
+      "capture": "sha256:645775176ce197be1cd63943dd41198ed4c3eec272e334e88c7bb809e8ccd6ac",
+      "quote": "- The API is available at [https://inference-api.nousresearch.com/v1](https://inference-api.nousresearch.com/v1)."
+    },
+    {
+      "url": "https://portal.nousresearch.com/api/openapi",
+      "date": "2026-11-18",
+      "proved": "the OpenAPI server list names the production endpoint",
+      "capture": "sha256:645775176ce197be1cd63943dd41198ed4c3eec272e334e88c7bb809e8ccd6ac",
+      "quote": "\"servers\":[{\"url\":\"https://inference-api.nousresearch.com/v1\",\"description\":\"Production server\"}]"
+    },
+    {
+      "url": "https://portal.nousresearch.com/api/openapi",
+      "date": "2026-11-18",
+      "proved": "API authentication is a bearer token in the Authorization header",
+      "capture": "sha256:645775176ce197be1cd63943dd41198ed4c3eec272e334e88c7bb809e8ccd6ac",
+      "quote": "\"securitySchemes\":{\"BearerAuth\":{\"type\":\"http\",\"scheme\":\"bearer\"}}"
+    },
+    {
+      "url": "https://portal.nousresearch.com/api/openapi",
+      "date": "2026-11-18",
+      "proved": "the first-party OpenAPI definition states the Free tier rate limit",
+      "capture": "sha256:645775176ce197be1cd63943dd41198ed4c3eec272e334e88c7bb809e8ccd6ac",
+      "quote": "- **Free**: 50 RPM, 500,000 TPM"
+    },
+    {
+      "url": "https://portal.nousresearch.com/api-docs",
+      "date": "2026-11-18",
+      "proved": "the rendered first-party docs page repeats the API base URL",
+      "capture": "sha256:d6c031aef80f92472ef7da1c441047d09c6f03bd43d0193497760630479de623",
+      "quote": "- The API is available at [https://inference-api.nousresearch.com/v1](https://inference-api.nousresearch.com/v1)."
+    },
+    {
+      "url": "https://hermes-agent.nousresearch.com/docs/integrations/nous-portal",
+      "date": "2026-11-18",
+      "proved": "the Hermes Agent integration guide sets the same base URL",
+      "capture": "sha256:91ae43c3ede9832d5c07ff2ed3cb3396da8832e74f1ab06747790329fe045ede",
+      "quote": "base_url: https://inference-api.nousresearch.com/v1"
     }
-  ]
+  ],
+  "endpoint": "https://inference-api.nousresearch.com/v1",
+  "interface_detail": "OpenAI-compatible REST. POST /chat/completions and POST /completions for inference; GET /models for the public model list. Auth is an API key as a bearer token in the Authorization header (BearerAuth, HTTP bearer scheme).",
+  "notes": "endpoint filled from first-party OpenAPI definition on 2026-11-18; the free tier uses the same host as paid tiers, distinguished by the 50 RPM / 500,000 TPM limit and FREE model tags.",
+  "binding": "request-rate",
+  "binding_note": "the free tier is bounded by the 50 requests a minute and 500,000 tokens a minute limit, not by a credit balance"
 }
