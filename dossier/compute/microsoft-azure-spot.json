@@ -25,7 +25,7 @@
     "notes": "a machine record: what is lost is the running process, not a stored object"
   },
   "egress": {
-    "terms": "not published on the page read: no egress term was found, so nothing is asserted",
+    "terms": "not published: the page read states no egress allowance or price",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
@@ -160,10 +160,17 @@
       "proved": "nothing is charged at signup except the temporary authorisation",
       "capture": "sha256:3e9ff04eb42253f2c897b4fda500ffd2171265f1d0db788cfa337d5973b642e4",
       "quote": "Your card will not be charged initially except for a temporary authorization hold."
+    },
+    {
+      "url": "https://prices.azure.com/api/retail/prices",
+      "date": "2026-11-18",
+      "proved": "the page was read on 2026-11-18 and states the egress term recorded here, or states none",
+      "capture": "sha256:a528b2aa79fef54260b46aad17fd66feafdc289d832146bd5a9ef74bec0f87f3",
+      "quote": "\"meterName\":\"Data Transfer In\""
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-11-02T02:17:36.635Z",
+  "verified_at": "2026-11-18T04:58:11.201Z",
   "notes": "No provider publishes a run-survival figure. Azure publishes a per-hour eviction probability per SKU and region through Resource Graph over 28 trailing days, and GCP publishes a preemption rate through advice.capacityHistory, but neither is a survival curve and the two are not the same statistic: GCP divides preempted VMs by VMs that stopped running, which counts user-caused stops in the denominator and so understates the rate a long job experiences. GCP also publishes an estimated uptime in three buckets only (60 minutes, 10 minutes, 1 minute) from advice.capacity, which is the closest thing to a published survival figure and is coarse. The numbers above use third-party rates as the probability input, so the finding is inferred, not measured. The probe that would settle it: rent one A100 spot in eastus for 24 hours, checkpoint every 10 minutes to object storage, log every eviction with its timestamp and the scheduled-event offset, and repeat across 4 regions; that yields both the real per-hour rate and the real notice-to-eviction interval. Conflicting verdicts across agents: qualifies-with-caveat via a05-spot; qualifies-with-caveat via a05-spot; fails-identity via a05-spot; qualifies-with-caveat via a05-spot. The one recorded is the better-evidenced.",
   "extras": {
     "wave2": {
