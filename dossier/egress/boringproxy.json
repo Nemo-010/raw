@@ -26,7 +26,7 @@
     "notes": ""
   },
   "egress": {
-    "terms": "No allowance is published in the list entry.; ingress: http-only",
+    "terms": "unverified: no hosted allowance is published; the hosted site redirects to a parked domain on 2026-11-19; ingress: http-only",
     "metered": false,
     "free_allowance": "none published",
     "price_per_tb": null,
@@ -36,7 +36,7 @@
     "cli"
   ],
   "interface_detail": "not established",
-  "tooling": "vendor client",
+  "tooling": "The user builds and runs the boringproxy server and client; no hosted endpoint is published.",
   "chaining": "Needs an account before any capacity is visible.",
   "limits": [],
   "limits_note": "",
@@ -47,18 +47,53 @@
     "detail": "an account on the hosted service, terms not read",
     "country": "None"
   },
-  "reliability_note": "not established",
+  "reliability_note": "Hosted site redirects to a parked domain and answers HTTP 403 under a challenge on 2026-11-19; first-party repo describes a self-hosted server.",
   "confidence": "reported",
-  "confidence_note": "A vendor page read would raise this to documented; only the aggregator was read for this name.",
+  "confidence_note": "Hosted site unreachable: boringproxy.io redirects to a parked domain and answers HTTP 403 under a challenge on 2026-11-19; the first-party GitHub README describes building and running the server from source.",
   "evidence": [
     {
       "url": "https://github.com/anderspitman/awesome-tunneling",
       "date": "2026-10-23",
       "proved": "list entry sentence: Designed to be very easy to use. No config files. Clients can be remote-controlled through a simple WebUI and/or REST API on the server."
+    },
+    {
+      "url": "probe:https://boringproxy.io/",
+      "date": "2026-11-19",
+      "proved": "the hosted site redirects to a parked domain",
+      "capture": "sha256:a82f36af502c2a16c332121c349f18005590385e97f8a0fca31ce53bd622f084",
+      "quote": "\"final_url\": \"https://rlcinvest.hk.com/\""
+    },
+    {
+      "url": "https://github.com/boringproxy/boringproxy",
+      "date": "2026-11-19",
+      "proved": "the first-party README describes software the user builds and runs",
+      "capture": "sha256:23f0e35b97d07b6c84b1864854b145ab7581aa63d565ce02908615ec63eb0832",
+      "quote": "The information in this README is just for building from source."
+    },
+    {
+      "url": "https://github.com/boringproxy/boringproxy",
+      "date": "2026-11-19",
+      "proved": "the software is built and run by the user",
+      "capture": "sha256:23f0e35b97d07b6c84b1864854b145ab7581aa63d565ce02908615ec63eb0832",
+      "quote": "The information in this README is just for building from source."
+    },
+    {
+      "url": "probe:https://boringproxy.io/",
+      "date": "2026-11-19",
+      "proved": "the hosted site answered HTTP 403 on 2026-11-19",
+      "capture": "sha256:a82f36af502c2a16c332121c349f18005590385e97f8a0fca31ce53bd622f084",
+      "quote": "\"status\": 403"
+    },
+    {
+      "url": "https://github.com/boringproxy/boringproxy",
+      "date": "2026-11-19",
+      "proved": "the first-party README describes self-hosted software with no hosted endpoint",
+      "capture": "sha256:23f0e35b97d07b6c84b1864854b145ab7581aa63d565ce02908615ec63eb0832",
+      "quote": "The information in this README is just for building from source."
     }
   ],
   "verdict": "fails-egress",
-  "verified_at": "2026-10-23T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:11:01.399Z",
   "price_per_tb_month": "USD 0",
   "history": [],
   "notes": "Reverse proxy with a WebUI; HTTP. Classified from the aggregator's own sentence; no vendor page was fetched for this name.",
