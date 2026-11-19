@@ -44,7 +44,7 @@
   "limits_note": "per-object-cap: undocumented; 413s observed around 2 MB, transient. retention: permanent and immutable per version. request-rate: not documented. Account gate: PAUSE registration requires a human-readable full name with a space (historical anti-spam check).",
   "identity_cost": {
     "kind": "email",
-    "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
+    "detail": "Signup requires a full name of at least two space-separated words (a spam-protection check).",
     "country": null
   },
   "reliability_note": "The 413 is emitted by the PAUSE web server as a request-body limit, so it behaves like a surprise ceiling that appears and disappears. Even at a generous reading this is a single-digit-MB store - three orders of magnitude from useful.",
@@ -70,10 +70,24 @@
       "url": "https://pause.perl.org/pause/query?ACTION=request_id",
       "date": "2026-10-21",
       "proved": "PAUSE signup form live"
+    },
+    {
+      "url": "https://www.cpan.org/modules/04pause.html",
+      "date": "2026-11-19",
+      "proved": "a file with an identical name cannot be uploaded twice, so versions are immutable",
+      "capture": "sha256:a462c122ac090d95a047514ef4e51b27b4a03a6ed7dece1f5e28bea73c8addd9",
+      "quote": "For security reasons you will never be able to upload a file with identical name again."
+    },
+    {
+      "url": "https://pause.perl.org/pause/query?ACTION=request_id",
+      "date": "2026-11-19",
+      "proved": "the PAUSE account form requires a full name of two space-separated words",
+      "capture": "sha256:99e32e660d50c6fc35790f6ae6aa185022632897eb40ff70cba152fbcae6e06d",
+      "quote": "You can enter fairly free-form text here but it must consist of at least two space-separated words. This is a spam protection measure we discovered accidentally."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:13:10.067Z",
   "notes": "No published byte quota, and the empirical evidence points to a tight request-body limit rather than a documented number: a 2,072,566-byte distribution was rejected with 'Upload failed (request failed with error code 413 Message: Request Entity Too Large)' in April 2024, and the same upload succeeded shortly after, so the 413 was transient rather than a hard 2 MB cap. Treat the ceiling as a few MB, undocumented.",
   "history": [],
   "extras": {
