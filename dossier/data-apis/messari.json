@@ -40,14 +40,14 @@
   "chaining": "Crypto market data from here needs a paid plan; CoinPaprika and CoinLore give keyless prices, DefiLlama keyless DeFi metrics.",
   "limits": [
     {
-      "kind": "write-gated",
-      "value": "paid or permission-gated access: a free-plan key answers 403 on models of the paid tier",
+      "kind": "request-rate",
+      "value": "200 requests per minute on the no-key or Free plan, shared by every endpoint; over it the API answers 429 Too Many Requests with a Retry-After header in seconds",
       "source": "https://docs.blockworks.com/getting-started/authentication"
     }
   ],
   "limits_note": "Bulk path: the legacy Bulk API gave CSV or JSONL downloads by subscription tier; the current Datashares are sales-gated. Storage terms: unverified. Rate limit: none enforced by the Data API; the legacy docs gave 200 requests a minute for unpaid keys.",
-  "binding": "write-gated",
-  "binding_note": "Access to a model, not a request count, decides what a free key can read.",
+  "binding": "request-rate",
+  "binding_note": "A numeric request-rate allowance binds the no-key or Free plan: 200 requests a minute, over which the API answers 429 with a Retry-After header.",
   "identity_cost": {
     "kind": "email",
     "detail": "A key is made in an account at app.blockworks.com; the sign-up form was not read, so what it asks is unverified: behind a sign-up.",
@@ -105,10 +105,52 @@
       "proved": "the 401 says the model requires authentication",
       "capture": "sha256:47c9d8318f3d9d2f8618e615863608039ae059858e7372140c3113e07c95dfd5",
       "quote": "this model requires authentication"
+    },
+    {
+      "url": "https://docs.blockworks.com/getting-started/authentication",
+      "date": "2026-11-19",
+      "proved": "the first-party authentication page now states a numeric request rate of 200 requests per minute for the no-key or Free plan",
+      "capture": "sha256:0536df63555c5ebc449f0e1763b6c15191213cded344eb7051e684ad8ca88ea4",
+      "quote": "| No key or Free | 200 requests per minute |"
+    },
+    {
+      "url": "https://docs.blockworks.com/getting-started/authentication",
+      "date": "2026-11-19",
+      "proved": "the binding published limit is a per-plan request-rate allowance shared across endpoints",
+      "capture": "sha256:0536df63555c5ebc449f0e1763b6c15191213cded344eb7051e684ad8ca88ea4",
+      "quote": "Each account gets one allowance, shared by every endpoint it calls. The allowance depends on your plan:"
+    },
+    {
+      "url": "https://docs.blockworks.com/getting-started/authentication",
+      "date": "2026-11-19",
+      "proved": "the binding limit on the Free plan is now the numeric request rate",
+      "capture": "sha256:0536df63555c5ebc449f0e1763b6c15191213cded344eb7051e684ad8ca88ea4",
+      "quote": "| No key or Free | 200 requests per minute |"
+    },
+    {
+      "url": "https://docs.blockworks.com/getting-started/authentication",
+      "date": "2026-11-19",
+      "proved": "the rate allowance is enforced with a 429 response and a Retry-After header",
+      "capture": "sha256:0536df63555c5ebc449f0e1763b6c15191213cded344eb7051e684ad8ca88ea4",
+      "quote": "A request over the limit gets `429 Too Many Requests` with a `Retry-After` header giving the whole number of seconds to wait before the next request will succeed:"
+    },
+    {
+      "url": "https://docs.blockworks.com/getting-started/authentication",
+      "date": "2026-11-19",
+      "proved": "the Free tier request rate is a numeric 200 requests per minute",
+      "capture": "sha256:0536df63555c5ebc449f0e1763b6c15191213cded344eb7051e684ad8ca88ea4",
+      "quote": "| No key or Free | 200 requests per minute |"
+    },
+    {
+      "url": "https://docs.blockworks.com/getting-started/authentication",
+      "date": "2026-11-19",
+      "proved": "the current authentication page still describes the per-plan allowance and its access tiers",
+      "capture": "sha256:0536df63555c5ebc449f0e1763b6c15191213cded344eb7051e684ad8ca88ea4",
+      "quote": "Each account gets one allowance, shared by every endpoint it calls. The allowance depends on your plan:"
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-11-03T00:30:00.000Z",
+  "verified_at": "2026-11-19T21:12:01.683Z",
   "history": [],
   "notes": "No keyless route; a free key reaches only unpaid-tier models. Bulk path: sales-gated. Storage terms: unverified.",
   "extras": {
