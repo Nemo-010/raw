@@ -128,5 +128,25 @@ This list holds each `measured` or `documented` record of this topic that no oth
 `docs/` names.
 
 <!-- generated:start topic=databases-kv kind=uncited -->
-Every `measured` or `documented` record of this topic is named by a document.
+| record | provider | verdict | confidence |
+| --- | --- | --- | --- |
+| `alibaba-apsaradb` | Alibaba Cloud ApsaraDB | trial-only | documented |
+| `arangodb-oasis` | ArangoDB Oasis (Arango Managed Platform) | trial-only | documented |
+| `astra-db` | Astra DB Serverless (DataStax / IBM) | qualifies-with-caveat | documented |
+| `cloudflare-vectorize` | Cloudflare Vectorize | qualifies-with-caveat | documented |
+| `couchbase-capella` | Couchbase Capella | qualifies-with-caveat | documented |
+| `crunchydata` | CrunchyData | paid-only | documented |
+| `digitalocean-managed-databases` | DigitalOcean Managed Databases | trial-only | documented |
+| `ferretdb-cloud` | FerretDB Cloud | qualifies-with-caveat | documented |
+| `memcachier` | MemCachier | qualifies-with-caveat | documented |
+| `questdb-cloud` | QuestDB Cloud (managed, Enterprise/BYOC) | paid-only | documented |
+| `redislabs` | RedisLabs (Redis Cloud Free) | fails-quota | documented |
+| `scalegrid` | ScaleGrid | trial-only | documented |
+| `scylladb-cloud` | ScyllaDB Cloud | trial-only | documented |
+| `surrealdb-cloud` | SurrealDB Cloud | qualifies-with-caveat | documented |
+| `tencent-cloud-database` | Tencent Cloud Database (TencentDB for... | trial-only | documented |
+| `uptrace-cloud` | Uptrace Cloud | qualifies | documented |
+| `victoriametrics-cloud` | VictoriaMetrics Cloud | trial-only | documented |
+| `yugabytedb-cloud` | YugabyteDB Cloud (YugabyteDB Aeon) | qualifies-with-caveat | documented |
+| `mariadb-foundation` | MariaDB Foundation (MariaDB Server) (self-hosted) | qualifies-with-caveat | documented |
 <!-- generated:end -->
