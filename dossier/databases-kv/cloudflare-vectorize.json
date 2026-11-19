@@ -1,0 +1,124 @@
+{
+  "topic": "databases-kv",
+  "slug": "cloudflare-vectorize",
+  "provider": "Cloudflare Vectorize",
+  "url": "https://developers.cloudflare.com/vectorize/platform/pricing/",
+  "category": "managed vector database on the Workers edge platform",
+  "tier": "Workers Free",
+  "free_tier": {
+    "stated": "| **Total stored vector dimensions** | 5 million stored vector dimensions |",
+    "unit": "mixed",
+    "metered_on": "stored-bytes",
+    "source_url": "https://developers.cloudflare.com/vectorize/platform/pricing/",
+    "read_on": "2026-11-19",
+    "notes": "Workers Free includes 30 million queried vector dimensions per month and 5 million stored vector dimensions. A dimension is a vector component, so a 768-dimension embedding uses 768 stored dimensions per vector."
+  },
+  "per_object_cap": {
+    "stated": "| Maximum dimensions per vector | 1536 dimensions, 32 bits precision |",
+    "bytes": null,
+    "source_url": "https://developers.cloudflare.com/vectorize/platform/limits/",
+    "notes": "Each vector also carries at most 10 KiB of metadata; maximum vectors per index is 20,000,000 but the stored-dimension allowance binds far sooner."
+  },
+  "retention": {
+    "stated": "vectors persist in the index until deleted by the owner; the pricing page gives no expiry clock for stored vectors on Workers Free",
+    "days": null,
+    "source_url": "https://developers.cloudflare.com/vectorize/platform/pricing/",
+    "notes": "days null is indefinite: no automatic deletion is documented. Empty indexes still count toward the account's index allocation."
+  },
+  "egress": {
+    "terms": "Does Vectorize charge for data transfer / egress? No.",
+    "metered": false,
+    "free_allowance": "unmetered",
+    "source_url": "https://developers.cloudflare.com/vectorize/platform/pricing/"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "a Worker binding, an HTTP REST API and the Wrangler CLI (npx wrangler vectorize create); queries from all three count as billable usage",
+  "tooling": "Wrangler CLI and the Cloudflare REST API, called from a Worker with a Vectorize binding",
+  "chaining": "Vectorize is designed to be called from a Worker and paired with Workers AI for embeddings and D1, KV or R2 for the source documents; a free Worker can index and query within the shared Workers Free allowance",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "30 million queried vector dimensions per month and 5 million stored vector dimensions on Workers Free",
+      "source": "https://developers.cloudflare.com/vectorize/platform/pricing/"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "1536 dimensions per vector, 10 KiB metadata per vector, 20,000,000 vectors per index",
+      "source": "https://developers.cloudflare.com/vectorize/platform/limits/"
+    },
+    {
+      "kind": "request-rate",
+      "value": "100 indexes per account on Workers Free; 1000 namespaces per index",
+      "source": "https://developers.cloudflare.com/vectorize/platform/limits/"
+    }
+  ],
+  "binding": "volume-quota",
+  "binding_note": "the 5 million stored-dimension allowance is consumed by each vector's dimension count and binds before the 1536-dimension per-vector cap or the 100-index ceiling",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "To create your first Cloudflare account: 1. Go to the Sign up page. 2. Enter your Email and Password. 3. Select Create Account. Cloudflare then sends an email to verify the address. No card is required to open a Free account.",
+    "country": null
+  },
+  "reliability_note": "V1 indexes are deprecated and held at a separate lower limit of 200,000 vectors per index; new indexes use the generally available limits. The pricing page does not state what happens when a Workers Free allowance is exhausted.",
+  "confidence": "documented",
+  "confidence_note": "all figures come from first-party Cloudflare docs pages read today; no probe of a public read path was run, so the rung stays documented",
+  "evidence": [
+    {
+      "url": "https://developers.cloudflare.com/vectorize/platform/pricing/",
+      "date": "2026-11-19",
+      "capture": "sha256:e8b46f2e42cb91a84e8b664f3dca39d3b076b35c30cb60b5fab2f70447b17624",
+      "quote": "| **Total stored vector dimensions** | 5 million stored vector dimensions | First 10 million stored vector dimensions + $0.05 per 100 million |",
+      "proved": "Workers Free includes 5 million stored vector dimensions"
+    },
+    {
+      "url": "https://developers.cloudflare.com/vectorize/platform/pricing/",
+      "date": "2026-11-19",
+      "capture": "sha256:e8b46f2e42cb91a84e8b664f3dca39d3b076b35c30cb60b5fab2f70447b17624",
+      "quote": "| **Total queried vector dimensions** | 30 million queried vector dimensions / month | First 50 million queried vector dimensions / month included + $0.01 per million |",
+      "proved": "Workers Free includes 30 million queried vector dimensions per month"
+    },
+    {
+      "url": "https://developers.cloudflare.com/vectorize/platform/pricing/",
+      "date": "2026-11-19",
+      "capture": "sha256:e8b46f2e42cb91a84e8b664f3dca39d3b076b35c30cb60b5fab2f70447b17624",
+      "quote": "Yes, the Workers free tier will always include the ability to prototype and experiment with Vectorize for free.",
+      "proved": "Cloudflare commits to an ongoing free tier for Vectorize on Workers Free"
+    },
+    {
+      "url": "https://developers.cloudflare.com/vectorize/platform/pricing/",
+      "date": "2026-11-19",
+      "capture": "sha256:e8b46f2e42cb91a84e8b664f3dca39d3b076b35c30cb60b5fab2f70447b17624",
+      "quote": "Does Vectorize charge for data transfer / egress? No.",
+      "proved": "there is no egress charge for Vectorize"
+    },
+    {
+      "url": "https://developers.cloudflare.com/vectorize/platform/limits/",
+      "date": "2026-11-19",
+      "capture": "sha256:2b2ca7ac502243e956d7ebe284e37b03e52bd18b7ff6f1517caf437e28f11aa4",
+      "quote": "| Maximum dimensions per vector | 1536 dimensions, 32 bits precision |",
+      "proved": "a single vector is limited to 1536 float32 dimensions"
+    },
+    {
+      "url": "https://developers.cloudflare.com/vectorize/platform/limits/",
+      "date": "2026-11-19",
+      "capture": "sha256:2b2ca7ac502243e956d7ebe284e37b03e52bd18b7ff6f1517caf437e28f11aa4",
+      "quote": "| Indexes per account | Workers Paid: Unlimited, with a default limit of 50,000. Each index above 50,000 costs [$0.10 per month](https://developers.cloudflare.com/vectorize/platform/pricing/#billing-metrics). Free: 100. |",
+      "proved": "Workers Free allows 100 Vectorize indexes per account"
+    },
+    {
+      "url": "https://developers.cloudflare.com/fundamentals/account/create-account",
+      "date": "2026-11-19",
+      "capture": "sha256:ae19573ff34cfa91ebfc7c46b599e2fc829bdf3e36111d1036e6e0c55328c3fd",
+      "quote": "2. Enter your **Email** and **Password**.",
+      "proved": "Cloudflare signup asks for an email address and a password, with email verification and no card"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T00:19:24.795Z",
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "The allowance is denominated in dimensions, not vectors, so a 768-dimension model stores roughly 6,500 vectors within 5 million stored dimensions. Cloudflare does not publish what happens when a Workers Free allowance is exhausted, only that the free tier will always exist for prototyping. The 50,000-index figure and the $0.10 per additional index price belong to Workers Paid, not to Workers Free."
+}

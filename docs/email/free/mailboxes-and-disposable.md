@@ -116,10 +116,13 @@ Verdict: `paid-only`.
 - **TempsMail from a second machine**: the inbox is bound to the creating IP.
 - **A free mailbox with a large quota and open protocols**: none found. Every free
   mailbox either removes the protocols or caps the storage at 5 GB.
-- **Three further disposable APIs, not opened**: MTempMail, NenzMail and the
-  `mail.lesin.org` API. None has a record, and their limits are `unverified` because
-  no page was read. A reader who needs a fourth disposable inbox should open those
-  three first.
+- **Three further disposable APIs, opened on 2026-11-19**: MTempMail, NenzMail and
+  the `mail.lesin.org` API now have records (`documented`). All three create an
+  inbox with no account and each states its deletion clock: 24 hours for MTempMail,
+  1 hour for NenzMail and 24 hours for `mail.lesin.org`. None publishes an inbox
+  byte quota, so mail.tm's 40 MB inbox is still the only size in this class.
+  Evidence: `dossier/email/mtempmail.json`, `dossier/email/nenzmail.json`,
+  `dossier/email/mail-lesin-org.json`.
 
 ## Chaining
 
