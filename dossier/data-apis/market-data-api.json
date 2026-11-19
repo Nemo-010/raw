@@ -348,10 +348,48 @@
       "proved": "the keyless MSFT answer says no credentials were provided",
       "capture": "sha256:8bc64c120a4b27397a6cf65998cf7efc775e9a8a0bf75c25b3b97cea83be93db",
       "quote": "{\"s\":\"error\",\"errmsg\":\"Invalid token header. No credentials provided.\"}"
+    },
+    {
+      "url": "https://www.marketdata.app/docs/api/stocks/bulkcandles/index.md",
+      "date": "2026-11-19",
+      "proved": "the vendor documents a bulk candles endpoint that returns data for many symbols in one request",
+      "capture": "sha256:30d2a687f245b6395f4f67db38138b92862f3da14e1445a277970ffd9d108115",
+      "quote": "Get bulk historical candle data for stocks. This endpoint returns bulk daily candle data for multiple stocks."
+    },
+    {
+      "url": "https://www.marketdata.app/docs/api/stocks/bulkcandles/index.md",
+      "date": "2026-11-19",
+      "proved": "the bulk candles endpoint costs one credit per symbol, so it is not stated to be free on the free tier",
+      "capture": "sha256:30d2a687f245b6395f4f67db38138b92862f3da14e1445a277970ffd9d108115",
+      "quote": "The cost of using the bulk candles API endpoint is 1 credit per symbol returned in the response."
+    },
+    {
+      "url": "https://www.marketdata.app/data/options/historical-options-csv/index.md",
+      "date": "2026-11-19",
+      "proved": "the whole-market historical options CSV packs are bought from the Data Store, so behind a paid tier",
+      "capture": "sha256:4c603ee258c379182d7a646d585de1248e61236aada8f2643595c5bdb4727a3b",
+      "quote": "In our Data Store, you can buy CSV files with complete end of day options prices going back to 2010."
+    },
+    {
+      "url": "https://www.marketdata.app/pricing/",
+      "date": "2026-11-19",
+      "proved": "the Quant plan at USD 125 a month is labelled for bulk data, a paid tier",
+      "capture": "sha256:6815ce6f55415e54c213b33a392bcbcf43a7d41e5a0943c467200931cc8d0ca0",
+      "quote": "Best option for API power users working with bulk data.\n\n$125\n\n/ month"
+    },
+    {
+      "url": "https://www.marketdata.app/docs/api/stocks/bulkcandles/index.md",
+      "date": "2026-11-19",
+      "proved": "the chaining note's bulk-path claim holds: a snapshot parameter returns a whole-market snapshot without listing symbols",
+      "capture": "sha256:30d2a687f245b6395f4f67db38138b92862f3da14e1445a277970ffd9d108115",
+      "quote": "Returns candles for all available symbols for the date indicated. The symbols parameter can be omitted if snapshot is set to true."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-02T00:23:43.773Z",
+  "verified_at": "2026-11-19T21:11:23.970Z",
   "notes": "Free Forever data is delayed 24 hours and covers the standard pricing endpoints; AAPL stock and options and the VFINX mutual fund answer with no token.",
-  "history": []
+  "history": [],
+  "extras": {
+    "bulk_path": "GET https://api.marketdata.app/v1/stocks/bulkcandles/D/{resolution}/ (many symbols in one request; 1 credit per symbol; HTTP request line capped at 4094 bytes, roughly 700-800 symbols per request, chunk into batches of 500 symbols or fewer; snapshot=true omits symbols for a whole-market snapshot) and CSV export of historical options prices for the entire market. The paid tiers add the Data Store CSV packs ('buy CSV files with complete end of day options prices') and a Quant plan labelled 'for API power users working with bulk data'; the free tier is not stated to reach the paid Data Store packs, and the bulk candles endpoint is charged 1 credit per symbol rather than stated as free"
+  }
 }
