@@ -6,7 +6,7 @@
   "category": "currency exchange rate API and central-bank rate datasets, keyless",
   "tier": "Open keyless",
   "free_tier": {
-    "stated": "No key and no account: the ECB reference table re-based to any of 30 currencies once a day, and the latest table of each central bank and tax authority; 120 requests a minute per IP address.",
+    "stated": "No key and no account: the ECB reference table re-based to any of 30 currencies once a day; 1 request a minute per IP address on the open endpoint.",
     "unit": "unlimited",
     "metered_on": "none",
     "source_url": "https://allratestoday.com/open-api/",
@@ -41,7 +41,7 @@
   "limits": [
     {
       "kind": "request-rate",
-      "value": "120 requests a minute per IP address, then HTTP 429 with Retry-After",
+      "value": "1 request a minute per IP address on the open endpoint, then HTTP 429 with Retry-After; 30 a minute on the compat drop-ins",
       "source": "https://allratestoday.com/open-api/"
     },
     {
@@ -52,7 +52,7 @@
   ],
   "limits_note": "Currency coverage: 30 currencies in the ECB table. Bulk path: the CC BY-NC 4.0 dataset in the GitHub repository AllRates-Today/central-bank-exchange-rates, which has data/<source>/history/<YYYY>.csv, an ECB history back to 1999 and a series from 1914 (SNB); the site also lists a Hugging Face dataset and a Kaggle dataset.",
   "binding": "request-rate",
-  "binding_note": "The 120 a minute per IP address bounds a burst, but the table changes once a day, so the daily refresh and the latest-only rule bind in practice.",
+  "binding_note": "The 1 a minute per IP address bound and the latest-only rule both bind in practice because the table changes once a day.",
   "identity_cost": {
     "kind": "anonymous",
     "detail": "No key and no account for the open endpoints and the GitHub dataset. The agent trial key needs one POST with no email and no captcha.",
@@ -201,10 +201,38 @@
       "proved": "the body of the keyless answer is the ECB reference table",
       "capture": "sha256:86715145865f7a398b699755f52a9c0236bdb0cd049dff4f1f3e10dbf6100b52",
       "quote": "\"source\":\"European Central Bank reference rates, served by AllRatesToday\""
+    },
+    {
+      "url": "https://allratestoday.com/open-api/",
+      "date": "2026-11-19",
+      "proved": "the open endpoint rate limit is now 1 request a minute per IP, down from 120",
+      "capture": "sha256:4f0e4c10562b41056178c9564902a6638a492bc3e68fc994f78e1bd5be3fc164",
+      "quote": "**Rate limited per IP** (1 request a minute; over that returns `429` with `Retry-After`). Cache for an hour or more; the table changes once a day. The response carries `time_next_update_utc`."
+    },
+    {
+      "url": "https://allratestoday.com/open-api/",
+      "date": "2026-11-19",
+      "proved": "the current keyless rate is 1 request a minute per IP and the table changes once a day",
+      "capture": "sha256:4f0e4c10562b41056178c9564902a6638a492bc3e68fc994f78e1bd5be3fc164",
+      "quote": "**Rate limited per IP** (1 request a minute; over that returns `429` with `Retry-After`). Cache for an hour or more; the table changes once a day."
+    },
+    {
+      "url": "https://allratestoday.com/open-api/",
+      "date": "2026-11-19",
+      "proved": "the rate bound is 1 a minute and the table changes once a day",
+      "capture": "sha256:4f0e4c10562b41056178c9564902a6638a492bc3e68fc994f78e1bd5be3fc164",
+      "quote": "**Rate limited per IP** (1 request a minute; over that returns `429` with `Retry-After`). Cache for an hour or more; the table changes once a day."
+    },
+    {
+      "url": "https://allratestoday.com/open-api/",
+      "date": "2026-11-19",
+      "proved": "the open endpoints still need no key and no account",
+      "capture": "sha256:4f0e4c10562b41056178c9564902a6638a492bc3e68fc994f78e1bd5be3fc164",
+      "quote": "**No API key, no account.** Nothing to register, nothing to rotate."
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-11-03T00:02:00.000Z",
+  "verified_at": "2026-11-19T21:11:46.461Z",
   "history": [],
   "notes": "Free requests: no count, no key. Rate limit: 120 a minute per IP address. Results storable: yes for the ECB endpoint, with a visible link on public pages; the dataset is CC BY-NC 4.0, non-commercial with credit. Bulk path: the GitHub dataset of per-source CSV history.",
   "extras": {
