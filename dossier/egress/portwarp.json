@@ -46,8 +46,8 @@
     }
   ],
   "limits_note": "",
-  "binding": "per-ip-shaping",
-  "binding_note": "Free plan provides one active tunnel with unstated bandwidth limits. Dropped free tunnels require manual restart.",
+  "binding": "none",
+  "binding_note": "The vendor's first-party pricing page states 'Every plan includes TCP, UDP, encrypted tunnels, and unlimited bandwidth' and 'no bandwidth caps', so no egress byte or rate limit is published to bind a transfer.",
   "identity_cost": {
     "kind": "email",
     "detail": "a free account with browser device-code approval: 'Create an account in 30 seconds. No credit card.' https://portwarp.com/ ; 'The CLI opens a browser approval flow and displays a short code.' https://portwarp.com/docs/cli/quickstart",
@@ -81,10 +81,31 @@
       "url": "probe:https://portwarp.com/ tcp:443",
       "date": "2026-10-23",
       "proved": "portwarp.com:443 accepts a TCP connection from this host and the pricing page returns HTTP 200 through the broker"
+    },
+    {
+      "url": "https://portwarp.com/pricing",
+      "date": "2026-11-19",
+      "proved": "the vendor states no bandwidth cap applies to any plan",
+      "capture": "sha256:59b2f2a5536dbe5f1ad0ce7423b7edfc1cb6feb1151dc45039db3ce427049aaa",
+      "quote": "No contracts, no hidden fees, and no bandwidth caps."
+    },
+    {
+      "url": "https://portwarp.com/pricing",
+      "date": "2026-11-19",
+      "proved": "bandwidth is unlimited on every plan, with no published rate or volume cap",
+      "capture": "sha256:59b2f2a5536dbe5f1ad0ce7423b7edfc1cb6feb1151dc45039db3ce427049aaa",
+      "quote": "Every plan includes TCP, UDP, encrypted tunnels, and unlimited bandwidth."
+    },
+    {
+      "url": "https://portwarp.com/pricing",
+      "date": "2026-11-19",
+      "proved": "the binding is none because the first-party pricing page publishes no bandwidth cap",
+      "capture": "sha256:59b2f2a5536dbe5f1ad0ce7423b7edfc1cb6feb1151dc45039db3ce427049aaa",
+      "quote": "No contracts, no hidden fees, and no bandwidth caps."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-23T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:10:55.762Z",
   "price_per_tb_month": "USD 0",
   "history": [],
   "notes": "The strongest free-tier UDP candidate found that is not a game-preset tunnel: UDP is in the base plan, the port is configured rather than allocated, and the allowance is stated as unlimited. Not measured. The free tier's one-tunnel cap is a plan limit outside the constraint vocabulary and lives in binding_note. Re-read 2026-10-23: PRO adds 90-day traffic history and connection insights, so the edge counts bytes even though every plan is sold as unlimited.",
