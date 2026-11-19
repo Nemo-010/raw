@@ -126,7 +126,9 @@ document of `docs/` names.
 | `buttondown` | Buttondown | qualifies-with-caveat | documented |
 | `elastic-email` | Elastic Email | qualifies-with-caveat | documented |
 | `fastmail` | Fastmail | paid-only | documented |
+| `mail-lesin-org` | mail.lesin.org (TempMail) | qualifies-with-caveat | documented |
 | `maileroo` | Maileroo | qualifies-with-caveat | documented |
+| `mailexpire` | MailExpire | dead | documented |
 | `mailo` | Mailo | paid-only | documented |
 | `mailpace` | MailPace | fails-quota | documented |
 | `migadu` | Migadu | paid-only | documented |
