@@ -1,0 +1,152 @@
+{
+  "topic": "domains-dns",
+  "slug": "ns1-connect-essentials",
+  "provider": "IBM NS1 Connect",
+  "url": "https://www.ibm.com/products/ns1-connect/pricing",
+  "category": "managed authoritative DNS and traffic steering",
+  "tier": "Essentials",
+  "free_tier": {
+    "stated": "no permanent free tier on this plan; a 30-day free trial precedes it, and Essentials is priced starting at $108.00 USD per month (a discounted starting price of $43.20 USD per month is shown)",
+    "unit": "none",
+    "source_url": "https://www.ibm.com/products/ns1-connect/pricing",
+    "read_on": "2026-11-19",
+    "metered_on": "none",
+    "notes": "Prices shown are indicative, may vary by country, exclude applicable taxes and duties, and are subject to product-offering availability in a locale."
+  },
+  "per_object_cap": {
+    "stated": "1000 DNS records; a DNS record may hold multiple answers, and the maximum TTL on a record is 86400 seconds (24 hours), with values above that automatically adjusted to 86400",
+    "bytes": null,
+    "source_url": "https://www.ibm.com/products/ns1-connect/pricing"
+  },
+  "retention": {
+    "stated": "unverified: no data-deletion or retention period is stated on the pages read; zone records survive while the subscription remains active",
+    "days": null,
+    "source_url": "https://www.ibm.com/products/ns1-connect/pricing"
+  },
+  "egress": {
+    "terms": "DNS queries are counted against a monthly allowance (30-80M DNS queries/month on Essentials); no per-GB traffic price is published, since DNS is priced by query count rather than by bytes out",
+    "metered": true,
+    "free_allowance": "30-80M DNS queries/month on Essentials",
+    "price_per_tb": null,
+    "source_url": "https://www.ibm.com/products/ns1-connect/pricing"
+  },
+  "interface": [
+    "rest",
+    "browser"
+  ],
+  "interface_detail": "a REST API at https://api.nsone.net/v1 (legacy) and https://api.nsone.net/{category}/v1 (newer) returning JSON over HTTPS, authenticated with an API key secret in the X-NSONE-Key header; the first key must be created in the NS1 Connect portal; a web portal manages zones and records",
+  "tooling": "REST API through curl or any HTTP client with an X-NSONE-Key API key; the NS1 Terraform provider (ns1-terraform/ns1) is the documented infrastructure-as-code path; Ansible integration is listed on the product page",
+  "chaining": "managed authoritative DNS with real-time traffic steering, health-check monitors and HTTPS redirects; Cloud Sync is an add-on on paid plans, and a Terraform toolkit keeps zones in step with other providers",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "30-80M DNS queries/month (Essentials)",
+      "source": "https://www.ibm.com/products/ns1-connect/pricing"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "1000 DNS records; TTL capped at 86400 seconds (24 hours)",
+      "source": "https://www.ibm.com/products/ns1-connect/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "2 health check monitors and 1 traffic filter chain (Essentials)",
+      "source": "https://www.ibm.com/products/ns1-connect/pricing"
+    }
+  ],
+  "binding": "request-rate",
+  "binding_note": "the 30-80M DNS queries/month allowance is the quantity that governs the plan; the 1000-record and 2-monitor caps are lower than the trial but still far above a single zone's needs",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "the trial sign-up page asks for a business email address, first name, last name, country and password to create an IBMid; Company is a required field in the form metadata; no credit card is required for the trial. The paid purchase steps were not read, so the payment identity required to buy Essentials is unverified: behind a sign-up (https://www.ibm.com/account/reg/signup?formid=urx-54055, https://www.ibm.com/products/ns1-connect/pricing)",
+    "country": null
+  },
+  "reliability_note": "the API requires HTTPS and rejects plain HTTP or unauthenticated requests; the Terraform provider documentation warns that 429 rate-limit responses occur and recommends rate_limit_parallelism 60; no outage history was read",
+  "confidence": "documented",
+  "confidence_note": "the first-party pricing page, the trial sign-up form (read from a raw fetch), the API documentation (read through a read provider), the Terraform toolkit documentation and the DNS-record documentation were captured and quoted; the paid checkout was not entered, so the payment identity for a paid purchase is documented as unverified",
+  "evidence": [
+    {
+      "url": "https://www.ibm.com/products/ns1-connect/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:3c813d4f5b2cc4375864b7944fc9d4e9f5f65ee3c0ff378df81028fae0e95e02",
+      "quote": "Pricing: Starting at $108.00 USD per month",
+      "proved": "the Essentials list price starts at USD 108 per month"
+    },
+    {
+      "url": "https://www.ibm.com/products/ns1-connect/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:3c813d4f5b2cc4375864b7944fc9d4e9f5f65ee3c0ff378df81028fae0e95e02",
+      "quote": "Discounted Pricing: Starting at $43.20 USD per month",
+      "proved": "a discounted Essentials price of USD 43.20 per month is shown"
+    },
+    {
+      "url": "https://www.ibm.com/products/ns1-connect/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:3c813d4f5b2cc4375864b7944fc9d4e9f5f65ee3c0ff378df81028fae0e95e02",
+      "quote": "30-80M DNS queries/month",
+      "proved": "the Essentials monthly DNS query allowance"
+    },
+    {
+      "url": "https://www.ibm.com/products/ns1-connect/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:3c813d4f5b2cc4375864b7944fc9d4e9f5f65ee3c0ff378df81028fae0e95e02",
+      "quote": "1000 DNS records",
+      "proved": "the Essentials DNS record cap"
+    },
+    {
+      "url": "https://www.ibm.com/products/ns1-connect/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:3c813d4f5b2cc4375864b7944fc9d4e9f5f65ee3c0ff378df81028fae0e95e02",
+      "quote": "2 health check monitors",
+      "proved": "the Essentials health check monitor count"
+    },
+    {
+      "url": "https://www.ibm.com/products/ns1-connect/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:3c813d4f5b2cc4375864b7944fc9d4e9f5f65ee3c0ff378df81028fae0e95e02",
+      "quote": "1 traffic filter chain",
+      "proved": "the Essentials traffic filter chain count"
+    },
+    {
+      "url": "https://www.ibm.com/products/ns1-connect/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:3c813d4f5b2cc4375864b7944fc9d4e9f5f65ee3c0ff378df81028fae0e95e02",
+      "quote": "Prices shown are indicative, may vary by country, exclude any applicable taxes and duties, and are subject to product offering availability in a locale.",
+      "proved": "the prices are indicative and vary by country and locale"
+    },
+    {
+      "url": "https://www.ibm.com/docs/en/ns1-connect?topic=answers-create-dns-record",
+      "date": "2026-11-19",
+      "capture": "sha256:3810c116152a11b9f0a4c802dcc5217d2a4fbac0b85873f7e442931321a1bf7b",
+      "quote": "In NS1 Connect, the maximum TTL value you can set for a DNS record is 86400 seconds or 24 hours. Values exceeding this limit are automatically adjusted to 86400 seconds.",
+      "proved": "a DNS record's TTL is capped at 86400 seconds"
+    },
+    {
+      "url": "https://www.ibm.com/docs/en/ns1-connect?topic=introduction-using-api",
+      "date": "2026-11-19",
+      "capture": "sha256:3ebe8dceac1bb4e077f0696bc3c8ca60d0f2a80f76626debe092535f56ad2d2f",
+      "quote": "This REST API returns JSON responses and uses standard HTTP methods (GET, PUT, POST, DELETE) to perform operations on resources.",
+      "proved": "the service exposes a REST API"
+    },
+    {
+      "url": "https://www.ibm.com/docs/en/ns1-connect?topic=toolkits-terraform-toolkit-ns1-connect",
+      "date": "2026-11-19",
+      "capture": "sha256:cb25cc8477f2d51739065fa79ea48bec287070eda6d412ec1ab3a183895c4295",
+      "quote": "The NS1 Connect + Terraform toolkit provides the tools needed to sync DNS zones and records across all of your DNS providers to create a single source of truth and to centralize resource management.",
+      "proved": "a Terraform toolkit manages zones and records as infrastructure as code"
+    },
+    {
+      "url": "https://www.ibm.com/account/reg/signup?formid=urx-54055",
+      "date": "2026-11-19",
+      "capture": "sha256:e5a50c811758b012f6f80d57f7f4c93b8703f07d224b2b3a5a5ec6328afe3ec0",
+      "quote": "Create your account. No credit card required.",
+      "proved": "the trial sign-up needs no payment card"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-19T02:46:19.580Z",
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "Essentials is the entry paid tier, listed at USD 108 per month with a promotional discounted price of USD 43.20 per month at the time of reading. DNS is priced by query volume and record count, not by stored bytes, so a per-TB price is not applicable.",
+  "stale": false
+}

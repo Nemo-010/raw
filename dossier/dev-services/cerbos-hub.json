@@ -1,0 +1,135 @@
+{
+  "topic": "dev-services",
+  "slug": "cerbos-hub",
+  "provider": "Cerbos Hub",
+  "url": "https://www.cerbos.dev/pricing",
+  "category": "hosted authorization control plane for policies (Hub) that manages policy decision points the user runs; the separate open-source Cerbos PDP is not this hosted offer",
+  "tier": "Proof of Concept",
+  "free_tier": {
+    "stated": "Proof of Concept plan at USD 0 a month, up to 100 monthly active principals, with 1 workspace, 2 developers, 2 Playgrounds, 2 simultaneous PDPs, up to 5 custom tenants, 5 policy builds a week and 1 week of unified audit logs; free up to 100 principals with no card",
+    "unit": "users",
+    "metered_on": "identity-count",
+    "source_url": "https://www.cerbos.dev/pricing",
+    "read_on": "2026-11-19",
+    "notes": "The meter is monthly active principals, where a principal is a user or a service; it is counted as unique principals authorized in one calendar month. Authorization decisions run in the user's own environment; Hub is the cloud control plane that builds and pushes policies. The free tier is a Proof of Concept plan and the first-party product-package document restricts it to proof of concept use."
+  },
+  "per_object_cap": {
+    "stated": "unverified: no per-policy or per-request byte size cap is stated on the pricing page read",
+    "bytes": null
+  },
+  "retention": {
+    "stated": "1 week of unified audit logs on the Proof of Concept plan; the Development plan raises this to 3 months and Production to 1 year",
+    "days": 7,
+    "source_url": "https://www.cerbos.dev/pricing",
+    "notes": "The 7 days is from the Proof of Concept entry '1 week of unified audit logs'. Custom audit log retention is an Enterprise feature."
+  },
+  "egress": {
+    "terms": "not applicable to authorization decisions: the control plane runs in the cloud and the PDPs that answer checks run in the user's environment; no data egress quota is stated for the Proof of Concept plan",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.cerbos.dev/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "Policies are managed through the Hub interface, the Cerbos CLI and an API; the first-party documentation lists programmatic policy management via the CLI or SDK. Decision checks are served by the Cerbos PDP that runs in the user's environment, while Hub distributes policy bundles to it.",
+  "endpoint": "https://hub.cerbos.cloud/",
+  "tooling": "The Cerbos Hub web interface at hub.cerbos.cloud, the Cerbos CLI and API for policy management, and a Cerbos PDP that the user runs to answer checks; Cerbos Synapse is included on the Proof of Concept plan for data enrichment",
+  "chaining": "Author and version policies in the hosted Hub, which builds them and pushes bundles to PDPs running next to the application; checks stay inside the user's network. The open-source Cerbos PDP can run standalone with no Hub account and is the last-resort, self-run option.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "100 monthly active principals on Proof of Concept",
+      "source": "https://www.cerbos.dev/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "1 workspace, 2 developers and 2 Playgrounds on Proof of Concept",
+      "source": "https://www.cerbos.dev/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "2 simultaneous PDPs, up to 5 custom tenants and 5 policy builds per week on Proof of Concept",
+      "source": "https://www.cerbos.dev/pricing"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "1 week of unified audit logs on Proof of Concept",
+      "source": "https://www.cerbos.dev/pricing"
+    }
+  ],
+  "binding": "volume-quota",
+  "binding_note": "The 100 monthly active principals cap binds first for a growing application, ahead of the 2-simultaneous-PDP and 5-builds-a-week caps. Beyond 100 principals the next plan is Development from USD 25 a month. Audit logs are kept only 1 week on the free plan.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The first-party sign-up walkthrough says to choose to sign in with a Google or GitHub ID or create a new ID with an email address; the Hub landing page states No credit card required. Whether a phone number is asked for is unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "The proof-of-concept package is stated as for proof of concept use only, with 1 week of audit logs and community support. A PDP needs outbound internet access to fetch bundle updates from Hub; decisions themselves run in the user's environment.",
+  "confidence": "documented",
+  "confidence_note": "Quotas, retention and the free-up-to-100 no-card claim are quoted from the first-party pricing page. Sign-up options come from a first-party Cerbos walkthrough. Any gate shown only after registration is unverified: behind a sign-up.",
+  "evidence": [
+    {
+      "url": "https://www.cerbos.dev/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:4c8a8ae0b23897b6ff97307c670aa64a5b2299e43d4e9e8bce138dd45ed9f686",
+      "quote": "It is free up to 100 (Proof of Concept, no card)",
+      "proved": "Cerbos Hub is free up to 100 monthly active principals with no card"
+    },
+    {
+      "url": "https://www.cerbos.dev/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:4c8a8ae0b23897b6ff97307c670aa64a5b2299e43d4e9e8bce138dd45ed9f686",
+      "quote": "Cerbos Hub, the managed control plane, is priced by monthly active principals",
+      "proved": "the hosted Hub is metered by monthly active principals"
+    },
+    {
+      "url": "https://www.cerbos.dev/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:4c8a8ae0b23897b6ff97307c670aa64a5b2299e43d4e9e8bce138dd45ed9f686",
+      "quote": "2 simultaneous PDPs",
+      "proved": "the Proof of Concept plan allows 2 simultaneous PDPs"
+    },
+    {
+      "url": "https://www.cerbos.dev/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:4c8a8ae0b23897b6ff97307c670aa64a5b2299e43d4e9e8bce138dd45ed9f686",
+      "quote": "5 policy builds per week",
+      "proved": "the Proof of Concept plan allows 5 policy builds a week"
+    },
+    {
+      "url": "https://www.cerbos.dev/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:4c8a8ae0b23897b6ff97307c670aa64a5b2299e43d4e9e8bce138dd45ed9f686",
+      "quote": "1 week of unified audit logs",
+      "proved": "the Proof of Concept plan keeps 1 week of unified audit logs"
+    },
+    {
+      "url": "https://www.cerbos.dev/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:4c8a8ae0b23897b6ff97307c670aa64a5b2299e43d4e9e8bce138dd45ed9f686",
+      "quote": "Hub manages the PDPs from the cloud, but the PDPs that answer each request run next to your application.",
+      "proved": "authorization decisions run in the user's environment while Hub is the cloud control plane"
+    },
+    {
+      "url": "https://www.cerbos.dev/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:4c8a8ae0b23897b6ff97307c670aa64a5b2299e43d4e9e8bce138dd45ed9f686",
+      "quote": "Just trying policies out: the Cerbos playground, in the browser with no account.",
+      "proved": "a no-account playground exists for trying policies"
+    },
+    {
+      "url": "https://www.cerbos.dev/blog/get-started-with-cerbos-hub",
+      "date": "2026-11-19",
+      "capture": "sha256:730016666f6fa6b907c5723fd8e9126bf71f0ebf7fa59b9c3585e2a38e66c2d7",
+      "quote": "create a new ID with your email address",
+      "proved": "sign-up accepts an email address or a Google or GitHub identity"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T00:17:12.856Z",
+  "self_hosted": false,
+  "notes": "Cerbos Hub is a hosted control plane; the decision points run in the user's environment, so this record is hosted and self_hosted is false. The open-source Cerbos PDP runs standalone with no account and is a separate, self-run option, not this hosted offer. The sign-in gate is taken from first-party Cerbos material; hub.cerbos.cloud redirects were not readable."
+}
