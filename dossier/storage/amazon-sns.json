@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
-    "bytes": null,
+    "stated": "Maximum message size is up to 1 MiB per message.",
+    "bytes": 1048576,
     "source_url": "https://aws.amazon.com/sns/pricing/",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "Messages are pushed and discarded; archived data is billed for a minimum of 1 day of storage with no fixed retention period stated.",
     "days": null,
     "source_url": "https://aws.amazon.com/sns/pricing/",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "Data transferred into SNS is free; delivery to Amazon SQS or AWS Lambda is charged at internet data-transfer rates even within one region.",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "Pub/sub messaging accessed through API requests to SNS topics.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "Fans out to endpoints; payloads can be stored in Amazon S3 via the Extended Client Library, incurring S3 storage charges, but SNS itself holds no readable bytes.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -49,10 +49,45 @@
       "url": "https://aws.amazon.com/sns/pricing/",
       "date": "2026-10-21",
       "proved": "rejected in the seed: Pub/sub only — zero storage. 1M publishes/month free, but messages are pushed and discarded; there is nothing to read back later. [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://aws.amazon.com/sns/pricing/",
+      "date": "2026-11-19",
+      "proved": "SNS is metered by API requests, indicating an API-based pub/sub interface",
+      "capture": "sha256:266459bea7c6f2d7da619a04a43bf73538368da3b42d23b9139dbf7aea07c110",
+      "quote": "Amazon Simple Notification Service (Amazon SNS) Standard topic pricing is based on the number of monthly API requests made"
+    },
+    {
+      "url": "https://aws.amazon.com/sns/pricing/",
+      "date": "2026-11-19",
+      "proved": "the maximum SNS message size is 1 MiB",
+      "capture": "sha256:266459bea7c6f2d7da619a04a43bf73538368da3b42d23b9139dbf7aea07c110",
+      "quote": "Each message from 1KB to the topic's maximum message size (up to 1 MiB) is billed as one message.."
+    },
+    {
+      "url": "https://aws.amazon.com/sns/pricing/",
+      "date": "2026-11-19",
+      "proved": "archived messages are billed by storage duration with a one-day minimum, rather than a stated fixed retention",
+      "capture": "sha256:266459bea7c6f2d7da619a04a43bf73538368da3b42d23b9139dbf7aea07c110",
+      "quote": "Any data that is archived will be billed for a minimum of 1 day of storage and message replay is billed at the existing FIFO API Requests and Payload data rates."
+    },
+    {
+      "url": "https://aws.amazon.com/sns/pricing/",
+      "date": "2026-11-19",
+      "proved": "ingress is free; delivery to SQS/Lambda is charged at internet data-transfer rates",
+      "capture": "sha256:266459bea7c6f2d7da619a04a43bf73538368da3b42d23b9139dbf7aea07c110",
+      "quote": "Data transferred into Amazon SNS is free of charge. Amazon SNS does not charge for per-message notification delivery when delivering messages to Amazon SQS or AWS Lambda, but does charge for the amount of data transferred from Amazon SNS to Amazon SQS or AWS Lambda, when messages are delivered."
+    },
+    {
+      "url": "https://aws.amazon.com/sns/pricing/",
+      "date": "2026-11-19",
+      "proved": "SNS chains to S3 through the Extended Client Library, which stores the payload and bills S3 storage",
+      "capture": "sha256:266459bea7c6f2d7da619a04a43bf73538368da3b42d23b9139dbf7aea07c110",
+      "quote": "when using the Amazon SNS Extended Client Library to send payloads using Amazon Simple Storage Service (Amazon S3), you incur Amazon S3 charges for any Amazon S3 storage you use to send message payloads."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:54.753Z",
   "notes": "Pub/sub only. Zero storage. 1M publishes/month free, but messages are pushed and discarded; there is nothing to read back later.",
   "history": [],
   "extras": {
@@ -67,7 +102,7 @@
       "first_recorded": "2026-10-21",
       "source": "DEAD-ENDS.md + the dossier wave that recorded it"
     },
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this rejection was not re-checked against the live service"
+    "verified_at_basis": "checked against the live service on 2026-11-19"
   },
   "binding": "none",
   "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
