@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "50G max",
     "bytes": null,
     "source_url": "https://fetch.web.pkgforge.dev/https://bashupload.com/",
-    "notes": "not applicable: a rejected offer has no per-object cap to shard"
+    "notes": "50G per-file upload ceiling stated on the archived homepage"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "Files are stored for 3 days and can be downloaded only once.",
     "days": null,
     "source_url": "https://fetch.web.pkgforge.dev/https://bashupload.com/",
-    "notes": "Binding failure documented in record details."
+    "notes": "3-day store with a single download"
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "not stated on the archived bashupload.com homepage",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "cli"
   ],
-  "interface_detail": "not documented",
-  "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "interface_detail": "command-line curl -T upload of a file to a share URL",
+  "tooling": "curl -T to upload a file",
+  "chaining": "single-use share: files stored for 3 days and downloadable only once",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -49,10 +49,87 @@
       "url": "https://fetch.web.pkgforge.dev/https://bashupload.com/",
       "date": "2026-10-21",
       "proved": "rejected in the seed: Domain no longer resolves to an origin — DNS returns only an SOA in the Authority section (NXDOMAIN-equivalent, registrar-servers.com), and the proxy returns HTTP 530. The dataset still list [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20240115205024/https://bashupload.com/?provider=wayback",
+      "date": "2026-11-19",
+      "proved": "the upload interface is a command-line curl -T upload",
+      "capture": "sha256:64988caec8b7ff82b7cd8f246ca11bc37e9ed39eb7185295d7c0e99be801a7e4",
+      "quote": "curl bashupload.com -T your_file.txt"
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20240115205024/https://bashupload.com/?provider=wayback",
+      "date": "2026-11-19",
+      "proved": "a file is uploaded with curl -T and a share URL is produced",
+      "capture": "sha256:64988caec8b7ff82b7cd8f246ca11bc37e9ed39eb7185295d7c0e99be801a7e4",
+      "quote": "curl bashupload.com -T your_file.txt"
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20240115205024/https://bashupload.com/?provider=wayback",
+      "date": "2026-11-19",
+      "proved": "the client uploads with curl -T",
+      "capture": "sha256:64988caec8b7ff82b7cd8f246ca11bc37e9ed39eb7185295d7c0e99be801a7e4",
+      "quote": "curl bashupload.com -T your_file.txt"
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20240115205024/https://bashupload.com/?provider=wayback",
+      "date": "2026-11-19",
+      "proved": "the offer chains by one-time download within a 3-day store",
+      "capture": "sha256:64988caec8b7ff82b7cd8f246ca11bc37e9ed39eb7185295d7c0e99be801a7e4",
+      "quote": "Files are stored for 3 days and can be downloaded only once."
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20240115205024/https://bashupload.com/?provider=wayback",
+      "date": "2026-11-19",
+      "proved": "the per-object upload ceiling is 50G",
+      "capture": "sha256:64988caec8b7ff82b7cd8f246ca11bc37e9ed39eb7185295d7c0e99be801a7e4",
+      "quote": "Upload files from command line to easily share between servers, desktops and mobiles, 50G max."
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20240115205024/https://bashupload.com/?provider=wayback",
+      "date": "2026-11-19",
+      "proved": "the 50G figure is a per-file upload ceiling",
+      "capture": "sha256:64988caec8b7ff82b7cd8f246ca11bc37e9ed39eb7185295d7c0e99be801a7e4",
+      "quote": "Upload files from command line to easily share between servers, desktops and mobiles, 50G max."
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20240115205024/https://bashupload.com/?provider=wayback",
+      "date": "2026-11-19",
+      "proved": "files are retained 3 days and removed after one download",
+      "capture": "sha256:64988caec8b7ff82b7cd8f246ca11bc37e9ed39eb7185295d7c0e99be801a7e4",
+      "quote": "Files are stored for 3 days and can be downloaded only once."
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20240115205024/https://bashupload.com/?provider=wayback",
+      "date": "2026-11-19",
+      "proved": "retention ends at 3 days or the first download",
+      "capture": "sha256:64988caec8b7ff82b7cd8f246ca11bc37e9ed39eb7185295d7c0e99be801a7e4",
+      "quote": "Files are stored for 3 days and can be downloaded only once."
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20240115205024/https://bashupload.com/?provider=wayback",
+      "date": "2026-11-19",
+      "proved": "the homepage gives file retention and one-shot download but no egress price or traffic quota",
+      "capture": "sha256:64988caec8b7ff82b7cd8f246ca11bc37e9ed39eb7185295d7c0e99be801a7e4",
+      "quote": "Files are stored for 3 days and can be downloaded only once."
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20240115205024/https://bashupload.com/?provider=wayback",
+      "date": "2026-11-19",
+      "proved": "the archived first-party homepage confirms the upload, retention and cap fields",
+      "capture": "sha256:64988caec8b7ff82b7cd8f246ca11bc37e9ed39eb7185295d7c0e99be801a7e4",
+      "quote": "Files are stored for 3 days and can be downloaded only once."
+    },
+    {
+      "url": "probe:https://fetch.web.pkgforge.dev/https://bashupload.com/",
+      "date": "2026-11-19",
+      "proved": "the proxy target was unreachable on the read date",
+      "capture": "sha256:36b513153951cf43e44503eb21fffefeafa569d4489c32b2edfc5b87545a8b5e",
+      "quote": "\"status\": 530"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:57.619Z",
   "notes": "Domain no longer resolves to an origin. DNS returns only an SOA in the Authority section (NXDOMAIN-equivalent, registrar-servers.com), and the proxy returns HTTP 530. The dataset still list.",
   "history": [],
   "extras": {
