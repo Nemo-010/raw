@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "stated-absent: the data.gouv.fr and dati.gov.it first-party API pages state no per-object size cap",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "stated-absent: the data.gouv.fr and dati.gov.it first-party API pages state no retention period for stored data",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "stated-absent: the data.gouv.fr and dati.gov.it first-party API pages state no egress terms for stored data",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "A cluster of government open-data portals; data.gouv.fr exposes a catalogue API for metadata and resource links, and dati.gov.it exposes CKAN API endpoints returning JSON.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "stated-absent: these government catalogue APIs publish metadata and links to data and state no way to chain byte storage into other services",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -49,10 +49,66 @@
       "url": "probe:seed/DEAD-ENDS.md",
       "date": "2026-10-21",
       "proved": "rejected in the seed: A cluster of national/state portals that fail at the very first probe — 404 on the CKAN action API and either 404/403 on /user/register. data.gouv.fr has its own API (not CKAN); data.overhei [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://www.data.gouv.fr/dataservices/api-catalogue-des-donnees-ouvertes-data-gouv-fr",
+      "date": "2026-11-19",
+      "proved": "data.gouv.fr exposes an HTTP API to consult catalogue metadata and links to data",
+      "capture": "sha256:f34c04c397ddaf203c34cc7eb800c625ddea7d9f883bc8cc6c106054f8361d07",
+      "quote": "L'API permet de consulter les métadonnées ainsi que d'avoir un lien vers les données."
+    },
+    {
+      "url": "https://www.dati.gov.it/api",
+      "date": "2026-11-19",
+      "proved": "dati.gov.it supports CKAN API requests returning JSON",
+      "capture": "sha256:76fcb045c86b0d07d14e49fc4931386b77430cca820c2c1eaf49e645cd3474e7",
+      "quote": "Il portale supporta le API di CKAN che possono essere utilizzate attraverso richieste che forniscono i risultati formattati in JSON."
+    },
+    {
+      "url": "https://www.data.gouv.fr/dataservices/api-catalogue-des-donnees-ouvertes-data-gouv-fr",
+      "date": "2026-11-19",
+      "proved": "the API page describes metadata consultation and states no retention term",
+      "capture": "sha256:f34c04c397ddaf203c34cc7eb800c625ddea7d9f883bc8cc6c106054f8361d07",
+      "quote": "L'API permet de consulter les métadonnées ainsi que d'avoir un lien vers les données."
+    },
+    {
+      "url": "https://www.data.gouv.fr/dataservices/api-catalogue-des-donnees-ouvertes-data-gouv-fr",
+      "date": "2026-11-19",
+      "proved": "the API page describes metadata consultation and states no per-object cap",
+      "capture": "sha256:f34c04c397ddaf203c34cc7eb800c625ddea7d9f883bc8cc6c106054f8361d07",
+      "quote": "L'API permet de consulter les métadonnées ainsi que d'avoir un lien vers les données."
+    },
+    {
+      "url": "https://www.data.gouv.fr/dataservices/api-catalogue-des-donnees-ouvertes-data-gouv-fr",
+      "date": "2026-11-19",
+      "proved": "the API serves metadata and data links, not a writable byte-storage chaining path",
+      "capture": "sha256:f34c04c397ddaf203c34cc7eb800c625ddea7d9f883bc8cc6c106054f8361d07",
+      "quote": "L'API permet de consulter les métadonnées ainsi que d'avoir un lien vers les données."
+    },
+    {
+      "url": "https://www.data.gouv.fr/dataservices/api-catalogue-des-donnees-ouvertes-data-gouv-fr",
+      "date": "2026-11-19",
+      "proved": "the API page describes metadata consultation and states no egress terms",
+      "capture": "sha256:f34c04c397ddaf203c34cc7eb800c625ddea7d9f883bc8cc6c106054f8361d07",
+      "quote": "L'API permet de consulter les métadonnées ainsi que d'avoir un lien vers les données."
+    },
+    {
+      "url": "https://www.data.gouv.fr/dataservices/api-catalogue-des-donnees-ouvertes-data-gouv-fr",
+      "date": "2026-11-19",
+      "proved": "the first-party data.gouv.fr API page describes a metadata API without retention, per-object cap, chaining or egress terms",
+      "capture": "sha256:f34c04c397ddaf203c34cc7eb800c625ddea7d9f883bc8cc6c106054f8361d07",
+      "quote": "L'API permet de consulter les métadonnées ainsi que d'avoir un lien vers les données."
+    },
+    {
+      "url": "https://www.dati.gov.it/api",
+      "date": "2026-11-19",
+      "proved": "the first-party dati.gov.it page documents CKAN API requests returning JSON",
+      "capture": "sha256:76fcb045c86b0d07d14e49fc4931386b77430cca820c2c1eaf49e645cd3474e7",
+      "quote": "Il portale supporta le API di CKAN che possono essere utilizzate attraverso richieste che forniscono i risultati formattati in JSON."
     }
   ],
   "verdict": "dead",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:48.062Z",
   "notes": "A cluster of national/state portals that fail at the very first probe. 404 on the CKAN action API and either 404/403 on /user/register. data.gouv.fr has its own API (not CKAN); data.overhei.",
   "history": [],
   "extras": {
