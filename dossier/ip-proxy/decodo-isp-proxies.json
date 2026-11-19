@@ -65,7 +65,7 @@
     "detail": "Payment for ISP proxies is by card or wallet, not cryptocurrency: 'We accept payments with credit cards, PayPal, Alipay, Google Pay, and Apple Pay. You can also pay with cryptocurrency for all products except ISP proxies and datacenter proxies (Pay per IP option).' Orders are processed by Paddle as Merchant of Record. Account set-up is 'Create your Decodo account, verify your email address'. Whether the 3-day ISP trial needs a payment method is unverified: behind a sign-up; for residential plans the trial converts on its own ('after the trial period ends, your chosen plan will activate automatically').",
     "country": null
   },
-  "reliability_note": "Of the two addresses the vendor publishes as its own samples, 37.120.211.30 is registered to M247-LTD-Warsaw in AS9009 M247 Europe SRL with the RDAP remark 'M247 LTD Warsaw Infrastructure', a hosting network, so a target that checks registration class sees hosting and not an ISP; the other, 90.135.104.218, is Tele2 Sverige AB (AS1257, LT-TELE2-GPRS, LT) and passes.",
+  "reliability_note": "The published sample address 37.120.211.30 is registered in 37.120.211.0/24 as M247-LTD-Warsaw (ASSIGNED PA, PL, remark \"M247 LTD Warsaw Infrastructure\"), a hosting network, so a registration-class check on it sees hosting rather than a consumer ISP. The allocation was checked in RDAP on 2026-11-19; this hosting registration is why the verdict is qualified.",
   "confidence": "documented",
   "confidence_note": "Documented: prices, protocols, endpoint and the 3-day trial are on the vendor's ISP product page. The addresses whose registration is looked up are the two samples the page publishes in its hero image, 'isp_01 37.120.211.30 and isp_02 90.135.104.218', not addresses issued to a buyer; no purchased address has been looked up, and whether an address stays the same across reconnects is unmeasured.",
   "evidence": [
@@ -236,10 +236,31 @@
       "proved": "the 3-day trial with 100MB, the 14-day money-back option, endpoint isp.decodo.com:10000, SOCKS5 & HTTP(S), username and password, the locations and the three price headlines are unchanged",
       "capture": "sha256:f813e47268772591c22ca5669ae8face2d7033bc414d900775512eac42cf7f6d",
       "quote": "100MB included to test performance before committing."
+    },
+    {
+      "url": "probe:https://rdap.db.ripe.net/ip/37.120.211.30",
+      "date": "2026-11-19",
+      "proved": "The published sample address 37.120.211.30 lies in 37.120.211.0/24, netname M247-LTD-Warsaw, type ASSIGNED PA, country PL.",
+      "capture": "sha256:708f546c09d7d30239fd7fe824938e8811c7bb44b8d818998d380f021f09625b",
+      "quote": "{\n  \"handle\" : \"37.120.211.0 - 37.120.211.255\",\n  \"startAddress\" : \"37.120.211.0\",\n  \"endAddress\" : \"37.120.211.255\",\n  \"ipVersion\" : \"v4\",\n  \"name\" : \"M247-LTD-Warsaw\",\n  \"type\" : \"ASSIGNED PA\",\n  \"country\" : \"PL\","
+    },
+    {
+      "url": "probe:https://rdap.db.ripe.net/ip/90.135.104.218",
+      "date": "2026-11-19",
+      "proved": "The second published sample address 90.135.104.218 lies in 90.135.0.0/16, netname LT-TELE2-GPRS, type ASSIGNED PA, country LT.",
+      "capture": "sha256:2f7091ba2aa2b7a8f1942bde0416a544de303fc3861935b0b86b3090776b32f5",
+      "quote": "{\n  \"handle\" : \"90.135.0.0 - 90.135.255.255\",\n  \"startAddress\" : \"90.135.0.0\",\n  \"endAddress\" : \"90.135.255.255\",\n  \"ipVersion\" : \"v4\",\n  \"name\" : \"LT-TELE2-GPRS\",\n  \"type\" : \"ASSIGNED PA\",\n  \"country\" : \"LT\","
+    },
+    {
+      "url": "https://decodo.com/proxies/isp-proxies",
+      "date": "2026-11-19",
+      "proved": "The vendor claims its ISP proxies are registered under ISP ASNs rather than hosting providers.",
+      "capture": "sha256:433f6f279c58b439fe43d936b0098b42166f68515e49f61b05234ebfb5055c2c",
+      "quote": "ISP proxies are significantly harder to identify as proxy traffic than datacenter proxies because they are registered under ASNs of internet service providers rather than hosting providers."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-30T18:28:35.818Z",
+  "verified_at": "2026-11-19T21:12:12.109Z",
   "price_per_tb_month": "USD 2.00 per dedicated address at the vendor's headline, USD 2.50 per address at the largest self-serve tier, USD 0.27 per shared address, USD 1.30 per GB of shared traffic. The unit sold is an address or a gigabyte, so no per-TB or per-month price exists to quote.",
   "history": [],
   "notes": "The page states that ISP proxies 'are registered under ASNs of internet service providers rather than hosting providers' and that addresses come from 'providers, including AT&T, Verizon, Orange, and Tele2'. Its hero image lists two sample addresses, isp_01 37.120.211.30 and isp_02 90.135.104.218; no other address and no per-address ASN list is published. The headline 'From $2/IP' is the 2000-IP dedicated tier, sold through contact sales; the self-serve dedicated ladder ends at USD 2.5/IP for 200 IPs (USD 500 + VAT a month). Shared pay-per-GB shows only 'From $1.30/GB'; its tiers are on dashboard.decodo.com/isp/pricing, unverified: behind a sign-up.",
@@ -288,6 +309,30 @@
     "locations_stated": "North and South Americas: US, CA, BR, CO; Europe: UK, DE, FR, NL, IT, BE, PL, SE, ES, RO, IE, CZ, AT; APAC: AU, HK, JP, KR, SG",
     "uptime_claim": "99.99% uptime and <0.2s response time, both vendor-stated and unverified here",
     "promoted_from": "sources/p/5f/5f2c693d742a7e2a270800b4154cc2e2e8d9107647f9b696b9d97b44931c23b6.tree.tsv",
-    "interface_enum_note": "The schema's interface enum has no token for a proxy endpoint or a tunnel, so this record follows the convention the egress records use: a proxy client or tunnel is 'cli', a vendor API is 'rest'. Previous value: ['socks5', 'http-proxy', 'web-ui']"
+    "interface_enum_note": "The schema's interface enum has no token for a proxy endpoint or a tunnel, so this record follows the convention the egress records use: a proxy client or tunnel is 'cli', a vendor API is 'rest'. Previous value: ['socks5', 'http-proxy', 'web-ui']",
+    "rdap_allocation": {
+      "address": "37.120.211.30",
+      "netname": "M247-LTD-Warsaw",
+      "type": "ASSIGNED PA",
+      "source": "https://rdap.db.ripe.net/ip/37.120.211.30",
+      "handle": "37.120.211.0 - 37.120.211.255",
+      "range": "37.120.211.0-37.120.211.255",
+      "country": "PL",
+      "class": "hosting",
+      "result": "fails",
+      "remark": "M247 LTD Warsaw Infrastructure",
+      "second_sample": {
+        "address": "90.135.104.218",
+        "netname": "LT-TELE2-GPRS",
+        "type": "ASSIGNED PA",
+        "source": "https://rdap.db.ripe.net/ip/90.135.104.218",
+        "handle": "90.135.0.0 - 90.135.255.255",
+        "range": "90.135.0.0-90.135.255.255",
+        "country": "LT",
+        "class": "isp",
+        "result": "passes",
+        "remark": "Mobile Services Lithuania"
+      }
+    }
   }
 }
