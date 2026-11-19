@@ -18,9 +18,10 @@
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
+    "stated": "Data is retained for one week, then automatically deleted.",
     "source_url": "https://termbin.com/",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim",
+    "days": 7
   },
   "egress": {
     "terms": "free direct GET over HTTPS, plain text, no metering.",
@@ -57,10 +58,24 @@
       "url": "https://termbin.com/c609",
       "date": "2026-10-21",
       "proved": "probe: 1,000,000-byte payload -> , GET bytes=1000000; 2,400,000-byte payload -> cat: write error: Connection reset by peer"
+    },
+    {
+      "url": "https://termbin.com/",
+      "date": "2026-11-19",
+      "proved": "the homepage documents the netcat-based paste upload the record describes",
+      "capture": "sha256:f6d3896b4923b328b1c472bb90b6b86777de5153b909b4251412c7342c44088c",
+      "quote": "echo just testing! | nc termbin.com 9999"
+    },
+    {
+      "url": "https://termbin.com/",
+      "date": "2026-11-19",
+      "proved": "the acceptable use policy states a one-week retention period",
+      "capture": "sha256:f6d3896b4923b328b1c472bb90b6b86777de5153b909b4251412c7342c44088c",
+      "quote": "The lifespan of any data or content posted on the service is limited to one week. After this period, such data will be automatically deleted."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:28.945Z",
   "notes": "approx. 1 MB per paste, no account, no count limit. Measured: 1,000,000 bytes stored and retrievable; 2,400,000 bytes -> connection reset.",
   "history": [],
   "extras": {
