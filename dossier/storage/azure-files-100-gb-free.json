@@ -13,25 +13,26 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
-    "bytes": null,
+    "stated": "Azure Files: \"| Maximum file size | 4 TiB |\" for an individual file in a file share.",
+    "bytes": 4398046511104,
     "source_url": "https://azure.microsoft.com/en-gb/pricing/free-services",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "Azure Files: stated-absent; the free-services page lists a 100 GB monthly amount and a 12-month free period, and the Azure Files pages state no automatic deletion of file data. Files persist until the user deletes the share or the account leaves its free period.",
     "days": null,
     "source_url": "https://azure.microsoft.com/en-gb/pricing/free-services",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "Azure Files: \"In a pay-as-you-go model, the cost of the Azure file share is based on how much you use the file share, in the form of used storage, transaction, and data transfer costs.\" No free outbound allowance specific to the Azure Files offer is stated on the pricing page.",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "smb",
+    "nfs"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "The file shares mount over SMB (Windows, Linux, macOS) and NFS (Linux); a File Service REST API is also documented for programmatic access.",
   "tooling": "not documented",
   "chaining": "rejected: it composes with nothing because it does not hold bytes here",
   "limits": [],
@@ -49,10 +50,59 @@
       "url": "https://azure.microsoft.com/en-gb/pricing/free-services",
       "date": "2026-10-21",
       "proved": "rejected in the seed: 100 GB for 12 months only, then bills; requires an Azure subscription with card. No path to 500 GB. [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/storage/files/storage-files-introduction",
+      "date": "2026-11-19",
+      "proved": "Azure file shares are mounted concurrently over SMB and NFS",
+      "capture": "sha256:6a514817fcb4b5db4cbf7524dd114cd186cd65e19694fc64923aac3714e9ad1d",
+      "quote": "You can mount Azure file shares concurrently from cloud and on-premises clients on Windows, Linux, and macOS — no additional software required."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/storage/files/storage-files-introduction",
+      "date": "2026-11-19",
+      "proved": "Azure Files is a cloud file-share service reached over SMB and NFS",
+      "capture": "sha256:6a514817fcb4b5db4cbf7524dd114cd186cd65e19694fc64923aac3714e9ad1d",
+      "quote": "Azure Files provides fully managed file shares in the cloud that you can access through the industry-standard SMB and NFS protocols."
+    },
+    {
+      "url": "https://azure.microsoft.com/en-gb/pricing/free-services",
+      "date": "2026-11-19",
+      "proved": "the free-services page states a 12-month free period for the free monthly amount",
+      "capture": "sha256:9ff9015700566c2b96efc87dce861e45ce2bef778a886817cb83a53406a0d617",
+      "quote": "Get free monthly amounts of these services for 12 months from the date you create your Azure account."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/storage/files/storage-files-scale-targets",
+      "date": "2026-11-19",
+      "proved": "Azure Files scale targets set a 4 TiB maximum size for an individual file",
+      "capture": "sha256:d94b24e8532c8cd09360f6eb2aef308268bd0c6cdcf759713a43ba2c70e8ed49",
+      "quote": "| Maximum file size | 4 TiB |"
+    },
+    {
+      "url": "https://azure.microsoft.com/en-us/pricing/details/storage/files/",
+      "date": "2026-11-19",
+      "proved": "Azure Files bills used storage, transactions and data transfer in the pay-as-you-go model",
+      "capture": "sha256:36ae51232937778db17736f14b8b28edab5c153e2bce74d0df500c0f359ff7d8",
+      "quote": "In a pay-as-you-go model, the cost of the Azure file share is based on how much you use the file share, in the form of used storage, transaction, and data transfer costs."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/storage/files/storage-files-introduction",
+      "date": "2026-11-19",
+      "proved": "the Azure Files interface is unchanged: SMB and NFS mounts",
+      "capture": "sha256:6a514817fcb4b5db4cbf7524dd114cd186cd65e19694fc64923aac3714e9ad1d",
+      "quote": "You can mount Azure file shares concurrently from cloud and on-premises clients on Windows, Linux, and macOS — no additional software required."
+    },
+    {
+      "url": "https://azure.microsoft.com/en-gb/pricing/free-services",
+      "date": "2026-11-19",
+      "proved": "the 100 GB free monthly amount is Azure Files file storage",
+      "capture": "sha256:9ff9015700566c2b96efc87dce861e45ce2bef778a886817cb83a53406a0d617",
+      "quote": "100 GB of LRS transaction optimised, hot, and cool files. 2 million read, list, and other file operations"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:56.868Z",
   "notes": "100 GB for 12 months only, then bills; requires an Azure subscription with card. No path to 500 GB.",
   "history": [],
   "extras": {
