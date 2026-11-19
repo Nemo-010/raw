@@ -30,7 +30,7 @@
   "interface": [
     "unknown"
   ],
-  "interface_detail": "a web dashboard at dash.domain.digitalplat.org that needs an account (unverified: behind a sign-up); the tutorial has an API chapter whose content was not read. The service stores only the delegation: A, CNAME, MX and TXT records are managed at the external DNS service the nameservers name",
+  "interface_detail": "a browser dashboard at dash.domain.digitalplat.org that needs an account (unverified: behind a sign-up) stores only NS delegation; A, AAAA, CNAME, MX and TXT records are created and managed at the external authoritative DNS service the nameservers name, not at this provider. The tutorial's API chapter (1.6-api-overview.md) states the dashboard exposes API-key and API-documentation areas, that the current documentation defines the actual endpoints, that endpoint details must be copied from the authenticated official documentation, and that the API cannot manage external DNS records; no dyndns update URL, git pull-request mechanism, or public DNS record API is documented for this hosted service. A REST API (/api/v1 with dns:write scope) is documented only for the separate self-hosted Domain-OSS software, not for this hosted service. interface keeps ['unknown'] because the vocabulary has no term for a delegation-only browser panel with no DNS record editor",
   "tooling": "the DigitalPlat dashboard, then an external authoritative DNS service of the user's choice",
   "chaining": "the delegation can point at an external DNS service such as Cloudflare, which makes the name a zone of the registrant's; the suffix is on the Public Suffix List",
   "limits": [
@@ -139,10 +139,45 @@
       "proved": "Let's Encrypt finds the registered domain with the Public Suffix List",
       "capture": "sha256:b5eee1fee7260f24a875dbca422432161e1e6e37041c64df017d7057af897c00",
       "quote": "We use the [Public Suffix List](https://publicsuffix.org/) to identify registered domains."
+    },
+    {
+      "url": "https://github.com/DigitalPlatDev/FreeDomain/blob/main/documents/tutorial/platform/1.6-api-overview.md",
+      "date": "2026-11-19",
+      "proved": "even where a dashboard API exists, it cannot manage external DNS records; delegation and a DNS provider's record API are separate systems",
+      "capture": "sha256:dccd4d3f14e5a69ce89a20b21ad93307f0959edeac32a31d5efe14269d63fa7a",
+      "quote": "Do not assume the API can manage external DNS records. DigitalPlat nameserver delegation and an external DNS provider's record API are separate systems."
+    },
+    {
+      "url": "https://github.com/DigitalPlatDev/FreeDomain/blob/main/documents/tutorial/platform/index.md",
+      "date": "2026-11-19",
+      "proved": "no DNS record editor exists at the provider; records are managed at an external authoritative DNS service",
+      "capture": "sha256:995316ac1e03774ca36e2ace6e9a7953703492cb4d0a6b5e9a2c1a5733ba9fa3",
+      "quote": "DigitalPlat does not provide a DNS record editor. Records such as `A`, `AAAA`, `CNAME`, `MX`, and `TXT` are created and managed at the external authoritative DNS service, not in the DigitalPlat Dashboard."
+    },
+    {
+      "url": "https://github.com/DigitalPlatDev/FreeDomain/blob/main/documents/tutorial/platform/1.0-product-boundaries.md",
+      "date": "2026-11-19",
+      "proved": "the provider stores only nameserver hostnames for delegation, not DNS records",
+      "capture": "sha256:8471cefba69a3ed4bc71398c430e67b279a1091f667b3e1aa0e975cc588aad2b",
+      "quote": "DigitalPlat stores the external nameserver hostnames for delegation. It does not replace the external DNS service's record editor."
+    },
+    {
+      "url": "https://github.com/DigitalPlatDev/FreeDomain/blob/main/documents/tutorial/platform/1.6-api-overview.md",
+      "date": "2026-11-19",
+      "proved": "API endpoint detail is defined only in the authenticated documentation area, not in the public tutorial",
+      "capture": "sha256:dccd4d3f14e5a69ce89a20b21ad93307f0959edeac32a31d5efe14269d63fa7a",
+      "quote": "The Dashboard currently exposes API key and API documentation areas. The current documentation defines the actual endpoints, permissions, request formats, and limits."
+    },
+    {
+      "url": "https://github.com/DigitalPlatDev/FreeDomain/blob/main/documents/tutorial/platform/1.6-api-overview.md",
+      "date": "2026-11-19",
+      "proved": "no public endpoint for record management is documented; endpoints sit behind authenticated documentation",
+      "capture": "sha256:dccd4d3f14e5a69ce89a20b21ad93307f0959edeac32a31d5efe14269d63fa7a",
+      "quote": "Copy current endpoint details only from the authenticated official API documentation."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-03T16:43:10.325Z",
+  "verified_at": "2026-11-19T21:12:41.002Z",
   "price_per_tb_month": null,
   "history": [],
   "notes": "The zone is the registrant's: the service stores only NS delegation, so a Cloudflare zone or any DNS host can serve it. The operator can still withdraw it, because a suffix can be paused, put behind a slot or charge, or a domain suspended. The TLS limit does not bind, because the suffixes are listed and each name counts alone. The dashboard is behind a login wall, so the live slot and renewal rules are unverified."
