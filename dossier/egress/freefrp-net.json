@@ -46,13 +46,13 @@
     },
     {
       "kind": "request-rate",
-      "value": "remote port must be unique and inside 10001-50000",
-      "source": "https://freefrp.net/docs"
+      "value": "remote port must be unique inside the shared open-port range 80/443 and 10001-50000",
+      "source": "https://freefrp.net/"
     }
   ],
   "limits_note": "",
   "binding": "request-rate",
-  "binding_note": "No byte quota and no rate cap are published, so no volume constraint exists in the vocabulary. The one published limit is a unique remote port inside a shared 10001-50000 range, recorded here as request-rate. That is not what breaks at 1 TiB/month; the true failure mode is a volunteer server with no operator obligation, which the vocabulary has no kind for.",
+  "binding_note": "The vendor home page publishes open ports 80/443 and 10001-50000; the binding limit is a unique remote port inside that shared 10001-50000 range, the nearest constraint kind. No byte quota or rate cap is published.",
   "identity_cost": {
     "kind": "anonymous",
     "detail": "No account: a shared server password is printed on the home page.",
@@ -71,10 +71,31 @@
       "url": "https://freefrp.net/docs",
       "date": "2026-10-23",
       "proved": "TCP and UDP proxy types are documented for this server"
+    },
+    {
+      "url": "https://freefrp.net/",
+      "date": "2026-11-19",
+      "proved": "the vendor home page publishes the open-port range 80/443 and 10001-50000 with numbers and unit",
+      "capture": "sha256:a0e36652029bbfa17ac4cfe724270d22dd3b10c6d559f417e50c7b6bd1878399",
+      "quote": "开放端口 ：80 / 443 , 10001 - 50000"
+    },
+    {
+      "url": "https://freefrp.net/",
+      "date": "2026-11-19",
+      "proved": "the first-party port range with numbers and unit supports the request-rate binding",
+      "capture": "sha256:a0e36652029bbfa17ac4cfe724270d22dd3b10c6d559f417e50c7b6bd1878399",
+      "quote": "开放端口 ：80 / 443 , 10001 - 50000"
+    },
+    {
+      "url": "https://freefrp.net/",
+      "date": "2026-11-19",
+      "proved": "the binding is a unique remote port inside the first-party 80/443 and 10001-50000 open-port range",
+      "capture": "sha256:a0e36652029bbfa17ac4cfe724270d22dd3b10c6d559f417e50c7b6bd1878399",
+      "quote": "开放端口 ：80 / 443 , 10001 - 50000"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-23T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:10:53.450Z",
   "price_per_tb_month": "USD 0",
   "history": [],
   "notes": "Anonymous and quota-free, but with no operator identity and no stated limit the risk is the service vanishing rather than a metered cut-off. A 1 TiB/month run on a volunteer server is the least likely thing it survives.",
