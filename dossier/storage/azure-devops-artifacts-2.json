@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "Universal Packages have a 4 TiB per-file limit; NuGet, npm, Maven, Python and Cargo have 500 MiB per-file limits, and npm package.json has a 375 KB hard limit.",
     "bytes": null,
     "source_url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "Retention policies can automatically delete older package versions and manage storage consumption.",
     "days": null,
     "source_url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "not stated on https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "cli"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "Package clients such as nuget.exe are used with Azure Artifacts; feeds hold NuGet, npm, Maven, Python, Cargo and Universal Packages.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "Feeds support 20 upstreams per package type per feed, so packages are pulled from upstream sources into the feed.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -49,10 +49,52 @@
       "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
       "date": "2026-10-21",
       "proved": "rejected in the seed: 2 GiB free per org, hard block on publish at the cap, and pay-go tiers start at $2/GB for the 2-10 GiB band. The 4 TiB Universal Package file ceiling is unusable with 2 GiB of pool. [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
+      "date": "2026-11-19",
+      "proved": "the limits page names nuget.exe as an integrated client tool",
+      "capture": "sha256:29b444110bc58ae49a4c40fb8b50bbd4270fb5dd6250ade5f30a2eccec34619e",
+      "quote": "Some limits are enforced by the client tools that Azure Artifacts integrates with (example nuget.exe)."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
+      "date": "2026-11-19",
+      "proved": "the limits page describes retention policies that delete older versions",
+      "capture": "sha256:29b444110bc58ae49a4c40fb8b50bbd4270fb5dd6250ade5f30a2eccec34619e",
+      "quote": "You can use [retention policies](../how-to/delete-and-recover-packages#delete-packages-automatically-with-retention-policies) to automatically delete older package versions and manage storage consumption."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
+      "date": "2026-11-19",
+      "proved": "the limits page states a 375 KB hard limit for package.json",
+      "capture": "sha256:29b444110bc58ae49a4c40fb8b50bbd4270fb5dd6250ade5f30a2eccec34619e",
+      "quote": "Azure Artifacts enforces an additional hard limit of *375 KB* for the *package.json* file."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
+      "date": "2026-11-19",
+      "proved": "feeds chain with up to 20 upstreams per package type",
+      "capture": "sha256:29b444110bc58ae49a4c40fb8b50bbd4270fb5dd6250ade5f30a2eccec34619e",
+      "quote": "- **20 upstreams** per package type per feed."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
+      "date": "2026-11-19",
+      "proved": "the limits page states a storage amount but no egress price or traffic quota",
+      "capture": "sha256:29b444110bc58ae49a4c40fb8b50bbd4270fb5dd6250ade5f30a2eccec34619e",
+      "quote": "Azure Artifacts provides 2 GiB of free storage per organization."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
+      "date": "2026-11-19",
+      "proved": "the first-party limits page was re-read and states the free storage amount",
+      "capture": "sha256:29b444110bc58ae49a4c40fb8b50bbd4270fb5dd6250ade5f30a2eccec34619e",
+      "quote": "Azure Artifacts provides 2 GiB of free storage per organization."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:56.065Z",
   "notes": "2 GiB free per org, hard block on publish at the cap, and pay-go tiers start at $2/GB for the 2-10 GiB band. The 4 TiB Universal Package file ceiling is unusable with 2 GiB of pool.",
   "history": [],
   "extras": {

@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "not stated on https://aws.amazon.com/s3/",
     "bytes": null,
     "source_url": "https://aws.amazon.com/free/",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "S3 Glacier Instant Retrieval and S3 Glacier Flexible Retrieval are charged for a minimum storage duration of 90 days; S3 Glacier Deep Archive has a minimum storage duration of 180 days.",
     "days": null,
     "source_url": "https://aws.amazon.com/free/",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "Data transfer out from Amazon S3 to the internet is charged at standard AWS data-transfer-out rates.",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "s3"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "Amazon S3 object storage reached through the S3 API/SDK.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "S3 chains with AWS Backup and partner solutions and supports replication for recovery objectives.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -54,10 +54,59 @@
       "url": "https://aws.amazon.com/free/free-tier-faqs/",
       "date": "2026-10-21",
       "proved": "cited as the basis of the rejection: The current AWS free-tier page and S3 pricing page no longer present a perpetual or 12-month 5 GB S3 allowance; the programme is now $200 of credits over 6 months and the account closes at 6 [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://aws.amazon.com/s3/",
+      "date": "2026-11-19",
+      "proved": "the product page names Amazon S3 object storage",
+      "capture": "sha256:3b5adc00abc37c90f210ec702fbcb4c50e5115bfde7d039ad6066e6cdf1f67ed",
+      "quote": "Amazon Simple Storage Service (Amazon S3) is an object storage service offering industry-leading scalability, data availability, security, and performance."
+    },
+    {
+      "url": "https://aws.amazon.com/s3/pricing/",
+      "date": "2026-11-19",
+      "proved": "S3 requests are made through the API/SDK",
+      "capture": "sha256:a251ac604d0f068839c500226280535f9d7d1d832d03a6c55e0854c265106fa7",
+      "quote": "Charges are accrued at the same rate as requests that are made using the API/SDK."
+    },
+    {
+      "url": "https://aws.amazon.com/s3/pricing/",
+      "date": "2026-11-19",
+      "proved": "the pricing page states minimum storage durations for Glacier classes",
+      "capture": "sha256:a251ac604d0f068839c500226280535f9d7d1d832d03a6c55e0854c265106fa7",
+      "quote": "Objects that are archived to S3 Glacier Instant Retrieval and S3 Glacier Flexible Retrieval are charged for a minimum storage duration of 90 days, and S3 Glacier Deep Archive has a minimum storage duration of 180 days."
+    },
+    {
+      "url": "https://aws.amazon.com/s3/",
+      "date": "2026-11-19",
+      "proved": "the product page describes unlimited total data but states no per-object byte cap",
+      "capture": "sha256:3b5adc00abc37c90f210ec702fbcb4c50e5115bfde7d039ad6066e6cdf1f67ed",
+      "quote": "You can store virtually any amount of data with S3 all the way to exabytes with unmatched performance."
+    },
+    {
+      "url": "https://aws.amazon.com/s3/",
+      "date": "2026-11-19",
+      "proved": "the product page describes replication, AWS Backup and partner integrations",
+      "capture": "sha256:3b5adc00abc37c90f210ec702fbcb4c50e5115bfde7d039ad6066e6cdf1f67ed",
+      "quote": "Meet your recovery time objective (RTO), recovery point objective (RPO), and compliance requirements with the robust replication functionality of S3, data protection with AWS Backup, and various AWS Partner Network solutions."
+    },
+    {
+      "url": "https://aws.amazon.com/s3/pricing/",
+      "date": "2026-11-19",
+      "proved": "internet-bound S3 data transfer is billed",
+      "capture": "sha256:a251ac604d0f068839c500226280535f9d7d1d832d03a6c55e0854c265106fa7",
+      "quote": "Since two of your customers are transferring data out of S3 over the internet you will incur standard AWS data transfer out charges, in addition to a S3 Multi-Region Access Point data routing cost."
+    },
+    {
+      "url": "https://aws.amazon.com/s3/",
+      "date": "2026-11-19",
+      "proved": "the first-party S3 product page was re-read and names S3 object storage",
+      "capture": "sha256:3b5adc00abc37c90f210ec702fbcb4c50e5115bfde7d039ad6066e6cdf1f67ed",
+      "quote": "Amazon Simple Storage Service (Amazon S3) is an object storage service offering industry-leading scalability, data availability, security, and performance."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:56.064Z",
   "notes": "The current AWS free-tier page and S3 pricing page no longer present a perpetual or 12-month 5 GB S3 allowance; the programme is now $200 of credits over 6 months and the account closes at 6",
   "history": [],
   "extras": {

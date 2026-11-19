@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "Universal Packages have a 4 TiB per-file limit; NuGet, npm, Maven, Python and Cargo have 500 MiB per-file limits, with a 375 KB hard limit for npm package.json.",
     "bytes": null,
     "source_url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/artifact-storage?view=azure-devops",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "Packages in the recycle bin are automatically deleted after 30 days.",
     "days": null,
     "source_url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/artifact-storage?view=azure-devops",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "not stated on https://learn.microsoft.com/en-us/azure/devops/artifacts/artifact-storage?view=azure-devops",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "cli"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "Package clients such as nuget.exe are used to publish and consume artifacts; feeds hold NuGet, npm, Python, Maven, Cargo and Universal Packages.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "Feeds support 20 upstreams per package type per feed, and packages saved from upstream sources count toward billed storage.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -49,10 +49,59 @@
       "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/artifact-storage?view=azure-devops",
       "date": "2026-10-21",
       "proved": "rejected in the seed: 2 GiB free per organization, and publishing is blocked at the limit: 'Once your organization reaches the storage limit, you won't be able to publish new artifacts.' Supports NuGet/npm/Python [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
+      "date": "2026-11-19",
+      "proved": "Azure Artifacts is used through client tools such as nuget.exe",
+      "capture": "sha256:29b444110bc58ae49a4c40fb8b50bbd4270fb5dd6250ade5f30a2eccec34619e",
+      "quote": "Some limits are enforced by the client tools that Azure Artifacts integrates with (example nuget.exe)."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
+      "date": "2026-11-19",
+      "proved": "the limits page names nuget.exe as an integrated client tool",
+      "capture": "sha256:29b444110bc58ae49a4c40fb8b50bbd4270fb5dd6250ade5f30a2eccec34619e",
+      "quote": "Some limits are enforced by the client tools that Azure Artifacts integrates with (example nuget.exe)."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/artifact-storage?view=azure-devops",
+      "date": "2026-11-19",
+      "proved": "the monitor page states a 30-day recycle-bin deletion",
+      "capture": "sha256:2754bb9ce6edcc80b0294957c60818c8888b3b90cd25aad196c493aa1e9da746",
+      "quote": "Yes, packages in the recycle bin still count toward your total storage. They are automatically deleted after 30 days, but you can manually remove them earlier by deleting them from the recycle bin."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/artifact-storage?view=azure-devops",
+      "date": "2026-11-19",
+      "proved": "the size table gives a 4 TiB per-file limit for Universal Packages",
+      "capture": "sha256:2754bb9ce6edcc80b0294957c60818c8888b3b90cd25aad196c493aa1e9da746",
+      "quote": "| Universal Packages | 4 TiB | 5,000 versions per package ID | Unlimited |"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/reference/limits",
+      "date": "2026-11-19",
+      "proved": "feeds chain with up to 20 upstreams per package type",
+      "capture": "sha256:29b444110bc58ae49a4c40fb8b50bbd4270fb5dd6250ade5f30a2eccec34619e",
+      "quote": "- **20 upstreams** per package type per feed."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/artifact-storage?view=azure-devops",
+      "date": "2026-11-19",
+      "proved": "the page describes consumption-based billing but states no egress price or traffic quota",
+      "capture": "sha256:2754bb9ce6edcc80b0294957c60818c8888b3b90cd25aad196c493aa1e9da746",
+      "quote": "Azure Artifacts uses a consumption‑based billing model and supports storing various package types, including NuGet, npm, Python, Maven, Cargo, and Universal Packages."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/artifacts/artifact-storage?view=azure-devops",
+      "date": "2026-11-19",
+      "proved": "the first-party storage page was re-read and describes supported package types",
+      "capture": "sha256:2754bb9ce6edcc80b0294957c60818c8888b3b90cd25aad196c493aa1e9da746",
+      "quote": "Azure Artifacts uses a consumption‑based billing model and supports storing various package types, including NuGet, npm, Python, Maven, Cargo, and Universal Packages."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:56.065Z",
   "notes": "2 GiB free per organization, and publishing is blocked at the limit: 'Once your organization reaches the storage limit, you won't be able to publish new artifacts.' Supports NuGet/npm/Python",
   "history": [],
   "extras": {
