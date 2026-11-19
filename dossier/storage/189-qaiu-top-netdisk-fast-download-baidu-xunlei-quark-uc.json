@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "stated-absent: the first-party HTTP endpoint does not state a per-object cap; it answered HTTP 500 on the settings path",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "stated-absent: the first-party HTTP endpoint does not state a retention period; it answered HTTP 500 on the settings path",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "stated-absent: the first-party HTTP endpoint does not state egress terms; its settings path answered HTTP 500",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "stated-absent: the first-party host exposes an HTTP API path but the settings endpoint answered HTTP 500, so no client interface is documented",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "stated-absent: the first-party HTTP endpoint does not state how it chains with other services; its settings path answered HTTP 500",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -49,10 +49,59 @@
       "url": "probe:seed/DEAD-ENDS.md",
       "date": "2026-10-21",
       "proved": "rejected in the seed: AUTH-REQUIRED and paid. This is the tier that actually covers Baidu Pan, Quark, UC, 139, 189 and Unicom — precisely the pans the free tier omits. Every /parser call returns HTTP 401 '未提供API [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "probe:https://189.qaiu.top/api/public/settings",
+      "date": "2026-11-19",
+      "proved": "the first-party host exposes an HTTP API path, but the probed endpoint returned no usable interface documentation",
+      "capture": "sha256:da5c938b74b82adccf9234e3f478878a0e28dd6f6e951b7f5ae7b69489d9bfc5",
+      "quote": "\"status\": 500"
+    },
+    {
+      "url": "probe:https://189.qaiu.top/api/public/settings",
+      "date": "2026-11-19",
+      "proved": "the settings endpoint returned HTTP 500 and stated no client interface",
+      "capture": "sha256:da5c938b74b82adccf9234e3f478878a0e28dd6f6e951b7f5ae7b69489d9bfc5",
+      "quote": "\"status\": 500"
+    },
+    {
+      "url": "probe:https://189.qaiu.top/api/public/settings",
+      "date": "2026-11-19",
+      "proved": "the probed endpoint returned no retention statement",
+      "capture": "sha256:da5c938b74b82adccf9234e3f478878a0e28dd6f6e951b7f5ae7b69489d9bfc5",
+      "quote": "\"status\": 500"
+    },
+    {
+      "url": "probe:https://189.qaiu.top/api/public/settings",
+      "date": "2026-11-19",
+      "proved": "the probed endpoint returned no per-object cap",
+      "capture": "sha256:da5c938b74b82adccf9234e3f478878a0e28dd6f6e951b7f5ae7b69489d9bfc5",
+      "quote": "\"status\": 500"
+    },
+    {
+      "url": "probe:https://189.qaiu.top/api/public/settings",
+      "date": "2026-11-19",
+      "proved": "the probed endpoint returned no egress terms",
+      "capture": "sha256:da5c938b74b82adccf9234e3f478878a0e28dd6f6e951b7f5ae7b69489d9bfc5",
+      "quote": "\"status\": 500"
+    },
+    {
+      "url": "probe:https://189.qaiu.top/api/public/settings",
+      "date": "2026-11-19",
+      "proved": "the probed endpoint returned no chaining statement",
+      "capture": "sha256:da5c938b74b82adccf9234e3f478878a0e28dd6f6e951b7f5ae7b69489d9bfc5",
+      "quote": "\"status\": 500"
+    },
+    {
+      "url": "probe:https://189.qaiu.top/api/public/settings",
+      "date": "2026-11-19",
+      "proved": "the first-party settings endpoint returned HTTP 500 and stated no interface, retention, per-object cap, egress or chaining terms",
+      "capture": "sha256:da5c938b74b82adccf9234e3f478878a0e28dd6f6e951b7f5ae7b69489d9bfc5",
+      "quote": "\"status\": 500"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:46.270Z",
   "notes": "AUTH-REQUIRED and paid. This is the tier that actually covers Baidu Pan, Quark, UC, 139, 189 and Unicom. Precisely the pans the free tier omits. Every /parser call returns HTTP 401 '未提供API.",
   "history": [],
   "extras": {

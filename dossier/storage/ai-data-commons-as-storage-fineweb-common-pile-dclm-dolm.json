@@ -13,27 +13,28 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "Hugging Face: \"In all cases, no single file will exceed 500GB. I.e. 500GB is the hard limit for a single file size.\"",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "stated-absent: the Hugging Face storage-limits page states storage quotas and file-size recommendations but no retention period for hosted repository files",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "stated-absent: the Hugging Face storage-limits page states storage quotas and prices but no egress or transfer-out price",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "git",
+    "rest"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "Hugging Face, host of FineWeb and Common Pile, uses Git-backed repositories (\"Under the hood, the Hub uses Git to version the data\") with a Hub Python library and API.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "stated-absent: the datasets are published for download and the host states no deposit path that chains them into a writable storage stack",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -84,10 +85,66 @@
       "proved": "a free Hugging Face user or org has public storage best-effort and private storage 100GB",
       "capture": "sha256:3151524ee2beb01b75e821c0d45e7cfc23e4a7feda74ce198393d81b23a27079",
       "quote": "| Free user or org         | Best-effort\\*"
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/storage-limits",
+      "date": "2026-11-19",
+      "proved": "Hugging Face, host of FineWeb and Common Pile, uses a Git-backed repository interface",
+      "capture": "sha256:d67ed20a7208dac21dbda9daf20d6c55f7885961eb85558a2f0c9d813f674afc",
+      "quote": "Under the hood, the Hub uses Git to version the data"
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/storage-limits",
+      "date": "2026-11-19",
+      "proved": "the host's repository interface is Git-backed",
+      "capture": "sha256:d67ed20a7208dac21dbda9daf20d6c55f7885961eb85558a2f0c9d813f674afc",
+      "quote": "Under the hood, the Hub uses Git to version the data"
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/storage-limits",
+      "date": "2026-11-19",
+      "proved": "the host's storage page describes versioning and quotas but states no automatic retention term",
+      "capture": "sha256:d67ed20a7208dac21dbda9daf20d6c55f7885961eb85558a2f0c9d813f674afc",
+      "quote": "Under the hood, the Hub uses Git to version the data"
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/storage-limits",
+      "date": "2026-11-19",
+      "proved": "the host sets a 500 GB hard cap per file",
+      "capture": "sha256:d67ed20a7208dac21dbda9daf20d6c55f7885961eb85558a2f0c9d813f674afc",
+      "quote": "In all cases, no single file will exceed 500GB. I.e. 500GB is the hard limit for a single file size."
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/storage-limits",
+      "date": "2026-11-19",
+      "proved": "the host's storage page discusses storage but states no egress terms",
+      "capture": "sha256:d67ed20a7208dac21dbda9daf20d6c55f7885961eb85558a2f0c9d813f674afc",
+      "quote": "Under the hood, the Hub uses Git to version the data"
+    },
+    {
+      "url": "https://huggingface.co/datasets/HuggingFaceFW/fineweb/raw/main/README.md",
+      "date": "2026-11-19",
+      "proved": "the FineWeb dataset is a published dump table, distributed for download rather than a writable store",
+      "capture": "sha256:f0069fc1b78f9205f5f74d629cfbc13aa714e2e43e1476a9410c46bf884a1f7e",
+      "quote": "| Total |  | 50,446.9       | 18,527.0               |"
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/storage-limits",
+      "date": "2026-11-19",
+      "proved": "the host's storage page states a 500 GB per-file cap and documents Git-backed access without a retention or egress term",
+      "capture": "sha256:d67ed20a7208dac21dbda9daf20d6c55f7885961eb85558a2f0c9d813f674afc",
+      "quote": "In all cases, no single file will exceed 500GB. I.e. 500GB is the hard limit for a single file size."
+    },
+    {
+      "url": "https://huggingface.co/datasets/HuggingFaceFW/fineweb/raw/main/README.md",
+      "date": "2026-11-19",
+      "proved": "the FineWeb first-party page is a published dump, not a writable deposit target",
+      "capture": "sha256:f0069fc1b78f9205f5f74d629cfbc13aa714e2e43e1476a9410c46bf884a1f7e",
+      "quote": "| Total |  | 50,446.9       | 18,527.0               |"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-11-04T00:31:28.057Z",
+  "verified_at": "2026-11-19T21:15:46.271Z",
   "notes": "All five are read-only distribution, not deposit targets, and they all sit on infrastructure with no write path. FineWeb (25.9B docs / 48.6 TB) and Common Pile (8 TB) and Pleias comm",
   "history": [],
   "extras": {

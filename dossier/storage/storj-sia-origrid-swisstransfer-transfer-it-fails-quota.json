@@ -13,27 +13,28 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "Origrid: \"No account needed to start (25 GB per file without one).\" Sia Free column: 50 GB storage.",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "Storj: \"In the Standard tier, objects have a minimum storage retention period of 30 days.\"",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "Storj: \"Egress** $7/TB\" on Standard and Advanced, free trial egress not separately priced. Origrid: \"No transfer quotas\" and \"No ads, on any plan\".",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "s3-compatible",
+    "cli"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "Storj: \"Drop-in replacement for AWS S3\" and works with S3-compatible apps; Sia offers an S3-compatible API (S3d) and rclone/Cyberduck; Origrid has a simple REST API.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "Storj works with S3-compatible apps and a mount client; Sia exposes an S3-compatible API usable with rclone and Cyberduck; Origrid offers a REST API and remote upload.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -70,10 +71,87 @@
       "proved": "the first (Free) plan column of the Sia Storage App pricing table holds 50 GB of storage",
       "capture": "sha256:6832a746ff5596eecdce8233f71d3755e62b0011d6f4c364fcb38e82023dd2fd",
       "quote": "Storage\n\n50 GB\n\n500 GB"
+    },
+    {
+      "url": "https://www.storj.io/pricing",
+      "date": "2026-11-19",
+      "proved": "Storj Object Storage is reachable through S3-compatible applications",
+      "capture": "sha256:e36516d3ea0357a5cbe3f816596cf5b54ecdb0a010bcba969568bd2441a76731",
+      "quote": "Works with S3-compatible apps"
+    },
+    {
+      "url": "https://www.storj.io/pricing",
+      "date": "2026-11-19",
+      "proved": "Storj is accessed as an S3-compatible object store",
+      "capture": "sha256:e36516d3ea0357a5cbe3f816596cf5b54ecdb0a010bcba969568bd2441a76731",
+      "quote": "Drop-in replacement for AWS S3"
+    },
+    {
+      "url": "https://www.storj.io/pricing",
+      "date": "2026-11-19",
+      "proved": "Storj Standard enforces a minimum 30-day retention on stored objects",
+      "capture": "sha256:e36516d3ea0357a5cbe3f816596cf5b54ecdb0a010bcba969568bd2441a76731",
+      "quote": "In the Standard tier, objects have a minimum storage retention period of 30 days."
+    },
+    {
+      "url": "https://origrid.io/pricing",
+      "date": "2026-11-19",
+      "proved": "Origrid's free links last 90 days after the last download, or 15 days without an account",
+      "capture": "sha256:16f32d5a053a4edeba0b20848e516bb1a62f20139c9d8ac08203850bf07c106f",
+      "quote": "Links last 90 days after the last download · 15 without an account"
+    },
+    {
+      "url": "https://origrid.io/pricing",
+      "date": "2026-11-19",
+      "proved": "Origrid allows a 25 GB file without an account; its free account allows 50 GB per file",
+      "capture": "sha256:16f32d5a053a4edeba0b20848e516bb1a62f20139c9d8ac08203850bf07c106f",
+      "quote": "No account needed to start (25 GB per file without one)."
+    },
+    {
+      "url": "https://www.storj.io/pricing",
+      "date": "2026-11-19",
+      "proved": "Storj charges USD 7 per TB of egress on its paid plans",
+      "capture": "sha256:e36516d3ea0357a5cbe3f816596cf5b54ecdb0a010bcba969568bd2441a76731",
+      "quote": "Egress** $7/TB"
+    },
+    {
+      "url": "https://sia.storage/",
+      "date": "2026-11-19",
+      "proved": "Sia's S3-compatible API chains with existing S3 tools",
+      "capture": "sha256:6832a746ff5596eecdce8233f71d3755e62b0011d6f4c364fcb38e82023dd2fd",
+      "quote": "S3-compatible API that works with the tools you already use."
+    },
+    {
+      "url": "https://www.storj.io/pricing",
+      "date": "2026-11-19",
+      "proved": "the Storj first-party pricing page still describes S3-compatible access and a 30-day free trial",
+      "capture": "sha256:e36516d3ea0357a5cbe3f816596cf5b54ecdb0a010bcba969568bd2441a76731",
+      "quote": "Works with S3-compatible apps"
+    },
+    {
+      "url": "https://origrid.io/pricing",
+      "date": "2026-11-19",
+      "proved": "the Origrid first-party pricing page still states its link-retention ladder",
+      "capture": "sha256:16f32d5a053a4edeba0b20848e516bb1a62f20139c9d8ac08203850bf07c106f",
+      "quote": "Links last 90 days after the last download · 15 without an account"
+    },
+    {
+      "url": "https://origrid.io/pricing",
+      "date": "2026-11-19",
+      "proved": "the Origrid first-party pricing page still states a 25 GB anonymous per-file cap",
+      "capture": "sha256:16f32d5a053a4edeba0b20848e516bb1a62f20139c9d8ac08203850bf07c106f",
+      "quote": "No account needed to start (25 GB per file without one)."
+    },
+    {
+      "url": "https://sia.storage/",
+      "date": "2026-11-19",
+      "proved": "the Sia first-party page still documents an S3-compatible API",
+      "capture": "sha256:6832a746ff5596eecdce8233f71d3755e62b0011d6f4c364fcb38e82023dd2fd",
+      "quote": "S3-compatible API that works with the tools you already use."
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-11-03T01:28:45.679Z",
+  "verified_at": "2026-11-19T21:15:46.270Z",
   "notes": "Storj has no free tier left, only a 30-day trial ('Free for 30 days', '25GB free storage for 30 days', 'No credit card required'). Sia's hosted product is 50 GB on the $0 plan. Origrid allows 25 GB per file with no account, and 50 GB per file with 50 GB of storage on a free account.",
   "history": [],
   "extras": {
