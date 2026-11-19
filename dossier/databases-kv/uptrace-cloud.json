@@ -1,0 +1,120 @@
+{
+  "topic": "databases-kv",
+  "slug": "uptrace-cloud",
+  "provider": "Uptrace Cloud",
+  "url": "https://uptrace.dev/pricing",
+  "category": "managed OpenTelemetry traces, metrics and logs (observability database on ClickHouse)",
+  "tier": "Cloud Free / pay-as-you-go",
+  "free_tier": {
+    "stated": "Uptrace Cloud is free up to 50 GB and 5,000 timeseries per month, then from $0.075/GB with automatic volume discounts; unlimited users, services and hosts. A separate free trial offers 1 TB of storage and 100,000 timeseries with no card required.",
+    "unit": "GB",
+    "source_url": "https://uptrace.dev/pricing",
+    "read_on": "2026-11-19",
+    "metered_on": "uploaded-bytes",
+    "notes": "The ongoing free allowance is 50 GB per month and 5,000 timeseries; the 1 TB / 100,000-timeseries figure is a signup trial. Metrics are billed per million ingested datapoints from $0.025 per 1M."
+  },
+  "per_object_cap": {
+    "stated": "unverified: no single-object cap is published; the free Cloud allowance is 50 GB per month of ingested spans/logs plus 5,000 timeseries, which are volume quotas rather than a per-object cap.",
+    "bytes": null,
+    "source_url": "https://uptrace.dev/pricing"
+  },
+  "retention": {
+    "stated": "Uptrace Cloud keeps all data for 4 weeks (28 days) by default; longer cold storage on S3 or HDD is available for up to 100 weeks at $0.01 per GB-month for spans and $0.20 per 1,000 timeseries-month for metrics.",
+    "days": 28,
+    "source_url": "https://uptrace.dev/pricing",
+    "notes": "28 days is the default retention; it can be extended via paid cold storage."
+  },
+  "egress": {
+    "terms": "Sending data from AWS or GCP incurs outbound fees; the vendor says OTel Arrow cuts bandwidth 30-70% versus standard OTLP and compresses telemetry 15-30x. Ingestion above the free allowance is charged per GB, not egress from Uptrace.",
+    "metered": false,
+    "free_allowance": "50 GB per month included",
+    "price_per_tb": null,
+    "source_url": "https://uptrace.dev/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "browser",
+    "chat"
+  ],
+  "interface_detail": "OpenTelemetry OTLP ingest for traces, metrics and logs; Prometheus, Vector, FluentBit and CloudWatch ingest; a built-in MCP server queryable from AI assistants using the existing Uptrace session token; UQL and PromQL-compatible query engines and a web UI.",
+  "tooling": "OpenTelemetry SDKs and Collector, Prometheus, Vector, FluentBit, Grafana data-source support; the self-hosted Community Edition that the user installs and runs is the last resort",
+  "chaining": "A hosted Uptrace Cloud endpoint takes OTLP telemetry from existing OpenTelemetry instrumentation; self-hosting the AGPL Community Edition on a rented or free machine is the last-resort path when the hosted free allowance is insufficient.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "50 GB free per month and 5,000 timeseries per month on Uptrace Cloud Free; beyond that from $0.075/GB",
+      "source": "https://uptrace.dev/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "Metrics billing starts at $0.025 per 1M ingested datapoints and decreases with volume; minimum supported collection interval is 10 seconds",
+      "source": "https://uptrace.dev/pricing"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "default retention 4 weeks (28 days); longer storage only via paid cold storage up to 100 weeks",
+      "source": "https://uptrace.dev/pricing"
+    }
+  ],
+  "binding": "volume-quota",
+  "binding_note": "The 50 GB/month and 5,000-timeseries free allowance is the first ceiling a free user hits; retention is a fixed 28-day default and per-object caps are not published.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "Cloud signup is a free account with no card required for the trial; billing is handled by Paddle by credit card or bank transfer after signup. A public live demo can be explored without any account.",
+    "country": null
+  },
+  "reliability_note": "Cloud data is stored in Hetzner's Germany datacenters with backups in Finland; 99.9% uptime is listed. Sending from AWS or GCP incurs outbound fees; dropped sampled data costs $0.01 per GB.",
+  "confidence": "documented",
+  "confidence_note": "All stated values come from first-party Uptrace pricing, homepage and signup pages captured on 2026-11-19. The exact signup form fields were not visible in the browser capture and identity is recorded at the level the page shows.",
+  "evidence": [
+    {
+      "url": "https://uptrace.dev/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:971121d569512a0e178fa4a527c31bb5a02ac239638b5528f3682ce7ad74406b",
+      "quote": "Or use Uptrace Cloud free up to 50 GB and 5,000 timeseries per month.",
+      "proved": "the ongoing Cloud free allowance is 50 GB and 5,000 timeseries per month"
+    },
+    {
+      "url": "https://uptrace.dev/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:971121d569512a0e178fa4a527c31bb5a02ac239638b5528f3682ce7ad74406b",
+      "quote": "The rate starts at $0.025 per 1M datapoints and decreases with volume.",
+      "proved": "metrics are billed from $0.025 per million datapoints"
+    },
+    {
+      "url": "https://uptrace.dev/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:971121d569512a0e178fa4a527c31bb5a02ac239638b5528f3682ce7ad74406b",
+      "quote": "Uptrace Cloud keeps all data for **4 weeks** (28 days) by default.",
+      "proved": "default Cloud retention is 28 days"
+    },
+    {
+      "url": "https://uptrace.dev/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:971121d569512a0e178fa4a527c31bb5a02ac239638b5528f3682ce7ad74406b",
+      "quote": "Sending from AWS or GCP? Outbound fees apply, but observability data compresses well.",
+      "proved": "ingest from other clouds incurs outbound fees"
+    },
+    {
+      "url": "https://uptrace.dev/",
+      "date": "2026-11-19",
+      "capture": "sha256:b7b4c65a3ec8659e1d7d4a36253cd0311b1867beb0452bc3aa05b4540c722713",
+      "quote": "1TB free storage and 100k timeseries No card required",
+      "proved": "the signup trial offers 1 TB and 100k timeseries with no card"
+    },
+    {
+      "url": "https://app.uptrace.dev/join",
+      "date": "2026-11-19",
+      "capture": "sha256:c98f60fb5f3adbf38df4d6ae27b06390eb378d7a93237dcc85cd34254eaae8eb",
+      "quote": "Sign up for a free account and get 1TB of storage and 100,000 timeseries.",
+      "proved": "the Cloud signup page states the 1 TB / 100k-timeseries trial with a free account"
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-11-19T02:46:18.052Z",
+  "price_per_tb_month": null,
+  "self_hosted": false,
+  "history": [],
+  "notes": "Uptrace Cloud has a genuine ongoing free tier of 50 GB and 5,000 timeseries per month with no card, plus a separate 1 TB / 100k-timeseries signup trial. Paid usage starts at $0.075/GB and data is kept 28 days by default. Self-hosted Community Edition is the last resort, not the offer this record describes."
+}

@@ -1,0 +1,206 @@
+{
+  "topic": "domains-dns",
+  "slug": "dnsimple",
+  "provider": "DNSimple",
+  "url": "https://dnsimple.com/pricing",
+  "category": "managed authoritative DNS with a REST API",
+  "tier": "Solo (free 30-day trial, then pay-as-you-go)",
+  "free_tier": {
+    "stated": "Solo has no base subscription fee and a free 30-day trial, but every hosted zone costs USD 0.50 per month and Solo includes 50,000 queries per zone per month then USD 0.80 per million; activation needs a card. No standing free allowance exists after the one-time trial",
+    "unit": "none",
+    "source_url": "https://support.dnsimple.com/articles/dnsimple-plans",
+    "read_on": "2026-11-19",
+    "metered_on": "none"
+  },
+  "per_object_cap": {
+    "stated": "100 DNS records per zone on Solo, including system records; a zone on Solo cannot grow above the limit, and records above it cannot be added until some are deleted or the plan is changed",
+    "bytes": null,
+    "source_url": "https://support.dnsimple.com/articles/dns-record-limits"
+  },
+  "retention": {
+    "stated": "zones persist while the subscription is active; the 30-day free trial is available once, and the card on file is charged when the trial ends unless the account cancels first",
+    "days": 30,
+    "source_url": "https://support.dnsimple.com/articles/account-activation/"
+  },
+  "egress": {
+    "terms": "the metered quantity is authoritative DNS queries, not bytes out; a zone within its included query allowance has no query fee, and volume above it is billed per million queries",
+    "metered": true,
+    "free_allowance": "50,000 queries per zone per month on Solo",
+    "price_per_tb": null,
+    "source_url": "https://support.dnsimple.com/articles/dns-query-limits"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "the DNSimple API is a REST web service API that provides access to domains, zones, records and certificates, authenticated with an access token; the official DNSimple CLI is a command-line interface for that API, and a Terraform provider is published",
+  "tooling": "the DNSimple CLI, Terraform provider dnsimple/dnsimple, and official API client libraries for Ruby, Go, Elixir, Node.js, .NET, Java, PHP, Python and Rust",
+  "chaining": "an authoritative DNS host with a full REST API and CLI, usable as primary or secondary DNS, with DNSSEC and Anycast, that a reader scripts against via token; every active zone carries a monthly charge",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "100 DNS records per zone on Solo, including system records; the zone cannot go above the limit",
+      "source": "https://support.dnsimple.com/articles/dns-record-limits"
+    },
+    {
+      "kind": "request-rate",
+      "value": "2,400 API requests per hour per account by default, 30 per hour per IP unauthenticated, 60 domain availability checks per hour per account",
+      "source": "https://support.dnsimple.com/articles/api-rate-limit"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "the 30-day free trial is available once; the card is charged when the trial ends unless cancelled first",
+      "source": "https://support.dnsimple.com/articles/account-activation/"
+    }
+  ],
+  "binding": "retention-clamped",
+  "binding_note": "there is no standing free allowance: the 30-day trial ends once and then every active zone costs USD 0.50 per month, so the trial clock binds before the 100-record cap or the API request rate does",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "the signup form asks for an email address and a password of at least 16 characters with two character types, and offers Google sign-in; an account can be created and the dashboard explored without a plan, but activation to add records needs payment details, and every self-service plan including Solo requires a credit or debit card with no alternative payment method (https://app.dnsimple.com/signup, https://support.dnsimple.com/articles/account-creation, https://support.dnsimple.com/articles/payment-methods, https://support.dnsimple.com/articles/account-activation/)",
+    "country": null
+  },
+  "reliability_note": "the API returns HTTP 429 when the hourly or per-IP request limit is reached; an expired email verification link after 7 days blocks subscribing and registering until a new one is requested",
+  "confidence": "documented",
+  "confidence_note": "the pricing page, plans, DNS query limits, DNS record limits, API rate limit, account creation, account activation, payment methods, signup form, developer documentation and CLI article were first-party pages read and quoted; the card requirement is documented on the payment and activation pages rather than at a live checkout; no live DNS read was probed",
+  "evidence": [
+    {
+      "url": "https://dnsimple.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:177468a221ac16fb82106c4c153411e60ff8ae492c7aaa560a9ba57466d49126",
+      "quote": "Free For 1 user $0.50 per hosted zone per month",
+      "proved": "the Solo plan has no base fee but charges USD 0.50 per hosted zone per month"
+    },
+    {
+      "url": "https://support.dnsimple.com/articles/dnsimple-plans",
+      "date": "2026-11-19",
+      "capture": "sha256:06e6f1af99da3a329c63b4eb701dddaf5b32b97217baed70dabb4bc245dc6b55",
+      "quote": "No base subscription fee. You will be charged on a pay-as-you-go basis, with fees determined by the number of active zones",
+      "proved": "Solo has no base subscription fee and bills by active zones"
+    },
+    {
+      "url": "https://support.dnsimple.com/articles/dnsimple-plans",
+      "date": "2026-11-19",
+      "capture": "sha256:06e6f1af99da3a329c63b4eb701dddaf5b32b97217baed70dabb4bc245dc6b55",
+      "quote": "On every self-service plan, each hosted zone costs $0.50 per month.",
+      "proved": "every active hosted zone costs USD 0.50 per month on self-service plans"
+    },
+    {
+      "url": "https://support.dnsimple.com/articles/dns-query-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:9457cc43c27cae423fac994b6a3da5cc3efac61aef289d964a1fe4419c2b2aad",
+      "quote": "Solo includes 50,000 queries per zone per month, then $0.80 per million.",
+      "proved": "the Solo plan includes 50,000 queries per zone per month and bills USD 0.80 per million above that"
+    },
+    {
+      "url": "https://support.dnsimple.com/articles/dns-record-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:41b49024a1725f1099032e16c5b95177998ba5d682a815513b4f26e872aaaeee",
+      "quote": "| Solo | 100 | You cannot add records above the limit |",
+      "proved": "Solo allows 100 records per zone and does not allow records above the limit"
+    },
+    {
+      "url": "https://support.dnsimple.com/articles/dns-record-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:41b49024a1725f1099032e16c5b95177998ba5d682a815513b4f26e872aaaeee",
+      "quote": "Every record counts toward the limit, including system records",
+      "proved": "system records count toward the 100-record per-zone limit"
+    },
+    {
+      "url": "https://support.dnsimple.com/articles/api-rate-limit",
+      "date": "2026-11-19",
+      "capture": "sha256:8480b777b248a6d00e541122fd562546cd61c7f38f4c2672ffd2b0b8f00e2722",
+      "quote": "By default, an account can make 2,400 requests per hour, and unauthenticated requests are limited to 30 per hour.",
+      "proved": "the API rate limit is 2,400 requests per hour per account and 30 per hour unauthenticated"
+    },
+    {
+      "url": "https://app.dnsimple.com/signup",
+      "date": "2026-11-19",
+      "capture": "sha256:949d2d102774fae3bc18eea23562fdf617f41c6d32e8eceedff334f243e1547c",
+      "quote": "At least 16 characters, including at least 2 different character types (letters, numbers, or symbols).",
+      "proved": "the signup form asks for an email address and a password with a length and character-type rule"
+    },
+    {
+      "url": "https://app.dnsimple.com/signup",
+      "date": "2026-11-19",
+      "capture": "sha256:949d2d102774fae3bc18eea23562fdf617f41c6d32e8eceedff334f243e1547c",
+      "quote": "Sign up free for 30 days",
+      "proved": "the signup page offers a 30-day free trial"
+    },
+    {
+      "url": "https://support.dnsimple.com/articles/account-creation",
+      "date": "2026-11-19",
+      "capture": "sha256:5b101086acc0a9e9340b4aae2d36ed2dd81654760f58398f50b60e027eaf65dd",
+      "quote": "Enter your email address and a password, confirm the password, and click Join DNSimple.",
+      "proved": "signup needs an email address and a password"
+    },
+    {
+      "url": "https://support.dnsimple.com/articles/account-creation",
+      "date": "2026-11-19",
+      "capture": "sha256:5b101086acc0a9e9340b4aae2d36ed2dd81654760f58398f50b60e027eaf65dd",
+      "quote": "You will need to choose a plan and provide payment details to activate your account, register domains, and add records.",
+      "proved": "activation to add records needs payment details"
+    },
+    {
+      "url": "https://support.dnsimple.com/articles/account-creation",
+      "date": "2026-11-19",
+      "capture": "sha256:5b101086acc0a9e9340b4aae2d36ed2dd81654760f58398f50b60e027eaf65dd",
+      "quote": "On the signup page, click Sign in using Google, and you will be prompted to select your Google account.",
+      "proved": "Google sign-in is an alternative identity path at signup"
+    },
+    {
+      "url": "https://support.dnsimple.com/articles/payment-methods",
+      "date": "2026-11-19",
+      "capture": "sha256:390ca998206fbba3eb2008c4976f6465ae250883cb82cc3596df53b812e8cb33",
+      "quote": "Every self-service plan, including the free Solo plan, requires a card, and there is no alternative payment method on those plans.",
+      "proved": "even the Solo plan requires a card, with no alternative payment method"
+    },
+    {
+      "url": "https://support.dnsimple.com/articles/account-activation/",
+      "date": "2026-11-19",
+      "capture": "sha256:167b761ff0afcd8c9940a3d9c1a04d6327e20328a35f99d371a36f6929d582b4",
+      "quote": "The 30-day free trial is available once.",
+      "proved": "the free trial is a one-time allowance, not a recurring free tier"
+    },
+    {
+      "url": "https://support.dnsimple.com/articles/account-activation/",
+      "date": "2026-11-19",
+      "capture": "sha256:167b761ff0afcd8c9940a3d9c1a04d6327e20328a35f99d371a36f6929d582b4",
+      "quote": "The card on file will not be charged until your free trial has ended.",
+      "proved": "the card is charged after the trial unless the account cancels first"
+    },
+    {
+      "url": "https://developer.dnsimple.com/getting-started",
+      "date": "2026-11-19",
+      "capture": "sha256:5385c884c69fba2257c578413102c6995c833455545b13e25305dc43bbe9986d",
+      "quote": "The DNSimple API is a REST web service API that provides access to domains, zones, records, SSL certificates and other entities",
+      "proved": "a REST API reaches domains, zones and records"
+    },
+    {
+      "url": "https://support.dnsimple.com/articles/dnsimple-cli/",
+      "date": "2026-11-19",
+      "capture": "sha256:ed862f1003956e9031b37df9240bee69eabb3004001b102b9f418441ef935e58",
+      "quote": "The DNSimple CLI is a command-line interface for the DNSimple API.",
+      "proved": "an official CLI reaches the DNSimple API"
+    },
+    {
+      "url": "https://support.dnsimple.com/articles/dnsimple-plans",
+      "date": "2026-11-19",
+      "capture": "sha256:06e6f1af99da3a329c63b4eb701dddaf5b32b97217baed70dabb4bc245dc6b55",
+      "quote": "DNSimple’s Solo plan provides anyone with a domain management platform",
+      "proved": "the Solo plan is a domain management platform for one user"
+    },
+    {
+      "url": "https://dnsimple.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:177468a221ac16fb82106c4c153411e60ff8ae492c7aaa560a9ba57466d49126",
+      "quote": "On Solo, you can't add records to a zone that is at or above its limit.",
+      "proved": "Solo blocks new records at the per-zone limit"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-19T01:28:23.303Z",
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "The Solo plan has no base fee but no standing free allowance: a one-time 30-day trial, then USD 0.50 per active zone per month plus query volume above 50,000 per zone. A card is required to activate even the free tier. The free tier uses unit none because there is no recurring free amount; the trial is described in retention and the limits rows. No live DNS read was probed. The CLI and Terraform provider are clients of the hosted API, not self-hosted software."
+}
