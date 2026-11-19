@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "stated-absent: the Wayback CDX Server documentation states a maximum result rows per query but no per-object upload size cap",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "stated-absent: the Wayback CDX Server documentation describes an index of captures returned per query and states no retention period for bytes deposited by a user",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "stated-absent: the Wayback CDX Server documentation describes query output formats (plain text or JSON) but states no egress price or transfer quota for deposited bytes",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "HTTP GET query API over web.archive.org/cdx/search/cdx returning CDX rows or JSON; a standalone servlet in the Internet Archive open-source wayback software",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "The CDX server is freely available open-source software and its queries return CDX data or a JSON array that can be consumed by other tools; it lists captures rather than holding deposited bytes.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -49,10 +49,59 @@
       "url": "probe:seed/DEAD-ENDS.md",
       "date": "2026-10-21",
       "proved": "rejected in the seed: It is an index over captures, not a blob store. Useful only as a free listing/manifest source for items you already uploaded (1.7s-38s per query in probes). [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://github.com/internetarchive/wayback/blob/master/wayback-cdx-server/README.md",
+      "date": "2026-11-19",
+      "proved": "the Wayback CDX Server is reached by HTTP GET queries returning CDX data or JSON",
+      "capture": "sha256:aa8de6287af10520a7cf0e144d3a4a640d288867f1dfdf3f12419d819d6c8683",
+      "quote": "The server responds to GET queries and returns either the plain text CDX data, or optionally a JSON array of the CDX."
+    },
+    {
+      "url": "https://github.com/internetarchive/wayback/blob/master/wayback-cdx-server/README.md",
+      "date": "2026-11-19",
+      "proved": "the CDX server serves an index of captures over HTTP, not a blob store",
+      "capture": "sha256:aa8de6287af10520a7cf0e144d3a4a640d288867f1dfdf3f12419d819d6c8683",
+      "quote": "The `wayback-cdx-server` is a standalone HTTP servlet that serves the index that the `wayback` machine uses to lookup captures."
+    },
+    {
+      "url": "https://archive.org/help/wayback_api.php",
+      "date": "2026-11-19",
+      "proved": "the CDX Server is described as a query API over capture data, with no user-byte retention term",
+      "capture": "sha256:9da66609b8c1968ac5df9f3d37da3394f613379be691902ee04128f539a101f2",
+      "quote": "The CDX Server is another API which allows for complex querying, filtering and analysis of Wayback capture data."
+    },
+    {
+      "url": "https://github.com/internetarchive/wayback/blob/master/wayback-cdx-server/README.md",
+      "date": "2026-11-19",
+      "proved": "the only stated maximum is a query result limit, not a per-object storage cap",
+      "capture": "sha256:aa8de6287af10520a7cf0e144d3a4a640d288867f1dfdf3f12419d819d6c8683",
+      "quote": "The CDX server config provides a setting for absolute maximum length returned from a single query (currently set to 150000 by default)."
+    },
+    {
+      "url": "https://github.com/internetarchive/wayback/blob/master/wayback-cdx-server/README.md",
+      "date": "2026-11-19",
+      "proved": "the CDX server composes as open-source software and returns machine-readable index data, but stores no deposited bytes",
+      "capture": "sha256:aa8de6287af10520a7cf0e144d3a4a640d288867f1dfdf3f12419d819d6c8683",
+      "quote": "However, the cdx server is freely available with the rest of the open-source wayback machine software in this repository."
+    },
+    {
+      "url": "https://github.com/internetarchive/wayback/blob/master/wayback-cdx-server/README.md",
+      "date": "2026-11-19",
+      "proved": "the documentation states query output formats but no egress terms for stored bytes",
+      "capture": "sha256:aa8de6287af10520a7cf0e144d3a4a640d288867f1dfdf3f12419d819d6c8683",
+      "quote": "The server responds to GET queries and returns either the plain text CDX data, or optionally a JSON array of the CDX."
+    },
+    {
+      "url": "https://github.com/internetarchive/wayback/blob/master/wayback-cdx-server/README.md",
+      "date": "2026-11-19",
+      "proved": "the first-party README confirms an HTTP GET query interface over capture data, with no stated retention, per-object cap or egress terms",
+      "capture": "sha256:aa8de6287af10520a7cf0e144d3a4a640d288867f1dfdf3f12419d819d6c8683",
+      "quote": "The `wayback-cdx-server` is a standalone HTTP servlet that serves the index that the `wayback` machine uses to lookup captures."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:51.191Z",
   "notes": "It is an index over captures, not a blob store. Useful only as a free listing/manifest source for items you already uploaded (1.7s-38s per query in probes).",
   "history": [],
   "extras": {
