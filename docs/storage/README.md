@@ -238,8 +238,8 @@ from `dossier/storage/`, so it cannot drift from the records the rest of this pa
 | confidence | Records |
 | --- | --- |
 | `measured` | 3 |
-| `documented` | 194 |
-| `reported` | 1493 |
+| `documented` | 198 |
+| `reported` | 1489 |
 | `inferred` | 30 |
 | **all** | 1720 |
 <!-- generated:end -->
