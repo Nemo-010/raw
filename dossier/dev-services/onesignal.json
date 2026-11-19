@@ -1,0 +1,284 @@
+{
+  "topic": "dev-services",
+  "slug": "onesignal",
+  "provider": "OneSignal",
+  "url": "https://onesignal.com/pricing",
+  "category": "hosted multi-channel push, in-app, email and SMS messaging service with a REST API (hosted)",
+  "tier": "Free",
+  "free_tier": {
+    "stated": "Free plan at USD 0/mo with all channels: unlimited mobile push notifications, in-app messaging and Live Activities sessions for organizations with up to 1,000 monthly active users, web push to at most 10,000 subscribers per send, 10,000 email sends per month, 3 active Journeys, 6 audience segments and 6 data tags, and unlimited contacts and API send access.",
+    "unit": "mixed",
+    "metered_on": "identity-count",
+    "source_url": "https://onesignal.com/pricing",
+    "read_on": "2026-11-19",
+    "notes": "The Free offer has no single unit: mobile push is denominated in monthly active users (MAU), web push in subscribers per send, and email in sends per month. The nearest unit term is mixed. The binding count is organization-wide MAU, a trailing 30-day count of mobile subscription records with at least one session. The 1,000 MAU Free limit takes effect for new customers on 2026-09-01 and existing customers on 2026-10-01."
+  },
+  "per_object_cap": {
+    "stated": "unverified: no single per-message payload cap is stated on the pages read; the Create custom events endpoint limits a request body to 1 MB and each event to 2,024 bytes",
+    "bytes": null,
+    "source_url": "https://documentation.onesignal.com/reference/rate-limits",
+    "notes": "The 1 MB and 2,024 byte figures apply to the custom events endpoint only, not to a push notification payload. No general message body cap was found on the pricing, billing or API overview pages."
+  },
+  "retention": {
+    "stated": "Free plan retains only User and Subscription records active in the last 18 months; dormant records may be removed. Dashboard reporting data is kept 30 days on Free, session events 7 days, and audit logs 48 hours. Message event retention starts at Growth (30 days) and is not offered on Free.",
+    "days": null,
+    "source_url": "https://documentation.onesignal.com/docs/en/billing-faq",
+    "notes": "Several clocks apply with no single day count: an activity-based 18-month record window, 30-day reporting history, 7-day session events, and 48-hour audit logs. days is null because the headline record retention is activity-based rather than a fixed number of days from write."
+  },
+  "egress": {
+    "terms": "not applicable as a byte allowance: OneSignal is an outbound messaging service and the pricing and billing pages state no per-GB egress price. Outbound delivery events (Event Streams and webhooks) are metered by event count, not bytes: Free allows 1 active Event Stream and up to 1,000 events per month.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://documentation.onesignal.com/docs/en/billing-faq"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "REST API over HTTPS with TLS 1.2 or higher on port 443 at api.onesignal.com. It creates messages, users, subscriptions, segments, Journeys and templates, and exports data as CSV. Requests authenticate with an App or Organization API key; the default response timeout is 100 seconds and exceeding a rate limit returns HTTP 429 with a Retry-After header.",
+  "endpoint": "https://api.onesignal.com",
+  "tooling": "The REST API with an App API key from Keys & IDs, callable with any HTTPS client, together with the vendor's mobile and web SDKs that register device subscriptions. The OpenAPI specification for the API is published by the vendor.",
+  "chaining": "A worker on a hosted compute service posts to POST /notifications to reach up to 1,000 organization MAU by mobile push or web push to at most 10,000 subscribers per send, and Event Streams or webhooks forward delivery events to an external destination.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "fewer than 1,000 monthly active users organization-wide on Free for mobile push and in-app messaging, counted over a trailing 30-day period",
+      "source": "https://documentation.onesignal.com/docs/en/billing-faq"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "web push to at most 10,000 subscribers per send on Free",
+      "source": "https://onesignal.com/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "10,000 email sends per month on Free",
+      "source": "https://onesignal.com/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "Event Streams on Free: 1 active stream and up to 1,000 events per month",
+      "source": "https://documentation.onesignal.com/docs/en/billing-faq"
+    },
+    {
+      "kind": "request-rate",
+      "value": "Create Message and Cancel message: 150 requests/sec/app on Free, 6,000 requests/sec/app on paid plans",
+      "source": "https://documentation.onesignal.com/reference/rate-limits"
+    },
+    {
+      "kind": "request-rate",
+      "value": "Create, update or delete users or subscriptions: 1,000 requests/sec/app and 1 request/sec per user or subscription",
+      "source": "https://documentation.onesignal.com/reference/rate-limits"
+    },
+    {
+      "kind": "write-gated",
+      "value": "application message limit: at most 10 times the number of subscribed Subscriptions delivered in a rolling 15-minute window, after which the app is temporarily disabled",
+      "source": "https://documentation.onesignal.com/reference/rate-limits"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "Free plan drops User and Subscription records inactive for more than 18 months and keeps reporting history 30 days",
+      "source": "https://documentation.onesignal.com/docs/en/billing-faq"
+    }
+  ],
+  "limits_note": "The channel caps are audience counts (MAU, subscribers per send) rather than byte volumes, so they are filed under volume-quota, the nearest term. The rolling 15-minute application message limit is an app-disable gate filed as write-gated; the schema has no dedicated kind for a burst-disable threshold. API 429 errors throttle requests but never disable an app.",
+  "binding": "volume-quota",
+  "binding_note": "The organization-wide 1,000 MAU ceiling is the first threshold a growing mobile push audience meets; crossing it pauses mobile push and in-app messages after a 24-hour upgrade window while web push and email continue under their own caps.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "First-party account docs state: when you sign up at OneSignal.com, a user account is created and tied to your email address, and your email address is used to log in. The Free plan starts with a Get Started link and no card term is stated on the pricing page. The signup page at dashboard.onesignal.com/signup is a JavaScript application whose captured HTML has an empty root element, so no form fields were visible and unverified whether a card or phone is asked at signup (behind a sign-up).",
+    "country": null
+  },
+  "reliability_note": "Above 1,000 MAU, mobile push and in-app messages stop sending until upgrade; the organization is re-enabled 30 days after deleting active mobile subscriptions and staying under the cap. An app is temporarily disabled when delivered messages exceed 10 times its subscription count in a rolling 15-minute window. Self-serve accounts are disabled after three failed payment attempts.",
+  "confidence": "documented",
+  "confidence_note": "All numbers come from first-party pricing, usage and billing, rate-limit and account documentation pages captured and quoted on 2026-11-19. No account was opened and no message was sent, which would need an App ID and API key held only by an account. unverified: the signup form fields and whether a card is requested, because the signup page is a JavaScript application with no fields in the captured HTML.",
+  "evidence": [
+    {
+      "url": "https://onesignal.com/pricing",
+      "date": "2026-11-19",
+      "proved": "Free mobile push, in-app messaging and Live Activities cover organizations with up to 1,000 monthly active users; Growth charges USD 0.012 per monthly active user",
+      "capture": "sha256:d856c21f6c7f643fc68479db0dde44daa0f6d4655c9bf1d3fce9cb7905096b7d",
+      "quote": "Unlimited Mobile Push Notifications | For organizations with up to 1,000 monthly active users | $0.012 per monthly active user"
+    },
+    {
+      "url": "https://onesignal.com/pricing",
+      "date": "2026-11-19",
+      "proved": "Free web push allows at most 10,000 subscribers per send",
+      "capture": "sha256:d856c21f6c7f643fc68479db0dde44daa0f6d4655c9bf1d3fce9cb7905096b7d",
+      "quote": "Web Push Notifications | Max 10,000 subscribers per send | $0.004 per web push subscriber"
+    },
+    {
+      "url": "https://onesignal.com/pricing",
+      "date": "2026-11-19",
+      "proved": "Free includes 10,000 email sends per month; Growth includes 20,000 then USD 1.50 per 1,000 sends",
+      "capture": "sha256:d856c21f6c7f643fc68479db0dde44daa0f6d4655c9bf1d3fce9cb7905096b7d",
+      "quote": "Email | 10,000 sends / month | 20,000 free sends / month, then $1.50 / 1,000 sends"
+    },
+    {
+      "url": "https://onesignal.com/pricing",
+      "date": "2026-11-19",
+      "proved": "Free reporting history is up to 30 days",
+      "capture": "sha256:d856c21f6c7f643fc68479db0dde44daa0f6d4655c9bf1d3fce9cb7905096b7d",
+      "quote": "Reporting History | Up to 30 days | Up to 90 days | Up to 1 year | Up to 2 years"
+    },
+    {
+      "url": "https://onesignal.com/pricing",
+      "date": "2026-11-19",
+      "proved": "API send access is unlimited on every plan including Free",
+      "capture": "sha256:d856c21f6c7f643fc68479db0dde44daa0f6d4655c9bf1d3fce9cb7905096b7d",
+      "quote": "API Send Access | Unlimited | Unlimited | Unlimited | Unlimited"
+    },
+    {
+      "url": "https://onesignal.com/pricing",
+      "date": "2026-11-19",
+      "proved": "Free retains all subscription records active in the past 18 months while paid plans retain until deletion",
+      "capture": "sha256:d856c21f6c7f643fc68479db0dde44daa0f6d4655c9bf1d3fce9cb7905096b7d",
+      "quote": "On all of our paid plans, we will retain your subscription record data until you choose to delete it. On our Free plan, we will retain all subscription records that have been active in the past 18 months."
+    },
+    {
+      "url": "https://onesignal.com/pricing",
+      "date": "2026-11-19",
+      "proved": "a monthly active user is a mobile subscription record active in the last 30 days even without push opt-in",
+      "capture": "sha256:d856c21f6c7f643fc68479db0dde44daa0f6d4655c9bf1d3fce9cb7905096b7d",
+      "quote": "A monthly active user is a mobile subscription record that has been active in your mobile app within the last 30 days, regardless of whether it has opted in for mobile push notifications."
+    },
+    {
+      "url": "https://documentation.onesignal.com/docs/en/billing-faq",
+      "date": "2026-11-19",
+      "proved": "the Free plan requires fewer than 1,000 MAU to send mobile push and in-app messages",
+      "capture": "sha256:4ae737de544d4272fe20413ea8b840cbe785ac7b7622ad0f9ba0aa53848eec99",
+      "quote": "On the Free plan, you must have fewer than **1,000 monthly active users (MAU)** to send mobile push and in-app messages."
+    },
+    {
+      "url": "https://documentation.onesignal.com/docs/en/billing-faq",
+      "date": "2026-11-19",
+      "proved": "above 1,000 MAU the account has 24 hours to upgrade before push sends stop",
+      "capture": "sha256:4ae737de544d4272fe20413ea8b840cbe785ac7b7622ad0f9ba0aa53848eec99",
+      "quote": "If your MAU count crosses 1,000, you'll have 24 hours to upgrade your plan before you are unable to send push notifications and in-app messages."
+    },
+    {
+      "url": "https://documentation.onesignal.com/docs/en/billing-faq",
+      "date": "2026-11-19",
+      "proved": "past the cap other channels keep working on the same plan limits",
+      "capture": "sha256:4ae737de544d4272fe20413ea8b840cbe785ac7b7622ad0f9ba0aa53848eec99",
+      "quote": "* Mobile push and in-app messages stop sending until you upgrade."
+    },
+    {
+      "url": "https://documentation.onesignal.com/docs/en/billing-faq",
+      "date": "2026-11-19",
+      "proved": "Event Streams on Free allow 1 active stream and up to 1,000 events per month",
+      "capture": "sha256:4ae737de544d4272fe20413ea8b840cbe785ac7b7622ad0f9ba0aa53848eec99",
+      "quote": "| Free | 1 | Up to 1,000 events |"
+    },
+    {
+      "url": "https://documentation.onesignal.com/docs/en/billing-faq",
+      "date": "2026-11-19",
+      "proved": "Free analytics reporting data is retained 30 days",
+      "capture": "sha256:4ae737de544d4272fe20413ea8b840cbe785ac7b7622ad0f9ba0aa53848eec99",
+      "quote": "| Free | 30 days |"
+    },
+    {
+      "url": "https://documentation.onesignal.com/docs/en/billing-faq",
+      "date": "2026-11-19",
+      "proved": "Free retains only User and Subscription records active in the last 18 months and may remove dormant records",
+      "capture": "sha256:4ae737de544d4272fe20413ea8b840cbe785ac7b7622ad0f9ba0aa53848eec99",
+      "quote": "On all paid plans, OneSignal retains your User and Subscription records until you choose to delete them. On the **Free plan**, OneSignal retains only User and Subscription records that have been active in the last 18 months."
+    },
+    {
+      "url": "https://documentation.onesignal.com/docs/en/billing-faq",
+      "date": "2026-11-19",
+      "proved": "billing rounds MAU down in increments of 10",
+      "capture": "sha256:4ae737de544d4272fe20413ea8b840cbe785ac7b7622ad0f9ba0aa53848eec99",
+      "quote": "Billing is calculated in **increments of 10 MAU**, rounded **down** to the nearest multiple of 10."
+    },
+    {
+      "url": "https://documentation.onesignal.com/docs/en/billing-faq",
+      "date": "2026-11-19",
+      "proved": "Free accounts are notified at 80, 90 and 100 percent of the 1,000 MAU limit",
+      "capture": "sha256:4ae737de544d4272fe20413ea8b840cbe785ac7b7622ad0f9ba0aa53848eec99",
+      "quote": "OneSignal customers on the Free plan receive updates as they approach 80%, 90%, and 100% of the 1,000 MAU limit."
+    },
+    {
+      "url": "https://documentation.onesignal.com/docs/en/billing-faq",
+      "date": "2026-11-19",
+      "proved": "self-serve plans are capped at 500,000 emails per month",
+      "capture": "sha256:4ae737de544d4272fe20413ea8b840cbe785ac7b7622ad0f9ba0aa53848eec99",
+      "quote": "* Self-serve (Growth & legacy plans) are capped at 500,000 emails per month."
+    },
+    {
+      "url": "https://documentation.onesignal.com/reference/rate-limits",
+      "date": "2026-11-19",
+      "proved": "Create Message is limited to 150 requests/sec/app on Free and 6,000 on paid plans",
+      "capture": "sha256:243e0ecd2391b472a60009d07cb9fd64f1c4b1a5404f2996a22bd0a6d6848424",
+      "quote": "**Free plans:** 150 requests/sec/app **Paid plans:** 6,000 requests/sec/app"
+    },
+    {
+      "url": "https://documentation.onesignal.com/reference/rate-limits",
+      "date": "2026-11-19",
+      "proved": "an app is disabled when delivered messages exceed 10 times its subscribed subscriptions in a rolling 15-minute window",
+      "capture": "sha256:243e0ecd2391b472a60009d07cb9fd64f1c4b1a5404f2996a22bd0a6d6848424",
+      "quote": "In any rolling 15-minute window, you may send up to **10 × your total number of subscribed [Subscriptions](https://documentation.onesignal.com/docs/en/subscriptions.md)**."
+    },
+    {
+      "url": "https://documentation.onesignal.com/reference/rate-limits",
+      "date": "2026-11-19",
+      "proved": "custom events take a 1 MB request body and 2,024 bytes per event",
+      "capture": "sha256:243e0ecd2391b472a60009d07cb9fd64f1c4b1a5404f2996a22bd0a6d6848424",
+      "quote": "**Request size limits:** 2,024 bytes per event · 1 MB per request body"
+    },
+    {
+      "url": "https://documentation.onesignal.com/reference/rest-api-overview",
+      "date": "2026-11-19",
+      "proved": "the REST API provides programmatic access to messaging and user features",
+      "capture": "sha256:c272a38f09da8d9618b6dcb29f8f112c639281b147eb6d7ae430efce5bedb302",
+      "quote": "The OneSignal REST API follows the [REST architecture](https://en.wikipedia.org/wiki/Representational_state_transfer) and provides programmatic access to core messaging and user features."
+    },
+    {
+      "url": "https://documentation.onesignal.com/reference/rest-api-overview",
+      "date": "2026-11-19",
+      "proved": "the API is reached over HTTPS with TLS 1.2 or higher on port 443",
+      "capture": "sha256:c272a38f09da8d9618b6dcb29f8f112c639281b147eb6d7ae430efce5bedb302",
+      "quote": "**HTTPS required**: All API requests must use HTTPS with **TLS 1.2 or higher** on port `443`."
+    },
+    {
+      "url": "https://documentation.onesignal.com/reference/rest-api-overview",
+      "date": "2026-11-19",
+      "proved": "clients reach the REST API at api.onesignal.com on port 443",
+      "capture": "sha256:c272a38f09da8d9618b6dcb29f8f112c639281b147eb6d7ae430efce5bedb302",
+      "quote": "Firewalls or proxies must allow **outbound traffic** to `https://api.onesignal.com` on port `443`."
+    },
+    {
+      "url": "https://documentation.onesignal.com/docs/en/apps-organizations",
+      "date": "2026-11-19",
+      "proved": "signing up ties a user account to an email address",
+      "capture": "sha256:154e7647c22a67278447054907c32dac997a4f9cb9ea866d501fad0571c89b76",
+      "quote": "When you sign up at [OneSignal.com](https://onesignal.com), a user account is created and tied to your email address."
+    },
+    {
+      "url": "https://documentation.onesignal.com/docs/en/apps-organizations",
+      "date": "2026-11-19",
+      "proved": "the email address is the login identity",
+      "capture": "sha256:154e7647c22a67278447054907c32dac997a4f9cb9ea866d501fad0571c89b76",
+      "quote": "Your email address is used to log in to your OneSignal account."
+    },
+    {
+      "url": "https://dashboard.onesignal.com/signup",
+      "date": "2026-11-19",
+      "proved": "the signup page is a JavaScript application whose captured HTML has an empty root element, so no form fields were visible",
+      "capture": "sha256:aff24724fd0302e1a634c5e5c7f97447c3f3c8ac06efc041acea3d850925fb77",
+      "quote": "<div id=\"root\"></div>"
+    },
+    {
+      "url": "https://dashboard.onesignal.com/signup",
+      "date": "2026-11-19",
+      "proved": "JavaScript is required for the signup page to render its form",
+      "capture": "sha256:aff24724fd0302e1a634c5e5c7f97447c3f3c8ac06efc041acea3d850925fb77",
+      "quote": "You need to enable JavaScript to run this app."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T02:02:12.483Z",
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "OneSignal is a hosted messaging service and no self-hosted lane is documented, so self_hosted is left absent. The 1,000 MAU Free limit applies organization-wide across all apps and took effect for new customers on 2026-09-01 and existing customers on 2026-10-01; MAU counts mobile subscription records active in a trailing 30 days even without push opt-in. Mobile push, web push and email are metered separately and should be costed as separate lines. The signup page fields are unverified because the form is rendered by JavaScript. Revisit when the pricing page changes the 1,000 MAU limit or the 10,000-subscriber-per-send web push cap."
+}
