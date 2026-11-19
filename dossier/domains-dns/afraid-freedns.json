@@ -31,7 +31,7 @@
   "interface": [
     "unknown"
   ],
-  "interface_detail": "no general record-management API is documented, and the /api/ page is behind a login, so its content is unverified: behind a sign-up; the site's client list says a client that sends a SHA1 hash of the user name and password can fetch the needed update URL itself; the free plan's programmatic path is the dynamic-update URL https://sync.afraid.org/u/<token>/ (https://v6.sync.afraid.org/u/<token>/ for IPv6), which changes the address of an existing record; other record edits, TXT included, are POSTs to https://freedns.afraid.org/subdomain/save.php with a logged-in session cookie; the interface term for the update URL would be dyndns, which the vocabulary lacks, so interface carries unknown",
+  "interface_detail": "documented interface is a dyndns-style HTTP GET update URL, not a general record API: the landing page shows curl https://sync.afraid.org/u/<token>/ (IPv6 https://v6.sync.afraid.org/u/<token>/) changing an existing record's address, and the signup Q&A calls this a fetchable URL in the Dynamic DNS section; https://freedns.afraid.org/api/ redirects to a login page, so its content is unverified: behind a sign-up; the FAQ's only programmatic non-address edit is a curl POST with a dns_cookie session to https://freedns.afraid.org/subdomain/save.php; record creation and other edits use the web panel (Domains > add, Subdomains > add); no git pull-request interface is documented; the vocabulary has no dyndns term, so interface keeps ['unknown'] and the true mechanism is named here",
   "tooling": "curl against sync.afraid.org/u/<token>/; DD-WRT and router integrations",
   "chaining": "a free hostname that resolves without owning a domain, which is the only thing here that does",
   "limits": [
@@ -308,10 +308,66 @@
       "proved": "the vendor describes the update path as a fetchable URL that auto-updates the network address, available in the Dynamic DNS section",
       "capture": "sha256:5bedaaeb1d196740356389dee453cd8d674dba3a7ae3891cc1451afa7a79e2bb",
       "quote": "a special fetchable URL to auto-update the network address in FreeDNS is available in the 'Dynamic DNS' section for those whose IP address changes at random."
+    },
+    {
+      "url": "https://freedns.afraid.org/",
+      "date": "2026-11-19",
+      "proved": "the landing page documents a dyndns-style HTTPS GET update URL that changes an existing record's address",
+      "capture": "sha256:0339e096de728caa2fc0cc3733d8cdc999980a7233ac94ec4413554633c13d0b",
+      "quote": "curl https://sync.afraid.org/u/CyTXMbtq5cPnLjEg5vKHTPDE/"
+    },
+    {
+      "url": "https://freedns.afraid.org/",
+      "date": "2026-11-19",
+      "proved": "the dyndns-style GET updates an existing record's address",
+      "capture": "sha256:0339e096de728caa2fc0cc3733d8cdc999980a7233ac94ec4413554633c13d0b",
+      "quote": "Updated demo.freshdns.com from 107.170.238.X to 50.23.197.94"
+    },
+    {
+      "url": "https://freedns.afraid.org/signup/moreinfo/",
+      "date": "2026-11-19",
+      "proved": "the vendor describes the update path as a fetchable URL in the Dynamic DNS section",
+      "capture": "sha256:5bedaaeb1d196740356389dee453cd8d674dba3a7ae3891cc1451afa7a79e2bb",
+      "quote": "a special fetchable URL to auto-update the network address in FreeDNS is available in the 'Dynamic DNS' section"
+    },
+    {
+      "url": "https://freedns.afraid.org/faq/",
+      "date": "2026-11-19",
+      "proved": "the FAQ describes a programmatic HTTP update path",
+      "capture": "sha256:c4b6f7b8405458eb332e70a776d756fb3703e4aaa9f782d037389750e60e2b44",
+      "quote": "In addition, you can use any program that talks over HTTP to update your IP within FreeDNS."
+    },
+    {
+      "url": "https://freedns.afraid.org/faq/",
+      "date": "2026-11-19",
+      "proved": "the FAQ documents one programmatic non-address edit as a curl POST with a dns_cookie session to subdomain/save.php",
+      "capture": "sha256:c4b6f7b8405458eb332e70a776d756fb3703e4aaa9f782d037389750e60e2b44",
+      "quote": "curl -b \"dns_cookie=XXXXXXXXXX\" -d \"type=TXT\" -d \"subdomain=_acme-challenge\" -d \"domain_id=0000\" -d \"data_id=0000\" -d \"address=%22some_text%22\" https://freedns.afraid.org/subdomain/save.php?step=2"
+    },
+    {
+      "url": "https://freedns.afraid.org/api/",
+      "date": "2026-11-19",
+      "proved": "a request for /api/ without a session lands on the login page, so the API page content is gated behind a sign-in",
+      "capture": "sha256:1dc793a05d3bbf7cfd6b8d7c600f31485bc2633375a176603edd848f7e0bee5f",
+      "quote": "Recover your password here"
+    },
+    {
+      "url": "https://freedns.afraid.org/guide/dd-wrt-v2/",
+      "date": "2026-11-19",
+      "proved": "record creation uses the web panel (Subdomains > add)",
+      "capture": "sha256:9f0c69345044d2819028b352e42aed5c88e63785c2165627527c1d6674b2296a",
+      "quote": "Once you setup a free DNS domain. You need to add some DNS records, like this (**subdomains** > **add**)"
+    },
+    {
+      "url": "https://freedns.afraid.org/guide/dd-wrt-v2/",
+      "date": "2026-11-19",
+      "proved": "the v2 guide documents the IPv6 dyndns-style update URL",
+      "capture": "sha256:9f0c69345044d2819028b352e42aed5c88e63785c2165627527c1d6674b2296a",
+      "quote": "http://v6.sync.afraid.org/u/FGpuRPivoSj0fYhMMD9JoquL/"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-02T10:17:37.729Z",
+  "verified_at": "2026-11-19T21:12:40.519Z",
   "price_per_tb_month": null,
   "history": [],
   "notes": "The name is not yours and the owner can withdraw consent. It is a dynamic-DNS tool with a social dependency, not a name.",
