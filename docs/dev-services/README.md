@@ -67,9 +67,11 @@ Each `measured` or `documented` record of this topic that no other document of `
 <!-- generated:start topic=dev-services kind=uncited -->
 | record | provider | verdict | confidence |
 | --- | --- | --- | --- |
+| `akeyless` | Akeyless | qualifies-with-caveat | documented |
 | `amplitude` | Amplitude | qualifies-with-caveat | documented |
 | `aptabase` | Aptabase | qualifies-with-caveat | documented |
 | `better-stack` | Better Stack | qualifies-with-caveat | documented |
+| `bitwarden-secrets-manager` | Bitwarden Secrets Manager | qualifies-with-caveat | documented |
 | `bugfender` | Bugfender | qualifies-with-caveat | documented |
 | `checkly` | Checkly | qualifies-with-caveat | documented |
 | `cloudamqp-little-lemur` | CloudAMQP | qualifies-with-caveat | documented |
@@ -77,11 +79,15 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `cron-job-org` | cron-job.org | qualifies | documented |
 | `cronitor` | Cronitor | qualifies-with-caveat | documented |
 | `datadog-open-source` | Datadog | fails-identity | documented |
+| `doppler` | Doppler | qualifies-with-caveat | documented |
+| `doppler-team` | Doppler Team | qualifies-with-caveat | documented |
 | `drumbeats-io` | Drumbeats | qualifies-with-caveat | documented |
 | `goatcounter` | GoatCounter | qualifies-with-caveat | documented |
+| `hcp-vault-secrets` | HCP Vault Secrets | dead | documented |
 | `healthchecks-io` | Healthchecks.io | qualifies-with-caveat | documented |
 | `heap` | Heap | qualifies-with-caveat | documented |
 | `hotjar` | Hotjar | qualifies-with-caveat | documented |
+| `infisical` | Infisical | qualifies-with-caveat | documented |
 | `instatus` | Instatus | qualifies-with-caveat | documented |
 | `middleware` | Middleware | qualifies-with-caveat | documented |
 | `mixpanel` | Mixpanel | qualifies-with-caveat | documented |
