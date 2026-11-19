@@ -1,0 +1,217 @@
+{
+  "topic": "domains-dns",
+  "slug": "ns1-connect",
+  "provider": "IBM NS1 Connect",
+  "url": "https://www.ibm.com/products/ns1-connect/pricing",
+  "category": "managed authoritative DNS and traffic steering",
+  "tier": "Trial (30-day free trial)",
+  "free_tier": {
+    "stated": "a 30-day free trial with 50M DNS queries/month, 500 DNS records, 20 health check monitors, 10 traffic steering chains, 50 HTTPS redirects, Cloud Sync and zone versioning; no credit card required at sign-up",
+    "unit": "requests",
+    "source_url": "https://www.ibm.com/products/ns1-connect/pricing",
+    "read_on": "2026-11-19",
+    "metered_on": "request-count",
+    "notes": "This is a time-boxed trial, not a recurring free allowance. The trial is the only no-charge entry; no permanent free tier was found on the pricing page."
+  },
+  "per_object_cap": {
+    "stated": "500 DNS records in the trial; a DNS record may hold multiple answers, and the maximum TTL on a record is 86400 seconds (24 hours), with values above that automatically adjusted to 86400",
+    "bytes": null,
+    "source_url": "https://www.ibm.com/products/ns1-connect/pricing",
+    "notes": "The 86400-second TTL ceiling is from the DNS-record documentation and applies to records in all zones, not to the trial alone."
+  },
+  "retention": {
+    "stated": "unverified: no data-deletion or retention period after the 30-day trial ends is stated on the pages read",
+    "days": null,
+    "source_url": "https://www.ibm.com/products/ns1-connect/pricing",
+    "notes": "Zone records survive only while the account and its subscription or trial remain active; the exact post-trial deletion window is unverified."
+  },
+  "egress": {
+    "terms": "DNS queries are counted against a monthly allowance (50M DNS queries/month on the trial); no per-GB traffic price is published, since DNS is priced by query count rather than by bytes out",
+    "metered": true,
+    "free_allowance": "50M DNS queries/month on the trial",
+    "price_per_tb": null,
+    "source_url": "https://www.ibm.com/products/ns1-connect/pricing"
+  },
+  "interface": [
+    "rest",
+    "browser"
+  ],
+  "interface_detail": "a REST API at https://api.nsone.net/v1 (legacy) and https://api.nsone.net/{category}/v1 (newer) returning JSON over HTTPS, authenticated with an API key secret in the X-NSONE-Key header; the first key must be created in the NS1 Connect portal; a web portal manages zones and records",
+  "tooling": "REST API through curl or any HTTP client with an X-NSONE-Key API key; the NS1 Terraform provider (ns1-terraform/ns1) is the documented infrastructure-as-code path; Ansible integration is listed on the product page",
+  "chaining": "managed authoritative DNS with real-time traffic steering, health-check monitors and HTTPS redirects; Cloud Sync synchronises zones with Amazon Route 53 as a paid add-on, and a Terraform toolkit keeps zones in step with other providers",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "50M DNS queries/month (trial)",
+      "source": "https://www.ibm.com/products/ns1-connect/pricing"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "500 DNS records (trial); TTL capped at 86400 seconds (24 hours)",
+      "source": "https://www.ibm.com/products/ns1-connect/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "20 health check monitors and 10 traffic steering chains (trial)",
+      "source": "https://www.ibm.com/products/ns1-connect/pricing"
+    }
+  ],
+  "binding": "request-rate",
+  "binding_note": "the 50M DNS queries/month trial allowance is the first quantity an active zone consumes; the 500-record and 20-monitor caps are far above a single zone's needs",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "the trial sign-up page asks for a business email address, first name, last name, country and password to create an IBMid; Company is a required field in the form metadata; no credit card is required ('Create your account. No credit card required.'); a phone number and an ID document are not requested on the form read (https://www.ibm.com/account/reg/signup?formid=urx-54055)",
+    "country": null
+  },
+  "reliability_note": "the API requires HTTPS and rejects plain HTTP or unauthenticated requests; the Terraform provider documentation warns that 429 rate-limit responses occur and recommends rate_limit_parallelism 60; no outage history was read",
+  "confidence": "documented",
+  "confidence_note": "first-party pricing, signup, product, API, Terraform and DNS-record pages were read and quoted; every value is at documented rung, with no live trial measurement of post-trial behaviour",
+  "evidence": [
+    {
+      "url": "https://www.ibm.com/products/ns1-connect/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:3c813d4f5b2cc4375864b7944fc9d4e9f5f65ee3c0ff378df81028fae0e95e02",
+      "quote": "30 day Free Trial",
+      "proved": "the entry offer is a 30-day free trial"
+    },
+    {
+      "url": "https://www.ibm.com/products/ns1-connect/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:3c813d4f5b2cc4375864b7944fc9d4e9f5f65ee3c0ff378df81028fae0e95e02",
+      "quote": "50M DNS queries/month",
+      "proved": "the trial allows 50 million DNS queries per month"
+    },
+    {
+      "url": "https://www.ibm.com/products/ns1-connect/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:3c813d4f5b2cc4375864b7944fc9d4e9f5f65ee3c0ff378df81028fae0e95e02",
+      "quote": "500 DNS records",
+      "proved": "the trial allows 500 DNS records"
+    },
+    {
+      "url": "https://www.ibm.com/products/ns1-connect/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:3c813d4f5b2cc4375864b7944fc9d4e9f5f65ee3c0ff378df81028fae0e95e02",
+      "quote": "20 health check monitor",
+      "proved": "the trial allows 20 health check monitors"
+    },
+    {
+      "url": "https://www.ibm.com/products/ns1-connect/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:3c813d4f5b2cc4375864b7944fc9d4e9f5f65ee3c0ff378df81028fae0e95e02",
+      "quote": "10 traffic steering chains",
+      "proved": "the trial allows 10 traffic steering chains"
+    },
+    {
+      "url": "https://www.ibm.com/products/ns1-connect/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:3c813d4f5b2cc4375864b7944fc9d4e9f5f65ee3c0ff378df81028fae0e95e02",
+      "quote": "50 HTTPS redirects",
+      "proved": "the trial allows 50 HTTPS redirects"
+    },
+    {
+      "url": "https://www.ibm.com/products/ns1-connect/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:3c813d4f5b2cc4375864b7944fc9d4e9f5f65ee3c0ff378df81028fae0e95e02",
+      "quote": "Cloud Sync",
+      "proved": "Cloud Sync is a listed trial feature"
+    },
+    {
+      "url": "https://www.ibm.com/products/ns1-connect/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:3c813d4f5b2cc4375864b7944fc9d4e9f5f65ee3c0ff378df81028fae0e95e02",
+      "quote": "Zone versioning",
+      "proved": "zone versioning is a listed trial feature"
+    },
+    {
+      "url": "https://www.ibm.com/account/reg/signup?formid=urx-54055",
+      "date": "2026-11-19",
+      "capture": "sha256:e5a50c811758b012f6f80d57f7f4c93b8703f07d224b2b3a5a5ec6328afe3ec0",
+      "quote": "Create your account. No credit card required.",
+      "proved": "the trial sign-up needs no payment card"
+    },
+    {
+      "url": "https://www.ibm.com/account/reg/signup?formid=urx-54055",
+      "date": "2026-11-19",
+      "capture": "sha256:e5a50c811758b012f6f80d57f7f4c93b8703f07d224b2b3a5a5ec6328afe3ec0",
+      "quote": "Business email is required",
+      "proved": "the trial sign-up requires a business email address"
+    },
+    {
+      "url": "https://www.ibm.com/account/reg/signup?formid=urx-54055",
+      "date": "2026-11-19",
+      "capture": "sha256:e5a50c811758b012f6f80d57f7f4c93b8703f07d224b2b3a5a5ec6328afe3ec0",
+      "quote": "Company is required",
+      "proved": "the trial form requires a company name"
+    },
+    {
+      "url": "https://www.ibm.com/account/reg/signup?formid=urx-54055",
+      "date": "2026-11-19",
+      "capture": "sha256:e5a50c811758b012f6f80d57f7f4c93b8703f07d224b2b3a5a5ec6328afe3ec0",
+      "quote": "Country is required",
+      "proved": "the trial form requires a country"
+    },
+    {
+      "url": "https://www.ibm.com/docs/en/ns1-connect?topic=introduction-using-api",
+      "date": "2026-11-19",
+      "capture": "sha256:3ebe8dceac1bb4e077f0696bc3c8ca60d0f2a80f76626debe092535f56ad2d2f",
+      "quote": "This REST API returns JSON responses and uses standard HTTP methods (GET, PUT, POST, DELETE) to perform operations on resources.",
+      "proved": "the service exposes a REST API"
+    },
+    {
+      "url": "https://www.ibm.com/docs/en/ns1-connect?topic=introduction-using-api",
+      "date": "2026-11-19",
+      "capture": "sha256:3ebe8dceac1bb4e077f0696bc3c8ca60d0f2a80f76626debe092535f56ad2d2f",
+      "quote": "The NS1 Connect API uses API key secrets to authenticate requests.",
+      "proved": "API access is authenticated by an API key secret"
+    },
+    {
+      "url": "https://www.ibm.com/docs/en/ns1-connect?topic=introduction-using-api",
+      "date": "2026-11-19",
+      "capture": "sha256:3ebe8dceac1bb4e077f0696bc3c8ca60d0f2a80f76626debe092535f56ad2d2f",
+      "quote": "Legacy endpoints: `https://api.nsone.net/v1`",
+      "proved": "the legacy REST base URL"
+    },
+    {
+      "url": "https://www.ibm.com/docs/en/ns1-connect?topic=introduction-using-api",
+      "date": "2026-11-19",
+      "capture": "sha256:3ebe8dceac1bb4e077f0696bc3c8ca60d0f2a80f76626debe092535f56ad2d2f",
+      "quote": "All API requests must be made over HTTPS. Requests made over plain HTTP or without authentication will fail.",
+      "proved": "plain HTTP and unauthenticated requests are rejected"
+    },
+    {
+      "url": "https://www.ibm.com/docs/en/ns1-connect?topic=toolkits-terraform-toolkit-ns1-connect",
+      "date": "2026-11-19",
+      "capture": "sha256:cb25cc8477f2d51739065fa79ea48bec287070eda6d412ec1ab3a183895c4295",
+      "quote": "The NS1 Connect + Terraform toolkit provides the tools needed to sync DNS zones and records across all of your DNS providers to create a single source of truth and to centralize resource management.",
+      "proved": "a Terraform toolkit manages zones and records as infrastructure as code"
+    },
+    {
+      "url": "https://www.ibm.com/docs/en/ns1-connect?topic=answers-create-dns-record",
+      "date": "2026-11-19",
+      "capture": "sha256:3810c116152a11b9f0a4c802dcc5217d2a4fbac0b85873f7e442931321a1bf7b",
+      "quote": "In NS1 Connect, the maximum TTL value you can set for a DNS record is 86400 seconds or 24 hours. Values exceeding this limit are automatically adjusted to 86400 seconds.",
+      "proved": "a DNS record's TTL is capped at 86400 seconds"
+    },
+    {
+      "url": "https://www.ibm.com/products/ns1-connect",
+      "date": "2026-11-19",
+      "capture": "sha256:6eea5d2ab831bd1f0341e141f5f92aad2317ff0a3b43f346c67cf548ec5cf87f",
+      "quote": "Reduce latency worldwide with 26+ points of presence across six continents",
+      "proved": "the anycast network has 26+ points of presence"
+    },
+    {
+      "url": "https://www.ibm.com/products/ns1-connect",
+      "date": "2026-11-19",
+      "capture": "sha256:6eea5d2ab831bd1f0341e141f5f92aad2317ff0a3b43f346c67cf548ec5cf87f",
+      "quote": "Integrate with Terraform®, Ansible® and CI/CD workflows",
+      "proved": "Terraform, Ansible and CI/CD integration are documented"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-19T02:46:19.580Z",
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "The 30-day trial is a time-boxed offer, not a recurring free allowance. No permanent free tier is stated on the pricing page. Prices shown on the page are indicative and may vary by country and by product-offering availability in a locale.",
+  "stale": false
+}

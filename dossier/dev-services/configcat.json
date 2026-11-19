@@ -1,0 +1,163 @@
+{
+  "topic": "dev-services",
+  "slug": "configcat",
+  "provider": "ConfigCat",
+  "url": "https://configcat.com/pricing",
+  "category": "hosted feature flags and remote configuration",
+  "tier": "Forever Free",
+  "free_tier": {
+    "stated": "Forever Free plan, USD 0 a month, no credit card required: 10 feature flags, 2 environments, 2 products, 5 million config JSON downloads a month, 20 GB network traffic a month, 7-day audit log, unlimited seats, service connections, MAUs and feature flag reads",
+    "unit": "mixed",
+    "metered_on": "request-count",
+    "source_url": "https://configcat.com/pricing",
+    "read_on": "2026-11-19",
+    "notes": "The plan is metered by config JSON downloads and network traffic, not by seats or monthly active users. The next plan, Pro, is USD 110 a month with 100 flags, 25 million downloads and 100 GB traffic. Downloads and traffic over the plan are soft limits: ConfigCat keeps serving config and contacts the account."
+  },
+  "per_object_cap": {
+    "stated": "unverified: no per-flag value size cap is stated on the pricing or subscription-limit pages read",
+    "bytes": null,
+    "source_url": "https://configcat.com/docs/subscription-plan-limits/"
+  },
+  "retention": {
+    "stated": "7-day audit log retention on Forever Free; 35 days on Pro and Smart; 2 years on Enterprise and Dedicated",
+    "days": 7,
+    "source_url": "https://configcat.com/pricing",
+    "notes": "This is audit-log retention; no retention period for flag values or identities is stated on the pages read."
+  },
+  "egress": {
+    "terms": "not applicable: a flag service metered by config JSON downloads and network traffic; the Free plan includes 20 GB network traffic a month with soft limits, not a byte-price egress charge",
+    "metered": true,
+    "free_allowance": "20 GB network traffic a month",
+    "price_per_tb": null,
+    "source_url": "https://configcat.com/pricing"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "A Public Management API at https://api.configcat.com based on HTTP REST with JSON, with an OpenAPI v3 description and a Swagger UI; it creates, reads, updates and deletes flags, configs, environments and products. The API is not used to evaluate flags: SDKs or the ConfigCat Proxy download config JSON from the CDN and evaluate flags locally.",
+  "endpoint": "https://api.configcat.com",
+  "tooling": "ConfigCat SDKs for JavaScript, .NET, Java, Go, Python, Ruby, Angular, React, Node.js, PHP, Elixir, Android, iOS, Flutter, Kotlin Multiplatform, C++, Rust, Unity and Unreal Engine, or any HTTP client against the Management API",
+  "chaining": "Serve remotely controlled flags and config to an app on free compute, downloading config JSON from the CDN and evaluating locally to stay under 5 million downloads and 20 GB traffic a month.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "5 million config JSON downloads a month on Forever Free",
+      "source": "https://configcat.com/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "20 GB network traffic a month on Forever Free",
+      "source": "https://configcat.com/pricing"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "10 feature flags, 2 environments and 2 products per account on Forever Free",
+      "source": "https://configcat.com/pricing"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "7-day audit log retention on Forever Free",
+      "source": "https://configcat.com/docs/subscription-plan-limits/"
+    }
+  ],
+  "limits_note": "Unlimited seats, service connections, MAUs, contexts and flag reads on every plan. ConfigCat calls downloads and traffic soft limits and continues serving config past them while contacting the account; the flag, environment and product counts are plan limits.",
+  "binding": "volume-quota",
+  "binding_note": "The 5 million monthly downloads and 20 GB traffic bind first for a client-side app that refreshes flags on each page view; flag count is capped at 10 but does not grow with traffic.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The sign-up page offers sign up through Google, GitHub, Microsoft, Bitbucket or Active Directory, and a Company Account through SAML SSO; the pricing page states no card is required and the FAQ names the account email address. A direct email-and-password field was not present in the captured sign-up text; whether a later step asks for a phone number is unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "Downloads and network traffic are soft limits: ConfigCat continues serving config on a temporary spike and contacts the account on sustained overage. Uptime target is 99% on Forever Free; no SLA on the free plan. Support is best effort through Slack or email.",
+  "confidence": "documented",
+  "confidence_note": "Every value is quoted from the first-party pricing page, subscription-limit page, Public Management API reference and sign-up page. No account was opened; the exact sign-up fields and any post-registration steps are unverified: behind a sign-up. No flag read was probed, so the record stays at documented rung.",
+  "evidence": [
+    {
+      "url": "https://configcat.com/pricing",
+      "date": "2026-11-19",
+      "proved": "the Forever Free plan needs no card",
+      "capture": "sha256:d49fa04d7f8e3f435d4100e537b901577f322c9d74d5c774406af1815b1c4ce9",
+      "quote": "No card required"
+    },
+    {
+      "url": "https://configcat.com/pricing",
+      "date": "2026-11-19",
+      "proved": "Forever Free includes 10 feature flags, 2 environments and 2 products",
+      "capture": "sha256:d49fa04d7f8e3f435d4100e537b901577f322c9d74d5c774406af1815b1c4ce9",
+      "quote": "10 Feature Flags"
+    },
+    {
+      "url": "https://configcat.com/pricing",
+      "date": "2026-11-19",
+      "proved": "Forever Free includes 5 million config JSON downloads a month",
+      "capture": "sha256:d49fa04d7f8e3f435d4100e537b901577f322c9d74d5c774406af1815b1c4ce9",
+      "quote": "5 million / mo"
+    },
+    {
+      "url": "https://configcat.com/pricing",
+      "date": "2026-11-19",
+      "proved": "Forever Free includes 20 GB network traffic a month",
+      "capture": "sha256:d49fa04d7f8e3f435d4100e537b901577f322c9d74d5c774406af1815b1c4ce9",
+      "quote": "20 GB / mo"
+    },
+    {
+      "url": "https://configcat.com/pricing",
+      "date": "2026-11-19",
+      "proved": "MAUs and contexts are unlimited on every plan",
+      "capture": "sha256:d49fa04d7f8e3f435d4100e537b901577f322c9d74d5c774406af1815b1c4ce9",
+      "quote": "MAUs & Contexts"
+    },
+    {
+      "url": "https://configcat.com/pricing",
+      "date": "2026-11-19",
+      "proved": "Forever Free audit log retention is 7 days",
+      "capture": "sha256:d49fa04d7f8e3f435d4100e537b901577f322c9d74d5c774406af1815b1c4ce9",
+      "quote": "7 days"
+    },
+    {
+      "url": "https://configcat.com/docs/subscription-plan-limits/",
+      "date": "2026-11-19",
+      "proved": "the subscription-limit table lists 5 million monthly downloads and 20 GB monthly traffic on Free",
+      "capture": "sha256:b650ef6009c74b30072f697caf8dc4540a8a4348f17eb6f63a7ebe9084f05e1d",
+      "quote": "Config JSON downloads (million)\n\n5\n\n25\n\n250\n\n1000\n\n6000\n\n25\n\n5\n\nNetwork traffic (per month)\n\n20GB\n\n100GB\n\n1TB\n\n4TB\n\n24TB\n\n100GB\n\n100GB"
+    },
+    {
+      "url": "https://configcat.com/docs/subscription-plan-limits/",
+      "date": "2026-11-19",
+      "proved": "Free audit log retention is 7 days",
+      "capture": "sha256:b650ef6009c74b30072f697caf8dc4540a8a4348f17eb6f63a7ebe9084f05e1d",
+      "quote": "Audit log retention (days)\n\n7\n\n35\n\n35\n\n750\n\n750"
+    },
+    {
+      "url": "https://configcat.com/docs/api/reference/configcat-public-management-api/",
+      "date": "2026-11-19",
+      "proved": "the Management API is HTTP REST at api.configcat.com with an OpenAPI v3 description",
+      "capture": "sha256:c04d1c8f7e92f644528a2253e65d084bf69100cdbe708751a94979bb48619485",
+      "quote": "The API is based on HTTP REST, uses resource-oriented URLs, status codes and supports JSON format."
+    },
+    {
+      "url": "https://configcat.com/docs/api/reference/configcat-public-management-api/",
+      "date": "2026-11-19",
+      "proved": "the Management API is not for flag evaluation; SDKs or the Proxy do that",
+      "capture": "sha256:c04d1c8f7e92f644528a2253e65d084bf69100cdbe708751a94979bb48619485",
+      "quote": "Do not use this API for accessing and evaluating feature flag values. Use the SDKs or the ConfigCat Proxy instead."
+    },
+    {
+      "url": "https://app.configcat.com/signup",
+      "date": "2026-11-19",
+      "proved": "the sign-up page offers SSO through several providers and company SAML",
+      "capture": "sha256:521afb732d29ef89c4f2e883ab92132aca648ea34bd257d3bc5f257973578d2d",
+      "quote": "Or sign up using"
+    },
+    {
+      "url": "https://app.configcat.com/signup",
+      "date": "2026-11-19",
+      "proved": "a company account can sign up through SAML SSO",
+      "capture": "sha256:521afb732d29ef89c4f2e883ab92132aca648ea34bd257d3bc5f257973578d2d",
+      "quote": "Sign up using your own company account (SAML SSO)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T00:44:36.826Z",
+  "notes": "ConfigCat also publishes an on-premise deployment, which is software the reader runs and is the last resort after the hosted Forever Free plan; the hosted plan is recorded here. Revisit when the pricing page changes the free download quota, traffic allowance or 10-flag cap."
+}

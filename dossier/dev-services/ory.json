@@ -1,0 +1,147 @@
+{
+  "topic": "dev-services",
+  "slug": "ory",
+  "provider": "Ory",
+  "url": "https://www.ory.com/pricing",
+  "category": "hosted identity, authentication, OAuth 2.0 and OpenID Connect, and fine-grained authorization APIs",
+  "tier": "Developer",
+  "free_tier": {
+    "stated": "Developer plan, free: 1 member, 0 production environments, 2 development environments, 0 staging environments, no included monthly credit, no per-aDAU price, no per-M2M-token price and no per-permission-check price; the administrative interface and zero-downtime migrations are available",
+    "unit": "users",
+    "metered_on": "identity-count",
+    "source_url": "https://www.ory.com/pricing",
+    "read_on": "2026-11-19",
+    "notes": "The free tier is a development tier: it has no production or staging environments and no included usage credit, so running production traffic needs the Production plan at USD 770/year, which includes a USD 21 monthly credit and charges USD 0.14 per average daily active user per month beyond it. Ory prices by average daily active users (aDAU), not MAU."
+  },
+  "per_object_cap": {
+    "stated": "unverified: no per-object size cap is stated on the pages read; the Developer tier is constrained by environment counts and usage credit instead",
+    "bytes": null,
+    "source_url": "https://www.ory.com/pricing"
+  },
+  "retention": {
+    "stated": "unverified: no identity or audit-log retention period is stated on the first-party pricing or rate-limit pages read",
+    "days": null,
+    "source_url": "https://www.ory.com/pricing"
+  },
+  "egress": {
+    "terms": "not applicable: a hosted identity and authorization API; no traffic allowance or per-GB egress price is published",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.ory.com/pricing"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "A set of REST APIs for identities, OAuth2 clients, permissions and project configuration, with public endpoints for end-user flows and administrative endpoints behind a Personal Access Token; a unified ory_client SDK targets https://{project_slug}.projects.oryapis.com/. Ory is headless and has no mandatory UI; the Account Experience supplies prebuilt screens. Rate limits are grouped into per-project buckets with burst and sustained thresholds that depend on the tier and environment.",
+  "endpoint": "https://{project_slug}.projects.oryapis.com/",
+  "tooling": "Auto-generated SDKs from OpenAPI specifications, the Ory CLI, the Ory Console, and the prebuilt Ory Account Experience and Elements UI components",
+  "chaining": "A headless identity and OAuth 2.0 provider in front of apps on free compute, with bring-your-own login and consent screens; Kratos handles identities, Hydra handles OAuth2 and OIDC, and Keto handles permission checks.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "1 member, 0 production environments and 2 development environments on the free Developer tier",
+      "source": "https://www.ory.com/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "no included monthly credit and no per-aDAU, per-token or per-check allowance on Developer",
+      "source": "https://www.ory.com/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "per-project rate-limit buckets with burst and sustained thresholds that depend on subscription tier and environment",
+      "source": "https://www.ory.com/docs/guides/rate-limits-project"
+    },
+    {
+      "kind": "write-gated",
+      "value": "flexible API rate limits, Console SSO and multi-region failover are Enterprise features and are not on Developer",
+      "source": "https://www.ory.com/pricing"
+    }
+  ],
+  "binding": "volume-quota",
+  "binding_note": "The 0 production environments and absent usage credit on Developer bind first: the free tier cannot carry production traffic, and the first paid tier is USD 770/year with per-aDAU overage.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The account registration page asks for a work email and a name and offers ChatGPT, GitHub and Google sign-up alternatives; it also asks the reader to accept the Terms of Service. The page states no card requirement. Whether a later step asks for a phone number or an identity document is unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "Rate limits are applied per project as shared buckets, so endpoints in one bucket compete for the same threshold. The free Developer tier has no production environments and no usage credit.",
+  "confidence": "documented",
+  "confidence_note": "Quota, environment counts and usage prices come from the first-party pricing page, rate-limit structure from the first-party guide, and registration fields from the first-party registration page read through a pinned route. No probe was run and no account was opened; a sign-up would confirm later identity fields.",
+  "evidence": [
+    {
+      "url": "https://www.ory.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:00c97c0843a62d82450e1cd2d19909114b34b0dcd79b68c16d893609241b7c8f",
+      "quote": "Developer: 1",
+      "proved": "the free Developer tier allows 1 member"
+    },
+    {
+      "url": "https://www.ory.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:00c97c0843a62d82450e1cd2d19909114b34b0dcd79b68c16d893609241b7c8f",
+      "quote": "Developer: 2",
+      "proved": "the free Developer tier allows 2 development environments"
+    },
+    {
+      "url": "https://www.ory.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:00c97c0843a62d82450e1cd2d19909114b34b0dcd79b68c16d893609241b7c8f",
+      "quote": "Developer: 0",
+      "proved": "the free Developer tier allows 0 production and 0 staging environments and has no price per aDAU"
+    },
+    {
+      "url": "https://www.ory.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:00c97c0843a62d82450e1cd2d19909114b34b0dcd79b68c16d893609241b7c8f",
+      "quote": "Production: $0.14 / aDAU / month",
+      "proved": "the Production plan charges USD 0.14 per average daily active user per month"
+    },
+    {
+      "url": "https://www.ory.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:00c97c0843a62d82450e1cd2d19909114b34b0dcd79b68c16d893609241b7c8f",
+      "quote": "Included Monthly Credit",
+      "proved": "the paid plans include a monthly usage credit while Developer has none"
+    },
+    {
+      "url": "https://www.ory.com/docs/guides/rate-limits-project",
+      "date": "2026-11-19",
+      "capture": "sha256:8b89842dda2dcaeb9c802658c599a616ae92430792f3ba09fd35ec8f330f650b",
+      "quote": "A bucket counter is shared across all endpoints in the same bucket.",
+      "proved": "rate-limit buckets are shared by the endpoints they contain"
+    },
+    {
+      "url": "https://www.ory.com/docs/guides/rate-limits-project",
+      "date": "2026-11-19",
+      "capture": "sha256:8b89842dda2dcaeb9c802658c599a616ae92430792f3ba09fd35ec8f330f650b",
+      "quote": "The Developer tier only supports Development environments.",
+      "proved": "the free Developer tier supports only development environments"
+    },
+    {
+      "url": "https://www.ory.com/docs/reference/reference-overview",
+      "date": "2026-11-19",
+      "capture": "sha256:942f64d88d21e6d2e33cd3ed85da327abe257acb88966f8063aa0fcaeba2c419",
+      "quote": "targeting your project's API at `https://{project_slug}.projects.oryapis.com/`",
+      "proved": "the hosted API is served on a per-project subdomain"
+    },
+    {
+      "url": "https://console.ory.com/registration",
+      "date": "2026-11-19",
+      "capture": "sha256:179c99f9c5931976efba18d1c677831c724d390410138a74bcdbaffa5eb38e03",
+      "quote": "Sign up with a social provider or your Work email",
+      "proved": "registration accepts a work email or a social provider"
+    },
+    {
+      "url": "https://console.ory.com/registration",
+      "date": "2026-11-19",
+      "capture": "sha256:179c99f9c5931976efba18d1c677831c724d390410138a74bcdbaffa5eb38e03",
+      "quote": "Work email",
+      "proved": "the registration form asks for a work email"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T00:32:47.480Z",
+  "notes": "Ory also distributes open-source identity components a reader can run on their own infrastructure, listed as self-hosted plans on the same site; that option is separate from the managed Ory Network offer recorded here and is the last resort."
+}

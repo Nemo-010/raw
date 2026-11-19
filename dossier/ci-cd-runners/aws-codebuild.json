@@ -1,0 +1,139 @@
+{
+  "topic": "ci-cd-runners",
+  "slug": "aws-codebuild",
+  "provider": "AWS CodeBuild",
+  "url": "https://aws.amazon.com/codebuild/pricing/",
+  "category": "CI runner",
+  "tier": "AWS Free Tier (on-demand EC2 and Lambda)",
+  "verdict": "qualifies-with-caveat",
+  "confidence": "documented",
+  "confidence_note": "all numbers are quoted from the first-party CodeBuild pricing page and run-build docs; no build was run, so worker behaviour during a build, the price of data transfer, and what happens after the 100 monthly minutes are spent are unverified",
+  "verified_at": "2026-11-19T00:19:24.719Z",
+  "free_tier": {
+    "stated": "100 total build minutes per month with the general1.small or arm1.small instance types using on-demand Amazon EC2, and 6,000 total build seconds per month with the lambda.arm.1GB or lambda.x86-64.1GB compute types using on-demand Lambda; the free tier does not expire at the end of the 12-month AWS Free Tier term and is available to new and existing AWS customers",
+    "unit": "minutes",
+    "metered_on": "wall-clock",
+    "source_url": "https://aws.amazon.com/codebuild/pricing/",
+    "read_on": "2026-11-19",
+    "notes": "the headline counts build minutes on on-demand EC2; Lambda compute is metered in seconds under a separate 6,000-second allowance. Reserved Capacity EC2, Sandbox and Docker image server have no free tier. The unit counts minutes a build runs from submission to termination, not one unit per build"
+  },
+  "per_object_cap": {
+    "stated": "unverified: the pricing and run-build pages read state no cap on a single build input or artifact",
+    "bytes": null,
+    "source_url": "https://aws.amazon.com/codebuild/pricing/"
+  },
+  "retention": {
+    "stated": "unverified: the pricing and run-build pages read state no retention period for build logs or artifacts",
+    "days": null,
+    "source_url": "https://aws.amazon.com/codebuild/pricing/"
+  },
+  "egress": {
+    "terms": "unverified: the pricing page states that builds may incur additional charges when they transfer data, but states no data-transfer allowance or rate",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://aws.amazon.com/codebuild/pricing/"
+  },
+  "interface": [
+    "cli",
+    "rest"
+  ],
+  "interface_detail": "builds run from the AWS CodeBuild console, the AWS CLI or the AWS SDKs; build projects and triggers are managed through the AWS APIs",
+  "endpoint": "https://codebuild.amazonaws.com",
+  "tooling": "the AWS CodeBuild console, the AWS CLI and the AWS SDKs; the user supplies a buildspec.yml build definition and a source repository",
+  "chaining": "a build runs to completion on an AWS-managed compute instance or on Lambda and its result is published to AWS services such as S3 and ECR; the console, CLI or an AWS SDK starts each build and each minute or second spends the monthly allowance. Reserved Capacity fleets are a separate paid offer outside this free allowance",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "100 free build minutes per month on on-demand EC2 general1.small or arm1.small; beyond it general1.small costs $0.005 per minute",
+      "source": "https://aws.amazon.com/codebuild/pricing/"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "6,000 free build seconds per month on on-demand Lambda lambda.arm.1GB or lambda.x86-64.1GB",
+      "source": "https://aws.amazon.com/codebuild/pricing/"
+    },
+    {
+      "kind": "request-rate",
+      "value": "on-demand EC2 build duration is rounded up to the nearest minute; Lambda duration is rounded up to the nearest second",
+      "source": "https://aws.amazon.com/codebuild/pricing/"
+    }
+  ],
+  "limits_note": "Reserved Capacity EC2 instances carry a minimum charge of 60 minutes each, and Mac reserved instances a minimum of 24 hours; Sandbox and Docker image server have no free tier",
+  "binding": "volume-quota",
+  "binding_note": "the 100 monthly EC2 build-minutes are spent from submission to termination on every build, so an active account reaches that allowance before the per-minute rounding or a compute limit binds",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "an AWS account is opened with a name, an email address verified by a one-time code, a password and contact information; most new customers are not asked for a payment method to start, though a phone number and a card may be requested for identity verification in some cases",
+    "country": null
+  },
+  "reliability_note": "the free tier is stated not to expire after the 12-month AWS Free Tier term; no ban or data-loss event is recorded on the pages read",
+  "price_per_tb_month": null,
+  "evidence": [
+    {
+      "url": "https://aws.amazon.com/codebuild/pricing/",
+      "date": "2026-11-19",
+      "capture": "sha256:bd02f4b5b66f1f2e36f5fe03a6beaaf3a5601272a9b06491eb896abb531104c2",
+      "quote": "The CodeBuild AWS Free Tier includes 100 total build minutes per month with the general1.small or arm1.small instance types using on-demand Amazon EC2.",
+      "proved": "the on-demand EC2 free tier is 100 build minutes a month on general1.small or arm1.small"
+    },
+    {
+      "url": "https://aws.amazon.com/codebuild/pricing/",
+      "date": "2026-11-19",
+      "capture": "sha256:bd02f4b5b66f1f2e36f5fe03a6beaaf3a5601272a9b06491eb896abb531104c2",
+      "quote": "Using on-demand Lambda, the CodeBuild AWS Free Tier includes 6,000 total build seconds per month with the lambda.arm.1GB or lambda.x86-64.1GB compute types.",
+      "proved": "the on-demand Lambda free tier is 6,000 build seconds a month on lambda.arm.1GB or lambda.x86-64.1GB"
+    },
+    {
+      "url": "https://aws.amazon.com/codebuild/pricing/",
+      "date": "2026-11-19",
+      "capture": "sha256:bd02f4b5b66f1f2e36f5fe03a6beaaf3a5601272a9b06491eb896abb531104c2",
+      "quote": "The CodeBuild AWS Free Tier does not automatically expire at the end of your 12-month AWS Free Tier term. It is available to new and existing AWS customers.",
+      "proved": "the CodeBuild free tier does not expire after the 12-month term and applies to new and existing customers"
+    },
+    {
+      "url": "https://aws.amazon.com/codebuild/pricing/",
+      "date": "2026-11-19",
+      "capture": "sha256:bd02f4b5b66f1f2e36f5fe03a6beaaf3a5601272a9b06491eb896abb531104c2",
+      "quote": "Reserved Capacity EC2, Sandbox and Docker image server don't offer an AWS free tier.",
+      "proved": "Reserved Capacity, Sandbox and Docker image server have no free allowance"
+    },
+    {
+      "url": "https://aws.amazon.com/codebuild/pricing/",
+      "date": "2026-11-19",
+      "capture": "sha256:e8dbb42edaf9b5a266164a5e3b56dd520a521d897e05631b34e1fb7998f7e309",
+      "quote": "Build duration is calculated in minutes, from the time you submit your build until your build is terminated, rounded up to the nearest minute.",
+      "proved": "on-demand EC2 builds are billed per minute, rounded up from submission to termination"
+    },
+    {
+      "url": "https://aws.amazon.com/codebuild/pricing/",
+      "date": "2026-11-19",
+      "capture": "sha256:e8dbb42edaf9b5a266164a5e3b56dd520a521d897e05631b34e1fb7998f7e309",
+      "quote": "Build duration is calculated in seconds, from the time you submit your build until your build is terminated, rounded up to the nearest second.",
+      "proved": "Lambda builds are billed per second, rounded up from submission to termination"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/codebuild/latest/userguide/run-build.html",
+      "date": "2026-11-19",
+      "capture": "sha256:8af5b179ee33e85039f6f0038ec99628548733dc1e7e20388c310b005543ddde",
+      "quote": "You can use the AWS CodeBuild console, AWS CLI, or AWS SDKs to run a build in CodeBuild.",
+      "proved": "builds run from the console, the AWS CLI or the AWS SDKs"
+    },
+    {
+      "url": "https://aws.amazon.com/resources/create-account",
+      "date": "2026-11-19",
+      "capture": "sha256:116645bd8c47dec00438e2fc10e14711a22c363c3ac777381f5f6ba4bae6b530",
+      "quote": "Enter your name, verify your email with a one-time code, create a password, and provide your contact information.",
+      "proved": "the sign-up form asks for a name, an email address verified by a code, a password and contact information"
+    },
+    {
+      "url": "https://aws.amazon.com/resources/create-account",
+      "date": "2026-11-19",
+      "capture": "sha256:116645bd8c47dec00438e2fc10e14711a22c363c3ac777381f5f6ba4bae6b530",
+      "quote": "No credit card is required for most new customers to get started.",
+      "proved": "most new customers sign up without a payment method"
+    }
+  ],
+  "notes": "A managed, AWS-run build service where each build spends minutes or seconds from a monthly allowance. Retention of build logs and artifacts and the price of data transfer out are unverified: no first-party page read states them. An AWS account is the identity gate; CodeBuild free minutes are a usage allowance, not a one-time credit. Reserved Capacity fleets, Sandbox and Docker image server are separate paid offers outside this free allowance and are not documented here.",
+  "history": []
+}

@@ -1,0 +1,113 @@
+{
+  "topic": "databases-kv",
+  "slug": "digitalocean-managed-databases",
+  "provider": "DigitalOcean Managed Databases",
+  "url": "https://www.digitalocean.com/pricing/managed-databases",
+  "category": "hosted managed database clusters for PostgreSQL, MySQL, MongoDB, Valkey, Kafka and OpenSearch",
+  "free_tier": {
+    "stated": "No free database tier. A new first team receives a USD 5 signup credit that expires 90 days after signup and applies to all products except SaaS Add-Ons; a valid payment method must be added before resources can be created. The smallest PostgreSQL node is USD 15.15 per month.",
+    "unit": "credits",
+    "metered_on": "wall-clock",
+    "source_url": "https://docs.digitalocean.com/platform/billing/signup-credit",
+    "read_on": "2026-11-19",
+    "notes": "The only free allowance is a one-time USD 5 credit with a 90-day expiry, not a recurring free plan. Managed databases themselves are paid from USD 15.15 per month."
+  },
+  "per_object_cap": {
+    "stated": "No per-object cap is published on the pricing or cluster documentation pages read. The smallest PostgreSQL node has a storage range of 10 GiB to 30 GiB in 10 GiB increments.",
+    "bytes": null,
+    "source_url": "https://www.digitalocean.com/pricing/managed-databases"
+  },
+  "retention": {
+    "stated": "Daily point-in-time backups are included on PostgreSQL, MySQL, MongoDB and OpenSearch. The write-ahead log backs up every five minutes, so the most recent writes may be lost if a cluster must be reprovisioned from backup. No retention period in days is published on the pages read.",
+    "days": null,
+    "source_url": "https://docs.digitalocean.com/products/databases/"
+  },
+  "egress": {
+    "terms": "Database traffic does not use the account bandwidth allowance; the managed databases pricing page lists no separate per-GB egress charge.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.digitalocean.com/pricing/managed-databases"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "a public API and the doctl command line client manage clusters; clients connect to the database engine's native wire protocol over end-to-end SSL",
+  "tooling": "psql, mysql, mongosh, redis-cli or the matching engine client; doctl and the DigitalOcean API for cluster management",
+  "chaining": "a managed cluster placed in a VPC by default, with automated failover, read-only nodes on PostgreSQL and MySQL, and online migration from an existing database",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "USD 5 signup credit, expiring 90 days after signup; a valid payment method is required before resources can be created",
+      "source": "https://docs.digitalocean.com/platform/billing/signup-credit"
+    }
+  ],
+  "binding": "none",
+  "binding_note": "There is no recurring free allowance, so no usage quota binds; the constraints are a USD 5 credit with a 90-day expiry and a payment-method gate, neither of which has a term in the binding vocabulary.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "signup applies a USD 5 credit to the first team, but a valid payment method must be added before Droplets or other resources can be created. Accepted methods are Visa, Mastercard, American Express, Discover, PayPal, Google Pay and Apple Pay. No phone number or identity document is shown.",
+    "country": null
+  },
+  "reliability_note": "all clusters have automated failover but a single-node cluster is not highly available without a standby; the write-ahead log backs up every five minutes, so recent writes can be lost on recovery from backup",
+  "confidence": "documented",
+  "confidence_note": "four first-party pages were captured and quoted on 2026-11-19: the managed databases pricing page, the signup credit documentation, the managed databases overview and the product page. The price, credit and payment figures come from those pages. No probe was run, so the rung stays documented.",
+  "evidence": [
+    {
+      "url": "https://www.digitalocean.com/pricing/managed-databases",
+      "date": "2026-11-19",
+      "capture": "sha256:f3ad29e60924ae0301e7ea0537897753ff4706df2d6b1a50ed6f468a87d96f7a",
+      "quote": "| 1 GiB | 1 vCPU | Storage range: 10 GiB - 30 GiB. $0.215/GiB/mo, 10 GiB increments. | $0.02254 | $15.15 |",
+      "proved": "the smallest PostgreSQL node is 1 GiB RAM and 1 vCPU at USD 15.15 per month plus USD 0.215 per GiB-month storage"
+    },
+    {
+      "url": "https://www.digitalocean.com/pricing/managed-databases",
+      "date": "2026-11-19",
+      "capture": "sha256:f3ad29e60924ae0301e7ea0537897753ff4706df2d6b1a50ed6f468a87d96f7a",
+      "quote": "We accept Visa, Mastercard, American Express, Discover, PayPal, Google Pay, and Apple Pay.",
+      "proved": "payment requires a card or a wallet"
+    },
+    {
+      "url": "https://docs.digitalocean.com/platform/billing/signup-credit",
+      "date": "2026-11-19",
+      "capture": "sha256:8deb887737d8169969a0202c550a2b8a9f25b63dedb16e0adc2c7b46df80398d",
+      "quote": "When you create your first team, DigitalOcean automatically applies a $5 signup credit. No promo code is required.",
+      "proved": "a new first team receives a USD 5 signup credit"
+    },
+    {
+      "url": "https://docs.digitalocean.com/platform/billing/signup-credit",
+      "date": "2026-11-19",
+      "capture": "sha256:8deb887737d8169969a0202c550a2b8a9f25b63dedb16e0adc2c7b46df80398d",
+      "quote": "- Signup credits expire 90 days after signup.",
+      "proved": "the signup credit expires 90 days after signup"
+    },
+    {
+      "url": "https://docs.digitalocean.com/platform/billing/signup-credit",
+      "date": "2026-11-19",
+      "capture": "sha256:8deb887737d8169969a0202c550a2b8a9f25b63dedb16e0adc2c7b46df80398d",
+      "quote": "- You must add a [valid payment method](https://docs.digitalocean.com/platform/billing/manage-payment-methods/index.html.md) before you can create Droplets or other resources.",
+      "proved": "a valid payment method is required before resources can be created"
+    },
+    {
+      "url": "https://docs.digitalocean.com/products/databases/",
+      "date": "2026-11-19",
+      "capture": "sha256:6bba28a0975e2e764c0aed8b41097180f76bbdbdf8f41a50c899f378e6c54ba2",
+      "quote": "Clusters include [high availability](#high-availability) with automated failover and end-to-end SSL encryption.",
+      "proved": "clusters include automated failover and end-to-end SSL encryption"
+    },
+    {
+      "url": "https://docs.digitalocean.com/products/databases/",
+      "date": "2026-11-19",
+      "capture": "sha256:6bba28a0975e2e764c0aed8b41097180f76bbdbdf8f41a50c899f378e6c54ba2",
+      "quote": "However, the write-ahead log backs up every five minutes, so the most recent writes to the database may be lost if the cluster needs to recover this way.",
+      "proved": "the five-minute WAL backup interval can lose the most recent writes on recovery"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-19T00:19:24.768Z",
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "Managed Databases has no free tier. The only no-cost value is the general USD 5 signup credit, which expires in 90 days and requires a payment method; the smallest database node costs more than that credit. The offer is hosted in DigitalOcean datacenters, not software the reader runs.",
+  "self_hosted": false
+}

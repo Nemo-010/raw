@@ -1,0 +1,200 @@
+{
+  "topic": "dev-services",
+  "slug": "infisical",
+  "provider": "Infisical",
+  "url": "https://infisical.com/pricing",
+  "category": "hosted secrets management, billed per identity (human and machine)",
+  "tier": "Free",
+  "free_tier": {
+    "stated": "Secrets Management Free: USD 0 forever, for individuals and personal projects, with 5 identities, unlimited projects, 3 environments and 10 secret syncs",
+    "unit": "users",
+    "metered_on": "identity-count",
+    "source_url": "https://infisical.com/pricing",
+    "read_on": "2026-11-19",
+    "notes": "The unit counted is the identity, which is any principal that authenticates to Infisical, human or machine. users is the nearest schema term; the true meter is identity-count, named in metered_on. On every plan including Free: unlimited projects, two-factor authentication, secret sharing, community support, pay by card and annual billing. Paid Secrets Management plans add a 30-day free trial with no credit card. The MIT-licensed core can be self-hosted at no cost on any plan; a supported, licensed self-hosting option is available after talking to sales and is not the hosted offer priced here."
+  },
+  "per_object_cap": {
+    "stated": "unverified: no per-secret value size or per-object byte cap is stated on the pricing, API reference or rate-limit pages read",
+    "bytes": null
+  },
+  "retention": {
+    "stated": "No audit log retention on Free; 30 days on Pro, 90 days on Advanced and custom on Enterprise. Secret retention is until deletion by the user and no automatic secret expiry is stated on the pages read.",
+    "days": null,
+    "source_url": "https://infisical.com/pricing",
+    "notes": "The days field is null because retention is tiered for audit logs and no automatic secret lifetime is published."
+  },
+  "egress": {
+    "terms": "not applicable: a secrets management service; data is read back through a REST API over HTTPS. No per-GB traffic price or traffic quota is stated on the pricing page; the API enforces per-minute request limits instead.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://infisical.com/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "A REST API over HTTPS supports every dashboard action: reading and writing secrets, managing projects and machine identities, reading audit logs and configuring resources. Cloud endpoints are app.infisical.com/api (US) and eu.infisical.com/api (EU). An OpenAPI specification is served at /api/docs/json. A CLI and SDKs use the same API.",
+  "endpoint": "https://app.infisical.com/api",
+  "tooling": "Infisical CLI, SDKs, Kubernetes Operator, Infisical Agent and the REST API, with an OpenAPI specification at /api/docs/json",
+  "chaining": "Hosted secrets store for applications and CI pipelines, reached by the CLI, SDKs and REST API; secret syncs and integrations cover AWS, Vercel, GitHub Actions, GitLab CI/CD and Jenkins.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "5 identities on Free",
+      "source": "https://infisical.com/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "3 environments, 10 secret syncs and up to 3 projects on Free",
+      "source": "https://infisical.com/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "a global cap of 600 requests per minute per client IP on Infisical Cloud; Free read 200, write 90, secret 120, identity creation 30 and project creation 30 per minute",
+      "source": "https://infisical.com/docs/api-reference/overview/rate-limits"
+    }
+  ],
+  "limits_note": "The older comparison table states a project limit of up to 3 on Free, while the Secrets Management summary on the same page states unlimited projects. The tighter figure is recorded here and the disagreement is unresolved. Exceeding a rate limit returns HTTP 429.",
+  "binding": "volume-quota",
+  "binding_note": "The 5-identity cap fills first for a small team plus its CI pipelines: each human and each machine identity counts, so a project with several distinct permission sets reaches the cap before the per-minute rate limits are approached.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "Email and password is the most common method for user identities signing in through the dashboard and CLI. The sign-up page is protected by hCaptcha; GitHub, Google and GitLab sign-in are offered as alternatives. The exact sign-up field list and whether a card is requested are unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "The Cloud API returns HTTP 429 with a standard error response and a seconds-until-reset message when a rate limit is exceeded; no ban or data-loss behaviour is stated on the pages read.",
+  "confidence": "documented",
+  "confidence_note": "Free allowances, per-identity billing, retention tiers and rate limits are quoted from first-party pricing, signup and API documentation pages. No probe of a public read path was run and no account was opened, so signup field details beyond the captured text remain unverified.",
+  "evidence": [
+    {
+      "url": "https://infisical.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:16f5b78ae64476fc87783c33fc520f83986a4cd5b10d9a45ce805dc69ae64d53",
+      "quote": "| **Free** | $0 forever | Individuals and personal projects | 5 identities, unlimited projects, 3 environments, 10 secret syncs |",
+      "proved": "Secrets Management Free is USD 0 forever with 5 identities, unlimited projects, 3 environments and 10 secret syncs"
+    },
+    {
+      "url": "https://infisical.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:16f5b78ae64476fc87783c33fc520f83986a4cd5b10d9a45ce805dc69ae64d53",
+      "quote": "Billed per identity per month. An identity is any principal that authenticates to Infisical, human or machine.",
+      "proved": "the billing unit is the identity and both human and machine principals count"
+    },
+    {
+      "url": "https://infisical.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:16f5b78ae64476fc87783c33fc520f83986a4cd5b10d9a45ce805dc69ae64d53",
+      "quote": "| Identities | 5 | Unlimited | Unlimited | Unlimited |",
+      "proved": "the Free identity cap is 5 against unlimited on paid tiers"
+    },
+    {
+      "url": "https://infisical.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:16f5b78ae64476fc87783c33fc520f83986a4cd5b10d9a45ce805dc69ae64d53",
+      "quote": "| Environments | 3 | 6/project | 12/project | Unlimited |",
+      "proved": "Free has 3 environments and higher tiers have more"
+    },
+    {
+      "url": "https://infisical.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:16f5b78ae64476fc87783c33fc520f83986a4cd5b10d9a45ce805dc69ae64d53",
+      "quote": "| Secret syncs | 10 | 25 | 50 | Unlimited |",
+      "proved": "Free has 10 secret syncs and higher tiers have more"
+    },
+    {
+      "url": "https://infisical.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:16f5b78ae64476fc87783c33fc520f83986a4cd5b10d9a45ce805dc69ae64d53",
+      "quote": "| Audit log retention | No | 30 days | 90 days | Custom |",
+      "proved": "Free has no audit log retention; Pro has 30 days, Advanced 90 and Enterprise custom"
+    },
+    {
+      "url": "https://infisical.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:16f5b78ae64476fc87783c33fc520f83986a4cd5b10d9a45ce805dc69ae64d53",
+      "quote": "Paid plans include a **30-day free trial** with no credit card.",
+      "proved": "the paid-tier trial lasts 30 days and asks for no card"
+    },
+    {
+      "url": "https://infisical.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:16f5b78ae64476fc87783c33fc520f83986a4cd5b10d9a45ce805dc69ae64d53",
+      "quote": "Each has an open-source core under the MIT license, free forever if you self-host.",
+      "proved": "an MIT-licensed self-hostable core exists alongside the hosted offer"
+    },
+    {
+      "url": "https://infisical.com/docs/api-reference/overview/rate-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:4b318bab958decd1439a83784605c331c0a1695b9befa82b04670ecb47d6b64e",
+      "quote": "A global cap of 600 requests per minute per client IP applies to every endpoint (the status endpoint is exempt).",
+      "proved": "a global 600 requests per minute per client IP cap applies to the Cloud API"
+    },
+    {
+      "url": "https://infisical.com/docs/api-reference/overview/rate-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:4b318bab958decd1439a83784605c331c0a1695b9befa82b04670ecb47d6b64e",
+      "quote": "* **Read**: 200 per minute",
+      "proved": "the Free read rate limit is 200 per minute"
+    },
+    {
+      "url": "https://infisical.com/docs/api-reference/overview/rate-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:4b318bab958decd1439a83784605c331c0a1695b9befa82b04670ecb47d6b64e",
+      "quote": "* **Write**: 90 per minute",
+      "proved": "the Free write rate limit is 90 per minute"
+    },
+    {
+      "url": "https://infisical.com/docs/api-reference/overview/rate-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:4b318bab958decd1439a83784605c331c0a1695b9befa82b04670ecb47d6b64e",
+      "quote": "* **Secret**: 120 per minute",
+      "proved": "the Free secret-operation rate limit is 120 per minute"
+    },
+    {
+      "url": "https://infisical.com/docs/api-reference/overview/rate-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:4b318bab958decd1439a83784605c331c0a1695b9befa82b04670ecb47d6b64e",
+      "quote": "A request that exceeds the applicable limit returns HTTP `429` with the standard",
+      "proved": "exceeding a rate limit returns HTTP 429"
+    },
+    {
+      "url": "https://infisical.com/docs/api-reference/overview/introduction",
+      "date": "2026-11-19",
+      "capture": "sha256:9e9cf81ac6013043e748809598e9e2a547f9b41371582ed0533814d0858d2e81",
+      "quote": "The Infisical API is a REST API served over HTTPS.",
+      "proved": "the programmatic interface is a REST API over HTTPS"
+    },
+    {
+      "url": "https://infisical.com/docs/api-reference/overview/introduction",
+      "date": "2026-11-19",
+      "capture": "sha256:9e9cf81ac6013043e748809598e9e2a547f9b41371582ed0533814d0858d2e81",
+      "quote": "If you use Infisical Cloud, all endpoints are available under `https://app.infisical.com/api` (US region) or `https://eu.infisical.com/api` (EU region).",
+      "proved": "the Cloud API base URLs for the US and EU regions"
+    },
+    {
+      "url": "https://app.infisical.com/signup",
+      "date": "2026-11-19",
+      "capture": "sha256:d99c02576fd13422ee73ea94c61ac2311ffbdff1fb379fa78f5d4952e08a46cc",
+      "quote": "This site is protected by hCaptcha and its Privacy Policy and Terms of Service apply.",
+      "proved": "the sign-up page is protected by hCaptcha"
+    },
+    {
+      "url": "https://infisical.com/docs/documentation/platform/auth-methods/email-password",
+      "date": "2026-11-19",
+      "capture": "sha256:d7fbffccc543043a16c14ec412c7e779a68b56c1433735c5edc14ccc34b04cb4",
+      "quote": "**Email and Password** is the most common authentication method that can be used by user identities for authentication into Web Dashboard and Infisical CLI.",
+      "proved": "email and password is a user sign-in method"
+    },
+    {
+      "url": "https://infisical.com/docs/documentation/platform/identities/overview",
+      "date": "2026-11-19",
+      "capture": "sha256:6f00cd86ce321ce491b0f042b8b12b1ee6fd51d81a11255d8920fee9ff096f5f",
+      "quote": "User identity count is straightforward—it equals the number of human users who need access to Infisical.",
+      "proved": "a human user counts as one user identity toward the identity cap"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T02:29:43.400Z",
+  "notes": "Identity is the binding constraint: the first-party pricing page states per-identity billing and a 5-identity Free cap. Self-hosting the MIT-licensed core is an alternative to the hosted Cloud offer and is not the offer priced in this record; a supported, licensed self-hosting contract is a separate paid option. No API probe of a public read path was run and no account was opened."
+}
