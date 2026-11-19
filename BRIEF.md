@@ -65,7 +65,7 @@ waiting to happen, and `render.py --check` refuses one.
 <!-- generated:start kind=topics link=1 -->
 | topic | records | qualifies | trial or paid | fails | dead | measured or documented | documents |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| [`ci-cd-runners`](docs/ci-cd-runners/README.md) | 34 | 23 | 7 | 1 | 3 | 34 | 7 |
+| [`ci-cd-runners`](docs/ci-cd-runners/README.md) | 44 | 28 | 9 | 1 | 6 | 44 | 7 |
 | [`coding-subs`](docs/coding-subs/README.md) | 74 | 27 | 43 | 2 | 2 | 74 | 8 |
 | [`compute`](docs/compute/README.md) | 1411 | 499 | 653 | 175 | 84 | 1211 | 63 |
 | [`crawler-scraper`](docs/crawler-scraper/README.md) | 61 | 40 | 10 | 3 | 8 | 57 | 15 |
@@ -80,7 +80,7 @@ waiting to happen, and `render.py --check` refuses one.
 | [`ip-proxy`](docs/ip-proxy/README.md) | 87 | 23 | 49 | 9 | 6 | 80 | 10 |
 | [`netdisk-pan`](docs/netdisk-pan/README.md) | 104 | 52 | 4 | 34 | 14 | 59 | 22 |
 | [`storage`](docs/storage/README.md) | 1720 | 382 | 138 | 1092 | 108 | 197 | 29 |
-| **all** | 5150 | 1779 | 1439 | 1606 | 326 | 3152 | 227 |
+| **all** | 5160 | 1784 | 1441 | 1606 | 329 | 3162 | 227 |
 <!-- generated:end -->
 
 ---
