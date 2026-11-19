@@ -1,0 +1,147 @@
+{
+  "topic": "ci-cd-runners",
+  "slug": "google-cloud-build",
+  "provider": "Google Cloud Build",
+  "url": "https://cloud.google.com/build/pricing",
+  "category": "CI runner",
+  "tier": "Free Tier (default pool, e2-standard-2)",
+  "verdict": "qualifies-with-caveat",
+  "confidence": "documented",
+  "confidence_note": "all numbers are quoted from the first-party Cloud Build pricing, quotas and free-features pages; no build was run, so the behaviour of a worker during a build, the exact rate of standard network egress and what happens after the 2,500 monthly minutes are spent are unverified",
+  "verified_at": "2026-11-19T00:19:24.719Z",
+  "free_tier": {
+    "stated": "Each billing account comes with 2,500 free build-minutes per month on e2-standard-2 (2 vCPU, 8 GB memory) in the default pool; the first 100GB of worker SSD is free. The build-minute allowance is promotional and its limit is subject to change",
+    "unit": "minutes",
+    "metered_on": "wall-clock",
+    "source_url": "https://cloud.google.com/build/pricing",
+    "read_on": "2026-11-19",
+    "notes": "the unit counts minutes a build is in process, not one unit per build; a one-minute build and a sixty-minute build each spend minutes from the same 2,500 per billing account. A Google Cloud billing account is required to reach the Free Tier"
+  },
+  "per_object_cap": {
+    "stated": "the first 100GB of extra worker SSD is free, and up to 4000GB can be requested; no cap on a single artifact or build input is stated on the pages read",
+    "bytes": null,
+    "source_url": "https://cloud.google.com/build/pricing"
+  },
+  "retention": {
+    "stated": "unverified: the pricing, quotas and free-features pages read state no retention period for build logs, artifacts or the build worker",
+    "days": null,
+    "source_url": "https://cloud.google.com/build/pricing"
+  },
+  "egress": {
+    "terms": "network egress is charged according to standard Google Cloud rates; no Cloud Build egress allowance or own price is stated",
+    "metered": true,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://cloud.google.com/build/pricing"
+  },
+  "interface": [
+    "cli",
+    "rest",
+    "git"
+  ],
+  "interface_detail": "builds are submitted with gcloud builds submit (the Google Cloud CLI) and the Cloud Build REST API at cloudbuild.googleapis.com; build triggers connect a Git repository. No SSH into a build worker is documented on the pages read",
+  "endpoint": "https://cloudbuild.googleapis.com",
+  "tooling": "the gcloud CLI and the Cloud Build REST API; the user supplies a cloudbuild.yaml build configuration and a source archive or a connected repository",
+  "chaining": "a build runs to completion on a Google-managed worker in the default pool and its result is published to Google Cloud services; a repository trigger, the CLI or the REST API starts each build and each build-minute spends the monthly allowance. No per-build step is a separate hosted runner",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "2,500 free build-minutes per month per billing account on e2-standard-2 in the default pool; beyond it e2-standard-2 costs $0.006 per minute",
+      "source": "https://cloud.google.com/build/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "10 to 30 concurrent builds in the default pool, counted globally as a project quota",
+      "source": "https://cloud.google.com/build/quotas"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "the first 100GB of worker SSD is free, up to 4000GB can be requested",
+      "source": "https://cloud.google.com/build/pricing"
+    }
+  ],
+  "limits_note": "partial minutes are billed at the actual number of seconds consumed, and minutes a build spends queued are not billed",
+  "binding": "volume-quota",
+  "binding_note": "the 2,500 monthly build-minutes are shared across every project on a billing account and are spent by every build in process, so an active account reaches the promotional allowance before the 10 to 30 concurrent-build quota binds",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "a Google Cloud billing account is required for the Free Tier; the Free Trial sign-up that creates one requires a credit card or other payment method valid for the trial, and in some countries a bank account verification",
+    "country": null
+  },
+  "reliability_note": "the pricing page calls the 2,500-minute allowance promotional and subject to change; no ban or data-loss event is recorded on the pages read",
+  "price_per_tb_month": null,
+  "evidence": [
+    {
+      "url": "https://cloud.google.com/build/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:7606d69f0fb1a11e08be624910f73c1d37fadb201940584eb1a6e1379d060e27",
+      "quote": "Each billing account comes with 2,500 free build-minutes per month.1",
+      "proved": "the free allowance is 2,500 build-minutes a month, counted per billing account"
+    },
+    {
+      "url": "https://cloud.google.com/build/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:7606d69f0fb1a11e08be624910f73c1d37fadb201940584eb1a6e1379d060e27",
+      "quote": "This promotional free tier is for e2-standard-2 machine types in the default pool, and the limit is subject to change.",
+      "proved": "the free minutes apply only to e2-standard-2 in the default pool and are promotional"
+    },
+    {
+      "url": "https://cloud.google.com/build/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:7606d69f0fb1a11e08be624910f73c1d37fadb201940584eb1a6e1379d060e27",
+      "quote": "| e2-standard-2 | 2 | 8 | Yes | $0.006 |",
+      "proved": "e2-standard-2 has 2 vCPUs and 8 GB of memory and costs $0.006 a minute beyond the allowance"
+    },
+    {
+      "url": "https://cloud.google.com/build/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:7606d69f0fb1a11e08be624910f73c1d37fadb201940584eb1a6e1379d060e27",
+      "quote": "Partial minutes are billed at the actual number of seconds consumed.",
+      "proved": "partial build minutes are billed at the actual seconds consumed"
+    },
+    {
+      "url": "https://cloud.google.com/build/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:7606d69f0fb1a11e08be624910f73c1d37fadb201940584eb1a6e1379d060e27",
+      "quote": "Network egress will be charged according to standard rates.",
+      "proved": "network egress from builds is metered at standard Google Cloud rates with no Cloud Build allowance"
+    },
+    {
+      "url": "https://cloud.google.com/build/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:7606d69f0fb1a11e08be624910f73c1d37fadb201940584eb1a6e1379d060e27",
+      "quote": "The first 100GB is free, and you can request up to 4000GB.",
+      "proved": "the first 100GB of extra worker SSD is free and up to 4000GB can be requested"
+    },
+    {
+      "url": "https://cloud.google.com/build/quotas",
+      "date": "2026-11-19",
+      "capture": "sha256:d6ed5530c8554528f8d33cae0e0e11371995062ad68b0b09c89b608a923c3486",
+      "quote": "| Default pool | Build | Number of concurrent builds | 10 - 30 |",
+      "proved": "the default pool allows 10 to 30 concurrent builds globally as a project quota"
+    },
+    {
+      "url": "https://cloud.google.com/build/docs/running-builds/submit-build-via-cli-api",
+      "date": "2026-11-19",
+      "capture": "sha256:51e73c4c9532c5b9fe4483a006fce83cc6ef28e5d254442b5baf8f577379ba25",
+      "quote": "Google Cloud CLI and the Cloud Build API.",
+      "proved": "builds start from the gcloud CLI and the Cloud Build API"
+    },
+    {
+      "url": "https://docs.cloud.google.com/free/docs/free-cloud-features",
+      "date": "2026-11-19",
+      "capture": "sha256:fb586488a217a0ff0238444a87a475f4707979c7264530c727094822a4e15d70",
+      "quote": "During the sign up, you must provide a credit card or other payment method that is valid for the period of the Free Trial.",
+      "proved": "the sign-up that creates a billing account asks for a credit card or other payment method"
+    },
+    {
+      "url": "https://docs.cloud.google.com/free/docs/free-cloud-features",
+      "date": "2026-11-19",
+      "capture": "sha256:fb586488a217a0ff0238444a87a475f4707979c7264530c727094822a4e15d70",
+      "quote": "A Google Cloud billing account is required to access the Google Cloud Free Tier.",
+      "proved": "the Free Tier, which lists the Cloud Build minutes, is reached only through a billing account"
+    }
+  ],
+  "notes": "A managed, Google-run build service where each build spends minutes from a monthly allowance held by the billing account. Retention of build logs and artifacts and the exact standard egress rate are unverified: no first-party page read states them. Private pools and the local builder are separate offers outside this free allowance and are not documented here.",
+  "history": []
+}

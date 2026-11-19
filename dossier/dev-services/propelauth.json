@@ -1,0 +1,141 @@
+{
+  "topic": "dev-services",
+  "slug": "propelauth",
+  "provider": "PropelAuth",
+  "tier": "Free",
+  "url": "https://www.propelauth.com/pricing",
+  "category": "hosted B2B customer identity and authentication (users, organizations, roles, sign-in and sign-up hosted pages)",
+  "free_tier": {
+    "stated": "Free: $0 per month, includes 10,000 monthly active users, unlimited organizations, unlimited waitlist users, custom domain, 2FA and RBAC, customizable UIs, hosted org management UIs, passwords and passwordless magic links, SSO/social login, CAPTCHA and attack protection; email support; 30-day audit log retention",
+    "unit": "users",
+    "metered_on": "identity-count",
+    "source_url": "https://www.propelauth.com/pricing",
+    "read_on": "2026-11-19",
+    "notes": "A monthly active user is counted only with login activity during the month. Waitlist users are not counted until invited and signed up. Transactional emails are capped at 10,000 on Free. Enterprise SSO, SCIM, API keys/M2M and MCP authentication are not on Free (Growth and up). Above 10,000 active users on Free the vendor emails the owner to upgrade and does not block logins."
+  },
+  "per_object_cap": {
+    "stated": "unverified: no per-user profile or per-object size cap is stated on the pricing, API or signup pages read",
+    "bytes": null
+  },
+  "retention": {
+    "stated": "Audit Logs have 30 Day Retention on Free (60 days on Growth, 90 days on Growth Plus)",
+    "days": 30,
+    "source_url": "https://www.propelauth.com/pricing",
+    "notes": "No retention period for user records or session lifetime is stated on the pages read; custom session duration is available on all plans."
+  },
+  "egress": {
+    "terms": "not applicable: a hosted authentication API; no traffic allowance or egress term is published on the pricing page",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.propelauth.com/pricing"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "A Backend REST API to manage users, organizations and API keys, called with an API key as an Authorization bearer token. Each environment (test, staging, production) has its own API key and its own Auth URL; the test URL is generated automatically (for example https://1581439057.propelauthtest.com) and staging and production use a custom domain such as https://auth.acme.com. Frontend SDKs and hosted sign-up, login and org-management pages are provided. User data export is available on request.",
+  "endpoint": "https://<your-auth-url>/api/backend/v1",
+  "tooling": "PropelAuth frontend and backend SDKs, hosted sign-up and login pages, a Postman collection, or any HTTP client against the Backend API with an API key bearer token.",
+  "chaining": "Login and multi-tenant organization store for a web app; a custom domain pairs with a name from domains-dns, and SAML or SCIM directory sync requires an upgrade to Growth or Growth Plus.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "10,000 monthly active users on Free",
+      "source": "https://www.propelauth.com/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "10,000 transactional emails on Free",
+      "source": "https://www.propelauth.com/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "1 role mapping on Free (3 on Growth, Unlimited on Growth Plus)",
+      "source": "https://www.propelauth.com/pricing"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "Audit Logs kept 30 days on Free",
+      "source": "https://www.propelauth.com/pricing"
+    }
+  ],
+  "limits_note": "Unknown number of API rate limits on Free: no numeric request-per-minute quota is published on the pages read.",
+  "binding": "volume-quota",
+  "binding_note": "The 10,000 monthly active user count is the first hard ceiling reached; exceeding it does not block login but triggers an upgrade request, and enterprise SSO is unavailable at this tier.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The account sign-up page (auth.propelauth.com/en/signup) offers Sign up with Google, Sign up with GitHub, Sign up with Magic Link, Sign up with SSO, or Email and Password fields with a Sign up with email button; no credit card field is shown and the pricing page states Free at $0 per month. Whether a later dashboard step asks for a phone number or card is unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "No numeric API rate limit, throttle or ban behavior is stated on the pricing or API getting-started pages read; the vendor states it will email the owner above 10,000 active users on Free and will not prevent users from logging in.",
+  "confidence": "documented",
+  "confidence_note": "Quota, retention and plan features are quoted from the first-party pricing page; identity gate from the first-party signup page and API access from the first-party API getting-started page. No account was opened, so signup fields past the first step are unverified and the rung stays documented.",
+  "evidence": [
+    {
+      "url": "https://www.propelauth.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:4b25dc3da3c9f32f64da3d1a45937ee1222d1b78a28e595c84fd5017f185f8ba",
+      "quote": "### Free - $0/month",
+      "proved": "the Free plan costs $0 per month"
+    },
+    {
+      "url": "https://www.propelauth.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:4b25dc3da3c9f32f64da3d1a45937ee1222d1b78a28e595c84fd5017f185f8ba",
+      "quote": "- Includes 10,000 MAUs",
+      "proved": "the Free plan includes 10,000 monthly active users"
+    },
+    {
+      "url": "https://www.propelauth.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:4b25dc3da3c9f32f64da3d1a45937ee1222d1b78a28e595c84fd5017f185f8ba",
+      "quote": "| Additional monthly active users | No | $0.05 per user | Volume discounts |",
+      "proved": "Free has no additional-user charge; Growth charges $0.05 per extra user"
+    },
+    {
+      "url": "https://www.propelauth.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:4b25dc3da3c9f32f64da3d1a45937ee1222d1b78a28e595c84fd5017f185f8ba",
+      "quote": "| Audit Logs | 30 Day Retention | 60 Day Retention | 90 Day Retention |",
+      "proved": "audit logs are retained 30 days on Free, 60 on Growth and 90 on Growth Plus"
+    },
+    {
+      "url": "https://www.propelauth.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:4b25dc3da3c9f32f64da3d1a45937ee1222d1b78a28e595c84fd5017f185f8ba",
+      "quote": "Congrats! We'll email you to ask you to upgrade. We will not prevent your users from logging in.",
+      "proved": "exceeding 10,000 active users on Free prompts an upgrade email without blocking login"
+    },
+    {
+      "url": "https://www.propelauth.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:4b25dc3da3c9f32f64da3d1a45937ee1222d1b78a28e595c84fd5017f185f8ba",
+      "quote": "### Growth - $150/month",
+      "proved": "the first paid plan, Growth, is $150 per month"
+    },
+    {
+      "url": "https://auth.propelauth.com/en/signup",
+      "date": "2026-11-19",
+      "capture": "sha256:314e1880f3227ccae6ac42372d00a3c0351137fca4289af8e05db3ed9f1e9a9f",
+      "quote": "Sign up with Magic Link",
+      "proved": "the sign-up page offers a passwordless magic-link registration option"
+    },
+    {
+      "url": "https://auth.propelauth.com/en/signup",
+      "date": "2026-11-19",
+      "capture": "sha256:314e1880f3227ccae6ac42372d00a3c0351137fca4289af8e05db3ed9f1e9a9f",
+      "quote": "Sign up with email",
+      "proved": "the sign-up page offers an email and password registration option"
+    },
+    {
+      "url": "https://docs.propelauth.com/reference/api/getting-started",
+      "date": "2026-11-19",
+      "capture": "sha256:b4b2f07d71f26d9bf961e90318ec50528d977ef94cd882d3f18546585a22dccc",
+      "quote": "The backend API requires an Authorization header with your API key set as a bearer token.",
+      "proved": "Backend API authentication uses an API key bearer token"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T00:28:25.558Z",
+  "notes": "PropelAuth also sells a self-hosted Bring-Your-Own-Auth option that adds features to an existing stack; the hosted Cloud Free plan is the offer recorded here, and the self-hosted option is not the answer while the hosted tier exists."
+}
