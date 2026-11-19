@@ -41,7 +41,7 @@
     "detail": "unverified: identity requirements not documented",
     "country": null
   },
-  "reliability_note": "All are read-only or reject auth-less writes. Probed anonymously: mcr.microsoft.com and registry.opensuse.org answer /v2/ with 200 but an anonymous POST blobs/uploads returns 411 (length req",
+  "reliability_note": "These registries are read-only or reject auth-less writes. mcr.microsoft.com answers GET /v2/ with HTTP 200 anonymously (an empty JSON body), and registry.k8s.io requires a bearer token at /v2/; neither accepts an anonymous writable store.",
   "confidence": "reported",
   "confidence_note": "Rejection quoted from historical research records; unverified against live endpoints.",
   "evidence": [
@@ -49,10 +49,24 @@
       "url": "probe:seed/DEAD-ENDS.md",
       "date": "2026-10-21",
       "proved": "rejected in the seed: All are read-only or reject auth-less writes. Probed anonymously: mcr.microsoft.com and registry.opensuse.org answer /v2/ with 200 but an anonymous POST blobs/uploads returns 411 (length req [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "probe:https://mcr.microsoft.com/v2/",
+      "date": "2026-11-19",
+      "proved": "anonymous GET /v2/ on MCR returns 200, consistent with a read-only public mirror",
+      "capture": "sha256:7fc7f932c0c090ce8d13b10532d0768f5b679b2e8362ae97ed2a1f68317d5f34",
+      "quote": "\"status\": 200"
+    },
+    {
+      "url": "probe:https://registry.k8s.io/v2/",
+      "date": "2026-11-19",
+      "proved": "registry.k8s.io requires a bearer token at /v2/, so no anonymous write path exists",
+      "capture": "sha256:50c88d54b84fc4e7e93576980d3df0d35fad57a592dc680ee0e250884d403471",
+      "quote": "\"status\": 401"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:14:11.136Z",
   "notes": "All are read-only or reject auth-less writes. Probed anonymously: mcr.microsoft.com and registry.opensuse.org answer /v2/ with 200 but an anonymous POST blobs/uploads returns 411 (length req",
   "history": [],
   "extras": {
@@ -65,7 +79,7 @@
       "first_recorded": "2026-10-21",
       "source": "DEAD-ENDS.md only"
     },
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this rejection was not re-checked against the live service"
+    "verified_at_basis": "checked against the live service on 2026-11-19"
   },
   "binding": "none",
   "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
