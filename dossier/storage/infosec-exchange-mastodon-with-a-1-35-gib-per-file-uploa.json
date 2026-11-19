@@ -76,10 +76,24 @@
       "url": "https://raw.githubusercontent.com/mastodon/mastodon/main/config/initializers/rack_attack.rb",
       "date": "2026-10-21",
       "proved": "`throttle('throttle_api_media', limit: 30, period: 30.minutes) { |req| req.authenticated_user_id if req.post? && req.path.match?(%r{\\A/api/v\\d+/media\\z}i) }`"
+    },
+    {
+      "url": "probe:https://infosec.exchange/api/v2/instance",
+      "date": "2026-11-19",
+      "proved": "the live instance API still reports a 1419430400-byte image size limit",
+      "capture": "sha256:cded30929a4647c643a24cbdb9204a0a771a9dde92085ce908676778efb184b0",
+      "quote": "\"image_size_limit\":1419430400"
+    },
+    {
+      "url": "probe:https://infosec.exchange/api/v2/instance",
+      "date": "2026-11-19",
+      "proved": "the live instance API reports that registration now requires approval, a reason and a minimum age of 18",
+      "capture": "sha256:cded30929a4647c643a24cbdb9204a0a771a9dde92085ce908676778efb184b0",
+      "quote": "\"approval_required\":true,\"reason_required\":true,\"message\":null,\"min_age\":18"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:14:05.299Z",
   "notes": "Per-account storage is UNLIMITED (stock Mastodon has no per-user media quota at all. Media_attachment has only a per-file size validator, no account-level counter). Per FILE: image_size_limit = video_size_limit = 1419430400 bytes = 1.32 GiB. That is a 84x relaxation of Mastodon's compiled defaults (IMAGE_LIMIT 16 MB / VIDEO_LIMIT 99 MB).",
   "history": [],
   "extras": {
@@ -105,7 +119,7 @@
     "target_document": "docs/storage/free/social-and-fediverse.md",
     "document_section": "Fediverse instances",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "checked against the live service on 2026-11-19",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 4,
     "evidence_carrying_a_source_date": 0,
