@@ -65,22 +65,22 @@ waiting to happen, and `render.py --check` refuses one.
 <!-- generated:start kind=topics link=1 -->
 | topic | records | qualifies | trial or paid | fails | dead | measured or documented | documents |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| [`ci-cd-runners`](docs/ci-cd-runners/README.md) | 34 | 23 | 7 | 1 | 3 | 34 | 7 |
+| [`ci-cd-runners`](docs/ci-cd-runners/README.md) | 44 | 28 | 9 | 1 | 6 | 44 | 7 |
 | [`coding-subs`](docs/coding-subs/README.md) | 74 | 27 | 43 | 2 | 2 | 74 | 8 |
 | [`compute`](docs/compute/README.md) | 1411 | 499 | 653 | 175 | 84 | 1211 | 63 |
 | [`crawler-scraper`](docs/crawler-scraper/README.md) | 61 | 40 | 10 | 3 | 8 | 57 | 15 |
 | [`data-apis`](docs/data-apis/README.md) | 155 | 127 | 8 | 12 | 8 | 153 | 1 |
-| [`databases-kv`](docs/databases-kv/README.md) | 23 | 18 | 2 | 0 | 3 | 23 | 10 |
+| [`databases-kv`](docs/databases-kv/README.md) | 42 | 27 | 11 | 1 | 3 | 42 | 10 |
 | [`debrid`](docs/debrid/README.md) | 526 | 316 | 108 | 50 | 52 | 467 | 19 |
-| [`dev-services`](docs/dev-services/README.md) | 81 | 74 | 4 | 2 | 1 | 81 | 1 |
-| [`domains-dns`](docs/domains-dns/README.md) | 33 | 26 | 5 | 1 | 1 | 29 | 6 |
+| [`dev-services`](docs/dev-services/README.md) | 98 | 84 | 10 | 2 | 2 | 98 | 1 |
+| [`domains-dns`](docs/domains-dns/README.md) | 43 | 27 | 14 | 1 | 1 | 39 | 6 |
 | [`egress`](docs/egress/README.md) | 458 | 62 | 168 | 204 | 24 | 312 | 20 |
-| [`email`](docs/email/README.md) | 38 | 25 | 10 | 3 | 0 | 37 | 5 |
+| [`email`](docs/email/README.md) | 47 | 31 | 12 | 3 | 1 | 46 | 5 |
 | [`inference`](docs/inference/README.md) | 365 | 104 | 230 | 18 | 13 | 358 | 11 |
 | [`ip-proxy`](docs/ip-proxy/README.md) | 87 | 23 | 49 | 9 | 6 | 80 | 10 |
 | [`netdisk-pan`](docs/netdisk-pan/README.md) | 104 | 52 | 4 | 34 | 14 | 59 | 22 |
 | [`storage`](docs/storage/README.md) | 1720 | 382 | 138 | 1092 | 108 | 197 | 29 |
-| **all** | 5170 | 1798 | 1439 | 1606 | 327 | 3172 | 227 |
+| **all** | 5235 | 1829 | 1467 | 1607 | 332 | 3237 | 227 |
 <!-- generated:end -->
 
 ---
