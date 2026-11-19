@@ -41,7 +41,7 @@
   "limits": [
     {
       "kind": "per-ip-shaping",
-      "value": "sustained 30 Mbps triggers a /24 ban",
+      "value": "sustained bandwidth at or above 30 Mbps gets the /24 address banned",
       "source": "https://www.freefrp.com/"
     },
     {
@@ -52,7 +52,7 @@
   ],
   "limits_note": "",
   "binding": "per-ip-shaping",
-  "binding_note": "No byte cap exists, so the 30 Mbps sustained threshold is the first thing that fails: it is a rate, and 1 TiB/month needs only 3.24 Mbps, so the quota test can pass while a burst still gets the address banned.",
+  "binding_note": "No byte cap is published. The operator warns that sustained bandwidth at or above 30 Mbps gets the /24 address banned, so that rate is the first published constraint; a short burst can stay under it even when a monthly byte total would be large.",
   "identity_cost": {
     "kind": "anonymous",
     "detail": "No account: the page publishes the server address, port, version and a shared auth token.",
@@ -66,10 +66,31 @@
       "url": "https://www.freefrp.com/",
       "date": "2026-10-23",
       "proved": "TCP/UDP/HTTP/HTTPS on ports 10000-60000, shared token, 30 Mbps sustained triggers a ban, IP may change without notice"
+    },
+    {
+      "url": "https://www.freefrp.com/",
+      "date": "2026-11-19",
+      "proved": "the operator warns that sustained bandwidth at or above 30 Mbps gets the /24 banned",
+      "capture": "sha256:a487a2a7c4ca788d49d63ecb9578c26cc4fc7bee821f5a19518fcf9053953ee0",
+      "quote": "警告: 恶意长时间带宽占用>=30Mbps将封禁其IP/24地址"
+    },
+    {
+      "url": "https://www.freefrp.com/",
+      "date": "2026-11-19",
+      "proved": "the binding constraint is a published 30 Mbps sustained rate that bans the /24",
+      "capture": "sha256:a487a2a7c4ca788d49d63ecb9578c26cc4fc7bee821f5a19518fcf9053953ee0",
+      "quote": "警告: 恶意长时间带宽占用>=30Mbps将封禁其IP/24地址"
+    },
+    {
+      "url": "https://www.freefrp.com/",
+      "date": "2026-11-19",
+      "proved": "the binding is a 30 Mbps sustained rate on the vendor's own page",
+      "capture": "sha256:a487a2a7c4ca788d49d63ecb9578c26cc4fc7bee821f5a19518fcf9053953ee0",
+      "quote": "警告: 恶意长时间带宽占用>=30Mbps将封禁其IP/24地址"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-23T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:10:53.040Z",
   "price_per_tb_month": "USD 0",
   "history": [],
   "notes": "The most permissive free endpoint in the sweep: no account, no quota, UDP in the port range. Unlimited here means the operator publishes no byte cap, not that it promises unmetered capacity. It is a single volunteer server with an explicit no-SLA warning, so the binding is reliability, not volume. The /24 ban means a shared address takes neighbours with it.",
