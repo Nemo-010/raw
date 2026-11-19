@@ -58,9 +58,9 @@
     "detail": "Registration is by e-mail address and a password of 8 to 22 characters with letters and numbers, plus a slider captcha. The vendor states 'without submitting complicated qualifications'; no ID document or card is asked before the trial. Payment methods for paid plans are unverified.",
     "country": null
   },
-  "reliability_note": "The vendor states 99.9% success and under 0.5 s response on the home page, unverified here. A static ISP product is sold in two kinds named 'Native' and 'Broadcast'; the pages do not say what the registration class of either kind is. The trial is claimed through customer service, so its availability and any expiry are unverified.",
+  "reliability_note": "The vendor states 99.9% success and under 0.5 s response on the home page, unverified here. unverified: behind a sign-up. No exit address was observed: both documented proxy routes need a dashboard account (account-key host, port, username and password, or a dashboard API link gated by an IP whitelist), and the free trial is requested through customer service, so no keyless endpoint was available to probe. A static ISP product is sold in two kinds named 'Native' and 'Broadcast'; the pages do not say what the registration class of either kind is. The trial is claimed through customer service, so its availability and any expiry are unverified.",
   "confidence": "documented",
-  "confidence_note": "Trial grant is quoted from the vendor's blog post of 2025-10-20 and the register page description; prices from the pricing pages read 2026-11-04. Whether the trial is still granted today, and its duration, were not read (behind a sign-up and customer service).",
+  "confidence_note": "Trial grant is quoted from the vendor's blog post of 2025-10-20 and the register page description; prices from the pricing pages read 2026-11-04. Whether the trial is still granted today, and its duration, were not read (behind a sign-up and customer service). The sign-up and proxy-route pages were re-read 2026-11-19: registration is by email and password, and both proxy modes require a dashboard account, so no exit address was measured and no probe record exists. No exit observation can be cited, so the earlier inference stands.",
   "evidence": [
     {
       "url": "https://novproxy.com/blog/free/",
@@ -131,10 +131,38 @@
       "capture": "sha256:49e3217b084c6cf976f259933dbcb7523a56a90da6575ac4614aef269afcd7c5",
       "quote": "We've upgraded to slider captcha for better security. Refresh the page before logging in or signing up.",
       "proved": "Sign-up has a slider captcha; password 8 to 22 characters."
+    },
+    {
+      "url": "https://novproxy.com/",
+      "date": "2026-11-19",
+      "proved": "The vendor's own integration sample authenticates to the proxy with a username and password, so the route is not keyless",
+      "capture": "sha256:32d90b46e256b0e3b11e00c4c04933d2373206e9967b6c57f9846ce00f0fc1de",
+      "quote": "CURLOPT_PROXYUSERPWD, \"username:password\"; // sub-account and password"
+    },
+    {
+      "url": "https://novproxy.com/register",
+      "date": "2026-11-19",
+      "proved": "Registration is gated by an email address and a password, so the proxy needs an account and no keyless exit probe could run",
+      "capture": "sha256:5ef04aeb66b97d4414faa864c522b96076b47157c3dbfb75779aace4d79ac7bf",
+      "quote": "The password must be 8 to 22 characters long."
+    },
+    {
+      "url": "https://novproxy.com/register",
+      "date": "2026-11-19",
+      "proved": "The sign-up gate is unchanged and still asks for an email and password",
+      "capture": "sha256:5ef04aeb66b97d4414faa864c522b96076b47157c3dbfb75779aace4d79ac7bf",
+      "quote": "The password must be 8 to 22 characters long."
+    },
+    {
+      "url": "https://novproxy.com/",
+      "date": "2026-11-19",
+      "proved": "The vendor's own integration sample still authenticates to the proxy with a username and password",
+      "capture": "sha256:32d90b46e256b0e3b11e00c4c04933d2373206e9967b6c57f9846ce00f0fc1de",
+      "quote": "CURLOPT_PROXYUSERPWD, \"username:password\"; // sub-account and password"
     }
   ],
   "verdict": "trial-only",
-  "verified_at": "2026-11-04T01:07:27.091Z",
+  "verified_at": "2026-11-19T21:12:19.985Z",
   "price_per_tb_month": "not a per-TB-month product: priced per GB, 0.47 to 1.10 USD per GB by tier.",
   "history": [],
   "notes": "Sells dynamic residential, static ISP, unlimited (by bandwidth or by port) and short-term residential IPs. The static ISP list separates 'Native' and 'Broadcast' addresses at different prices (for example Germany native 4.2 USD, broadcast 3.2 USD); the vendor does not define the two terms on the pages read.",
