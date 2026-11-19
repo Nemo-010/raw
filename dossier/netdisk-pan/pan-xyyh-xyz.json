@@ -44,7 +44,7 @@
     "detail": "no registration; /api/me returns a guest session",
     "country": null
   },
-  "reliability_note": "The two fresh probes returned different root listing hashes minutes apart, so the listing is flapping; one of the two reproduced the recorded hash.",
+  "reliability_note": "The host is flapping: a fresh probe answered the mount-list request and a second probe minutes later timed out. The record stays dead.",
   "confidence": "measured",
   "evidence": [
     {
@@ -126,10 +126,38 @@
       "proved": "the mount-list request failed in the second fresh probe, consistent with a dead service",
       "capture": "sha256:41f126a7aea647e3a2dc3ea9ac787417cf8c5ed6adff8c4530826aa82ce27c3c",
       "quote": "\"alive\": false"
+    },
+    {
+      "url": "probe:https://pan.xyyh.xyz",
+      "date": "2026-11-19",
+      "proved": "the second probe found the host dead",
+      "capture": "sha256:41f126a7aea647e3a2dc3ea9ac787417cf8c5ed6adff8c4530826aa82ce27c3c",
+      "quote": "\"alive\": false"
+    },
+    {
+      "url": "probe:https://pan.xyyh.xyz",
+      "date": "2026-11-19",
+      "proved": "the first probe answered the mount-list request and returned an anonymous root listing",
+      "capture": "sha256:c432eaff085f76445aa0926ff4beb75c793250032c67b1a2c990c90b67d20d60",
+      "quote": "\"listing_sha256\": \"b78ce46f\""
+    },
+    {
+      "url": "probe:https://pan.xyyh.xyz",
+      "date": "2026-11-19",
+      "proved": "the second probe's mount-list request timed out",
+      "capture": "sha256:41f126a7aea647e3a2dc3ea9ac787417cf8c5ed6adff8c4530826aa82ce27c3c",
+      "quote": "\"error\": \"URLError: <urlopen error _ssl.c:1012: The handshake operation timed out>\""
+    },
+    {
+      "url": "probe:https://pan.xyyh.xyz",
+      "date": "2026-11-19",
+      "proved": "the later probe found the host dead after the earlier one answered the mount-list request",
+      "capture": "sha256:41f126a7aea647e3a2dc3ea9ac787417cf8c5ed6adff8c4530826aa82ce27c3c",
+      "quote": "\"alive\": false"
     }
   ],
   "verdict": "dead",
-  "verified_at": "2026-11-19T21:12:07.761Z",
+  "verified_at": "2026-11-19T21:38:29.549Z",
   "binding": "write-gated",
   "notes": "Answered as an AList API on one run and not on another, and listed 2 root entries once. Its zero-byte oracle returned neither of the two defined messages.",
   "history": [],
