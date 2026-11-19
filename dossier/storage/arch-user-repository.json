@@ -13,27 +13,28 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
-    "bytes": null,
+    "stated": "max-blob-size = 256000 bytes; no binaries",
+    "bytes": 256000,
     "source_url": "https://raw.githubusercontent.com/archlinux/aurweb/master/conf/config.defaults",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "stated-absent: the aurweb config states no retention period for stored blobs",
     "days": null,
     "source_url": "https://raw.githubusercontent.com/archlinux/aurweb/master/conf/config.defaults",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "stated-absent: the config states a request limit of 4000 over a window of 86400 seconds but no byte egress allowance",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "git",
+    "ssh"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "git clone over HTTPS for anonymous users and SSH for authenticated users; PKGBUILD and small aux files only",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "stated-absent: the config exposes git clone URIs for PKGBUILD and aux files with a 256000-byte blob cap and states no way to chain it as a byte store",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -54,10 +55,66 @@
       "url": "https://wiki.archlinux.org/title/AUR_submission_guidelines",
       "date": "2026-10-21",
       "proved": "cited as the basis of the rejection: Git only, PKGBUILDs and small aux files; hard 256,000-byte (250 KiB) per-blob limit enforced in aurweb's git hook. No binaries at all. [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/archlinux/aurweb/master/conf/config.defaults",
+      "date": "2026-11-19",
+      "proved": "the first-party aurweb config states an anonymous HTTPS git clone URI",
+      "capture": "sha256:e590b767a9ab2cd0acbfa1ef4fab8b5543e97af91c49ef6c0827699453f30fae",
+      "quote": "git_clone_uri_anon = https://aur.archlinux.org/%s.git"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/archlinux/aurweb/master/conf/config.defaults",
+      "date": "2026-11-19",
+      "proved": "the config states an SSH git clone URI for privileged users",
+      "capture": "sha256:e590b767a9ab2cd0acbfa1ef4fab8b5543e97af91c49ef6c0827699453f30fae",
+      "quote": "git_clone_uri_priv = ssh://aur@aur.archlinux.org/%s.git"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/archlinux/aurweb/master/conf/config.defaults",
+      "date": "2026-11-19",
+      "proved": "the update section sets a 256000-byte maximum blob size",
+      "capture": "sha256:e590b767a9ab2cd0acbfa1ef4fab8b5543e97af91c49ef6c0827699453f30fae",
+      "quote": "max-blob-size = 256000"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/archlinux/aurweb/master/conf/config.defaults",
+      "date": "2026-11-19",
+      "proved": "the numeric per-blob cap is 256000 bytes",
+      "capture": "sha256:e590b767a9ab2cd0acbfa1ef4fab8b5543e97af91c49ef6c0827699453f30fae",
+      "quote": "max-blob-size = 256000"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/archlinux/aurweb/master/conf/config.defaults",
+      "date": "2026-11-19",
+      "proved": "the config states a request-rate limit, not a byte-retention period",
+      "capture": "sha256:e590b767a9ab2cd0acbfa1ef4fab8b5543e97af91c49ef6c0827699453f30fae",
+      "quote": "request_limit = 4000"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/archlinux/aurweb/master/conf/config.defaults",
+      "date": "2026-11-19",
+      "proved": "the config constrains blobs to a small cap and states no byte-store chaining",
+      "capture": "sha256:e590b767a9ab2cd0acbfa1ef4fab8b5543e97af91c49ef6c0827699453f30fae",
+      "quote": "max-blob-size = 256000"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/archlinux/aurweb/master/conf/config.defaults",
+      "date": "2026-11-19",
+      "proved": "the limit is a count of requests, not a byte egress allowance",
+      "capture": "sha256:e590b767a9ab2cd0acbfa1ef4fab8b5543e97af91c49ef6c0827699453f30fae",
+      "quote": "request_limit = 4000"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/archlinux/aurweb/master/conf/config.defaults",
+      "date": "2026-11-19",
+      "proved": "the first-party aurweb config still states git clone access, a 256000-byte blob cap and a request limit, with no retention or byte egress term",
+      "capture": "sha256:e590b767a9ab2cd0acbfa1ef4fab8b5543e97af91c49ef6c0827699453f30fae",
+      "quote": "git_clone_uri_anon = https://aur.archlinux.org/%s.git"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:55.371Z",
   "notes": "Git only, PKGBUILDs and small aux files; hard 256,000-byte (250 KiB) per-blob limit enforced in aurweb's git hook. No binaries at all.",
   "history": [],
   "extras": {
