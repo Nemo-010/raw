@@ -1,0 +1,157 @@
+{
+  "topic": "dev-services",
+  "slug": "zitadel-cloud",
+  "provider": "ZITADEL Cloud",
+  "tier": "Free",
+  "url": "https://zitadel.com/pricing",
+  "category": "hosted identity and access management: OIDC and OAuth 2.0 login, hosted login page, organizations, service users (managed ZITADEL Cloud)",
+  "free_tier": {
+    "stated": "Free: USD 0 per month, all security features, data residency in the EU, US, Switzerland and Australia, unlimited stored users, unlimited organizations, 100 daily active users, service users and agents, 3 identity providers and custom workflows",
+    "unit": "users",
+    "metered_on": "identity-count",
+    "source_url": "https://zitadel.com/pricing",
+    "read_on": "2026-11-19",
+    "notes": "The counted unit is the daily active user (DAU), not the monthly active user. A unique user counts once per day for a login, a token refresh or a machine-to-machine service-user authentication; the monthly total is the sum of each day's count. The unit vocabulary has no term for daily active users; users is the nearest term and the true unit is named here. The pricing page does not state what happens when a Free instance exceeds 100 DAU."
+  },
+  "per_object_cap": {
+    "stated": "unverified: no per-object or user-profile size cap is stated on the pages read",
+    "bytes": null,
+    "source_url": "https://zitadel.com/pricing/detail"
+  },
+  "retention": {
+    "stated": "On the Free plan the Audit Trail History is kept 1 day and logs are kept 30 minutes (2 weeks and 1 day respectively on Pro)",
+    "days": 1,
+    "source_url": "https://zitadel.com/pricing/detail",
+    "notes": "The retention figures are for audit trail events and access and runtime logs, not for stored user records; no expiry for user records is stated on the pages read."
+  },
+  "egress": {
+    "terms": "not applicable: an authentication and identity API; no traffic allowance or egress term is published",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://zitadel.com/pricing"
+  },
+  "interface": [
+    "rest",
+    "browser"
+  ],
+  "interface_detail": "A Management API with 5,000 requests included on Free and 500,000 on Pro, served on the instance domain; applications integrate over OIDC with a PKCE login on the ZITADEL-hosted login page, and the docs publish an API reference. The login page is hosted, so a browser reaching it is required for the interactive sign-in flow.",
+  "endpoint": "https://{instance}.zitadel.cloud",
+  "tooling": "An OIDC client or OAuth 2.0 library against the hosted login page, the Management API for administration, and ZITADEL SDKs for the chosen framework.",
+  "chaining": "An OIDC identity provider in front of an app on free hosting; a generated instance domain is provided, and the Pro plan adds a custom domain. A separate offer of the same software that the reader installs and runs exists as ZITADEL Enterprise Self-Hosted, listed here last and not counted as a hosted tier.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "100 daily active users on Free (each unique user counted once per day)",
+      "source": "https://zitadel.com/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "5,000 Management API requests included on Free",
+      "source": "https://zitadel.com/pricing/detail"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "Audit Trail History 1 day and logs 30 minutes on Free",
+      "source": "https://zitadel.com/pricing/detail"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "3 active external identity providers, 1 instance and 1 administrator on Free",
+      "source": "https://zitadel.com/pricing/detail"
+    }
+  ],
+  "limits_note": "The dashboard-seat and identity-provider counts have no dedicated vocabulary kind and are recorded as volume-quota rows.",
+  "binding": "volume-quota",
+  "binding_note": "The 100 daily active users per day is the smallest ceiling: a user who signs in on twenty days spends twenty units, so a small returning user base passes it before the 5,000 Management API requests are used.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The register page states 'No credit card needed' and 'No commitment'. The quickstart says a new account verifies its email and sets up a Portal Team; an instance then needs a name, a region and an Instance Administrator, and the quickstart recommends passkeys for the account. Whether a phone number is asked for at signup is unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "The pricing page gives no uptime guarantee to the Free plan; guarantees start at Pro (99.5 percent, add-on 99.95 percent). Login-policy misconfiguration can lock out an instance, and the quickstart advises a backup personal access token and a second administrator.",
+  "confidence": "documented",
+  "confidence_note": "Every limit is quoted from first-party pricing, pricing-detail, help-centre and quickstart pages. No account was opened and no probe was run; the Management API is on a per-instance domain. A login and an API call on a Free instance would move the token request toward measured.",
+  "evidence": [
+    {
+      "url": "https://zitadel.com/pricing",
+      "date": "2026-11-19",
+      "proved": "the Free plan is USD 0 a month and includes unlimited stored users, unlimited organizations and 100 daily active users",
+      "capture": "sha256:75a107da5af05ab295e0e1894de62ea1061d867b42daab3be223c5e63a21f394",
+      "quote": "US$0/Month\n\nAll security features\n\nData Residency: EU, US, Switzerland, Australia\n\nStore unlimited Users\n\nUnlimited Organizations\n\n100 Daily Active Users"
+    },
+    {
+      "url": "https://zitadel.com/pricing",
+      "date": "2026-11-19",
+      "proved": "the Free plan also includes service users, 3 identity providers and custom workflows",
+      "capture": "sha256:75a107da5af05ab295e0e1894de62ea1061d867b42daab3be223c5e63a21f394",
+      "quote": "Service Users / Agents\n\n3 identity providers\n\nCustom workflows"
+    },
+    {
+      "url": "https://zitadel.com/pricing/detail",
+      "date": "2026-11-19",
+      "proved": "Free has 100 DAU, 3 external identity providers, 5,000 Management API requests and 1 administrator",
+      "capture": "sha256:1d32d9b68dae20d4b17c2cd921dda6d79daa225fdbe1ff878c977470ff8e4435",
+      "quote": "| Daily Active Users | 100 | 25'000 included |  |  |\n| Active External Identity Providers | 3 | 3 included | Volume Price | Volume Price |\n| Management API requests | 5,000 | 500'000 included |  |  |\n| Administrators | 1 | 3 included |  |  |"
+    },
+    {
+      "url": "https://zitadel.com/pricing/detail",
+      "date": "2026-11-19",
+      "proved": "Free keeps audit trail history 1 day and logs 30 minutes",
+      "capture": "sha256:1d32d9b68dae20d4b17c2cd921dda6d79daa225fdbe1ff878c977470ff8e4435",
+      "quote": "| Audit Trail History | 1 day | 2 weeks |  |  |\n| Logs | 30 min | 1 day |  |  |"
+    },
+    {
+      "url": "https://zitadel.com/pricing/detail",
+      "date": "2026-11-19",
+      "proved": "Free has 1 instance",
+      "capture": "sha256:1d32d9b68dae20d4b17c2cd921dda6d79daa225fdbe1ff878c977470ff8e4435",
+      "quote": "| Instances | 1 |  |  |  |"
+    },
+    {
+      "url": "https://help.zitadel.com/how-is-daily-active-users-calculated",
+      "date": "2026-11-19",
+      "proved": "a DAU is a unique user counted once per day for a login, token refresh or service-user authentication",
+      "capture": "sha256:0ec745d0e288bb51f5c1a2dd8ba071a0e208a3a75067e757d0c1992a9f5127c3",
+      "quote": "A user is considered \"active\" on a specific day if they perform an **authentication event**. Specifically:\n\n- **Logging in** (using a local account or an external provider like Google or Microsoft).\n- **Refreshing a token** (when an application keeps a user logged in).\n- **Service User authentication** (Machine-to-Machine API access)."
+    },
+    {
+      "url": "https://help.zitadel.com/how-is-daily-active-users-calculated",
+      "date": "2026-11-19",
+      "proved": "each unique user counts once per day regardless of the number of logins or refreshes",
+      "capture": "sha256:0ec745d0e288bb51f5c1a2dd8ba071a0e208a3a75067e757d0c1992a9f5127c3",
+      "quote": "**Key Rule:** Each unique user is only counted **once per day**, no matter how many times they log in or refresh tokens within that 24-hour period."
+    },
+    {
+      "url": "https://help.zitadel.com/how-is-daily-active-users-calculated",
+      "date": "2026-11-19",
+      "proved": "the monthly bill is the sum of each day's DAU count, so a user signing in on twenty days is twenty units",
+      "capture": "sha256:0ec745d0e288bb51f5c1a2dd8ba071a0e208a3a75067e757d0c1992a9f5127c3",
+      "quote": "To calculate your monthly total, we **sum the DAU count of every single day** in that month."
+    },
+    {
+      "url": "https://zitadel.com/register",
+      "date": "2026-11-19",
+      "proved": "the register page states no credit card and no commitment are needed",
+      "capture": "sha256:c2a6414c20750bf53ca8e56d8b0bfd7e1647a58805286b53ed024a425d405e72",
+      "quote": "No credit card needed\n\nNo commitment"
+    },
+    {
+      "url": "https://zitadel.com/docs/guides/start/quickstart",
+      "date": "2026-11-19",
+      "proved": "signup verifies the email and sets up a Portal Team",
+      "capture": "sha256:2a7d525e9f3a05ddc5881b5f0ae53fc917da220dc5e5bba6a0ff1cf0232d8c55",
+      "quote": "2. **Onboarding**: Follow the prompts to verify your email and set up your Portal Team."
+    },
+    {
+      "url": "https://zitadel.com/docs/guides/start/quickstart",
+      "date": "2026-11-19",
+      "proved": "the quickstart recommends passkeys for the account",
+      "capture": "sha256:2a7d525e9f3a05ddc5881b5f0ae53fc917da220dc5e5bba6a0ff1cf0232d8c55",
+      "quote": "- Tip: We recommend using Passkeys for a secure, passwordless login experience."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T00:17:12.816Z",
+  "notes": "The DAU meter makes the 100-unit Free allowance much smaller than a 100-MAU allowance: a user who signs in on twenty days spends twenty units. Pro is USD 100 a month with 25,000 summed DAU included and a custom domain. A self-hosted Enterprise option exists but is not counted as a hosted offer."
+}
