@@ -1,0 +1,161 @@
+{
+  "topic": "domains-dns",
+  "slug": "oracle-cloud-dns",
+  "provider": "Oracle Cloud DNS",
+  "url": "https://www.oracle.com/cloud/networking/dns/",
+  "category": "managed authoritative DNS",
+  "tier": "OCI DNS (paid)",
+  "free_tier": {
+    "stated": "none: OCI DNS requires a paid OCI account, either as a pay-as-you-go or Universal Credits contract",
+    "unit": "none",
+    "source_url": "https://www.oracle.com/cloud/networking/dns/",
+    "read_on": "2026-11-19",
+    "metered_on": "none"
+  },
+  "per_object_cap": {
+    "stated": "zone file uploads are limited to 1 megabyte (MB) in size per zone file; a zone holds up to 25,000 records",
+    "bytes": null,
+    "source_url": "https://docs.oracle.com/en-us/iaas/Content/DNS/Concepts/dnszonemanagement.htm",
+    "notes": "a zone file over 1 MB must be split; records can be added in batches of 100 through the PatchDomainRecords API"
+  },
+  "retention": {
+    "stated": "a zone persists until the user deletes it; no inactivity deletion rule was stated on the pages read",
+    "days": null,
+    "source_url": "https://docs.oracle.com/en-us/iaas/Content/DNS/Concepts/dnszonemanagement.htm"
+  },
+  "egress": {
+    "terms": "DNS queries are metered and billed per 1,000,000 queries; the price-list unit price cell is blank on the first-party page, so no marginal price is recorded",
+    "metered": true,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.oracle.com/cloud/price-list/"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "oci",
+    "browser"
+  ],
+  "interface_detail": "the browser-based Console, a REST API, the OCI CLI and OCI SDKs; access is authenticated through OCI IAM, and zones are managed through the Console, CLI or API",
+  "tooling": "the OCI CLI (oci dns ...), OCI SDKs, BIND-compatible zone-file import and export, the OCI Terraform provider, and Kubernetes ExternalDNS",
+  "chaining": "managed authoritative DNS for a domain registered at an external registrar, with primary and secondary zones for redundancy and traffic steering by endpoint health, geography, ASN or source prefix; it integrates with Kubernetes ExternalDNS, but unlike the free managed DNS options in this topic it is a paid OCI service",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "1000 zones per account",
+      "source": "https://docs.oracle.com/en-us/iaas/Content/DNS/Concepts/dnszonemanagement.htm"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "25,000 records per zone; zone file uploads limited to 1 megabyte (MB) per zone file",
+      "source": "https://docs.oracle.com/en-us/iaas/Content/DNS/Concepts/dnszonemanagement.htm"
+    },
+    {
+      "kind": "write-gated",
+      "value": "public DNS zones are only supported in the OC1 commercial realm; a domain must be registered and delegated at an external registrar, as OCI isn't a registrar",
+      "source": "https://docs.oracle.com/en-us/iaas/Content/DNS/Concepts/dnszonemanagement.htm"
+    }
+  ],
+  "binding": "none",
+  "binding_note": "the service is paid-only with no free tier, so no published quota binds a free user; the paid-account and card requirement is the real gate, and the 1000-zone and 25,000-record caps are far above one user's needs",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "OCI DNS requires a paid OCI account on a pay-as-you-go or Universal Credits contract. The Oracle Cloud signup asks for a credit or debit card used for account setup and identity verification, and accepts credit cards and debit cards that function like credit cards, not debit cards with a PIN or virtual, single-use or prepaid cards. A domain registered and delegated at an external registrar is needed for a public zone since OCI isn't a registrar.",
+    "country": null
+  },
+  "reliability_note": "zone files over 1 MB must be split into batches of 100 records for upload; public DNS zones are only supported in the OC1 commercial realm, and Traffic Management is unavailable on private zones; no outage history was read",
+  "confidence": "documented",
+  "confidence_note": "the Oracle DNS product page, the OCI price list, the DNS overview, zone-management and getting-started docs, the DNS cost estimator and the Oracle Cloud free tier/signup page were captured and quoted. No marginal per-query price is published on the first-party pages read (the price-list unit price cell is blank), so none is recorded.",
+  "evidence": [
+    {
+      "url": "https://www.oracle.com/cloud/networking/dns/",
+      "date": "2026-11-19",
+      "capture": "sha256:b3c35873056d74febf17ca45a6a41d34061e48083ad10b23733bfd261e2a83c5",
+      "quote": "OCI DNS requires a paid OCI account, either as a pay-as-you-go or Universal Credits contract.",
+      "proved": "OCI DNS has no free tier and requires a paid account"
+    },
+    {
+      "url": "https://www.oracle.com/cloud/networking/dns/cost-estimator/",
+      "date": "2026-11-19",
+      "capture": "sha256:d992184a010aec7664e2ab85d74fd9164e3eff8f9afa1f726d0941e86d8995fa",
+      "quote": "OCI DNS requires a paid OCI account, either as a pay-as-you-go or Universal Credits contract.",
+      "proved": "the cost estimator page repeats the paid-account requirement"
+    },
+    {
+      "url": "https://www.oracle.com/cloud/price-list/",
+      "date": "2026-11-19",
+      "capture": "sha256:9ee6bbd8391217bd68bd8020e5248a709f6859645ae8245444048d101d89724e",
+      "quote": "| DNS |  | 1,000,000 queries |",
+      "proved": "DNS is billed per 1,000,000 queries; the unit price cell is blank, so no price or free allowance is stated"
+    },
+    {
+      "url": "https://docs.oracle.com/en-us/iaas/Content/DNS/Concepts/dnszonemanagement.htm",
+      "date": "2026-11-19",
+      "capture": "sha256:a5b155822b91f481f680c78cea839d9401e6119d2dd0dbc699ef3da23fecd35b",
+      "quote": "The OCI DNS service is limited to 1000 zones per account and 25,000 records per zone.",
+      "proved": "the zone and record quotas"
+    },
+    {
+      "url": "https://docs.oracle.com/en-us/iaas/Content/DNS/Concepts/dnszonemanagement.htm",
+      "date": "2026-11-19",
+      "capture": "sha256:a5b155822b91f481f680c78cea839d9401e6119d2dd0dbc699ef3da23fecd35b",
+      "quote": "Zone file uploads are limited to 1 megabyte (MB) in size per zone file.",
+      "proved": "the per-zone-file size cap"
+    },
+    {
+      "url": "https://docs.oracle.com/en-us/iaas/Content/DNS/Concepts/dnszonemanagement.htm",
+      "date": "2026-11-19",
+      "capture": "sha256:a5b155822b91f481f680c78cea839d9401e6119d2dd0dbc699ef3da23fecd35b",
+      "quote": "You can access Oracle Cloud Infrastructure (OCI) by using the [Console](https://docs.oracle.com/iaas/Content/GSG/Tasks/signingin_topic-Signing_In_for_the_First_Time.htm) (a browser-based interface), [REST API](https://docs.oracle.com/iaas/Content/API/Concepts/usingapi.htm), or [OCI CLI](https://docs.oracle.com/iaas/Content/API/Concepts/cliconcepts.htm).",
+      "proved": "the Console, REST API and OCI CLI access methods"
+    },
+    {
+      "url": "https://docs.oracle.com/en-us/iaas/Content/DNS/Concepts/dnszonemanagement.htm",
+      "date": "2026-11-19",
+      "capture": "sha256:a5b155822b91f481f680c78cea839d9401e6119d2dd0dbc699ef3da23fecd35b",
+      "quote": "OCI isn't a registrar.",
+      "proved": "a public zone needs a domain registered and delegated at an external registrar"
+    },
+    {
+      "url": "https://docs.oracle.com/en-us/iaas/Content/DNS/Tasks/managingdnszones.htm",
+      "date": "2026-11-19",
+      "capture": "sha256:6b95eb3fa53b89a93e90088899c260024ab38f6131359ec83309deb6fb2bf4d9",
+      "quote": "The Oracle Cloud Infrastructure DNS service lets you manage **zones ** using the Console, CLI, or API.",
+      "proved": "zone management is available through the Console, CLI and API"
+    },
+    {
+      "url": "https://docs.oracle.com/en-us/iaas/Content/DNS/Concepts/gettingstarted.htm",
+      "date": "2026-11-19",
+      "capture": "sha256:241e009d9450d61c1c4c82c05e14ccb4ae1fb7f9508346f932bb580f88ec0056",
+      "quote": "Traffic Management is only available for public DNS, and isn't supported on private DNS.",
+      "proved": "Traffic Management does not apply to private zones"
+    },
+    {
+      "url": "https://www.oracle.com/cloud/free/",
+      "date": "2026-11-19",
+      "capture": "sha256:1fd6cec8ec20056d8ed3b3b48a040d303e3e21c7cff5495b79fa103578c87928",
+      "quote": "We accept credit cards and debit cards that function like credit cards. We do not accept debit cards with a PIN or virtual, single-use, or prepaid cards.",
+      "proved": "signup requires an accepted credit or debit card; PIN, virtual, single-use and prepaid cards are not accepted"
+    },
+    {
+      "url": "https://www.oracle.com/cloud/free/",
+      "date": "2026-11-19",
+      "capture": "sha256:1fd6cec8ec20056d8ed3b3b48a040d303e3e21c7cff5495b79fa103578c87928",
+      "quote": "We use your contact information and credit/debit card information for account setup and identity verification.",
+      "proved": "the card is used for identity verification at signup"
+    },
+    {
+      "url": "https://www.oracle.com/cloud/free/",
+      "date": "2026-11-19",
+      "capture": "sha256:1fd6cec8ec20056d8ed3b3b48a040d303e3e21c7cff5495b79fa103578c87928",
+      "quote": "Oracle Cloud Free Tier allows you to sign up for an Oracle Cloud account which provides a number of Always Free services and a Free Trial with US$300 of free credit to use on all eligible Oracle Cloud Infrastructure services for up to 30 days.",
+      "proved": "a general 30-day US$300 trial exists, but it is credit for eligible services and OCI DNS itself still requires a paid account"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-19T02:46:19.633Z",
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "OCI DNS has no free tier: the product and cost-estimator pages both state a paid OCI account is required. The general 30-day US$300 Oracle Cloud trial is credit for eligible services and does not make DNS free. The first-party price list bills DNS per 1,000,000 queries but leaves the unit price cell blank, so no marginal price is recorded and none was invented.",
+  "stale": false
+}
