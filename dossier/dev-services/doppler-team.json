@@ -1,0 +1,157 @@
+{
+  "topic": "dev-services",
+  "slug": "doppler-team",
+  "provider": "Doppler Team",
+  "tier": "Team",
+  "url": "https://www.doppler.com/pricing",
+  "category": "hosted secrets management with config sync to deployment targets (SaaS; on-premises only on Enterprise)",
+  "free_tier": {
+    "stated": "Team plan: free for 14 days, then USD 21/mo per user; 90 Days of activity logs, 100 config syncs, 250 projects, 15 environments, 500 service tokens, SAML SSO, Role-Based Access Controls, automatic secret rotation and service accounts",
+    "unit": "users",
+    "metered_on": "identity-count",
+    "source_url": "https://www.doppler.com/pricing",
+    "read_on": "2026-11-19",
+    "notes": "Team is a 14-day trial followed by a per-human-seat charge; the bill counts human users, and the pricing page says AI agents and non-human identities ride free. The Developer plan above it is free for 3 users and USD 8/mo per additional user. USD 21 is the first paid tier with SSO and RBAC."
+  },
+  "per_object_cap": {
+    "stated": "unverified: the pricing and API pages state no size limit per secret; Doppler documents multi-line secrets such as PEM and SSH keys",
+    "bytes": null,
+    "source_url": "https://www.doppler.com/pricing"
+  },
+  "retention": {
+    "stated": "Activity log retention is 90 days on Team, Custom on Enterprise; no expiry for stored secrets is stated on the pages read",
+    "days": 90,
+    "source_url": "https://www.doppler.com/pricing",
+    "notes": "The 90-day value applies to activity logs, not to secret values. No automatic expiry of stored secrets is stated on the pages read."
+  },
+  "egress": {
+    "terms": "not applicable: a secrets management API; the pricing page names no traffic allowance or per-GB charge, and the API is reached over HTTPS at api.doppler.com",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.doppler.com/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "The Doppler API is organized around REST with predictable resource-oriented URLs, JSON request bodies and responses, and bearer-token authentication; base URL api.doppler.com. The open-source Doppler CLI injects secrets into a process with doppler run and reads values with doppler secrets get.",
+  "endpoint": "https://api.doppler.com/v3",
+  "tooling": "the Doppler CLI, the REST API at api.doppler.com, official SDKs, the MCP server and the web dashboard",
+  "chaining": "Secrets are delivered to apps and CI through the CLI, REST API, config syncs to deployment targets, and service tokens scoped to a single config.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "Team: 480 Reads/min, 240 Secret reads/min and 120 Writes/min per IP address; a further rate limit is tied to the API key",
+      "source": "https://docs.doppler.com/reference/api"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "500 users, 250 projects, 15 environments, 500 service tokens and 100 config syncs on Team",
+      "source": "https://www.doppler.com/pricing"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "90 days of activity logs on Team",
+      "source": "https://www.doppler.com/pricing"
+    },
+    {
+      "kind": "write-gated",
+      "value": "Add-ons on Team cost USD 9 per seat per month each for custom roles, user groups, or raising config syncs from 100 to 500; dynamic secrets, SCIM and on-premises need Enterprise",
+      "source": "https://www.doppler.com/pricing"
+    }
+  ],
+  "binding": "request-rate",
+  "binding_note": "The per-IP rate limits apply to every API and CLI read; a workload pulling secrets through one CI address meets 480 Reads/min before the 500-user or 100-sync quotas are reached.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The sign-up page for the Developer plan says Create an account using one of the following options and offers Google, GitHub, Secure SSO or Email; no card, phone number or ID document is asked for on the sign-up page. The Team plan is a 14-day trial and the pricing page does not show whether a card is required to start it. Fields shown only after account creation are unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "The API answers 429 when a rate limit is hit and sends x-ratelimit-limit, x-ratelimit-remaining, x-ratelimit-reset and retry-after headers; no data-loss event is stated on the pages read.",
+  "confidence": "documented",
+  "confidence_note": "Plan limits, the rate-limit table and the sign-up fields are quoted from first-party Doppler pricing, API reference and registration pages. No account, trial or payment was created; any value visible only after registration is unverified.",
+  "evidence": [
+    {
+      "url": "https://www.doppler.com/pricing",
+      "date": "2026-11-19",
+      "proved": "the Team plan is free for 14 days and then USD 21/mo per user",
+      "capture": "sha256:0661baba8eabc60d35a52768099ef95ad4ae8c7116b6fe47a89135a342baf4de",
+      "quote": "Free for 14 days\n\n$21/mo per user"
+    },
+    {
+      "url": "https://www.doppler.com/pricing",
+      "date": "2026-11-19",
+      "proved": "human users are billed while AI agents and non-human identities are not",
+      "capture": "sha256:0661baba8eabc60d35a52768099ef95ad4ae8c7116b6fe47a89135a342baf4de",
+      "quote": "Per-seat pricing for your team. AI agents and non-human identities ride free."
+    },
+    {
+      "url": "https://www.doppler.com/pricing",
+      "date": "2026-11-19",
+      "proved": "Team includes 90 days of activity logs and 100 config syncs",
+      "capture": "sha256:0661baba8eabc60d35a52768099ef95ad4ae8c7116b6fe47a89135a342baf4de",
+      "quote": "90 Days of activity logs"
+    },
+    {
+      "url": "https://www.doppler.com/pricing",
+      "date": "2026-11-19",
+      "proved": "Team includes 100 config syncs",
+      "capture": "sha256:0661baba8eabc60d35a52768099ef95ad4ae8c7116b6fe47a89135a342baf4de",
+      "quote": "Config syncs (100)"
+    },
+    {
+      "url": "https://www.doppler.com/pricing",
+      "date": "2026-11-19",
+      "proved": "Team add-ons cost USD 9 per seat per month each",
+      "capture": "sha256:0661baba8eabc60d35a52768099ef95ad4ae8c7116b6fe47a89135a342baf4de",
+      "quote": "**Additional $9/seat per month**"
+    },
+    {
+      "url": "https://www.doppler.com/pricing",
+      "date": "2026-11-19",
+      "proved": "the Developer plan is free for 3 users and USD 8/mo per additional user",
+      "capture": "sha256:0661baba8eabc60d35a52768099ef95ad4ae8c7116b6fe47a89135a342baf4de",
+      "quote": "Free for 3 users\n\n$8/mo per additional user"
+    },
+    {
+      "url": "https://docs.doppler.com/reference/api",
+      "date": "2026-11-19",
+      "proved": "the API is REST with JSON and bearer-token authentication",
+      "capture": "sha256:fe83ffd6b6129bac7d56dc5df587d05dcc2667bc6feccd4ebba50642d5a47816",
+      "quote": "The Doppler API is organized around REST."
+    },
+    {
+      "url": "https://docs.doppler.com/reference/api",
+      "date": "2026-11-19",
+      "proved": "the Team rate limits are 480 reads, 240 secret reads and 120 writes per minute",
+      "capture": "sha256:fe83ffd6b6129bac7d56dc5df587d05dcc2667bc6feccd4ebba50642d5a47816",
+      "quote": "| Team       | 480       | 240              | 120        |"
+    },
+    {
+      "url": "https://docs.doppler.com/reference/api",
+      "date": "2026-11-19",
+      "proved": "exceeding a rate limit answers 429",
+      "capture": "sha256:fe83ffd6b6129bac7d56dc5df587d05dcc2667bc6feccd4ebba50642d5a47816",
+      "quote": "If you hit a rate limit, the API will respond with a 429 response code."
+    },
+    {
+      "url": "https://dashboard.doppler.com/register?plan=developer",
+      "date": "2026-11-19",
+      "proved": "the sign-up page offers Google, GitHub, Secure SSO or Email and asks no card or phone field",
+      "capture": "sha256:7fb6b1a0bb6278b59e05097d5ee0ec9b61341a98ff86d8a75ffcf28cc96820d7",
+      "quote": "Create an account using one of the following options."
+    },
+    {
+      "url": "https://docs.doppler.com/docs/cli",
+      "date": "2026-11-19",
+      "proved": "the Doppler CLI injects secrets across local development, CI/CD, staging and production",
+      "capture": "sha256:10ad439bc77e581c82a8772e30df1690520a3bdb1f297e87d2d9f1ecfe5b6c4a",
+      "quote": "The Doppler CLI provides access to your secrets in every environment, from local development, CI/CD, staging, and production."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T02:33:38.483Z",
+  "price_per_tb_month": null,
+  "history": []
+}
