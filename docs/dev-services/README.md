@@ -71,35 +71,55 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `aptabase` | Aptabase | qualifies-with-caveat | documented |
 | `better-stack` | Better Stack | qualifies-with-caveat | documented |
 | `bugfender` | Bugfender | qualifies-with-caveat | documented |
+| `cerbos-hub` | Cerbos Hub | qualifies-with-caveat | documented |
 | `checkly` | Checkly | qualifies-with-caveat | documented |
 | `cloudamqp-little-lemur` | CloudAMQP | qualifies-with-caveat | documented |
 | `cloudamqp-loyal-lemming` | CloudAMQP | qualifies-with-caveat | documented |
+| `configcat` | ConfigCat | qualifies-with-caveat | documented |
 | `cron-job-org` | cron-job.org | qualifies | documented |
 | `cronitor` | Cronitor | qualifies-with-caveat | documented |
 | `datadog-open-source` | Datadog | fails-identity | documented |
+| `descope` | Descope | qualifies-with-caveat | documented |
 | `drumbeats-io` | Drumbeats | qualifies-with-caveat | documented |
+| `featureflip` | Featureflip | qualifies-with-caveat | documented |
+| `flagpool` | Flagpool | qualifies-with-caveat | documented |
+| `frontegg` | Frontegg | qualifies-with-caveat | documented |
 | `goatcounter` | GoatCounter | qualifies-with-caveat | documented |
 | `healthchecks-io` | Healthchecks.io | qualifies-with-caveat | documented |
 | `heap` | Heap | qualifies-with-caveat | documented |
 | `hotjar` | Hotjar | qualifies-with-caveat | documented |
+| `hypertune` | Hypertune (feature flags) | dead | documented |
 | `instatus` | Instatus | qualifies-with-caveat | documented |
+| `kinde` | Kinde | qualifies-with-caveat | documented |
+| `logto` | Logto | qualifies-with-caveat | documented |
 | `middleware` | Middleware | qualifies-with-caveat | documented |
 | `mixpanel` | Mixpanel | qualifies-with-caveat | documented |
 | `n8n-cloud` | n8n | trial-only | documented |
 | `new-relic` | New Relic | qualifies-with-caveat | documented |
+| `okta` | Okta | qualifies-with-caveat | documented |
 | `onlineornot` | OnlineOrNot | qualifies-with-caveat | documented |
 | `openobserve-cloud` | OpenObserve | trial-only | documented |
+| `ory` | Ory | qualifies-with-caveat | documented |
+| `permit-io` | Permit.io | qualifies-with-caveat | documented |
 | `phare` | Phare | qualifies-with-caveat | documented |
+| `propelauth` | PropelAuth | qualifies-with-caveat | documented |
 | `pulsetic` | Pulsetic | qualifies-with-caveat | documented |
 | `pusher-beams` | Pusher Beams | qualifies-with-caveat | documented |
 | `pusher-channels` | Pusher | qualifies-with-caveat | documented |
+| `rollgate` | Rollgate | qualifies-with-caveat | documented |
+| `scalekit` | Scalekit | qualifies-with-caveat | documented |
 | `sentry-education` | Sentry | fails-identity | documented |
 | `sentry-open-source` | Sentry | qualifies-with-caveat | documented |
+| `stack-auth` | Stack Auth (Hexclave) | qualifies-with-caveat | documented |
 | `statsig` | Statsig | qualifies-with-caveat | documented |
 | `statuscake` | StatusCake | qualifies-with-caveat | documented |
+| `supertokens` | SuperTokens | qualifies-with-caveat | documented |
 | `temporal-cloud` | Temporal | trial-only | documented |
+| `toggled-dev` | Toggled.dev | qualifies-with-caveat | documented |
 | `umami-cloud` | Umami | qualifies-with-caveat | documented |
+| `unkey` | Unkey | qualifies-with-caveat | documented |
 | `uptimeobserver` | UptimeObserver | qualifies-with-caveat | documented |
+| `zitadel-cloud` | ZITADEL Cloud | qualifies-with-caveat | documented |
 | `cron-job-org-chronos` | cron-job.org chronos daemon (self-hos... (self-hosted) | qualifies-with-caveat | documented |
 | `inngest-server` | Inngest server (self-hosted) (self-hosted) | qualifies-with-caveat | documented |
 | `n8n-community-edition` | n8n Community Edition (self-hosted) (self-hosted) | qualifies-with-caveat | documented |
