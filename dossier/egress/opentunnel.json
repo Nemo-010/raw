@@ -26,7 +26,7 @@
     "notes": ""
   },
   "egress": {
-    "terms": "No byte allowance or price is published in the README.; ingress: http-only",
+    "terms": "No byte allowance or price is published on the first-party README; the hosted relay carries visitor TCP 443 bytes over a bridge.; ingress: http-only",
     "metered": false,
     "free_allowance": "none published",
     "price_per_tb": null,
@@ -47,18 +47,53 @@
     "detail": "a client claims a route by hostname; no account is described in the README.",
     "country": "None"
   },
-  "reliability_note": "Depends on a Cloudflare TCP Workers beta and a temporary AWS relay.",
-  "confidence": "reported",
-  "confidence_note": "The hosted service is young (MIT declared, no LICENSE file); a published quota would sharpen the binding.",
+  "reliability_note": "The first-party README describes a hosted Rust relay on Fly.io with PlanetScale MySQL and ZeroSSL ACME certificates; no Cloudflare Workers beta or temporary AWS relay is described.",
+  "confidence": "documented",
+  "confidence_note": "The first-party README has a LICENSE file now and describes a hosted blind TLS relay on Fly.io that reads only the TLS ClientHello and carries no published byte allowance. No hosted free byte allowance is stated.",
   "evidence": [
     {
       "url": "https://github.com/anomalyco/opentunnel",
       "date": "2026-10-23",
       "proved": "'It accepts public TCP on 443 and reads only the TLS ClientHello. A tunnel hostname is carried, still encrypted, over the tunnel bridge WebSocket'"
+    },
+    {
+      "url": "https://github.com/anomalyco/opentunnel",
+      "date": "2026-11-19",
+      "proved": "the first-party repository describes a hosted blind TLS relay that carries visitor bytes over a bridge to a local client",
+      "capture": "sha256:95dc972e78f06e5760d85ac185c09ec39961bcb6204a8bebbfb453ddb2e9b876",
+      "quote": "The hosted service is one Rust binary, `crates/opentunnel-server`, on Fly.io"
+    },
+    {
+      "url": "https://github.com/anomalyco/opentunnel",
+      "date": "2026-11-19",
+      "proved": "the hosted relay accepts public TCP 443, reads only the ClientHello and publishes no byte allowance",
+      "capture": "sha256:95dc972e78f06e5760d85ac185c09ec39961bcb6204a8bebbfb453ddb2e9b876",
+      "quote": "It accepts public TCP on 443 and reads only the TLS ClientHello."
+    },
+    {
+      "url": "https://github.com/anomalyco/opentunnel",
+      "date": "2026-11-19",
+      "proved": "the hosted relay carries visitor bytes and publishes no allowance in the README",
+      "capture": "sha256:95dc972e78f06e5760d85ac185c09ec39961bcb6204a8bebbfb453ddb2e9b876",
+      "quote": "It accepts public TCP on 443 and reads only the TLS ClientHello."
+    },
+    {
+      "url": "https://github.com/anomalyco/opentunnel",
+      "date": "2026-11-19",
+      "proved": "the current first-party hosted architecture is a Rust binary on Fly.io, not the old Workers and AWS relay",
+      "capture": "sha256:95dc972e78f06e5760d85ac185c09ec39961bcb6204a8bebbfb453ddb2e9b876",
+      "quote": "The hosted service is one Rust binary, `crates/opentunnel-server`, on Fly.io"
+    },
+    {
+      "url": "https://github.com/anomalyco/opentunnel",
+      "date": "2026-11-19",
+      "proved": "the first-party README describes the current hosted relay and no byte allowance",
+      "capture": "sha256:95dc972e78f06e5760d85ac185c09ec39961bcb6204a8bebbfb453ddb2e9b876",
+      "quote": "The hosted service is one Rust binary, `crates/opentunnel-server`, on Fly.io"
     }
   ],
   "verdict": "fails-egress",
-  "verified_at": "2026-10-23T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:11:04.143Z",
   "price_per_tb_month": "USD 0",
   "history": [],
   "notes": "Blind TLS relay on Cloudflare Workers with an AWS relay for inbound TCP. Interesting shape, no UDP.",
