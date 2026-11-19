@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "Each file can be up to 30 GB, within the record's total quota.",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "Long-term preservation is stated; no automatic deletion period is stated on https://researchdata.tuwien.at/tuw/about",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "not stated on https://inveniordm.docs.cern.ch/reference/rest_api_quickstart",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "InvenioRDM REST API uploads file content into a record draft, then publishes the record.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "Files are uploaded into an InvenioRDM record draft through the REST API and published as a citable record.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -49,10 +49,38 @@
       "url": "probe:seed/DEAD-ENDS.md",
       "date": "2026-10-21",
       "proved": "rejected in the seed: Every one I probed publishes no numeric per-record quota, hosts no large objects, and is sized for text/metadata rather than bulk data. Record counts are in the tens-to-hundreds (KTH 58, Tal [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://inveniordm.docs.cern.ch/reference/rest_api_quickstart",
+      "date": "2026-11-19",
+      "proved": "InvenioRDM file content is uploaded over a REST API endpoint",
+      "capture": "sha256:8491f526dab6da41380f72598706b5604164c8547cf9eb2f72e0d46d687a2ce7",
+      "quote": "curl -i -X PUT https://inveniordm.web.cern.ch/api/records/ha4g3-7x208/draft/files/data.csv/content"
+    },
+    {
+      "url": "https://inveniordm.docs.cern.ch/reference/rest_api_quickstart",
+      "date": "2026-11-19",
+      "proved": "the quickstart documents a REST PUT of file content",
+      "capture": "sha256:8491f526dab6da41380f72598706b5604164c8547cf9eb2f72e0d46d687a2ce7",
+      "quote": "curl -i -X PUT https://inveniordm.web.cern.ch/api/records/ha4g3-7x208/draft/files/data.csv/content"
+    },
+    {
+      "url": "https://researchdata.tuwien.at/tuw/about",
+      "date": "2026-11-19",
+      "proved": "the TU Wien repository states long-term preservation with no numeric expiry",
+      "capture": "sha256:c721c8f3f47dcfd11511c925ee6358ea0087a095b5925b0795100e1836931f8b",
+      "quote": "It meets legal, institutional, and funder requirements for long-term preservation and sharing, in line with"
+    },
+    {
+      "url": "https://docs.datarepository.kth.se/deposit/manage_files",
+      "date": "2026-11-19",
+      "proved": "the KTH InvenioRDM instance states a 30 GB per-file cap",
+      "capture": "sha256:286b54baf79476959494df8d5e63d3defc3ccd9e281f745749f8716a195fa853",
+      "quote": "Each file can be up to 30 GB, within the record's total quota."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:50.378Z",
   "notes": "Published documentation states no numeric per-record quota. Instances host small document metadata rather than bulk data. Record counts remain low across instances.",
   "history": [],
   "extras": {
