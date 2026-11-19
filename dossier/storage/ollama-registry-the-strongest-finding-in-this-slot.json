@@ -31,7 +31,7 @@
     "oci",
     "rest"
   ],
-  "interface_detail": "oci",
+  "interface_detail": "Native OCI Distribution v2 for push/pull, plus a documented REST API for running and managing models. `ollama push` / `ollama pull`, oras/skopeo/crane all work",
   "tooling": "Native OCI Distribution v2. `ollama push` / `ollama pull`, oras/skopeo/crane all work. Push requires a free ollama.com account (WorkOS authkit signup, no payment); pull is fully anonymous. `ollama create` accepts safetensors dirs, GGUF, split GGUF globs, and any layer content. A pushed model is just OCI layers, so arbitrary bytes ride as `application/vnd.ollama.image.model`.",
   "chaining": "unlimited free namespaces x unlimited repos x unlimited tags; the binding per-object ceiling is whatever the server accepts, and 455 GiB single-blob objects already exist in production. 30 TiB = 66 objects the size of huihui_ai/kimi-k2-abliterated. Multiply by free-account count. This is structurally identical to GHCR but with a ~45x larger observed per-object ceiling and no documented 10 GB layer cap.",
   "limits": [
@@ -118,10 +118,17 @@
       "proved": "the first-party pricing page still meters inference by token with no storage charge",
       "capture": "sha256:f68df641c9dbcb52d61fe751223241183b8ce8e1555b66ca773ec0b85507133c",
       "quote": "Pay per token for every cloud model."
+    },
+    {
+      "url": "https://github.com/ollama/ollama",
+      "date": "2026-11-19",
+      "proved": "the first-party Ollama repository documents a REST API for running and managing models alongside the OCI registry",
+      "capture": "sha256:82001b377cbd536c1393d9d8e056eb82bf97d7fd88c01ab8d768e61932e08346",
+      "quote": "Ollama has a REST API for running and managing models."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-19T21:15:51.194Z",
+  "verified_at": "2026-11-19T21:38:40.946Z",
   "notes": "No published byte quota, no published per-file cap, and no paid storage tier exists to upsell to — the only paid Ollama product is inference compute ('Pricing': Free $0 'Use any cloud model with pay-as-you-go usage credits', Pro $20/mo; nothing on that page meters model storage). Empirically established this session by summing manifests: ONE free namespace holds 3,270 GiB across 89 working repos. A single repo holds 455.5 GiB in one layer.",
   "history": [],
   "extras": {
