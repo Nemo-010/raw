@@ -24,7 +24,7 @@
     "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
-    "terms": "Free to the consumer; storage is Cloudflare R2 in the EU plus AWS in Ireland per their own subprocessor table. Downloads are short-lived presigned URLs, and downloads are rate-limited to 30 per organisation per day (429 beyond that).",
+    "terms": "Free to the consumer; downloads are short-lived presigned URLs, and downloads are limited to 7 per organisation per day (429 beyond that).",
     "metered": false
   },
   "interface": [
@@ -37,7 +37,7 @@
   "limits": [
     {
       "kind": "request-rate",
-      "value": "30 downloads/day",
+      "value": "7 downloads/day",
       "source": "https://mozilla-data-collective.github.io/datacollective-python/upload/"
     },
     {
@@ -47,7 +47,7 @@
     },
     {
       "kind": "pull-count",
-      "value": "30 downloads/day",
+      "value": "7 downloads/day",
       "source": "https://mozilla-data-collective.github.io/datacollective-python/upload/"
     },
     {
@@ -61,13 +61,13 @@
       "source": "https://mozilla-data-collective.github.io/datacollective-python/upload/"
     }
   ],
-  "limits_note": "Write-gated, hard. 'we manually review every request to upload'. You file a Request to Upload, wait days, and are interviewed by email about 'yourself, the organization you are representing, the data you want to upload and what are your goals'. They also ask for a full legal name and an organisation email. Every dataset must carry a datasheet. API upload calls are rate-limited at their discretion and skipping the approval flow ends the account. Also note the published conditions exclude rehosting or re-distributing datasets, which is a policy limit on using MDC as a mirror.",
+  "limits_note": "Write-gated, hard. 'we manually review every request to upload'. You file a Request to Upload, wait days, and are interviewed by email. They also ask for a full legal name and an organisation email. Every dataset must carry a datasheet. API upload calls are rate-limited at their discretion and skipping the approval flow ends the account. Downloads are limited to 7 per organisation per day.",
   "identity_cost": {
     "kind": "email",
     "detail": "email",
     "country": null
   },
-  "reliability_note": "The gate is a human reviewer, not a form. Treat acceptance as the scarce resource. 30 downloads/day/org will throttle any mirroring plan. Hash field is present in metadata, so a checksum roundtrip is cheap to automate.",
+  "reliability_note": "The gate is a human reviewer, not a form. Treat acceptance as the scarce resource. 7 downloads/day/org will throttle any mirroring plan. Hash field is present in metadata, so a checksum roundtrip is cheap to automate.",
   "confidence": "reported",
   "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [
@@ -105,10 +105,24 @@
       "url": "probe:unspecified",
       "date": "2026-10-21",
       "proved": "PROBED: GET /api/datasets/bibletts-luo-aligned-bible-speech-4118962a -> 200, datasetUrl, filename bibletts-luo-aligned-bible-speech-4118962a.tar.gz, sizeBytes 9786006314, checksum 221a7218f72a8fd106459d95dfd9341d3ff626e7456c2912336c0047bc96143f, isPaid false. Proves multi-GB single-object hosting actually exists on the platform."
+    },
+    {
+      "url": "https://mozilla-data-collective.github.io/datacollective-python/upload/",
+      "date": "2026-11-19",
+      "proved": "the SDK documents a 10,000-part ceiling per upload",
+      "capture": "sha256:efbbb87a54af7c95489b4c2d40fde94033b0b8e18a2a02281025ec2a9c34816e",
+      "quote": "A single upload can have at most 10,000 parts."
+    },
+    {
+      "url": "https://mozilladatacollective.com/api-reference/docs",
+      "date": "2026-11-19",
+      "proved": "the API reference states a 7-download-per-day organization limit",
+      "capture": "sha256:24dc85524373ad18b992c173619381013cd758d825b011362e9146fc6c250b5b",
+      "quote": "By Default, Organizations are limited to 7 dataset downloads per day. The limit resets at midnight UTC. When exceeded, the API responds with a 429 error."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-10T00:50:25.834Z",
+  "verified_at": "2026-11-19T21:14:01.148Z",
   "notes": "150 GB per uploaded file. Raised from a lower value in the Python SDK on 2026-03-24 ('Increase upload file size limit to 150GB'). No published per-account or total quota anywhere in the provider terms, FAQ, or API reference; the archive in the public catalogue runs to multi-GB objects (one measured dataset is 9,786,006,314 bytes = 9.79 GB as a single .tar.gz). Uploads are multipart with a hard 10,000-part ceiling, so a 1 TB object would need ≥100 MB parts. The SDK enforces this and names the minimum part size rather than failing mid-upload.",
   "history": [],
   "extras": {
