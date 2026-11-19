@@ -1,0 +1,155 @@
+{
+  "topic": "domains-dns",
+  "slug": "gandi",
+  "provider": "Gandi",
+  "url": "https://www.gandi.net/en-US/domain/dns",
+  "category": "domain registrar with bundled managed authoritative DNS (LiveDNS)",
+  "free_tier": {
+    "stated": "Free Anycast LiveDNS hosting and a REST API are included with each domain registered at Gandi; the domain registration itself is paid (USD 11.71 per year for .com, USD 8.00 for .fr)",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://www.gandi.net/en-US/domain/dns",
+    "read_on": "2026-11-19",
+    "notes": "No free-standing DNS tier: the free DNS servers and the API require a paid domain registered at Gandi. A free DNS zone for a domain registered elsewhere is not documented on the pages read. The 'none' unit records the absence of a free-standing offer; a 'bundled-with-paid-domain' unit would name it more exactly."
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap is stated on the pages read; the LiveDNS API accepts DNS record sets and its record-type list has no stated size cap",
+    "bytes": null,
+    "source_url": "https://api.gandi.net/docs/livedns/"
+  },
+  "retention": {
+    "stated": "zones persist while the domain is registered; no automatic expiry of DNS zones is stated on the pages read",
+    "days": null,
+    "source_url": "https://www.gandi.net/en-US/domain/dns"
+  },
+  "egress": {
+    "terms": "Anycast DNS query traffic is included with the domain and is not metered or priced on the pages read",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.gandi.net/en-US/domain/dns"
+  },
+  "interface": [
+    "rest",
+    "browser"
+  ],
+  "interface_detail": "A REST API at https://api.gandi.net/v5/ for domains, records, zones and snapshots, plus a browser dashboard; TSIG keys support AXFR zone transfer to BIND, Knot, NSD and PowerDNS",
+  "endpoint": "https://api.gandi.net/v5/",
+  "tooling": "the Gandi LiveDNS v5 REST API with a Personal Access Token in the Authorization header; curl or any HTTPS/JSON client; the browser dashboard",
+  "chaining": "Free DNS and a REST API bundled with a paid domain, with DNSSEC, zone snapshots and a domain-ownership verification record endpoint for ACME DNS-01 challenges",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "a paid domain registered at Gandi is required before LiveDNS hosting and the API can be used",
+      "source": "https://www.gandi.net/en-US/domain/dns"
+    },
+    {
+      "kind": "request-rate",
+      "value": "a maximum of 1000 requests per minute from the same IP address",
+      "source": "https://api.gandi.net/docs/reference"
+    }
+  ],
+  "limits_note": "DNS record TTL values must be between 300 and 2592000 seconds, as stated in the LiveDNS API reference.",
+  "binding": "write-gated",
+  "binding_note": "The paid domain registration is the gate that fails first, since no free-standing DNS zone is offered; once a domain is held, the 1000 requests per minute per IP rate limit is the next constraint.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "Account creation at id.gandi.net asks an email address, first name, last name, username and password, an affirmation of being older than 18, and acceptance of the terms; no card is asked at account creation, and a confirmation link must be clicked to activate the account. An identity document may be requested if ownership verification proves necessary. The paid domain that unlocks the free DNS and API needs a payment method.",
+    "country": null
+  },
+  "confidence": "documented",
+  "confidence_note": "All verdict-deciding values come from first-party Gandi pages that were captured and quoted. A read-only probe of the generic nameservers route returned HTTP 401, so no keyless programmatic read was established; that does not raise the rung.",
+  "evidence": [
+    {
+      "url": "https://www.gandi.net/en-US/domain/dns",
+      "date": "2026-11-19",
+      "capture": "sha256:921f9171cd66f4d0abbbc3658e348ae1404b3af27b71cfa0abd8de9e3b55fc13",
+      "quote": "Each [domain name](https://www.gandi.net/en-US/domain) registered at Gandi gets access to free DNS servers, linked to our developed technologies and features.",
+      "proved": "free DNS servers are included with each domain registered at Gandi"
+    },
+    {
+      "url": "https://www.gandi.net/en-US/domain/dns",
+      "date": "2026-11-19",
+      "capture": "sha256:921f9171cd66f4d0abbbc3658e348ae1404b3af27b71cfa0abd8de9e3b55fc13",
+      "quote": "Thanks to LiveDNS, our DNS management service, each modification is propagated in less than 250 ms.",
+      "proved": "Gandi states a propagation time below 250 ms for DNS changes"
+    },
+    {
+      "url": "https://api.gandi.net/docs/reference",
+      "date": "2026-11-19",
+      "capture": "sha256:10a87d2c74b1cb36b878ffea6e83815f5fc71f638f2eef0ab3a535d1848cfacf",
+      "quote": "Gandi's API is rate limited; you can perform a maximum of **1000 requests per minute** from the same IP address.",
+      "proved": "the API is limited to 1000 requests per minute per source IP"
+    },
+    {
+      "url": "https://api.gandi.net/docs/reference",
+      "date": "2026-11-19",
+      "capture": "sha256:10a87d2c74b1cb36b878ffea6e83815f5fc71f638f2eef0ab3a535d1848cfacf",
+      "quote": "Gandi provides remote RESTful APIs over HTTPS, making it easy to manage your products and build third-party applications.",
+      "proved": "the management interface is a REST API over HTTPS"
+    },
+    {
+      "url": "https://docs.gandi.net/en/account_management/activate_account/account_creation.html",
+      "date": "2026-11-19",
+      "capture": "sha256:0beb6a2ff88645ebab43753daa414aaf35e185a8c31ffbe53c4ce4ef99a2e9de",
+      "quote": "When on the creation page, you will have to choose a username, an email address and a password.",
+      "proved": "account creation asks a username, email address and password"
+    },
+    {
+      "url": "https://docs.gandi.net/en/account_management/activate_account/account_creation.html",
+      "date": "2026-11-19",
+      "capture": "sha256:0beb6a2ff88645ebab43753daa414aaf35e185a8c31ffbe53c4ce4ef99a2e9de",
+      "quote": "If it proves necessary to verify the ownership of the account via an identity document, it will be simpler to do so via this data.",
+      "proved": "an identity document may be requested for account ownership verification"
+    },
+    {
+      "url": "https://id.gandi.net/en/login",
+      "date": "2026-11-19",
+      "capture": "sha256:911b375f8256a1611a5dcbcb5206ec8c602353ec1c952381df8f8f1a2feadcf7",
+      "quote": "I am older than 18 and I agree to the General Terms and Conditions of Services",
+      "proved": "the sign-up form requires an age affirmation and acceptance of the terms"
+    },
+    {
+      "url": "https://www.gandi.net/en-US/domain",
+      "date": "2026-11-19",
+      "capture": "sha256:54c3821cd2bc3d510493a6f4b3d7153706787548e4e2ea77fd2c6553556d9bc9",
+      "quote": "| [.com](https://www.gandi.net/en-US/domain/tld/com) | $11.71 | $38.38 | $11.71 |",
+      "proved": "a .com domain costs USD 11.71 to register and USD 38.38 to renew"
+    },
+    {
+      "url": "https://www.gandi.net/en-US/domain",
+      "date": "2026-11-19",
+      "capture": "sha256:54c3821cd2bc3d510493a6f4b3d7153706787548e4e2ea77fd2c6553556d9bc9",
+      "quote": "Your domain's DNS (domain name system) is free, secure, and available with DNSSEC, high quality anycast DNS servers",
+      "proved": "DNS is free, secure and anycast with DNSSEC when bought with a domain"
+    },
+    {
+      "url": "https://api.gandi.net/docs/authentication",
+      "date": "2026-11-19",
+      "capture": "sha256:7ca64f9bff030ef0d3598dbda0cc8000dfc41932dd2c5b842dc10de914dc3fb6",
+      "quote": "Every request to Gandi's API requires authentication.",
+      "proved": "API calls require a Personal Access Token or API key"
+    },
+    {
+      "url": "https://api.gandi.net/docs/livedns/",
+      "date": "2026-11-19",
+      "capture": "sha256:095617cb894668383f9f22f40cfd61362e1e581a5764dc35c9e851e2b639b5a2",
+      "quote": "This is a generic route for hashing any domain and thus is not authenticated.",
+      "proved": "the API docs describe a generic nameservers route as unauthenticated"
+    },
+    {
+      "url": "probe:https://api.gandi.net/v5/livedns/nameservers/example.com",
+      "date": "2026-11-19",
+      "capture": "sha256:f66a9fd680a1ca6f508754cf72459b1b6103aeb980966cdb3918133c35b08a6c",
+      "quote": "\"status\": 401",
+      "proved": "a read-only probe of the documented unauthenticated generic nameservers route returned HTTP 401, so keyless programmatic read was not established"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-19T00:19:24.696Z",
+  "price_per_tb_month": null,
+  "reliability_note": "A read-only probe of the documented unauthenticated generic nameservers route returned HTTP 401 today, so keyless programmatic DNS read is unverified. The product page states DNS changes propagate in less than 250 ms, while full resolver visibility can take a few hours.",
+  "self_hosted": false,
+  "history": [],
+  "notes": "The free DNS and REST API are bundled with a paid domain, which is why the verdict is paid-only rather than the qualifies given to a free-standing DNS host. A read-only probe of the LiveDNS generic nameservers route returned HTTP 401 even though the API docs call it unauthenticated; the docs may be stale."
+}

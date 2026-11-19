@@ -1,0 +1,115 @@
+{
+  "topic": "databases-kv",
+  "slug": "memcachier",
+  "provider": "MemCachier",
+  "url": "https://www.memcachier.com/pricing",
+  "category": "managed Memcached cache",
+  "tier": "Developer",
+  "free_tier": {
+    "stated": "Totally free forever. Try it out. See what it can do. Always $0 25MB 1 Proxy",
+    "unit": "MB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.memcachier.com/pricing",
+    "read_on": "2026-11-19",
+    "notes": "The free Developer plan is 25 MB of cache, one proxy server and 10 connections, with no end date stated (the price column reads 'Always')."
+  },
+  "per_object_cap": {
+    "stated": "no per-item size cap is published on the pricing page; the plan's 25 MB is the whole cache",
+    "bytes": null,
+    "source_url": "https://www.memcachier.com/pricing"
+  },
+  "retention": {
+    "stated": "data lives in the Memcached cache until evicted or the cache is restarted; no automatic expiry schedule is stated on the pricing page",
+    "days": null,
+    "source_url": "https://www.memcachier.com/pricing",
+    "notes": "Memcached is an in-memory cache; retention is governed by eviction, not a published day count."
+  },
+  "egress": {
+    "terms": "no egress allowance or per-GB price is published on the pricing page",
+    "metered": false,
+    "free_allowance": null,
+    "source_url": "https://www.memcachier.com/pricing"
+  },
+  "interface": [
+    "unknown"
+  ],
+  "interface_detail": "the Memcached text protocol is the service interface; the pricing and signup pages checked do not publish an API reference, so the programmatic interface is documented from the product category and not from a captured protocol page",
+  "tooling": "standard Memcached clients that speak the Memcached text protocol, connecting to the single proxy",
+  "chaining": "a free MemCachier cache can sit in front of a separate free database to offload reads; the 25 MB cache and 10 connections bound any chain immediately",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "25 MB of cache storage on the Developer plan",
+      "source": "https://www.memcachier.com/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "10 connections on the Developer plan",
+      "source": "https://www.memcachier.com/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "1 proxy server on the Developer plan",
+      "source": "https://www.memcachier.com/pricing"
+    }
+  ],
+  "binding": "volume-quota",
+  "binding_note": "the 25 MB cache size fills well before the 10-connection limit for a single application, so storage binds first",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The sign-up form asks for Email address and Password and is protected by reCAPTCHA. No card, phone or ID document is requested on the free sign-up page.",
+    "country": null
+  },
+  "reliability_note": "the free Developer plan has one proxy server and no high availability, so the single proxy is the availability of the cache; basic analytics only",
+  "confidence": "documented",
+  "confidence_note": "the plan numbers and sign-up fields are from first-party pages read today; no probe was run, so the rung stays documented",
+  "evidence": [
+    {
+      "url": "https://www.memcachier.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:1e17949efdf46aeedbd58af0b23f8a0159d384b8858a804a3bde1a6c387dc963",
+      "quote": "Totally free forever. Try it out. See what it can do.",
+      "proved": "the Developer plan is a permanent free offer, not a trial"
+    },
+    {
+      "url": "https://www.memcachier.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:1e17949efdf46aeedbd58af0b23f8a0159d384b8858a804a3bde1a6c387dc963",
+      "quote": "25MB",
+      "proved": "the free Developer plan includes 25 MB of cache"
+    },
+    {
+      "url": "https://www.memcachier.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:1e17949efdf46aeedbd58af0b23f8a0159d384b8858a804a3bde1a6c387dc963",
+      "quote": "10 Connections",
+      "proved": "the free Developer plan is limited to 10 connections"
+    },
+    {
+      "url": "https://www.memcachier.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:1e17949efdf46aeedbd58af0b23f8a0159d384b8858a804a3bde1a6c387dc963",
+      "quote": "1 Proxy Server",
+      "proved": "the free Developer plan runs a single proxy server"
+    },
+    {
+      "url": "https://www.memcachier.com/users/signup",
+      "date": "2026-11-19",
+      "capture": "sha256:843346b77ba081196373f2d6539cc174305933d74db1b1cc65862a8646b9dc1b",
+      "quote": "Email address",
+      "proved": "the sign-up form asks for an email address"
+    },
+    {
+      "url": "https://www.memcachier.com/users/signup",
+      "date": "2026-11-19",
+      "capture": "sha256:843346b77ba081196373f2d6539cc174305933d74db1b1cc65862a8646b9dc1b",
+      "quote": "protected by **reCAPTCHA**",
+      "proved": "signup is guarded by a reCAPTCHA, with a password field and no card request"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T00:19:24.795Z",
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "25 MB and 10 connections make this a cache for a single small application, not a general key-value store. The interface is set to unknown because the pages captured name the product as a managed Memcached service but publish no protocol or API reference; the true interface is the Memcached text protocol and an open_question records the vocabulary gap."
+}
