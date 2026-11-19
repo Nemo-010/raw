@@ -1,0 +1,127 @@
+{
+  "topic": "databases-kv",
+  "slug": "yugabytedb-cloud",
+  "provider": "YugabyteDB Cloud (YugabyteDB Aeon)",
+  "url": "https://docs.yugabyte.com/stable/yugabyte-cloud/serverless/",
+  "category": "fully managed distributed SQL / PostgreSQL database-as-a-service",
+  "tier": "Serverless Postgres free tier",
+  "free_tier": {
+    "stated": "Serverless Postgres is free to start, and includes 2 vCPU, 16 GiB RAM, and 100 GiB storage. This allowance is shared by every cluster in the account.",
+    "unit": "mixed",
+    "source_url": "https://docs.yugabyte.com/stable/yugabyte-cloud/serverless/",
+    "read_on": "2026-11-19",
+    "metered_on": "stored-bytes",
+    "notes": "A perpetual free allowance on the shared serverless pool, one isolated PostgreSQL database per application or tenant with zero-copy branching. To use larger sizes an Admin must create a billing profile with a payment method. A separate single-node Sandbox free tier offers 10 GB, pauses after 10 days idle and is deleted after 15 days."
+  },
+  "per_object_cap": {
+    "stated": "unverified: no single-object size cap stated on the first-party pages read; the free allowance is 100 GiB of storage shared across the account",
+    "bytes": null,
+    "source_url": "https://docs.yugabyte.com/stable/yugabyte-cloud/serverless/",
+    "notes": "The shared 100 GiB allowance is an account storage figure, not a per-object cap."
+  },
+  "retention": {
+    "stated": "no deletion on the Serverless Postgres free allowance is stated on the pages read; the separate Sandbox cluster is paused after 10 days of inactivity and deleted after 15 days",
+    "days": null,
+    "source_url": "https://docs.yugabyte.com/stable/faq/yugabytedb-managed-faq",
+    "notes": "The 10/15-day countdown belongs to the Sandbox cluster, not the Serverless free allowance."
+  },
+  "egress": {
+    "terms": "data transfer is billed separately: same region $0.01/GB, cross region (other regions) $0.02/GB, cross region (APAC) $0.08/GB, Internet $0.10/GB",
+    "metered": true,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.yugabyte.com/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "PostgreSQL wire protocol via the YSQL API, plus a Cassandra-style YCQL API; automate with a REST API, CLI or Terraform provider.",
+  "tooling": "any PostgreSQL driver or ORM against the YSQL endpoint, CQL drivers against YCQL, the YugabyteDB CLI and Terraform provider; rclone does not apply",
+  "chaining": "a free Serverless Postgres database with zero-copy branches behind a worker or tunnel gives a programme-accessible store; the self-hosted open-source YugabyteDB server is a last-resort option and is not the hosted free tier",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "2 vCPU, 16 GiB RAM and 100 GiB storage shared by every cluster in the account",
+      "source": "https://docs.yugabyte.com/stable/yugabyte-cloud/serverless/"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "Sandbox cluster: up to 2 vCPU / 4 GB memory / 10 GB storage, up to 15 simultaneous connections, paused after 10 days idle and deleted after 15 days",
+      "source": "https://docs.yugabyte.com/stable/faq/yugabytedb-managed-faq"
+    },
+    {
+      "kind": "write-gated",
+      "value": "larger than free sizes require an Admin to create a billing profile with a payment method",
+      "source": "https://docs.yugabyte.com/stable/yugabyte-cloud/serverless/"
+    }
+  ],
+  "binding": "volume-quota",
+  "binding_note": "The Serverless free allowance is a shared 100 GiB / 2 vCPU / 16 GiB pool, so the storage and compute quota binds before any other stated free limit.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "sign-up creates an account; the free-trial form takes contact details and a free-trial link is sent to the email address. A billing profile with a credit card is needed only to go beyond the free allowance, and the pricing page FAQ states the database-as-a-service is a paid offering",
+    "country": null
+  },
+  "reliability_note": "the free allowance runs on a shared pool with resource isolation between tenants; the Sandbox is single-node and is explicitly not for production or performance testing, and it does not support backups.",
+  "confidence": "documented",
+  "confidence_note": "First-party pages read on 2026-11-19: the Serverless Postgres docs, the Aeon overview, the managed FAQ, the free-trial docs, the billing-profile docs and the pricing page.",
+  "evidence": [
+    {
+      "url": "https://docs.yugabyte.com/stable/yugabyte-cloud/serverless/",
+      "date": "2026-11-19",
+      "capture": "sha256:734068a43c684069b1ae58df4c6b4449a3ea6eb550623d67efbb5a4b81fa3966",
+      "quote": "Serverless Postgres is free to start, and includes 2 vCPU, 16 GiB RAM, and 100 GiB storage.",
+      "proved": "the free Serverless Postgres allowance and its compute and storage figures"
+    },
+    {
+      "url": "https://docs.yugabyte.com/stable/yugabyte-cloud/serverless/",
+      "date": "2026-11-19",
+      "capture": "sha256:734068a43c684069b1ae58df4c6b4449a3ea6eb550623d67efbb5a4b81fa3966",
+      "quote": "This allowance is shared by every cluster in the account. To use larger sizes, create a billing profile for the serverless account. Only Admin users can create a billing profile.",
+      "proved": "the allowance is account-shared and going bigger needs an Admin billing profile"
+    },
+    {
+      "url": "https://docs.yugabyte.com/stable/faq/yugabytedb-managed-faq",
+      "date": "2026-11-19",
+      "capture": "sha256:816557053e59f048971641807fa06bf17e1ccc870f0a1da4d1f9485016023349",
+      "quote": "The Sandbox cluster is limited to a single node and 10GB of storage. Although not suitable for production workloads or performance testing, the cluster includes enough resources to start exploring the core features available for developing applications with YugabyteDB. You can only have one Sandbox cluster. Sandbox clusters that are inactive for 10 days are paused; after 15 days they are deleted.",
+      "proved": "the separate Sandbox free tier and its idle pause and delete clock"
+    },
+    {
+      "url": "https://docs.yugabyte.com/stable/faq/yugabytedb-managed-faq",
+      "date": "2026-11-19",
+      "capture": "sha256:816557053e59f048971641807fa06bf17e1ccc870f0a1da4d1f9485016023349",
+      "quote": "Up to 2 vCPU / 4 GB Memory / 10 GB storage",
+      "proved": "the Sandbox compute and storage figures"
+    },
+    {
+      "url": "https://docs.yugabyte.com/stable/yugabyte-cloud/managed-freetrial/",
+      "date": "2026-11-19",
+      "capture": "sha256:26a144feba6281cfa65839befbb11933cb96b1e4c079367d3b0ec5cac5867204",
+      "quote": "A free trial link is sent to your email.",
+      "proved": "the free-trial sign-up gate is an email address"
+    },
+    {
+      "url": "https://www.yugabyte.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:925af1e6f9032da14da909b32e5176d88e07d5b52622430ca274fee2b32cfac2",
+      "quote": "Data transfer – Internet",
+      "proved": "Internet data transfer is a separately metered dimension on the pricing page"
+    },
+    {
+      "url": "https://www.yugabyte.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:925af1e6f9032da14da909b32e5176d88e07d5b52622430ca274fee2b32cfac2",
+      "quote": "The database-as-a-service is a paid offering, and is available in a range of flexible deployment options.",
+      "proved": "the hosted service is paid beyond the free allowance"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T02:46:17.998Z",
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "The hosted free offer is Serverless Postgres: 2 vCPU, 16 GiB RAM and 100 GiB storage shared across the account, with zero-copy branches. The legacy single-node Sandbox (10 GB, paused after 10 days and deleted after 15) is a different, more restrictive free path and is recorded here as a limit rather than as the headline. The open-source YugabyteDB server is self-hosted software and a last resort, not the hosted free tier. Egress beyond the free allowance is metered in USD per GB.",
+  "stale": false,
+  "stale_checked_at": "2026-11-19T00:00:00.000Z"
+}
