@@ -1,0 +1,247 @@
+{
+  "topic": "dev-services",
+  "slug": "firebase-cloud-messaging",
+  "provider": "Firebase Cloud Messaging",
+  "url": "https://firebase.google.com/pricing",
+  "category": "cross-platform hosted push notification messaging service: notification and data messages to iOS, Android and web apps (hosted)",
+  "tier": "no-cost (Spark and Blaze)",
+  "free_tier": {
+    "stated": "Cloud Messaging (FCM) is listed as No-cost on both the no-cost Spark plan and the pay-as-you-go Blaze plan; the pricing plans page says full usage of no-cost Firebase products at no charge even with several million users, and no per-message price or monthly message-count allowance is stated",
+    "unit": "unlimited",
+    "metered_on": "none",
+    "source_url": "https://firebase.google.com/pricing",
+    "read_on": "2026-11-19",
+    "notes": "The counted unit is a message sent downstream. There is no stated per-message charge or monthly message cap. Sending is governed by a per-minute rate quota, not a free allowance. The unit vocabulary has no term for messages, so the absence of a count cap is recorded as unlimited; the true unit is messages per minute."
+  },
+  "per_object_cap": {
+    "stated": "4096 bytes maximum payload for both notification messages and data messages, except sends from the Firebase console composer, which enforces a 1000 character limit; a message sent to a topic is limited to 2048 bytes",
+    "bytes": 4096,
+    "source_url": "https://firebase.google.com/docs/cloud-messaging/customize-messages/set-message-type",
+    "notes": "The 2048-byte topic limit and the 1000-character console composer limit are stated on the message types and error codes pages. The cap counts both payload keys and values."
+  },
+  "retention": {
+    "stated": "An undelivered message is held in FCM storage for its time to live, at most 4 weeks (2,419,200 seconds), which is also the default when the field is not set; setting ttl to 0 discards a message that cannot be delivered immediately",
+    "days": 28,
+    "source_url": "https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages",
+    "notes": "4 weeks is 28 days (4 x 7). On iOS the backend sets a default apns-expiration of 30 days when the header is absent."
+  },
+  "egress": {
+    "terms": "not applicable: a push messaging transport with no per-message, byte or bandwidth line; the pricing table lists Cloud Messaging as No-cost, and an app server posts JSON to the HTTP v1 API while Google delivers to the device",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://firebase.google.com/pricing"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "The FCM HTTP v1 API takes an HTTP POST to https://fcm.googleapis.com/v1/TARGET_PROJECT_ID/messages:send with a JSON message body, authorized with a service account JSON file, Application Default Credentials or a short-lived OAuth 2.0 access token. The Firebase Admin SDK wraps the same send operation. Clients receive messages through platform SDKs for iOS, Android and web; the console Notifications composer sends without code.",
+  "endpoint": "https://fcm.googleapis.com/v1/projects/PROJECT_ID/messages:send",
+  "tooling": "Firebase Admin SDK for Node.js, Java, Python, Go and C#; the FCM HTTP v1 REST API with a service account key or Application Default Credentials; the Firebase CLI; client SDKs for iOS, Android, Web, Flutter, Unity and C++; and the console Notifications composer.",
+  "chaining": "A worker on any host sends one HTTPS POST to the FCM HTTP v1 API to reach devices by registration token, topic or condition on iOS, Android and web; delivery through FCM is no-cost while the sender's own backend is billed on its own terms.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "default quota of 600k downstream messages per minute per project; above it the API answers HTTP 429 RESOURCE_EXHAUSTED until the quota refills the following minute",
+      "source": "https://firebase.google.com/docs/cloud-messaging/throttling-and-quotas"
+    },
+    {
+      "kind": "request-rate",
+      "value": "for Android, at most 240 messages per minute and 5,000 messages per hour to a single device",
+      "source": "https://firebase.google.com/docs/cloud-messaging/throttling-and-quotas"
+    },
+    {
+      "kind": "request-rate",
+      "value": "collapsible messages limited to a burst of 20 messages per app per device, with a refill of 1 message every 3 minutes",
+      "source": "https://firebase.google.com/docs/cloud-messaging/throttling-and-quotas"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "4096 bytes maximum message payload (2048 bytes for messages to a topic)",
+      "source": "https://firebase.google.com/docs/cloud-messaging/customize-messages/set-message-type"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "message time to live at most 4 weeks (2,419,200 seconds), the default when unset, with ttl 0 discarding an undeliverable message",
+      "source": "https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages"
+    }
+  ],
+  "limits_note": "The downstream quota measures messages, not requests; HTTP client errors 400-499 (excluding 429) count against it, and quota minutes are not aligned to the clock. A self-service increase of up to 25 percent can be requested once usage is regularly at least 80 percent of quota for 5 consecutive minutes a day with a client error ratio below 5 percent; temporary increases above 18M messages per minute need at least 30 days notice, at most 2 events a year. A maximum of 4 collapse keys is allowed at any given time. The documented limits are subject to change.",
+  "binding": "request-rate",
+  "binding_note": "FCM has no per-message charge or monthly message cap, so the default downstream rate quota of 600k messages per minute per project is the first constraint a growing sender meets; the per-device rate and the 4096-byte payload cap bind a single target sooner but not the account.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "Access is through a Google Account. The Firebase console sign-in page shows Use your Google Account with an Email or phone identifier field and a Create account link, behind a CAPTCHA. No card is asked at sign-in, and the no-cost Spark plan needs no payment method; a Cloud Billing account with a payment method is required only for the Blaze plan's paid services, which FCM messaging does not need. Sending through the HTTP v1 API from a non-Google server needs a service account JSON file from the Firebase project.",
+    "country": null
+  },
+  "reliability_note": "Delivery is best effort and a message ID means accepted, not delivered; the connection is encrypted but not end-to-end encrypted. Over-quota or overload sends answer HTTP 429, and the limits are subject to change. For an Android device with direct channel messaging that has not connected to FCM for more than one month, FCM accepts a message then immediately discards it.",
+  "confidence": "documented",
+  "confidence_note": "Every number is quoted from first-party Firebase pricing, documentation and REST reference pages captured on 2026-11-19. No account was opened and no message was sent, so no measured rung is claimed: sending needs project credentials that only an account holds. unverified: any account-level quota or console composer limit visible only after sign-up.",
+  "evidence": [
+    {
+      "url": "https://firebase.google.com/pricing",
+      "date": "2026-11-19",
+      "proved": "the pricing table lists Cloud Messaging as No-cost",
+      "capture": "sha256:5e4acc1e87970021c88cbeb99d6f3c3002bb7ae2e9e7662162b3bc662b749995",
+      "quote": "Cloud Messaging (FCM) |No-cost"
+    },
+    {
+      "url": "https://firebase.google.com/pricing",
+      "date": "2026-11-19",
+      "proved": "the no-cost Spark plan needs no payment method",
+      "capture": "sha256:5e4acc1e87970021c88cbeb99d6f3c3002bb7ae2e9e7662162b3bc662b749995",
+      "quote": "Generous no-cost usage limits No payment method needed"
+    },
+    {
+      "url": "https://firebase.google.com/docs/projects/billing/firebase-pricing-plans",
+      "date": "2026-11-19",
+      "proved": "no-cost Firebase products, including FCM, get full usage at no charge regardless of user count",
+      "capture": "sha256:4af2d0ab75bbbb5a29c12bf1f88a88ac5ccd684128c3d6fa4e3bd4aee41517b6",
+      "quote": "you get full usage of the following Firebase products at no charge"
+    },
+    {
+      "url": "https://firebase.google.com/docs/projects/billing/firebase-pricing-plans",
+      "date": "2026-11-19",
+      "proved": "Cloud Messaging is in the list of no-cost Firebase products",
+      "capture": "sha256:4af2d0ab75bbbb5a29c12bf1f88a88ac5ccd684128c3d6fa4e3bd4aee41517b6",
+      "quote": "Cloud Messaging ( FCM ) Crashlytics"
+    },
+    {
+      "url": "https://firebase.google.com/docs/projects/billing/firebase-pricing-plans",
+      "date": "2026-11-19",
+      "proved": "the Spark plan needs no payment information to start or to use no-cost products",
+      "capture": "sha256:4af2d0ab75bbbb5a29c12bf1f88a88ac5ccd684128c3d6fa4e3bd4aee41517b6",
+      "quote": "No payment information needed to get started or to use only the no-cost Firebase products"
+    },
+    {
+      "url": "https://firebase.google.com/docs/projects/billing/firebase-pricing-plans",
+      "date": "2026-11-19",
+      "proved": "a Cloud Billing account, which needs a payment method, belongs to the Blaze plan rather than FCM messaging",
+      "capture": "sha256:4af2d0ab75bbbb5a29c12bf1f88a88ac5ccd684128c3d6fa4e3bd4aee41517b6",
+      "quote": "Cloud Billing accounts require a payment method"
+    },
+    {
+      "url": "https://firebase.google.com/docs/cloud-messaging/throttling-and-quotas",
+      "date": "2026-11-19",
+      "proved": "the default downstream quota is 600k messages per minute per project and covers over 99 percent of developers",
+      "capture": "sha256:9a360b470ad7808e488ac6949712514651bd408ad81278836b745a4f99e49d3e",
+      "quote": "The default quota of 600k messages per minute covers over 99% of"
+    },
+    {
+      "url": "https://firebase.google.com/docs/cloud-messaging/throttling-and-quotas",
+      "date": "2026-11-19",
+      "proved": "an over-quota send answers HTTP 429 RESOURCE_EXHAUSTED until the next minute",
+      "capture": "sha256:9a360b470ad7808e488ac6949712514651bd408ad81278836b745a4f99e49d3e",
+      "quote": "HTTP status code 429 RESOURCE_EXHAUSTED"
+    },
+    {
+      "url": "https://firebase.google.com/docs/cloud-messaging/throttling-and-quotas",
+      "date": "2026-11-19",
+      "proved": "the quota counts messages rather than requests",
+      "capture": "sha256:9a360b470ad7808e488ac6949712514651bd408ad81278836b745a4f99e49d3e",
+      "quote": "The downstream quota measures messages, not requests"
+    },
+    {
+      "url": "https://firebase.google.com/docs/cloud-messaging/throttling-and-quotas",
+      "date": "2026-11-19",
+      "proved": "HTTP client errors except 429 count against the quota",
+      "capture": "sha256:9a360b470ad7808e488ac6949712514651bd408ad81278836b745a4f99e49d3e",
+      "quote": "Client errors (HTTP status code 400-499) are counted (excluding 429s)"
+    },
+    {
+      "url": "https://firebase.google.com/docs/cloud-messaging/throttling-and-quotas",
+      "date": "2026-11-19",
+      "proved": "Android is limited to 240 messages a minute and 5,000 an hour to one device",
+      "capture": "sha256:9a360b470ad7808e488ac6949712514651bd408ad81278836b745a4f99e49d3e",
+      "quote": "up to 240 messages per minute and 5,000 messages per hour to a single device"
+    },
+    {
+      "url": "https://firebase.google.com/docs/cloud-messaging/throttling-and-quotas",
+      "date": "2026-11-19",
+      "proved": "collapsible messages are limited to a burst of 20 per app per device with a refill of 1 every 3 minutes",
+      "capture": "sha256:9a360b470ad7808e488ac6949712514651bd408ad81278836b745a4f99e49d3e",
+      "quote": "a burst of 20 messages per app per device, with a refill of 1 message every 3 minutes"
+    },
+    {
+      "url": "https://firebase.google.com/docs/cloud-messaging/throttling-and-quotas",
+      "date": "2026-11-19",
+      "proved": "the documented limits are subject to change",
+      "capture": "sha256:9a360b470ad7808e488ac6949712514651bd408ad81278836b745a4f99e49d3e",
+      "quote": "The limits discussed in this section are subject to change"
+    },
+    {
+      "url": "https://firebase.google.com/docs/cloud-messaging/customize-messages/set-message-type",
+      "date": "2026-11-19",
+      "proved": "notification and data messages have a 4096-byte maximum payload, with a 1000-character limit from the console composer",
+      "capture": "sha256:8f292c390100a315e2a25cc175b2b72c9cde5f97b16aaa7bb9963cd26e04d694",
+      "quote": "Maximum payload for both message types is 4096 bytes"
+    },
+    {
+      "url": "https://firebase.google.com/docs/cloud-messaging/error-codes",
+      "date": "2026-11-19",
+      "proved": "the payload cap is 4096 bytes and 2048 bytes for messages to topics, counting keys and values",
+      "capture": "sha256:5b1831a41550b81435431abfe25586097363377d10323e233ab1dbce92829ace",
+      "quote": "4096 bytes for most messages, or 2048 bytes in the case of messages to topics"
+    },
+    {
+      "url": "https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages",
+      "date": "2026-11-19",
+      "proved": "message time to live is at most 4 weeks and defaults to 4 weeks when unset",
+      "capture": "sha256:56326beba0924041f2d4e3bf57e597d725686a4d84763576cc4b6f34ac383ceb",
+      "quote": "The maximum time to live supported is 4 weeks, and the default value is 4 weeks if not set"
+    },
+    {
+      "url": "https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages",
+      "date": "2026-11-19",
+      "proved": "at most 4 collapse keys are allowed at any given time",
+      "capture": "sha256:56326beba0924041f2d4e3bf57e597d725686a4d84763576cc4b6f34ac383ceb",
+      "quote": "A maximum of 4 different collapse keys is allowed at any given time"
+    },
+    {
+      "url": "https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages",
+      "date": "2026-11-19",
+      "proved": "the backend sets a default apns-expiration of 30 days when the header is absent",
+      "capture": "sha256:56326beba0924041f2d4e3bf57e597d725686a4d84763576cc4b6f34ac383ceb",
+      "quote": "The backend sets a default value for apns-expiration of 30 days"
+    },
+    {
+      "url": "https://console.firebase.google.com/",
+      "date": "2026-11-19",
+      "proved": "the Firebase console sign-in asks for an email or phone identifier",
+      "capture": "sha256:eea9ef34af68ee79be32f903ab204c2c41a54fec83fbcaf1efec0c9010e51d6a",
+      "quote": "aria-label=\"Email or phone\""
+    },
+    {
+      "url": "https://console.firebase.google.com/",
+      "date": "2026-11-19",
+      "proved": "sign-in is through a Google Account and offers a Create account route",
+      "capture": "sha256:eea9ef34af68ee79be32f903ab204c2c41a54fec83fbcaf1efec0c9010e51d6a",
+      "quote": "Use your Google Account"
+    },
+    {
+      "url": "https://console.firebase.google.com/",
+      "date": "2026-11-19",
+      "proved": "a new Google Account can be created at the sign-in page",
+      "capture": "sha256:eea9ef34af68ee79be32f903ab204c2c41a54fec83fbcaf1efec0c9010e51d6a",
+      "quote": "Create account"
+    },
+    {
+      "url": "https://firebase.google.com/docs/cloud-messaging/send/v1-api",
+      "date": "2026-11-19",
+      "proved": "the HTTP v1 send endpoint is an HTTP POST to fcm.googleapis.com",
+      "capture": "sha256:b21e52b7b42565b0a5d9483ed299495847ba5b5f86f3487771499b0dbf9f0087",
+      "quote": "POST https://fcm.googleapis.com/v1/TARGET_PROJECT_ID/messages:send"
+    },
+    {
+      "url": "https://firebase.google.com/docs/cloud-messaging/send/v1-api",
+      "date": "2026-11-19",
+      "proved": "a non-Google server needs a service account JSON file from the Firebase project to authorize sends",
+      "capture": "sha256:b21e52b7b42565b0a5d9483ed299495847ba5b5f86f3487771499b0dbf9f0087",
+      "quote": "you'll need to download a service account JSON file from your Firebase project"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T00:19:24.749Z",
+  "history": [],
+  "notes": "Cloud Messaging is no-cost on both the Spark and Blaze plans, so one record covers the offer. Revisit when the pricing page adds a per-message charge, when the default downstream quota changes, or when the message types page changes the payload cap. A send path needs Firebase project credentials, so no probe was run and the rung stays documented. The docs page firebase.google.com/docs/cloud-messaging/concept-options answered HTTP 404; the retention value is instead taken from the REST reference, which states the same 4-week maximum and default. The schema has no unit for messages, so the free tier unit is recorded as unlimited and the true unit is named in free_tier.notes."
+}

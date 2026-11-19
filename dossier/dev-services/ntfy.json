@@ -1,0 +1,207 @@
+{
+  "topic": "dev-services",
+  "slug": "ntfy",
+  "provider": "ntfy",
+  "url": "https://ntfy.sh/v1/tiers",
+  "category": "HTTP pub-sub push notification service to phone and desktop (hosted, ntfy.sh public server free tier)",
+  "tier": "free (no account)",
+  "free_tier": {
+    "stated": "Free usage of the ntfy.sh hosted server without creating an account: 250 messages a day, 5 emails a day, 0 phone calls, 0 reserved topics, attachments up to 2 MB with 20 MB total per visitor and 200 MB daily bandwidth; the free limits are based on IP address (basis ip)",
+    "unit": "requests",
+    "metered_on": "request-count",
+    "source_url": "https://ntfy.sh/v1/tiers",
+    "read_on": "2026-11-19",
+    "notes": "The headline free unit is the daily message count, denominated in requests (messages). The tiers endpoint also states messages_expiry_duration 43200 seconds (12 hours), attachment_file_size 2097152 bytes (2 MB), attachment_total_size 20971520 bytes (20 MB), attachment_expiry_duration 10800 seconds (3 hours), emails 5 and calls 0. The unit-free to sign-up is anonymous; billing accounts and card details apply only to paid plans, which are out of scope for this hosted free-tier record."
+  },
+  "per_object_cap": {
+    "stated": "Each message can be up to 4,096 bytes long; longer messages are treated as attachments. On the free tier an attachment is at most 2 MB (2097152 bytes) per file and 20 MB (20971520 bytes) total per visitor.",
+    "bytes": 2097152,
+    "source_url": "https://ntfy.sh/v1/tiers",
+    "notes": "The 2 MB attachment file cap is the free-tier value from the tiers endpoint; 2097152 bytes is that stated value. The publish docs describe the default self-hosted configuration as 15 MB per attachment and 100 MB total per visitor, which the tiers endpoint shows is raised or lowered per tier; the hosted free tier uses 2 MB."
+  },
+  "retention": {
+    "stated": "Messages are cached server-side for 12 hours by default (43200 seconds on the free tier); attachments expire after 3 hours (10800 seconds on the free tier).",
+    "days": null,
+    "source_url": "https://docs.ntfy.sh/publish",
+    "notes": "Both are sub-day retention windows, so days is null. A publisher can set the X-Cache: no header to skip server-side caching entirely."
+  },
+  "egress": {
+    "terms": "Traffic out is metered only as a daily bandwidth budget: by default 500 MB per visitor in 24 hours covering attachment transfers and cache replay, and on ntfy.sh the daily bandwidth limit is 200 MB. Exceeding it returns HTTP 429 with ntfy error code 42905 and no messages are written. No per-GB price is stated for the free tier.",
+    "metered": true,
+    "free_allowance": "200 MB per visitor per 24 hours on ntfy.sh free",
+    "price_per_tb": null,
+    "source_url": "https://docs.ntfy.sh/publish"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "Publishing is an HTTP PUT or POST to ntfy.sh/<topic> with the message as the body and headers for title, priority, tags and attachments. Subscribing uses a GET streaming API at <topic>/json, <topic>/sse or <topic>/raw, or WebSockets at <topic>/ws, all documented. The ntfy CLI publishes and subscribes from a shell. A free anonymous user publishes to any unreserved topic name with no authentication, so the topic name acts as the credential.",
+  "endpoint": "https://ntfy.sh",
+  "tooling": "curl or any HTTP client for PUT/POST publishing; the ntfy CLI; official client libraries for JavaScript, Go, Python, PHP and PowerShell shown in the docs; official Android, iOS and web apps for receiving. Client SDKs exist for common languages.",
+  "chaining": "A worker or script on any free compute service sends one HTTP PUT/POST to ntfy.sh to reach subscribed phones and desktops; healthchecks.io, GitHub Actions, Ansible, Home Assistant and Uptime Kuma are named integrations.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "250 messages a day on ntfy.sh free (based on IP address)",
+      "source": "https://docs.ntfy.sh/publish"
+    },
+    {
+      "kind": "request-rate",
+      "value": "60 requests per visitor at once, refilling at one request per 5 seconds (default server configuration)",
+      "source": "https://docs.ntfy.sh/publish"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "5 emails a day on ntfy.sh free; 0 phone calls",
+      "source": "https://ntfy.sh/v1/tiers"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "message body up to 4,096 bytes; attachment up to 2 MB per file and 20 MB total per visitor on the free tier",
+      "source": "https://ntfy.sh/v1/tiers"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "attachments expire after 3 hours; messages cached 12 hours by default on the free tier",
+      "source": "https://docs.ntfy.sh/publish"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "200 MB daily bandwidth per visitor on ntfy.sh free",
+      "source": "https://docs.ntfy.sh/publish"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "free limits keyed to IP address (basis ip); repeated overuse may temporarily ban the IP",
+      "source": "https://docs.ntfy.sh/publish"
+    }
+  ],
+  "binding": "volume-quota",
+  "binding_note": "The 250-message-per-day ceiling keyed to IP address is the first threshold a script reaches at normal alerting volume, before the 60-request burst rate or the 200 MB bandwidth budget.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "No account is needed for the hosted free tier: the terms state 'You may use the Service without creating an account or subscribing to a paid plan.' The home page says 'Try ntfy for free without sign-up' and the publish docs say 'Because there is no sign-up, the topic is essentially a password'. No email, phone, card, ID or institution is asked for to publish or subscribe on the free tier. A valid payment method via Stripe is required only for a paid Subscription, which is out of scope for this free-tier record.",
+    "country": null
+  },
+  "reliability_note": "Best effort only: the FAQ states the service runs on a single DigitalOcean droplet without scale out or redundancy; short blips and HTTP 500 spikes have occurred. Traffic over the daily bandwidth budget returns HTTP 429 (error code 42905). Repeatedly exceeding limits may temporarily ban the IP address.",
+  "confidence": "documented",
+  "confidence_note": "All limits are quoted from first-party pages: the ntfy.sh/v1/tiers JSON endpoint, the official publish docs, the subscribe API docs, the FAQ and the terms. The tiers endpoint serves a JSON response; that page text was captured from the fetched response. No live publish probe was run against ntfy.sh, so the rung stays documented. The self-hosted software is not the offer of this record and is not recommended while the hosted free server exists.",
+  "evidence": [
+    {
+      "url": "https://ntfy.sh/",
+      "date": "2026-11-19",
+      "proved": "the home page offers ntfy free without sign-up and notes the open-source self-host option",
+      "capture": "sha256:8da87563959da74ba842399a19806003485a82dba02c26786a4ba5ab95e6981b",
+      "quote": "Try ntfy for free without sign-up, or check out our paid plans. Or, since it's open source, you can always self-host it."
+    },
+    {
+      "url": "https://ntfy.sh/",
+      "date": "2026-11-19",
+      "proved": "ntfy is a REST-based push notification service from scripts to phone or desktop",
+      "capture": "sha256:8da87563959da74ba842399a19806003485a82dba02c26786a4ba5ab95e6981b",
+      "quote": "It allows you to send notifications to your phone or desktop via scripts from any computer, and/or using a REST API."
+    },
+    {
+      "url": "https://ntfy.sh/v1/tiers",
+      "date": "2026-11-19",
+      "proved": "the free tier is IP-based with 250 messages, 5 emails, 0 calls, 2 MB attachment file, 20 MB total attachment, 3-hour attachment expiry and 12-hour message expiry",
+      "capture": "sha256:d9b6c6d59ed67a6dc266e4488b5142f9a42cc8e8ee8e83c9a3ffe09e1cc46b26",
+      "quote": "{\"limits\":{\"basis\":\"ip\",\"messages\":250,\"messages_expiry_duration\":43200,\"emails\":5,\"calls\":0,\"reservations\":0,\"attachment_total_size\":20971520,\"attachment_file_size\":2097152,\"attachment_expiry_duration\":10800,\"attachment_bandwidth\":0}}"
+    },
+    {
+      "url": "https://docs.ntfy.sh/publish",
+      "date": "2026-11-19",
+      "proved": "the daily message limit on ntfy.sh is 250",
+      "capture": "sha256:e2efc0bcd645bfb80a9700013cdca6410e45ed1e67721873de41189e4215ac9c",
+      "quote": "On ntfy.sh, the daily message limit is 250."
+    },
+    {
+      "url": "https://docs.ntfy.sh/publish",
+      "date": "2026-11-19",
+      "proved": "the daily bandwidth budget on ntfy.sh is 200 MB",
+      "capture": "sha256:e2efc0bcd645bfb80a9700013cdca6410e45ed1e67721873de41189e4215ac9c",
+      "quote": "On ntfy.sh, the daily bandwidth limit is 200 MB."
+    },
+    {
+      "url": "https://docs.ntfy.sh/publish",
+      "date": "2026-11-19",
+      "proved": "the hosted attachment size limit is 2 MB and per-visitor total is 20 MB",
+      "capture": "sha256:e2efc0bcd645bfb80a9700013cdca6410e45ed1e67721873de41189e4215ac9c",
+      "quote": "On ntfy.sh, the attachment size limit is 2 MB, and the per-visitor total is 20 MB."
+    },
+    {
+      "url": "https://docs.ntfy.sh/publish",
+      "date": "2026-11-19",
+      "proved": "the default server allows 60 requests per visitor at once, refilling one request per 5 seconds",
+      "capture": "sha256:e2efc0bcd645bfb80a9700013cdca6410e45ed1e67721873de41189e4215ac9c",
+      "quote": "the server is configured to allow 60 requests per visitor at once, and then refills the your allowed requests bucket at a rate of one request per 5 seconds."
+    },
+    {
+      "url": "https://docs.ntfy.sh/publish",
+      "date": "2026-11-19",
+      "proved": "each message is at most 4,096 bytes and longer ones become attachments",
+      "capture": "sha256:e2efc0bcd645bfb80a9700013cdca6410e45ed1e67721873de41189e4215ac9c",
+      "quote": "Each message can be up to 4,096 bytes long. Longer messages are treated as attachments."
+    },
+    {
+      "url": "https://docs.ntfy.sh/publish",
+      "date": "2026-11-19",
+      "proved": "ntfy.sh deletes attachments after 3 hours",
+      "capture": "sha256:e2efc0bcd645bfb80a9700013cdca6410e45ed1e67721873de41189e4215ac9c",
+      "quote": "Attachments **expire after 3 hours**, which typically is plenty of time for the user to download it"
+    },
+    {
+      "url": "https://docs.ntfy.sh/publish",
+      "date": "2026-11-19",
+      "proved": "repeated limit overuse on ntfy.sh may temporarily ban the IP address",
+      "capture": "sha256:e2efc0bcd645bfb80a9700013cdca6410e45ed1e67721873de41189e4215ac9c",
+      "quote": "If you repeatedly exceed the limits on ntfy.sh, or otherwise abuse the service, your IP address may be temporarily banned."
+    },
+    {
+      "url": "https://docs.ntfy.sh/publish",
+      "date": "2026-11-19",
+      "proved": "publishing uses HTTP PUT or POST and anonymous users have the topic name as their credential",
+      "capture": "sha256:e2efc0bcd645bfb80a9700013cdca6410e45ed1e67721873de41189e4215ac9c",
+      "quote": "Because there is no sign-up, **the topic is essentially a password**, so pick something that's not easily guessable"
+    },
+    {
+      "url": "https://docs.ntfy.sh/subscribe/api/",
+      "date": "2026-11-19",
+      "proved": "the subscription API is available as HTTP streams or WebSockets",
+      "capture": "sha256:41d0bafb22ef1b91ecb4794d1a5f3b3cd2f778d777e74254f49f56396964bd3d",
+      "quote": "You can consume the subscription API as either a **simple HTTP stream (JSON, SSE or raw)**, or **via WebSockets**."
+    },
+    {
+      "url": "https://docs.ntfy.sh/faq",
+      "date": "2026-11-19",
+      "proved": "the FAQ confirms free no-signup use of the ntfy.sh server",
+      "capture": "sha256:2c40ff3e1963586d0637c3eebb0e86e597c7520eb21e4441e9560103674ed2a6",
+      "quote": "While I will always allow usage of the ntfy.sh server without signup and free of charge, I may also offer paid plans in the future."
+    },
+    {
+      "url": "https://docs.ntfy.sh/faq",
+      "date": "2026-11-19",
+      "proved": "the hosted service offers best-effort reliability on a single droplet",
+      "capture": "sha256:2c40ff3e1963586d0637c3eebb0e86e597c7520eb21e4441e9560103674ed2a6",
+      "quote": "ntfy currently runs on a single DigitalOcean droplet, without any scale out strategy or redundancies."
+    },
+    {
+      "url": "https://docs.ntfy.sh/faq",
+      "date": "2026-11-19",
+      "proved": "messages are cached server-side for 12 hours by default",
+      "capture": "sha256:2c40ff3e1963586d0637c3eebb0e86e597c7520eb21e4441e9560103674ed2a6",
+      "quote": "Messages are cached for the duration configured in `server.yml` (12h by default) to facilitate service restarts, message polling and to overcome client network disruptions."
+    },
+    {
+      "url": "https://docs.ntfy.sh/terms",
+      "date": "2026-11-19",
+      "proved": "the terms state the Service can be used without an account and free usage is rate limited",
+      "capture": "sha256:6d034f57ebac6015936e69e0f133f9f458cb50dc6c683d963edd85a28151d981",
+      "quote": "You may use the Service without creating an account or subscribing to a paid plan. Free usage is subject to rate limits and other restrictions as described in our documentation."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T02:07:06.468Z",
+  "notes": "ntfy has both a hosted free server (ntfy.sh) and self-hostable open-source software; this record documents the hosted free offer, not the self-hosted software, so self_hosted is absent. The cheapest paid tiers (Supporter USD 6 monthly or USD 5 yearly, Pro USD 12 or USD 10, Business USD 25 or USD 20) are out of scope for this free-tier record. The free tier is anonymous and keyed to IP address, so a shared IP can inherit another user's rate limit. No live publish probe was run. Revisit when the tiers endpoint changes the free message count or the attachment cap."
+}
