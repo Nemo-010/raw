@@ -1,0 +1,302 @@
+{
+  "topic": "dev-services",
+  "slug": "plivo",
+  "provider": "Plivo",
+  "url": "https://www.plivo.com/pricing",
+  "category": "hosted SMS, MMS and voice API with phone numbers, SIP trunking and voice AI agents (hosted)",
+  "tier": "Pay as you go / Free Trial (US data region, before first payment)",
+  "free_tier": {
+    "stated": "USD 10 in free credits, no credit card required; the free trial credits last for the first 3 weeks, after which a payment card is required to continue on the Professional plan. There is no free message or call allowance: platform usage is billed per use from the credits, and SMS & MMS, WhatsApp and Verify are available on the Enterprise plan only (USD 1,000 a month).",
+    "unit": "credits",
+    "metered_on": "unstated",
+    "source_url": "https://www.plivo.com/pricing",
+    "read_on": "2026-11-19",
+    "notes": "USD 10 is the stated trial credit value; the pricing page does not state how many messages or minutes that buys, and the trial is time-limited to 3 weeks rather than recurring."
+  },
+  "per_object_cap": {
+    "stated": "A single SMS segment holds up to 160 characters in GSM-7 encoding, or 70 characters with Unicode; longer messages are split into billed segments. A call recording file is capped at 2GB.",
+    "bytes": null,
+    "source_url": "https://docs.plivo.com/docs/faq/billing-and-invoices/billing-concepts",
+    "notes": "The two caps apply to different objects: a message segment and a recording file, so no single byte count is recorded."
+  },
+  "retention": {
+    "stated": "Call logs can be retrieved for the last 90 days only; if no end_time filter is given, the Calls API searches the last 7 days and the maximum search range is 30 days.",
+    "days": 90,
+    "source_url": "https://docs.plivo.com/docs/voice/api/calls",
+    "notes": "The 90-day window is a documented retrieval limit for call records, not a stated deletion guarantee."
+  },
+  "egress": {
+    "terms": "Not a data-transfer service: calls and messages are billed per minute or per segment, and the API returns JSON over HTTPS with no separate per-GB egress charge stated on the pages read.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://docs.plivo.com/docs/voice/api/overview"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "The Voice API is at https://api.plivo.com/v1/Account/{auth_id}/ and uses standard HTTP methods with JSON request and response bodies. All API requests use HTTP Basic Authentication with the Auth ID as username and Auth Token as password. Messaging, phone number and pricing APIs share the same host, and XML documents and the PHLO visual tool cover call flow design.",
+  "endpoint": "https://api.plivo.com/v1/Account/{auth_id}/",
+  "tooling": "Official server SDKs for Node.js, Python, Go, Java, PHP, Ruby, .NET and Salesforce; cURL or any HTTP client using Basic Auth and JSON; the PHLO visual designer; Browser SDK for WebRTC calls.",
+  "chaining": "A worker on any host can place calls or send messages through the REST API, and audio streaming or SIP trunking connects calls to a separate voice agent over WebSocket or SIP.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "USD 10 in free trial credits, valid for the first 3 weeks",
+      "source": "https://www.plivo.com/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "Free Tier (before first payment): 1 outbound call per second and 2 concurrent calls in the US data region",
+      "source": "https://docs.plivo.com/docs/voice/concepts/account-limits"
+    },
+    {
+      "kind": "request-rate",
+      "value": "300 API requests per five seconds; above that the API answers 429 Too Many Requests",
+      "source": "https://docs.plivo.com/docs/voice/concepts/account-limits"
+    },
+    {
+      "kind": "request-rate",
+      "value": "Default inbound CPS is 10 per account; calls above it are rejected",
+      "source": "https://docs.plivo.com/docs/voice/concepts/account-limits"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "SMS segment of 160 GSM-7 characters or 70 Unicode characters; call recording file up to 2GB",
+      "source": "https://docs.plivo.com/docs/faq/billing-and-invoices/billing-concepts"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "Call logs retrievable for the last 90 days only",
+      "source": "https://docs.plivo.com/docs/voice/api/calls"
+    }
+  ],
+  "limits_note": "SMS & MMS, WhatsApp and Verify are listed as Enterprise-only features (from USD 1,000/month) in the US data region, so SMS use is gated to the paid tier. The default account usage limit is USD 1,000 a month and the Professional maximum is USD 2,500 a month. The vocabulary has no kind for a spend cap or a time-limited credit, so both are filed as volume-quota.",
+  "binding": "volume-quota",
+  "binding_note": "The USD 10 trial credit that expires after 3 weeks and the 2 concurrent calls on the free tier are reached before the API rate of 300 requests per five seconds, and the free tier cannot send SMS at all in the US data region.",
+  "identity_cost": {
+    "kind": "country-phone",
+    "detail": "The signup page at cx.plivo.com/signup answered with a VPN or proxy block, so no form fields were observed there. First-party account and support pages state the registration gate: name, work email address and password, then email activation via a link, then verification of a unique phone number by SMS OTP or voice call. Personal and disposable email domains are rejected, the number must be SMS-enabled, non-VoIP and match the region, and no VPN is allowed during onboarding. A data region is chosen at signup: the United States region requires an international credit or debit card or USD bank transfer, while the India region requires an Indian card, both only for payment after the trial. No card is required to open the free trial.",
+    "country": "US or India data region; phone country must match the region"
+  },
+  "reliability_note": "Voice API calls in the US region are billed in 60-second increments starting at answer; calls above the concurrency limit are rejected immediately with hangup cause 5030, and requests above the monthly usage limit answer 403. The default maximum call duration is four hours, extendable to 24 hours.",
+  "confidence": "documented",
+  "confidence_note": "Every limit is quoted from first-party pricing, FAQ, account-limit and API pages. No account was opened and no message or call was sent, so no measured rung is claimed. The signup page was walled with a VPN notice; the identity fields come from first-party account-management and support pages. unverified: whether a work email alone is enough to receive trial credits, since registration also requires a verified phone number, and how much voice or SMS usage USD 10 of credit buys.",
+  "evidence": [
+    {
+      "url": "https://www.plivo.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:2d7587825ee6159d6cb2f06edcfe5e7e02b9a7efc4ab15964f4e1205b049d1d8",
+      "quote": "$10 in free credits. No credit card required.",
+      "proved": "the pay-as-you-go offer grants USD 10 in free credits with no card at signup"
+    },
+    {
+      "url": "https://www.plivo.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:2d7587825ee6159d6cb2f06edcfe5e7e02b9a7efc4ab15964f4e1205b049d1d8",
+      "quote": "Coverage in the United States & India\n\nSIP Trunking, Audio Streaming, AI Agents & Phone Numbers\n\n2 RPS & 50 call concurrency\n\nUp to $2,500 of monthly usage",
+      "proved": "the pay-as-you-go plan covers the US and India and states 2 RPS, 50 concurrent calls and a USD 2,500 monthly usage ceiling"
+    },
+    {
+      "url": "https://www.plivo.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:2d7587825ee6159d6cb2f06edcfe5e7e02b9a7efc4ab15964f4e1205b049d1d8",
+      "quote": "## Enterprise\n\nStarts at $1,000 per month",
+      "proved": "the Enterprise plan starts at USD 1,000 a month"
+    },
+    {
+      "url": "https://www.plivo.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:2d7587825ee6159d6cb2f06edcfe5e7e02b9a7efc4ab15964f4e1205b049d1d8",
+      "quote": "### SMS & Verify API\n\nMessages start at $0.0077/sms",
+      "proved": "SMS messages are priced from USD 0.0077 each"
+    },
+    {
+      "url": "https://www.plivo.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:2d7587825ee6159d6cb2f06edcfe5e7e02b9a7efc4ab15964f4e1205b049d1d8",
+      "quote": "Available in Enterprise plan only (starts at $1,000/month)",
+      "proved": "SMS and Verify are limited to the paid Enterprise plan"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/faq/account/plans",
+      "date": "2026-11-19",
+      "capture": "sha256:d204f14f17e76dca044334e317b43eb8251aa5ee8ee2487e83b0d7da4010eb52",
+      "quote": "Yes. You get free credits for your first 3 weeks. After they expire, add a payment card to continue on the Professional plan. You can later upgrade to Enterprise as your needs grow.",
+      "proved": "the free trial credits last 3 weeks and a card is needed afterwards"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/faq/account/plans",
+      "date": "2026-11-19",
+      "capture": "sha256:d204f14f17e76dca044334e317b43eb8251aa5ee8ee2487e83b0d7da4010eb52",
+      "quote": "| **Usage limit** | $2,500/month | As required |\n| **CPS** | 2 (default) | Custom |\n| **Coverage** | United States | Custom — [global](https://docs.plivo.com/docs/numbers#country-availability) |\n| **Voice & SIP Trunking** | ✓ | ✓ |\n| **SMS & MMS** | ✗ | ✓ |",
+      "proved": "in the US data region the Professional plan has a USD 2,500 monthly usage limit, 2 default CPS, US coverage and no SMS or MMS"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/voice/concepts/account-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:5a74bfaa904d20b8c06089c534f42470f9ee1cbcc39b6642814e8cfd4d0b62a7",
+      "quote": "| US data region | Free Tier — before your first payment | 1 | 2 |",
+      "proved": "the free tier before first payment allows 1 outbound CPS and 2 concurrent calls"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/voice/concepts/account-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:5a74bfaa904d20b8c06089c534f42470f9ee1cbcc39b6642814e8cfd4d0b62a7",
+      "quote": "Free Tier is not a plan you select. Every US data region account starts there and moves to Professional on its first payment.",
+      "proved": "the free tier is automatic and ends at the first payment"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/voice/concepts/account-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:5a74bfaa904d20b8c06089c534f42470f9ee1cbcc39b6642814e8cfd4d0b62a7",
+      "quote": "Plivo limits all accounts to 300 API requests per five seconds. The limit applies separately to call-initiating APIs and to all other APIs:",
+      "proved": "the API rate limit is 300 requests per five seconds"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/voice/concepts/account-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:5a74bfaa904d20b8c06089c534f42470f9ee1cbcc39b6642814e8cfd4d0b62a7",
+      "quote": "If you send more requests than the limit allows, Plivo blocks the requests and responds with the HTTP error",
+      "proved": "requests above the API rate limit are blocked with an HTTP error"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/voice/concepts/account-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:5a74bfaa904d20b8c06089c534f42470f9ee1cbcc39b6642814e8cfd4d0b62a7",
+      "quote": "The default inbound CPS is 10 per account. Calls above the inbound CPS are rejected, not queued.",
+      "proved": "the default inbound call rate is 10 per second and excess calls are rejected"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/voice/concepts/account-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:5a74bfaa904d20b8c06089c534f42470f9ee1cbcc39b6642814e8cfd4d0b62a7",
+      "quote": "with hangup cause `5030` (`Concurrency Limit Breached`)",
+      "proved": "calls above the concurrency limit are rejected immediately with hangup cause 5030"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/voice/concepts/account-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:5a74bfaa904d20b8c06089c534f42470f9ee1cbcc39b6642814e8cfd4d0b62a7",
+      "quote": "is four hours starting from the time a call is answered. You can extend the limit to 86,400 seconds (24 hours).",
+      "proved": "the default maximum call duration is four hours and can be extended to 24 hours"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/voice/concepts/account-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:5a74bfaa904d20b8c06089c534f42470f9ee1cbcc39b6642814e8cfd4d0b62a7",
+      "quote": "The maximum recording file size is 2GB.",
+      "proved": "a call recording file is capped at 2GB"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/faq/billing-and-invoices/billing-concepts",
+      "date": "2026-11-19",
+      "capture": "sha256:aa39655246e07b6570a8249c7d170c91877dc05d4a86f6fe0844cb88a95f8d5b",
+      "quote": "| Voice API | 60-second (60/60) | Calls are rounded up to the next full minute. A 10-second call is billed as 1 minute. |",
+      "proved": "US Voice API calls are billed in 60-second blocks starting at answer"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/faq/billing-and-invoices/billing-concepts",
+      "date": "2026-11-19",
+      "capture": "sha256:aa39655246e07b6570a8249c7d170c91877dc05d4a86f6fe0844cb88a95f8d5b",
+      "quote": "A single SMS segment can contain up to **160 characters** using GSM-7 encoding (standard Latin characters).",
+      "proved": "one SMS segment holds 160 GSM-7 characters"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/faq/billing-and-invoices/billing-concepts",
+      "date": "2026-11-19",
+      "capture": "sha256:aa39655246e07b6570a8249c7d170c91877dc05d4a86f6fe0844cb88a95f8d5b",
+      "quote": "If your message uses **Unicode** characters (such as non-Latin scripts or special symbols), the segment limit drops to **70 characters**.",
+      "proved": "one Unicode SMS segment holds 70 characters"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/voice/api/calls",
+      "date": "2026-11-19",
+      "capture": "sha256:29651d4be599b518b2b2f1585ee5e39567231d1053949aba733151cb66f591b8",
+      "quote": "Only calls from the last 90 days can be retrieved. If no `end_time` filter is specified, Plivo searches the last 7 days. The maximum search range is 30 days.",
+      "proved": "call records are retrievable for 90 days with a 30-day maximum search range"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/voice/api/overview",
+      "date": "2026-11-19",
+      "capture": "sha256:744571dd76e76d49857bee8aa1fd751b16c7d27d84e99be862f1265c45af2f97",
+      "quote": "The Plivo Voice API lets you programmatically make and receive calls, play audio, record conversations, and build interactive voice applications. The API uses standard HTTP methods and returns JSON responses.",
+      "proved": "the Voice API is a REST interface with JSON responses"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/voice/api/overview",
+      "date": "2026-11-19",
+      "capture": "sha256:744571dd76e76d49857bee8aa1fd751b16c7d27d84e99be862f1265c45af2f97",
+      "quote": "https://api.plivo.com/v1/Account/{auth_id}/",
+      "proved": "the Voice API base URL"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/voice/api/overview",
+      "date": "2026-11-19",
+      "capture": "sha256:744571dd76e76d49857bee8aa1fd751b16c7d27d84e99be862f1265c45af2f97",
+      "quote": "All API requests use HTTP Basic Authentication with your Plivo credentials",
+      "proved": "the API authenticates with HTTP Basic Auth"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/voice/api/overview",
+      "date": "2026-11-19",
+      "capture": "sha256:744571dd76e76d49857bee8aa1fd751b16c7d27d84e99be862f1265c45af2f97",
+      "quote": "API rate limit exceeded (300 requests/5 sec), CPS limit reached",
+      "proved": "the API answers 429 above 300 requests per five seconds"
+    },
+    {
+      "url": "https://cx.plivo.com/signup",
+      "date": "2026-11-19",
+      "capture": "sha256:07643da1a7c669386876fc5103aac27ea44f3e1ff7795e6020898937821446eb",
+      "quote": "Sign up unavailable",
+      "proved": "the signup page was walled with a VPN or proxy check on the reading machine, so no form fields were observed"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/faq/account/account-management",
+      "date": "2026-11-19",
+      "capture": "sha256:c1036342cde02ad37d81dbec6cc730e41d9b3e004c6dcebbe0d06b33a8ff3759",
+      "quote": "1. Go to [Plivo signup](https://cx.plivo.com/signup)\n2. Enter your name, work email, and set a password\n3. Verify your email via activation link\n4. Verify your phone number",
+      "proved": "registration asks for name, work email, password and a verified phone number"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/faq/account/account-management",
+      "date": "2026-11-19",
+      "capture": "sha256:c1036342cde02ad37d81dbec6cc730e41d9b3e004c6dcebbe0d06b33a8ff3759",
+      "quote": "- Work email address — personal (e.g., @gmail.com, @yahoo.com) and disposable email domains are not accepted\n- Valid phone number for verification\n- No VPN during onboarding",
+      "proved": "a work email and a valid phone number are required and no VPN is allowed during onboarding"
+    },
+    {
+      "url": "https://docs.plivo.com/docs/faq/account/account-management",
+      "date": "2026-11-19",
+      "capture": "sha256:c1036342cde02ad37d81dbec6cc730e41d9b3e004c6dcebbe0d06b33a8ff3759",
+      "quote": "New accounts start with a usage limit of $1,000 per month.",
+      "proved": "the default monthly account usage limit is USD 1,000"
+    },
+    {
+      "url": "https://old-support.plivo.com/hc/en-us/articles/360041203772-How-can-I-create-a-Plivo-account",
+      "date": "2026-11-19",
+      "capture": "sha256:811aad2adca26a90de2ebdae2e5e441585d44e269776e13016a5c59cc5dd5e37",
+      "quote": "Plivo account registration requires a unique phone number to be linked with the account. You won’t be able to access your account until you complete the phone verification process.",
+      "proved": "a unique phone number must be verified before the account is accessible"
+    },
+    {
+      "url": "https://old-support.plivo.com/hc/en-us/articles/360041203772-How-can-I-create-a-Plivo-account",
+      "date": "2026-11-19",
+      "capture": "sha256:811aad2adca26a90de2ebdae2e5e441585d44e269776e13016a5c59cc5dd5e37",
+      "quote": "You must use a valid, SMS-enabled, non-VoIP number, and the number country should match the region you’re signing up from.",
+      "proved": "the verification number must be SMS-enabled, non-VoIP and match the signup region"
+    },
+    {
+      "url": "https://old-support.plivo.com/hc/en-us/articles/360041203772-How-can-I-create-a-Plivo-account",
+      "date": "2026-11-19",
+      "capture": "sha256:811aad2adca26a90de2ebdae2e5e441585d44e269776e13016a5c59cc5dd5e37",
+      "quote": "We’ll send a one-time password (OTP) to the number to complete the phone verification process. If you’re unable to receive a code from Plivo via text message, you can select the option to receive a code via phone call.",
+      "proved": "phone verification uses an SMS OTP or a voice call"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-19T01:56:54.567Z",
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "Plivo is a hosted communications API, not downloadable software; the user runs only their own application code against its REST API, so self_hosted is false. The free offer is a time-limited USD 10 trial credit, not a recurring free tier, and in the US data region SMS and MMS are Enterprise-only, which is why the verdict is trial-only. Trial credits buy an unstated amount of voice or SMS usage. The 90-day figure is a call-record retrieval window, not a published deletion guarantee."
+}
