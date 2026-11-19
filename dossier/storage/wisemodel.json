@@ -41,7 +41,7 @@
     "detail": "unverified: identity requirements not documented",
     "country": null
   },
-  "reliability_note": "Public model catalog index returns HTTP 200, but individual model detail pages and Git LFS endpoints returned HTTP 504 gateway timeout on 2026-10-21. Model downloads require authentication.",
+  "reliability_note": "unverified: the Git LFS ref URL answered HTTP 401 on 2026-11-19 (Basic realm GitLab); routes tried: direct read, provider pins (jina-keyless, browserless, cfbr, firecrawl, jina), fetch --dump-headers, Wayback and Cloudflare URL Scanner archive, probe.",
   "confidence": "reported",
   "confidence_note": "Rejection quoted from historical research records; unverified against live endpoints.",
   "evidence": [
@@ -49,6 +49,13 @@
       "url": "https://wisemodel.cn/DeepSeek/DeepSeek-V3.git/info/refs?service=git-upload-pack",
       "date": "2026-10-21",
       "proved": "rejected in the seed: Reads are Chinese-market and mostly login-gated for the interesting parts: /models -> 200, but every model detail page I opened returned 504 through the reader (2 attempts), the git LFS ref [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "probe:https://wisemodel.cn/DeepSeek/DeepSeek-V3.git/info/refs?service=git-upload-pack",
+      "date": "2026-11-19",
+      "proved": "the model download endpoint refuses anonymous access with HTTP 401",
+      "capture": "sha256:9368924521a53c26553ff1d82da3b06a238b22c720ae5012fdfc51d5aa3fbe45",
+      "quote": "\"status\": 401"
     }
   ],
   "verdict": "fails-quota",
