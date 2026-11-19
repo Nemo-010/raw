@@ -78,9 +78,9 @@ waiting to happen, and `render.py --check` refuses one.
 | [`email`](docs/email/README.md) | 47 | 31 | 12 | 3 | 1 | 46 | 5 |
 | [`inference`](docs/inference/README.md) | 365 | 104 | 230 | 18 | 13 | 358 | 11 |
 | [`ip-proxy`](docs/ip-proxy/README.md) | 87 | 23 | 49 | 9 | 6 | 80 | 10 |
-| [`netdisk-pan`](docs/netdisk-pan/README.md) | 104 | 52 | 4 | 34 | 14 | 59 | 22 |
+| [`netdisk-pan`](docs/netdisk-pan/README.md) | 104 | 53 | 4 | 34 | 13 | 59 | 22 |
 | [`storage`](docs/storage/README.md) | 1720 | 382 | 138 | 1092 | 108 | 197 | 29 |
-| **all** | 5240 | 1831 | 1469 | 1607 | 333 | 3242 | 227 |
+| **all** | 5240 | 1832 | 1469 | 1607 | 332 | 3242 | 227 |
 <!-- generated:end -->
 
 ---
