@@ -150,16 +150,29 @@ Each `measured` or `documented` record of this topic that no other document of `
 | record | provider | verdict | confidence |
 | --- | --- | --- | --- |
 | `actuated` | Actuated | paid-only | documented |
+| `amazon-codecatalyst` | Amazon CodeCatalyst | dead | documented |
 | `appcircle-starter` | Appcircle | qualifies-with-caveat | documented |
+| `appflow` | Ionic Appflow | trial-only | documented |
+| `aws-codebuild` | AWS CodeBuild | qualifies-with-caveat | documented |
 | `cloudflare-artifacts` | Cloudflare Artifacts | paid-only | documented |
 | `cloudflare-pages-builds` | Cloudflare Pages builds | qualifies-with-caveat | documented |
 | `cloudflare-workers-builds` | Cloudflare Workers Builds | qualifies-with-caveat | documented |
 | `codefresh-ci` | Codefresh CI (Octopus Deploy) | paid-only | documented |
+| `codeship` | Codeship | dead | documented |
+| `dagger-cloud` | Dagger Cloud | paid-only | documented |
 | `dev-ramps-free` | Dev Ramps | qualifies-with-caveat | documented |
 | `garnix` | Garnix | dead | measured |
+| `graphide` | Graphide | trial-only | documented |
 | `harness-ci-free` | Harness CI Free plan (Harness Cloud) | fails-identity | documented |
+| `jetbrains-qodana` | JetBrains Qodana | qualifies-with-caveat | documented |
 | `nixci` | NixCI | trial-only | documented |
+| `octopus-cloud` | Octopus Cloud | qualifies-with-caveat | documented |
 | `semaphore-cloud` | Semaphore Cloud | qualifies-with-caveat | documented |
+| `shippable` | Shippable | dead | documented |
 | `sourcehut-builds` | SourceHut builds.sr.ht | paid-only | documented |
+| `teamcity-cloud` | TeamCity Cloud | paid-only | documented |
 | `vercel-ci` | Vercel CI | qualifies-with-caveat | documented |
+| `wercker` | Wercker | dead | documented |
+| `gocd` | GoCD (self-hosted) | qualifies-with-caveat | documented |
+| `jenkins-cloud` | Jenkins (self-hosted) | qualifies-with-caveat | documented |
 <!-- generated:end -->
