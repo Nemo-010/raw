@@ -114,11 +114,15 @@ This list holds each `measured` or `documented` record of this topic that no oth
 | record | provider | verdict | confidence |
 | --- | --- | --- | --- |
 | `bunny-dns` | Bunny DNS | paid-only | documented |
+| `constellix` | Constellix | paid-only | documented |
 | `digitalplat-freedomain` | DigitalPlat FreeDomain | qualifies-with-caveat | documented |
+| `dnsimple` | DNSimple | trial-only | documented |
+| `dnsmadeeasy` | DNS Made Easy | trial-only | documented |
 | `dnspod-free` | DNSPod | qualifies-with-caveat | documented |
 | `dynu-free` | Dynu | qualifies-with-caveat | documented |
 | `dynv6` | dynv6 | qualifies-with-caveat | documented |
 | `freemyip` | freemyip.com | qualifies-with-caveat | measured |
+| `gandi` | Gandi | paid-only | documented |
 | `google-trust-services` | Google Trust Services | qualifies-with-caveat | documented |
 | `hetzner-dns` | Hetzner DNS | qualifies-with-caveat | documented |
 | `is-a-dev` | is-a.dev | qualifies-with-caveat | documented |
@@ -126,9 +130,15 @@ This list holds each `measured` or `documented` record of this topic that no oth
 | `js-org` | JS.ORG | qualifies-with-caveat | documented |
 | `kevin-service-registry` | Kevin Service Registry | qualifies-with-caveat | documented |
 | `namesilo` | NameSilo | paid-only | documented |
+| `neustar` | Neustar | paid-only | documented |
 | `no-ip-free` | No-IP | qualifies-with-caveat | documented |
+| `ns1-connect` | IBM NS1 Connect | trial-only | documented |
+| `ns1-connect-essentials` | IBM NS1 Connect | paid-only | documented |
+| `ns1-connect-standard` | IBM NS1 Connect | paid-only | documented |
 | `nsupdate-info` | nsupdate.info | fails-identity | documented |
+| `oracle-cloud-dns` | Oracle Cloud DNS | paid-only | documented |
 | `public-free-suffix` | Public Free Suffix | qualifies-with-caveat | documented |
+| `rage4` | Rage4 | qualifies-with-caveat | documented |
 | `ready-bd` | Ready (ready.bd) | qualifies-with-caveat | documented |
 | `ydns` | YDNS | qualifies-with-caveat | documented |
 | `zerossl` | ZeroSSL | qualifies-with-caveat | documented |
