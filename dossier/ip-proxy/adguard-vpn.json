@@ -58,7 +58,7 @@
     "detail": "An AdGuard account is needed even for the free version: 'first you need to log into your AdGuard account', by email or via Google, Apple ID or Facebook; 'We need your email address to register an AdGuard account and log you in.' A paid purchase takes an email address plus 'bank cards, PayPal, and cryptocurrency'. No phone number or identity document is asked on the pages read.",
     "country": null
   },
-  "reliability_note": "The default page extraction of the licence page returned no price cards (they load by script); the prices above come from a second reader of the same page, and the vendor blog gives the same $47.88 yearly total. A third reader returned the same page in Korean won, so the displayed currency follows the reader's location. unverified: no exit-IP registry class was measured.",
+  "reliability_note": "unverified: behind a sign-up. The exit address that one request returns cannot be measured without an AdGuard account: the free version still needs a login by email (adguardvpn-cli login or the AdGuard account sign-up page), and the CLI proxies only through a local proxy on the user's machine, so no keyless vendor endpoint was available to probe. The displayed currency of the price cards follows the reader's location.",
   "confidence": "documented",
   "confidence_note": "Documented from the vendor's licence page, home page and knowledge base as served. Measured would need an account, a tunnel brought up in each mode and a byte count against the 3 GB free cap.",
   "evidence": [
@@ -166,10 +166,24 @@
       "proved": "The vendor license page lists the VPN plan that both records cite.",
       "capture": "sha256:d2a3f9f083f644e6fd4cdf7a2939772257516afb8ac99a44dcb43a496c09fc8a",
       "quote": "unlimited speed and traffic, the ability to connect up to 10 devices"
+    },
+    {
+      "url": "https://adguard-vpn.com/en/linux/overview.html",
+      "date": "2026-11-19",
+      "proved": "The free VPN needs an AdGuard account login, so no keyless endpoint can be probed for its exit address",
+      "capture": "sha256:372d7f46ad9ed4f0236b4e5bd26383c6dd7f95efead62e9ea2e86e6cd3110863",
+      "quote": "To use AdGuard VPN for Linux, you need an AdGuard account."
+    },
+    {
+      "url": "https://adguard-vpn.com/kb/adguard-vpn-for-linux/login/",
+      "date": "2026-11-19",
+      "proved": "The CLI login asks for an email address, confirming the sign-up gate that keeps the exit address unverified",
+      "capture": "sha256:e5b60e3fbe70fe0a9ec30479f215afcb3a8535379b8e715d684396f06240a695",
+      "quote": "Enter your email address. Once you are logged in, you will see the message *Successfully logged in* in the Terminal."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-04T11:00:31.322Z",
+  "verified_at": "2026-11-19T21:12:18.406Z",
   "price_per_tb_month": "USD 3.99 per month billed annually (USD 47.88 per year) on the 1 year plan; a subscription price, not a per-TB price",
   "history": [],
   "notes": "Duplicate of egress/adguard-vpn, which holds the offer."
