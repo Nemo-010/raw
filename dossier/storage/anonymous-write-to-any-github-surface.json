@@ -38,7 +38,7 @@
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
     "kind": "email",
-    "detail": "unverified: identity requirements not documented",
+    "detail": "a verified email address is required to open a personal account; publishing uses a personal access token bound to that account",
     "country": null
   },
   "reliability_note": "Every write path needs an authenticated identity: anonymous release create -> 401, anonymous GHCR push scope -> DENIED, anonymous release-asset upload -> 400. The multiplier therefore depend",
@@ -49,10 +49,38 @@
       "url": "probe:seed/DEAD-ENDS.md",
       "date": "2026-10-21",
       "proved": "rejected in the seed: Every write path needs an authenticated identity: anonymous release create -> 401, anonymous GHCR push scope -> DENIED, anonymous release-asset upload -> 400. The multiplier therefore depend [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry",
+      "date": "2026-11-19",
+      "proved": "GitHub documents that publishing to its package surfaces needs an access token",
+      "capture": "sha256:4b3a2c0a26a56c2a4cfd47016d4f6a9c5f388b00b9a4eb57386569eab7a9495b",
+      "quote": "You need an access token to publish, install, and delete private, internal, and public packages."
+    },
+    {
+      "url": "https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github",
+      "date": "2026-11-19",
+      "proved": "opening a GitHub account needs a verified email address, not a card",
+      "capture": "sha256:0a0beece02e0570e78f75f239991e8a347ea5999944b0ca711ce7bcb46cdb716",
+      "quote": "To get started with GitHub.com, you need to have a personal account and a verified email address."
+    },
+    {
+      "url": "https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github",
+      "date": "2026-11-19",
+      "proved": "a verified email address is the registration requirement",
+      "capture": "sha256:0a0beece02e0570e78f75f239991e8a347ea5999944b0ca711ce7bcb46cdb716",
+      "quote": "To get started with GitHub.com, you need to have a personal account and a verified email address."
+    },
+    {
+      "url": "probe:https://api.github.com/user",
+      "date": "2026-11-19",
+      "proved": "an unauthenticated GitHub API request is refused with 401 on 2026-11-19",
+      "capture": "sha256:29b7fa2f691d4fe76863e735d4aea973cdcdb0a921a3221aa6fe500897797da8",
+      "quote": "\"status\": \"401\""
     }
   ],
   "verdict": "fails-identity",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:13:00.038Z",
   "notes": "Every write path needs an authenticated identity: anonymous release create -> 401, anonymous GHCR push scope -> DENIED, anonymous release-asset upload -> 400. The multiplier therefore depend",
   "history": [],
   "extras": {
