@@ -102,10 +102,24 @@
       "proved": "the vendor states the residential VPN servers run on its own bare metal servers in data centers",
       "capture": "sha256:30605a6689e4f7867203cac330fba2639d218e4c3b4f49901e08850bfa8c73c8",
       "quote": "TorGuard’s residential VPN IP servers are controlled and operated by TorGuard on bare metal servers in trusted data center locations."
+    },
+    {
+      "url": "probe:https://rdap.arin.net/registry/ip/121.186.118.191",
+      "date": "2026-11-19",
+      "proved": "RDAP response cited only to show the lookup method; this vendor publishes no address, so no lookup was possible.",
+      "capture": "sha256:a08839f772e8b8478ee550e7c9837db580e5dd6054a8558c11df9066ca4c1f52",
+      "quote": "\"handle\":\"121.160.0.0 - 121.191.255.255\",\"type\":\"ALLOCATED PORTABLE\",\"startAddress\":\"121.160.0.0\",\"endAddress\":\"121.191.255.255\""
+    },
+    {
+      "url": "probe:https://rdap.arin.net/registry/ip/121.186.118.191",
+      "date": "2026-11-19",
+      "proved": "RDAP method demonstrated; this vendor publishes no address, so the allocation stays unverified.",
+      "capture": "sha256:a08839f772e8b8478ee550e7c9837db580e5dd6054a8558c11df9066ca4c1f52",
+      "quote": "\"handle\":\"121.160.0.0 - 121.191.255.255\",\"type\":\"ALLOCATED PORTABLE\",\"startAddress\":\"121.160.0.0\",\"endAddress\":\"121.191.255.255\""
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-03T08:33:43.034Z",
+  "verified_at": "2026-11-19T21:12:16.546Z",
   "price_per_tb_month": "USD 19.99 per month per address; the product is priced per address, so no per-TB figure exists",
   "history": [],
   "notes": "The residential arm of the TorGuard product, recorded separately from dossier/egress/torguard.json, which prices the standard plans and port forwarding. Two records for one vendor is correct here because the tiers differ and a reader acts on one.\n\nThree candidates were considered for how the 'leased directly from major ISPs' sentence could be tested, and none of them closed it. (1) The vendor's server list: blocked, both fetch paths returned the Cloudflare challenge. (2) A published ASN or inventory page: none found, and the site publishes no address inventory at all. (3) A third-party review or forum post naming the ASN of an assigned address: not searched in this session, and it would be a reported claim at best, not a measured one. So the sentence is left unverified and named as the caveat rather than repeated as fact. That is the one claim this topic says never survives a registry check, so quoting it would have been the expensive error.\n\nWhat settles it: one purchase, then one RIPE query on the assigned address, answering three things at once, which ASN announces the address, whether that ASN is a consumer ISP or a hosting provider, and whether the address appears in that ISP's own whois. One sample is one sample: a single purchase establishes one address and not the class of the inventory, so the record should name the address that was tested.\n\nThe price is one sample too. It comes from a single page read on a single day in the parent session, and my own two fetch attempts on 2026-10-24 both got 403, so the price is passed on as read rather than re-read here. The probe row above records the wall, not a confirmation of the number.\n\nNot a correction to dossier/egress/torguard.json, but the difference is worth naming. That record's identity kind is email, with a card-or-crypto payment path for the standard plans; this record's card gate concerns the separately-priced residential add-on. Whether the crypto path extends to the residential IP was not established, so this record does not claim anonymity, and the add-on's checkout page is what would settle it. That record also carries the vendor's 'Unlimited Speeds and Unlimited Bandwidth' feature-list sentence for the standard plans; whether that sentence covers this add-on was not established either, so it is not used in egress.terms here.\n\nbinding is none because no constraint with a number was published. Rather than file an invented entry, limits[] is empty and limits_note carries the address-count prose, which is the shape dossier/egress/airvpn.json used for its structural ceilings.\n\nOne schema gap is parked rather than fixed, because this session was scoped to one file: scripts/dossier/schema.json's interface enum has no wireguard, openvpn, socks5, http-proxy, web-ui, api or none token, so no record in this topic can name its access path properly. Until that enum is extended, records here will use cli and put the protocol in interface_detail, as this one does.",
@@ -118,6 +132,7 @@
     "comparison": "cheapest per-address residential product found in this topic's research",
     "isp_origin_claim": "leased directly from major ISPs",
     "isp_claim_status": "documented as a vendor statement, not checked against a registry: the vendor says the addresses are leased directly from major ISPs and terminate on servers it operates on bare metal in data centers, with the upstream ISP named for each US location (Spectrum, Sprint, AT&T, Windstream, Atlas); no per-address inventory or ASN is published, and the server list page returned no list.",
-    "isp_claim_settled_by": "one purchase plus one RIPE query on the assigned address"
+    "isp_claim_settled_by": "one purchase plus one RIPE query on the assigned address",
+    "rdap_allocation": "unverified: the vendor publishes no per-address inventory or test address; no address to look up in RDAP"
   }
 }
