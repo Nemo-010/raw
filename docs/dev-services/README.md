@@ -90,16 +90,21 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `onlineornot` | OnlineOrNot | qualifies-with-caveat | documented |
 | `openobserve-cloud` | OpenObserve | trial-only | documented |
 | `phare` | Phare | qualifies-with-caveat | documented |
+| `plivo` | Plivo | trial-only | documented |
 | `pulsetic` | Pulsetic | qualifies-with-caveat | documented |
 | `pusher-beams` | Pusher Beams | qualifies-with-caveat | documented |
 | `pusher-channels` | Pusher | qualifies-with-caveat | documented |
 | `sentry-education` | Sentry | fails-identity | documented |
 | `sentry-open-source` | Sentry | qualifies-with-caveat | documented |
+| `sinch` | Sinch | trial-only | documented |
 | `statsig` | Statsig | qualifies-with-caveat | documented |
 | `statuscake` | StatusCake | qualifies-with-caveat | documented |
+| `telnyx-messaging` | Telnyx Messaging | paid-only | documented |
 | `temporal-cloud` | Temporal | trial-only | documented |
+| `twilio-programmable-messaging` | Twilio Programmable Messaging | trial-only | documented |
 | `umami-cloud` | Umami | qualifies-with-caveat | documented |
 | `uptimeobserver` | UptimeObserver | qualifies-with-caveat | documented |
+| `vonage` | Vonage | trial-only | documented |
 | `cron-job-org-chronos` | cron-job.org chronos daemon (self-hos... (self-hosted) | qualifies-with-caveat | documented |
 | `inngest-server` | Inngest server (self-hosted) (self-hosted) | qualifies-with-caveat | documented |
 | `n8n-community-edition` | n8n Community Edition (self-hosted) (self-hosted) | qualifies-with-caveat | documented |
