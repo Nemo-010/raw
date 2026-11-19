@@ -5,7 +5,7 @@
   "url": "https://api-docs.deepseek.com/guides/files_api",
   "category": "Chinese LLM platform /v1/files",
   "free_tier": {
-    "stated": "25 GiB per user, 10,000 files, 64 MiB per file. Permanent if `expires_after` is omitted; otherwise 1 hour – 30 days.",
+    "stated": "25 GiB per user, 10,000 files; per-file cap is 64 MiB for images, 100 MiB for documents (PDF, Word, PowerPoint) and 32 MiB for plain text, spreadsheets and ebooks. Permanent if expires_after is omitted; otherwise 1 hour to 30 days.",
     "unit": "GiB",
     "metered_on": "unstated",
     "source_url": "https://api-docs.deepseek.com/guides/files_api",
@@ -13,7 +13,7 @@
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "64 MiB per file",
+    "stated": "Type-dependent: 64 MiB for images, 100 MiB for documents such as PDF, Word and PowerPoint, 32 MiB for plain text, spreadsheets and ebooks.",
     "bytes": 67108864,
     "source_url": "https://api-docs.deepseek.com/guides/files_api",
     "notes": "extracted from the quota or limits prose"
@@ -37,7 +37,7 @@
   "limits": [
     {
       "kind": "per-object-cap",
-      "value": "64 MiB per file",
+      "value": "64 MiB images / 100 MiB documents / 32 MiB text, spreadsheets and ebooks",
       "source": "https://api-docs.deepseek.com/guides/files_api"
     }
   ],
@@ -80,10 +80,59 @@
       "url": "https://api.deepseek.com/files",
       "date": "2026-10-21",
       "proved": "PROBE: curl -D - -> 401, Content-Length 31, body 'Authentication Fails (governor)' — live, ELB + CloudFront fronted"
+    },
+    {
+      "url": "https://api-docs.deepseek.com/guides/files_api",
+      "date": "2026-11-19",
+      "proved": "the docs state a 25 GiB per-user storage quota",
+      "capture": "sha256:298b8834073e4554a50a7a1857ae1510541af48b114ca133266e49f38e08fc48",
+      "quote": "| Max storage per user | 25 GiB |"
+    },
+    {
+      "url": "https://api-docs.deepseek.com/guides/files_api",
+      "date": "2026-11-19",
+      "proved": "the limits table gives a different per-file cap by file type",
+      "capture": "sha256:298b8834073e4554a50a7a1857ae1510541af48b114ca133266e49f38e08fc48",
+      "quote": "| Max upload file size | Images: 64 MiB; documents such as PDF, Word and PowerPoint files: 100 MiB; plain text, spreadsheets and ebooks: 32 MiB |"
+    },
+    {
+      "url": "https://api-docs.deepseek.com/guides/files_api",
+      "date": "2026-11-19",
+      "proved": "the limits table gives image cap as 64 MiB",
+      "capture": "sha256:298b8834073e4554a50a7a1857ae1510541af48b114ca133266e49f38e08fc48",
+      "quote": "| Max upload file size | Images: 64 MiB; documents such as PDF, Word and PowerPoint files: 100 MiB; plain text, spreadsheets and ebooks: 32 MiB |"
+    },
+    {
+      "url": "https://api-docs.deepseek.com/guides/files_api",
+      "date": "2026-11-19",
+      "proved": "the limits table gives a per-type upload size cap",
+      "capture": "sha256:298b8834073e4554a50a7a1857ae1510541af48b114ca133266e49f38e08fc48",
+      "quote": "| Max upload file size | Images: 64 MiB; documents such as PDF, Word and PowerPoint files: 100 MiB; plain text, spreadsheets and ebooks: 32 MiB |"
+    },
+    {
+      "url": "https://api-docs.deepseek.com/guides/files_api",
+      "date": "2026-11-19",
+      "proved": "the 10000-file per-user count cap is unchanged",
+      "capture": "sha256:298b8834073e4554a50a7a1857ae1510541af48b114ca133266e49f38e08fc48",
+      "quote": "| Max number of stored files per user | 10000 |"
+    },
+    {
+      "url": "https://api-docs.deepseek.com/guides/files_api",
+      "date": "2026-11-19",
+      "proved": "the 1 hour to 30 days expiration range and permanence by omission are unchanged",
+      "capture": "sha256:298b8834073e4554a50a7a1857ae1510541af48b114ca133266e49f38e08fc48",
+      "quote": "| File expiration range | 1 hour to 30 days, or permanent (omit `expires_after`) |"
+    },
+    {
+      "url": "https://api-docs.deepseek.com/guides/files_api",
+      "date": "2026-11-19",
+      "proved": "uploaded originals and parsing results cannot be downloaded, so the read path is absent",
+      "capture": "sha256:298b8834073e4554a50a7a1857ae1510541af48b114ca133266e49f38e08fc48",
+      "quote": "Neither the uploaded original file nor the parsing result can be downloaded."
     }
   ],
   "verdict": "fails-egress",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:13:31.792Z",
   "notes": "25 GiB per user, 10,000 files, 64 MiB per file. Permanent if `expires_after` is omitted; otherwise 1 hour – 30 days.",
   "history": [],
   "extras": {
