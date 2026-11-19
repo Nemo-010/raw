@@ -44,7 +44,7 @@
     "detail": "no registration; /api/me returns a guest session",
     "country": null
   },
-  "reliability_note": "Answered as an AList API on one run and not on another, and listed 2 root entries once. Its zero-byte oracle returned neither of the two defined messages.",
+  "reliability_note": "The two fresh probes returned different root listing hashes minutes apart, so the listing is flapping; one of the two reproduced the recorded hash.",
   "confidence": "measured",
   "evidence": [
     {
@@ -56,10 +56,80 @@
       "url": "probe:https://pan.xyyh.xyz/api/fs/list",
       "date": "2026-10-22",
       "proved": "anonymous POST /api/fs/list on / returned code 200 with 2 root entries; write:false, write_content_bypass:None, provider:unknown"
+    },
+    {
+      "url": "probe:https://pan.xyyh.xyz",
+      "date": "2026-11-19",
+      "proved": "the probe's checked_at instant is the fresh last-alive verification time",
+      "capture": "sha256:c432eaff085f76445aa0926ff4beb75c793250032c67b1a2c990c90b67d20d60",
+      "quote": "\"checked_at\": \"2026-11-19T03:37:08.563Z\""
+    },
+    {
+      "url": "probe:https://pan.xyyh.xyz",
+      "date": "2026-11-19",
+      "proved": "the anonymous guest session answered and the root listing returned entries",
+      "capture": "sha256:c432eaff085f76445aa0926ff4beb75c793250032c67b1a2c990c90b67d20d60",
+      "quote": "\"alive\": true"
+    },
+    {
+      "url": "probe:https://pan.xyyh.xyz",
+      "date": "2026-11-19",
+      "proved": "the /api/public/settings request answered HTTP 200 in this run",
+      "capture": "sha256:c432eaff085f76445aa0926ff4beb75c793250032c67b1a2c990c90b67d20d60",
+      "quote": "\"status\": 200"
+    },
+    {
+      "url": "probe:https://pan.xyyh.xyz",
+      "date": "2026-11-19",
+      "proved": "a fresh anonymous root listing produced this hash",
+      "capture": "sha256:c432eaff085f76445aa0926ff4beb75c793250032c67b1a2c990c90b67d20d60",
+      "quote": "\"listing_sha256\": \"b78ce46f\""
+    },
+    {
+      "url": "probe:https://pan.xyyh.xyz",
+      "date": "2026-11-19",
+      "proved": "the fresh root listing hash supports the changed-hash or flapping note",
+      "capture": "sha256:c432eaff085f76445aa0926ff4beb75c793250032c67b1a2c990c90b67d20d60",
+      "quote": "\"listing_sha256\": \"b78ce46f\""
+    },
+    {
+      "url": "probe:https://pan.xyyh.xyz",
+      "date": "2026-11-19",
+      "proved": "the second fresh probe produced a different hash, so the runs disagree",
+      "capture": "sha256:41f126a7aea647e3a2dc3ea9ac787417cf8c5ed6adff8c4530826aa82ce27c3c",
+      "quote": "\"listing_sha256\": null"
+    },
+    {
+      "url": "probe:https://pan.xyyh.xyz",
+      "date": "2026-11-19",
+      "proved": "the first fresh probe returned an anonymous root listing",
+      "capture": "sha256:c432eaff085f76445aa0926ff4beb75c793250032c67b1a2c990c90b67d20d60",
+      "quote": "\"listing_sha256\": \"b78ce46f\""
+    },
+    {
+      "url": "probe:https://pan.xyyh.xyz",
+      "date": "2026-11-19",
+      "proved": "the first fresh probe produced this root listing hash",
+      "capture": "sha256:c432eaff085f76445aa0926ff4beb75c793250032c67b1a2c990c90b67d20d60",
+      "quote": "\"listing_sha256\": \"b78ce46f\""
+    },
+    {
+      "url": "probe:https://pan.xyyh.xyz",
+      "date": "2026-11-19",
+      "proved": "the second fresh probe failed to return a listing",
+      "capture": "sha256:41f126a7aea647e3a2dc3ea9ac787417cf8c5ed6adff8c4530826aa82ce27c3c",
+      "quote": "\"consecutive_failures\": 1"
+    },
+    {
+      "url": "probe:https://pan.xyyh.xyz",
+      "date": "2026-11-19",
+      "proved": "the mount-list request failed in the second fresh probe, consistent with a dead service",
+      "capture": "sha256:41f126a7aea647e3a2dc3ea9ac787417cf8c5ed6adff8c4530826aa82ce27c3c",
+      "quote": "\"alive\": false"
     }
   ],
   "verdict": "dead",
-  "verified_at": "2026-10-22T03:37:00.574Z",
+  "verified_at": "2026-11-19T21:12:07.761Z",
   "binding": "write-gated",
   "notes": "Answered as an AList API on one run and not on another, and listed 2 root entries once. Its zero-byte oracle returned neither of the two defined messages.",
   "history": [],
@@ -73,12 +143,16 @@
     "write_content_bypass": null,
     "permission_bitmask": "2",
     "base_path": "/",
-    "listing_sha256": "9e6193c6",
+    "listing_sha256": "b78ce46f",
     "first_seen": "2024-01-20",
     "first_seen_source": "kuhehe.github.io/20240120224502, whose page was edited in place until 2025-06-17",
-    "last_verified_alive": "2026-10-22T03:37:00.574Z",
+    "last_verified_alive": "2026-11-19T03:37:08.563Z",
     "last_verified_dead": null,
-    "consecutive_failures": 0
+    "consecutive_failures": 1,
+    "death": {
+      "on": "2026-11-19",
+      "cause": "dead-service"
+    }
   },
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z"
