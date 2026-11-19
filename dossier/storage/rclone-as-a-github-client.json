@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "stated-absent: the first-party page states no a per-object cap; rclone is a client and a chunker backend splits large files",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "stated-absent: the first-party page states no a retention period; rclone is a client and does not host bytes",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "stated-absent: the first-party page states no egress terms; rclone is a client and sets none of its own",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "cli"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "Command-line program driven by subcommands such as copy, sync and mount over configured remotes",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "Wraps remotes with alias, chunker, crypt, compress and union; the documented backend list has no GitHub backend.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -49,10 +49,24 @@
       "url": "probe:seed/DEAD-ENDS.md",
       "date": "2026-10-21",
       "proved": "rejected in the seed: No GitHub/Gist/Releases backend exists — verified by listing rclone's backend directory (alias, archive, azureblob, b2, ... s3, sftp, webdav, yandex, zoho; nothing for github). Any GitHub-ba [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://rclone.org/docs/",
+      "date": "2026-11-19",
+      "proved": "the rclone first-party documentation describes a command-line interface",
+      "capture": "sha256:6aef1b42f0d6bc764e287733162455d2c34afc6ce119bb2b4dfa1ecef5a1348f",
+      "quote": "Rclone is a command line program to manage files on cloud storage."
+    },
+    {
+      "url": "https://rclone.org/docs/",
+      "date": "2026-11-19",
+      "proved": "the rclone first-party documentation lists a chunker backend for chaining remotes",
+      "capture": "sha256:6aef1b42f0d6bc764e287733162455d2c34afc6ce119bb2b4dfa1ecef5a1348f",
+      "quote": "- [Chunker](https://rclone.org/chunker/) - transparently splits large files for other remotes"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:49.637Z",
   "notes": "No GitHub/Gist/Releases backend exists. Verified by listing rclone's backend directory (alias, archive, azureblob, b2, .. s3, sftp, webdav, yandex, zoho; nothing for github). Any GitHub-ba.",
   "history": [],
   "extras": {

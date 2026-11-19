@@ -13,27 +13,28 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "Temporary uploads up to 1 GB are allowed.",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "Temporary uploads expire after a chosen 1 hour, 12 hours, 1 day or 3 days.",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "No ads and no throttling on downloads.",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest",
+    "cli"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "HTTP multipart file-upload API at https://catbox.moe/user/api.php (reqtype=fileupload), driven by curl or CLI clients",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "stated-absent: the first-party page states no a way to chain uploads into other storage services; it is a standalone temporary host with browser extensions and API clients",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -49,10 +50,45 @@
       "url": "probe:seed/DEAD-ENDS.md",
       "date": "2026-10-21",
       "proved": "rejected in the seed: Upload API is broken: POST to /resources/internals/api.php returns HTTP 500 (a full 69 KB HTML error page) for every time= value, with or without browser UA/Referer. The GET page renders ('T [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://catbox.moe/tools.php",
+      "date": "2026-11-19",
+      "proved": "the first-party tools page documents an HTTP file-upload API",
+      "capture": "sha256:416b245f9f072953aee73591deb0cce373c06cfa498e6d1bfe67ec5eb8a29c17",
+      "quote": "The API is located at https://catbox.moe/user/api.php"
+    },
+    {
+      "url": "https://litterbox.catbox.moe/",
+      "date": "2026-11-19",
+      "proved": "the Litterbox homepage lists the selectable expiry periods 1 hour, 12 hours, 1 day and 3 days",
+      "capture": "sha256:24511fe1519f052ac685917e77ae7b868682789ffc92d3d6d9877c41ebb9c29f",
+      "quote": "Expire after: 1 Hour 12 Hours 1 Day 3 Days"
+    },
+    {
+      "url": "https://litterbox.catbox.moe/",
+      "date": "2026-11-19",
+      "proved": "the Litterbox homepage states a 1 GB maximum per temporary upload",
+      "capture": "sha256:24511fe1519f052ac685917e77ae7b868682789ffc92d3d6d9877c41ebb9c29f",
+      "quote": "Temporary uploads up to 1 GB are allowed."
+    },
+    {
+      "url": "https://catbox.llc/",
+      "date": "2026-11-19",
+      "proved": "the operator first-party page states Litterbox 1 GB cap, 1/12/24/72-hour expiry and no throttling",
+      "capture": "sha256:d3a402ef0a74958ff02d971c3cd2e4155c24d8dc89db4a430b5366e2a62fc6f6",
+      "quote": "Litterbox is a temporary file upload service that allows you to upload files up to 1GB. Choose whether to have your files expire in 1, 12, 24, or 72 hours. Similar to Catbox - 100% free, no ads, and no throttling."
+    },
+    {
+      "url": "https://litterbox.catbox.moe/faq.php",
+      "date": "2026-11-19",
+      "proved": "the FAQ describes temporary anonymous file storage with later deletion",
+      "capture": "sha256:8961f743719f3321b4f29ddc2e791d2b1261962f1c33d813d4603d959662a203",
+      "quote": "Temporary file storage, so you don't have to waste my disk space, or if you just want to upload something anonymously but have it deleted after a while."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:49.635Z",
   "notes": "Upload API is broken: POST to /resources/internals/api.php returns HTTP 500 (a full 69 KB HTML error page) for every time= value, with or without browser UA/Referer. The GET page renders ('T",
   "history": [],
   "extras": {
