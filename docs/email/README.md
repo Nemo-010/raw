@@ -125,11 +125,16 @@ document of `docs/` names.
 | --- | --- | --- | --- |
 | `buttondown` | Buttondown | qualifies-with-caveat | documented |
 | `elastic-email` | Elastic Email | qualifies-with-caveat | documented |
+| `emaillabs` | EmailLabs | qualifies-with-caveat | documented |
 | `fastmail` | Fastmail | paid-only | documented |
+| `mailazy` | Mailazy | qualifies-with-caveat | documented |
+| `mailercloud` | Mailercloud | qualifies-with-caveat | documented |
 | `maileroo` | Maileroo | qualifies-with-caveat | documented |
 | `mailo` | Mailo | paid-only | documented |
 | `mailpace` | MailPace | fails-quota | documented |
 | `migadu` | Migadu | paid-only | documented |
 | `purelymail` | Purelymail | paid-only | documented |
+| `smtp-com` | SMTP.com | paid-only | documented |
+| `socketlabs` | SocketLabs | trial-only | documented |
 | `tuta` | Tuta (formerly Tutanota) | paid-only | documented |
 <!-- generated:end -->
