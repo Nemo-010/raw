@@ -1,0 +1,130 @@
+{
+  "topic": "email",
+  "slug": "nenzmail",
+  "provider": "NenzMail",
+  "url": "https://nenzmail.com/api-docs",
+  "category": "disposable inbox API",
+  "free_tier": {
+    "stated": "free disposable inbox with a keyless REST API; no signup and no stated byte quota; unlimited inbox count",
+    "unit": "unlimited",
+    "metered_on": "identity-count",
+    "source_url": "https://nenzmail.com/faq",
+    "read_on": "2026-11-19",
+    "notes": "The FAQ states 100% free with no limits and unlimited inboxes. No per-inbox byte quota is stated on the first-party pages reviewed."
+  },
+  "per_object_cap": {
+    "stated": "no message or object byte cap is stated on the first-party API docs, FAQ, home page or official SDK pages",
+    "bytes": null,
+    "notes": "unverified: no per-message size number appears on any first-party NenzMail page reviewed",
+    "source_url": "https://nenzmail.com/api-docs"
+  },
+  "retention": {
+    "stated": "Inboxes auto-delete after 1 hour (3600 seconds); on expiry or manual delete all emails are permanently removed and cannot be recovered",
+    "days": null,
+    "notes": "Retention is one hour, below a day. days is null because no day count is stated.",
+    "source_url": "https://nenzmail.com/api-docs"
+  },
+  "egress": {
+    "terms": "inbound messages are received at no charge; free outbound send through POST /api/send, rate limited to 20 emails per inbox per hour; no egress metering or traffic price is stated",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://nenzmail.com/api-docs"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "Keyless REST API on api.nenzmail.com: POST /api/inbox/create, GET /api/inbox/:address/emails, GET /api/email/:id, POST /api/send, DELETE /api/inbox/:address; all responses JSON, CORS enabled.",
+  "endpoint": "https://api.nenzmail.com",
+  "tooling": "curl or any HTTP client; official SDK packages nenzmail on PyPI (Python) and nenzmail on npm (Node.js)",
+  "chaining": "Create a disposable inbox with a keyless POST, let a service deliver a verification email over SMTP, poll GET /api/inbox/:address/emails, read the full message through GET /api/email/:id, then delete the inbox. The 1-hour auto-delete clamps the whole chain, and outbound send is capped at 20 emails per inbox per hour.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "Inboxes auto-delete after 1 hour (3600 seconds); emails are permanently removed on expiry",
+      "source": "https://nenzmail.com/api-docs"
+    },
+    {
+      "kind": "request-rate",
+      "value": "outbound send rate limited to 20 emails per inbox per hour",
+      "source": "https://pypi.org/project/nenzmail/"
+    },
+    {
+      "kind": "request-rate",
+      "value": "Rate limits may apply for abuse prevention; no numeric request cap is published on the API docs",
+      "source": "https://nenzmail.com/api-docs"
+    }
+  ],
+  "binding": "retention-clamped",
+  "binding_note": "the 1-hour auto-delete removes an unread message before any request-rate or send cap is reached, so the retention window decides what a chain can do",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "No signup, no phone number, no personal information required; the API needs no key, token or account: 'No API key, no token, no signup.'",
+    "country": null
+  },
+  "reliability_note": "The live host nenzmail.com returned HTTP 502 at review; the pages used here are Wayback snapshots dated 2026-10-28. A deleted or expired inbox cannot be recovered. No numeric message-size cap was stated on the first-party pages reviewed.",
+  "confidence": "documented",
+  "confidence_note": "values from first-party API docs, FAQ, home page and official SDK pages; the vendor site was read from archive after the live host returned 502; no probe was run, so the rung is documented and not measured",
+  "evidence": [
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20261028190313/https://nenzmail.com/api-docs?provider=wayback",
+      "date": "2026-11-19",
+      "capture": "sha256:47722301ad22da15b1df405e079c9bb3aca324042530754df573a5e6cd80a668",
+      "quote": "NenzMail is free and open. No API key, no token, no signup. Just use your inbox address to read and send emails. Inboxes auto-delete after 1 hour.",
+      "proved": "inbox creation and API access are anonymous and keyless, and retention is one hour"
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20261028190313/https://nenzmail.com/api-docs?provider=wayback",
+      "date": "2026-11-19",
+      "capture": "sha256:47722301ad22da15b1df405e079c9bb3aca324042530754df573a5e6cd80a668",
+      "quote": "Inboxes auto-delete after 1 hour (3600 seconds)",
+      "proved": "the retention clamp is one hour, expressed in seconds"
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20261028190313/https://nenzmail.com/api-docs?provider=wayback",
+      "date": "2026-11-19",
+      "capture": "sha256:47722301ad22da15b1df405e079c9bb3aca324042530754df573a5e6cd80a668",
+      "quote": "Rate limits may apply for abuse prevention",
+      "proved": "the API docs warn of rate limiting without publishing a numeric request cap"
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20261028190538/https://nenzmail.com/faq?provider=wayback",
+      "date": "2026-11-19",
+      "capture": "sha256:a5ee0ab1b892a6732e2c2610e609c9366320c8721af7f4085085fb2832deb369",
+      "quote": "Yes, 100% free with no limits. Create as many temporary inboxes as you need.",
+      "proved": "the free tier has no stated byte quota and the inbox count is unlimited"
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20261028190538/https://nenzmail.com/faq?provider=wayback",
+      "date": "2026-11-19",
+      "capture": "sha256:a5ee0ab1b892a6732e2c2610e609c9366320c8721af7f4085085fb2832deb369",
+      "quote": "NenzMail provides a free REST API for creating inboxes, listing emails, and reading email content.",
+      "proved": "a free REST API covers inbox creation, listing and reading"
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20261028190608/https://nenzmail.com/?provider=wayback",
+      "date": "2026-11-19",
+      "capture": "sha256:0882a9101fcc3c8cac9ad719f2c72cd360f4e5f503fc64eebd360383293f1953",
+      "quote": "No signup, no phone number, no personal information required.",
+      "proved": "registration needs no email, phone, card or identity document"
+    },
+    {
+      "url": "https://pypi.org/project/nenzmail/",
+      "date": "2026-11-19",
+      "capture": "sha256:8efc71b073daa51885b986536d78a8539f03774961f9c2e922b5a4b92b13c324",
+      "quote": "`domain` — `nenzmail.xyz` (default), `nzmail.xyz`, or `zlkcyber.xyz`",
+      "proved": "the official SDK exposes three selectable inbox domains"
+    },
+    {
+      "url": "https://pypi.org/project/nenzmail/",
+      "date": "2026-11-19",
+      "capture": "sha256:8efc71b073daa51885b986536d78a8539f03774961f9c2e922b5a4b92b13c324",
+      "quote": "Send an email from your inbox to any address. Rate limited: 20/hr per inbox.",
+      "proved": "outbound send is capped at 20 emails per inbox per hour"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T00:18:04.184Z",
+  "notes": "Domain count and domain names come from the official SDK pages; the web and API pages use nenzmail.com while the SDK defaults to nenzmail.xyz. Per-inbox byte size and per-message byte cap are unverified: no first-party page states a number.",
+  "history": []
+}

@@ -1,0 +1,247 @@
+{
+  "topic": "dev-services",
+  "slug": "telnyx-messaging",
+  "provider": "Telnyx Messaging",
+  "url": "https://telnyx.com/pricing/messaging",
+  "category": "hosted SMS and MMS messaging API with REST endpoints, SDKs and webhooks (hosted)",
+  "tier": "Pay as you go",
+  "free_tier": {
+    "stated": "No free SMS. Telnyx offers market-leading prices for feature-rich SMS, starting at just $0.004 to send an SMS on a local number. We currently do not offer free SMS, but you can easily add small amounts of money (e.g. $10) via credit card or even Bitcoin.",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://telnyx.com/products/sms-api",
+    "read_on": "2026-11-19",
+    "notes": "Self-serve Pay as you go has USD 0 monthly minimum at the published rate with a card on file; no contract. Growth (USD 2,000 monthly minimum) and Enterprise (USD 5,000) are committed tiers. New accounts get free testing credits and a Pretrial or Freemium account gives USD 25 in AI credits, but those credits cover AI products only and Messaging needs a full account."
+  },
+  "per_object_cap": {
+    "stated": "SMS body at most 1,600 characters when concatenated; MMS supports up to 10 media URLs per message, with individual media files under 1 MB and total media under 2 MB",
+    "bytes": null,
+    "source_url": "https://developers.telnyx.com/docs/messaging/messages/send-message"
+  },
+  "retention": {
+    "stated": "The retrieve-message API returns messages no older than 10 days since creation; older messages need an MDR report",
+    "days": 10,
+    "source_url": "https://telnyx.com/products/sms-api",
+    "notes": "This is the API retrieval window, not deletion: reports retain delivery records beyond 10 days."
+  },
+  "egress": {
+    "terms": "Not a bandwidth product: outbound messaging is the service and is priced per message part plus a carrier passthrough fee, with no separate per-GB charge",
+    "metered": true,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://telnyx.com/pricing/messaging"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "REST API at api.telnyx.com/v2 authenticated with a bearer API key; POST /v2/messages sends SMS and MMS. Delivery status arrives through webhooks on the messaging profile. SDKs exist in Python, Java, Node, Ruby, .NET and PHP.",
+  "endpoint": "https://api.telnyx.com/v2/messages",
+  "tooling": "Telnyx SDKs in Python, Java, Node, Ruby, .NET and PHP, or curl or any HTTP client against the REST API with a bearer API key, plus the Mission Control Portal for numbers and profiles.",
+  "chaining": "Programmable SMS and MMS for OTP and 2FA, transactional notifications and bulk outreach, on phone numbers provisioned from the same account.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "SMS 50 messages/second account default with a 720,000 message queue; Long Code 0.1 MPS per number",
+      "source": "https://developers.telnyx.com/docs/messaging/messages/rate-limiting"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "50 outbound messages per day at Level 1 verification",
+      "source": "https://support.telnyx.com/en/articles/1130595-account-verification"
+    },
+    {
+      "kind": "write-gated",
+      "value": "US off-net sends require 10DLC brand and campaign registration or toll-free verification",
+      "source": "https://developers.telnyx.com/docs/messaging/messages/send-message"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "retrieve-message API limited to messages no older than 10 days",
+      "source": "https://telnyx.com/products/sms-api"
+    }
+  ],
+  "binding": "write-gated",
+  "binding_note": "For a new self-serve account the first real send to an external US number is gated on 10DLC or toll-free sender registration, and Level 1 verification caps unregistered outbound traffic at 50 messages a day, before the 50-per-second throughput limit matters.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "Signup is free to create and asks for a business email address, full name and password through a form or Google or Microsoft single sign-on, under reCAPTCHA, followed by email verification. Telnyx may also ask for mobile-number validation and Know Your Customer documentation, and email verification may be followed by phone verification with a one-time pass-code. The Pay as you go tier needs a card on file to send billable messages.",
+    "country": null
+  },
+  "reliability_note": "Sending above a rate limit queues messages; when a queue is full the API returns error 40318. Off-net US sends need sender registration, and an insufficient balance returns HTTP 402.",
+  "confidence": "documented",
+  "confidence_note": "Prices, rate limits, retrieval window, caps and signup fields are quoted from first-party pricing, product, documentation and help pages. No account was opened: the verification level actually assigned, the testing-credit amount and any account-only rate limit are unverified behind a sign-up.",
+  "evidence": [
+    {
+      "url": "https://telnyx.com/pricing/messaging",
+      "date": "2026-11-19",
+      "capture": "sha256:466709fd6c01ec65952896706522d9ea57decbf52bef3b9a7a7dd9d49e0e05e3",
+      "quote": "$0.004 a part. Then the carrier, at cost. Two lines: our rate and the carrier's passthrough, both published, neither marked up. Volume tiers apply automatically at 100M parts.",
+      "proved": "the messaging rate is USD 0.004 per part plus a carrier passthrough fee, with automatic volume tiers"
+    },
+    {
+      "url": "https://telnyx.com/pricing/messaging",
+      "date": "2026-11-19",
+      "capture": "sha256:466709fd6c01ec65952896706522d9ea57decbf52bef3b9a7a7dd9d49e0e05e3",
+      "quote": "Send outbound messages | $0.004 per message part + [carrier fee](#local-outbound-carriers)",
+      "proved": "the local outbound SMS line item is USD 0.004 per message part plus carrier fee"
+    },
+    {
+      "url": "https://telnyx.com/pricing/messaging",
+      "date": "2026-11-19",
+      "capture": "sha256:466709fd6c01ec65952896706522d9ea57decbf52bef3b9a7a7dd9d49e0e05e3",
+      "quote": "$0platform fee",
+      "proved": "no platform fee is charged on top of the per-part rate"
+    },
+    {
+      "url": "https://telnyx.com/pricing/messaging",
+      "date": "2026-11-19",
+      "capture": "sha256:466709fd6c01ec65952896706522d9ea57decbf52bef3b9a7a7dd9d49e0e05e3",
+      "quote": "Standard rates. Card on file. Automatic tier discounts as usage crosses thresholds, no contract needed.",
+      "proved": "the Pay as you go tier needs a card on file and has no contract"
+    },
+    {
+      "url": "https://telnyx.com/products/sms-api",
+      "date": "2026-11-19",
+      "capture": "sha256:1018b6685326fabaedd60d1f52ca2c6e53cddb21b0b41a54d87c882d61a63938",
+      "quote": "We currently do not offer free SMS, but you can easily add small amounts of money (e.g. $10) via credit card or even Bitcoin.",
+      "proved": "there is no free SMS tier and the service is paid by adding money"
+    },
+    {
+      "url": "https://telnyx.com/products/sms-api",
+      "date": "2026-11-19",
+      "capture": "sha256:1018b6685326fabaedd60d1f52ca2c6e53cddb21b0b41a54d87c882d61a63938",
+      "quote": "Yes, we provide SDKs in Python, Java, Node, Ruby, .NET and PHP, with more coming soon.",
+      "proved": "the vendor publishes SDKs in six languages"
+    },
+    {
+      "url": "https://telnyx.com/products/sms-api",
+      "date": "2026-11-19",
+      "capture": "sha256:1018b6685326fabaedd60d1f52ca2c6e53cddb21b0b41a54d87c882d61a63938",
+      "quote": "Note: This API endpoint can only retrieve messages that are no older than 10 days since their creation.",
+      "proved": "message retrieval through the API is limited to 10 days"
+    },
+    {
+      "url": "https://developers.telnyx.com/docs/messaging/messages/rate-limiting",
+      "date": "2026-11-19",
+      "capture": "sha256:4d4b2ec4739d5cf4b48175230b091d3fb70ec04dcebd2ab128abaa44da65e4e2",
+      "quote": "| SMS | 50 messages/second | 720,000 |",
+      "proved": "the default account SMS rate limit is 50 messages per second with a 720,000 message queue"
+    },
+    {
+      "url": "https://developers.telnyx.com/docs/messaging/messages/rate-limiting",
+      "date": "2026-11-19",
+      "capture": "sha256:4d4b2ec4739d5cf4b48175230b091d3fb70ec04dcebd2ab128abaa44da65e4e2",
+      "quote": "| Long Code | 0.1 MPS | Number | 1,440 |",
+      "proved": "a long-code sender is limited to 0.1 messages per second per number"
+    },
+    {
+      "url": "https://developers.telnyx.com/docs/messaging/messages/rate-limiting",
+      "date": "2026-11-19",
+      "capture": "sha256:4d4b2ec4739d5cf4b48175230b091d3fb70ec04dcebd2ab128abaa44da65e4e2",
+      "quote": "When you send messages faster than your rate limit allows, excess messages are automatically queued for delivery.",
+      "proved": "excess messages are queued rather than rejected"
+    },
+    {
+      "url": "https://developers.telnyx.com/docs/messaging/messages/rate-limiting",
+      "date": "2026-11-19",
+      "capture": "sha256:4d4b2ec4739d5cf4b48175230b091d3fb70ec04dcebd2ab128abaa44da65e4e2",
+      "quote": "When a queue is full, additional messages return error code `40318`.",
+      "proved": "a full queue produces error 40318"
+    },
+    {
+      "url": "https://developers.telnyx.com/docs/messaging/messages/rate-limiting",
+      "date": "2026-11-19",
+      "capture": "sha256:4d4b2ec4739d5cf4b48175230b091d3fb70ec04dcebd2ab128abaa44da65e4e2",
+      "quote": "For US destinations, throughput is determined at the campaign level based on your 10DLC registration.",
+      "proved": "US throughput depends on the registered 10DLC campaign"
+    },
+    {
+      "url": "https://support.telnyx.com/en/articles/5295540-how-to-sign-up-for-a-telnyx-account",
+      "date": "2026-11-19",
+      "capture": "sha256:33176b3e53d6ba5536478fca9969c557495275dd474c0aa33514eb1c47098470",
+      "quote": "Enter your email address, full name and desired password into the provided text boxes.",
+      "proved": "signup asks for email, full name and password"
+    },
+    {
+      "url": "https://support.telnyx.com/en/articles/5295540-how-to-sign-up-for-a-telnyx-account",
+      "date": "2026-11-19",
+      "capture": "sha256:33176b3e53d6ba5536478fca9969c557495275dd474c0aa33514eb1c47098470",
+      "quote": "**Note:** It is mandatory for users to have a business email address to create or sign up for a new account as certain free email providers are disallowed for signing up for the account.",
+      "proved": "a business email address is required and free email providers are disallowed"
+    },
+    {
+      "url": "https://support.telnyx.com/en/articles/5295540-how-to-sign-up-for-a-telnyx-account",
+      "date": "2026-11-19",
+      "capture": "sha256:33176b3e53d6ba5536478fca9969c557495275dd474c0aa33514eb1c47098470",
+      "quote": "You may be prompted to follow an identity check before your account can be created.",
+      "proved": "a Know Your Customer identity check may be required at signup"
+    },
+    {
+      "url": "https://support.telnyx.com/en/articles/5295540-how-to-sign-up-for-a-telnyx-account",
+      "date": "2026-11-19",
+      "capture": "sha256:33176b3e53d6ba5536478fca9969c557495275dd474c0aa33514eb1c47098470",
+      "quote": "Once your email is verified, you may be required to submit **phone verification** as well through receiving a one time pass-code.",
+      "proved": "phone verification by one-time pass-code may follow email verification"
+    },
+    {
+      "url": "https://support.telnyx.com/en/articles/1130595-account-verification",
+      "date": "2026-11-19",
+      "capture": "sha256:6d89c6332bbfb088e3de58708757c9e6dc67e3ec3aba82501360037aa85bced7",
+      "quote": "Most users are **automatically Level 1 verified** after confirming their email.",
+      "proved": "email confirmation gives Level 1 verification by default"
+    },
+    {
+      "url": "https://support.telnyx.com/en/articles/1130595-account-verification",
+      "date": "2026-11-19",
+      "capture": "sha256:6d89c6332bbfb088e3de58708757c9e6dc67e3ec3aba82501360037aa85bced7",
+      "quote": "- Outbound messages will be limited to **50 per day** at this level.",
+      "proved": "Level 1 accounts are capped at 50 outbound messages a day"
+    },
+    {
+      "url": "https://support.telnyx.com/en/articles/1130595-account-verification",
+      "date": "2026-11-19",
+      "capture": "sha256:6d89c6332bbfb088e3de58708757c9e6dc67e3ec3aba82501360037aa85bced7",
+      "quote": "- A payment method is on file",
+      "proved": "Level 2 verification needs a payment method on file"
+    },
+    {
+      "url": "https://developers.telnyx.com/docs/account-setup/signup",
+      "date": "2026-11-19",
+      "capture": "sha256:2ddd81f6c764a993b0fc300f755781c7c63b4805d064f1f5401217c25781cc97",
+      "quote": "An attempt will be unsuccessful if **any** of the above fails.",
+      "proved": "signup runs trust and safety checks including reCAPTCHA that can reject an attempt"
+    },
+    {
+      "url": "https://developers.telnyx.com/docs/account-setup/signup",
+      "date": "2026-11-19",
+      "capture": "sha256:2ddd81f6c764a993b0fc300f755781c7c63b4805d064f1f5401217c25781cc97",
+      "quote": "* Successfully passing Know Your Customer (KYC) documentation verification",
+      "proved": "Know Your Customer documentation verification is an additional signup requirement"
+    },
+    {
+      "url": "https://support.telnyx.com/en/articles/14327893-telnyx-freemium-accounts",
+      "date": "2026-11-19",
+      "capture": "sha256:d53b1d05d56bd44f10a45fb4a3aa33026bebcd3a1a2cf0f327007e04a8c546b6",
+      "quote": "Other Telnyx products (Voice, Messaging, Networking, etc.) require a full account.",
+      "proved": "the free Pretrial or Freemium credit does not unlock Messaging"
+    },
+    {
+      "url": "https://developers.telnyx.com/docs/messaging/messages/send-message",
+      "date": "2026-11-19",
+      "capture": "sha256:d9185ea95c082015a193b01053c2b50486ebefb738510ddf28b9391d13455df5",
+      "quote": "Sending to non-Telnyx numbers? Off-net messaging to external carriers typically requires sender registration (10DLC, toll-free verification, etc.).",
+      "proved": "sending to external numbers is gated on sender registration"
+    },
+    {
+      "url": "https://developers.telnyx.com/docs/messaging/messages/send-message",
+      "date": "2026-11-19",
+      "capture": "sha256:d9185ea95c082015a193b01053c2b50486ebefb738510ddf28b9391d13455df5",
+      "quote": "* A [Telnyx account](https://telnyx.com/sign-up) (free to create)",
+      "proved": "the account itself is free to create"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-19T00:19:24.370Z",
+  "self_hosted": false,
+  "notes": "Telnyx Messaging is a hosted SMS and MMS API, a different offer from Telnyx object and cloud storage. Self-serve Pay as you go starts at USD 0.004 per message part plus carrier passthrough with a card on file; there is no free SMS. The signup is free with a business email, and the Pretrial or Freemium credit covers AI products only, not Messaging."
+}

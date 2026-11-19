@@ -1,0 +1,139 @@
+{
+  "topic": "databases-kv",
+  "slug": "redislabs",
+  "provider": "RedisLabs (Redis Cloud Free)",
+  "url": "https://redis.io/docs/latest/operate/rc/subscriptions/view-essentials-subscription/essentials-plan-details/",
+  "category": "fully managed Redis and Redis Stack, free 30 MB Essentials plan on shared infrastructure",
+  "tier": "Free (30 MB Essentials)",
+  "free_tier": {
+    "stated": "Free plan: Always $0, up to 30 MB, a 30 MB single database on a shared cloud deployment, best-effort SLA and community support. The 30 MB Essentials plan is free and is designed for learning and building test projects.",
+    "unit": "MB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://redis.io/pricing",
+    "read_on": "2026-11-19",
+    "notes": "Free plans are a type of Essentials plan, which gives an upgrade path to paid Essentials. Since Jan 2024 a new Essentials subscription supports only one database."
+  },
+  "per_object_cap": {
+    "stated": "30 MB database size on the free plan; the database size includes replication where applicable",
+    "bytes": 31457280,
+    "source_url": "https://redis.io/docs/latest/operate/rc/subscriptions/view-essentials-subscription/essentials-plan-details/",
+    "notes": "bytes is the decimal reading of 30 MB as the vendor states it; the size includes replication where applicable, so the usable dataset is smaller when replication is on."
+  },
+  "retention": {
+    "stated": "no expiry or inactivity deletion clock is stated on the pages read; the free database persists while the account and subscription are kept",
+    "days": null,
+    "source_url": "https://redis.io/docs/latest/operate/rc/subscriptions/view-essentials-subscription/essentials-plan-details/",
+    "notes": "null is indefinite: the pages read state no automatic expiry for the free database."
+  },
+  "egress": {
+    "terms": "Data transfer is included in the price but limited on the Free plan; the free 30 MB Essentials plan has a 5 GB monthly total network bandwidth limit applied to the whole plan.",
+    "metered": true,
+    "free_allowance": "5 GB monthly total network bandwidth on the 30 MB free plan",
+    "price_per_tb": null,
+    "source_url": "https://redis.io/docs/latest/operate/rc/subscriptions/view-essentials-subscription/essentials-plan-details/"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "the Redis protocol over TLS for clients; a REST API for subscription and database management",
+  "tooling": "redis-cli, Redis Insight, and Redis client libraries for .NET, node.js, Python, Java, Go and PHP",
+  "chaining": "a free Redis Cloud database can be added to a project through the Vercel Redis Cloud integration or the Heroku add-on, or reached directly from an application; the 30 MB and 100 ops/sec caps are the ceiling",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "30 MB database size, single database per Essentials subscription since Jan 2024",
+      "source": "https://support.redislabs.com/hc/en-us/articles/27361653454098-Choosing-a-Subscription-and-Creating-Your-First-Database"
+    },
+    {
+      "kind": "request-rate",
+      "value": "Maximum throughput 100 ops/sec on the 30 MB free plan; 30 concurrent connections",
+      "source": "https://redis.io/docs/latest/operate/rc/subscriptions/view-essentials-subscription/essentials-plan-details/"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "5 GB monthly total network bandwidth on the free plan; 1 CIDR allow rule",
+      "source": "https://redis.io/docs/latest/operate/rc/subscriptions/view-essentials-subscription/essentials-plan-details/"
+    }
+  ],
+  "binding": "per-object-cap",
+  "binding_note": "the 30 MB single database is the hard ceiling that stops any workload first; the 100 ops/sec throughput and 5 GB transfer are generous relative to that 30 MB",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "Signup offers two options: enter your information in the form and select Get Started, or sign up with Google or Github. After entering your information you receive an activation email from Redis and select Activate account. No card is requested for the free database; a card is added only when a paid tier is chosen.",
+    "country": null
+  },
+  "reliability_note": "best-effort SLA and community support on the free plan; Redis notifies the user before limiting database usage when the bandwidth or throughput limits are exceeded",
+  "confidence": "documented",
+  "confidence_note": "four first-party Redis pages were captured and quoted on 2026-11-19: the pricing page, the Essentials plan details table, the quick start, and the RedisLabs support knowledge-base article. No probe was run; every figure is from a first-party page.",
+  "evidence": [
+    {
+      "url": "https://redis.io/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:1e13e3ae0e35d5d553f367c6421e9e970a68d70f18c8c63ca74c69d1cf7708e7",
+      "quote": "30 MB single DB",
+      "proved": "the free plan is a 30 MB single database"
+    },
+    {
+      "url": "https://redis.io/docs/latest/operate/rc/subscriptions/view-essentials-subscription/essentials-plan-details/",
+      "date": "2026-11-19",
+      "capture": "sha256:2b9df66df5e1124f87facac621e536417e20f5d01fc35b1f0c104ed528147062",
+      "quote": "The 30 MB Essentials plan is free; it's designed for learning and building test projects.",
+      "proved": "the 30 MB plan is the free tier within Essentials"
+    },
+    {
+      "url": "https://redis.io/docs/latest/operate/rc/subscriptions/view-essentials-subscription/essentials-plan-details/",
+      "date": "2026-11-19",
+      "capture": "sha256:2b9df66df5e1124f87facac621e536417e20f5d01fc35b1f0c104ed528147062",
+      "quote": "| **Concurrent connections per database** | 30 | 256 | 1024 | 2500 | 5000 | 10000 |",
+      "proved": "the free plan allows 30 concurrent connections per database"
+    },
+    {
+      "url": "https://redis.io/docs/latest/operate/rc/subscriptions/view-essentials-subscription/essentials-plan-details/",
+      "date": "2026-11-19",
+      "capture": "sha256:2b9df66df5e1124f87facac621e536417e20f5d01fc35b1f0c104ed528147062",
+      "quote": "| **Monthly total network bandwidth[2]** | 5 GB | 100 GB | 200 GB | 400 GB | 800 GB | 2000 GB |",
+      "proved": "the free plan has a 5 GB monthly total network bandwidth limit"
+    },
+    {
+      "url": "https://redis.io/docs/latest/operate/rc/subscriptions/view-essentials-subscription/essentials-plan-details/",
+      "date": "2026-11-19",
+      "capture": "sha256:2b9df66df5e1124f87facac621e536417e20f5d01fc35b1f0c104ed528147062",
+      "quote": "| **Maximum throughput[3]** | 100 ops/sec | 1000 ops/sec | 2000 ops/sec | 4000 ops/sec | 8000 ops/sec | 16000 ops/sec |",
+      "proved": "the free plan has a 100 ops/sec maximum throughput"
+    },
+    {
+      "url": "https://support.redislabs.com/hc/en-us/articles/27361653454098-Choosing-a-Subscription-and-Creating-Your-First-Database",
+      "date": "2026-11-19",
+      "capture": "sha256:f2faaa03b1294786b6abd692f26760f461be3e6aaba915f7282fb93361d22720",
+      "quote": "- Free: 30MB memory, 30 connections",
+      "proved": "the RedisLabs support article states 30 MB memory and 30 connections on the free tier"
+    },
+    {
+      "url": "https://support.redislabs.com/hc/en-us/articles/27361653454098-Choosing-a-Subscription-and-Creating-Your-First-Database",
+      "date": "2026-11-19",
+      "capture": "sha256:f2faaa03b1294786b6abd692f26760f461be3e6aaba915f7282fb93361d22720",
+      "quote": "As of Jan 2024, new Essentials subscriptions support only one database. Create a second subscription or upgrade to Pro to add more.",
+      "proved": "only one database is allowed per Essentials subscription since Jan 2024"
+    },
+    {
+      "url": "https://redis.io/docs/latest/operate/rc/rc-quickstart/",
+      "date": "2026-11-19",
+      "capture": "sha256:5749c727f76a7d9f58a7464dc02203156f4f4da62443d7232e185dcfd3dc6d8b",
+      "quote": "There are two options available to get started with Redis Cloud:",
+      "proved": "the quick start states there are two signup options"
+    },
+    {
+      "url": "https://redis.io/docs/latest/operate/rc/rc-quickstart/",
+      "date": "2026-11-19",
+      "capture": "sha256:5749c727f76a7d9f58a7464dc02203156f4f4da62443d7232e185dcfd3dc6d8b",
+      "quote": "After you enter your information, you should receive an activation email from Redis. Select Activate account to go to the Create your database page in the Redis Cloud console.",
+      "proved": "email verification is required to activate the account; no card is asked for the free path"
+    }
+  ],
+  "verdict": "fails-quota",
+  "verified_at": "2026-11-19T01:13:44.791Z",
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "The free Redis Cloud plan is 30 MB with one database, 30 connections, 100 ops/sec and 5 GB of transfer. It clears identity (no card) and interface (a real Redis protocol with clients), but the 30 MB ceiling is a hard wall, so the verdict is fails-quota. This is the RedisLabs hosted service, not the Redis Software that a user installs and runs; self-hosted Redis is not the offer here."
+}

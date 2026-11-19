@@ -1,0 +1,167 @@
+{
+  "topic": "ci-cd-runners",
+  "slug": "teamcity-cloud",
+  "provider": "TeamCity Cloud",
+  "url": "https://www.jetbrains.com/teamcity/cloud/",
+  "category": "CI runner",
+  "tier": "14-day free trial, then paid per committer",
+  "verdict": "paid-only",
+  "confidence": "documented",
+  "confidence_note": "the JetBrains licensing documentation, buy page, cloud page, signup page and support FAQ were read and quoted on 2026-11-19; no build was run, so CPU, memory and disk of a JetBrains-hosted agent and the build log retention period are unverified",
+  "verified_at": "2026-11-19T00:52:06.675Z",
+  "free_tier": {
+    "stated": "no free tier: 'we do not currently offer a free tier in TeamCity Cloud'; a 14-day trial includes unlimited committer slots, 12,000 build credits (up to 20 build hours on the Linux small instance type), unlimited parallel builds, 120 GB of storage and up to 3 concurrent self-hosted builds; paid plans start from USD 15.00 per committer per month",
+    "unit": "none",
+    "metered_on": "wall-clock",
+    "source_url": "https://teamcity-support.jetbrains.com/hc/en-us/articles/360021064900-Is-there-a-free-plan-for-TeamCity-Cloud",
+    "read_on": "2026-11-19",
+    "notes": "the trial is time-limited to 14 days, not an always-free allowance; the free-forever Professional licence is the separate TeamCity On-Premises software the reader installs and runs, and is not this hosted offer"
+  },
+  "per_object_cap": {
+    "stated": "no per-object cap stated; the trial and the paid plan include 120 GB of storage for build results and artifacts",
+    "bytes": null,
+    "source_url": "https://www.jetbrains.com/teamcity/buy/#cloud"
+  },
+  "retention": {
+    "stated": "unverified: no page read states a build log or artifact retention period for TeamCity Cloud",
+    "days": null,
+    "source_url": "https://www.jetbrains.com/help/teamcity/cloud/teamcity-cloud-subscription-and-licensing.html"
+  },
+  "egress": {
+    "terms": "cloud data transfer is counted when artifacts and build logs are downloaded out of TeamCity Cloud; the paid plan includes 600 GB of data transfer per month",
+    "metered": true,
+    "free_allowance": "600 GB of data transfer per month on the paid plan",
+    "price_per_tb": null,
+    "source_url": "https://www.jetbrains.com/teamcity/buy/#cloud"
+  },
+  "interface": [
+    "git",
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "pipelines are defined in YAML, the Kotlin DSL or a visual editor; the REST API gives programmatic access to builds, projects and pipelines, and the cloud page states full MCP and CLI access",
+  "endpoint": "unverified: the REST API endpoint URL is not stated on the pages read",
+  "tooling": "JetBrains-hosted Windows, Linux and ARM build agents that start on demand, with a preinstalled build tool set and Docker container steps; self-hosted agents connect from the reader's own network; Kotlin DSL, YAML, a visual editor, a REST API, a CLI and MCP access",
+  "chaining": "a Git push or API call starts a build on a JetBrains-hosted agent and consumes build credits; credits can also be redeemed for self-hosted agent concurrency, prepaid agents, extra storage and extra data transfer; TeamCity On-Premises Professional is the separate self-hosted software, listed after this hosted offer",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "24,000 build credits per month on the 3-committer paid plan; 12,000 build credits in the 14-day trial, good for up to 20 build hours on the Linux small instance type",
+      "source": "https://www.jetbrains.com/teamcity/buy/#cloud"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "120 GB of storage and 600 GB of data transfer per month on the paid plan",
+      "source": "https://www.jetbrains.com/teamcity/buy/#cloud"
+    },
+    {
+      "kind": "request-rate",
+      "value": "unlimited parallel builds on the paid plan; up to 3 concurrent self-hosted builds in the trial",
+      "source": "https://www.jetbrains.com/help/teamcity/cloud/teamcity-cloud-subscription-and-licensing.html"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "remaining subscription build credits expire at the end of each month; additional credits purchased on demand do not expire",
+      "source": "https://www.jetbrains.com/help/teamcity/cloud/teamcity-cloud-subscription-and-licensing.html"
+    }
+  ],
+  "limits_note": "a committer slot is needed for a user who authors 10 or more VCS changes over a 30-day period; non-committing web users are unlimited",
+  "binding": "volume-quota",
+  "binding_note": "the monthly build credit budget binds first: subscription credits expire each month and the hosted plan starts at USD 15.00 per committer, while parallel builds are unlimited on the paid plan",
+  "self_hosted": false,
+  "identity_cost": {
+    "kind": "email",
+    "detail": "the signup page offers GitHub, GitLab, Bitbucket or Google sign-in, or an email address ('Sign up for a free 14-day trial using: GitHub GitLab Bitbucket Google Or sign up using your email'); no phone number or card is asked for on that page",
+    "country": null
+  },
+  "reliability_note": "unverified: no suspension or data-loss event is stated on the pages read; build time on a JetBrains-hosted agent is charged against build credits at a rate that depends on the agent instance type",
+  "evidence": [
+    {
+      "url": "https://teamcity-support.jetbrains.com/hc/en-us/articles/360021064900-Is-there-a-free-plan-for-TeamCity-Cloud",
+      "date": "2026-11-19",
+      "capture": "sha256:a293a6216d9eb59aa877d1f34e2ff36e9727a6c7276abeb55314eb5978bb1306",
+      "quote": "we do not currently offer a free tier in TeamCity Cloud",
+      "proved": "TeamCity Cloud has no free tier; the free-forever licence applies only to On-Premises"
+    },
+    {
+      "url": "https://www.jetbrains.com/help/teamcity/cloud/teamcity-cloud-subscription-and-licensing.html",
+      "date": "2026-11-19",
+      "capture": "sha256:b1f2100caded9a5d621532d4f0da5d958338222d1cae66b62267a75f0092526b",
+      "quote": "You can try TeamCity Cloud for free for 14 days. The free trial subscription plan includes unlimited committer slots, 12,000 build credits (good for up to 20 build hours on our Linux small instance type), unlimited parallel builds, 120 GB of storage, and up to 3 concurrent self-hosted builds.",
+      "proved": "the trial lasts 14 days and gives 12,000 build credits, 120 GB of storage, unlimited parallel builds and 3 concurrent self-hosted builds"
+    },
+    {
+      "url": "https://www.jetbrains.com/help/teamcity/cloud/teamcity-cloud-subscription-and-licensing.html",
+      "date": "2026-11-19",
+      "capture": "sha256:b1f2100caded9a5d621532d4f0da5d958338222d1cae66b62267a75f0092526b",
+      "quote": "All users who author 10 or more VCS changes over a 30-day period require a committer slot in TeamCity Cloud.",
+      "proved": "a committer slot is required after 10 VCS changes in 30 days"
+    },
+    {
+      "url": "https://www.jetbrains.com/help/teamcity/cloud/teamcity-cloud-subscription-and-licensing.html",
+      "date": "2026-11-19",
+      "capture": "sha256:b1f2100caded9a5d621532d4f0da5d958338222d1cae66b62267a75f0092526b",
+      "quote": "At the end of each month, the remaining build credits expire from your subscription, and a new set of build credits is provided at the beginning of the next month. If you purchase additional build credits, they do not expire.",
+      "proved": "subscription build credits expire monthly; purchased credits do not"
+    },
+    {
+      "url": "https://www.jetbrains.com/teamcity/buy/#cloud",
+      "date": "2026-11-19",
+      "capture": "sha256:b466a641514b8905b9a910ba89757f668f5cb17c96c84131463959001225e256",
+      "quote": "From $15.00 per committer, per month",
+      "proved": "the paid hosted plan starts at USD 15.00 per committer per month"
+    },
+    {
+      "url": "https://www.jetbrains.com/teamcity/buy/#cloud",
+      "date": "2026-11-19",
+      "capture": "sha256:b466a641514b8905b9a910ba89757f668f5cb17c96c84131463959001225e256",
+      "quote": "**120 GB** of storage",
+      "proved": "the hosted plan includes 120 GB of storage"
+    },
+    {
+      "url": "https://www.jetbrains.com/teamcity/buy/#cloud",
+      "date": "2026-11-19",
+      "capture": "sha256:b466a641514b8905b9a910ba89757f668f5cb17c96c84131463959001225e256",
+      "quote": "**600 GB** of data transfer per month",
+      "proved": "the hosted plan includes 600 GB of data transfer per month"
+    },
+    {
+      "url": "https://www.jetbrains.com/teamcity/buy/#cloud",
+      "date": "2026-11-19",
+      "capture": "sha256:b466a641514b8905b9a910ba89757f668f5cb17c96c84131463959001225e256",
+      "quote": "**24,000 build credits** per month",
+      "proved": "the 3-committer hosted plan includes 24,000 build credits per month"
+    },
+    {
+      "url": "https://www.jetbrains.com/teamcity/signup/cloud-enterprise/",
+      "date": "2026-11-19",
+      "capture": "sha256:22673724931de362b5ef1602563ca9781ffb253cf17c67ba7a8ddf44402b8c2e",
+      "quote": "Sign up for a free 14-day trial using:",
+      "proved": "the signup page opens a 14-day trial"
+    },
+    {
+      "url": "https://www.jetbrains.com/teamcity/signup/cloud-enterprise/",
+      "date": "2026-11-19",
+      "capture": "sha256:22673724931de362b5ef1602563ca9781ffb253cf17c67ba7a8ddf44402b8c2e",
+      "quote": "GitHubGitLabBitbucketGoogle",
+      "proved": "sign-in options are GitHub, GitLab, Bitbucket and Google"
+    },
+    {
+      "url": "https://www.jetbrains.com/teamcity/signup/cloud-enterprise/",
+      "date": "2026-11-19",
+      "capture": "sha256:22673724931de362b5ef1602563ca9781ffb253cf17c67ba7a8ddf44402b8c2e",
+      "quote": "Or sign up using your email:",
+      "proved": "an email address is an alternative to the social sign-in options"
+    },
+    {
+      "url": "https://www.jetbrains.com/teamcity/cloud/",
+      "date": "2026-11-19",
+      "capture": "sha256:3c0c02142f63612ba2cb2d509ed9b46ff318265aa271280846fab57ed7d2564b",
+      "quote": "Connect GitHub, GitLab, Bitbucket, and Perforce to the same project simultaneously",
+      "proved": "the hosted service connects to GitHub, GitLab, Bitbucket and Perforce"
+    }
+  ],
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "TeamCity Cloud is the JetBrains-hosted CI service, billed per committer after a 14-day trial. The free-forever Professional licence belongs to TeamCity On-Premises, which is software the reader installs and runs and is not a hosted offer. Self-hosted agents may connect to the hosted control plane, but the control plane and the JetBrains-hosted agents are managed by the vendor, so this record stays hosted. No build was run, so the agent's CPU, memory and disk and the build log retention period are unverified."
+}
