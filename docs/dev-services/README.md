@@ -78,6 +78,7 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `cronitor` | Cronitor | qualifies-with-caveat | documented |
 | `datadog-open-source` | Datadog | fails-identity | documented |
 | `drumbeats-io` | Drumbeats | qualifies-with-caveat | documented |
+| `firebase-cloud-messaging` | Firebase Cloud Messaging | qualifies-with-caveat | documented |
 | `goatcounter` | GoatCounter | qualifies-with-caveat | documented |
 | `healthchecks-io` | Healthchecks.io | qualifies-with-caveat | documented |
 | `heap` | Heap | qualifies-with-caveat | documented |
@@ -87,12 +88,15 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `mixpanel` | Mixpanel | qualifies-with-caveat | documented |
 | `n8n-cloud` | n8n | trial-only | documented |
 | `new-relic` | New Relic | qualifies-with-caveat | documented |
+| `ntfy` | ntfy | qualifies-with-caveat | documented |
+| `onesignal` | OneSignal | qualifies-with-caveat | documented |
 | `onlineornot` | OnlineOrNot | qualifies-with-caveat | documented |
 | `openobserve-cloud` | OpenObserve | trial-only | documented |
 | `phare` | Phare | qualifies-with-caveat | documented |
 | `pulsetic` | Pulsetic | qualifies-with-caveat | documented |
 | `pusher-beams` | Pusher Beams | qualifies-with-caveat | documented |
 | `pusher-channels` | Pusher | qualifies-with-caveat | documented |
+| `pushover` | Pushover | qualifies-with-caveat | documented |
 | `sentry-education` | Sentry | fails-identity | documented |
 | `sentry-open-source` | Sentry | qualifies-with-caveat | documented |
 | `statsig` | Statsig | qualifies-with-caveat | documented |
@@ -100,7 +104,9 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `temporal-cloud` | Temporal | trial-only | documented |
 | `umami-cloud` | Umami | qualifies-with-caveat | documented |
 | `uptimeobserver` | UptimeObserver | qualifies-with-caveat | documented |
+| `wonderpush` | WonderPush | trial-only | documented |
 | `cron-job-org-chronos` | cron-job.org chronos daemon (self-hos... (self-hosted) | qualifies-with-caveat | documented |
+| `gotify-cloud` | Gotify Cloud (self-hosted) | qualifies-with-caveat | documented |
 | `inngest-server` | Inngest server (self-hosted) (self-hosted) | qualifies-with-caveat | documented |
 | `n8n-community-edition` | n8n Community Edition (self-hosted) (self-hosted) | qualifies-with-caveat | documented |
 | `temporal-server` | Temporal server (self-hosted) (self-hosted) | qualifies-with-caveat | documented |
