@@ -1,0 +1,148 @@
+{
+  "topic": "dev-services",
+  "slug": "rollgate",
+  "provider": "Rollgate",
+  "url": "https://rollgate.io/pricing",
+  "category": "EU-hosted feature flags with local SDK evaluation",
+  "tier": "Free",
+  "free_tier": {
+    "stated": "Free plan, EUR 0 a month, free forever, no card required: 500K requests a month, unlimited flags, 3 environments, 3 projects, 3 seats, all 12 SDKs, Discord support",
+    "unit": "requests",
+    "metered_on": "request-count",
+    "source_url": "https://rollgate.io/pricing",
+    "read_on": "2026-11-19",
+    "notes": "Pricing is per SDK request, not per seat and not per monthly active user. The next plan, Starter, is EUR 45 a month billed monthly (EUR 39 annually) for 1M requests and 5 seats. The pricing page does not state what happens past 500K requests; the REST API docs say a request over the plan answers 429."
+  },
+  "per_object_cap": {
+    "stated": "unverified: no per-flag value size cap is stated on the pages read",
+    "bytes": null
+  },
+  "retention": {
+    "stated": "unverified: no flag-data retention period is stated on the pricing or API pages read; the pricing comparison lists a 3-day audit log retention on Free",
+    "days": null,
+    "source_url": "https://rollgate.io/blog/feature-flags-pricing-comparison",
+    "notes": "A 3-day audit log retention appears in the vendor's pricing-comparison blog table; the main pricing page read here does not state a retention period."
+  },
+  "egress": {
+    "terms": "not applicable: a flag service metered by SDK request count; no traffic allowance or byte price is published",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://rollgate.io/pricing"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "A REST API manages flags, projects and users; SDKs for React, Vue, Angular, Svelte, browser, Node.js, Go, Python, Java, .NET, React Native and Flutter stream a resolved rules bundle over SSE and evaluate flags locally in-process, with no network hop per evaluation.",
+  "endpoint": "https://api.rollgate.io",
+  "tooling": "The 12 official SDKs, the REST API or any HTTP client; the SDK streams flag configuration and evaluates locally.",
+  "chaining": "Serve flags to an app from a worker that uses a Rollgate SDK, keeping the SDK request count under 500K a month; SSE streaming and caching lower the effective request volume.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "500K SDK requests a month on Free",
+      "source": "https://rollgate.io/pricing"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "3 environments, 3 projects and 3 seats on Free",
+      "source": "https://rollgate.io/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "the REST API answers 429 Too Many Requests when plan limits are exceeded",
+      "source": "https://rollgate.io/docs/api"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "1 SSE connection on the Free plan",
+      "source": "https://rollgate.io/docs/api"
+    }
+  ],
+  "limits_note": "Unlimited flags on every plan. The API docs list 500K requests, 1 SSE connection and 3 projects on Free; a request over the plan answers 429. The docs list 14-day free trials on paid plans.",
+  "binding": "volume-quota",
+  "binding_note": "The 500K monthly request cap binds first for an app that polls flags frequently; a single SSE connection also caps concurrent streaming sessions on the Free plan.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The quickstart says to sign up for a free Rollgate account with no credit card required; the architecture page lists user authentication by email and OAuth, and dashboard sign-in by Google and GitHub. The register page capture shows only a Terms and Privacy acceptance line, so the exact form fields are unverified: behind a sign-up; no card, phone or ID is stated at sign-up.",
+    "country": null
+  },
+  "reliability_note": "The API returns 429 when a plan limit is exceeded. Data is hosted in Germany on Hetzner and described as GDPR compliant by default. A 99.9% uptime SLA appears on the Growth plan only. Self-hosting is not yet available and is on the roadmap.",
+  "confidence": "documented",
+  "confidence_note": "Every value is quoted from first-party pricing, REST API docs, quickstart, architecture and homepage pages. No account was opened; the exact register fields are unverified: behind a sign-up. No live flag evaluation was probed, so the record stays at documented rung.",
+  "evidence": [
+    {
+      "url": "https://rollgate.io/pricing",
+      "date": "2026-11-19",
+      "proved": "the Free plan is EUR 0 a month, free forever",
+      "capture": "sha256:29e8b8182793ec6185ea9ccb2083beb1ac736569d902b4d4956577f6afdc265f",
+      "quote": "Free forever"
+    },
+    {
+      "url": "https://rollgate.io/pricing",
+      "date": "2026-11-19",
+      "proved": "the Free plan includes 500K requests a month",
+      "capture": "sha256:29e8b8182793ec6185ea9ccb2083beb1ac736569d902b4d4956577f6afdc265f",
+      "quote": "500K requests/mo"
+    },
+    {
+      "url": "https://rollgate.io/pricing",
+      "date": "2026-11-19",
+      "proved": "the Free plan includes unlimited flags, 3 environments, 3 projects and 3 seats",
+      "capture": "sha256:29e8b8182793ec6185ea9ccb2083beb1ac736569d902b4d4956577f6afdc265f",
+      "quote": "- 500K requests/mo\n- Unlimited flags\n- 3 environments · 3 projects\n- 3 seats\n- All 12 SDKs\n- Discord support"
+    },
+    {
+      "url": "https://rollgate.io/pricing",
+      "date": "2026-11-19",
+      "proved": "pricing is per request, not per user",
+      "capture": "sha256:29e8b8182793ec6185ea9ccb2083beb1ac736569d902b4d4956577f6afdc265f",
+      "quote": "Flat pricing. Pay per request, not per user."
+    },
+    {
+      "url": "https://rollgate.io/docs/api",
+      "date": "2026-11-19",
+      "proved": "the API lists 500K requests, 1 SSE connection and 3 projects on Free and all plans include unlimited flags",
+      "capture": "sha256:73bb978b4a931a34aa7823d791ef2ecb7098a3503ec772187073143a6ff99ab4",
+      "quote": "| Free | 500K | 1 | 3 |"
+    },
+    {
+      "url": "https://rollgate.io/docs/api",
+      "date": "2026-11-19",
+      "proved": "a request over the plan answers 429 and all plans include unlimited flags",
+      "capture": "sha256:73bb978b4a931a34aa7823d791ef2ecb7098a3503ec772187073143a6ff99ab4",
+      "quote": "When limits are exceeded, the API returns `429 Too Many Requests`. All plans include unlimited flags."
+    },
+    {
+      "url": "https://rollgate.io/",
+      "date": "2026-11-19",
+      "proved": "the free plan starts with no card and data is hosted in Germany",
+      "capture": "sha256:5373bf58cac97a314ac392a45e409f5850d4a3201f5e3bd5590c61145a15229d",
+      "quote": "Start free · no card required"
+    },
+    {
+      "url": "https://rollgate.io/",
+      "date": "2026-11-19",
+      "proved": "self-hosting is not yet available; the service is EU-hosted cloud",
+      "capture": "sha256:5373bf58cac97a314ac392a45e409f5850d4a3201f5e3bd5590c61145a15229d",
+      "quote": "Not yet. Self-hosting is on the roadmap. Join the waitlist and we'll tell you the moment it ships. Today, Rollgate runs as EU-hosted cloud."
+    },
+    {
+      "url": "https://rollgate.io/docs/quickstart",
+      "date": "2026-11-19",
+      "proved": "a free account needs no credit card",
+      "capture": "sha256:463028f9e1e25525ce122f0bc56cfc674a1aa4971aaece19bf2f6679df64c31b",
+      "quote": "Sign up for a free Rollgate account. No credit card required."
+    },
+    {
+      "url": "https://rollgate.io/docs/architecture",
+      "date": "2026-11-19",
+      "proved": "user authentication uses email and OAuth and the dashboard supports Google and GitHub sign-in",
+      "capture": "sha256:fd2c00313142b46244d23694585dcfad5ef59fd68d0c485bce957ece2f3ac675",
+      "quote": "• User authentication (email, OAuth)"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T00:44:36.826Z",
+  "notes": "Self-hosting is on the roadmap and not available, so this is a hosted offer. Revisit when the pricing page states the over-limit behaviour or changes the 500K request allowance."
+}
