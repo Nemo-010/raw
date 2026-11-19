@@ -1,0 +1,143 @@
+{
+  "topic": "dev-services",
+  "slug": "scalekit",
+  "provider": "Scalekit",
+  "tier": "Free (SaaSKit Auth for SaaS)",
+  "url": "https://www.scalekit.com/pricing/auth-for-saas",
+  "category": "hosted customer identity and authentication for B2B SaaS (sign-up, sign-in, sessions, organizations, SSO, SCIM)",
+  "free_tier": {
+    "stated": "Free: $0 per month, 25,000 monthly active users (hard cap, no overages), 25 monthly active organizations (hard cap, no overages), first SSO connection and first SCIM connection free, community and email support, Scalekit branding on auth widgets and emails; auto-upgrades to Growth after 25 organizations or 1 SSO and 1 SCIM connection",
+    "unit": "users",
+    "metered_on": "identity-count",
+    "source_url": "https://www.scalekit.com/pricing/auth-for-saas",
+    "read_on": "2026-11-19",
+    "notes": "A user counts as a MAU if they log in or sign up at least once in a billing month. An organization counts as a MAO if it has at least 2 users and at least 1 of them logs in during a billing month. Development, QA, UAT and Staging environments are free and their usage does not count toward production quotas. The separate AgentKit Agent Gateway plan has different limits (5 users, 10,000 tool calls, 5 MCP connectors, 7-day audit log retention), which are not this tier."
+  },
+  "per_object_cap": {
+    "stated": "unverified: no per-user profile or per-object size cap is stated on the pricing, API or signup pages read",
+    "bytes": null
+  },
+  "retention": {
+    "stated": "unverified: a user-data or session retention period for the Auth for SaaS Free tier is not stated on the pages read; the pricing page lists a dashboard audit trail only on the Enterprise plan",
+    "days": null,
+    "source_url": "https://www.scalekit.com/pricing/auth-for-saas",
+    "notes": "The AgentKit Agent Gateway Free plan states 7 days of audit log retention, a different product with its own tier."
+  },
+  "egress": {
+    "terms": "not applicable: an authentication API; no traffic allowance or egress term is published on the pricing page",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.scalekit.com/pricing/auth-for-saas"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "A REST API (OpenAPI 3.1.1, API version 1.0.0) covering AgentKit and SaaSKit. All requests use HTTPS with base URLs https://{your-subdomain}.scalekit.dev for development and https://{your-subdomain}.scalekit.com for production. Authentication uses OAuth 2.0 Client Credentials: POST to /oauth/token with client_id, client_secret and grant_type=client_credentials to get a token sent as a bearer credential. Resources include organizations, users, SSO, directory sync, RBAC and sessions.",
+  "endpoint": "https://{your-subdomain}.scalekit.com",
+  "tooling": "Scalekit SDKs and hosted auth widgets, the npx @scalekit-inc/cli setup tool, or any HTTP client against the REST API with an OAuth client credentials token.",
+  "chaining": "Login and user store for a web app; SSO and SCIM add-ons integrate a customer's existing identity provider, and the modular BYOA tier adds SSO or SCIM on top of an in-house auth system.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "25,000 monthly active users on Free (hard cap, no overages)",
+      "source": "https://www.scalekit.com/pricing/auth-for-saas"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "25 monthly active organizations on Free (hard cap, no overages)",
+      "source": "https://www.scalekit.com/pricing/auth-for-saas"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "first SSO connection and first SCIM connection free; a second enabled connection requires Growth",
+      "source": "https://www.scalekit.com/pricing/auth-for-saas"
+    }
+  ],
+  "limits_note": "Every additional SSO or SCIM connection on Growth is billed per connection per month with volume discounts; the vocabulary has no kind for a connection count.",
+  "binding": "volume-quota",
+  "binding_note": "The hard cap of 25,000 MAUs or 25 organizations ends production use on Free with no overage; reaching more than 1 SSO or SCIM connection also forces an upgrade.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The account sign-up page (auth.scalekit.com/a/auth/signup) offers Continue with Google or Email and a Continue button, with no credit card field shown; the pricing page labels the Free plan Get started free at $0 per month. Production beyond a Free-plan hard cap needs a payment method on the workspace for the automatic upgrade. Whether a later dashboard step asks for a phone number or card is unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "A rate-limited request answers 429 with a Retry-After header on the Frontend API; the pricing page states 99.99%+ uptime. No ban or data-loss behavior is stated on the pages read.",
+  "confidence": "documented",
+  "confidence_note": "Quota, MAU and MAO definitions, hard-cap behavior and the connection allowance are quoted from the first-party pricing page; identity gate from the first-party signup page and API access from the first-party API reference. No account was opened, so signup fields past the first step are unverified and the rung stays documented.",
+  "evidence": [
+    {
+      "url": "https://www.scalekit.com/pricing/auth-for-saas",
+      "date": "2026-11-19",
+      "capture": "sha256:2fb7dbc07a6d6d4651e03572034d8057363e0a453226a4122c4472d99650a7d0",
+      "quote": "Free: 25,000 MAUs included (hard cap, no overages)",
+      "proved": "the Free plan includes 25,000 monthly active users as a hard cap with no overages"
+    },
+    {
+      "url": "https://www.scalekit.com/pricing/auth-for-saas",
+      "date": "2026-11-19",
+      "capture": "sha256:2fb7dbc07a6d6d4651e03572034d8057363e0a453226a4122c4472d99650a7d0",
+      "quote": "Free: 25 orgs included (hard cap, no overages)",
+      "proved": "the Free plan includes 25 monthly active organizations as a hard cap"
+    },
+    {
+      "url": "https://www.scalekit.com/pricing/auth-for-saas",
+      "date": "2026-11-19",
+      "capture": "sha256:2fb7dbc07a6d6d4651e03572034d8057363e0a453226a4122c4472d99650a7d0",
+      "quote": "A user counts as active (MAU) if they log in or sign up to your app at least once in a billing month. You are billed only for active users.",
+      "proved": "the definition of a monthly active user"
+    },
+    {
+      "url": "https://www.scalekit.com/pricing/auth-for-saas",
+      "date": "2026-11-19",
+      "capture": "sha256:2fb7dbc07a6d6d4651e03572034d8057363e0a453226a4122c4472d99650a7d0",
+      "quote": "The Free plan is a hard cap with no overages. When you hit 25,000 MAUs, 25 orgs, or need more than 1 SSO connection, you upgrade to Growth.",
+      "proved": "production use stops at the hard cap and requires an upgrade"
+    },
+    {
+      "url": "https://www.scalekit.com/pricing/auth-for-saas",
+      "date": "2026-11-19",
+      "capture": "sha256:2fb7dbc07a6d6d4651e03572034d8057363e0a453226a4122c4472d99650a7d0",
+      "quote": "Your first connection of each type is free.",
+      "proved": "the first SSO connection and the first SCIM connection are each free"
+    },
+    {
+      "url": "https://www.scalekit.com/pricing/auth-for-saas",
+      "date": "2026-11-19",
+      "capture": "sha256:2fb7dbc07a6d6d4651e03572034d8057363e0a453226a4122c4472d99650a7d0",
+      "quote": "No. Development (Dev, QA, UAT, Staging) environments are free. Charges apply only to production usage.",
+      "proved": "development environments are free and only production usage is billed"
+    },
+    {
+      "url": "https://auth.scalekit.com/a/auth/signup",
+      "date": "2026-11-19",
+      "capture": "sha256:906059958271727b40b868fe7872055cf93905bb7966b5c4da6a6ba1d957581b",
+      "quote": "Continue with Google",
+      "proved": "the sign-up page offers a Google social sign-in option"
+    },
+    {
+      "url": "https://auth.scalekit.com/a/auth/signup",
+      "date": "2026-11-19",
+      "capture": "sha256:906059958271727b40b868fe7872055cf93905bb7966b5c4da6a6ba1d957581b",
+      "quote": "Start free. No feature gating",
+      "proved": "the sign-up page states a free start with no feature gating"
+    },
+    {
+      "url": "https://docs.scalekit.com/apis",
+      "date": "2026-11-19",
+      "capture": "sha256:9a578a3ae76d31180791c4d6aa91b38f35c7046f2d71b9edd521f446aa102ca2",
+      "quote": "Scalekit uses OAuth 2.0 Client Credentials for API authentication.",
+      "proved": "the API authenticates with the OAuth 2.0 client credentials grant"
+    },
+    {
+      "url": "https://docs.scalekit.com/apis",
+      "date": "2026-11-19",
+      "capture": "sha256:9a578a3ae76d31180791c4d6aa91b38f35c7046f2d71b9edd521f446aa102ca2",
+      "quote": "https://{your-subdomain}.scalekit.com (Production)",
+      "proved": "the production API base URL format"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T00:28:25.558Z",
+  "notes": "A distinct AgentKit Agent Gateway product has its own Free plan (up to 5 users, 10,000 tool calls and 5 MCP connectors per month, 7-day audit log retention), documented on a separate pricing page; it is not this SaaSKit Auth tier. Scalekit lists Enterprise as the only on-prem or private-cloud option."
+}

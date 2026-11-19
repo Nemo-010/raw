@@ -19,8 +19,8 @@
     "source_url": "https://api.mail.tm/"
   },
   "retention": {
-    "stated": "messages persist until the account is deleted; no expiry is stated",
-    "days": null,
+    "stated": "incoming messages are stored for 7 days only, then deleted",
+    "days": 7,
     "notes": "",
     "source_url": "https://api.mail.tm/"
   },
@@ -39,7 +39,7 @@
   "limits": [
     {
       "kind": "request-rate",
-      "value": "no published rate limit; the API is undocumented beyond the Hydra index",
+      "value": "8 queries per second (QPS) per IP address general quota limit",
       "source": "https://api.mail.tm/"
     },
     {
@@ -80,10 +80,38 @@
       "url": "probe:https://api.mail.tm/messages",
       "date": "2026-10-22",
       "proved": "200, the message listed with its subject and sender, then GET /messages/{id} returned 200 with subject, from, a text part and an html part"
+    },
+    {
+      "url": "probe:https://mail.tm/en/faq",
+      "date": "2026-11-19",
+      "proved": "incoming messages are deleted after 7 days",
+      "capture": "sha256:4b82905ece2a56e358e089453ccb5b9da7994966b63a984530b212019e98040d",
+      "quote": "We store messages for 7 days only. Sorry, we can't keep them indefinitely."
+    },
+    {
+      "url": "probe:https://docs.mail.tm/",
+      "date": "2026-11-19",
+      "proved": "the general rate limit is 8 QPS per IP address",
+      "capture": "sha256:6b41150c4f73604163141ced7039795a5e4e87a66976c1fd325e5703e6dca831",
+      "quote": "The general quota limit is 8 queries per second (QPS) per IP address."
+    },
+    {
+      "url": "probe:https://api.mail.tm/domains",
+      "date": "2026-11-19",
+      "proved": "one active domain is published, with hostname euploading.com",
+      "capture": "sha256:776b6377c55784f7474d93b7099f991292a3967e651d3ae804c2c959db880393",
+      "quote": "\"hydra:totalItems\":1,\"hydra:member\":[{\"@id\":\"\\/domains\\/6afb98c70be0e025f318c96f\",\"@type\":\"Domain\",\"id\":\"6afb98c70be0e025f318c96f\",\"domain\":\"euploading.com\",\"isActive\":true,\"isPrivate\":false"
+    },
+    {
+      "url": "probe:https://docs.mail.tm/",
+      "date": "2026-11-19",
+      "proved": "no key, no signup and no payment are needed to use the API",
+      "capture": "sha256:6b41150c4f73604163141ced7039795a5e4e87a66976c1fd325e5703e6dca831",
+      "quote": "Completely free. No API key, no signup, no paid tiers."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-22T03:20:00.000Z",
+  "verified_at": "2026-11-19T03:34:18.381Z",
   "notes": "Four requests and one SMTP message proved the whole chain. 25 MiB per message against a 40 MB inbox is the practical ceiling, so one inbox holds one message.",
   "history": [],
   "extras": {
