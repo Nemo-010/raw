@@ -1,0 +1,221 @@
+{
+  "topic": "dev-services",
+  "slug": "twilio-programmable-messaging",
+  "provider": "Twilio Programmable Messaging",
+  "url": "https://www.twilio.com/docs/usage/trials",
+  "category": "hosted SMS, MMS, RCS and voice API with a time-limited free trial (hosted)",
+  "tier": "Free Trial",
+  "free_tier": {
+    "stated": "30-day free trial with product-specific free units instead of a dollar balance: 100 SMS messages, 100 WhatsApp messages, 3,000 emails and 75 voice minutes. No credit card at signup. Trial messaging is restricted to verified recipients (up to 5 per account) and to the sign-up country, and requires Twilio-provided message templates.",
+    "unit": "mixed",
+    "metered_on": "request-count",
+    "source_url": "https://www.twilio.com/docs/usage/trials",
+    "read_on": "2026-11-19",
+    "notes": "Every SMS or WhatsApp message deducts one free unit; a verification over SMS deducts one SMS unit and one verification unit. The trial expires 30 days after sign-up. A plan help article states 150 free messages with a 10-per-day cap; a restrictions article states a 50-per-day maximum. Those first-party figures conflict with the trials table and are recorded in notes and an open_question."
+  },
+  "per_object_cap": {
+    "stated": "An MMS message carries up to 10 media files with a total size of up to 5MB; Twilio rejects messages with over 5MB of media.",
+    "bytes": null,
+    "source_url": "https://www.twilio.com/docs/messaging/api/media-resource",
+    "notes": "The 5MB is a total across up to 10 attached files, not a single-object cap, so bytes is null. This cap applies to billed MMS messages; the free trial allocates message units, not media storage."
+  },
+  "retention": {
+    "stated": "Message bodies and records are kept until the customer requests removal with an HTTP DELETE. Message Logs and the Messages API show records for up to 13 months (400 days) by default, configurable from 7 to 400 days. Records older than 13 months remain accessible through Bulk Export, while MMS media older than 13 months is permanently deleted. Bodies may persist up to 30 days in backups after a DELETE.",
+    "days": 400,
+    "source_url": "https://help.twilio.com/articles/223181008-Twilio-SMS-message-and-traffic-storage",
+    "notes": "400 days is the default data-access window in the Console and Messages API, not automatic loss: records survive in Bulk Export beyond it, but MMS media older than 13 months is deleted. The value is customer-configurable between 7 and 400 days."
+  },
+  "egress": {
+    "terms": "Not a byte-egress offer: messages are sent and read back through the Programmable Messaging REST API and webhooks. Outbound SMS is billed per segment, starting at USD 0.0083 per outbound or inbound segment on a long code (pricing current as of November 2026); no bandwidth egress quota is stated.",
+    "metered": false,
+    "free_allowance": "100 free SMS messages in the 30-day trial",
+    "price_per_tb": null,
+    "source_url": "https://www.twilio.com/en-us/sms/pricing/us"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "The Programmable Messaging REST API serves SMS, MMS, RCS and WhatsApp. The API base URL is https://api.twilio.com/2010-04-01 and authentication is HTTP Basic with the API key SID as username and API key secret as password. A separate base URL serves Messaging Services. The Twilio Console and the Message Logs expose the same records.",
+  "endpoint": "https://api.twilio.com/2010-04-01",
+  "tooling": "The hosted API is reached with the Twilio SDKs (twilio-node, twilio-python and others), with curl against the REST API, or from the Twilio Console. No software the user installs and runs is required: the messaging service is hosted by the vendor. This is a hosted service, not a self-hosted offer.",
+  "chaining": "Send and receive SMS, MMS, RCS and WhatsApp from an application with delivery-status callbacks, inbound webhooks and message scheduling; combine with Messaging Services and other Twilio products. Hosted service only.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "100 SMS messages free in the 30-day trial",
+      "source": "https://www.twilio.com/docs/usage/trials"
+    },
+    {
+      "kind": "request-rate",
+      "value": "trial accounts are restricted to a maximum of 50 messages per day",
+      "source": "https://help.twilio.com/articles/360036052753"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "up to 5 verified recipients per account",
+      "source": "https://www.twilio.com/docs/usage/trials"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "MMS media up to 5MB total across up to 10 media files per message",
+      "source": "https://www.twilio.com/docs/messaging/api/media-resource"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "one Twilio number per trial account, at most 3 unique numbers over the account's life",
+      "source": "https://help.twilio.com/articles/360036052753"
+    },
+    {
+      "kind": "request-rate",
+      "value": "trial calls limited to a maximum of 10 minutes and a maximum of 5 concurrent calls",
+      "source": "https://help.twilio.com/articles/360036052753"
+    },
+    {
+      "kind": "write-gated",
+      "value": "must use Twilio-provided message templates; custom message bodies are not available during the trial",
+      "source": "https://www.twilio.com/docs/usage/trials"
+    }
+  ],
+  "binding": "volume-quota",
+  "binding_note": "The 100-message, 5-recipient, 30-day trial quota ends free use before the 5MB media cap or the 50-per-day rate is reached; the offer is a trial, not a recurring free tier.",
+  "identity_cost": {
+    "kind": "any-phone",
+    "detail": "Sign-up asks for an email address and a personal phone number, both verified, plus information about the project. The sign-up text states: 'Verify your email address.' and 'Verify your personal phone number.' A free trial account needs no credit card. Trial sending is limited to verified recipients and the sign-up country. The identity needed for a paid account that sends A2P messaging, including adding funds and payment details and carrier registration, is unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "Trial messages carry a 'Sent from a Twilio Trial account' prefix and trial numbers are shared Twilio-owned numbers that cannot be kept after upgrade. An unused trial number may be removed after 60 days. Message bodies may persist up to 30 days in database backups after an HTTP DELETE request.",
+  "confidence": "documented",
+  "confidence_note": "All values are quoted from first-party Twilio pricing, documentation and help pages. Sign-up requirements are quoted from the public trial documentation; paid-account identity is unverified behind a sign-up and the trial SMS figures conflict across first-party pages.",
+  "evidence": [
+    {
+      "url": "https://www.twilio.com/docs/usage/trials",
+      "date": "2026-11-19",
+      "proved": "the trial includes 100 free SMS messages",
+      "capture": "sha256:7b20047d77d498d98952da50fd754e577418b15b1d996655d0dc5384d2990a75",
+      "quote": "| Messaging | SMS messages                | 100        |"
+    },
+    {
+      "url": "https://www.twilio.com/docs/usage/trials",
+      "date": "2026-11-19",
+      "proved": "the trial needs no credit card and expires after 30 days",
+      "capture": "sha256:7b20047d77d498d98952da50fd754e577418b15b1d996655d0dc5384d2990a75",
+      "quote": "You can sign up for a Twilio free trial account without a credit card. Trial accounts expire after 30 days."
+    },
+    {
+      "url": "https://www.twilio.com/docs/usage/trials",
+      "date": "2026-11-19",
+      "proved": "sign-up verifies an email address and a personal phone number and asks for project information",
+      "capture": "sha256:7b20047d77d498d98952da50fd754e577418b15b1d996655d0dc5384d2990a75",
+      "quote": "* Verify your email address.\n* Verify your personal phone number.\n* Customize your account by providing information about your project."
+    },
+    {
+      "url": "https://www.twilio.com/docs/usage/trials",
+      "date": "2026-11-19",
+      "proved": "an account can verify at most 5 recipients during the trial",
+      "capture": "sha256:7b20047d77d498d98952da50fd754e577418b15b1d996655d0dc5384d2990a75",
+      "quote": "Each account can verify up to **5 recipients**."
+    },
+    {
+      "url": "https://www.twilio.com/docs/usage/trials",
+      "date": "2026-11-19",
+      "proved": "trial SMS is restricted to the sign-up country",
+      "capture": "sha256:7b20047d77d498d98952da50fd754e577418b15b1d996655d0dc5384d2990a75",
+      "quote": "SMS messages and voice calls are restricted to your sign-up country, determined by the phone number you used during registration."
+    },
+    {
+      "url": "https://www.twilio.com/docs/usage/trials",
+      "date": "2026-11-19",
+      "proved": "trial messaging requires Twilio-provided templates, not custom message bodies",
+      "capture": "sha256:7b20047d77d498d98952da50fd754e577418b15b1d996655d0dc5384d2990a75",
+      "quote": "You must use Twilio-provided templates or message examples. Custom message bodies, email content, and WhatsApp templates aren't available during the trial."
+    },
+    {
+      "url": "https://help.twilio.com/articles/360036052753",
+      "date": "2026-11-19",
+      "proved": "trial accounts have a 50-message-per-day maximum",
+      "capture": "sha256:0937f02c5ae28624c754e972eca75206d7f8e65a0d8e2712f97b85eedb5178cb",
+      "quote": "Trial accounts are restricted to a maximum of 50 messages per day"
+    },
+    {
+      "url": "https://help.twilio.com/articles/360036052753",
+      "date": "2026-11-19",
+      "proved": "one Twilio number is allowed per trial account",
+      "capture": "sha256:0937f02c5ae28624c754e972eca75206d7f8e65a0d8e2712f97b85eedb5178cb",
+      "quote": "We only allow one Twilio number per trial account."
+    },
+    {
+      "url": "https://help.twilio.com/articles/360036052753",
+      "date": "2026-11-19",
+      "proved": "a trial account can verify at most 3 unique numbers over its life",
+      "capture": "sha256:0937f02c5ae28624c754e972eca75206d7f8e65a0d8e2712f97b85eedb5178cb",
+      "quote": "Trial accounts are limited to 3 unique numbers over the duration of their life."
+    },
+    {
+      "url": "https://help.twilio.com/articles/360036052753",
+      "date": "2026-11-19",
+      "proved": "trial calls are limited to 10 minutes and 5 concurrent calls",
+      "capture": "sha256:0937f02c5ae28624c754e972eca75206d7f8e65a0d8e2712f97b85eedb5178cb",
+      "quote": "All trial calls are limited to a maximum of 10 minutes"
+    },
+    {
+      "url": "https://help.twilio.com/articles/360036052753",
+      "date": "2026-11-19",
+      "proved": "trial project messages carry a trial-account prefix",
+      "capture": "sha256:0937f02c5ae28624c754e972eca75206d7f8e65a0d8e2712f97b85eedb5178cb",
+      "quote": "When you send an SMS from your free trial project, it will begin with"
+    },
+    {
+      "url": "https://help.twilio.com/articles/360036052753",
+      "date": "2026-11-19",
+      "proved": "an unused trial number may be removed after 60 days",
+      "capture": "sha256:0937f02c5ae28624c754e972eca75206d7f8e65a0d8e2712f97b85eedb5178cb",
+      "quote": "If your phone number is unused in your trial account for more than 60 days, it may be removed"
+    },
+    {
+      "url": "https://help.twilio.com/articles/55716603558939-How-do-I-choose-a-plan-when-I-create-a-Twilio-account",
+      "date": "2026-11-19",
+      "proved": "a plan help article states a different trial allocation of 150 messages with a 10-per-day cap",
+      "capture": "sha256:098fa0d1c724048545d9fc8850a41331a94cf331feeef58091a2a401049a6096",
+      "quote": "Messaging includes 150 free messages with a 10-per-day cap; Voice includes 75 free minutes"
+    },
+    {
+      "url": "https://help.twilio.com/articles/223181008-Twilio-SMS-message-and-traffic-storage",
+      "date": "2026-11-19",
+      "proved": "message records are shown for up to 13 months (400 days) by default",
+      "capture": "sha256:3c48fd825f94b7b136c9a85972d75257734a9a5344b9b7717185e655cb2650f4",
+      "quote": "display message records for **up to 13 months (400 days) after the message is created, by default**"
+    },
+    {
+      "url": "https://help.twilio.com/articles/223181008-Twilio-SMS-message-and-traffic-storage",
+      "date": "2026-11-19",
+      "proved": "MMS media older than 13 months is permanently deleted",
+      "capture": "sha256:3c48fd825f94b7b136c9a85972d75257734a9a5344b9b7717185e655cb2650f4",
+      "quote": "Message media objects (e.g. MMS attachments) older than 13 months are permanently deleted."
+    },
+    {
+      "url": "https://www.twilio.com/docs/messaging/api/media-resource",
+      "date": "2026-11-19",
+      "proved": "a message carries up to 10 media files totalling up to 5MB",
+      "capture": "sha256:d3206a671e967c452641522a1e88c7ee368570d2c7a829b3308a6e92b189d52c",
+      "quote": "You can send messages using Twilio with up to 10 media files that have a total size of up to 5MB."
+    },
+    {
+      "url": "https://www.twilio.com/docs/messaging/api",
+      "date": "2026-11-19",
+      "proved": "the messaging REST API authenticates with an API key SID and secret",
+      "capture": "sha256:71ac6d08fe585edbd854551c86c4138b0ed059313fdc3ef880ff5d5971b086a8",
+      "quote": "Use your *API key SID* as the username and your *API key secret* as the password."
+    },
+    {
+      "url": "https://www.twilio.com/en-us/sms/pricing/us",
+      "date": "2026-11-19",
+      "proved": "long-code SMS is billed per segment starting at USD 0.0083, with pricing current as of November 2026",
+      "capture": "sha256:1f7f3a912cb76678099ad9eb2ff46115888e2602b2968a6087b4163a660f201f",
+      "quote": "A 10-digit number for SMS and voice calls with localized identity. | $0.0083 | $0.0083 | $0.022 | $0.0165 |"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-19T01:54:13.418Z",
+  "history": [],
+  "notes": "First-party pages disagree on the trial SMS allocation and daily cap: the trials table and trial tutorial state 100 SMS messages, a plan help article states 150 messages with a 10-per-day cap, and the trial-restrictions article states a 50-per-day maximum. The trials table is used as the headline value. This offer is a 30-day trial of a hosted messaging API, not a recurring free tier and not self-hosted software."
+}
