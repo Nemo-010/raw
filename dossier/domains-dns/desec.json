@@ -51,7 +51,7 @@
     },
     {
       "kind": "write-gated",
-      "value": "no fixed number is published: the per-account maximum is the read-only limit_domains field of the account object (the API reference example shows 15) and, unless deSEC has set a limit for the account explicitly, it grows with the domains delegated to deSEC with DNSSEC enabled; reaching it returns 403 Forbidden and the API reference says to contact support. Names under dedyn.io are limited to 1 per account. A new account is reported to start at one, and a deSEC staff reply gives the formula max(1, s + round(sqrt(s))) for s DNSSEC-delegated domains",
+      "value": "the per-account maximum is the read-only limit_domains field of the account object; unless deSEC sets it explicitly it grows with the domains delegated to deSEC with DNSSEC enabled. deSEC's FAQ publishes the rule and a table: one domain at first plus headroom of the square root of the securely delegated domains, rounded; at 0/1/2/3/5/7/12/20/50/100 securely delegated domains the limit is 1/2/3/5/7/10/15/24/57/110. Names under dedyn.io are limited to one per account. The FAQ says the limit is automatic and not raised manually.",
       "source": "https://desec.readthedocs.io/en/latest/auth/account.html"
     }
   ],
@@ -63,8 +63,8 @@
     "country": null
   },
   "reliability_note": "no suspension, throttle or data-loss event is recorded on the pages read",
-  "confidence": "reported",
-  "confidence_note": "the API, the rate table and the account reference are first-party. The account reference documents the per-account domain limit (limit_domains) and how it grows with DNSSEC-delegated domains, and the domains reference documents the 403 on reaching it, but neither states a fixed number; the initial value of one and the staff formula come from deSEC's forum and an independent write-up, at the reported rung. free_tier.unit is objects, not unlimited, because the domain count is capped.",
+  "confidence": "documented",
+  "confidence_note": "the API, the rate table, the account reference and the FAQ are first-party. deSEC's FAQ publishes the domain-limit rule (one domain plus rounded-square-root headroom over securely delegated domains) and a numeric table, so the mechanism is documented. No single fixed cap applies to every account: limit_domains is still read per account and explicit support-set values still override the automatic rule, so free_tier.unit stays objects, not unlimited.",
   "evidence": [
     {
       "url": "probe:https://desec.io/api/v1/domains/",
@@ -133,10 +133,59 @@
       "proved": "names under dedyn.io are limited to 1 per account",
       "capture": "sha256:6506f0790ed2b9a146b4c09ccaf796724a72402c43e0cc9b9b6887cf22612257",
       "quote": "Domains that we offer for registration ourselves, such as those directly under `dedyn.io`, are limited to one per account."
+    },
+    {
+      "url": "https://desec.io/faq/",
+      "date": "2026-11-19",
+      "proved": "deSEC's FAQ states the automatic domain-limit rule: one domain plus rounded-square-root headroom over securely delegated domains",
+      "capture": "sha256:edf69e7acecec3224b9a5994b476e37263807d12ddadfa8833a61e94bb289e4b",
+      "quote": "Your domain limit grows with the number of domains you have delegated to deSEC securely, that is, with deSEC's nameservers and DNSSEC enabled. Each such domain counts for its own slot. On top of that, you get some headroom for domains that are not secured yet: one domain at first, and more as you secure more domains (the square root of their number, rounded)."
+    },
+    {
+      "url": "https://desec.io/faq/",
+      "date": "2026-11-19",
+      "proved": "deSEC's first-party FAQ gives the concrete domain-limit numbers, previously only third-party reported",
+      "capture": "sha256:edf69e7acecec3224b9a5994b476e37263807d12ddadfa8833a61e94bb289e4b",
+      "quote": "| Domain limit | 1 | 2 | 3 | 5 | 7 | 10 | 15 | 24 | 57 | 110 |"
+    },
+    {
+      "url": "https://desec.io/faq/",
+      "date": "2026-11-19",
+      "proved": "deSEC publishes the concrete domain-limit numbers on its own FAQ",
+      "capture": "sha256:edf69e7acecec3224b9a5994b476e37263807d12ddadfa8833a61e94bb289e4b",
+      "quote": "| Domain limit | 1 | 2 | 3 | 5 | 7 | 10 | 15 | 24 | 57 | 110 |"
+    },
+    {
+      "url": "https://desec.io/faq/",
+      "date": "2026-11-19",
+      "proved": "the domain limit is automatic and not granted manually, and grows as domains are secured",
+      "capture": "sha256:4212f691215feaa1d7502a21ba661b76bc12ef7a85d56955f3b3f604c8f14919",
+      "quote": "As a rule, no: the limit is automatic, so that nobody has to wait for us. Secure the domains you have, and the limit follows, with more headroom the more domains you secure."
+    },
+    {
+      "url": "https://desec.io/faq/",
+      "date": "2026-11-19",
+      "proved": "deSEC's FAQ domain-limit table is current on this date",
+      "capture": "sha256:edf69e7acecec3224b9a5994b476e37263807d12ddadfa8833a61e94bb289e4b",
+      "quote": "| Domain limit | 1 | 2 | 3 | 5 | 7 | 10 | 15 | 24 | 57 | 110 |"
+    },
+    {
+      "url": "https://desec.io/faq/",
+      "date": "2026-11-19",
+      "proved": "deSEC documents the September 2026 change from individually granted limits to the automatic limit",
+      "capture": "sha256:4212f691215feaa1d7502a21ba661b76bc12ef7a85d56955f3b3f604c8f14919",
+      "quote": "In September 2026, we replaced most individually granted limits with the automatic limit."
+    },
+    {
+      "url": "probe:https://desec.io/api/v1/domains/",
+      "date": "2026-11-19",
+      "proved": "the public domains API endpoint is token-authenticated and returns 401 without a token, so it cannot confirm a per-account limit anonymously",
+      "capture": "sha256:db690e4adc74cc75c889472138b931dee97c9d57f3f6a7a83eddf47622a2d2cf",
+      "quote": "\"status\": 401"
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-11-04T00:20:29.067Z",
+  "verified_at": "2026-11-19T21:12:39.082Z",
   "price_per_tb_month": null,
   "history": [
     "history/2026-10-22T041504Z/desec-domain-count-unlimited.md"
@@ -144,5 +193,5 @@
   "notes": "The 300 changes a day per domain is generous for steady state and painful for provisioning: a 500-record import takes two days. Bulk endpoints exist and the docs recommend them, which is the alternative route. The domain counter is the constraint that is often recorded as 'no published cap', which is a different claim: deSEC publishes no fixed number, and its own forum gives one. The cap binds before the rate table does, and only a signup shows the number an account actually receives.",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z",
-  "binding_note": "the change rate is generous for steady state. The domain counter is what stops a multi-zone scheme: it is not published, a new account is reported to begin at one domain, and raising it is a support request with a person in the queue."
+  "binding_note": "the change rate is generous for steady state. The domain counter is what stops a multi-zone scheme: deSEC's FAQ publishes an automatic limit of one domain plus rounded-square-root headroom over securely delegated zones, so a new account begins at one and the limit grows as DNSSEC is enabled on each zone; the FAQ says the limit is automatic and not raised manually."
 }
