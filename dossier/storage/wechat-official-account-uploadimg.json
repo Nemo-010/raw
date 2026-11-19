@@ -32,7 +32,7 @@
     "rest"
   ],
   "interface_detail": "rest",
-  "tooling": "Trivial. One multipart POST: curl -F media=@test.jpg \"https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=ACCESS_TOKEN\". No wrapper needed; any HTTP client plus a token-refresh loop (access_token lives 7200s) is the whole client.",
+  "tooling": "Trivial. One multipart POST: curl -F media=@test.jpg \"https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=ACCESS_TOKEN\". No wrapper needed; any HTTP client plus a token-refresh loop is the whole client.",
   "chaining": "The absence of a count cap means one account is already unbounded in object count; the binding limit becomes 1 MB/file. 1 account = effectively millions of 1MB objects. Multiple Official Accounts (1 per entity) multiply further, but count is not the constraint. File size is.",
   "limits": [
     {
@@ -60,10 +60,31 @@
       "url": "https://mmbiz.qpic.cn/mmbiz_jpg/<synthetic-id>",
       "date": "2026-10-21",
       "proved": "probe: GET -> 400 text/plain (endpoint live and reachable anonymously; the 400 is a fabricated media id, not an auth wall)"
+    },
+    {
+      "url": "https://developers.weixin.qq.com/doc/service/api/material/permanent/api_uploadimage",
+      "date": "2026-11-19",
+      "proved": "uploaded images do not count against the 100000-image limit; jpg/png only and under 1 MB",
+      "capture": "sha256:fc9bd722ae1603f21ae5ac1af1a1c291af54f88375afd0f7ff8b03f9ca4b168e",
+      "quote": "1. 该接口所上传的图片，不占用公众号的素材库中图片数量的100000个的限制，图片仅支持jpg/png格式，大小必须在1MB以下。"
+    },
+    {
+      "url": "https://developers.weixin.qq.com/doc/service/api/material/permanent/api_uploadimage",
+      "date": "2026-11-19",
+      "proved": "the documented upload is a single multipart POST with an access_token",
+      "capture": "sha256:fc9bd722ae1603f21ae5ac1af1a1c291af54f88375afd0f7ff8b03f9ca4b168e",
+      "quote": "curl -F media=@test.jpg \"https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=ACCESS_TOKEN\""
+    },
+    {
+      "url": "https://developers.weixin.qq.com/doc/service/api/material/permanent/api_uploadimage",
+      "date": "2026-11-19",
+      "proved": "the upload response returns a public CDN URL on mmbiz.qpic.cn",
+      "capture": "sha256:fc9bd722ae1603f21ae5ac1af1a1c291af54f88375afd0f7ff8b03f9ca4b168e",
+      "quote": "\"url\": \"http://mmbiz.qpic.cn/XXXXX\","
     }
   ],
   "verdict": "fails-egress",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:25.207Z",
   "notes": "NO documented count cap. The docs state explicitly: \"该接口所上传的图片，不占用公众号的素材库中图片数量的100000个的限制\". Images uploaded via this endpoint do NOT count against the 100,000-image library limit. Per-file cap 1 MB, JPG/PNG only.",
   "history": [],
   "extras": {
