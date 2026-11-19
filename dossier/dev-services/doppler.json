@@ -1,0 +1,210 @@
+{
+  "topic": "dev-services",
+  "slug": "doppler",
+  "provider": "Doppler",
+  "url": "https://www.doppler.com/pricing",
+  "category": "hosted secrets management and environment variable synchronization with a dashboard, REST API and CLI",
+  "tier": "Developer",
+  "free_tier": {
+    "stated": "Developer plan: Free for 3 users, then USD 8 per month for each additional user, up to 25 users; includes the Doppler CLI for local development, service tokens, email alerts, 3 days of activity logs, secrets referencing, secret value types, API and webhooks access, and 5 config syncs",
+    "unit": "users",
+    "metered_on": "identity-count",
+    "source_url": "https://www.doppler.com/pricing",
+    "read_on": "2026-11-19",
+    "notes": "The headline unit counted is the human user. Service tokens, CLI tokens and non-human identities are not billed as separate seats. The unit 'users' is the nearest schema term; the offer is per human seat with three free seats."
+  },
+  "per_object_cap": {
+    "stated": "Secret Value Size 50 KiB and Config Payload Size 500 KiB on every plan; 1,200 secrets per config on Developer",
+    "bytes": 51200,
+    "source_url": "https://docs.doppler.com/docs/platform-limits",
+    "notes": "The 50 KiB figure is the largest single secret value, which is the per-object cap; the bytes field holds 50 KiB = 51,200 bytes. A config payload can hold 500 KiB and at most 1,200 secrets."
+  },
+  "retention": {
+    "stated": "Activity logs kept for 3 days on Developer; 90 days on Team and 1095 days on Enterprise. Secrets themselves persist until changed or deleted; no automatic secret expiry is stated on the pages read.",
+    "days": 3,
+    "source_url": "https://docs.doppler.com/docs/platform-limits",
+    "notes": "The 3-day figure is the activity log retention window, not a lifetime for stored secrets."
+  },
+  "egress": {
+    "terms": "not applicable: a hosted secrets store, not a bulk transfer service. Secrets are read back through the REST API and CLI; API rate limits apply rather than a per-GB egress price. No per-GB egress charge or quota is stated on the pages read.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://docs.doppler.com/docs/api"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "The Doppler API is organized around REST with predictable resource-oriented URLs, JSON-encoded request bodies and responses, and standard HTTP response codes. Authentication uses high entropy bearer tokens in the HTTP Authorization header, with CLI tokens, personal tokens, service tokens, service account tokens and SCIM and audit tokens. An official MCP Server and SDKs are listed on the pricing page.",
+  "endpoint": "https://api.doppler.com/v3",
+  "tooling": "Doppler CLI, the REST API with bearer tokens, official SDKs and the official MCP Server",
+  "chaining": "A hosted secrets store for local development and CI, with API and webhook access and 5 config syncs on Developer that push a config to destinations such as cloud platforms and infrastructure.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "API read 240/min, secret read 120/min, write 60/min on Developer; 429 response when the limit is hit",
+      "source": "https://docs.doppler.com/docs/api"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "50 KiB maximum secret value; 500 KiB config payload; 1,200 secrets per config",
+      "source": "https://docs.doppler.com/docs/platform-limits"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "5 config syncs, 10 projects, 4 environments, 10 configs per environment, 50 service tokens, 5 CLI tokens per user, 25 users on Developer",
+      "source": "https://www.doppler.com/pricing"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "3 days of activity logs on Developer",
+      "source": "https://www.doppler.com/pricing"
+    }
+  ],
+  "limits_note": "Config syncs count only syncs created in the dashboard or by the Secrets Sync API; Kubernetes Operator syncs and CLI secret fetches are excluded. Rate limits apply to direct API requests and to requests made by the CLI and Kubernetes Operator, and are per access token.",
+  "binding": "volume-quota",
+  "binding_note": "The 5 config sync fill first for a project that syncs secrets to more than a few destinations, before the 240 reads per minute API rate is reached.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "Sign-up page offers Google, GitHub and Email options; the Email option needs an email address and no card or phone is requested at registration. Pricing page Start for Free links to dashboard.doppler.com/register?plan=developer. Third-party pages state no card is required at signup, which is not confirmed by a first-party page read here.",
+    "country": null
+  },
+  "reliability_note": "The API answers 429 when a rate limit is hit; retry-after and rate limit headers are returned. No throttle, ban or data loss beyond the 3-day activity log window is stated on the pages read.",
+  "confidence": "documented",
+  "confidence_note": "Plan limits, rate limits and per-object caps come from first-party pricing, API and platform-limits pages; the sign-up gate is read from the first-party registration page. No account was opened, so values only visible in an account are unverified.",
+  "evidence": [
+    {
+      "url": "https://www.doppler.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:0661baba8eabc60d35a52768099ef95ad4ae8c7116b6fe47a89135a342baf4de",
+      "quote": "Free for 3 users",
+      "proved": "the Developer plan is free for three users"
+    },
+    {
+      "url": "https://www.doppler.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:0661baba8eabc60d35a52768099ef95ad4ae8c7116b6fe47a89135a342baf4de",
+      "quote": "$8/mo per additional user",
+      "proved": "each additional Developer user costs USD 8 per month"
+    },
+    {
+      "url": "https://www.doppler.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:0661baba8eabc60d35a52768099ef95ad4ae8c7116b6fe47a89135a342baf4de",
+      "quote": "Config syncs (5)",
+      "proved": "Developer includes five config syncs"
+    },
+    {
+      "url": "https://www.doppler.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:0661baba8eabc60d35a52768099ef95ad4ae8c7116b6fe47a89135a342baf4de",
+      "quote": "3 days of activity logs",
+      "proved": "Developer retains three days of activity logs"
+    },
+    {
+      "url": "https://www.doppler.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:0661baba8eabc60d35a52768099ef95ad4ae8c7116b6fe47a89135a342baf4de",
+      "quote": "Users\n\n25\n\n500",
+      "proved": "the User ceiling is 25 on Developer and 500 on Team"
+    },
+    {
+      "url": "https://www.doppler.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:0661baba8eabc60d35a52768099ef95ad4ae8c7116b6fe47a89135a342baf4de",
+      "quote": "Projects\n\n10\n\n250",
+      "proved": "the project ceiling is 10 on Developer and 250 on Team"
+    },
+    {
+      "url": "https://www.doppler.com/pricing",
+      "date": "2026-11-19",
+      "capture": "sha256:0661baba8eabc60d35a52768099ef95ad4ae8c7116b6fe47a89135a342baf4de",
+      "quote": "[Start for Free](https://dashboard.doppler.com/register?plan=developer)",
+      "proved": "the Developer sign-up route is the registration page for the developer plan"
+    },
+    {
+      "url": "https://docs.doppler.com/docs/api",
+      "date": "2026-11-19",
+      "capture": "sha256:fe83ffd6b6129bac7d56dc5df587d05dcc2667bc6feccd4ebba50642d5a47816",
+      "quote": "The Doppler API is organized around REST. Our API has predictable resource-oriented URLs, accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.",
+      "proved": "the API is a REST interface with JSON over HTTPS"
+    },
+    {
+      "url": "https://docs.doppler.com/docs/api",
+      "date": "2026-11-19",
+      "capture": "sha256:fe83ffd6b6129bac7d56dc5df587d05dcc2667bc6feccd4ebba50642d5a47816",
+      "quote": "Authentication to the API is performed by providing a bearer token to the",
+      "proved": "API requests authenticate with a bearer token in the Authorization header"
+    },
+    {
+      "url": "https://docs.doppler.com/docs/api",
+      "date": "2026-11-19",
+      "capture": "sha256:fe83ffd6b6129bac7d56dc5df587d05dcc2667bc6feccd4ebba50642d5a47816",
+      "quote": "Developer  | 240       | 120              | 60         |",
+      "proved": "Developer rate limits are 240 reads, 120 secret reads and 60 writes per minute"
+    },
+    {
+      "url": "https://docs.doppler.com/docs/api",
+      "date": "2026-11-19",
+      "capture": "sha256:fe83ffd6b6129bac7d56dc5df587d05dcc2667bc6feccd4ebba50642d5a47816",
+      "quote": "If you hit a rate limit, the API will respond with a 429 response code.",
+      "proved": "exceeding a rate limit returns HTTP 429"
+    },
+    {
+      "url": "https://docs.doppler.com/docs/platform-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:15f8850de6f0d9d1ff435f61e0271d61ac73d6b11ea2bc01a42131ed824cfb43",
+      "quote": "Secrets per Config\\* | 1,200",
+      "proved": "a config holds at most 1,200 secrets"
+    },
+    {
+      "url": "https://docs.doppler.com/docs/platform-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:15f8850de6f0d9d1ff435f61e0271d61ac73d6b11ea2bc01a42131ed824cfb43",
+      "quote": "Config Payload Size  | 500 KiB",
+      "proved": "a config payload is capped at 500 KiB"
+    },
+    {
+      "url": "https://docs.doppler.com/docs/platform-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:15f8850de6f0d9d1ff435f61e0271d61ac73d6b11ea2bc01a42131ed824cfb43",
+      "quote": "Secret Value Size    | 50 KiB",
+      "proved": "a single secret value is capped at 50 KiB"
+    },
+    {
+      "url": "https://docs.doppler.com/docs/platform-limits",
+      "date": "2026-11-19",
+      "capture": "sha256:15f8850de6f0d9d1ff435f61e0271d61ac73d6b11ea2bc01a42131ed824cfb43",
+      "quote": "Logs                                                 | 3 days    | 90 days",
+      "proved": "log retention is 3 days on Developer and 90 days on Team"
+    },
+    {
+      "url": "https://dashboard.doppler.com/register?plan=developer",
+      "date": "2026-11-19",
+      "capture": "sha256:7fb6b1a0bb6278b59e05097d5ee0ec9b61341a98ff86d8a75ffcf28cc96820d7",
+      "quote": "Create an account using one of the following options.",
+      "proved": "the registration page presents the account creation options"
+    },
+    {
+      "url": "https://dashboard.doppler.com/register?plan=developer",
+      "date": "2026-11-19",
+      "capture": "sha256:7fb6b1a0bb6278b59e05097d5ee0ec9b61341a98ff86d8a75ffcf28cc96820d7",
+      "quote": "Google\n![](https://dashboard.doppler.com/imgs/github-inverse.png)\nGitHub",
+      "proved": "Google and GitHub are offered as registration options"
+    },
+    {
+      "url": "https://dashboard.doppler.com/register?plan=developer",
+      "date": "2026-11-19",
+      "capture": "sha256:7fb6b1a0bb6278b59e05097d5ee0ec9b61341a98ff86d8a75ffcf28cc96820d7",
+      "quote": "Email",
+      "proved": "an email registration option is offered"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T02:26:47.756Z",
+  "price_per_tb_month": null,
+  "self_hosted": false,
+  "history": [],
+  "notes": "Doppler is a hosted secrets manager. Enterprise offers an on-prem or cloud deployment, but the Developer plan documented here is the hosted service the reader signs up for. Enforcement of the listed Developer limits and the identity cost beyond the registration options are unverified: behind a sign-up."
+}
