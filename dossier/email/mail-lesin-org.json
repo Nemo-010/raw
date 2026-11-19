@@ -1,0 +1,132 @@
+{
+  "topic": "email",
+  "slug": "mail-lesin-org",
+  "provider": "mail.lesin.org (TempMail)",
+  "url": "https://mail.lesin.org/",
+  "category": "disposable inbox with a separate paid developer API",
+  "tier": "free disposable inbox",
+  "free_tier": {
+    "stated": "Free disposable inbox, no registration and no personal details; the developer email API is a separate paid offer at USD 5/month; no numeric storage quota is published",
+    "unit": "mixed",
+    "metered_on": "unstated",
+    "source_url": "https://mail.lesin.org/",
+    "read_on": "2026-11-19",
+    "notes": "mixed is used because the free disposable inbox carries no published numeric quota. The live host mail.lesin.org has no current A or AAAA record, so the first-party pages were read from Wayback snapshots captured 2026-03-27."
+  },
+  "per_object_cap": {
+    "stated": "unverified: no per-message size cap is published on the first-party pages",
+    "bytes": null,
+    "source_url": "https://mail.lesin.org/",
+    "notes": "No message size figure appears on the main page, about, terms, privacy or blog pages."
+  },
+  "retention": {
+    "stated": "All temporary emails and addresses are automatically deleted after 24 hours; the inbox offers manual auto-delete timers of 10 minutes, 30 minutes, 1 hour, 6 hours and 24 hours",
+    "days": 24,
+    "source_url": "https://mail.lesin.org/terms",
+    "notes": "The 24-hour figure is stated on both the terms and the privacy page."
+  },
+  "egress": {
+    "terms": "not applicable: a receive-only disposable inbox; mail is delivered in via SMTP and read back over the web UI or the retrieval API",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://mail.lesin.org/"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "The free disposable inbox is a web UI with an outbound webhook that POSTs JSON on arrival. A separate paid private REST API exposes inbox, HTML view and code-retrieval endpoints for scripts.",
+  "tooling": "any HTTP client for the paid private REST API; a web browser for the free disposable inbox",
+  "chaining": "verification-code sink: create an inbox with no key, let a service deliver a code to it, then read the message back over the paid retrieval API; the scarce links are the 24-hour deletion and the unpublished message cap",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "all temporary emails and addresses are deleted after 24 hours",
+      "source": "https://mail.lesin.org/terms"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "unverified: no per-message size cap is published on first-party pages",
+      "source": "https://mail.lesin.org/"
+    }
+  ],
+  "binding": "retention-clamped",
+  "binding_note": "the 24-hour automatic deletion caps how long a verification code can be read; no message size cap or published rate limit binds earlier",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "TempMail is a free temporary email service that allows you to receive emails without registration. No registration, no personal information required. The paid API asks for an account and payment, but the free disposable inbox needs no key, email or card.",
+    "country": null
+  },
+  "reliability_note": "messages and addresses are deleted after 24 hours, so a code must be read inside that window; the operator states that emails may be delayed or lost; the live host has no current DNS record, so availability is unverified",
+  "confidence": "documented",
+  "confidence_note": "all figures come from first-party pages captured from Wayback snapshots of 2026-03-27; the live host did not resolve, and no probe was run, so the rung stays documented",
+  "evidence": [
+    {
+      "url": "https://mail.lesin.org/about",
+      "date": "2026-11-19",
+      "capture": "sha256:dfbdc31eca092f5b2bb2fce8c7c8b2cb1e74381ee63bb942ebaad80182a122f8",
+      "quote": "TempMail is a free temporary email service that allows you to receive emails without registration.",
+      "proved": "the service is free and an inbox is created without registration"
+    },
+    {
+      "url": "https://mail.lesin.org/about",
+      "date": "2026-11-19",
+      "capture": "sha256:dfbdc31eca092f5b2bb2fce8c7c8b2cb1e74381ee63bb942ebaad80182a122f8",
+      "quote": "No registration, no personal information required.",
+      "proved": "inbox creation is anonymous: no registration and no personal details"
+    },
+    {
+      "url": "https://mail.lesin.org/",
+      "date": "2026-11-19",
+      "capture": "sha256:1923132044cd5606da10cdcf5784cc8996e025b3efe91a70abf1638ab36f253b",
+      "quote": "Get your own dedicated domain · Receive unlimited emails · Extract codes instantly via API · IP protected · $5/month",
+      "proved": "the developer email API is a separate paid offer at USD 5 per month"
+    },
+    {
+      "url": "https://mail.lesin.org/",
+      "date": "2026-11-19",
+      "capture": "sha256:1923132044cd5606da10cdcf5784cc8996e025b3efe91a70abf1638ab36f253b",
+      "quote": "Create up to 5 aliases. All emails go to your main inbox.",
+      "proved": "an inbox supports up to five aliases feeding the same mailbox"
+    },
+    {
+      "url": "https://mail.lesin.org/",
+      "date": "2026-11-19",
+      "capture": "sha256:1923132044cd5606da10cdcf5784cc8996e025b3efe91a70abf1638ab36f253b",
+      "quote": "We'll POST JSON data to this URL when emails arrive",
+      "proved": "a webhook delivers a JSON POST to a caller URL when mail arrives"
+    },
+    {
+      "url": "https://mail.lesin.org/",
+      "date": "2026-11-19",
+      "capture": "sha256:1923132044cd5606da10cdcf5784cc8996e025b3efe91a70abf1638ab36f253b",
+      "quote": "Automatically delete this inbox after a set time.",
+      "proved": "the inbox offers a user-set automatic deletion timer"
+    },
+    {
+      "url": "https://mail.lesin.org/",
+      "date": "2026-11-19",
+      "capture": "sha256:1923132044cd5606da10cdcf5784cc8996e025b3efe91a70abf1638ab36f253b",
+      "quote": "DomainRandomiopia.orgkarsus.orgkvarra.orgaatrox.orgambes.organgues.orgayuta.org",
+      "proved": "the custom-email selector lists seven domains: iopia.org, karsus.org, kvarra.org, aatrox.org, ambes.org, angues.org, ayuta.org"
+    },
+    {
+      "url": "https://mail.lesin.org/terms",
+      "date": "2026-11-19",
+      "capture": "sha256:a039cde79b24227158c7db9ed36056ac0c0275a88c9f68741bb730fada338153",
+      "quote": "All temporary emails are automatically deleted after 24 hours",
+      "proved": "messages are deleted after 24 hours"
+    },
+    {
+      "url": "https://mail.lesin.org/privacy",
+      "date": "2026-11-19",
+      "capture": "sha256:bb2f3b4c4d736507f7a2d39d73605d36ae5f01ac5d8774fea1c802ee9de48bad",
+      "quote": "All emails and temporary addresses are automatically deleted after 24 hours. We do not store personal information or email content permanently.",
+      "proved": "both addresses and messages have a 24-hour deletion window"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-19T00:49:45.930Z",
+  "notes": "Inbox size and per-message size cap are unverified: no first-party page publishes figures. The seven domains on the captured page are iopia.org, karsus.org, kvarra.org, aatrox.org, ambes.org, angues.org and ayuta.org. The live host mail.lesin.org has no current A or AAAA record; the first-party pages were read from Wayback snapshots captured 2026-03-27. The free disposable inbox is hosted; the developer API is a separate paid offer, not software the reader installs.",
+  "history": []
+}

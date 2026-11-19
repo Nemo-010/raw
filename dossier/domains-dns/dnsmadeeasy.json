@@ -1,0 +1,194 @@
+{
+  "topic": "domains-dns",
+  "slug": "dnsmadeeasy",
+  "provider": "DNS Made Easy",
+  "url": "https://support.dnsmadeeasy.com/hc/en-us/articles/34327085326107-How-to-Sign-Up-With-DNS-Made-Easy-Free-Trial",
+  "category": "managed authoritative DNS",
+  "tier": "Free 30-day trial (no perpetual free tier)",
+  "free_tier": {
+    "stated": "A free 30-day trial with 3 domains, 900 records, unlimited queries during the trial, 1 failover record, 5 query logs, 2FA, DNS analytics and a 100% SLA; there is no perpetual free tier and paid plans start at USD 6.25 per month",
+    "unit": "seconds",
+    "metered_on": "wall-clock",
+    "source_url": "https://www.digicert.com/blog/how-much-does-dns-cost",
+    "read_on": "2026-11-19",
+    "notes": "the trial is time-boxed at 30 days rather than capacity-boxed; the 30-day length is the head-line allowance, so the unit names wall-clock time"
+  },
+  "per_object_cap": {
+    "stated": "900 records across 3 domains on the trial and 7,500 records across 25 domains on the cheapest paid Business plan; no single-record size cap is stated",
+    "bytes": null,
+    "source_url": "https://support.dnsmadeeasy.com/hc/en-us/articles/34327085326107-How-to-Sign-Up-With-DNS-Made-Easy-Free-Trial",
+    "notes": "the cap is a record count, not a byte size"
+  },
+  "retention": {
+    "stated": "the trial ends after 30 days, after which a paid plan is required to keep the zones active; no separate retention window for zones on a paid plan was read",
+    "days": 30,
+    "source_url": "https://www.digicert.com/blog/how-much-does-dns-cost",
+    "notes": "30 days is the trial length, which is the clock that decides access to the offer"
+  },
+  "egress": {
+    "terms": "unlimited DNS queries during the 30-day trial; on the paid Business plan 10M queries per month are included and overages are invoiced",
+    "metered": true,
+    "free_allowance": "unlimited queries during the 30-day trial",
+    "price_per_tb": null,
+    "source_url": "https://support.dnsmadeeasy.com/hc/en-us/articles/34327085326107-How-to-Sign-Up-With-DNS-Made-Easy-Free-Trial"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "a REST API at https://api.dnsmadeeasy.com/V2.0/ using x-dnsme-apiKey, x-dnsme-requestDate and an HMAC-SHA1 x-dnsme-hmac header; a separate dynamic DNS update servlet at https://cp.dnsmadeeasy.com/servlet/updateip takes username, password, record id and ip. The API reference documents full record and domain CRUD, secondary DNS, failover and query-usage calls",
+  "endpoint": "https://api.dnsmadeeasy.com/V2.0/",
+  "tooling": "curl with the x-dnsme-* HMAC headers, the sample dnsmeapi.pl Perl wrapper, and dynamic DNS clients such as ddclient; public SDKs and terraform providers exist from third parties",
+  "chaining": "a managed authoritative DNS service that can serve as a primary or secondary zone and can be paired with another DNS provider for redundancy; dynamic DNS clients update A records through the update servlet",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "the free offer is a 30-day trial; a paid plan is required afterwards",
+      "source": "https://www.digicert.com/blog/how-much-does-dns-cost"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "3 domains and 900 records on the trial; 25 domains and 7,500 records on the paid Business plan",
+      "source": "https://support.dnsmadeeasy.com/hc/en-us/articles/34327085326107-How-to-Sign-Up-With-DNS-Made-Easy-Free-Trial"
+    },
+    {
+      "kind": "request-rate",
+      "value": "150 REST API requests per 5 minute scrolling window per API key",
+      "source": "https://api-docs.dnsmadeeasy.com/"
+    },
+    {
+      "kind": "write-gated",
+      "value": "REST API keys are available only on Business / DNS-25 memberships or above; DNS-5 members must upgrade",
+      "source": "https://support.dnsmadeeasy.com/hc/en-us/articles/34326955127451-Finding-or-Generating-API-Keys-In-DNS-Made-Easy"
+    }
+  ],
+  "binding": "retention-clamped",
+  "binding_note": "the free offer is only a 30-day trial, so the clock ends access before the record count, API rate or API-key gate binds for a free user; API access is also gated to paid tiers",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "the trial signup guide lists username, password, confirm password, email, first name and last name, then company name, address, city, state, country, zip, phone, an optional fax, a secret question and secret answer, and an optional charity; no card is listed on the Create an Account page and Prerequisites is None, so no payment card is asked for at trial signup (https://support.dnsmadeeasy.com/hc/en-us/articles/34327085326107-How-to-Sign-Up-With-DNS-Made-Easy-Free-Trial). A phone number is requested as account information for the business",
+    "country": null
+  },
+  "reliability_note": "REST API calls with invalid credentials or an invalid request-date header receive HTTP 403, and calls arriving more than 30 seconds after the request-date and HMAC are generated are denied; an account suspended for complaints or misuse returns error-auth-suspend on a dynamic DNS update",
+  "confidence": "documented",
+  "confidence_note": "the free-trial signup guide, the DigiCert first-party pricing blog, the API reference, the API-key article, the add-ons article and the dynamic DNS article were read and quoted; no signup form was submitted, so the exact fields are as documented rather than measured. The marketing pricing and free-trial pages at dnsmadeeasy.com now answer 404 or serve a DigiCert UltraDNS page, so the trial terms come from the support guide and the first-party DigiCert blog",
+  "evidence": [
+    {
+      "url": "https://support.dnsmadeeasy.com/hc/en-us/articles/34327085326107-How-to-Sign-Up-With-DNS-Made-Easy-Free-Trial",
+      "date": "2026-11-19",
+      "capture": "sha256:8748bc724bc33be38b2650dc7f69fa4a8e4023c3056fca51267d6946deffdac7",
+      "quote": "DNS Made Easy provides users with a free 30-day trial that includes our most popular features.",
+      "proved": "the free offer is a 30-day trial"
+    },
+    {
+      "url": "https://support.dnsmadeeasy.com/hc/en-us/articles/34327085326107-How-to-Sign-Up-With-DNS-Made-Easy-Free-Trial",
+      "date": "2026-11-19",
+      "capture": "sha256:8748bc724bc33be38b2650dc7f69fa4a8e4023c3056fca51267d6946deffdac7",
+      "quote": "- 3 domains\n- 900 records\n- Unlimited queries during the trial period\n- 1 Failover record\n- 5 query logs\n- 2FA\n- DNS analytics\n- 100% SLA-backed",
+      "proved": "trial allowance of 3 domains, 900 records, unlimited queries, 1 failover record and 5 query logs"
+    },
+    {
+      "url": "https://www.digicert.com/blog/how-much-does-dns-cost",
+      "date": "2026-11-19",
+      "capture": "sha256:c6fcaeab0947b4fb7fd6cedcf754c8ed6902e677a7646fe7bcf77ae87a973b7b",
+      "quote": "**Cost**: Free for 30 days",
+      "proved": "the trial is free for 30 days"
+    },
+    {
+      "url": "https://www.digicert.com/blog/how-much-does-dns-cost",
+      "date": "2026-11-19",
+      "capture": "sha256:c6fcaeab0947b4fb7fd6cedcf754c8ed6902e677a7646fe7bcf77ae87a973b7b",
+      "quote": "**Cost**: $6.25 mo / $75 billed annually",
+      "proved": "the cheapest paid plan after the trial is USD 6.25 per month"
+    },
+    {
+      "url": "https://www.digicert.com/blog/how-much-does-dns-cost",
+      "date": "2026-11-19",
+      "capture": "sha256:c6fcaeab0947b4fb7fd6cedcf754c8ed6902e677a7646fe7bcf77ae87a973b7b",
+      "quote": "- 25 Domains\n- 7,500 Records\n- 10M Queries /month",
+      "proved": "the paid Business tier counts"
+    },
+    {
+      "url": "https://support.dnsmadeeasy.com/hc/en-us/articles/34327085326107-How-to-Sign-Up-With-DNS-Made-Easy-Free-Trial",
+      "date": "2026-11-19",
+      "capture": "sha256:8748bc724bc33be38b2650dc7f69fa4a8e4023c3056fca51267d6946deffdac7",
+      "quote": "- Username\n- Password\n- Confirm Password\n- Email\n- First Name\n- Last Name",
+      "proved": "the trial signup asks for email and a name"
+    },
+    {
+      "url": "https://support.dnsmadeeasy.com/hc/en-us/articles/34327085326107-How-to-Sign-Up-With-DNS-Made-Easy-Free-Trial",
+      "date": "2026-11-19",
+      "capture": "sha256:8748bc724bc33be38b2650dc7f69fa4a8e4023c3056fca51267d6946deffdac7",
+      "quote": "Next, enter the account information for your business:\n\n- Company name\n- Address/City/State/Country/Zip\n- Phone\n- Fax (optional)\n- Secret question\n- Secret answer\n- Charity (optional)",
+      "proved": "the signup also asks for company details and a phone number"
+    },
+    {
+      "url": "https://support.dnsmadeeasy.com/hc/en-us/articles/34327085326107-How-to-Sign-Up-With-DNS-Made-Easy-Free-Trial",
+      "date": "2026-11-19",
+      "capture": "sha256:8748bc724bc33be38b2650dc7f69fa4a8e4023c3056fca51267d6946deffdac7",
+      "quote": "**Prerequisites**\n\n- None",
+      "proved": "no prerequisite such as a card is stated for the trial"
+    },
+    {
+      "url": "https://support.dnsmadeeasy.com/hc/en-us/articles/34326955127451-Finding-or-Generating-API-Keys-In-DNS-Made-Easy",
+      "date": "2026-11-19",
+      "capture": "sha256:ce7bf5f8f7dc810d1e59d5a131cf8a891dd25226a30529de38be965be2730ff0",
+      "quote": "Only Business / DNS-25 memberships or above have access to API Keys. Small Business / DNS-5 members will need to upgrade to [Business / DNS-25](https://dnsmadeeasy.com/pricing)to take advantage of our API service.",
+      "proved": "REST API keys are gated to paid memberships"
+    },
+    {
+      "url": "https://api-docs.dnsmadeeasy.com/",
+      "date": "2026-11-19",
+      "capture": "sha256:ad63eb397cbf261b07758536bb37f4eb7d47e4604743dba0a5dd5729d8479cde",
+      "quote": "This limit is 150 requests per 5 minute scrolling window.",
+      "proved": "the REST API is rate limited to 150 requests per 5 minute window per API key"
+    },
+    {
+      "url": "https://api-docs.dnsmadeeasy.com/",
+      "date": "2026-11-19",
+      "capture": "sha256:ad63eb397cbf261b07758536bb37f4eb7d47e4604743dba0a5dd5729d8479cde",
+      "quote": "The current endpoint for API V2.0 is\navailable at:\n**http\\[s\\]://api.dnsmadeeasy.com/V2.0/**",
+      "proved": "the REST API endpoint"
+    },
+    {
+      "url": "https://api-docs.dnsmadeeasy.com/",
+      "date": "2026-11-19",
+      "capture": "sha256:ad63eb397cbf261b07758536bb37f4eb7d47e4604743dba0a5dd5729d8479cde",
+      "quote": "Requests made with invalid credentials or an invalid x-dnsme-requestDate value will receive an **HTTP 403 – Forbidden response**.",
+      "proved": "bad credentials or request date are refused with HTTP 403"
+    },
+    {
+      "url": "https://api-docs.dnsmadeeasy.com/",
+      "date": "2026-11-19",
+      "capture": "sha256:ad63eb397cbf261b07758536bb37f4eb7d47e4604743dba0a5dd5729d8479cde",
+      "quote": "If too much time has passed between when the _x-dnsme-requestDate_ and _x-dnsme-hmac_ strings were created and when the request is received by the DNS Made Easy API servers, then the request will be denied.",
+      "proved": "a skewed request date causes denial"
+    },
+    {
+      "url": "https://support.dnsmadeeasy.com/hc/en-us/articles/34327262173723-Dynamic-DNS",
+      "date": "2026-11-19",
+      "capture": "sha256:46acabc25245f661b6492a2ebcedfa4cc611c0e39888be89ad374d4a1676fdfd",
+      "quote": "The servlet is: [https://cp.dnsmadeeasy.com/servlet/updateip](https://cp.dnsmadeeasy.com/servlet/updateip)?",
+      "proved": "a programmatic dynamic DNS update endpoint exists"
+    },
+    {
+      "url": "https://support.dnsmadeeasy.com/hc/en-us/articles/34327262173723-Dynamic-DNS",
+      "date": "2026-11-19",
+      "capture": "sha256:46acabc25245f661b6492a2ebcedfa4cc611c0e39888be89ad374d4a1676fdfd",
+      "quote": "The four parameters are: \"username\", \"password\", \"id\", and \"ip\".",
+      "proved": "dynamic DNS updates use username, password, record id and ip"
+    },
+    {
+      "url": "https://support.dnsmadeeasy.com/hc/en-us/articles/34327053801627-How-to-Purchase-Additional-DNS-Services-and-Add-ons",
+      "date": "2026-11-19",
+      "capture": "sha256:ccebf393316edf80a877464cce657bd668823e82b4b160fa49b102128fa0ee32",
+      "quote": "If additional API calls are needed for your account or a sub-user’s account, you can purchase an extra 150 API calls per 300 seconds (per user).",
+      "proved": "extra API call capacity is a paid add-on"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-19T01:33:39.433Z",
+  "self_hosted": false,
+  "price_per_tb_month": null,
+  "history": [],
+  "notes": "The free offer is a 30-day trial and no perpetual free tier was found. DNS Made Easy is a DigiCert brand; the dnsmadeeasy.com marketing and free-trial pages now answer 404 or serve a DigiCert UltraDNS page, while the support articles, API reference and the first-party DigiCert pricing blog remain live. The blog and the signup guide disagree on the trial record count (900 versus 1,500), so the lower guide figure is used."
+}
