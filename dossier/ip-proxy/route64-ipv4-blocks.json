@@ -58,7 +58,7 @@
     "detail": "An account in the self-service manager portal is required: 'Just created an account in our manager.' The sign-in page at manager.route64.org returned a login wall to the reader, so the exact fields a new account must supply were not read; email is the minimum such a portal implies and is not confirmed. No card is stated anywhere on the page or the ToS. The ToS adds 'Multiple accounts are not allowed and will cause the suspension of all accounts', so the account is the unit and cannot be multiplied.",
     "country": null
   },
-  "reliability_note": "Best effort with no SLA ('This is a free best effort service. You have no service levels or guarantees.'); the ToS reserves throttling, nullrouting and cancellation at any time without warning, and one account only; all five blocks are one IPXO registration class and one announcing AS, so a prefix-level blocklist entry or a nullroute removes all 1,280 addresses together.",
+  "reliability_note": "unverified: behind a sign-up. The source address one request through a Route64 static allocation returns cannot be measured without a manager account and a supporter allocation: the current site lists the Static IP tunnel as 'For supporters' and says 'Pick what you need, everything is self-service in the manager.'; the keyless DynDNS and API routes echo only a manager-configured name or a caller-supplied host, not an allocation's egress address. No account or allocation was created, so no exit address was observed and the rung stays at the measured registration class of the five blocks. Best effort with no SLA; the ToS reserves throttling, nullrouting and cancellation at any time without warning, and one account only; all five blocks are one IPXO registration class and one announcing AS, so a prefix-level blocklist entry or a nullroute removes all the addresses together.",
   "confidence": "documented",
   "confidence_note": "Autonomous system announcements and RDAP registrations across five /24 subnets were measured via RIPEstat and RDAP on 2026-10-24. Free allocation terms, portal access, and unmetered bandwidth policies are documented from vendor documentation read on 2026-10-24.",
   "evidence": [
@@ -101,10 +101,38 @@
       "url": "https://route64.org/en/tos",
       "date": "2026-10-24",
       "proved": "The published ceilings and the reliability position: 'Our service is designed to deliver up to 200M throughput often more.', 'We can throttle your bandwidth at any time.', 'We can cancel any service at any time without any warning.', 'We can nullroute your advertised prefixes at any time without any warning.', 'This is a free best effort service. You have no service levels or guarantees.', 'Multiple accounts are not allowed and will cause the suspension of all accounts.'"
+    },
+    {
+      "url": "https://route64.org/",
+      "date": "2026-11-19",
+      "proved": "Every Route64 service, including the Static IP tunnel, is provisioned through a manager account, so no keyless allocation is available to probe an exit address",
+      "capture": "sha256:7247a72ce562414b0628560ea3ed4b9f7e2100816bcf02e22b306d8567038dde",
+      "quote": "Pick what you need, everything is self-service in the manager."
+    },
+    {
+      "url": "https://route64.org/en",
+      "date": "2026-11-19",
+      "proved": "The free-of-charge allocation still requires creating a manager account, confirming the sign-up gate that keeps the exit address unobserved",
+      "capture": "sha256:328c570cbf140a80da4d7072922b91132662728adfa5cab9d36ec83cd47173eb",
+      "quote": "Just created an account in our manager. But we happy to get a donation from you."
+    },
+    {
+      "url": "https://route64.org/",
+      "date": "2026-11-19",
+      "proved": "The Static IP tunnel is the product that would yield an allocation; it is listed 'For supporters' and is not a keyless endpoint",
+      "capture": "sha256:7247a72ce562414b0628560ea3ed4b9f7e2100816bcf02e22b306d8567038dde",
+      "quote": "Your own IPv4 or IPv6 subnet, routed to you through a tunnel."
+    },
+    {
+      "url": "https://route64.org/",
+      "date": "2026-11-19",
+      "proved": "Even the API is keyed and created in the manager, so no keyless vendor endpoint echoes an allocation's egress address",
+      "capture": "sha256:7247a72ce562414b0628560ea3ed4b9f7e2100816bcf02e22b306d8567038dde",
+      "quote": "Keys you create in the manager, for dyndns2, DynDNS hosts, reverse DNS, DNS zones and a PeeringDB-compatible API."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-24T10:07:11.000Z",
+  "verified_at": "2026-11-19T21:12:20.112Z",
   "price_per_tb_month": "USD 0: the allocation and its traffic are both free, and no per-byte price exists at any tier",
   "history": [],
   "notes": "Three candidates were considered for what the caveat is, and two were refuted on the evidence. (1) That the vendor claims an ISP or residential registration class, which is the failure mode the topic flags. Refuted for this vendor's own wording: the page read on 2026-10-24 says 'static IP allocations that remain permanently assigned to your account' and 'our static IPs are geographically flexible', and never uses the words ISP, residential, eyeball or native. Route64 makes no class claim at all, so the class is settled entirely by the registry, and the registry does not support one: four blocks read IPXO or IPXO-LEASED as SUB-ALLOCATED PA or ASSIGNED PA, country EU, registrant ORG-PC1552-RIPE, with PC21176-RIPE 'Private Customer' as admin, tech and abuse contact and the remark 'End User Organization'. A sub-allocation of a lease broker's PA space is a broker's pool, not an eyeball broadband network, so rung 5 is not cleared. (2) That the announcement and the registration disagree, which is the topic's warning stated as a claim. Confirmed, and precisely: the announcement is Route64's own, since RIPE autnum 212895 is registered as ROUTE64_ORG and all five /24s are originated there and visible to 268 or 269 of 269 RIS peers, while the registration belongs to IPXO on four blocks and to an ARIN 'Private Customer' assignment on the fifth. Two parties, neither of them an ISP. That is a rung-5 failure, and it is not a rung-3 or rung-4 failure: the addresses are in five different /24s and in an ASN that is not AS13335, so both of those rungs are cleared by the measured announcement. (3) That the vendor's own block count can be relied on. Refuted: the page says 'Our address portfolio includes 3 IPv4 /24 blocks' and RIPEstat returned five, so the pool to draw from is 1,280 addresses rather than 768. That changes the size of the caveat, not its direction. A fourth finding belongs in the record rather than the notes: the vendor publishes a geofeed that carves single /24s into per-country fragments, a /28 in Stockholm, a /29 in London, /31s in Paris, Zurich and Frankfurt. A geofeed-aware upstream will read the declared country while RDAP still says EU, so the declared location is a vendor artifact and neither a registry fact nor a class. Every fact about the network rests on one read, on 2026-10-24: one announced-prefixes query, five routing-status queries, five RDAP queries, one geofeed fetch and two vendor pages. Nothing was delivered and nothing was echoed, and the instruction that matters for this record is that one delivered address must be measured before the class is relied on. That measurement is not here: it needs an account, an allocation, an echo service and a control request from a Cloudflare address in the same minute, and without it this record reports what the registry says rather than what an address does. This record does not duplicate dossier/egress/route64-org.json, which owns the free IPv6 /56 WireGuard tunnel and was read on 2026-10-23; this record owns the IPv4 static allocation only. Nothing in that record is corrected here, and the 200 Mbit/s design point and the ToS sentences appear in both because they bind both products, each citing the ToS directly. The interface token is unknown rather than a protocol name because scripts/dossier/schema.json's interface enum has no member for a web portal, a bare address allocation or a tunnel product: api, socks5, http-proxy, wireguard and web-ui are not in it, so writing them would have failed the gate's schema check, and the qualifier lives in interface_detail instead.",
