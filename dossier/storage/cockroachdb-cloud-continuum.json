@@ -5,7 +5,7 @@
   "url": "https://www.cockroachlabs.com",
   "category": "paas",
   "free_tier": {
-    "stated": "$15/month of free resource consumption per pay-as-you-go org = 50M Request Units + 10 GiB storage/month",
+    "stated": "$15 of resource consumption (equivalent to 50 million Request Units and 10 GiB of storage) free each month, spendable across all Basic clusters in an organization",
     "unit": "GiB",
     "metered_on": "stored-bytes",
     "source_url": "https://www.cockroachlabs.com/docs/cockroachcloud/plan-your-cluster-basic",
@@ -23,7 +23,7 @@
     "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
-    "terms": "No separate egress charge on Basic. Billing is storage GiB + Request Units. So egress is effectively free within the RU budget, and reads are the meter.",
+    "terms": "Data transfer is not included in the Continuum estimate and is billed separately on data leaving the cluster.",
     "metered": false
   },
   "interface": [
@@ -33,7 +33,13 @@
   "interface_detail": "rest",
   "tooling": "Postgres wire protocol (psql, any driver), `cockroach` CLI, Cloud API; no object storage. Bytes must live in tables/BYTEA.",
   "chaining": "The $15 credit is per ORGANIZATION and explicitly spendable 'across all CockroachDB Basic clusters in an organization'. It is a monthly consumable, not a standing quota. 10 GiB is the storage-equivalent, and multi-region replication multiplies storage 3-5x against the same credit. New orgs get a $400 trial credit on top.",
-  "limits": [],
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "Storage limit blocks writes once the monthly storage allowance is reached",
+      "source": "https://docs.cockroachlabs.com/docs/cockroachcloud/plan-your-cluster-basic"
+    }
+  ],
   "limits_note": "10 GiB/month equivalent; hitting the storage limit blocks writes ('cluster will be unable to write to its storage'); hitting the RU limit disables the cluster until next cycle. Pricing changed for deployments created on/after 2026-09-15 ('Cockroach Continuum').",
   "identity_cost": {
     "kind": "card",
@@ -53,10 +59,52 @@
       "url": "https://www.cockroachlabs.com/pricing/",
       "date": "2026-10-21",
       "proved": "'This pricing applies to Cockroach Continuum for anyone getting started or adding new database deployments on or after September 15, 2026'"
+    },
+    {
+      "url": "https://docs.cockroachlabs.com/docs/cockroachcloud/plan-your-cluster-basic",
+      "date": "2026-11-19",
+      "proved": "The $15/50M RU/10 GiB monthly benefit is per organization and shared across its Basic clusters",
+      "capture": "sha256:02dcf34faf8aaa9e4b036056e041282d794bf1536d5b12558d1f162e8ca9be6f",
+      "quote": "for free each month. Every monthly billing cycle, this free monthly resource benefit can be spent across all CockroachDB Basic clusters in an organization."
+    },
+    {
+      "url": "https://www.cockroachlabs.com/pricing/",
+      "date": "2026-11-19",
+      "proved": "Continuum bills egress separately from the estimate",
+      "capture": "sha256:2145bf89bc755cde161102e66e734130594a95983e497d40f7ce769b2e4ab881",
+      "quote": "Data transfer is not included in the estimate and is billed separately on data leaving the cluster."
+    },
+    {
+      "url": "https://docs.cockroachlabs.com/docs/cockroachcloud/plan-your-cluster-basic",
+      "date": "2026-11-19",
+      "proved": "Storage limit is a hard volume quota that blocks writes",
+      "capture": "sha256:02dcf34faf8aaa9e4b036056e041282d794bf1536d5b12558d1f162e8ca9be6f",
+      "quote": "If you reach your storage limit, your cluster will be unable to write to its storage unless you delete data or increase your storage limit."
+    },
+    {
+      "url": "https://docs.cockroachlabs.com/docs/cockroachcloud/plan-your-cluster-basic",
+      "date": "2026-11-19",
+      "proved": "Storage limit is a hard quota that stops writes",
+      "capture": "sha256:02dcf34faf8aaa9e4b036056e041282d794bf1536d5b12558d1f162e8ca9be6f",
+      "quote": "If you reach your storage limit, your cluster will be unable to write to its storage unless you delete data or increase your storage limit."
+    },
+    {
+      "url": "https://www.cockroachlabs.com/pricing/",
+      "date": "2026-11-19",
+      "proved": "Continuum organization signup needs no credit card",
+      "capture": "sha256:2145bf89bc755cde161102e66e734130594a95983e497d40f7ce769b2e4ab881",
+      "quote": "Create a free Continuum Cloud organization and run your first workload in minutes. No credit card required."
+    },
+    {
+      "url": "https://www.cockroachlabs.com/pricing/",
+      "date": "2026-11-19",
+      "proved": "Continuum pricing applies to deployments created on or after 2026-09-15",
+      "capture": "sha256:2145bf89bc755cde161102e66e734130594a95983e497d40f7ce769b2e4ab881",
+      "quote": "This pricing applies to Cockroach Continuum for anyone getting started or adding new database deployments on or after September 15, 2026."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:13:08.914Z",
   "notes": "$15/month of free resource consumption per pay-as-you-go org = 50M Request Units + 10 GiB storage/month",
   "history": [],
   "extras": {
@@ -93,8 +141,8 @@
     "interface_verbatim": "rest",
     "agent_focus": "Backend-as-a-service and database platforms where free storage quota is expressed per PROJECT/DATASET/CLUSTER and the units may multiply with free orgs — plus the headless-CMS class, where assets are CDN-served at no egress cost"
   },
-  "binding": "none",
-  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "binding": "volume-quota",
+  "binding_note": "the storage limit is a hard volume quota that blocks writes when the allowance is reached",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z"
 }

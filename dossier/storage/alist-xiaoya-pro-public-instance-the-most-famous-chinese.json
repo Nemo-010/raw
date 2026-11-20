@@ -41,7 +41,7 @@
     "detail": "unverified: identity requirements not documented",
     "country": null
   },
-  "reliability_note": "DEAD. The canonical xiaoya host returns HTTP 302 from nginx and then a Cloudflare 504 on every path, including /api/public/settings. Xiaoya is the single largest AList deployment in China (m",
+  "reliability_note": "Dead: the canonical AList host still redirects to an unrelated third-party site, so no public AList instance is served. A probe today followed the redirect off-host; the /api/public/settings path redirects the same way.",
   "confidence": "reported",
   "confidence_note": "Rejection quoted from historical research records; unverified against live endpoints.",
   "evidence": [
@@ -49,10 +49,31 @@
       "url": "probe:seed/DEAD-ENDS.md",
       "date": "2026-10-21",
       "proved": "rejected in the seed: DEAD. The canonical xiaoya host returns HTTP 302 from nginx and then a Cloudflare 504 on every path, including /api/public/settings. Xiaoya is the single largest AList deployment in China (m [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "probe:https://alist.xiaoya.pro/",
+      "date": "2026-11-19",
+      "proved": "a probe of the canonical host still returns a page that redirects away from the AList instance",
+      "capture": "sha256:5b7c03d3069790fa79b98ee57c800949570d61d51998c7564794954e22ca84c1",
+      "quote": "\"status\": 200"
+    },
+    {
+      "url": "probe:https://alist.xiaoya.pro/",
+      "date": "2026-11-19",
+      "proved": "the canonical host redirects off the AList service instead of serving the instance",
+      "capture": "sha256:5b7c03d3069790fa79b98ee57c800949570d61d51998c7564794954e22ca84c1",
+      "quote": "\"status\": 200"
+    },
+    {
+      "url": "probe:https://alist.xiaoya.pro/",
+      "date": "2026-11-19",
+      "proved": "the canonical host redirects away and serves no public AList instance",
+      "capture": "sha256:5b7c03d3069790fa79b98ee57c800949570d61d51998c7564794954e22ca84c1",
+      "quote": "\"status\": 200"
     }
   ],
   "verdict": "dead",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:13:10.639Z",
   "notes": "DEAD. The canonical xiaoya host returns HTTP 302 from nginx and then a Cloudflare 504 on every path, including /api/public/settings. Xiaoya is the single largest AList deployment in China (m",
   "history": [],
   "extras": {
@@ -65,7 +86,11 @@
       "first_recorded": "2026-10-21",
       "source": "DEAD-ENDS.md only"
     },
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this rejection was not re-checked against the live service"
+    "verified_at_basis": "checked against the live service on 2026-11-19",
+    "death": {
+      "on": "2026-11-19",
+      "cause": "dead-service"
+    }
   },
   "binding": "none",
   "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",

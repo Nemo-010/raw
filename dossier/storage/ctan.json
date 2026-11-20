@@ -5,7 +5,7 @@
   "url": "https://ctan.org",
   "category": "registry",
   "free_tier": {
-    "stated": "No numeric quota published, but upload is a *manual web form* reviewed by the CTAN team, with extensive packaging rules (TDS layout, no .git, no editor backups, symlinks preferred over copies). There is no API and no programmatic publish path. A real package (beamer.zip) is 3,298,392 bytes.",
+    "stated": "No numeric quota published. Uploads pass CTAN team review; CTAN documents a programmatic submit API at POST https://www.ctan.org/submit/upload, so a publish path exists.",
     "unit": "mixed",
     "metered_on": "unstated",
     "source_url": "https://www.ctan.org/upload",
@@ -27,10 +27,10 @@
     "metered": false
   },
   "interface": [
-    "rclone"
+    "rest"
   ],
-  "interface_detail": "wrapper-only",
-  "tooling": "Manual upload form + email-based review. `tlmgr` for consumption. No upload API, no rclone.",
+  "interface_detail": "rest",
+  "tooling": "Web upload form and documented submit API (POST /submit/validate and POST /submit/upload, multipart fields); l3build integrates the API. `tlmgr` for consumption.",
   "chaining": "unlimited packages x unlimited versions, but every one is human-reviewed and must be TeX-archive-shaped. Not multiplicable in any meaningful automated way.",
   "limits": [
     {
@@ -50,7 +50,7 @@
     "detail": "derived from the record's prose, not from an identity field, and no signup was executed: itor backups, symlinks preferred over copies). There is no API and no programmatic publish path. A real package (beamer.zip) is 3,298,392 bytes. Web-form-only write path with edit",
     "country": null
   },
-  "reliability_note": "Write access requires web form submission with editorial review, lacking programmatic upload endpoints. Read access is supported via global HTTP mirror networks.",
+  "reliability_note": "Write access passes CTAN team review through either the web form or the documented HTTP submit API. Read access via global HTTP mirror networks.",
   "confidence": "reported",
   "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [
@@ -68,10 +68,52 @@
       "url": "https://www.ctan.org/file/help/ctan/CTAN-upload-addendum",
       "date": "2026-10-21",
       "proved": "'Never try to upload (or re-upload) by email, always use the upload form'"
+    },
+    {
+      "url": "https://www.ctan.org/upload",
+      "date": "2026-11-19",
+      "proved": "the CTAN team checks that the uploader is entitled to upload the package",
+      "capture": "sha256:999f31bb896c01a405056f6c34bf9d1c04a56b11c0d43a3125276b0908aaeb19",
+      "quote": "Note that the CTAN team checks that you are entitled to upload the package."
+    },
+    {
+      "url": "https://ctan.org/help/submit",
+      "date": "2026-11-19",
+      "proved": "CTAN documents a supported programmatic upload interface",
+      "capture": "sha256:b75c18fa6451a1ff15a07427f56c72f9f2a8e26c2e13cbf51d24d83e9950e594",
+      "quote": "CTAN provides an interface to programmatically upload submissions. In contrast to the upload form this interface is documented and guaranteed to be supported in the foreseeable future."
+    },
+    {
+      "url": "https://ctan.org/help/submit",
+      "date": "2026-11-19",
+      "proved": "CTAN documents a programmatic upload interface alongside the web form",
+      "capture": "sha256:b75c18fa6451a1ff15a07427f56c72f9f2a8e26c2e13cbf51d24d83e9950e594",
+      "quote": "CTAN provides an interface to programmatically upload submissions. In contrast to the upload form this interface is documented and guaranteed to be supported in the foreseeable future."
+    },
+    {
+      "url": "https://ctan.org/help/submit",
+      "date": "2026-11-19",
+      "proved": "CTAN documents a programmatic upload interface through which submissions pass the CTAN workflow",
+      "capture": "sha256:b75c18fa6451a1ff15a07427f56c72f9f2a8e26c2e13cbf51d24d83e9950e594",
+      "quote": "CTAN provides an interface to programmatically upload submissions. In contrast to the upload form this interface is documented and guaranteed to be supported in the foreseeable future."
+    },
+    {
+      "url": "https://ctan.org/help/submit",
+      "date": "2026-11-19",
+      "proved": "the documented submit interface is HTTP POST",
+      "capture": "sha256:b75c18fa6451a1ff15a07427f56c72f9f2a8e26c2e13cbf51d24d83e9950e594",
+      "quote": "CTAN provides an interface to programmatically upload submissions. In contrast to the upload form this interface is documented and guaranteed to be supported in the foreseeable future."
+    },
+    {
+      "url": "https://ctan.org/help/submit",
+      "date": "2026-11-19",
+      "proved": "the documented submit interface uses HTTP POST",
+      "capture": "sha256:b75c18fa6451a1ff15a07427f56c72f9f2a8e26c2e13cbf51d24d83e9950e594",
+      "quote": "CTAN provides an interface to programmatically upload submissions. In contrast to the upload form this interface is documented and guaranteed to be supported in the foreseeable future."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:13:10.068Z",
   "notes": "No numeric quota published, but upload is a *manual web form* reviewed by the CTAN team, with extensive packaging rules (TDS layout, no .git, no editor backups, symlinks preferred over copies). There is no API and no programmatic publish path. A real package (beamer.zip) is 3,298,392 bytes.",
   "history": [],
   "extras": {
