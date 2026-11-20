@@ -32,8 +32,8 @@ the record's own prose.
 | Notion (free plan) - file blocks & Files property | No total storage cap: 'Unlimited file uploads' on Free... | per-object-cap: 5 MiB per file | - | qualifies-with-caveat |
 | Telegram, MTProto user account + unlimited channels... | No total storage cap, quoted from Telegram: 'you can... | per-object-cap: Per-file 2 GB | - | qualifies-with-caveat |
 | Telegram public-channel web CDN... | Not a storage tier, this is the READ path for files already in a public channel... | - | - | qualifies-with-caveat |
-| TG-FileStreamBot / filestream.bot... | Inherits Telegram's unlimited storage but solves a different problem: turning a stored... | per-object-cap: 20 MB per file | - | qualifies-with-caveat |
 | ddrive (Discord as a filesystem) (self-hosted) | Unlimited logical file size and unlimited total: 'Tested with storing 4000 GB of data... | - | - | qualifies-with-caveat |
+| TG-FileStreamBot / filestream.bot (self-hosted)... | Inherits Telegram's unlimited storage but solves a different problem: turning a stored... | per-object-cap: 20 MB per file | - | qualifies-with-caveat |
 
 ## What the class is
 

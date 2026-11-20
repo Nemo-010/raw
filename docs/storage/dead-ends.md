@@ -584,7 +584,6 @@ The 898 records below never held a row in the provider table, so no ledger row a
 | cran (r) | Policy explicitly caps and actively polices size: 'neither data nor documentation should exceed 5MB... authors will be asked to trim their documentation to a maximum of 5MB' and 'Source pac |
 | cyberdrop (cyberdrop.me) | The.me domain is dead, Cloudflare 1016, origin hostname does not resolve. The service lives on at cyberdrop.cr; the.me records are a trap for anyone copying old links |
 | dans easy (legacy) | Retired. 'As of 2 December 2024, EASY will no longer be accessible', datasets migrated to the domain-specific DANS Data Stations. Any EASY quota figure found in third-party guides is dead |
-| datachain / datachain studio (iterative) | Already recorded dead and checked here: it is a Python data-context layer over S3/GCS/Azure, a catalogue and lineage tool. It provides zero bytes and requires a bucket supplied by the caller |
 | dataverse's own installations json... | DNS dead. Cloudflare error 1016, origin hostname does not resolve. The working substitute is the GitHub data file that powers the same map |
 | disposable-mail providers as storage (mail.tm, guerrilla... | All probed and all dead at the API layer, `api.mail.tm/domains` -> **502**, `POST api.mail.tm/accounts` -> **502 0 bytes**, `api.guerrillamail.com/ajax.php?f=get_email_address` |
 | edgio / limelight networks | Chapter 11 in September 2024, CDN went dark 15 Jan 2025. Akamai acquired the assets and select contracts. Any cached pricing for Edgio is fiction |
@@ -645,6 +644,7 @@ The 898 records below never held a row in the provider table, so no ledger row a
 | uptobox as a precedent (or as a live host) | Dead and instructive, not usable. Seized 19 Sept 2023 across Scaleway, OpCore and OVH; owner Genius Servers Tech FZE (Dubai) fought it, lost in Aug 2024 on a time-bar rather than the me |
 | vimeo weekly-quota premise (500 mb/week) | Dead premise worth correcting: the widely-repeated '500 MB/week free' figure describes the pre-June-2024 Free plan and legacy paid Plus/Pro weekly quotas. Current Free is unlimited public st |
 | xserver vps storage expansion | The 200 GB storage add-on was discontinued for all new signups on 2025-02-03; the maximum disk on any current plan is 2,400 GB and only on 4 GB+ plans. Not purchasable for a new customer and |
+| datachain / datachain studio (iterative) (self-hosted) | Already recorded dead and checked here: it is a Python data-context layer over S3/GCS/Azure, a catalogue and lineage tool. It provides zero bytes and requires a bucket supplied by the caller |
 
 ### `read-gated` (16)
 
@@ -1271,7 +1271,6 @@ The 898 records below never held a row in the provider table, so no ledger row a
 | misskey.social, 50 mb drive | Live and open, but driveCapacityMb=50 and maxFileSize=16 MB. Two orders of magnitude too small to matter; listed to show the family's low end and that 'Misskey' does not imply 'gigabytes' |
 | mixdrop | Returns HTTP 410 Gone on the canonical domain, service withdrawn at this address. No limits page reachable |
 | mopan (mopan) (`中国电信魔盘`) | Has a dedicated OpenList driver (`mopan`, reverse-engineered, with an explicit provider warning 'This network disk may store your password in clear text'), so it is technically mountable, b |
-| morb0/tgbucket, two/telegram-fuse,... | Real projects but abandoned (tgbucket last pushed 2022-05-06, 8 stars). gh search repos 'telegram storage' returns 20+ repos with a median of ~10 stars, most unmaintained since 2022-2023. Th |
 | morejust store (morejust.store) | kirillovmr/mjsChrome still links a Chrome Web Store listing for 'Free Unlimited Cloud Storage', but the vendor's own page says the org was closed and it is test-only: 'We were banned by Gi |
 | multi-cloud manager guis (multcloud, and air cluster's... | They are transfer/copy schedulers between clouds, not capacity pools. MultCloud's own framing of the user request is telling, it answers 'how do I merge my cloud accounts' with a file-manag |
 | mux | Pure pay-as-you-go across four meters (ingest/storage/delivery/encoding). No free storage allowance of any size; fails on cost before any storage question |
@@ -1499,6 +1498,7 @@ The 898 records below never held a row in the provider table, so no ledger row a
 | hyperswarm / hyperdht blind relay as free bulk... (self-hosted) | Blind relay exists, any willing peer forwards ciphertext when both sides are behind randomized NAT, but there is no operated free relay fleet to draw on; `relayThrough` is supplied by the caller |
 | herihericloud (againsturb/herihericloud) (self-hosted) | Marketed as ' + WebDAV' and it is a genuinely good client, but its substrate is (classic Lanzou), already recorded in this topic. It adds WebDAV/MCP/OpenWRT surface to a known provider, not |
 | clouder (oleksandrshabaldas/clouder) and the... (self-hosted) | A clean, well-tested Windows app ('107 tests') that pools 'Google Drive and MEGA today' into one 45 GB folder. Names only already-researched providers and adds no new tier, the multiplier i |
+| morb0/tgbucket, two/telegram-fuse,... (self-hosted) | Real projects but abandoned (tgbucket last pushed 2022-05-06, 8 stars). gh search repos 'telegram storage' returns 20+ repos with a median of ~10 stars, most unmaintained since 2022-2023. Th |
 
 ## What this page does not do
 
