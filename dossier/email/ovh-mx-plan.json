@@ -32,7 +32,9 @@
     "source_url": "https://www.ovhcloud.com/en/emails/"
   },
   "interface": [
-    "unknown"
+    "unknown",
+    "rest",
+    "browser"
   ],
   "tooling": "any IMAP client, per the MX Plan documentation",
   "chaining": "the cheapest route to a real mailbox with a custom domain, at the cost of a domain and a hosting plan at OVH.",
@@ -118,10 +120,38 @@
       "proved": "the MX Plan guide still documents IMAP, POP and SMTP client access",
       "capture": "sha256:e6357369a3badaff39d6a69e8c245b4010c2f002bdc2e090a3c8b5364ef07eb4",
       "quote": "Server (outgoing): smtp.mail.ovh.net or ssl0.ovh.net."
+    },
+    {
+      "url": "https://developers.eu.ovhcloud.com/reference/web-cloud/email-and-collaborative-solutions/mx-plan/zimbra-platform/accounts",
+      "date": "2026-11-19",
+      "proved": "OVHcloud publishes a first-party REST API for MX Plan that lists and manages email accounts",
+      "capture": "sha256:08c0be90ef5148c4bb78bf12ed0bfe061c0b97a13063ad81d34cd2b11bb8e79f",
+      "quote": "List email accounts. Returns the email addresses of the email accounts of the service. Filter them by `primaryEmailAddress` or `id`."
+    },
+    {
+      "url": "https://docs.ovhcloud.com/en/guides/web-cloud/email-and-collaborative-solutions/mx-plan/email-creation",
+      "date": "2026-11-19",
+      "proved": "the first-party MX Plan guide states the outgoing SMTP port on this plan",
+      "capture": "sha256:d774b3e561782fcc2b4fad253eacdd922fa35c84ef578db4c87540d8942f25f4",
+      "quote": "**Port**: 465."
+    },
+    {
+      "url": "https://docs.ovhcloud.com/en/guides/web-cloud/email-and-collaborative-solutions/mx-plan/landing-page-mx-plan",
+      "date": "2026-11-19",
+      "proved": "the first-party MX Plan landing page still lists IMAP client access",
+      "capture": "sha256:bf2e11212ac5f598e12d0656fa5e36b5128d87bd89a8eec51eabaf7b76e2d1f0",
+      "quote": "| Incoming — IMAP | `imap.mail.ovh.net` or `ssl0.ovh.net` | SSL/TLS | 993 |"
+    },
+    {
+      "url": "https://docs.ovhcloud.com/en/guides/web-cloud/email-and-collaborative-solutions/mx-plan/email-generalities",
+      "date": "2026-11-19",
+      "proved": "the first-party guide still confirms configuration in any email client",
+      "capture": "sha256:917940d683b8c38dae7579f6bc561afe70dcc1184d6d196b1ff72a0cc676d9df",
+      "quote": "You can configure your email account on an email client such as Outlook, Thunderbird, Mac Mail, etc."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-02T10:00:29.728Z",
+  "verified_at": "2026-11-19T21:12:36.070Z",
   "notes": "",
   "history": [],
   "extras": {
@@ -129,7 +159,7 @@
     "verified_at_basis": "activation guide read on 2026-10-22 with no capture; the MX Plan getting-started guide captured on 2026-11-02"
   },
   "binding": "write-gated",
-  "interface_detail": "webmail from a browser, and an email client over IMAP (imap.mail.ovh.net or ssl0.ovh.net, port 993, SSL/TLS), POP (pop.mail.ovh.net or ssl0.ovh.net, port 995, SSL/TLS) and SMTP (smtp.mail.ovh.net or ssl0.ovh.net, port 465, SSL/TLS) in the Europe and Africa zone",
+  "interface_detail": "IMAP, POP and SMTP are documented on the MX Plan: incoming IMAP at imap.mail.ovh.net or ssl0.ovh.net (port 993, SSL/TLS), incoming POP at pop.mail.ovh.net or ssl0.ovh.net (port 995, SSL/TLS) and outgoing SMTP at smtp.mail.ovh.net or ssl0.ovh.net (port 465, SSL/TLS). Webmail is available from a browser (Roundcube, Zimbra or OWA, depending on the service). OVHcloud also publishes a first-party REST management API for MX Plan at /v1/email/mxplan/{service}/account with Bearer-token authentication, covering listing, creating, updating and deleting mailboxes and changing passwords; it manages the service and is not a message-access protocol. No JMAP endpoint or JMAP support is listed on the first-party MX Plan guides, the email FAQ or the developer reference pages read. The interface vocabulary has no term for IMAP, POP, SMTP or JMAP, so unknown is kept as the nearest term for those protocols.",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z",
   "limits_note": "the 5 GB is a mailbox storage volume and not an object size, so no kind in the six-value vocabulary names it. One mailbox per domain is the count that shapes the tier"
