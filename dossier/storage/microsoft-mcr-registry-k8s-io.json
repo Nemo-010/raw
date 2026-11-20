@@ -5,7 +5,7 @@
   "url": "https://mcr.microsoft.com/v2/",
   "category": "rejected-provider",
   "free_tier": {
-    "stated": "None reachable: Anonymous pulls work (MCR returns 200 at /v2/), but both are read-only mirrors of vendor images. No push, no account, no writable namespace.",
+    "stated": "None reachable: these are read-only public mirrors. registry.k8s.io's /v2/ returns HTTP 401 requiring a bearer token, and MCR's /v2/ is an anonymous read-only mirror; neither offers a writable namespace.",
     "unit": "none",
     "metered_on": "none",
     "source_url": "https://mcr.microsoft.com/v2/",
@@ -59,10 +59,31 @@
       "url": "https://registry.k8s.io/token",
       "date": "2026-10-21",
       "proved": "cited as the basis of the rejection: Anonymous pulls work (MCR returns 200 at /v2/), but both are read-only mirrors of vendor images — no push, no account, no writable namespace. [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "probe:https://mcr.microsoft.com/v2/",
+      "date": "2026-11-19",
+      "proved": "MCR answers the anonymous /v2/ endpoint with HTTP 200, consistent with an anonymous read-only mirror",
+      "capture": "sha256:7fc7f932c0c090ce8d13b10532d0768f5b679b2e8362ae97ed2a1f68317d5f34",
+      "quote": "\"status\": 200"
+    },
+    {
+      "url": "probe:https://registry.k8s.io/v2/",
+      "date": "2026-11-19",
+      "proved": "registry.k8s.io requires bearer-token auth at /v2/ and offers no anonymous writable namespace",
+      "capture": "sha256:50c88d54b84fc4e7e93576980d3df0d35fad57a592dc680ee0e250884d403471",
+      "quote": "\"status\": 401"
+    },
+    {
+      "url": "probe:https://registry.k8s.io/v2/",
+      "date": "2026-11-19",
+      "proved": "registry.k8s.io /v2/ requires bearer-token authentication, so no anonymous write path exists",
+      "capture": "sha256:50c88d54b84fc4e7e93576980d3df0d35fad57a592dc680ee0e250884d403471",
+      "quote": "\"status\": 401"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:14:11.136Z",
   "notes": "Anonymous pulls work (MCR returns 200 at /v2/), but both are read-only mirrors of vendor images. No push, no account, no writable namespace.",
   "history": [],
   "extras": {
@@ -77,7 +98,7 @@
       "first_recorded": "2026-10-21",
       "source": "DEAD-ENDS.md + the dossier wave that recorded it"
     },
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this rejection was not re-checked against the live service"
+    "verified_at_basis": "checked against the live service on 2026-11-19"
   },
   "binding": "none",
   "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
