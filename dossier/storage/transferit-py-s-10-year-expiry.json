@@ -41,7 +41,7 @@
     "detail": "unverified: identity requirements not documented",
     "country": null
   },
-  "reliability_note": "The library advertises MAX_EXPIRY_SECONDS = 10 years and will happily send e=315360000, but the bt7 server clamps to 90 days. Verified across five requested expiries. Do not trust client-sid",
+  "reliability_note": "The transferit-py client sets a 10-year MAX_EXPIRY_SECONDS clamp, but this is client-side only: the first-party reverse-engineering note records that the MEGA bt7 server empirically accepts durations up to about 2^32 seconds (~136 years), with spurious -11 at exact powers of two, and that the web UI offers presets of {0, 7, 30, 90, 180, 365} days. A 90-day server clamp is not confirmed by these first-party sources.",
   "confidence": "reported",
   "confidence_note": "Rejection quoted from historical research records; unverified against live endpoints.",
   "evidence": [
@@ -49,10 +49,24 @@
       "url": "probe:seed/DEAD-ENDS.md",
       "date": "2026-10-21",
       "proved": "rejected in the seed: The library advertises MAX_EXPIRY_SECONDS = 10 years and will happily send e=315360000, but the bt7 server clamps to 90 days. Verified across five requested expiries. Do not trust client-sid [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/viperadnan-git/transferit-py/main/docs/REVERSE_ENGINEERING.md",
+      "date": "2026-11-19",
+      "proved": "the first-party note states the server accepts far more than a 90-day expiry, so the 90-day clamp claim is unsupported",
+      "capture": "sha256:7d6bc743d02da8608d9db375069f4e3e7064715a9371cf297e6a6ca6ddb50668",
+      "quote": "Empirically the server accepts ≤ ~2^32 seconds (~136 y), with spurious -11 at exact powers-of-2"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/viperadnan-git/transferit-py/main/transferit/_transfer.py",
+      "date": "2026-11-19",
+      "proved": "the 10-year expiry figure is a client-side clamp in the library source",
+      "capture": "sha256:0fc365e87bd883c8568ffb232845d5b35bd57e713bec4464b643221a05b27c11",
+      "quote": "MAX_EXPIRY_SECONDS: int = 3650 * 86400  # 10 years"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:29.438Z",
   "notes": "The library advertises MAX_EXPIRY_SECONDS = 10 years and will happily send e=315360000, but the bt7 server clamps to 90 days. Verified across five requested expiries. Do not trust client-sid",
   "history": [],
   "extras": {
