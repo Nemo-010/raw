@@ -179,6 +179,7 @@ names the record removes its row at the next render.
 | record | provider | verdict | confidence |
 | --- | --- | --- | --- |
 | `affordablebytes-xeon-gold-6gb` | AffordableBytes | paid-only | documented |
+| `agg-loop` | AGG Loop | fails-egress | documented |
 | `bytehosting-xeon-6gb` | ByteHosting | paid-only | documented |
 | `c-servers-nanovps-ii-384` | C-Servers | paid-only | documented |
 | `chunkserve-xeon-standard-2` | ChunkServ | paid-only | documented |
@@ -188,6 +189,7 @@ names the record removes its row at the next render.
 | `enderhost-budget-vps-4gb` | EnderHost | paid-only | documented |
 | `expose-dev-hobby` | Expose (expose.dev managed service) | qualifies-with-caveat | documented |
 | `expose-dev-pro` | Expose (expose.dev managed service) | paid-only | documented |
+| `expose-ssh` | EXPOSE | fails-egress | documented |
 | `fastturn-net` | fastTURN | paid-only | documented |
 | `finlandhosting-budget-small` | FinlandHosting | paid-only | documented |
 | `firstbyte-eu-kvm-ssd-start-fin1` | FirstByte | paid-only | documented |
@@ -199,6 +201,7 @@ names the record removes its row at the next render.
 | `greencloud-storage-0-5tb` | GreenCloudVPS | paid-only | documented |
 | `gullos-hosting-nat-ipv4-128mb` | Gullo's Hosting | paid-only | documented |
 | `gullos-hosting-nat-ipv4-256mb` | Gullo's Hosting | paid-only | documented |
+| `homeway` | Homeway | fails-egress | documented |
 | `hostbilby-bilbyboost-vds` | HostBilby | paid-only | documented |
 | `hostdare-ssd1` | HostDare | paid-only | documented |
 | `hosteons-hybrid-server-special-1` | HostEONS | paid-only | documented |
@@ -212,6 +215,7 @@ names the record removes its row at the next render.
 | `littlecreek-starter-vps` | LittleCreek | paid-only | documented |
 | `massivegrid-cloud-vps-starter` | MassiveGRID | paid-only | documented |
 | `ouiheberg-linux-vps-01g` | OuiHeberg | paid-only | documented |
+| `proxy-py` | proxy.py | fails-egress | documented |
 | `racknerd-kvm-1gb` | RackNerd | paid-only | documented |
 | `rarecloud-custom-kvm-vps` | RareCloud | paid-only | documented |
 | `serverhost-kvm-2gb` | ServerHost | paid-only | documented |
@@ -219,6 +223,7 @@ names the record removes its row at the next render.
 | `siliconkiwi-kiwi-go` | SiliconKiwi | paid-only | documented |
 | `softshellweb-lxc-ipv6-only-la` | SoftShellWeb | paid-only | documented |
 | `strato-linux-vserver-vps-s` | STRATO | paid-only | documented |
+| `telebit` | Telebit | fails-egress | documented |
 | `tierhive-micro-nat` | TierHive | paid-only | documented |
 | `tunelo-net` | tunelo.net | fails-egress | documented |
 | `upcloud-starter-vps` | UpCloud | paid-only | documented |
@@ -227,6 +232,64 @@ names the record removes its row at the next render.
 | `virtbase-epyc-01` | Virtbase | paid-only | documented |
 | `vpspioneer-cloud-vps-s` | VPSPioneer | paid-only | documented |
 | `webdock-vps-essential` | Webdock | paid-only | documented |
+| `anywherelan` | Anywherelan (self-hosted) | fails-egress | documented |
+| `bifrost` | bifrost (self-hosted) | fails-egress | documented |
+| `bitbang` | BitBang (self-hosted) | fails-egress | documented |
+| `cactus-tunnel` | cactus-tunnel (self-hosted) | fails-egress | documented |
+| `chisel` | chisel (self-hosted) | fails-egress | documented |
+| `chisel-operator` | chisel-operator (self-hosted) | fails-egress | documented |
+| `chissl` | chiSSL (self-hosted) | fails-egress | documented |
+| `connet` | connet (self-hosted) | fails-egress | documented |
+| `crowbar` | Crowbar (self-hosted) | fails-egress | documented |
+| `docker-tunnel` | docker-tunnel (self-hosted) | fails-egress | documented |
+| `docker-wireguard-tunnel` | docker-wireguard-tunnel (self-hosted) | fails-egress | documented |
+| `dockflare` | DockFlare (self-hosted) | fails-egress | documented |
+| `edgevpn` | EdgeVPN (self-hosted) | fails-egress | documented |
+| `ephemeral-hidden-service` | ephemeral-hidden-service (self-hosted) | fails-egress | documented |
+| `expose-php` | expose (self-hosted) | fails-egress | documented |
+| `frp-operator` | frp-operator (self-hosted) | fails-egress | documented |
+| `go-http-tunnel` | go-http-tunnel (self-hosted) | fails-egress | documented |
+| `gost` | gost (self-hosted) | fails-egress | documented |
+| `gt` | gt (self-hosted) | fails-egress | documented |
+| `h2tunnel` | h2tunnel (self-hosted) | fails-egress | documented |
+| `hsync` | hsync (self-hosted) | fails-egress | documented |
+| `hysteria` | Hysteria (self-hosted) | fails-egress | documented |
+| `iodine` | iodine (self-hosted) | fails-egress | documented |
+| `jkuri-bore` | jkuri/bore (self-hosted) | fails-egress | documented |
+| `jprq` | jprq (self-hosted) | fails-egress | documented |
+| `lanemu-p2pvpn` | LanEmu/P2PVPN (self-hosted) | fails-egress | documented |
+| `mmar` | mmar (self-hosted) | fails-egress | documented |
+| `mycoria` | Mycoria (self-hosted) | fails-egress | documented |
+| `n2n` | n2n (self-hosted) | fails-egress | documented |
+| `narrowlink` | Narrowlink (self-hosted) | fails-egress | documented |
+| `netmask` | netmask (self-hosted) | fails-egress | documented |
 | `ngrok-operator-zufardhiyaulhaq` | ngrok-operator (zufardhiyaulhaq) (self-hosted) | fails-quota | documented |
+| `ngtor` | ngtor (self-hosted) | fails-egress | documented |
+| `nostr-vpn` | nostr-vpn (self-hosted) | fails-egress | documented |
+| `nps-enhanced` | NPS Enhanced (self-hosted) | fails-egress | documented |
+| `octelium` | Octelium (self-hosted) | fails-egress | documented |
+| `onionpipe` | onionpipe (self-hosted) | fails-egress | documented |
+| `orbien` | Orbien (self-hosted) | fails-egress | documented |
+| `pgrok-pgrok` | pgrok/pgrok (self-hosted) | fails-egress | documented |
+| `piko` | piko (self-hosted) | fails-egress | documented |
+| `pilot-protocol` | Pilot Protocol (self-hosted) | fails-egress | documented |
 | `pomerium-zero` | Pomerium (self-hosted) | fails-egress | documented |
+| `portr` | portr (self-hosted) | fails-egress | documented |
+| `progrium-localtunnel` | progrium/localtunnel (self-hosted) | fails-egress | documented |
+| `punchmole` | Punchmole (self-hosted) | fails-egress | documented |
+| `rathole` | rathole (self-hosted) | fails-egress | documented |
+| `reverse-tunnel` | reverse-tunnel (self-hosted) | fails-egress | documented |
+| `reverst` | reverst (self-hosted) | fails-egress | documented |
+| `selfhosted-gateway` | Selfhosted Gateway (self-hosted) | fails-egress | documented |
+| `sirtunnel` | SirTunnel (self-hosted) | fails-egress | documented |
+| `sshuttle` | sshuttle (self-hosted) | fails-egress | documented |
+| `tinc` | Tinc (self-hosted) | fails-egress | documented |
+| `tnnlink` | tnnlink (self-hosted) | fails-egress | documented |
+| `tunneller` | tunneller (self-hosted) | fails-egress | documented |
+| `tunwg` | tunwg (self-hosted) | fails-egress | documented |
+| `vgrok` | vgrok (self-hosted) | fails-egress | documented |
+| `weron` | weron (self-hosted) | fails-egress | documented |
+| `wiretap` | Wiretap (self-hosted) | fails-egress | documented |
+| `wsssh` | wsssh (self-hosted) | fails-egress | documented |
+| `ytunnel` | YTunnel (self-hosted) | fails-egress | documented |
 <!-- generated:end -->
