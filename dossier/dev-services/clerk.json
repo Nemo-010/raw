@@ -81,7 +81,7 @@
   "binding_note": "Without a domain the app stays on a development instance, capped at 100 users and 100 emails a month; with a domain, the 50,000 retained users per app is the ceiling.",
   "identity_cost": {
     "kind": "email",
-    "detail": "The sign-up form asks for an email address and a password, or a GitHub or Google sign-in, and states no credit card is required. The Clerk CLI needs no account to start: signed out, npx clerk@latest init provisions a claimable application, writes dev keys to .env.local, and signing in later claims it. A production instance also needs a domain with DNS records. Whether a later step of the dashboard sign-up asks for a phone number is unverified: behind a sign-up.",
+    "detail": "The dashboard sign-up form asks for an Email address and a Password and states No credit card required. The form has no phone number field and does not ask for a card, so no card and no phone number are required at sign-up. The Clerk CLI needs no account to start: signed out, npx clerk@latest init provisions a claimable application, writes dev keys to .env.local, and signing in later claims it. A production instance also needs a domain the user owns with DNS records.",
     "country": null
   },
   "reliability_note": "A rate-limited request answers 429 with a Retry-After header; Hobby email support covers billing, registration and abuse queries only.",
@@ -381,10 +381,24 @@
       "proved": "the dashboard sign-up page asks for GitHub, Google, or an email address and a password, and states no credit card is required",
       "capture": "sha256:ce618148a329d5a13315dae0c828938dd630270c84c8dc342ed96742474b7d1e",
       "quote": "# Create your account\n\nNo credit card required.\n\nGitHubGoogle\n\nor\n\nEmail address\n\nPassword"
+    },
+    {
+      "url": "https://dashboard.clerk.com/sign-up",
+      "date": "2026-11-19",
+      "proved": "the sign-up form asks for an email address and a password, states no credit card is required, and shows no phone field",
+      "capture": "sha256:3c1e1d647da5528417e4b83dba5cf089fa399b3e053abccf9a88ddb3f5b3650e",
+      "quote": "# Create your account\n\nNo credit card required.\n\nor\n\nEmail address\n\nPassword"
+    },
+    {
+      "url": "https://dashboard.clerk.com/sign-up",
+      "date": "2026-11-19",
+      "proved": "the sign-up gate still asks for email and password with no card and no phone, so the email identity and its detail are unchanged in kind",
+      "capture": "sha256:3c1e1d647da5528417e4b83dba5cf089fa399b3e053abccf9a88ddb3f5b3650e",
+      "quote": "# Create your account\n\nNo credit card required.\n\nor\n\nEmail address\n\nPassword"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-02T00:37:55.408Z",
+  "verified_at": "2026-11-19T21:12:31.379Z",
   "notes": "A development instance passes its session token in the querystring, which Clerk states is not secure enough for production use. Pro is USD 25 a month (USD 20 billed annually) and charges USD 0.02 a month per retained user above 50,000 per app.",
   "history": []
 }

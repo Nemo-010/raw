@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "stated-absent: the CCR personal-edition page states no per-object size cap; it lists a 500GB per-namespace storage quota and a 100-tag-per-namespace limit.",
     "bytes": null,
     "source_url": "https://cloud.baidu.com/doc/CCR/s/jkw60wx3m",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "stated-absent: the CCR pricing page states storage quotas and billing but no retention or deletion term for images in the personal edition.",
     "days": null,
     "source_url": "https://cloud.baidu.com/doc/CCR/s/jkw60wx3m",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "BOS Bucket storage and traffic are billed by actual use: \"根据实际使用情况将产生存储和流量费用\". The personal-edition free scope and its egress treatment are not stated on this page.",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "oci"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "CCR is a container image and Helm chart registry; \"企业版实例托管的云原生应用制品（如容器镜像和 Helm Chart）存储在您的 BOS Bucket 中\". The personal edition accepts no new repositories since 2024-04-25.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "CCR registry artifacts are stored in a user's BOS Bucket, chaining the registry to BOS storage; since 2024-04-25 the personal edition accepts no new namespaces, repositories or external image migrations.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -49,10 +49,59 @@
       "url": "https://cloud.baidu.com/doc/CCR/s/jkw60wx3m",
       "date": "2026-10-21",
       "proved": "rejected in the seed: Dead since 2024-04-25: personal-edition instances no longer accept new namespaces or repositories at all, and no external image migration is allowed. Only pre-existing images keep working. [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://cloud.baidu.com/doc/CCR/s/jkw60wx3m",
+      "date": "2026-11-19",
+      "proved": "the first-party CCR doc still states that personal-edition instances stopped accepting new namespaces and repositories from 2024-04-25",
+      "capture": "sha256:11165253674cd0ab631b40c6e8d8829a24cfd39959b5e47174f3017698c4d2ba",
+      "quote": "自 2024 年 4 月 25 日起，容器镜像仓库个人版实例不再支持新建命名空间与镜像仓库，也不再支持将外部镜像迁移至 CCR 个人版实例，不影响已迁移镜像的使用"
+    },
+    {
+      "url": "https://cloud.baidu.com/doc/CCR/s/jkw60wx3m",
+      "date": "2026-11-19",
+      "proved": "CCR is a container-image and Helm-chart registry service",
+      "capture": "sha256:11165253674cd0ab631b40c6e8d8829a24cfd39959b5e47174f3017698c4d2ba",
+      "quote": "容器镜像服务 CCR 提供企业版和个人版。本文介绍 CCR 企业版的定价说明和个人版的免费说明。"
+    },
+    {
+      "url": "https://cloud.baidu.com/doc/CCR/s/jkw60wx3m",
+      "date": "2026-11-19",
+      "proved": "registry artifacts are container images and Helm charts stored in BOS",
+      "capture": "sha256:11165253674cd0ab631b40c6e8d8829a24cfd39959b5e47174f3017698c4d2ba",
+      "quote": "企业版实例托管的云原生应用制品（如容器镜像和 Helm Chart）存储在您的 BOS Bucket 中"
+    },
+    {
+      "url": "https://cloud.baidu.com/doc/CCR/s/jkw60wx3m",
+      "date": "2026-11-19",
+      "proved": "the CCR personal edition is a free, quota-limited service for individual developers with no SLA",
+      "capture": "sha256:11165253674cd0ab631b40c6e8d8829a24cfd39959b5e47174f3017698c4d2ba",
+      "quote": "个人版服务面向个人开发者，可在配额范围内免费使用，不承诺 SLA 及相关补偿。"
+    },
+    {
+      "url": "https://cloud.baidu.com/doc/CCR/s/jkw60wx3m",
+      "date": "2026-11-19",
+      "proved": "the page states a 500 GB per-namespace storage quota, not a single-object cap",
+      "capture": "sha256:11165253674cd0ab631b40c6e8d8829a24cfd39959b5e47174f3017698c4d2ba",
+      "quote": "每个命名空间存储容量限额 | 500GB | 不支持调整，超出后将无法上传镜像"
+    },
+    {
+      "url": "https://cloud.baidu.com/doc/CCR/s/jkw60wx3m",
+      "date": "2026-11-19",
+      "proved": "storage and traffic for the backing BOS bucket are billed by usage",
+      "capture": "sha256:11165253674cd0ab631b40c6e8d8829a24cfd39959b5e47174f3017698c4d2ba",
+      "quote": "根据实际使用情况将产生存储和流量费用"
+    },
+    {
+      "url": "https://cloud.baidu.com/doc/CCR/s/jkw60wx3m",
+      "date": "2026-11-19",
+      "proved": "the personal edition is closed to new namespaces, repositories and external image migration",
+      "capture": "sha256:11165253674cd0ab631b40c6e8d8829a24cfd39959b5e47174f3017698c4d2ba",
+      "quote": "自 2024 年 4 月 25 日起，容器镜像仓库个人版实例不再支持新建命名空间与镜像仓库，也不再支持将外部镜像迁移至 CCR 个人版实例"
     }
   ],
   "verdict": "dead",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:56.869Z",
   "notes": "Dead since 2024-04-25: personal-edition instances no longer accept new namespaces or repositories at all, and no external image migration is allowed. Only pre-existing images keep working.",
   "history": [],
   "extras": {
@@ -67,7 +116,11 @@
       "first_recorded": "2026-10-21",
       "source": "DEAD-ENDS.md + the dossier wave that recorded it"
     },
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this rejection was not re-checked against the live service"
+    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this rejection was not re-checked against the live service",
+    "death": {
+      "on": "2026-11-19",
+      "cause": "dead-service"
+    }
   },
   "binding": "none",
   "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",

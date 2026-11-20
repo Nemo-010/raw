@@ -18,7 +18,7 @@
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "Deployment Retention defaults for Hobby are now 30 days for ALL four states. Canceled, errored, pre-production, production (Pro gets 180 days preview / 1 year production).",
+    "stated": "Deployment retention defaults: Hobby and Pro are 30 days for canceled, errored, pre-production and production; Enterprise is 30 days canceled, 90 days errored, 180 days pre-production and 1 year production. On Hobby the last 3 production deployments and last 3 of any type are kept as exceptions.",
     "days": 30,
     "source_url": "https://vercel.com/changelog/hobby-projects-now-retain-fewer-deployments-to-free-up-storage",
     "notes": "Extracted from published terms."
@@ -53,7 +53,7 @@
       "source": "https://vercel.com/changelog/hobby-projects-now-retain-fewer-deployments-to-free-up-storage"
     }
   ],
-  "limits_note": "THE TTL IS THE STORY, and it tightened twice in 2026. Deployment Retention defaults for Hobby are now 30 days for ALL four states. Canceled, errored, pre-production, production (Pro gets 180 days preview / 1 year production). The Sept 16, 2026 changelog cut it further: 'Each Hobby project now keeps its 3 most recent production deployments, plus its 3 most recent deployments of any type, regardless of age. Preview deployments no longer get their own protection.' Deletion runs within 48 hours of eligibility, then a recovery window, then permanent removal. CLI source upload is capped at 100 MB per deploy (Hobby), 15,000 files.",
+  "limits_note": "Deployment retention is the binding constraint: Hobby and Pro default to 30 days across canceled, errored, pre-production and production states, while Enterprise gets 30, 90 and 180 days and 1 year. Hobby keeps its last 3 production deployments and last 3 of any type as exceptions. Deletion is marked within 48 hours of eligibility, followed by a recovery window that matches the retention policy.",
   "identity_cost": {
     "kind": "email",
     "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
@@ -77,10 +77,31 @@
       "url": "https://vercel.com/docs/limits",
       "date": "2026-10-21",
       "proved": "'Projects | 200' on Hobby; 'the maximum size of the source files that can be uploaded is limited to 100 MB for Hobby'; '15,000' source files"
+    },
+    {
+      "url": "https://vercel.com/changelog/hobby-projects-now-retain-fewer-deployments-to-free-up-storage",
+      "date": "2026-11-19",
+      "proved": "the Hobby Deployment Storage pool is 10GB",
+      "capture": "sha256:cf680c8bea46ecf6c432ca25082234d33481f7e172275b7cd32b726198c6f2ef",
+      "quote": "Hobby teams get 10GB of [Deployment Storage](https://vercel.com/docs/deployment-storage)."
+    },
+    {
+      "url": "https://vercel.com/docs/deployment-retention",
+      "date": "2026-11-19",
+      "proved": "Hobby and Pro both default to 30 days for all four deployment states; the longer periods belong to Enterprise",
+      "capture": "sha256:26063d43fe5797fd40cb2220bf2421680593cae481da28496e431a06c004dd28",
+      "quote": "| Hobby and Pro | 30 days | 30 days | 30 days | 30 days |"
+    },
+    {
+      "url": "https://vercel.com/docs/deployment-retention",
+      "date": "2026-11-19",
+      "proved": "the default retention table and exception table give the current Hobby/Pro/Enterprise periods",
+      "capture": "sha256:26063d43fe5797fd40cb2220bf2421680593cae481da28496e431a06c004dd28",
+      "quote": "| Hobby and Pro | 30 days | 30 days | 30 days | 30 days |"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:31.691Z",
   "notes": "10 GB of Deployment Storage per Hobby team, and that pool is what every retained deployment output draws from. This is the clearest example in the whole slot of a 'free tier' that is a build-artifact store, not storage.",
   "history": [],
   "extras": {

@@ -31,7 +31,7 @@
     "rest"
   ],
   "interface_detail": "rest",
-  "tooling": "Plain HTTP PUT. 'curl -X PUT --data-binary @file -H \"filename: probe.bin\" https://filebin.net/<bin>/probe.bin'. Open source (github.com/espebra/filebin2, BSD-3) so it can be self-hosted.",
+  "tooling": "Plain HTTP PUT to a bin URL (curl -X PUT --data-binary @file -H 'filename: probe.bin' https://filebin.net/<bin>/probe.bin); the hosted service gates downloads behind bin approval. The Filebin server is also open source (github.com/espebra/filebin2, BSD-3) and can be self-hosted as a last resort.",
   "chaining": "Unlimited distinct bin IDs, each with its own 6-day clock. 'N bins x 6 days' is the only multiplication, and nothing survives week 2.",
   "limits": [
     {
@@ -51,7 +51,7 @@
     "detail": "derived from the record's prose, not from an identity field, and no signup was executed: no account; per-bin, no published byte cap; bins expire 6 days after creation IMPORTANT INVERSION: a real browser UA (Mozilla/.",
     "country": null
   },
-  "reliability_note": "IMPORTANT INVERSION: a real browser UA (Mozilla/..) gets a 5399-byte 'are you sure / proceed to download' interstitial at HTTP 200; curl's default UA gets the real bytes. Automation works better than a browser here. The opposite of the usual trap. Any client that sets a browser UA (rclone, most HTTP libs, headless Chrome) will silently receive HTML instead of the file.",
+  "reliability_note": "Bins are gated: the first-party FAQ shows a newly created bin as 'pending approval' with 'Downloads are not allowed as the bin is pending approval.' The self-hosted Filebin server source is published, but the hosted service at filebin.net applies the approval gate and 6-day expiry.",
   "confidence": "reported",
   "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [
@@ -69,10 +69,38 @@
       "url": "https://filebin.net/about",
       "date": "2026-10-21",
       "proved": "version v1.3.1, source github.com/espebra/filebin2"
+    },
+    {
+      "url": "https://filebin.net/",
+      "date": "2026-11-19",
+      "proved": "the first-party page still states a 6-day automatic deletion from bin creation",
+      "capture": "sha256:e6a70b6121252eed6052f13f436828d2272d97ebe61f4ffd6246854487cd075c",
+      "quote": "will in any case be deleted automatically 6 days from now"
+    },
+    {
+      "url": "https://filebin.net/faq",
+      "date": "2026-11-19",
+      "proved": "a bin is gated behind administrator approval before downloads are allowed",
+      "capture": "sha256:851f8059e2050f51e91e8f9bf2791049eb3a9a3c65713333853e61c828362466",
+      "quote": "Downloads are not allowed as the bin is pending approval."
+    },
+    {
+      "url": "https://filebin.net/faq",
+      "date": "2026-11-19",
+      "proved": "downloads on the hosted service are blocked until a bin is approved",
+      "capture": "sha256:851f8059e2050f51e91e8f9bf2791049eb3a9a3c65713333853e61c828362466",
+      "quote": "Downloads are not allowed as the bin is pending approval."
+    },
+    {
+      "url": "https://filebin.net/about",
+      "date": "2026-11-19",
+      "proved": "the first-party about page states the server source is published and self-hostable",
+      "capture": "sha256:c2354dc288f45491cafe2f3ee282ffdef71da5c829e879df6b50fbd1e2fe0e5c",
+      "quote": "The source code is licensed under the BSD 3-clause license and it can be self hosted."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:13:37.562Z",
   "notes": "no account; per-bin, no published byte cap; bins expire 6 days after creation",
   "history": [],
   "extras": {

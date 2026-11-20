@@ -5,7 +5,7 @@
   "url": "https://www.cockroachlabs.com/",
   "category": "paas",
   "free_tier": {
-    "stated": "$15/month of free resource consumption per pay-as-you-go org, equivalent to 50 million Request Units AND 10 GiB of storage per month",
+    "stated": "$15 of resource consumption (equivalent to 50 million Request Units and 10 GiB of storage) free each month for pay-as-you-go organizations",
     "unit": "GiB",
     "metered_on": "stored-bytes",
     "source_url": "https://docs.cockroachlabs.com/docs/cockroachcloud/plan-your-cluster-basic",
@@ -34,7 +34,13 @@
   "interface_detail": "rest",
   "tooling": "psql / any Postgres wire client (CockroachDB is PG-wire compatible), `cockroach` CLI, Cloud API",
   "chaining": "The $15 credit is per ORG, and the 10 GiB is a monthly allowance, not a permanent bucket. New orgs get a separate $400 30-day trial. There is no documented per-account cap on the number of orgs, so 50 orgs x 10 GiB = 500 GB in principle. But each org requires a distinct signup and a payment method to keep the $15 recurring benefit, which is a much higher friction per byte than Telegram or a drive.",
-  "limits": [],
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "Storage limit blocks writes once the monthly storage allowance is reached",
+      "source": "https://docs.cockroachlabs.com/docs/cockroachcloud/plan-your-cluster-basic"
+    }
+  ],
   "limits_note": "10 GiB storage/month free allowance; 50M RUs/month; 30K RU/sec ceiling on Basic; the legacy 'Serverless free tier' (5 GiB + 50M RUs, no card) has been replaced. Current signup is $400 credit for 30 days then the $15/month Basic allowance.",
   "identity_cost": {
     "kind": "card",
@@ -59,10 +65,38 @@
       "url": "https://www.cockroachlabs.com/docs/cockroachcloud/quickstart",
       "date": "2026-10-21",
       "proved": "'$400 in free-trial free trial credits ... you will need to [add a payment method] by the end of the trial'"
+    },
+    {
+      "url": "https://docs.cockroachlabs.com/docs/cockroachcloud/plan-your-cluster-basic",
+      "date": "2026-11-19",
+      "proved": "Each pay-as-you-go Basic org gets $15/month = 50M Request Units + 10 GiB storage free",
+      "capture": "sha256:02dcf34faf8aaa9e4b036056e041282d794bf1536d5b12558d1f162e8ca9be6f",
+      "quote": "given \\$15 of resource consumption (equivalent to 50 million [Request Units](#request-units) and 10 GiB of storage) for free each month."
+    },
+    {
+      "url": "https://docs.cockroachlabs.com/docs/cockroachcloud/plan-your-cluster-basic",
+      "date": "2026-11-19",
+      "proved": "Storage limit is a hard volume quota that blocks writes",
+      "capture": "sha256:02dcf34faf8aaa9e4b036056e041282d794bf1536d5b12558d1f162e8ca9be6f",
+      "quote": "If you reach your storage limit, your cluster will be unable to write to its storage unless you delete data or increase your storage limit."
+    },
+    {
+      "url": "https://docs.cockroachlabs.com/docs/cockroachcloud/plan-your-cluster-basic",
+      "date": "2026-11-19",
+      "proved": "Storage limit is a hard quota that stops writes",
+      "capture": "sha256:02dcf34faf8aaa9e4b036056e041282d794bf1536d5b12558d1f162e8ca9be6f",
+      "quote": "If you reach your storage limit, your cluster will be unable to write to its storage unless you delete data or increase your storage limit."
+    },
+    {
+      "url": "https://docs.cockroachlabs.com/docs/cockroachcloud/plan-your-cluster-basic",
+      "date": "2026-11-19",
+      "proved": "Storage metered in GiB per billing period; no per-object cap; no object-store interface",
+      "capture": "sha256:02dcf34faf8aaa9e4b036056e041282d794bf1536d5b12558d1f162e8ca9be6f",
+      "quote": "cluster storage is measured in GiB and is based on the total amount of storage your cluster used over a billing period"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:13:08.914Z",
   "notes": "$15/month of free resource consumption per pay-as-you-go org, equivalent to 50 million Request Units AND 10 GiB of storage per month",
   "history": [],
   "extras": {
@@ -99,8 +133,8 @@
     "interface_verbatim": "rest",
     "agent_focus": "Structured stores (SQL/NoSQL/KV/queue/search) repurposed as blob storage by encoding bytes into rows, values and documents — free bytes, per-item caps, op quotas, and the bytes-per-operation arithmetic that decides whether any of them can carry 500 GB"
   },
-  "binding": "none",
-  "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",
+  "binding": "volume-quota",
+  "binding_note": "the storage limit is a hard volume quota that blocks writes when the allowance is reached",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z"
 }

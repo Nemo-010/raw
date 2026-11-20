@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "stated-absent: the GitHub Packages billing page states example package sizes and quotas but no per-object size cap",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "stated-absent: the GitHub Packages billing page states storage and transfer quotas and billing but no fixed retention period for stored packages",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "Private packages on GitHub Free: 1GB of data transfer per month (10GB on Pro and Team, 100GB on Enterprise Cloud); beyond the quota data transfer is billed for each GB, and with no payment method on file usage is blocked at the quota. Public packages are free, and Container registry storage and bandwidth is currently free. The per-GB price is not on the captured page: unverified.",
+    "terms": "\"Data transfer is billed for each GB of data transferred.\" Private packages on GitHub Free get 1GB transfer per month; \"If your account does not have a valid payment method on file, usage is blocked once you use up your quota.\" Public packages and Container registry storage and bandwidth are free.",
     "metered": true
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "Package registry reached through package-manager clients (npm, Docker, Maven) and the GitHub API; private packages use 500MB storage and 1GB transfer on GitHub Free, public packages are free",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "GitHub Packages composes with npm/Docker/Maven tooling and GitHub Actions, but private-package storage is metered (500MB storage, 1GB transfer on GitHub Free) and overage needs a payment method; public packages and the Container registry are free",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -84,10 +84,59 @@
       "proved": "Container registry storage and bandwidth is free for now",
       "capture": "sha256:e86d8202da6424d7fe777a09cf7daa8f56612d3bd02b7fe08da73f46ea4aa5a2",
       "quote": "Container image storage and bandwidth for the Container registry is currently free."
+    },
+    {
+      "url": "https://docs.github.com/en/billing/concepts/product-billing/github-packages",
+      "date": "2026-11-19",
+      "proved": "GitHub Packages is a package registry reached through package-manager and GitHub API tooling",
+      "capture": "sha256:e86d8202da6424d7fe777a09cf7daa8f56612d3bd02b7fe08da73f46ea4aa5a2",
+      "quote": "GitHub Packages usage is **free** for **public packages**. In addition, data transferred in from any source is free."
+    },
+    {
+      "url": "https://docs.github.com/en/billing/concepts/product-billing/github-packages",
+      "date": "2026-11-19",
+      "proved": "the GitHub Free plan allots 500MB storage and 1GB monthly data transfer for private packages",
+      "capture": "sha256:e86d8202da6424d7fe777a09cf7daa8f56612d3bd02b7fe08da73f46ea4aa5a2",
+      "quote": "| GitHub Free                   | 500MB   | 1GB                       |"
+    },
+    {
+      "url": "https://docs.github.com/en/billing/concepts/product-billing/github-packages",
+      "date": "2026-11-19",
+      "proved": "additional data transfer is billed per GB beyond the included 1GB on GitHub Free",
+      "capture": "sha256:e86d8202da6424d7fe777a09cf7daa8f56612d3bd02b7fe08da73f46ea4aa5a2",
+      "quote": "Data transfer is billed for each GB of data transferred."
+    },
+    {
+      "url": "https://docs.github.com/en/billing/concepts/product-billing/github-packages",
+      "date": "2026-11-19",
+      "proved": "the billing page discusses storage quotas but states no retention term",
+      "capture": "sha256:e86d8202da6424d7fe777a09cf7daa8f56612d3bd02b7fe08da73f46ea4aa5a2",
+      "quote": "The storage amounts shown are **shared** with GitHub Actions artifacts. This means your total storage across Packages and Actions artifacts cannot exceed the included amount for your plan."
+    },
+    {
+      "url": "https://docs.github.com/en/billing/concepts/product-billing/github-packages",
+      "date": "2026-11-19",
+      "proved": "the billing page gives a 500 MB worked example, not a per-object cap",
+      "capture": "sha256:e86d8202da6424d7fe777a09cf7daa8f56612d3bd02b7fe08da73f46ea4aa5a2",
+      "quote": "If you publish a 500 MB package in a private repository, you'll use 500 MB of the repository owner's storage and none of their data transfer allowance."
+    },
+    {
+      "url": "https://docs.github.com/en/billing/concepts/product-billing/github-packages",
+      "date": "2026-11-19",
+      "proved": "package storage composes with registry tooling; the Container registry is free while metered private packages are not",
+      "capture": "sha256:e86d8202da6424d7fe777a09cf7daa8f56612d3bd02b7fe08da73f46ea4aa5a2",
+      "quote": "Container image storage and bandwidth for the Container registry is currently free."
+    },
+    {
+      "url": "https://docs.github.com/en/billing/concepts/product-billing/github-packages",
+      "date": "2026-11-19",
+      "proved": "the first-party billing page still states the GitHub Free 500MB storage and 1GB transfer quota and the billed egress terms",
+      "capture": "sha256:e86d8202da6424d7fe777a09cf7daa8f56612d3bd02b7fe08da73f46ea4aa5a2",
+      "quote": "| GitHub Free                   | 500MB   | 1GB                       |"
     }
   ],
   "verdict": "fails-egress",
-  "verified_at": "2026-11-03T15:04:25.579Z",
+  "verified_at": "2026-11-19T21:15:51.192Z",
   "notes": "Private packages on GitHub Free: 500MB of storage and 1GB of data transfer per month, billed per GB beyond. Public packages and the Container registry are free (see storage/github-packages-public-packages).",
   "history": [],
   "extras": {

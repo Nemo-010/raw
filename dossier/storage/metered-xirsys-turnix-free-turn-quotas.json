@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "stated-absent: the page lists monthly transfer quotas and overage prices but no per-object size cap",
     "bytes": null,
     "source_url": "https://blog.mickeyzzc.tech/en/posts/network/third-party-free-p2p-nodes/",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "Relay service cuts off when the quota is exhausted or the trial expires; a TURN credential is valid for at most 48 hours",
     "days": null,
     "source_url": "https://blog.mickeyzzc.tech/en/posts/network/third-party-free-p2p-nodes/",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "Free monthly quotas of 500 MB (Xirsys and Metered) and 10 GB (Turnix); overage from USD 0.40/GB (Metered) and USD 30/mo with 40 GB (Turnix)",
     "metered": false
   },
   "interface": [
     "unknown"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "the free quotas are TURN relays: Xirsys gives a standard ICE config with no SDK lock-in, Turnix gives standard TURN with multi-region GeoIP routing",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "stated-absent: the page states no way to chain these TURN quotas with other storage offers; they speak standard TURN and can be listed in an ICE config",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -41,7 +41,7 @@
     "detail": "unverified: identity requirements not documented",
     "country": null
   },
-  "reliability_note": "Free monthly bandwidth allowances on TURN relays are 20 GB for Metered, 500 MB for Xirsys, and 10 GB for Turnix.",
+  "reliability_note": "Metered's own pricing page now states a 500 MB/month free TURN trial, Xirsys states 500 MB/month after its trial, and a third-party survey lists Turnix at 10 GB/month",
   "confidence": "reported",
   "confidence_note": "Rejection quoted from historical research records; unverified against live endpoints.",
   "evidence": [
@@ -49,10 +49,45 @@
       "url": "https://blog.mickeyzzc.tech/en/posts/network/third-party-free-p2p-nodes/",
       "date": "2026-10-21",
       "proved": "rejected in the seed: Recorded as a candidate above but they fail the ≥500 GB filter by two orders of magnitude: 20 GB, 500 MB and 10 GB per month against a 500 GB/day serving workload. Listed here so the relay s [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://www.metered.ca/pricing",
+      "date": "2026-11-19",
+      "proved": "Metered's first-party free TURN allowance is 500 MB per month",
+      "capture": "sha256:8660efdfb67d9b74026a5e82e32ebbcac5579a09a35356e6d24add45423617ef",
+      "quote": "### Free: 500 MB trial\n\n$0/mo\n\n- 500 MB monthly TURN usage"
+    },
+    {
+      "url": "https://blog.mickeyzzc.tech/en/posts/network/third-party-free-p2p-nodes/",
+      "date": "2026-11-19",
+      "proved": "the survey confirms Metered's free allowance shrank to 500 MB, well below the serving workload",
+      "capture": "sha256:0018cebf87f6c4490e7c5b49e87de2c9fbf3dbe2e5af44ea9a8074148ea9a6d1",
+      "quote": "Free quotas also shrink — Metered once advertised 20-50 GB/month free; its pricing page now says 500 MB."
+    },
+    {
+      "url": "https://blog.mickeyzzc.tech/en/posts/network/third-party-free-p2p-nodes/",
+      "date": "2026-11-19",
+      "proved": "Xirsys exposes a standard ICE configuration with no SDK lock-in",
+      "capture": "sha256:0018cebf87f6c4490e7c5b49e87de2c9fbf3dbe2e5af44ea9a8074148ea9a6d1",
+      "quote": "| Xirsys | 500 MB/month (after a 30-day full-feature trial) | From USD 39/mo with 50 GB | Standard ICE config, no SDK lock-in |"
+    },
+    {
+      "url": "https://blog.mickeyzzc.tech/en/posts/network/third-party-free-p2p-nodes/",
+      "date": "2026-11-19",
+      "proved": "the relay stops on the spot when the quota is exhausted or the trial expires",
+      "capture": "sha256:0018cebf87f6c4490e7c5b49e87de2c9fbf3dbe2e5af44ea9a8074148ea9a6d1",
+      "quote": "In production, quota-based free relay does not degrade — it cuts off: quota exhausted, trial expired, card charge failed, and the relay stops on the spot, stranding every session that depended on it."
+    },
+    {
+      "url": "https://blog.mickeyzzc.tech/en/posts/network/third-party-free-p2p-nodes/",
+      "date": "2026-11-19",
+      "proved": "Turnix exposes standard TURN with multi-region GeoIP routing",
+      "capture": "sha256:0018cebf87f6c4490e7c5b49e87de2c9fbf3dbe2e5af44ea9a8074148ea9a6d1",
+      "quote": "| Turnix | 10 GB/month | From USD 30/mo with 40 GB | Standard TURN, multi-region with GeoIP routing |"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:52.048Z",
   "notes": "Free monthly bandwidth allowances on TURN relays are 20 GB for Metered, 500 MB for Xirsys, and 10 GB for Turnix.",
   "history": [],
   "extras": {

@@ -41,8 +41,8 @@
   "limits": [
     {
       "kind": "volume-quota",
-      "value": "50 GB per month on the entry tier; 1 TB on Pro",
-      "source": "https://nekotopia.io/sponsor.html"
+      "value": "50 GB per month on Basic, 200 GB on Plus, 1 TB on Pro; after the allowance the connection is throttled to 256 kbps on Basic/Plus or 1 Mbps on Pro",
+      "source": "https://nekotopia.io/terms.html"
     },
     {
       "kind": "write-gated",
@@ -52,7 +52,7 @@
   ],
   "limits_note": "",
   "binding": "volume-quota",
-  "binding_note": "A new account starts at 50 GB/month, which is 0.0455 TiB, so the volume quota fails 22 times over before anything else is reached. The 1 TB rung that would pass the test is behind a human decision, and nSolo, the thing that makes a service inbound, is behind the same decision.",
+  "binding_note": "The first-party terms state a monthly data allowance of 50 GB on Basic, 200 GB on Plus and 1 TB on Pro, with a throttle to 256 kbps on Basic/Plus and 1 Mbps on Pro after the allowance; the volume quota binds before any other limit.",
   "identity_cost": {
     "kind": "email",
     "detail": "Basic is obtained by 'Verify your email'. The rungs above it are not bought: 'Plus and Pro are switched on after a chat with the maintainer.'",
@@ -81,10 +81,31 @@
       "url": "https://wiki.nekotopia.io/",
       "date": "2026-10-23",
       "proved": "'Nekotopia is in early access and free to use right now.' and the exposure ladder from private mesh to fully routed"
+    },
+    {
+      "url": "https://nekotopia.io/terms.html",
+      "date": "2026-11-19",
+      "proved": "the first-party terms state the post-allowance throttle rates of 256 kbps and 1 Mbps with numbers and units",
+      "capture": "sha256:0097d450bcde18f5570cd271f94d5663dbc24a485359cdc0f8abb255457aafe2",
+      "quote": "Once you exceed it in a calendar month, your connection is throttled (to 256 kbps on Basic/Plus, 1 Mbps on Pro) until the allowance resets at the start of the next month."
+    },
+    {
+      "url": "https://nekotopia.io/terms.html",
+      "date": "2026-11-19",
+      "proved": "the first-party terms give the numbered monthly data allowances that make the volume quota binding",
+      "capture": "sha256:0097d450bcde18f5570cd271f94d5663dbc24a485359cdc0f8abb255457aafe2",
+      "quote": "Each tier runs at a fast peak speed with a monthly data allowance: Basic 10 Mbps / 50 GB, Plus 25 Mbps / 200 GB, Pro 100 Mbps / 1 TB."
+    },
+    {
+      "url": "https://nekotopia.io/terms.html",
+      "date": "2026-11-19",
+      "proved": "the first-party terms still state the monthly data allowance that binds egress by volume",
+      "capture": "sha256:0097d450bcde18f5570cd271f94d5663dbc24a485359cdc0f8abb255457aafe2",
+      "quote": "Each tier runs at a fast peak speed with a monthly data allowance: Basic 10 Mbps / 50 GB, Plus 25 Mbps / 200 GB, Pro 100 Mbps / 1 TB."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-23T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:10:54.548Z",
   "price_per_tb_month": "USD 0 during early access",
   "history": [],
   "notes": "The free tier is mesh-only: Basic has no Internet Outbound Egress at all ('-' in that row), so a new account cannot serve anything inbound until a rung is granted. nSolo is bidirectional NAT on one machine from 193.143.16.0/23 BYOIP, London only. UDP is inferred, not stated: the vendor says 'run services reachable from the internet' with no protocol restriction, and a NAT'd public IPv4 forwards whatever the port mapping says. The 1 TiB figure appears only as 1 TB on Pro, which is 0.909 TiB. All member documentation is behind a login, so the port-publishing detail and the 1 TB terms could not be read.",

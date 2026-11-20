@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "not stated on https://developers.google.com/workspace/drive/api/guides/about-shareddrives",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "not stated on https://developers.google.com/workspace/drive/api/guides/about-shareddrives",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "not stated on https://developers.google.com/workspace/drive/api/guides/about-shareddrives",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "Google Drive API; shared drives are the storage container a service account can write to.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "A service account has no quota of its own; it writes into a shared drive or uses OAuth 2.0 on behalf of a human user.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -49,10 +49,52 @@
       "url": "probe:seed/DEAD-ENDS.md",
       "date": "2026-10-21",
       "proved": "rejected in the seed: Sharing a My Drive folder with a service account does not give it the owner's quota; uploads fail at 16,106,127,360 bytes with storageQuotaExceeded regardless of maxUploadSize. Many tutorial [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://developers.google.com/workspace/drive/api/guides/handle-errors",
+      "date": "2026-11-19",
+      "proved": "a service account has no Drive storage quota and cannot own files, so it cannot use a human's My Drive quota",
+      "capture": "sha256:e78b6d39fd50a1c8e341feabfa7c35710c7e0ec19892fedb38f6fea9046bbe71",
+      "quote": "Note: Service accounts don't have storage quota and can't own any files. Instead, they must upload files and folders into shared drives, or use OAuth 2.0 to upload items on behalf of a human user."
+    },
+    {
+      "url": "https://developers.google.com/workspace/drive/api/guides/handle-errors",
+      "date": "2026-11-19",
+      "proved": "the Drive API reports storageQuotaExceeded when the uploading identity has no quota",
+      "capture": "sha256:e78b6d39fd50a1c8e341feabfa7c35710c7e0ec19892fedb38f6fea9046bbe71",
+      "quote": "\"reason\": \"storageQuotaExceeded\","
+    },
+    {
+      "url": "https://developers.google.com/workspace/drive/api/guides/about-shareddrives",
+      "date": "2026-11-19",
+      "proved": "shared drives are managed through the Google Drive API",
+      "capture": "sha256:a2efa4288007acb338cc20e4120a799c55a9a6c959ad9628f025d076017de203",
+      "quote": "To learn how to create and manage shared drives using the Google Drive API, see"
+    },
+    {
+      "url": "https://developers.google.com/workspace/drive/api/guides/about-shareddrives",
+      "date": "2026-11-19",
+      "proved": "shared drives are an organizational storage container within Google Drive",
+      "capture": "sha256:a2efa4288007acb338cc20e4120a799c55a9a6c959ad9628f025d076017de203",
+      "quote": "Shared drives support files owned by an organization rather than an individual user."
+    },
+    {
+      "url": "https://developers.google.com/workspace/drive/api/guides/about-shareddrives",
+      "date": "2026-11-19",
+      "proved": "service accounts have no storage quota and must write into shared drives or act for a human user",
+      "capture": "sha256:a2efa4288007acb338cc20e4120a799c55a9a6c959ad9628f025d076017de203",
+      "quote": "Service accounts don't have storage quota and can't own files. Instead, they must upload files and folders into shared drives, or use OAuth 2.0 to upload items on behalf of a human user."
+    },
+    {
+      "url": "https://developers.google.com/workspace/drive/api/guides/about-shareddrives",
+      "date": "2026-11-19",
+      "proved": "a shared drive has a 500,000 item cap, counted by item count, not object size",
+      "capture": "sha256:a2efa4288007acb338cc20e4120a799c55a9a6c959ad9628f025d076017de203",
+      "quote": "A shared drive can contain a maximum of 500,000 items, including files, folders, shortcuts, and items in the trash."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:50.377Z",
   "notes": "Sharing a My Drive folder with a service account does not give it the owner's quota; uploads fail at 16,106,127,360 bytes with storageQuotaExceeded regardless of maxUploadSize. Many tutorial",
   "history": [],
   "extras": {

@@ -13,7 +13,7 @@
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
+    "stated": "Max account data size: 10 MiB (10,485,760 bytes); max data growth per transaction 20 MiB (20,971,520 bytes).",
     "source_url": "https://solana.com/docs/core/accounts/account-structure",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
@@ -39,7 +39,7 @@
     "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
     "country": null
   },
-  "reliability_note": "Funds are recoverable on close (so it is a deposit, not a fee) but the capital lock at TB scale is prohibitive; the public RPC blocked this session's probes (403 'Your IP or provider is blocked').",
+  "reliability_note": "The full storage balance can be recovered when the account is closed, so it is a refundable deposit rather than a fee.",
   "confidence": "reported",
   "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [
@@ -57,10 +57,31 @@
       "url": "https://solana.com/developers/cookbook/accounts/calculate-rent",
       "date": "2026-10-21",
       "proved": "rent is reclaimable in full when the account is closed"
+    },
+    {
+      "url": "https://solana.com/docs/core/accounts",
+      "date": "2026-11-19",
+      "proved": "an account holds at most 10 MiB of data",
+      "capture": "sha256:2e594e185c1b306eed7771faf66f7d50d845c196dde9ce6fe94712ac16e072a5",
+      "quote": "Max account data size | 10 MiB (10,485,760 bytes)"
+    },
+    {
+      "url": "https://solana.com/docs/core/accounts/account-structure",
+      "date": "2026-11-19",
+      "proved": "the storage balance is a refundable deposit proportional to data size",
+      "capture": "sha256:35b5dfaf4914cf11d061568e6bc945250385e28385cc1614101c1c22429e9ee4",
+      "quote": "This refundable storage balance is proportional to the account's data size."
+    },
+    {
+      "url": "https://solana.com/docs/core/accounts/account-structure",
+      "date": "2026-11-19",
+      "proved": "the storage deposit is refundable on account close",
+      "capture": "sha256:35b5dfaf4914cf11d061568e6bc945250385e28385cc1614101c1c22429e9ee4",
+      "quote": "the full balance can be recovered when the account is closed"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:27.377Z",
   "notes": "No free tier. Storage is a refundable rent-exempt deposit: 10 MiB account costs 53,268,311,040 lamports (~53.27 SOL) to create, reclaimed only on close.",
   "history": [],
   "extras": {

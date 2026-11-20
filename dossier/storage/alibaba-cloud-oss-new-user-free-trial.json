@@ -5,7 +5,7 @@
   "url": "https://www.alibabacloud.com/help/en/oss/free-quota-for-new-users",
   "category": "iaas",
   "free_tier": {
-    "stated": "Current international page: 'Standard LRS resource plan: 500 GB for 1 month' (individual) / '1 TB for 1 month' (enterprise), stacking with a 5 GB/month perpetual allowance to 505 GB (individual) / 1,029 GB (enterprise) during the trial month. The help.aliyun.com (China) variant of the same doc instead states 20 GB for 3 months. The docs disagree, so treat 500 GB/1 month as the international figure and 20 GB/3 months as the China figure.",
+    "stated": "Standard LRS resource plan: 500 GB for 1 month (individual) or 1 TB for 1 month (enterprise), stacking with the 5 GB/month free quota to 505 GB or 1029 GB in the trial month. A separate help.aliyun.com variant of the same document states a different figure.",
     "unit": "TB",
     "metered_on": "unstated",
     "source_url": "https://www.alibabacloud.com/help/en/oss/free-quota-for-new-users",
@@ -23,7 +23,7 @@
     "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
-    "terms": "Outbound internet traffic free trial: 2 GB for 3 months (China doc), stacked with a 5 GB/month perpetual quota => ~7 GB/month. Paid after that. This is the hardest egress failure in the slot.",
+    "terms": "Outbound data transfer plan: 2 GB for 3 months, combined with the 5 GB monthly free quota to 7 GB/month; paid after that.",
     "metered": false,
     "free_allowance": "5 GB per month"
   },
@@ -33,12 +33,12 @@
   ],
   "interface_detail": "s3",
   "tooling": "OSS S3-compatible API. Rclone 's3' provider 'Alibaba Cloud (Aliyun) Object Storage System (OSS)'; ossutil; OSS SDKs.",
-  "chaining": "New-user-only, one trial per verified identity. The 500 GB is 30 days, not recurring. No free per-account multiplication.",
+  "chaining": "New-user-only trial; one trial per verified account, with a separate individual and enterprise edition.",
   "limits": [],
   "limits_note": "1 month; 2 GB (trial) + 5 GB/month outbound traffic; 200,000 API requests for 3 months. A 500 GB store with 7 GB/month of egress is a write-only archive you cannot read back for free.",
   "identity_cost": {
     "kind": "institution",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: month; 2 GB (trial) + 5 GB/month outbound traffic; 200,000 API requests for 3 months. A 500 GB store with 7 GB/month of egress is a write-only archive you cannot read back for free.",
+    "detail": "unverified: the free-quota pages state that identity verification is required but do not name the credential; no sign-up was performed",
     "country": null
   },
   "reliability_note": "Reliable object store; the trial simply expires and billing starts on everything, with an SMS warning at exhaustion.",
@@ -59,10 +59,59 @@
       "url": "https://www.alibabacloud.com/en/product/oss/pricing",
       "date": "2026-10-21",
       "proved": "'Standard Storage(LRS) 0~5GB Free' rows across regions (the perpetual sliver)"
+    },
+    {
+      "url": "https://www.alibabacloud.com/help/en/oss/free-quota-for-new-users",
+      "date": "2026-11-19",
+      "proved": "the international page states the trial capacity and duration for both user types",
+      "capture": "sha256:b30f5a1942fdb40904aae493a20faf5c310023fdbe17ae4fa0fa3c0236701ed6",
+      "quote": "Standard LRS resource plan: 500 GB for 1 month"
+    },
+    {
+      "url": "https://help.aliyun.com/en/oss/free-quota-for-new-users",
+      "date": "2026-11-19",
+      "proved": "the help.aliyun.com page states the combined 7 GB monthly outbound allowance",
+      "capture": "sha256:cb63454161fb8a6a5e411b8e80c22871dbf7b09e44aa27d4a3a97fbba2d86a90",
+      "quote": "Individual or enterprise users | Each month within the 3-month free trial period | 7 GB"
+    },
+    {
+      "url": "https://www.alibabacloud.com/help/en/oss/free-quota-for-new-users",
+      "date": "2026-11-19",
+      "proved": "the international page states separate individual and enterprise trial editions",
+      "capture": "sha256:b30f5a1942fdb40904aae493a20faf5c310023fdbe17ae4fa0fa3c0236701ed6",
+      "quote": "Users who complete enterprise identity verification are eligible for the Enterprise Edition free trial."
+    },
+    {
+      "url": "https://help.aliyun.com/en/oss/free-quota-for-new-users",
+      "date": "2026-11-19",
+      "proved": "the page requires identity verification but does not name the credential",
+      "capture": "sha256:cb63454161fb8a6a5e411b8e80c22871dbf7b09e44aa27d4a3a97fbba2d86a90",
+      "quote": "If you complete identity verification and have not activated OSS, you can try Object Storage Service (OSS) for free."
+    },
+    {
+      "url": "https://www.alibabacloud.com/help/en/oss/free-quota-for-new-users",
+      "date": "2026-11-19",
+      "proved": "the international page states the combined individual capacity allowance",
+      "capture": "sha256:b30f5a1942fdb40904aae493a20faf5c310023fdbe17ae4fa0fa3c0236701ed6",
+      "quote": "Individual users | Any hour within the 1-month free trial period | 505 GB"
+    },
+    {
+      "url": "https://help.aliyun.com/en/oss/free-quota-for-new-users",
+      "date": "2026-11-19",
+      "proved": "the help.aliyun.com page states the 2 GB three-month outbound allowance",
+      "capture": "sha256:cb63454161fb8a6a5e411b8e80c22871dbf7b09e44aa27d4a3a97fbba2d86a90",
+      "quote": "Outbound data transfer plan: 2 GB for 3 months"
+    },
+    {
+      "url": "https://www.alibabacloud.com/help/en/oss/free-quota-for-new-users",
+      "date": "2026-11-19",
+      "proved": "the international page states the account must pass identity verification",
+      "capture": "sha256:b30f5a1942fdb40904aae493a20faf5c310023fdbe17ae4fa0fa3c0236701ed6",
+      "quote": "Your Alibaba Cloud account has passed identity verification, and you have not activated OSS."
     }
   ],
   "verdict": "trial-only",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:12:58.760Z",
   "notes": "Current international page: 'Standard LRS resource plan: 500 GB for 1 month' (individual) / '1 TB for 1 month' (enterprise), stacking with a 5 GB/month perpetual allowance to 505 GB (individual) / 1,029 GB (enterprise) during the trial month. The help.aliyun.com (China) variant of the same doc instead states 20 GB for 3 months. The docs disagree, so treat 500 GB/1 month as the international figure and 20 GB/3 months as the China figure.",
   "history": [],
   "extras": {

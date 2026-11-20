@@ -5,7 +5,7 @@
   "url": "https://arize.com/docs/ax/security-and-settings/pricing-and-usage",
   "category": "rejected-provider",
   "free_tier": {
-    "stated": "none reachable: AX Free is 25k spans/month with 1 GB ingestion and 7-15 day retention; Pro is 10 GB/30 days. Spans are telemetry, not objects, and there is no bulk-blob path.",
+    "stated": "none reachable: AX Free is 25k spans/month, 1 GB storage and 15-day retention; Pro is 50k spans/month, 10 GB storage and 30-day retention. Spans are telemetry, not objects, and there is no bulk-blob path.",
     "unit": "none",
     "metered_on": "none",
     "source_url": "https://arize.com/docs/ax/security-and-settings/pricing-and-usage",
@@ -13,32 +13,32 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "stated-absent: the plan table denominates limits in spans and GB of ingestion and states no per-object size cap",
     "bytes": null,
     "source_url": "https://arize.com/docs/ax/security-and-settings/pricing-and-usage",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
-    "days": null,
+    "stated": "AX Free retains traces for 15 days; AX Pro for 30 days.",
+    "days": 15,
     "source_url": "https://arize.com/docs/ax/security-and-settings/pricing-and-usage",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "stated-absent: the plan table states no egress terms for stored data",
     "metered": false
   },
   "interface": [
     "unknown"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "OpenTelemetry-compliant span ingestion; no S3 or REST object interface stated",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "stated-absent: the plan table lists telemetry spans and storage in GB but no bulk-object chaining; self-hosted deployment is listed only on Enterprise",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
     "kind": "email",
-    "detail": "unverified: identity requirements not documented",
+    "detail": "email: no credit card is required for the AX Free plan; signup is through the join link",
     "country": null
   },
   "reliability_note": "AX Free is 25k spans/month with 1 GB ingestion and 7-15 day retention; Pro is 10 GB/30 days. Spans are telemetry, not objects, and there is no bulk-blob path.",
@@ -54,10 +54,52 @@
       "url": "https://markaicode.com/pricing/arize-phoenix-pricing/",
       "date": "2026-10-21",
       "proved": "cited as the basis of the rejection: AX Free is 25k spans/month with 1 GB ingestion and 7-15 day retention; Pro is 10 GB/30 days. Spans are telemetry, not objects, and there is no bulk-blob path. [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://arize.com/docs/ax/security-and-settings/pricing-and-usage",
+      "date": "2026-11-19",
+      "proved": "AX Free is 25k spans, 1 GB and 15 days; Pro is 50k spans, 10 GB and 30 days",
+      "capture": "sha256:3d3a92ee729f59dab3639d1395537a176c069d9b0fecbb9d49883cbee6505bd4",
+      "quote": "> | Span volume | Included 25k/month | Included 50k/month | Custom |\n> | Storage (GB) | 1 GB | 10 GB | Custom |\n> | Retention | 15 days | 30 days | Custom |"
+    },
+    {
+      "url": "https://arize.com/docs/ax/security-and-settings/pricing-and-usage",
+      "date": "2026-11-19",
+      "proved": "the first-party plan table states OpenTelemetry-compliant ingestion, not an object API",
+      "capture": "sha256:3d3a92ee729f59dab3639d1395537a176c069d9b0fecbb9d49883cbee6505bd4",
+      "quote": "| OpenTelemetry compliant | ✓ | ✓ | ✓ |"
+    },
+    {
+      "url": "https://arize.com/docs/ax/security-and-settings/pricing-and-usage",
+      "date": "2026-11-19",
+      "proved": "the first-party plan table states 15-day retention on AX Free",
+      "capture": "sha256:3d3a92ee729f59dab3639d1395537a176c069d9b0fecbb9d49883cbee6505bd4",
+      "quote": "| Retention | 15 days | 30 days | Custom |"
+    },
+    {
+      "url": "https://arize.com/docs/ax/security-and-settings/pricing-and-usage",
+      "date": "2026-11-19",
+      "proved": "the plan table states a storage volume in GB, not a per-object cap",
+      "capture": "sha256:3d3a92ee729f59dab3639d1395537a176c069d9b0fecbb9d49883cbee6505bd4",
+      "quote": "| Storage (GB) | 1 GB | 10 GB | Custom |"
+    },
+    {
+      "url": "https://arize.com/docs/ax/security-and-settings/pricing-and-usage",
+      "date": "2026-11-19",
+      "proved": "the free plan is SaaS and self-hosting appears only on Enterprise; no byte-store chaining is stated",
+      "capture": "sha256:3d3a92ee729f59dab3639d1395537a176c069d9b0fecbb9d49883cbee6505bd4",
+      "quote": "| Deployment | SaaS | SaaS | SaaS or Self-Hosted |"
+    },
+    {
+      "url": "https://arize.com/docs/ax/security-and-settings/pricing-and-usage",
+      "date": "2026-11-19",
+      "proved": "the AX Free card states no card is required at signup",
+      "capture": "sha256:3d3a92ee729f59dab3639d1395537a176c069d9b0fecbb9d49883cbee6505bd4",
+      "quote": "No credit card required."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:55.372Z",
   "notes": "AX Free is 25k spans/month with 1 GB ingestion and 7-15 day retention; Pro is 10 GB/30 days. Spans are telemetry, not objects, and there is no bulk-blob path.",
   "history": [],
   "extras": {

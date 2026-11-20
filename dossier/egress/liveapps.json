@@ -38,17 +38,22 @@
   "limits": [
     {
       "kind": "retention-clamped",
-      "value": "the public URL expires after about an hour",
-      "source": "probe:https://warped-wiry-wool.liveapps.dev/"
+      "value": "the public URL lasts up to 24 hours",
+      "source": "https://liveapps.dev/faq"
     },
     {
       "kind": "request-rate",
       "value": "a 30-second relay timeout returns a 504 for a transfer that has not finished",
       "source": "probe:https://warped-wiry-wool.liveapps.dev/"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "each HTTP response must stay under 32MB",
+      "source": "https://liveapps.dev/faq"
     }
   ],
   "binding": "retention-clamped",
-  "binding_note": "the one-hour URL fails first for anything but a demo, and the 30-second timeout fails first inside that hour for a large transfer.",
+  "binding_note": "The first-party FAQ states an open tunnel lasts up to 24 hours and each HTTP response must stay under 32MB; the time window binds first for a long-running lane.",
   "identity_cost": {
     "kind": "anonymous",
     "detail": "no account: the page's comparison table lists 'Account required | no', and the harness created a tunnel through the public API with no credentials",
@@ -92,9 +97,44 @@
       "proved": "the /lat median was 223 ms",
       "capture": "sha256:de1014306d7aafba9c8afb95b55b8157e989a4a1b9e9ed7f96360b0a68698102",
       "quote": "min 211 / med 223 / p95 295 ms"
+    },
+    {
+      "url": "https://liveapps.dev/faq",
+      "date": "2026-11-19",
+      "proved": "the first-party FAQ states a tunnel lasts up to 24 hours, a retention limit with a number and unit",
+      "capture": "sha256:e8b6341536996d211e45ac87e1a6134b0cb71df2ff0e5058879b5e32c1f8b543",
+      "quote": "An open tunnel lasts up to 24 hours."
+    },
+    {
+      "url": "https://liveapps.dev/faq",
+      "date": "2026-11-19",
+      "proved": "the first-party FAQ states a tunnel lasts up to 24 hours",
+      "capture": "sha256:e8b6341536996d211e45ac87e1a6134b0cb71df2ff0e5058879b5e32c1f8b543",
+      "quote": "An open tunnel lasts up to 24 hours."
+    },
+    {
+      "url": "https://liveapps.dev/faq",
+      "date": "2026-11-19",
+      "proved": "the first-party FAQ states each HTTP response must stay under 32MB",
+      "capture": "sha256:e8b6341536996d211e45ac87e1a6134b0cb71df2ff0e5058879b5e32c1f8b543",
+      "quote": "Each HTTP response is sent after it finishes, and it has to stay under 32MB."
+    },
+    {
+      "url": "https://liveapps.dev/faq",
+      "date": "2026-11-19",
+      "proved": "the first-party FAQ states a 24-hour retention window and a 32MB per-response cap on the same page",
+      "capture": "sha256:e8b6341536996d211e45ac87e1a6134b0cb71df2ff0e5058879b5e32c1f8b543",
+      "quote": "An open tunnel lasts up to 24 hours."
+    },
+    {
+      "url": "https://liveapps.dev/faq",
+      "date": "2026-11-19",
+      "proved": "the binding retention window is 24 hours, stated first-party",
+      "capture": "sha256:e8b6341536996d211e45ac87e1a6134b0cb71df2ff0e5058879b5e32c1f8b543",
+      "quote": "An open tunnel lasts up to 24 hours."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-10T03:20:00.000Z",
+  "verified_at": "2026-11-19T21:10:54.166Z",
   "notes": "The lowest median latency of the authless relays measured on 2026-11-05, at 223 ms. The 30-second relay timeout makes it a webhook and demo lane rather than a file-transfer lane, and the URL lasts about an hour."
 }

@@ -18,8 +18,8 @@
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "4 GB/transfer; default 14-day expiry, override with ?expires=N[day|w|M|y]; file is DELETED after the first download ('after it is downloaded, the file is completely deleted').",
-    "days": 14,
+    "stated": "3-day expiry: 'The file is deleted automatically after 3 days, even if it was never downloaded'; 'The link works for 3 days. Each file can be downloaded up to 10 times a day.' The old expires= syntax and one-download deletion are no longer described.",
+    "days": 3,
     "source_url": "https://www.file.io/about",
     "notes": "Extracted from published terms."
   },
@@ -31,7 +31,7 @@
     "rest"
   ],
   "interface_detail": "rest",
-  "tooling": "documented REST: curl -F 'file=@x' https://file.io/?expires=1w -> {\"success\":true,\"link\":...,\"expiry\":\"7 days\"}",
+  "tooling": "The old file.io API was retired in 2025; the about page directs scripted uploads to the LimeWire MCP server (https://www.file.io/developers).",
   "chaining": "None. One-download-then-delete semantics make it anti-storage by design.",
   "limits": [
     {
@@ -40,9 +40,9 @@
       "source": "https://www.file.io/about"
     }
   ],
-  "limits_note": "4 GB/transfer; default 14-day expiry, override with ?expires=N[day|w|M|y]; file is DELETED after the first download ('after it is downloaded, the file is completely deleted').",
+  "limits_note": "4 GB per transfer; files expire after 3 days with up to 10 downloads per file per day; the old expires= syntax is no longer described.",
   "identity_cost": {
-    "kind": "institution",
+    "kind": "anonymous",
     "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ited to a total of 4 GB') Docs still describe a working API, but both the apex and www return 301/405 today. The 405 comes from an object-store front end, so the API has been re-p",
     "country": null
   },
@@ -59,10 +59,52 @@
       "url": "https://file.io/",
       "date": "2026-10-21",
       "proved": "probe: POST -> 301; POST https://www.file.io/ -> 405 MethodNotAllowed (ResourceType: OBJECT)"
+    },
+    {
+      "url": "https://www.file.io/about",
+      "date": "2026-11-19",
+      "proved": "the first-party about page states a 3-day link life with up to 10 downloads per file per day",
+      "capture": "sha256:e9e0141b38cbe95c7f11a3a46e250de5105c08a48da3df0e577bb941361b54cc",
+      "quote": "The link works for 3 days. Each file can be downloaded up to 10 times a day."
+    },
+    {
+      "url": "https://www.file.io/about",
+      "date": "2026-11-19",
+      "proved": "the stated file lifetime is 3 days",
+      "capture": "sha256:e9e0141b38cbe95c7f11a3a46e250de5105c08a48da3df0e577bb941361b54cc",
+      "quote": "The file is deleted automatically after 3 days, even if it was never downloaded, so nothing is left hanging around in the cloud."
+    },
+    {
+      "url": "https://www.file.io/about",
+      "date": "2026-11-19",
+      "proved": "the 4 GB transfer cap is unchanged and the page states 3-day expiry with 10 downloads per day",
+      "capture": "sha256:e9e0141b38cbe95c7f11a3a46e250de5105c08a48da3df0e577bb941361b54cc",
+      "quote": "Yes, file transfers are limited to a total of 4 GB."
+    },
+    {
+      "url": "https://www.file.io/about",
+      "date": "2026-11-19",
+      "proved": "upload and download are anonymous with no identity information required",
+      "capture": "sha256:e9e0141b38cbe95c7f11a3a46e250de5105c08a48da3df0e577bb941361b54cc",
+      "quote": "Users are not required to create an account or provide any personal information in order to upload or download files."
+    },
+    {
+      "url": "https://www.file.io/about",
+      "date": "2026-11-19",
+      "proved": "the documented curl REST upload endpoint is retired",
+      "capture": "sha256:e9e0141b38cbe95c7f11a3a46e250de5105c08a48da3df0e577bb941361b54cc",
+      "quote": "The old file.io API was retired in 2025."
+    },
+    {
+      "url": "https://www.file.io/about",
+      "date": "2026-11-19",
+      "proved": "the 4 GB no-account transfer offer is unchanged",
+      "capture": "sha256:e9e0141b38cbe95c7f11a3a46e250de5105c08a48da3df0e577bb941361b54cc",
+      "quote": "**Share any type of file you like, with anyone, anywhere in the world.** Files up to 4 GB can be shared without an account."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:13:37.015Z",
   "notes": "no account; 4 GB per transfer ('file transfers are limited to a total of 4 GB')",
   "history": [],
   "extras": {

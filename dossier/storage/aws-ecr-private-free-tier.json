@@ -13,27 +13,28 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "not stated on https://aws.amazon.com/ecr/pricing/",
     "bytes": null,
     "source_url": "https://aws.amazon.com/ecr/pricing/",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "not stated on https://aws.amazon.com/ecr/pricing/",
     "days": null,
     "source_url": "https://aws.amazon.com/ecr/pricing/",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "Private-repository data transfer out is billed to the AWS account that owns the repository.",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "oci",
+    "cli"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "A managed container registry reached with a CLI for Docker images, OCI images and OCI artifacts.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "Pull through cache rules cache repositories from an upstream registry into a private ECR registry.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -49,10 +50,45 @@
       "url": "https://aws.amazon.com/ecr/pricing/",
       "date": "2026-10-21",
       "proved": "rejected in the seed: Trial, not free tier, and tiny: 'As a new Amazon ECR customer, you get 500 MB per month of storage for your private repositories for one year as part of the AWS Free Tier.' Private repos als [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://aws.amazon.com/ecr/pricing/",
+      "date": "2026-11-19",
+      "proved": "the 500 MB-per-month, one-year private ECR allowance is unchanged",
+      "capture": "sha256:12dbebbb8666aa092d3780b099cf39f10abd88a98ce8119d08b697cd440ad8dc",
+      "quote": "As a new Amazon ECR customer, you get 500 MB per month of storage for your private repositories for one year as part of the AWS Free Tier."
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonECR/latest/userguide/ECR_on_AWS.html",
+      "date": "2026-11-19",
+      "proved": "ECR is used through a CLI for Docker and OCI images",
+      "capture": "sha256:e06de498f0811b88701045638df22f81dd99cbc184fa003d18c12312881ffbb1",
+      "quote": "You can use your preferred CLI to push, pull, and manage Docker images, Open Container Initiative (OCI) images, and OCI compatible artifacts."
+    },
+    {
+      "url": "https://aws.amazon.com/ecr/pricing/",
+      "date": "2026-11-19",
+      "proved": "the pricing page describes the registry but states no retention period",
+      "capture": "sha256:12dbebbb8666aa092d3780b099cf39f10abd88a98ce8119d08b697cd440ad8dc",
+      "quote": "Amazon Elastic Container Registry (Amazon ECR) is a fully managed container registry that makes it easy to store, share, and deploy your container software anywhere."
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonECR/latest/userguide/ECR_on_AWS.html",
+      "date": "2026-11-19",
+      "proved": "ECR chains with upstream registries through pull-through cache rules",
+      "capture": "sha256:e06de498f0811b88701045638df22f81dd99cbc184fa003d18c12312881ffbb1",
+      "quote": "Pull through cache rules provide a way to cache repositories in an upstream registry in your private Amazon ECR registry."
+    },
+    {
+      "url": "https://aws.amazon.com/ecr/pricing/",
+      "date": "2026-11-19",
+      "proved": "egress from a private repository is billed to its owning account",
+      "capture": "sha256:12dbebbb8666aa092d3780b099cf39f10abd88a98ce8119d08b697cd440ad8dc",
+      "quote": "Data transferred from a private repository is billed to the AWS account that owns the private repository."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:56.064Z",
   "notes": "Trial, not free tier, and tiny: 'As a new Amazon ECR customer, you get 500 MB per month of storage for your private repositories for one year as part of the AWS Free Tier.' Private repos als",
   "history": [],
   "extras": {

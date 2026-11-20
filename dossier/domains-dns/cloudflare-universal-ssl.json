@@ -48,8 +48,8 @@
     "country": null
   },
   "reliability_note": "no suspension, throttle or data-loss event is recorded on the pages read",
-  "confidence": "reported",
-  "confidence_note": "the one-level coverage limit is stated across Cloudflare's TLS documentation and repeated in third-party summaries; the product page was reached only as a stub, so this is reported.",
+  "confidence": "documented",
+  "confidence_note": "one-level subdomain coverage, the deeper-subdomain exclusion, the automatic renewal and the paid upgrade path are stated on Cloudflare's own Universal SSL and Limitations pages (both read in full on 2026-11-19), so the limit is first-party documented.",
   "evidence": [
     {
       "url": "https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/",
@@ -62,13 +62,49 @@
       "proved": "on a full setup the certificate covers the apex and first-level subdomains only",
       "capture": "sha256:c6274db1c947c6f3ba83385ab5db05c1de2cc8322821c8be77cf7ba022688cdd",
       "quote": "On a full setup, Universal SSL certificates cover your root domain (for example, `example.com`) and first-level subdomains (for example, `www.example.com`)."
+    },
+    {
+      "url": "https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/",
+      "date": "2026-11-19",
+      "proved": "Cloudflare's first-party page states full-setup Universal SSL covers the apex and first-level subdomains only",
+      "capture": "sha256:ee8babf492c3582fcdc2d8f1cc23a547f2ef1d3feb60bd13a26a4b8854c2d26d",
+      "quote": "On a full setup, Universal SSL certificates cover your root domain (for example, `example.com`) and first-level subdomains (for example, `www.example.com`)."
+    },
+    {
+      "url": "https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/limitations/",
+      "date": "2026-11-19",
+      "proved": "Cloudflare's first-party Limitations page states deeper subdomains are excluded from Universal SSL",
+      "capture": "sha256:8f8b31b06ba5e545b8a0f60d9cabc21c628a1f084f940e42820d0cdc2789d197",
+      "quote": "Deeper subdomains — such as `dev.www.example.com` or `app3.dev.www.example.com` — are not covered and will not serve a valid certificate."
+    },
+    {
+      "url": "https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/",
+      "date": "2026-11-19",
+      "proved": "coverage beyond the first subdomain level requires a paid certificate product",
+      "capture": "sha256:ee8babf492c3582fcdc2d8f1cc23a547f2ef1d3feb60bd13a26a4b8854c2d26d",
+      "quote": "For full setup zones that need coverage beyond first-level subdomains, use Total TLS or advanced certificates."
+    },
+    {
+      "url": "https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/",
+      "date": "2026-11-19",
+      "proved": "Universal SSL is a free certificate issued and renewed automatically for all activated domains",
+      "capture": "sha256:ee8babf492c3582fcdc2d8f1cc23a547f2ef1d3feb60bd13a26a4b8854c2d26d",
+      "quote": "By default, Cloudflare issues — and renews — free, unshared, publicly trusted SSL certificates to all domains added to and activated on Cloudflare."
+    },
+    {
+      "url": "https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/limitations/",
+      "date": "2026-11-19",
+      "proved": "the first-party Limitations page restates the apex plus first-level coverage limit",
+      "capture": "sha256:8f8b31b06ba5e545b8a0f60d9cabc21c628a1f084f940e42820d0cdc2789d197",
+      "quote": "When you rely only on Universal SSL in a full setup zone, coverage is limited to the root domain (for example, `example.com`) and first-level subdomains (for example, `www.example.com` or `blog.example.com`)."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-09T05:04:38.024Z",
+  "verified_at": "2026-11-19T21:12:38.926Z",
   "price_per_tb_month": null,
   "history": [],
   "notes": "The one-level limit is the trap. A per-tenant scheme at tenant.app.example.com needs a paid certificate manager, or a wildcard from Let's Encrypt over DNS-01, which is free.",
   "stale": false,
-  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding_note": "full-setup coverage stops at the root domain and first-level subdomains, so a per-tenant name below that level needs the paid Advanced Certificate Manager or Total TLS"
 }

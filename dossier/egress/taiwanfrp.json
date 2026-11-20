@@ -41,13 +41,13 @@
   "limits": [
     {
       "kind": "retention-clamped",
-      "value": "[translated] 'The account has already expired, the proxy cannot be started! Please contact TaiwanFRP.'",
+      "value": "unverified: no numeric egress rate or byte cap is published on the vendor's own front page or terms page; the only first-party figures are a Discord account limit and an optional Taiwanese mobile number",
       "source": "https://taiwanfrp.me/"
     }
   ],
   "limits_note": "",
   "binding": "retention-clamped",
-  "binding_note": "No byte allowance is published anywhere, so no volume quota can be shown to fail first. What the site itself displays as a failure is an expired account: the status panel reports the expiry and refuses to start the proxy.",
+  "binding_note": "No numeric egress rate or byte allowance is published on the vendor's own front page or terms page, so no first-party limit has a number and unit to bind; the terms state proxy count and traffic can be adjusted on demand. The account-expiry status text recorded earlier was not present in today's capture.",
   "identity_cost": {
     "kind": "email",
     "detail": "[translated] Registration takes a username, a password and a verification code obtained from the vendor's Discord: 'one Discord user may register only one account'. The third field reads 'Taiwan mobile phone (not required) - Taiwan mobile numbers only, landlines cannot be used; some features require a phone number, which you can also add later in the account settings'.",
@@ -125,10 +125,31 @@
       "proved": "registration takes a verification code from the vendor's Discord, one account per Discord user",
       "capture": "sha256:a185601c942d56886a49f0b59b2dadcb29ca41c1ba56c29289d73a31580857d9",
       "quote": "請進入 Discord 獲取驗證碼。進入之後到頻道▘註冊使用者帳號▗點擊點擊按鈕獲取。一位discord使用者只能註冊一個帳號。"
+    },
+    {
+      "url": "https://taiwanfrp.me/",
+      "date": "2026-11-19",
+      "proved": "the first-party front page describes TCP and UDP forwarding but publishes no numeric egress rate or byte cap",
+      "capture": "sha256:533ca64190205a8229f6ad2fdbc0c81200be6c4db1d4fb35cbc34706aa8fa2a0",
+      "quote": "同時支援 TCP 與 UDP 流量轉發，確保伺服器穩定運行。"
+    },
+    {
+      "url": "https://taiwanfrp.me/terms.html",
+      "date": "2026-11-19",
+      "proved": "the first-party terms describe adjusting proxy count and traffic on demand but state no numeric egress rate or byte cap",
+      "capture": "sha256:8782aefc7abc023daaf742c41d0fe5dca131c32cdd6706c4db6d673357f1fd94",
+      "quote": "可依需求調整代理數量與流量，靈活因應各種應用情境"
+    },
+    {
+      "url": "https://taiwanfrp.me/",
+      "date": "2026-11-19",
+      "proved": "the first-party front page states TCP and UDP forwarding and publishes no numeric egress cap",
+      "capture": "sha256:533ca64190205a8229f6ad2fdbc0c81200be6c4db1d4fb35cbc34706aa8fa2a0",
+      "quote": "同時支援 TCP 與 UDP 流量轉發，確保伺服器穩定運行。"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-04T06:52:59.172Z",
+  "verified_at": "2026-11-19T21:10:56.223Z",
   "price_per_tb_month": "USD 0",
   "history": [],
   "notes": "The only Taiwanese free service found that forwards UDP on a public port without a public IP, and the cheapest identity cost in the lane: a Discord account, with the Taiwanese mobile number explicitly optional and needed only for some features. Two gaps. Every page is silent on volume. And the account appears to carry an expiry that must be renewed, which the status panel reports as a hard stop. Country: Taiwan; the operator writes in Traditional Chinese, and the terms invoke the law of the Republic of China. The client is frp-based: a 'custom client FRPC file' is offered for download.",

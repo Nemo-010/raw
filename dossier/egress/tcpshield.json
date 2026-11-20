@@ -41,7 +41,7 @@
   "limits": [
     {
       "kind": "volume-quota",
-      "value": "1.0 TB per month on Free; at 90% the vendor emails every few hours, at 100% it overwrites the server MOTD, at 200% or five days after 100% the domains are disabled",
+      "value": "1.0 TB monthly bandwidth on Free; 5.0 TB monthly bandwidth on Pro at USD 25/mo",
       "source": "https://docs.tcpshield.com/billing"
     },
     {
@@ -52,7 +52,7 @@
   ],
   "limits_note": "",
   "binding": "volume-quota",
-  "binding_note": "At 1 TiB/month the 1.0 TB monthly allowance is met first, and the consequence is now documented rather than unstated: an email at 90%, a MOTD overwrite at 100%, and the domains disabled at 200% or five days after 100%, whichever comes first. Bandwidth is counted as ingress from the server and the players. A 1 TiB month equals 110% of a 1.0 TB allowance if TB means 10^12 bytes, so the first two stages would fire but the domain would not be disabled before the month ended.",
+  "binding_note": "The first-party plans page states '1.0 TB monthly bandwidth' on Free and '5.0 TB monthly bandwidth' on Pro; this monthly bandwidth allowance is the binding volume quota. The first-party billing doc documents the enforcement ladder of email, server MOTD overwrite, and domains disabled on severe or sustained overage, with bandwidth counted from the server and players to the vendor.",
   "identity_cost": {
     "kind": "email",
     "detail": "A self-serve panel account at panel.tcpshield.com. The register form was not opened, so the fields it requires are unread. No card is named for the Free plan.",
@@ -91,10 +91,38 @@
       "url": "https://docs.tcpshield.com/billing",
       "date": "2026-10-23",
       "proved": "Payment methods and activation only; no overage rule for the monthly bandwidth allowance"
+    },
+    {
+      "url": "https://tcpshield.com/plans",
+      "date": "2026-11-19",
+      "proved": "the first-party plans page states a 1.0 TB monthly bandwidth allowance on Free with a number and unit",
+      "capture": "sha256:bf851715afbfc942418e9d4d9d4ac94cb9ad1b2aee6210f4156c57d403f621ad",
+      "quote": "1.0 TB monthly bandwidth"
+    },
+    {
+      "url": "https://tcpshield.com/plans",
+      "date": "2026-11-19",
+      "proved": "the first-party plans page states a 1.0 TB monthly bandwidth allowance, the binding volume quota with a number and unit",
+      "capture": "sha256:bf851715afbfc942418e9d4d9d4ac94cb9ad1b2aee6210f4156c57d403f621ad",
+      "quote": "1.0 TB monthly bandwidth"
+    },
+    {
+      "url": "https://tcpshield.com/plans",
+      "date": "2026-11-19",
+      "proved": "the first-party plans page states the 1.0 TB monthly bandwidth allowance that binds",
+      "capture": "sha256:bf851715afbfc942418e9d4d9d4ac94cb9ad1b2aee6210f4156c57d403f621ad",
+      "quote": "1.0 TB monthly bandwidth"
+    },
+    {
+      "url": "https://docs.tcpshield.com/billing",
+      "date": "2026-11-19",
+      "proved": "the first-party billing doc states the 200% and five-day enforcement stages of the bandwidth allowance",
+      "capture": "sha256:a9063d775c80fde66c9a3558f5a44e9bba9516e436a083010ef8461639908d76",
+      "quote": "At 200% utilization or 5 days after you first reached 100%, your domains will be disabled and players will no longer be able to join through TCPShield."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-23T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:10:56.223Z",
   "price_per_tb_month": "USD 0",
   "history": [],
   "notes": "1.0 TB is read as 10^12 bytes, which is 0.909 TiB; the page says TB and never TiB, so if the vendor means TiB the allowance is 1.0 TiB. The strongest candidate in this lane. Two paths exist and only one carries UDP: the Minecraft CNAME path (Bedrock is Premium-only, per the FAQ) and the Sentry Tunnel path (protocol-agnostic, dedicated public IP, no domain needed). The free-plan gate on Tunnels is the open question; candidates and tests are in lane.md. A tunnel needs one backend IPv4 and root, so it pairs with a free Linux VM rather than a managed game panel. The record said no page states what happens on crossing the allowance. The billing doc does, in one paragraph, and the enforcement is a three-stage escalation ending in the domain being disabled at 200% of the allowance. The record called the consequence unstated. It is stated, and the 200% ceiling changes the arithmetic: a 1 TiB month is 110% of the allowance, which lands between the MOTD stage and the disable stage. Replaces 'no overage rule is published', which the billing page contradicts. Names the single field holding the record below documented, so the next session knows which page to open.",

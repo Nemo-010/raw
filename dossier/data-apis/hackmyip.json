@@ -150,10 +150,24 @@
       "proved": "the answer carries a location for the looked-up IP",
       "capture": "sha256:5f5b1a6c9518d0c11332e4903da1ae3192a6a633124433e16df4b4b1cdde3272",
       "quote": "\"country_name\": \"United States\""
+    },
+    {
+      "url": "https://hackmyip.com/api",
+      "date": "2026-11-19",
+      "proved": "the first-party page states 100 a minute on /api and 60 a minute on /api/v1",
+      "capture": "sha256:0312180c4a210f8c26375b12c9a83b5fd118cbebf5637aba1ae0f4aa9ad0bf63",
+      "quote": "Please keep it under 100 requests per minute, the limit our response headers advertise (`X-RateLimit-Limit: 100`, `X-RateLimit-Window: 60`). The `/api/v1/` endpoints are capped at 60 requests per minute."
+    },
+    {
+      "url": "probe:https://hackmyip.com/api/lookup?ip=8.8.8.8",
+      "date": "2026-11-19",
+      "proved": "a fresh keyless lookup answered HTTP 200 advertising a limit of 100 over a 60-second window",
+      "capture": "sha256:2b9174dafecb58e9ef3994ae1065d1340caa3731b36029f4d6c4e795aa26bd53",
+      "quote": "\"x-ratelimit-limit\": \"100\",\n    \"x-ratelimit-window\": \"60\""
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-11-02T00:23:42.887Z",
+  "verified_at": "2026-11-19T21:11:56.231Z",
   "notes": "Free requests: no quota stated; 100 a minute per IP on /api, 60 a minute on /api/v1. Rate limit: HTTP 429 with Retry-After. Results storable: answers are cacheable for an hour. Bulk path: POST /api/bulk, up to 50 IPs a request, keyless.",
   "history": [],
   "extras": {

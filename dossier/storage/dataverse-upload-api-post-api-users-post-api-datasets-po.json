@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "stated-absent: the Dataverse native API guide states no fixed per-object size cap",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "stated-absent: the Dataverse native API guide states no retention period for stored files",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "stated-absent: the Dataverse API guides describe upload and download endpoints but state no egress price or transfer terms",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "The Dataverse native API is REST-based; the builtin-user creation endpoint requires a server-side BuiltinUsersKey known only to the installation team.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "Dataverse's file upload API chains with DvUploader and with web applications such as OJS, OSF and RSpace.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -49,10 +49,59 @@
       "url": "probe:seed/DEAD-ENDS.md",
       "date": "2026-10-21",
       "proved": "rejected in the seed: Not usable as a write path in this research frame. POST /api/users is 404 on 6.10+ (endpoint removed); POST /api/builtin-users requires :BuiltinUsersKey (403/404 without it). Writes therefor [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "probe:https://dataverse.harvard.edu/api/users",
+      "date": "2026-11-19",
+      "proved": "POST's /api/users endpoint is removed and returns 404 on a current Dataverse install",
+      "capture": "sha256:a61b4b2353b3c5f66ca467d812f91f358fb7e68e57abab3392054af4bd3482e4",
+      "quote": "\"status\": 404"
+    },
+    {
+      "url": "probe:https://dataverse.harvard.edu/api/builtin-users",
+      "date": "2026-11-19",
+      "proved": "the builtin-users route is gated and returns 403 without the builtin-users key",
+      "capture": "sha256:7e40676cb3e554abb2aeb3be381b034a231e40a73e532b1fd5d41169a80f5a46",
+      "quote": "\"status\": 403"
+    },
+    {
+      "url": "https://guides.dataverse.org/en/latest/api/native-api.html",
+      "date": "2026-11-19",
+      "proved": "the Dataverse native API, including the user and builtin-user endpoints, is REST-based",
+      "capture": "sha256:ad5423b4b982223d0152bc7e275721ff1cb0e648637376cb5070bce8423aec14",
+      "quote": "The Dataverse Software exposes most of its GUI functionality via a REST-based API."
+    },
+    {
+      "url": "https://guides.dataverse.org/en/latest/api/native-api.html",
+      "date": "2026-11-19",
+      "proved": "the builtin-user creation API needs a secret server-side key, so it is not an anonymous signup path",
+      "capture": "sha256:ad5423b4b982223d0152bc7e275721ff1cb0e648637376cb5070bce8423aec14",
+      "quote": "For security reasons, builtin users cannot be created via API unless the team who runs the Dataverse installation has populated a database setting called `:BuiltinUsersKey`"
+    },
+    {
+      "url": "https://guides.dataverse.org/en/6.11/developers/s3-direct-upload-api.html",
+      "date": "2026-11-19",
+      "proved": "the per-file cap is a per-installation setting, not a fixed documented number",
+      "capture": "sha256:e90c303165b7f43f750a8f34e9c373e72c31f1794c073985ab5b365cbfc970ba",
+      "quote": "The call will return a 400 (BAD REQUEST) response if the file is larger than what is allowed by the"
+    },
+    {
+      "url": "https://guides.dataverse.org/en/latest/api/intro.html",
+      "date": "2026-11-19",
+      "proved": "the file upload API lets external applications deposit files into Dataverse",
+      "capture": "sha256:9452a7f1fff755c391d106a3624d5e19a52413748663d0ca9ade668255605086",
+      "quote": "OJS, OSF, and RSpace are all web applications that can integrate with a Dataverse installation"
+    },
+    {
+      "url": "https://guides.dataverse.org/en/latest/api/intro.html",
+      "date": "2026-11-19",
+      "proved": "the API guide describes integration paths but states no egress terms",
+      "capture": "sha256:9452a7f1fff755c391d106a3624d5e19a52413748663d0ca9ade668255605086",
+      "quote": "APIs open the door for integrations between the Dataverse Software and other software."
     }
   ],
   "verdict": "dead",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:48.061Z",
   "notes": "Not usable as a write path in this research frame. POST /api/users is 404 on 6.10+ (endpoint removed); POST /api/builtin-users requires :BuiltinUsersKey (403/404 without it). Writes therefor",
   "history": [],
   "extras": {

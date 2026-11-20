@@ -44,17 +44,45 @@
     "detail": "no registration; /api/me returns a guest session",
     "country": null
   },
-  "reliability_note": "Answered as an AList API in one run and as a non-API in another, and never returned a listing. Unclassifiable at this sample size.",
+  "reliability_note": "Anonymous JSON listing of 2 root directories returned by the AList API on a fresh probe; guest session with permission 0; the instance still flaps between API and non-API answers.",
   "confidence": "measured",
   "evidence": [
     {
       "url": "probe:https://pan.iosrxwy.com/api/public/settings",
       "date": "2026-10-22",
       "proved": "HTTP 200, JSON carrying a code field, site_title '七喵的宝藏'"
+    },
+    {
+      "url": "probe:https://pan.iosrxwy.com/api/fs/list",
+      "date": "2026-11-19",
+      "proved": "an anonymous GET /api/fs/list returns a success JSON body with two root directory entries",
+      "capture": "sha256:068c0a361f70e48ae82030b590187da12975ae8cdbc10e16275507c18123e210",
+      "quote": "\"total\":2"
+    },
+    {
+      "url": "probe:https://pan.iosrxwy.com/api/fs/list",
+      "date": "2026-11-19",
+      "proved": "the read path now returns an anonymous listing of two root directories",
+      "capture": "sha256:068c0a361f70e48ae82030b590187da12975ae8cdbc10e16275507c18123e210",
+      "quote": "\"total\":2"
+    },
+    {
+      "url": "probe:https://pan.iosrxwy.com/api/me",
+      "date": "2026-11-19",
+      "proved": "the session is anonymous: /api/me returns a guest user with permission 0 and no account requirement",
+      "capture": "sha256:92b5f17df4530587fe3412ec271b5970bf2cf3764f1adab0b418c9d9a10368fe",
+      "quote": "\"username\":\"guest\""
+    },
+    {
+      "url": "probe:https://pan.iosrxwy.com/api/public/settings",
+      "date": "2026-11-19",
+      "proved": "the host answers the AList settings API with title 七喵的宝藏",
+      "capture": "sha256:5aa80b49531272b3f77f952c1944a76495d95d16c9a7651095ac9d8dd5cef94e",
+      "quote": "\"site_title\":\"七喵的宝藏\""
     }
   ],
   "verdict": "dead",
-  "verified_at": "2026-10-22T03:37:00.574Z",
+  "verified_at": "2026-11-19T21:12:45.420Z",
   "binding": "write-gated",
   "notes": "Answered as an AList API in one run and as a non-API in another, and never returned a listing. Unclassifiable at this sample size.",
   "history": [],

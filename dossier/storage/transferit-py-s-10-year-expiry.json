@@ -13,27 +13,28 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "not stated on https://github.com/viperadnan-git/transferit-py/blob/main/transferit/_transfer.py",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "MAX_EXPIRY_SECONDS: int = 3650 * 86400 # 10 years (client-side maximum; no server-side period is stated on this page)",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "not stated on https://github.com/viperadnan-git/transferit-py",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "cli",
+    "rest"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "Python library and CLI for transfer.it over its MEGA HTTP backend, no browser required.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "Each upload spins up an anonymous ephemeral MEGA account that holds the transfer.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -41,7 +42,7 @@
     "detail": "unverified: identity requirements not documented",
     "country": null
   },
-  "reliability_note": "The library advertises MAX_EXPIRY_SECONDS = 10 years and will happily send e=315360000, but the bt7 server clamps to 90 days. Verified across five requested expiries. Do not trust client-sid",
+  "reliability_note": "The transferit-py client sets a 10-year MAX_EXPIRY_SECONDS clamp, but this is client-side only: the first-party reverse-engineering note records that the MEGA bt7 server empirically accepts durations up to about 2^32 seconds (~136 years), with spurious -11 at exact powers of two, and that the web UI offers presets of {0, 7, 30, 90, 180, 365} days. A 90-day server clamp is not confirmed by these first-party sources.",
   "confidence": "reported",
   "confidence_note": "Rejection quoted from historical research records; unverified against live endpoints.",
   "evidence": [
@@ -49,10 +50,52 @@
       "url": "probe:seed/DEAD-ENDS.md",
       "date": "2026-10-21",
       "proved": "rejected in the seed: The library advertises MAX_EXPIRY_SECONDS = 10 years and will happily send e=315360000, but the bt7 server clamps to 90 days. Verified across five requested expiries. Do not trust client-sid [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/viperadnan-git/transferit-py/main/docs/REVERSE_ENGINEERING.md",
+      "date": "2026-11-19",
+      "proved": "the first-party note states the server accepts far more than a 90-day expiry, so the 90-day clamp claim is unsupported",
+      "capture": "sha256:7d6bc743d02da8608d9db375069f4e3e7064715a9371cf297e6a6ca6ddb50668",
+      "quote": "Empirically the server accepts ≤ ~2^32 seconds (~136 y), with spurious -11 at exact powers-of-2"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/viperadnan-git/transferit-py/main/transferit/_transfer.py",
+      "date": "2026-11-19",
+      "proved": "the 10-year expiry figure is a client-side clamp in the library source",
+      "capture": "sha256:0fc365e87bd883c8568ffb232845d5b35bd57e713bec4464b643221a05b27c11",
+      "quote": "MAX_EXPIRY_SECONDS: int = 3650 * 86400  # 10 years"
+    },
+    {
+      "url": "https://github.com/viperadnan-git/transferit-py",
+      "date": "2026-11-19",
+      "proved": "the offer is a Python library and CLI over the transfer.it MEGA backend",
+      "capture": "sha256:f74094f0028f08da8d5c183c5871c7776560567976d9f5e59267b37c87f0bb20",
+      "quote": "Upload and download files on transfer.it from Python or your terminal — no browser, no MEGA account, no external CLI tools."
+    },
+    {
+      "url": "https://github.com/viperadnan-git/transferit-py/blob/main/transferit/_transfer.py",
+      "date": "2026-11-19",
+      "proved": "the library sets a client-side maximum expiry of 10 years",
+      "capture": "sha256:ab0140f5acf337f1d6f0db9b8d14b5c7879100fa2ffc07586f93169c68ed7fe0",
+      "quote": "MAX_EXPIRY_SECONDS: int = 3650 * 86400 # 10 years"
+    },
+    {
+      "url": "https://github.com/viperadnan-git/transferit-py",
+      "date": "2026-11-19",
+      "proved": "a transfer creates an anonymous ephemeral MEGA account to hold the bytes",
+      "capture": "sha256:f74094f0028f08da8d5c183c5871c7776560567976d9f5e59267b37c87f0bb20",
+      "quote": "Each upload spins up an anonymous ephemeral MEGA account"
+    },
+    {
+      "url": "https://github.com/viperadnan-git/transferit-py",
+      "date": "2026-11-19",
+      "proved": "the README describes downloads but states no egress price or traffic quota",
+      "capture": "sha256:f74094f0028f08da8d5c183c5871c7776560567976d9f5e59267b37c87f0bb20",
+      "quote": "Streaming download + decrypt via httpx.stream — constant memory regardless of file size."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:50.379Z",
   "notes": "The library advertises MAX_EXPIRY_SECONDS = 10 years and will happily send e=315360000, but the bt7 server clamps to 90 days. Verified across five requested expiries. Do not trust client-sid",
   "history": [],
   "extras": {

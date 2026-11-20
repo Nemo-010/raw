@@ -19,7 +19,7 @@
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
+    "stated": "Free-workspace files older than one year may be deleted on a rolling basis since 26 August 2024",
     "source_url": "https://docs.slack.dev/reference/methods/files.getUploadURLExternal/",
     "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
@@ -47,7 +47,7 @@
     "country": null
   },
   "reliability_note": "Data loss on deletion is by design, not accidental: Slack states it 'will not be possible to restore messages and files once deletion occurs'. Also explicitly throttles 'use for storage and spam'.",
-  "confidence": "reported",
+  "confidence": "documented",
   "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [
     {
@@ -69,10 +69,45 @@
       "url": "https://slack.com/api/files.getUploadURLExternal",
       "date": "2026-10-21",
       "proved": "probe: POST -> HTTP 200 {\"ok\":false,\"error\":\"not_authed\"} (API live)"
+    },
+    {
+      "url": "https://docs.slack.dev/reference/methods/files.getUploadURLExternal/",
+      "date": "2026-11-19",
+      "proved": "Slack's first-party API reference was read and captured",
+      "capture": "sha256:c8497d9d2d9ba8da155d21a8a3a86bce2fe989e0353836c9afcffacd80851181",
+      "quote": "File storage limit has been reached. This occurs when free teams have uploaded 5GB of files."
+    },
+    {
+      "url": "https://docs.slack.dev/reference/methods/files.getUploadURLExternal/",
+      "date": "2026-11-19",
+      "proved": "Slack's API reference still states a 5 GB file storage limit for free teams",
+      "capture": "sha256:c8497d9d2d9ba8da155d21a8a3a86bce2fe989e0353836c9afcffacd80851181",
+      "quote": "File storage limit has been reached. This occurs when free teams have uploaded 5GB of files."
+    },
+    {
+      "url": "https://slack.com/help/articles/201330736-Add-files-to-Slack",
+      "date": "2026-11-19",
+      "proved": "Slack's help page still states a 1 GB per-file size limit",
+      "capture": "sha256:a2fcc6c5d1f338c502bb9ed0e076518d38ea8e46f18146a2f7d99ae8da935818",
+      "quote": "Members and guests can add files up to 1 GB in size."
+    },
+    {
+      "url": "https://slack.com/help/articles/115002422943-Usage-limits-for-free-workspaces",
+      "date": "2026-11-19",
+      "proved": "Slack states a rolling one-year deletion of free-workspace file history",
+      "capture": "sha256:dfd51aa49c2812c1e26895092cd14e8af08d51b3e87759d9f5a80f037e8b6879",
+      "quote": "Starting 26th August 2024, Customer Data – such as messages and file history – older than one year may be deleted on a rolling basis from workspaces on the free subscription"
+    },
+    {
+      "url": "https://slack.com/help/articles/115002422943-Usage-limits-for-free-workspaces",
+      "date": "2026-11-19",
+      "proved": "Slack hides free-workspace files older than 90 days",
+      "capture": "sha256:dfd51aa49c2812c1e26895092cd14e8af08d51b3e87759d9f5a80f037e8b6879",
+      "quote": "You can view and search messages and files from the last 90 days."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:26.832Z",
   "notes": "5 GB per free workspace (hard cap), 1 GB max per file, plus a 90-day visibility window and permanent deletion of anything over one year old",
   "history": [],
   "extras": {

@@ -5,7 +5,7 @@
   "url": "https://www.vidyard.com",
   "category": "media",
   "free_tier": {
-    "stated": "Free: 5 recorded videos per month, 25 videos in the library at once, 30 minutes max length. AI video generation capped separately.",
+    "stated": "Free: 5 recorded videos per month, 15 AI videos total (lifetime), and a 30-minute maximum on new recordings. Existing videos never expire and there is no limit to library size.",
     "unit": "mixed",
     "metered_on": "unstated",
     "source_url": "https://knowledge.vidyard.com/hc/en-us/articles/360009875374-Video-usage-and-length-limits-in-Vidyard-Free",
@@ -23,7 +23,7 @@
     "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
-    "terms": "Free sharing links; hosting of video is effectively a paid feature.",
+    "terms": "Free sharing links with ad-free playback and no bandwidth limits on shared videos.",
     "metered": false
   },
   "interface": [
@@ -31,15 +31,15 @@
   ],
   "interface_detail": "rest",
   "tooling": "No yt-dlp extractor (absent from `--list-extractors`). No public upload API on Free.",
-  "chaining": "5/month x unlimited accounts. But 25-slot library means each account tops out at 25 videos.",
+  "chaining": "5 recorded videos per month per account; recordings never expire and the library has no stated size limit, so capacity accumulates across accounts.",
   "limits": [],
-  "limits_note": "5 new videos/month and a 25-video rolling library. Deleting is mandatory to keep uploading; it cannot accumulate.",
+  "limits_note": "5 new recorded videos per month and 15 AI videos lifetime; new recordings cap at 30 minutes. Videos never expire and there is no library-size limit, so capacity accumulates.",
   "identity_cost": {
     "kind": "email",
     "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
     "country": null
   },
-  "reliability_note": "The 25-video library cap plus monthly creation limit means capacity never grows. Retrieval has no supported automation path.",
+  "reliability_note": "Recordings never expire and there is no library-size cap, so capacity grows by 5 recorded videos per month; retrieval has no supported automation path (no yt-dlp extractor, no public upload API on Free).",
   "confidence": "reported",
   "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [
@@ -57,10 +57,52 @@
       "url": "probe:unspecified",
       "date": "2026-10-21",
       "proved": "probe: `yt-dlp --list-extractors | grep -i vidyard` -> no match"
+    },
+    {
+      "url": "https://knowledge.vidyard.com/hc/en-us/articles/360009875374-Video-usage-and-length-limits-in-Vidyard-Free",
+      "date": "2026-11-19",
+      "proved": "Vidyard Free allows 5 recorded videos per month",
+      "capture": "sha256:24fea1250ee5d48449d920b83af4bf07656774743ce402b5fcaf833b26b0556c",
+      "quote": "Recorded videos** - 5 per month"
+    },
+    {
+      "url": "https://knowledge.vidyard.com/hc/en-us/articles/360009875374-Video-usage-and-length-limits-in-Vidyard-Free",
+      "date": "2026-11-19",
+      "proved": "AI videos are capped at 15 lifetime and the same article states the library has no size limit",
+      "capture": "sha256:24fea1250ee5d48449d920b83af4bf07656774743ce402b5fcaf833b26b0556c",
+      "quote": "AI videos** - 15 total (lifetime)"
+    },
+    {
+      "url": "https://knowledge.vidyard.com/hc/en-us/articles/360009875374-Video-usage-and-length-limits-in-Vidyard-Free",
+      "date": "2026-11-19",
+      "proved": "there is no library-size cap and videos do not expire",
+      "capture": "sha256:24fea1250ee5d48449d920b83af4bf07656774743ce402b5fcaf833b26b0556c",
+      "quote": "Just so you know, your existing videos never expire, and there is no limit to the number of videos you can have in your library at once."
+    },
+    {
+      "url": "https://knowledge.vidyard.com/hc/en-us/articles/360009875374-Video-usage-and-length-limits-in-Vidyard-Free",
+      "date": "2026-11-19",
+      "proved": "no per-account library ceiling is stated, so the former 25-slot cap is gone",
+      "capture": "sha256:24fea1250ee5d48449d920b83af4bf07656774743ce402b5fcaf833b26b0556c",
+      "quote": "Just so you know, your existing videos never expire, and there is no limit to the number of videos you can have in your library at once."
+    },
+    {
+      "url": "https://knowledge.vidyard.com/hc/en-us/articles/360009875374-Video-usage-and-length-limits-in-Vidyard-Free",
+      "date": "2026-11-19",
+      "proved": "recordings accumulate at 5 per month with no stated library ceiling",
+      "capture": "sha256:24fea1250ee5d48449d920b83af4bf07656774743ce402b5fcaf833b26b0556c",
+      "quote": "Recorded videos** - 5 per month"
+    },
+    {
+      "url": "https://www.vidyard.com/free-screen-record/",
+      "date": "2026-11-19",
+      "proved": "Vidyard states ad-free playback with no bandwidth limit on shared videos",
+      "capture": "sha256:25cc90ef5c6a0fb88342faac19482f3ce2ef7c5bdaf3c8e9bea92a3dd21c815a",
+      "quote": "ad-free playback with no bandwidth limits"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:31.692Z",
   "notes": "Free: 5 recorded videos per month, 25 videos in the library at once, 30 minutes max length. AI video generation capped separately.",
   "history": [],
   "extras": {

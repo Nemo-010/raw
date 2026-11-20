@@ -45,7 +45,7 @@
     },
     {
       "kind": "per-object-cap",
-      "value": "100 MB proxied request body on Free and Pro",
+      "value": "Free and Pro: 100 MB maximum request body size (413 beyond it); Business 200 MB",
       "source": "https://developers.cloudflare.com/workers/platform/limits/"
     },
     {
@@ -76,10 +76,45 @@
       "url": "https://community.cloudflare.com/t/cloudflare-tunnel-limits-and-bandwith/393006",
       "date": "2026-10-22",
       "proved": "Cloudflare staff, 2022-06-21: 'There are no bandwidth limits'"
+    },
+    {
+      "url": "https://developers.cloudflare.com/workers/platform/limits/",
+      "date": "2026-11-19",
+      "proved": "the first-party limits page states a 100 MB maximum proxied request body on the Free plan with a 413 error beyond it",
+      "capture": "sha256:32b947d4f0a79cef3bc993d7d3a9804b03c7771d1c93456cadd3db3b2fd14e19",
+      "quote": "Free | 100 MB"
+    },
+    {
+      "url": "https://developers.cloudflare.com/workers/platform/limits/",
+      "date": "2026-11-19",
+      "proved": "the 100 MB proxied request body cap is a first-party limit with a number and unit",
+      "capture": "sha256:32b947d4f0a79cef3bc993d7d3a9804b03c7771d1c93456cadd3db3b2fd14e19",
+      "quote": "Free | 100 MB"
+    },
+    {
+      "url": "https://developers.cloudflare.com/tunnel/setup/",
+      "date": "2026-11-19",
+      "proved": "publishing an application requires a domain on Cloudflare, the write gate",
+      "capture": "sha256:38494a88b09e35a3ac0a712630df69176f5d746714a1e3497c12d24c8f2b1a3f",
+      "quote": "A domain on Cloudflare (required to publish applications)"
+    },
+    {
+      "url": "https://developers.cloudflare.com/workers/platform/limits/",
+      "date": "2026-11-19",
+      "proved": "the 100 MB proxied request body cap binds a transfer after the write gate",
+      "capture": "sha256:32b947d4f0a79cef3bc993d7d3a9804b03c7771d1c93456cadd3db3b2fd14e19",
+      "quote": "Free | 100 MB"
+    },
+    {
+      "url": "https://developers.cloudflare.com/fundamentals/reference/connection-limits/",
+      "date": "2026-11-19",
+      "proved": "the first-party connection-limits page states a 125 s proxy read timeout returning 524",
+      "capture": "sha256:1e0a3c7f0593453ca2e749cf48c6aaa5b5c74f06ef5f6bb0a711e926e3cb467d",
+      "quote": "Proxy Read Timeout | 125 | 524"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-22T03:20:00.000Z",
+  "verified_at": "2026-11-19T21:10:53.038Z",
   "notes": "Cloudflare Tunnel provides unmetered outbound tunnels to the Cloudflare edge for HTTP and supported protocols without inbound firewall ports.",
   "history": [
     "history/2026-10-22T033153Z/quick-tunnel-body-cap-not-a-tunnel-limit.md"
@@ -91,7 +126,7 @@
     "transit_note": "cloudflared dials out and Cloudflare relays the request and response bytes"
   },
   "binding": "write-gated",
-  "binding_note": "the domain is the only paid element and the gate; the 100 MB body cap binds writes, not reads.",
+  "binding_note": "The zone-on-Cloudflare requirement is the write gate reached before any byte. On a transfer the first first-party limit is the 100 MB proxied request body cap (413 beyond it); the 125 s read and 30 s write proxy timeouts also apply, and no transit byte quota is published.",
   "interface_detail": "cloudflared tunnel run; the hostname is a record on a zone owned by the account",
   "stale": false,
   "stale_checked_at": "2026-10-22T00:00:00.000Z",

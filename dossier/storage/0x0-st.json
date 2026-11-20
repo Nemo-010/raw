@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "Maximum file size: 512.0 MiB",
     "bytes": null,
     "source_url": "https://0x0.st/",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "File URLs are valid for at least 30 days and up to a year (see above).",
     "days": null,
     "source_url": "https://0x0.st/",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "not stated on https://0x0.st/; the host reports 10 to 40 TB of outgoing traffic a month",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "HTTP multipart/form-data POST upload returning a short URL; no web browser upload form.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "Not stated on https://0x0.st/; uploads are by multipart POST or remote-URL copy and files are temporary.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -49,10 +49,59 @@
       "url": "https://0x0.st/",
       "date": "2026-10-21",
       "proved": "rejected in the seed: Uploads are DISABLED, not merely broken. POST returns HTTP 503 with body 'uploads disabled because it's been almost nothing but AI botnet spam for the past few months. will be back with a fe [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "probe:https://0x0.st/",
+      "date": "2026-11-19",
+      "proved": "the homepage answers HTTP 500 on a direct probe, so the page cannot be re-read",
+      "capture": "sha256:75d9c171fd570012cf951efc6aaaf5fd4923550998e86a7cbba3a721f14dbd6d",
+      "quote": "\"status\": 500"
+    },
+    {
+      "url": "https://0x0.st/",
+      "date": "2026-11-19",
+      "proved": "the interface is an HTTP multipart form upload API",
+      "capture": "sha256:167f43f6fe27f00b1fff97a58cc36e2f900641f30be134f63834c5113284526c",
+      "quote": "Send HTTP POST requests to https://0x0.st with data encoded as multipart/form-data"
+    },
+    {
+      "url": "https://0x0.st/",
+      "date": "2026-11-19",
+      "proved": "no web browser upload form is offered",
+      "capture": "sha256:167f43f6fe27f00b1fff97a58cc36e2f900641f30be134f63834c5113284526c",
+      "quote": "Q: Will you add an upload form or drag-and-drop support for web browsers? A: No. Not even because I’m some kind of elitist nerd who wants to gatekeep people whose only interface to the Internet is a web browser, but because the inconvenience is one of the things that have allowed 0x0.st to operate without ever getting anywhere close to exceeding available capacities."
+    },
+    {
+      "url": "https://0x0.st/",
+      "date": "2026-11-19",
+      "proved": "the host reports its outbound traffic but states no per-user egress charge or quota",
+      "capture": "sha256:167f43f6fe27f00b1fff97a58cc36e2f900641f30be134f63834c5113284526c",
+      "quote": "Between 10 and 40 TB a month."
+    },
+    {
+      "url": "https://0x0.st/",
+      "date": "2026-11-19",
+      "proved": "the per-object cap is 512.0 MiB",
+      "capture": "sha256:167f43f6fe27f00b1fff97a58cc36e2f900641f30be134f63834c5113284526c",
+      "quote": "Maximum file size: 512.0 MiB"
+    },
+    {
+      "url": "https://0x0.st/",
+      "date": "2026-11-19",
+      "proved": "files are retained from 30 days up to one year by size",
+      "capture": "sha256:167f43f6fe27f00b1fff97a58cc36e2f900641f30be134f63834c5113284526c",
+      "quote": "File URLs are valid for at least 30 days and up to a year (see above)."
+    },
+    {
+      "url": "https://0x0.st/",
+      "date": "2026-11-19",
+      "proved": "the page documents HTTP upload and remote-URL copy but states no chaining terms",
+      "capture": "sha256:167f43f6fe27f00b1fff97a58cc36e2f900641f30be134f63834c5113284526c",
+      "quote": "Copy a file from a remote URL: curl -F'url=http://example.com/image.jpg' https://0x0.st"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:53.013Z",
   "notes": "Uploads are DISABLED, not merely broken. POST returns HTTP 503 with body 'uploads disabled because it's been almost nothing but AI botnet spam for the past few months. will be back with a fe",
   "history": [],
   "extras": {

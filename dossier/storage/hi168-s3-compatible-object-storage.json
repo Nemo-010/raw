@@ -47,7 +47,7 @@
     "detail": "registration asks for a mobile phone number (reported on a blog dated 2026-01-27); 1 TB needs real-name verification (实名) and 500 GB does not",
     "country": null
   },
-  "reliability_note": "On 2026-11-03 the home page shows a maintenance notice that suspends Hi168 services. A direct probe of https://www.hi168.com timed out while a brokered read returned that notice, and the S3 endpoint s3.hi168.com failed certificate verification (tls_untrusted).",
+  "reliability_note": "On 2026-11-19 the https://www.hi168.com home page serves a JavaScript-only landing page titled Hi168 with no maintenance notice in its body; the maintenance notice that suspended services is no longer present. The S3 endpoint s3.hi168.com still fails certificate verification (tls_untrusted).",
   "confidence": "reported",
   "confidence_note": "the 2026-11-03 evidence rows read https://www.nodeloc.com/t/topic/75399, the blog.xiaohack.org tutorial tag page and https://www.appinn.com/1tb-free-s3-hi168/ (third-party posts), the vendor home page https://www.hi168.com (a maintenance notice that suspends the service) and probes of s3.hi168.com and www.hi168.com; no vendor page states the quota, so the quota rests on third-party reports",
   "evidence": [
@@ -128,10 +128,38 @@
       "proved": "the 2026-01-19 thread still states the 5 GB figure for new signups",
       "capture": "sha256:2f3e07623580f23b6e3097f898b8b9f9008ec4488402cf3dcc012566c9542276",
       "quote": "注：目前新用户注册只有5G了，仅做留档"
+    },
+    {
+      "url": "probe:www.hi168.com",
+      "date": "2026-11-19",
+      "proved": "the home-page body read on 2026-11-19 is a JavaScript-only landing page with no maintenance notice",
+      "capture": "sha256:69479e790d3a1c891958feb4314c166316a07cb63952ccba762b0ef430eea4f9",
+      "quote": "<title>Hi168</title>"
+    },
+    {
+      "url": "probe:s3.hi168.com",
+      "date": "2026-11-19",
+      "proved": "the S3 endpoint s3.hi168.com still fails certificate verification on 2026-11-19",
+      "capture": "sha256:965956a933762d86509118769965db546a47504b3f3a596daceadcce1f3ab904",
+      "quote": "\"error\": \"tls_untrusted\""
+    },
+    {
+      "url": "https://www.nodeloc.com/t/topic/75399",
+      "date": "2026-11-19",
+      "proved": "the forum thread states 1 TB after real-name verification and 500 GB without it",
+      "capture": "sha256:2f3e07623580f23b6e3097f898b8b9f9008ec4488402cf3dcc012566c9542276",
+      "quote": "实名以后可以有1T的空间，不实名就是500G"
+    },
+    {
+      "url": "https://www.nodeloc.com/t/topic/75399",
+      "date": "2026-11-19",
+      "proved": "the thread notes new signups get only 5 GB",
+      "capture": "sha256:2f3e07623580f23b6e3097f898b8b9f9008ec4488402cf3dcc012566c9542276",
+      "quote": "注：目前新用户注册只有5G了，仅做留档"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-11-03T15:04:18.959Z",
+  "verified_at": "2026-11-19T21:14:14.724Z",
   "notes": "500 GB on registration, 1 TB after real-name verification (实名). Forum dealers advertised it as '免费领取1T超大对象存储' in Jan 2026; by 2026-01-19 nodeloc reported '新用户注册只有5G了，仅做留档'. I.e. the grant was already being clawed back.",
   "history": [],
   "extras": {

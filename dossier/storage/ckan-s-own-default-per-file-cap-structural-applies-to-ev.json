@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "CKAN default: \"Also there are 10MiB limits on resource size and 2MiB limit on group/organization/user image size.\"",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "stated-absent: the CKAN FileStore page describes resource and image uploads and states no retention period for stored files",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "stated-absent: the CKAN FileStore page describes uploads and storage backends but states no egress terms for stored bytes",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "CKAN FileStore uploads use the resource_create() and resource_update() action API functions with multipart/form-data and an extra upload key.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "CKAN: \"Resource files linked-to from CKAN or uploaded to CKAN’s FileStore can also be pushed into CKAN’s DataStore, which then enables data previews and a data API for the resources.\"",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -49,10 +49,52 @@
       "url": "probe:seed/DEAD-ENDS.md",
       "date": "2026-10-21",
       "proved": "rejected in the seed: The default deployment is hostile to bulk storage before any policy gate applies: ckan.max_resource_size defaults to 10 MB and ckan.max_image_size to 2 MB. Any portal that merely 'allows upl [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://docs.ckan.org/en/latest/maintaining/configuration.html",
+      "date": "2026-11-19",
+      "proved": "the current CKAN configuration docs state the default per-file upload cap is 10 MB",
+      "capture": "sha256:91f9b79969a6338626c2a3d24b9edb56a5bea7a4967cc93d8a0315570ff42df4",
+      "quote": "ckan.max_resource_size = 100\nDefault value: `10`\nThe maximum in megabytes a resources upload can be."
+    },
+    {
+      "url": "https://docs.ckan.org/en/latest/maintaining/configuration.html",
+      "date": "2026-11-19",
+      "proved": "the current CKAN configuration docs state the default image upload cap is 2 MB",
+      "capture": "sha256:91f9b79969a6338626c2a3d24b9edb56a5bea7a4967cc93d8a0315570ff42df4",
+      "quote": "ckan.max_image_size = 10\nDefault value: `2`\nThe maximum in megabytes an image upload can be."
+    },
+    {
+      "url": "https://docs.ckan.org/en/2.12/maintaining/filestore.html",
+      "date": "2026-11-19",
+      "proved": "CKAN FileStore uploads use the resource_create and resource_update action API functions over HTTP",
+      "capture": "sha256:e810585ad7235c621f8cf38c6997ff006d0c08b97c58fcc4c1e5518928e3eb62",
+      "quote": "Files can be uploaded to the FileStore using the"
+    },
+    {
+      "url": "https://docs.ckan.org/en/2.12/maintaining/filestore.html",
+      "date": "2026-11-19",
+      "proved": "the page documents upload size settings but states no retention term",
+      "capture": "sha256:e810585ad7235c621f8cf38c6997ff006d0c08b97c58fcc4c1e5518928e3eb62",
+      "quote": "ckan.max_resource_size = 10"
+    },
+    {
+      "url": "https://docs.ckan.org/en/2.12/maintaining/filestore.html",
+      "date": "2026-11-19",
+      "proved": "the default CKAN FileStore limits a resource upload to 10 MiB and an image to 2 MiB",
+      "capture": "sha256:e810585ad7235c621f8cf38c6997ff006d0c08b97c58fcc4c1e5518928e3eb62",
+      "quote": "Also there are 10MiB limits on resource size and 2MiB limit on group/organization/user image size."
+    },
+    {
+      "url": "https://docs.ckan.org/en/2.12/maintaining/filestore.html",
+      "date": "2026-11-19",
+      "proved": "CKAN FileStore files feed CKAN DataStore, enabling previews and a data API",
+      "capture": "sha256:e810585ad7235c621f8cf38c6997ff006d0c08b97c58fcc4c1e5518928e3eb62",
+      "quote": "Resource files linked-to from CKAN or uploaded to CKAN’s FileStore can also be pushed into CKAN’s DataStore, which then enables data previews and a data API for the resources."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:48.060Z",
   "notes": "The default deployment is hostile to bulk storage before any policy gate applies: ckan.max_resource_size defaults to 10 MB and ckan.max_image_size to 2 MB. Any portal that merely 'allows upl",
   "history": [],
   "extras": {

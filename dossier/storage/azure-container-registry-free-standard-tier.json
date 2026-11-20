@@ -13,27 +13,28 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "Maximum image layer size is 195 GiB and maximum manifest size is 4 MiB on all SKUs.",
     "bytes": null,
     "source_url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-skus",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "Retention policy for untagged manifests is N/A on Basic and Standard and supported only on Premium.",
     "days": null,
     "source_url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-skus",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "not stated on https://learn.microsoft.com/en-us/azure/container-registry/container-registry-skus",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "oci",
+    "cli"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "A managed Docker-compatible registry with a data-plane API; registries are managed with the Azure CLI, portal or API.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "All SKUs expose the same programmatic capabilities and data-plane APIs; Standard and Premium add artifact cache rules, and Premium adds artifact transfer and connected registries.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -49,10 +50,59 @@
       "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-skus",
       "date": "2026-10-21",
       "proved": "rejected in the seed: 'Included storage' is bundled into a paid daily SKU rate, not granted free; 100 GB for 12 months then billing. Basic is a paid SKU from day one. [undated in the seed; dated to the seed pass]"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-skus",
+      "date": "2026-11-19",
+      "proved": "the first-party page still states included storage is a per-SKU allowance with additional storage at a per-GB rate",
+      "capture": "sha256:adf07b5bf4384a7cf2d2b656904a9de7a98e8713a2d84a6ef00fd4f157fe2662",
+      "quote": "Each SKU includes a specific amount of free storage, with additional storage available at a per-GB rate."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-intro",
+      "date": "2026-11-19",
+      "proved": "images are pushed and pulled with Docker commands",
+      "capture": "sha256:7cb28a09fc605aa5b6ad811936d02cfc28a98960dd948f355cb6c36d7248615b",
+      "quote": "Use standard [Docker commands](https://docs.docker.com/reference/cli/docker/) to push images into a repository or pull an image from a repository."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-intro",
+      "date": "2026-11-19",
+      "proved": "the introduction names the Azure CLI, portal and API as management interfaces",
+      "capture": "sha256:7cb28a09fc605aa5b6ad811936d02cfc28a98960dd948f355cb6c36d7248615b",
+      "quote": "Azure provides tooling like the Azure CLI, the Azure portal, and API support to manage your container registries."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-skus",
+      "date": "2026-11-19",
+      "proved": "the SKU table lists untagged-manifest retention policy only on Premium",
+      "capture": "sha256:adf07b5bf4384a7cf2d2b656904a9de7a98e8713a2d84a6ef00fd4f157fe2662",
+      "quote": "Retention policy for untagged manifests | N/A | N/A | [Supported]"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-skus",
+      "date": "2026-11-19",
+      "proved": "the SKU table gives a 195 GiB maximum image layer size",
+      "capture": "sha256:adf07b5bf4384a7cf2d2b656904a9de7a98e8713a2d84a6ef00fd4f157fe2662",
+      "quote": "| Maximum image layer size (GiB) | 195 | 195 | 195 |"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-skus",
+      "date": "2026-11-19",
+      "proved": "all SKUs share data-plane APIs",
+      "capture": "sha256:adf07b5bf4384a7cf2d2b656904a9de7a98e8713a2d84a6ef00fd4f157fe2662",
+      "quote": "The Basic, Standard, and Premium SKUs all provide the same programmatic capabilities and data plane APIs."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-skus",
+      "date": "2026-11-19",
+      "proved": "the SKU page defers data-transfer pricing to the bandwidth pricing page",
+      "capture": "sha256:adf07b5bf4384a7cf2d2b656904a9de7a98e8713a2d84a6ef00fd4f157fe2662",
+      "quote": "For details about pricing for data transfers, see [Bandwidth pricing](https://azure.microsoft.com/pricing/details/bandwidth/)."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:56.065Z",
   "notes": "'Included storage' is bundled into a paid daily SKU rate, not granted free; 100 GB for 12 months then billing. Basic is a paid SKU from day one.",
   "history": [],
   "extras": {

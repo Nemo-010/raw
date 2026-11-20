@@ -68,19 +68,19 @@ waiting to happen, and `render.py --check` refuses one.
 | [`ci-cd-runners`](docs/ci-cd-runners/README.md) | 49 | 30 | 11 | 1 | 7 | 49 | 7 |
 | [`coding-subs`](docs/coding-subs/README.md) | 74 | 27 | 43 | 2 | 2 | 74 | 8 |
 | [`compute`](docs/compute/README.md) | 1411 | 499 | 653 | 175 | 84 | 1211 | 63 |
-| [`crawler-scraper`](docs/crawler-scraper/README.md) | 61 | 40 | 10 | 3 | 8 | 57 | 15 |
+| [`crawler-scraper`](docs/crawler-scraper/README.md) | 61 | 40 | 10 | 3 | 8 | 61 | 15 |
 | [`data-apis`](docs/data-apis/README.md) | 155 | 127 | 8 | 12 | 8 | 153 | 1 |
 | [`databases-kv`](docs/databases-kv/README.md) | 42 | 27 | 11 | 1 | 3 | 42 | 10 |
 | [`debrid`](docs/debrid/README.md) | 526 | 316 | 108 | 50 | 52 | 467 | 19 |
 | [`dev-services`](docs/dev-services/README.md) | 98 | 84 | 10 | 2 | 2 | 98 | 1 |
-| [`domains-dns`](docs/domains-dns/README.md) | 43 | 27 | 14 | 1 | 1 | 39 | 6 |
-| [`egress`](docs/egress/README.md) | 458 | 62 | 168 | 204 | 24 | 312 | 20 |
+| [`domains-dns`](docs/domains-dns/README.md) | 43 | 27 | 14 | 1 | 1 | 43 | 6 |
+| [`egress`](docs/egress/README.md) | 458 | 62 | 168 | 204 | 24 | 379 | 20 |
 | [`email`](docs/email/README.md) | 47 | 31 | 12 | 3 | 1 | 46 | 5 |
 | [`inference`](docs/inference/README.md) | 365 | 104 | 230 | 18 | 13 | 358 | 11 |
 | [`ip-proxy`](docs/ip-proxy/README.md) | 87 | 23 | 49 | 9 | 6 | 80 | 10 |
-| [`netdisk-pan`](docs/netdisk-pan/README.md) | 104 | 52 | 4 | 34 | 14 | 59 | 22 |
-| [`storage`](docs/storage/README.md) | 1720 | 382 | 138 | 1092 | 108 | 197 | 29 |
-| **all** | 5240 | 1831 | 1469 | 1607 | 333 | 3242 | 227 |
+| [`netdisk-pan`](docs/netdisk-pan/README.md) | 104 | 51 | 4 | 34 | 15 | 59 | 22 |
+| [`storage`](docs/storage/README.md) | 1720 | 381 | 135 | 1062 | 142 | 211 | 29 |
+| **all** | 5240 | 1829 | 1466 | 1577 | 368 | 3331 | 227 |
 <!-- generated:end -->
 
 ---

@@ -41,7 +41,7 @@
     "detail": "card",
     "country": null
   },
-  "reliability_note": "The most important reliability finding here is a PRICE DISCREPANCY INSIDE ONE VENDOR. Utho's marketing pages advertise object storage at «₹4/GB/month above 100 GB» and the pricing-comparison page claims «60-70 % More Affordable Than AWS», while Utho's own plan API returns ₹5.00/GB at 25 GB falling to ₹1.95/GB only at 10 TB. I.e. the advertised headline rate is roughly 2× the actual entry price and only reachable at the top of the ladder. Treat every Utho number as requiring an API cross-check. Node/uptime history not independently verified.",
+  "reliability_note": "The archive-storage URL no longer carries the archive offer: a direct GET was answered with a Cloudflare challenge, and the page served through the read provider is the generic Utho cloud homepage with no archive rate, no retrieval window and no durability claim. The former archive pricing is no longer readable at its first-party URL.",
   "confidence": "reported",
   "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [
@@ -69,10 +69,24 @@
       "url": "https://utho.com/simple-pricing",
       "date": "2026-10-21",
       "proved": "«Zero egress fees, zero early termination penalties», «No bandwidth overage charges»"
+    },
+    {
+      "url": "probe:https://utho.com/archive-storage",
+      "date": "2026-11-19",
+      "proved": "direct GET returns HTTP 403 Cloudflare challenge; no archive pricing is readable from the origin",
+      "capture": "sha256:376e139a64c0ac805031c35aed9be6658678b7ea53fafde9c79364ee71b237f6",
+      "quote": "\"status\": 403"
+    },
+    {
+      "url": "https://utho.com/archive-storage",
+      "date": "2026-11-19",
+      "proved": "the archive-storage URL now serves a generic cloud homepage and states no archive rate",
+      "capture": "sha256:5f1461351d8646ef7209176d4a13094e13fed8ec09b633068448de9b165c0710",
+      "quote": "Cloud Infrastructure That Runs India's Digital Backbone"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:15:22.710Z",
   "price_per_tb_month": "Archive: $4.10/TB/mo at both 5 TB and 20 TB ($49.16/TB/yr), egress claimed $0. Standard object tier: $20.53/TB/mo at 10 TB ($205.28/mo), $26.32/TB/mo at 5 TB, $37.73/TB/mo at 250 GB — so the standard tier is 5× the archive tier at the same vendor. INR at 0.010527 USD/INR.",
   "notes": "₹0.38/GB/month, no minimum commitment, 11-nines designed durability, 1-4 hour standard retrieval (instant available). The general object tier is quoted separately at ₹4/GB/month above a 100 GB base.",
   "history": [],
@@ -91,7 +105,7 @@
     "target_document": "docs/storage/paid/regional.md",
     "document_section": "Regional cheap paid",
     "conversion": "mechanical",
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this record was not re-checked against the live service",
+    "verified_at_basis": "checked against the live service on 2026-11-19",
     "evidence_dated_by_seed": 0,
     "evidence_dated_to_seed_pass": 5,
     "evidence_carrying_a_source_date": 0,
