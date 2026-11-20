@@ -13,27 +13,28 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "stated-absent: the Azure Pipelines retention and artifacts pages state no per-object size cap for pipeline artifacts.",
     "bytes": null,
     "source_url": "https://learn.microsoft.com/en-us/azure/devops/pipelines/policies/retention?view=azure-devops",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "Azure Pipelines: \"No. The pipeline's retention policy and the maximum limits set by the administrator aren't applied when you mark an individual run or release to be retained indefinitely. It remains until you stop retaining it indefinitely.\"",
     "days": null,
     "source_url": "https://learn.microsoft.com/en-us/azure/devops/pipelines/policies/retention?view=azure-devops",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "stated-absent: the Azure Pipelines retention and artifacts pages state no egress or transfer-out price; they describe REST APIs to download artifacts.",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest",
+    "cli"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "Artifacts are published and downloaded through pipeline tasks and the Azure CLI (PublishPipelineArtifact, az pipelines runs artifact upload) and through REST APIs; they are not a general byte-store interface.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "Azure Pipelines: \"You can also use REST APIs to download run information and artifacts, and then store them in your own storage account or artifact repository.\" \"Use Copy files instead of Publish build artifacts because data published as build artifacts is still subject to retention cleanup.\"",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -84,13 +85,6 @@
       "quote": "Deleting a pipeline run results in the deletion of all Artifacts associated with that run."
     },
     {
-      "url": "https://learn.microsoft.com/en-us/azure/devops/pipelines/policies/retention?view=azure-devops",
-      "date": "2026-11-03",
-      "proved": "indefinite retention exempts a run from the retention policy",
-      "capture": "sha256:c4e0de17ed27cc6bc9798546ed8f1a18e865051a85f678335afb456330dbc8a0",
-      "quote": "No. The pipeline's retention policy and the maximum limits set by the administrator aren't applied when you mark an individual run or release to be retained indefinitely."
-    },
-    {
       "url": "https://learn.microsoft.com/en-us/azure/devops/pipelines/artifacts/pipeline-artifacts",
       "date": "2026-11-19",
       "proved": "pipeline artifacts are exempt from storage billing and carry no general-purpose byte allowance",
@@ -117,10 +111,45 @@
       "proved": "a run marked retained indefinitely is exempt from the retention policy",
       "capture": "sha256:c4e0de17ed27cc6bc9798546ed8f1a18e865051a85f678335afb456330dbc8a0",
       "quote": "No. The pipeline's retention policy and the maximum limits set by the administrator aren't applied when you mark an individual run or release to be retained indefinitely."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/pipelines/policies/retention?view=azure-devops",
+      "date": "2026-11-19",
+      "proved": "runs and artifacts are reachable through REST APIs and CLI tooling",
+      "capture": "sha256:c4e0de17ed27cc6bc9798546ed8f1a18e865051a85f678335afb456330dbc8a0",
+      "quote": "You can also use REST APIs to download run information and artifacts, and then store them in your own storage account or artifact repository."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/pipelines/artifacts/pipeline-artifacts",
+      "date": "2026-11-19",
+      "proved": "the Azure CLI publishes a pipeline artifact",
+      "capture": "sha256:0d52634267a1508d9a652ebdbe561b129ce9a652488eadc51374ebc4434b6c3e",
+      "quote": "az pipelines runs artifact upload --artifact-name 'WebApp' --path $(System.DefaultWorkingDirectory)/bin/WebApp --run-id '<run id here>'"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/pipelines/policies/retention?view=azure-devops",
+      "date": "2026-11-19",
+      "proved": "a run marked retained indefinitely is exempt from retention cleanup",
+      "capture": "sha256:c4e0de17ed27cc6bc9798546ed8f1a18e865051a85f678335afb456330dbc8a0",
+      "quote": "No. The pipeline's retention policy and the maximum limits set by the administrator aren't applied when you mark an individual run or release to be retained indefinitely. It remains until you stop retaining it indefinitely."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/pipelines/policies/retention?view=azure-devops",
+      "date": "2026-11-19",
+      "proved": "pipeline retention policies govern how long runs and artifacts are kept",
+      "capture": "sha256:c4e0de17ed27cc6bc9798546ed8f1a18e865051a85f678335afb456330dbc8a0",
+      "quote": "Retention policies control how long pipeline runs, classic releases, and test data are kept in Azure DevOps."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/devops/pipelines/artifacts/pipeline-artifacts",
+      "date": "2026-11-19",
+      "proved": "the first-party artifacts page still documents pipeline artifact download",
+      "capture": "sha256:0d52634267a1508d9a652ebdbe561b129ce9a652488eadc51374ebc4434b6c3e",
+      "quote": "Using Azure Pipelines, you can download artifacts from earlier stages in your pipeline or from another pipeline."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-11-19T21:13:11.667Z",
+  "verified_at": "2026-11-19T21:15:56.869Z",
   "notes": "Retention is configurable and a run can be marked 'retained indefinitely', but the backing storage is the Azure DevOps organization's storage, and the org's free artifacts allowance is 2 GiB",
   "history": [],
   "extras": {

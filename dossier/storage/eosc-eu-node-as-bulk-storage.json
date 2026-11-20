@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "stated-absent: the access policy states storage and transfer quotas but no per-object size cap",
     "bytes": null,
     "source_url": "https://open-science-cloud.ec.europa.eu/about/access-policy",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "Unused credits expire at the end of each 90-day period; reserved service environments are deactivated on credit or time expiration and reactivation needs a Helpdesk request",
     "days": null,
     "source_url": "https://open-science-cloud.ec.europa.eu/about/access-policy",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "Large File Transfer allows up to 1TB upload per month; file transfer is capped at 1TB/month and charged 7 credits per month",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "s3"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "the access policy lists S3 storage on Virtual Machines; File Sync and Share is provided through ownCloud and large transfers through FileSender and FTS",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "stated-absent: the access policy states no way to chain EOSC EU Node storage with other storage offers",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -70,10 +70,24 @@
       "proved": "the monthly upload transfer allowance is 1 TB",
       "capture": "sha256:fd74f46c2fac9dd8e17db6e40765c7e33cfb9522ee1304e0b0c2b97fb6932e1a",
       "quote": "| ** Large File Transfer (FileSender) ** | Up to 1TB transfer (upload) per month | 7 | Credits per month |"
+    },
+    {
+      "url": "https://open-science-cloud.ec.europa.eu/about/access-policy",
+      "date": "2026-11-19",
+      "proved": "the VM service offers up to 1TB of S3 storage, an S3 interface on the EOSC EU Node",
+      "capture": "sha256:fd74f46c2fac9dd8e17db6e40765c7e33cfb9522ee1304e0b0c2b97fb6932e1a",
+      "quote": "| **Virtual Machines** | Up to 2 vCPU with 8GB RAM, up to 700GB (fast/large) storage, up to 1TB S3 storage (if available), 1 Gbps | Up to 16 vCPU with 64GB RAM, up to 1TB (fast/large) storage, up to 1TB S3 storage (if available), 10 Gbps | Up to 64 vCPU with 128GB RAM, 1 GPU with at least 16GB RAM, 1TB fast/2TB large storage (3TB total storage quota), up to 1TB S3 storage (if available), 10 Gbps | Dependent on size |"
+    },
+    {
+      "url": "https://open-science-cloud.ec.europa.eu/about/access-policy",
+      "date": "2026-11-19",
+      "proved": "service allocations are tied to 90-day credit periods after which unused credits expire",
+      "capture": "sha256:fd74f46c2fac9dd8e17db6e40765c7e33cfb9522ee1304e0b0c2b97fb6932e1a",
+      "quote": "**Credits Replenishment**: Credits refresh every 90 days, starting from your first login. Unused credits expire at the end of the period for all services, except for credit grants."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-11-19T21:13:35.940Z",
+  "verified_at": "2026-11-19T21:15:52.048Z",
   "notes": "Allocation provides 50 GB personal storage and 500 GB group storage with 1 TB per month transfer. Storage credits do not roll over and cannot be supplemented.",
   "history": [],
   "extras": {

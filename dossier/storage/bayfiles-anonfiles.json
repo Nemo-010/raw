@@ -13,27 +13,28 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "Max 20 GB per file",
     "bytes": null,
     "source_url": "https://bayfiles.com/",
-    "notes": "not applicable: a rejected offer has no per-object cap to shard"
+    "notes": "20 GB per-file ceiling stated on the first-party homepage"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "For as long as possible",
     "days": null,
     "source_url": "https://bayfiles.com/",
-    "notes": "Binding failure documented in record details."
+    "notes": "retention stated as for as long as possible, subject to the terms"
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "unlimited downloads and no speed limits; hourly and daily traffic quotas are listed",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest",
+    "browser"
   ],
-  "interface_detail": "not documented",
-  "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "interface_detail": "REST POST upload API returning a share URL in JSON, plus browser download URLs",
+  "tooling": "curl -F file=@ to POST an upload; GET the returned URL to download",
+  "chaining": "direct share URLs returned on upload; files retrieved by that URL",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -70,15 +71,57 @@
       "quote": "\"status\": null"
     },
     {
+      "url": "https://archive.web.pkgforge.dev/capture/20230810101823/https://bayfiles.com/docs/api?provider=wayback",
+      "date": "2026-11-19",
+      "proved": "the offer has a REST upload API returning a JSON download URL",
+      "capture": "sha256:336394ffc9250205fb5556d87d5ef49646386b1f0d829fa7fec333dca746c885",
+      "quote": "You send us files with POST and we will store them and return an url for you in JSON."
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20230810101823/https://bayfiles.com/docs/api?provider=wayback",
+      "date": "2026-11-19",
+      "proved": "curl -F is the documented upload tool",
+      "capture": "sha256:336394ffc9250205fb5556d87d5ef49646386b1f0d829fa7fec333dca746c885",
+      "quote": "curl -F \"file=@test.txt\" https://api.bayfiles.com/upload"
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20230810101823/https://bayfiles.com/?provider=wayback",
+      "date": "2026-11-19",
+      "proved": "the per-object ceiling is 20 GB",
+      "capture": "sha256:b5fade677eeee9c3600a04884b8ac779363f42f0dd5065a5cdac0ea932b6a85d",
+      "quote": "Max 20 GB per file - unlimited downloads and no speed limits."
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20230810101823/https://bayfiles.com/faq?provider=wayback",
+      "date": "2026-11-19",
+      "proved": "the stated retention is for as long as possible",
+      "capture": "sha256:1caaab2c46e3caead4b1c369fec4005eaf0492a62a224267b33c8c74d0177907",
+      "quote": "For as long as possible"
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20230913092920/https://anonfiles.com/?provider=wayback",
+      "date": "2026-11-19",
+      "proved": "the archived first-party AnonFiles notice confirms the shutdown",
+      "capture": "sha256:3d45252b717a89fdb9712cda3917757f0f394d3708c5530ccad923c62f620b82",
+      "quote": "Domain 4sale."
+    },
+    {
       "url": "probe:https://bayfiles.com/",
       "date": "2026-11-19",
-      "proved": "the BayFiles host does not resolve on a probe today",
-      "capture": "sha256:21c6e7b3c3c518bf8b85edf02216632d8955ab2bf647b4a6e7386df3a8710dea",
+      "proved": "the live BayFiles domain did not resolve on the read date",
+      "capture": "sha256:1f71f9d54f08c9b8586300dff5b6eedd7bd38438c6b108bf61a3c9b052e2c17a",
       "quote": "\"status\": null"
+    },
+    {
+      "url": "https://archive.web.pkgforge.dev/capture/20230913092920/https://anonfiles.com/?provider=wayback",
+      "date": "2026-11-19",
+      "proved": "the first-party AnonFiles shutdown notice states the service ended because of the extreme volume of abuse",
+      "capture": "sha256:3d45252b717a89fdb9712cda3917757f0f394d3708c5530ccad923c62f620b82",
+      "quote": "After trying endlessly for two years to run a file sharing site with user anonymity we have been tired of handling the extreme volumes of people abusing it and the headaches it has created for us."
     }
   ],
   "verdict": "dead",
-  "verified_at": "2026-11-19T21:13:10.640Z",
+  "verified_at": "2026-11-19T21:38:40.819Z",
   "notes": "Both gone, and they are not the same story. AnonFiles shut down August 2023 citing the volume of excess use; BayFiles' 2023-era successor domain no longer resolves. Neither has a free successor operatin",
   "history": [],
   "extras": {

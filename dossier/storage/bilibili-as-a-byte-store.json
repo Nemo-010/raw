@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "文件大小限制为4GB",
     "bytes": null,
     "source_url": "https://bilibili.apifox.cn/api-23693239",
-    "notes": "not applicable: a rejected offer has no per-object cap to shard"
+    "notes": "file-size ceiling stated by the upload API documentation"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "not stated on the Bilibili upload API documentation page",
     "days": null,
     "source_url": "https://bilibili.apifox.cn/api-23693239",
-    "notes": "Binding failure documented in record details."
+    "notes": "not stated on the Bilibili upload API documentation page"
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "not stated on the Bilibili upload API documentation page",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "not documented",
-  "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "interface_detail": "HTTP POST upload API with a pre-processing endpoint and a chunked upload flow for larger files",
+  "tooling": "HTTP POST calls with a signed request to the upload API",
+  "chaining": "chunked upload flow feeding the submission API",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -56,10 +56,45 @@
       "proved": "Bilibili's upload endpoint specifies a file-size limit and a video duration limit, and is a video submission API rather than a byte store; the rejection stands",
       "capture": "sha256:107f93326946fe924ac80170f0aa1b10d3ff4870f1293e7a40e84a759400fbb4",
       "quote": "文件大小限制为4GB"
+    },
+    {
+      "url": "https://bilibili.apifox.cn/api-23693239",
+      "date": "2026-11-19",
+      "proved": "the upload uses an HTTP POST API endpoint",
+      "capture": "sha256:d91c884984b62541b4fcde4e4bcd0b1f8208090f537b41974abc74be63b4feb7",
+      "quote": "POST /arcopen/fn/archive/video/init"
+    },
+    {
+      "url": "https://bilibili.apifox.cn/api-23693239",
+      "date": "2026-11-19",
+      "proved": "the upload API offers a chunked flow above 100M",
+      "capture": "sha256:d91c884984b62541b4fcde4e4bcd0b1f8208090f537b41974abc74be63b4feb7",
+      "quote": "文件超过100M时，须通过分片上传流程进行交互"
+    },
+    {
+      "url": "https://bilibili.apifox.cn/api-23693239",
+      "date": "2026-11-19",
+      "proved": "the documented tool is an HTTP client sending a signed POST",
+      "capture": "sha256:d91c884984b62541b4fcde4e4bcd0b1f8208090f537b41974abc74be63b4feb7",
+      "quote": "curl --location --request POST 'https://member.bilibili.com/arcopen/fn/archive/video/init'"
+    },
+    {
+      "url": "https://bilibili.apifox.cn/api-23693239",
+      "date": "2026-11-19",
+      "proved": "the file-size limit is 4GB",
+      "capture": "sha256:d91c884984b62541b4fcde4e4bcd0b1f8208090f537b41974abc74be63b4feb7",
+      "quote": "文件大小限制为4GB"
+    },
+    {
+      "url": "https://bilibili.apifox.cn/api-23693239",
+      "date": "2026-11-19",
+      "proved": "the doc gives a video-duration limit but no retention period",
+      "capture": "sha256:d91c884984b62541b4fcde4e4bcd0b1f8208090f537b41974abc74be63b4feb7",
+      "quote": "视频时长小于5小时"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-11-19T21:13:04.941Z",
+  "verified_at": "2026-11-19T21:15:57.620Z",
   "notes": "8 GB sounds good but every upload is transcoded and content-reviewed; playback is signed m3u8. Cannot return the uploaded bytes",
   "history": [],
   "extras": {

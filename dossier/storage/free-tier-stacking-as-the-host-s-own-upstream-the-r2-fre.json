@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "stated-absent: the Cloudflare R2 pricing page states no per-object size cap",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "stated-absent: the Cloudflare R2 pricing page states no retention period for stored objects",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "Cloudflare R2: \"There are no charges for egress bandwidth for any storage class.\" Free tier: \"Egress (data transfer to Internet) | Free\".",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "s3"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "Cloudflare R2 is an object store reachable through its S3 API and Workers API.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "stated-absent: the first-party R2 pricing page describes S3 and Workers API egress paths but no free-tier stacking with another host",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -63,10 +63,24 @@
       "proved": "R2's free storage allowance is 10 GB-month per month, matching the record's arithmetic",
       "capture": "sha256:07b6fefe97c7af33057b34c7ab919b6ccda227555a08ed1d414d9c71598bbc16",
       "quote": "Storage | 10 GB-month / month"
+    },
+    {
+      "url": "https://developers.cloudflare.com/r2/pricing/",
+      "date": "2026-11-19",
+      "proved": "Cloudflare R2 is accessed through an S3 API, as named in its first-party pricing notes",
+      "capture": "sha256:07b6fefe97c7af33057b34c7ab919b6ccda227555a08ed1d414d9c71598bbc16",
+      "quote": "Egressing directly from R2, including via the"
+    },
+    {
+      "url": "https://developers.cloudflare.com/r2/pricing/",
+      "date": "2026-11-19",
+      "proved": "R2 charges no egress fee on any storage class, including the free tier",
+      "capture": "sha256:07b6fefe97c7af33057b34c7ab919b6ccda227555a08ed1d414d9c71598bbc16",
+      "quote": "There are no charges for egress bandwidth for any storage class."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-11-19T21:13:38.679Z",
+  "verified_at": "2026-11-19T21:15:48.062Z",
   "notes": "Ruled out by arithmetic. R2's free tier is 10 GB-month and Bunny/Backblaze free tiers are single-digit GB. No host in this set is running on anybody's free allowance. The real upstream trick",
   "history": [],
   "extras": {

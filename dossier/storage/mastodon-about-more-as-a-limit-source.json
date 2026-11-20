@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "The instance API states media attachment caps: \"image_size_limit\":16777216, \"video_size_limit\":103809024, and \"max_media_attachments\":4",
     "bytes": null,
     "source_url": "https://mastodon.social/about/more",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "stated-absent: the /about/more page and instance API describe the server, its rules and media limits but state no retention period for stored bytes",
     "days": null,
     "source_url": "https://mastodon.social/about/more",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "stated-absent: the /about/more page and instance API state media size caps but no egress price or transfer quota",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "Instance metadata REST endpoint at /api/v1/instance and a WebSocket streaming API; /about/more is a client-rendered page about the server. Neither states a general byte-storage interface",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "stated-absent: the /about/more page and instance API describe a social-media server with REST and streaming endpoints, but state no way to chain it as general byte storage",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -61,10 +61,31 @@
       "proved": "the instance API exposes per-attachment media limits as JSON, not the /about/more HTML page",
       "capture": "sha256:11ae4598ce0a4538f54225c688de49e827123a503dcdd175d02b78a5f9da39be",
       "quote": "\"image_size_limit\":16777216,\"image_matrix_limit\":33177600,\"video_size_limit\":103809024"
+    },
+    {
+      "url": "https://mastodon.social/api/v1/instance",
+      "date": "2026-11-19",
+      "proved": "the first-party host exposes a documented REST instance endpoint and a streaming API, not a byte store",
+      "capture": "sha256:963628bd3ed0e46e88594395d1f9cea390458b90df145fe3eba4e5976705aeb4",
+      "quote": "\"streaming_api\":\"wss://streaming.mastodon.social\""
+    },
+    {
+      "url": "https://mastodon.social/api/v1/instance",
+      "date": "2026-11-19",
+      "proved": "the first-party instance API states a 16,777,216-byte per-image limit",
+      "capture": "sha256:963628bd3ed0e46e88594395d1f9cea390458b90df145fe3eba4e5976705aeb4",
+      "quote": "\"image_size_limit\":16777216"
+    },
+    {
+      "url": "https://mastodon.social/about/more",
+      "date": "2026-11-19",
+      "proved": "the about page describes the server and states no retention term",
+      "capture": "sha256:bfc1eb91ef82f0dcde9646b58a355a6a0e88254d02cdf192dee35d7532ae38fc",
+      "quote": "The mastodon.social server is the original instance of the Mastodon open source software (OSS), created and maintained by Mastodon GmbH."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-11-19T21:14:09.581Z",
+  "verified_at": "2026-11-19T21:15:51.194Z",
   "notes": "Mastodon 4.x renders /about/more as a client-side application without static upload limit text in raw HTML responses.",
   "history": [],
   "extras": {

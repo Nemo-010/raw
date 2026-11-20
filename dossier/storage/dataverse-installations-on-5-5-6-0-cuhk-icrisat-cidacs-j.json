@@ -13,27 +13,28 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "stated-absent: the first-party Dataverse pages leave the per-installation maximum upload size to a setting (:MaxFileUploadSizeInBytes) and state no single numeric cap",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "stated-absent: the Dataverse collection-quota page states no retention period for stored files",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "stated-absent: the Dataverse guide pages describe upload and download APIs but state no egress price or transfer terms",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest",
+    "s3"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "Dataverse exposes a REST-based native API and, on installations with direct upload enabled, pre-signed S3 URLs for file transfer.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "Dataverse chains through DvUploader and through web applications such as OJS, OSF and RSpace that use the file upload API.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -56,10 +57,59 @@
       "proved": "the collection-quota feature the record depends on was introduced only in Dataverse 6.1, so pre-6.1 installs cannot expose it",
       "capture": "sha256:8388e89e6de65072a1f41039ddcf9fcf12a7dcbb757d3c635e779a083a4dd9dc",
       "quote": "Please note that this is a new and still experimental feature (as of Dataverse v6.1 release)."
+    },
+    {
+      "url": "https://guides.dataverse.org/en/6.11/developers/s3-direct-upload-api.html",
+      "date": "2026-11-19",
+      "proved": "Dataverse exposes an S3 direct-upload path alongside its REST-based native API",
+      "capture": "sha256:e90c303165b7f43f750a8f34e9c373e72c31f1794c073985ab5b365cbfc970ba",
+      "quote": "To initiate a transfer of a file to S3, make a call to the Dataverse installation indicating the size of the file to upload."
+    },
+    {
+      "url": "https://guides.dataverse.org/en/latest/api/native-api.html",
+      "date": "2026-11-19",
+      "proved": "the Dataverse native API is REST-based",
+      "capture": "sha256:ad5423b4b982223d0152bc7e275721ff1cb0e648637376cb5070bce8423aec14",
+      "quote": "The Dataverse Software exposes most of its GUI functionality via a REST-based API."
+    },
+    {
+      "url": "https://guides.dataverse.org/en/latest/admin/collectionquotas.html",
+      "date": "2026-11-19",
+      "proved": "the page documents collection storage quotas introduced in v6.1 and states no retention term",
+      "capture": "sha256:b4889df14b989834eed350206b2f05d6b9667f72755ebcacd01915a1b6860a06",
+      "quote": "Please note that this is a new and still experimental feature (as of Dataverse v6.1 release)."
+    },
+    {
+      "url": "https://guides.dataverse.org/en/6.11/developers/s3-direct-upload-api.html",
+      "date": "2026-11-19",
+      "proved": "the upload cap is installation-configured through MaxFileUploadSizeInBytes, not stated as a fixed number",
+      "capture": "sha256:e90c303165b7f43f750a8f34e9c373e72c31f1794c073985ab5b365cbfc970ba",
+      "quote": "The call will return a 400 (BAD REQUEST) response if the file is larger than what is allowed by the"
+    },
+    {
+      "url": "https://guides.dataverse.org/en/latest/api/intro.html",
+      "date": "2026-11-19",
+      "proved": "the API guide describes integration paths but states no egress terms",
+      "capture": "sha256:9452a7f1fff755c391d106a3624d5e19a52413748663d0ca9ade668255605086",
+      "quote": "APIs open the door for integrations between the Dataverse Software and other software."
+    },
+    {
+      "url": "https://guides.dataverse.org/en/latest/api/intro.html",
+      "date": "2026-11-19",
+      "proved": "the file upload API lets external web applications deposit files into a Dataverse installation",
+      "capture": "sha256:9452a7f1fff755c391d106a3624d5e19a52413748663d0ca9ade668255605086",
+      "quote": "OJS, OSF, and RSpace are all web applications that can integrate with a Dataverse installation"
+    },
+    {
+      "url": "https://guides.dataverse.org/en/latest/api/intro.html",
+      "date": "2026-11-19",
+      "proved": "the first-party API guide documents a file upload API for integrations",
+      "capture": "sha256:9452a7f1fff755c391d106a3624d5e19a52413748663d0ca9ade668255605086",
+      "quote": "API stands for “Application Programming Interface” and an example is the Dataverse Software’s “file upload” API."
     }
   ],
   "verdict": "dead",
-  "verified_at": "2026-11-19T21:13:43.470Z",
+  "verified_at": "2026-11-19T21:15:48.061Z",
   "notes": "19 of 149 installs predate the collection-quota feature (Dataverse 6.1+) and return 404 on the quota endpoint. They cannot be scored on this axis at all. The absence of the endpoint is not.",
   "history": [],
   "extras": {

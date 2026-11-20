@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "Single GitHub files larger than 20 MB are not supported by default; packages larger than 150 MB are not supported by default.",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "Fetched files are kept permanently in S3: jsDelivr will continue to serve the stored copy forever even if the upstream package is deleted.",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "No bandwidth limits and no premium features; it is completely free to use.",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "browser"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "URL-based CDN delivery under /gh/user/repo@version/file and /npm/package@version/file",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "A multi-CDN CDN chaining Cloudflare and Fastly with version fallback and a combine endpoint across /gh/ and /npm/ files.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -56,10 +56,45 @@
       "proved": "a GitHub release asset returns the Not Found page through the jsDelivr gh/ mirror path",
       "capture": "sha256:0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5",
       "quote": "Not Found"
+    },
+    {
+      "url": "https://github.com/jsdelivr/jsdelivr/blob/master/README.md",
+      "date": "2026-11-19",
+      "proved": "the jsDelivr README documents a URL-based CDN interface under /gh/",
+      "capture": "sha256:8411932f3ea41d9beb2f10bb8d43b3758a6278928e173de12f4d8cecf2bd7d13",
+      "quote": "Load any GitHub release, commit, or branch: /gh/user/repo@version/file"
+    },
+    {
+      "url": "https://github.com/jsdelivr/jsdelivr/blob/master/README.md",
+      "date": "2026-11-19",
+      "proved": "the jsDelivr README states fetched files are kept permanently in S3",
+      "capture": "sha256:8411932f3ea41d9beb2f10bb8d43b3758a6278928e173de12f4d8cecf2bd7d13",
+      "quote": "We use a permanent S3 storage to ensure all files remain available even if GitHub goes down or a repository or a release is deleted by its author."
+    },
+    {
+      "url": "https://github.com/jsdelivr/jsdelivr/blob/master/README.md",
+      "date": "2026-11-19",
+      "proved": "the jsDelivr README states a 20 MB per-file limit for GitHub files",
+      "capture": "sha256:8411932f3ea41d9beb2f10bb8d43b3758a6278928e173de12f4d8cecf2bd7d13",
+      "quote": "single files larger than 20 MB (in the case of GitHub) are not supported by default"
+    },
+    {
+      "url": "https://github.com/jsdelivr/jsdelivr/blob/master/README.md",
+      "date": "2026-11-19",
+      "proved": "the jsDelivr README describes a multi-CDN design that chains several CDN providers",
+      "capture": "sha256:8411932f3ea41d9beb2f10bb8d43b3758a6278928e173de12f4d8cecf2bd7d13",
+      "quote": "Unlike the competition, jsDelivr uses multiple CDN providers, resulting in the best possible uptime and performance."
+    },
+    {
+      "url": "https://github.com/jsdelivr/jsdelivr/blob/master/README.md",
+      "date": "2026-11-19",
+      "proved": "the jsDelivr README states no bandwidth limit",
+      "capture": "sha256:8411932f3ea41d9beb2f10bb8d43b3758a6278928e173de12f4d8cecf2bd7d13",
+      "quote": "There are no bandwidth limits or premium features, and it's completely free to use."
     }
   ],
   "verdict": "dead",
-  "verified_at": "2026-11-19T21:14:13.424Z",
+  "verified_at": "2026-11-19T21:15:49.635Z",
   "notes": "The GitHub proxy only indexes git repo files. Release assets return 404, so the >2 GiB objects that make Releases interesting cannot be fronted by jsDelivr. They stay on GitHub's own Fastly.",
   "history": [],
   "extras": {

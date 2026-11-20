@@ -13,27 +13,28 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "stated-absent: the first-party page states no per-object size cap on the first-party registry pages",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "stated-absent: the first-party page states no a retention period for stored image layers on the registry.k8s.io page",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "There is NO uptime SLA as this is a free, volunteer managed service; traffic is sent to GCP and AWS thanks to their donations.",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "oci",
+    "rest"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "OCI distribution registry with an HTTP /v2/ API used by Docker and Skopeo",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "Mirroring to a location you control is recommended; API endpoints, IP addresses and backing services may change at any time.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -63,10 +64,31 @@
       "proved": "registry.k8s.io requires a bearer token at /v2/, so no anonymous write path exists",
       "capture": "sha256:50c88d54b84fc4e7e93576980d3df0d35fad57a592dc680ee0e250884d403471",
       "quote": "\"status\": 401"
+    },
+    {
+      "url": "https://github.com/kubernetes/registry.k8s.io",
+      "date": "2026-11-19",
+      "proved": "the registry.k8s.io first-party README states it serves an OCI-compliant registry",
+      "capture": "sha256:759a4b183187812fb9771b736bcda2ecad617f504d1fc251b55b2de95bc7e050",
+      "quote": "Other than `registry.k8s.io` serving an [OCI](https://github.com/opencontainers/distribution-spec) compliant registry: API endpoints, IP addresses, and backing services used are subject to change at *anytime*"
+    },
+    {
+      "url": "https://icr.io/",
+      "date": "2026-11-19",
+      "proved": "the IBM Container Registry first-party page states an OCI distribution interface used by Docker and Skopeo",
+      "capture": "sha256:690ae67578eb5bdeeb477009fde80a2ad12d8950cb1378b7851a7ff5cebfda1c",
+      "quote": "IBM Cloud® Container Registry supports the Open Container Initiative - [OCI](https://opencontainers.org/) distribution specification so that you can use common tools such as Docker and Skopeo to interact with your images."
+    },
+    {
+      "url": "https://github.com/kubernetes/registry.k8s.io",
+      "date": "2026-11-19",
+      "proved": "the registry.k8s.io first-party README states there is no uptime SLA",
+      "capture": "sha256:759a4b183187812fb9771b736bcda2ecad617f504d1fc251b55b2de95bc7e050",
+      "quote": "**Please note that there is NO uptime SLA as this is a free, volunteer managed service**"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-11-19T21:14:11.136Z",
+  "verified_at": "2026-11-19T21:15:49.636Z",
   "notes": "All are read-only or reject auth-less writes. Probed anonymously: mcr.microsoft.com and registry.opensuse.org answer /v2/ with 200 but an anonymous POST blobs/uploads returns 411 (length req",
   "history": [],
   "extras": {

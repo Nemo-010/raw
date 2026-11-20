@@ -13,27 +13,28 @@
     "notes": "storage buckets are free to create and draw on the account's free storage allowance in the storage-limits table"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "Hugging Face storage limits apply to all repository types including buckets: \"In all cases, no single file will exceed 500GB. I.e. 500GB is the hard limit for a single file size.\"",
     "bytes": null,
     "source_url": "https://huggingface.co/docs/hub/storage-limits",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "Buckets are mutable: \"Since buckets are non-versioned, deletions are immediate and permanent — there is no way to recover a deleted file.\" In-flight multipart uploads are expired after 7 days.",
     "days": null,
     "source_url": "https://huggingface.co/docs/hub/storage-limits",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "\"GetObject typically responds with an HTTP 302 redirect to the nearest Hugging Face CDN edge rather than serving bytes directly\"; no egress price or transfer quota is stated on the first-party buckets pages",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "s3-compatible",
+    "cli"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "S3-compatible API at s3.hf.co usable with AWS CLI, boto3 and s5cmd, plus the Hub web interface, hf CLI and Python API; buckets are non-versioned and mutable object storage on the Xet backend",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "\"Buckets serve as staging areas for data processing workflows. Process raw data, write intermediate outputs to a bucket, then promote the final artifact to a versioned [Dataset](./datasets) repository when the pipeline completes.\" Buckets are also reachable with existing S3 tooling.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -108,10 +109,59 @@
       "proved": "free public storage is still subject to abuse mitigations",
       "capture": "sha256:d67ed20a7208dac21dbda9daf20d6c55f7885961eb85558a2f0c9d813f674afc",
       "quote": "We do have mitigations in place to prevent abuse of free public storage"
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/storage-buckets-s3",
+      "date": "2026-11-19",
+      "proved": "Hugging Face Storage Buckets expose an S3-compatible API usable with existing S3 tooling",
+      "capture": "sha256:3220501058a16d74e8e458a0baa5bcafa41da1ca15ae139312f6538a1fe442f1",
+      "quote": "Storage Buckets can be accessed through an **S3-compatible API**, letting you use existing S3 tooling — the AWS CLI, `boto3`, `s5cmd`, and most other S3 SDKs — against your buckets without changing your code."
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/storage-buckets",
+      "date": "2026-11-19",
+      "proved": "buckets are S3-like object storage on the Xet backend",
+      "capture": "sha256:43bc2ff819beda710edbc6ed4646d1a618daca9a5049210cbad959a9b123c456",
+      "quote": "Storage Buckets are a repo type on the Hugging Face Hub providing S3-like object storage, powered by the [Xet](./xet/index) storage backend."
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/storage-limits",
+      "date": "2026-11-19",
+      "proved": "the Hub sets a 500 GB hard per-file size limit",
+      "capture": "sha256:d67ed20a7208dac21dbda9daf20d6c55f7885961eb85558a2f0c9d813f674afc",
+      "quote": "In all cases, no single file will exceed 500GB. I.e. 500GB is the hard limit for a single file size."
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/storage-buckets",
+      "date": "2026-11-19",
+      "proved": "bucket files persist until deleted, with no automatic expiry of stored objects",
+      "capture": "sha256:43bc2ff819beda710edbc6ed4646d1a618daca9a5049210cbad959a9b123c456",
+      "quote": "Since buckets are non-versioned, deletions are immediate and permanent — there is no way to recover a deleted file."
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/storage-buckets-s3",
+      "date": "2026-11-19",
+      "proved": "incomplete multipart uploads expire after 7 days",
+      "capture": "sha256:3220501058a16d74e8e458a0baa5bcafa41da1ca15ae139312f6538a1fe442f1",
+      "quote": "**Multipart upload expiry**: in-flight multipart uploads that are never completed or aborted are automatically expired and cleaned up after 7 days."
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/storage-buckets-s3",
+      "date": "2026-11-19",
+      "proved": "object downloads are served through a CDN redirect; the page states no egress price or transfer quota",
+      "capture": "sha256:3220501058a16d74e8e458a0baa5bcafa41da1ca15ae139312f6538a1fe442f1",
+      "quote": "The gateway is currently single-region. To improve download performance, `GetObject` typically responds with an HTTP 302 redirect to the nearest Hugging Face CDN edge rather than serving bytes directly."
+    },
+    {
+      "url": "https://huggingface.co/docs/hub/storage-buckets",
+      "date": "2026-11-19",
+      "proved": "buckets chain into data-processing pipelines and versioned dataset repositories",
+      "capture": "sha256:43bc2ff819beda710edbc6ed4646d1a618daca9a5049210cbad959a9b123c456",
+      "quote": "Buckets serve as staging areas for data processing workflows. Process raw data, write intermediate outputs to a bucket, then promote the final artifact to a versioned [Dataset](./datasets) repository when the pipeline completes."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-11-19T21:14:14.244Z",
+  "verified_at": "2026-11-19T21:15:51.193Z",
   "notes": "Free user or org: best-effort public storage and 100GB of private storage, applied to buckets as to other repositories",
   "history": [],
   "extras": {

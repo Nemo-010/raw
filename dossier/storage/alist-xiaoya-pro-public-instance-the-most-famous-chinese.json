@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "stated-absent: the first-party host redirects to a consumer portal and states no per-object cap",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "stated-absent: the first-party host redirects to a consumer portal and states no retention period",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "stated-absent: the first-party host redirects to a consumer portal and states no egress terms",
     "metered": false
   },
   "interface": [
     "unknown"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "stated-absent: the first-party host redirects with HTTP 302 to a consumer portal and exposes no storage API interface",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "stated-absent: the first-party host redirects to a consumer portal and states no way to chain byte storage with other services",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -58,22 +58,15 @@
       "quote": "\"status\": 200"
     },
     {
-      "url": "probe:https://alist.xiaoya.pro/",
+      "url": "probe:https://alist.xiaoya.pro",
       "date": "2026-11-19",
-      "proved": "the canonical host redirects off the AList service instead of serving the instance",
-      "capture": "sha256:5b7c03d3069790fa79b98ee57c800949570d61d51998c7564794954e22ca84c1",
-      "quote": "\"status\": 200"
-    },
-    {
-      "url": "probe:https://alist.xiaoya.pro/",
-      "date": "2026-11-19",
-      "proved": "the canonical host redirects away and serves no public AList instance",
-      "capture": "sha256:5b7c03d3069790fa79b98ee57c800949570d61d51998c7564794954e22ca84c1",
-      "quote": "\"status\": 200"
+      "proved": "the host redirects to a consumer portal rather than serving a storage API, so no interface is exposed",
+      "capture": "sha256:4a599e56cdc80cfa4e9fb3f54dad482b8cdb262316cbbfc3640a8f807a6e8704",
+      "quote": "\"final_url\": \"https://bmh.163.com\""
     }
   ],
   "verdict": "dead",
-  "verified_at": "2026-11-19T21:13:10.639Z",
+  "verified_at": "2026-11-19T21:15:46.271Z",
   "notes": "DEAD. The canonical xiaoya host returns HTTP 302 from nginx and then a Cloudflare 504 on every path, including /api/public/settings. Xiaoya is the single largest AList deployment in China (m",
   "history": [],
   "extras": {

@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "not stated on the api.video pricing page; hosting is metered per minute of video stored.",
     "bytes": null,
     "source_url": "https://api.video/pricing/",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "Videos are stored with backups so access is retained; no fixed retention period is stated on the pricing page.",
     "days": null,
     "source_url": "https://api.video/pricing/",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "Video delivery is metered at $0.0017 per minute of video delivered.",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "Access is through upload, write and read API calls.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "Encodes, hosts and delivers video through its own CDN; metered per minute of video, so it can serve video but not hold a general-purpose byte store.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -63,10 +63,45 @@
       "proved": "the signup gate does not ask for a card",
       "capture": "sha256:db07f6ed8c8ac947e4906d791dc988ba00365eb48a1f28971f44e9d3d0733ff3",
       "quote": "No commitments or credit card required"
+    },
+    {
+      "url": "https://api.video/pricing/",
+      "date": "2026-11-19",
+      "proved": "api.video exposes upload, write and read API calls with rate limits",
+      "capture": "sha256:db07f6ed8c8ac947e4906d791dc988ba00365eb48a1f28971f44e9d3d0733ff3",
+      "quote": "100 Upload API calls/min"
+    },
+    {
+      "url": "https://api.video/pricing/",
+      "date": "2026-11-19",
+      "proved": "hosting is metered by minutes of video stored rather than a single-object cap; no per-object cap is stated",
+      "capture": "sha256:db07f6ed8c8ac947e4906d791dc988ba00365eb48a1f28971f44e9d3d0733ff3",
+      "quote": "Total length or storage of your hosted videos."
+    },
+    {
+      "url": "https://api.video/pricing/",
+      "date": "2026-11-19",
+      "proved": "videos are stored with backups and no fixed retention period is stated",
+      "capture": "sha256:db07f6ed8c8ac947e4906d791dc988ba00365eb48a1f28971f44e9d3d0733ff3",
+      "quote": "Api.video securely stores your videos with backups so that you never lose access to your content"
+    },
+    {
+      "url": "https://api.video/pricing/",
+      "date": "2026-11-19",
+      "proved": "video delivery is priced at $0.0017 per minute delivered",
+      "capture": "sha256:db07f6ed8c8ac947e4906d791dc988ba00365eb48a1f28971f44e9d3d0733ff3",
+      "quote": "$0.0017\nPER MINUTE OF VIDEO DELIVERED"
+    },
+    {
+      "url": "https://api.video/pricing/",
+      "date": "2026-11-19",
+      "proved": "api.video delivers video through its own worldwide CDN",
+      "capture": "sha256:db07f6ed8c8ac947e4906d791dc988ba00365eb48a1f28971f44e9d3d0733ff3",
+      "quote": "Delivery on the CDN (worldwide)"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-11-19T21:13:02.849Z",
+  "verified_at": "2026-11-19T21:15:54.755Z",
   "notes": "Encoding free but hosting is $0.00285 per minute per month and delivery $0.0017 per minute. Per-minute-of-video pricing, so it is both paid and duration-shaped; 10,000 hours would be ~$1,710",
   "history": [],
   "extras": {
@@ -81,7 +116,7 @@
       "first_recorded": "2026-10-21",
       "source": "DEAD-ENDS.md + the dossier wave that recorded it"
     },
-    "verified_at_basis": "the seed research pass, which ended 2026-10-21; this rejection was not re-checked against the live service"
+    "verified_at_basis": "checked against the live service on 2026-11-19"
   },
   "binding": "none",
   "binding_note": "no constraint of a named kind was recorded; the verdict rests on the quota sentence rather than on a named limit",

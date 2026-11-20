@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "stated-absent: the External Character.AI OpenAPI spec states no per-object size cap",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "stated-absent: the External Character.AI OpenAPI spec states no retention period for stored bytes",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "stated-absent: the External Character.AI OpenAPI spec states no egress terms for stored bytes",
     "metered": false
   },
   "interface": [
     "unknown"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "stated-absent: the External Character.AI OpenAPI spec defines /chat/completions and /character/{character_id}/greeting/ and no file or object storage endpoint",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "stated-absent: the External Character.AI OpenAPI spec defines chat and greeting endpoints and states no byte-storage chaining mechanism",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -56,10 +56,31 @@
       "proved": "the first-party product description is an interactive-entertainment chat service with no document or file storage offering, consistent with the recorded rejection",
       "capture": "sha256:368c2bed3eb14b53a02db2320332d06d85b6ba0527f387063bc1263a1d995c47",
       "quote": "Character.AI empowers people to connect, learn, and tell stories through interactive entertainment."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/character-ai/openapi/main/openapi.yaml",
+      "date": "2026-11-19",
+      "proved": "the External Character.AI OpenAPI spec defines chat completion and character greeting endpoints and no file or object storage endpoint",
+      "capture": "sha256:256c9f25f906ed3f5bc736f6f12a4903c31619225dd07b1178c61ed5216b8097",
+      "quote": "/chat/completions:"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/character-ai/openapi/main/openapi.yaml",
+      "date": "2026-11-19",
+      "proved": "the spec's paths are chat and character greeting, not byte storage",
+      "capture": "sha256:256c9f25f906ed3f5bc736f6f12a4903c31619225dd07b1178c61ed5216b8097",
+      "quote": "/character/{character_id}/greeting/:"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/character-ai/openapi/main/openapi.yaml",
+      "date": "2026-11-19",
+      "proved": "the spec describes a chat-completion API and states no retention term",
+      "capture": "sha256:256c9f25f906ed3f5bc736f6f12a4903c31619225dd07b1178c61ed5216b8097",
+      "quote": "title: External Character.AI - OpenAPI 3.0"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-11-19T21:13:07.129Z",
+  "verified_at": "2026-11-19T21:15:48.060Z",
   "notes": "No document/file storage product at all. Text persona chat only. Nothing to store.",
   "history": [],
   "extras": {

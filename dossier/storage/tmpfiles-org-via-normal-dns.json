@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "Maximum file size of 100 MiB per upload",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "All files are deleted after 60 minutes 6 hours 24 hours 48 hours",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "not stated on https://tmpfiles.org/tos",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "Multipart HTTP POST to /api/v1/upload with an optional expire field; response gives a file URL.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "An HTTP upload returns a URL that the caller uses to download the temporary file.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -58,15 +58,50 @@
       "quote": "All files are deleted after 60 minutes 6 hours 24 hours 48 hours"
     },
     {
-      "url": "https://tmpfiles.org/",
+      "url": "https://tmpfiles.org/api",
       "date": "2026-11-19",
-      "proved": "tmpfiles.org still serves a free temporary hosting page with timed deletion",
-      "capture": "sha256:56a2957126c6a8a48df5c9f4ade700e26d5fd84c5d4a9b14be6a5426143efb53",
-      "quote": "All files are deleted after 60 minutes 6 hours 24 hours 48 hours"
+      "proved": "tmpfiles.org exposes an HTTP POST upload API",
+      "capture": "sha256:35a6ca634e8b9cdb4a76a2a64791b0550a5d50c682b8e2d753fa57b4fc4c705c",
+      "quote": "POST https://tmpfiles.org/api/v1/upload"
+    },
+    {
+      "url": "https://tmpfiles.org/api",
+      "date": "2026-11-19",
+      "proved": "the API documents the expire parameter for uploaded files",
+      "capture": "sha256:35a6ca634e8b9cdb4a76a2a64791b0550a5d50c682b8e2d753fa57b4fc4c705c",
+      "quote": "Seconds until deletion (60–172800), default 3600"
+    },
+    {
+      "url": "https://tmpfiles.org/tos",
+      "date": "2026-11-19",
+      "proved": "the first-party terms state a 100 MiB per-upload cap",
+      "capture": "sha256:733bbbb8dc95448a2dc2d005abb0238f7f094627dba4666fd338abda7c46e925",
+      "quote": "Maximum file size of 100 MiB per upload"
+    },
+    {
+      "url": "https://tmpfiles.org/api",
+      "date": "2026-11-19",
+      "proved": "the upload API returns a URL for the stored file",
+      "capture": "sha256:35a6ca634e8b9cdb4a76a2a64791b0550a5d50c682b8e2d753fa57b4fc4c705c",
+      "quote": "\"url\": \"https://tmpfiles.org/{id}/{name}\""
+    },
+    {
+      "url": "https://tmpfiles.org/tos",
+      "date": "2026-11-19",
+      "proved": "the terms describe download via generated links but state no egress price or quota",
+      "capture": "sha256:733bbbb8dc95448a2dc2d005abb0238f7f094627dba4666fd338abda7c46e925",
+      "quote": "Download and host files via external URLs"
+    },
+    {
+      "url": "https://tmpfiles.org/tos",
+      "date": "2026-11-19",
+      "proved": "the first-party terms state a maximum 48-hour retention",
+      "capture": "sha256:733bbbb8dc95448a2dc2d005abb0238f7f094627dba4666fd338abda7c46e925",
+      "quote": "Files may be retained for a maximum of 48 hours"
     }
   ],
   "verdict": "dead",
-  "verified_at": "2026-11-19T21:15:35.016Z",
+  "verified_at": "2026-11-19T21:15:50.379Z",
   "notes": "Not dead, but effectively unreachable on this machine: DNS answers 0.0.0.0 / :: (sinkholed), so every plain curl fails with 'Could not resolve host'. Worked around with --resolve to the Clou",
   "history": [],
   "extras": {

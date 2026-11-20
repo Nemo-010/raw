@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "not stated on the first-party rclone IMAP pull request",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "not stated on the first-party rclone IMAP pull request",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "not stated on the first-party rclone IMAP pull request",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rclone"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "IMAP backend proposed for rclone; IMAP holds valid mail messages, not general-purpose files.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "An IMAP backend copies mail to or from any other rclone storage backend, writing Maildir-named files on the non-IMAP side.",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -63,10 +63,38 @@
       "proved": "the earlier IMAP backend PR 9071 is closed, matching the record's note that it was closed unmerged",
       "capture": "sha256:a0fc17bc6ebc22315d326987cdf1e09d0a1bc1c3677ec92d6f1251fcbc060d76",
       "quote": "\"state\": \"closed\","
+    },
+    {
+      "url": "https://github.com/rclone/rclone/pull/9208",
+      "date": "2026-11-19",
+      "proved": "the proposed IMAP backend composes with any rclone storage backend using Maildir naming",
+      "capture": "sha256:dffe6f26f089769e600275a9ec7e5c95a4d9c3207fc21e6f84166ec833bdf0c7",
+      "quote": "You can copy from imap server to any type of storage, if it's not an imap server it will create files using the Maildir naming format."
+    },
+    {
+      "url": "https://github.com/rclone/rclone/pull/9208",
+      "date": "2026-11-19",
+      "proved": "the maintainer states IMAP cannot store general-purpose files or directories",
+      "capture": "sha256:dffe6f26f089769e600275a9ec7e5c95a4d9c3207fc21e6f84166ec833bdf0c7",
+      "quote": "I don't think IMAP can store general purpose files/directories so I don't think the backend should attempt to do that"
+    },
+    {
+      "url": "https://github.com/rclone/rclone/pull/9208",
+      "date": "2026-11-19",
+      "proved": "the pull request describes backend operations and states no retention period",
+      "capture": "sha256:dffe6f26f089769e600275a9ec7e5c95a4d9c3207fc21e6f84166ec833bdf0c7",
+      "quote": "I tested ls/cat/mkdir/rmdir/copy/sync/delete."
+    },
+    {
+      "url": "https://github.com/rclone/rclone/pull/9208",
+      "date": "2026-11-19",
+      "proved": "the pull request states full messages are read into memory, with no per-object size cap",
+      "capture": "sha256:dffe6f26f089769e600275a9ec7e5c95a4d9c3207fc21e6f84166ec833bdf0c7",
+      "quote": "the way the imap library works I have to read the full message to memory"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-11-19T21:14:58.550Z",
+  "verified_at": "2026-11-19T21:15:50.377Z",
   "notes": "The wrapper that would make this whole niche rclone-addressable does not exist yet. PR #9071 (2025-12-30) was closed unmerged; PR #9208 (2026-02-23) is still **open, merged=false**; issue #8",
   "history": [],
   "extras": {

@@ -13,27 +13,27 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "Uploading files must be no larger than 1 GB (Standard and Premium); no free-tier per-object cap stated",
     "bytes": null,
     "source_url": "https://www.atlassian.com/blog/bitbucket/important-changes-coming-to-bitbucket-clouds-free-plan",
-    "notes": "not applicable: a rejected offer has no per-object cap to shard"
+    "notes": "1 GB upload ceiling applies to Standard and Premium; no free-tier per-object cap stated on the first-party limits page"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "**Pipelines logs: **The retention period for Pipelines logs will be reduced to 90 days.",
     "days": null,
     "source_url": "https://www.atlassian.com/blog/bitbucket/important-changes-coming-to-bitbucket-clouds-free-plan",
-    "notes": "Binding failure documented in record details."
+    "notes": "Pipelines logs retained 90 days; inactive free repositories may be archived after more than 3 months"
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "file downloads capped at 5000 requests per hour to prevent CDN use",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "git"
   ],
-  "interface_detail": "not documented",
-  "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "interface_detail": "Git repositories with Git LFS suggested for large files",
+  "tooling": "git client; Git LFS for large files",
+  "chaining": "free workspaces lost Downloads and snippets; artifacts are published to third-party artifact services",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -68,10 +68,66 @@
       "proved": "the free-plan 1 GB repository storage limit remains documented",
       "capture": "sha256:93ed759276dc31ed979cb9248488b9a5be25b491994f81c13631b3c075462b21",
       "quote": "workspaces on a Free plan have a size limit of 1GB of total repository storage within the workspace."
+    },
+    {
+      "url": "https://confluence.atlassian.com/bbkb/what-are-the-repository-and-file-size-limits-1167700604.html",
+      "date": "2026-11-19",
+      "proved": "the interface is Git code hosting",
+      "capture": "sha256:93ed759276dc31ed979cb9248488b9a5be25b491994f81c13631b3c075462b21",
+      "quote": "Keep in mind Bitbucket is a code hosting service, not a file sharing service."
+    },
+    {
+      "url": "https://confluence.atlassian.com/bbkb/what-are-the-repository-and-file-size-limits-1167700604.html",
+      "date": "2026-11-19",
+      "proved": "Git and Git LFS are the access path for large files",
+      "capture": "sha256:93ed759276dc31ed979cb9248488b9a5be25b491994f81c13631b3c075462b21",
+      "quote": "consider introducing [Git Large File Storage](https://www.atlassian.com/git/tutorials/git-lfs)"
+    },
+    {
+      "url": "https://www.atlassian.com/blog/bitbucket/important-changes-coming-to-bitbucket-clouds-free-plan",
+      "date": "2026-11-19",
+      "proved": "free workspaces cannot use Downloads, so artifacts go to third parties",
+      "capture": "sha256:ad8adf8c85036589cd836b956b97f2f147e800ba5b1a391b2f0a5057f5f5d94e",
+      "quote": "**Downloads:** Free workspaces will no longer be able to upload and download additional files."
+    },
+    {
+      "url": "https://confluence.atlassian.com/bbkb/what-are-the-repository-and-file-size-limits-1167700604.html",
+      "date": "2026-11-19",
+      "proved": "the 1 GB upload ceiling is stated for the paid plans",
+      "capture": "sha256:93ed759276dc31ed979cb9248488b9a5be25b491994f81c13631b3c075462b21",
+      "quote": "| **Uploading files** | Must be **no larger than 1 GB**. |  |"
+    },
+    {
+      "url": "https://confluence.atlassian.com/bbkb/what-are-the-repository-and-file-size-limits-1167700604.html",
+      "date": "2026-11-19",
+      "proved": "the 1 GB upload limit is explicitly limited to paid plans",
+      "capture": "sha256:93ed759276dc31ed979cb9248488b9a5be25b491994f81c13631b3c075462b21",
+      "quote": "The following limits are applied to workspaces on Standard and Premium plans only."
+    },
+    {
+      "url": "https://www.atlassian.com/blog/bitbucket/important-changes-coming-to-bitbucket-clouds-free-plan",
+      "date": "2026-11-19",
+      "proved": "the stated retention period is 90 days for Pipelines logs",
+      "capture": "sha256:ad8adf8c85036589cd836b956b97f2f147e800ba5b1a391b2f0a5057f5f5d94e",
+      "quote": "**Pipelines logs: **The retention period for Pipelines logs will be reduced to 90 days."
+    },
+    {
+      "url": "https://www.atlassian.com/blog/bitbucket/important-changes-coming-to-bitbucket-clouds-free-plan",
+      "date": "2026-11-19",
+      "proved": "inactive free repositories may be archived",
+      "capture": "sha256:ad8adf8c85036589cd836b956b97f2f147e800ba5b1a391b2f0a5057f5f5d94e",
+      "quote": "Furthermore, free repositories that have not been accessed or pushed to for more than 3 months may be archived before April 28, 2025."
+    },
+    {
+      "url": "https://confluence.atlassian.com/bbkb/what-are-the-repository-and-file-size-limits-1167700604.html",
+      "date": "2026-11-19",
+      "proved": "egress is limited by a 5000-requests-per-hour file-download ceiling",
+      "capture": "sha256:93ed759276dc31ed979cb9248488b9a5be25b491994f81c13631b3c075462b21",
+      "quote": "**5000 requests per hour ** | This is to prevent the use of Bitbucket as a content delivery network (CDN)"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-11-19T21:13:05.452Z",
+  "verified_at": "2026-11-19T21:15:57.621Z",
   "notes": "Free workspaces were cut to 1 GB of total repository storage (all repos combined) effective 2025-04-28, delayed to 2025-05-29. Free plan also lost the Downloads feature entirely and lost sni",
   "history": [],
   "extras": {

@@ -13,32 +13,32 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "stated-absent: the GitHub Packages npm documentation states no per-object package size cap",
     "bytes": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "stated-absent: the GitHub Packages npm documentation describes publishing and installing packages and states no retention period for stored bytes",
     "days": null,
     "source_url": "probe:seed/DEAD-ENDS.md",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "stated-absent: the GitHub Packages npm documentation describes installing packages but states no egress price or transfer quota for an anonymous writer",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "Package-manager and GitHub API write paths (npm publish against the registry, releases and GHCR); the first-party docs require a personal access token for every write, so no anonymous interface exists",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "GitHub Packages composes with npm and GitHub Actions tooling, but every write path is gated by a personal access token, so it cannot serve as an anonymous byte store",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
     "kind": "email",
-    "detail": "a verified email address is required to open a personal account; publishing uses a personal access token bound to that account",
+    "detail": "A registered GitHub account and a personal access token (classic) are required to publish, install and delete packages; no card or phone is asked for",
     "country": null
   },
   "reliability_note": "Every write path needs an authenticated identity: anonymous release create -> 401, anonymous GHCR push scope -> DENIED, anonymous release-asset upload -> 400. The multiplier therefore depend",
@@ -65,22 +65,36 @@
       "quote": "To get started with GitHub.com, you need to have a personal account and a verified email address."
     },
     {
-      "url": "https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github",
-      "date": "2026-11-19",
-      "proved": "a verified email address is the registration requirement",
-      "capture": "sha256:0a0beece02e0570e78f75f239991e8a347ea5999944b0ca711ce7bcb46cdb716",
-      "quote": "To get started with GitHub.com, you need to have a personal account and a verified email address."
-    },
-    {
       "url": "probe:https://api.github.com/user",
       "date": "2026-11-19",
       "proved": "an unauthenticated GitHub API request is refused with 401 on 2026-11-19",
       "capture": "sha256:29b7fa2f691d4fe76863e735d4aea973cdcdb0a921a3221aa6fe500897797da8",
       "quote": "\"status\": \"401\""
+    },
+    {
+      "url": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry",
+      "date": "2026-11-19",
+      "proved": "GitHub package surfaces are reached through package-manager and GitHub API tooling, not anonymously",
+      "capture": "sha256:3a8a5012d92758ae51377843b8e98fcfd5ddba7072c379ed6000b12a6d57a7c4",
+      "quote": "You can configure npm to publish packages to GitHub Packages and to use packages stored on GitHub Packages as dependencies in an npm project."
+    },
+    {
+      "url": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry",
+      "date": "2026-11-19",
+      "proved": "every GitHub package write path requires an authenticated token",
+      "capture": "sha256:3a8a5012d92758ae51377843b8e98fcfd5ddba7072c379ed6000b12a6d57a7c4",
+      "quote": "You need an access token to publish, install, and delete private, internal, and public packages."
+    },
+    {
+      "url": "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry",
+      "date": "2026-11-19",
+      "proved": "every write requires a personal access token tied to a registered GitHub account; no card, phone or identity document is asked for",
+      "capture": "sha256:3a8a5012d92758ae51377843b8e98fcfd5ddba7072c379ed6000b12a6d57a7c4",
+      "quote": "GitHub Packages only supports authentication using a personal access token (classic)."
     }
   ],
   "verdict": "fails-identity",
-  "verified_at": "2026-11-19T21:13:00.038Z",
+  "verified_at": "2026-11-19T21:15:51.191Z",
   "notes": "Every write path needs an authenticated identity: anonymous release create -> 401, anonymous GHCR push scope -> DENIED, anonymous release-asset upload -> 400. The multiplier therefore depend",
   "history": [],
   "extras": {

@@ -13,27 +13,28 @@
     "notes": "the offer existed; the rejection records why it is unusable here"
   },
   "per_object_cap": {
-    "stated": "not recorded; the provider was rejected before its per-object cap mattered",
+    "stated": "A server-side git hook enforces a maximum blob size of 250.00KiB on push.",
     "bytes": null,
     "source_url": "https://bugs.archlinux.org/task/68997",
     "notes": "not applicable: a rejected offer has no per-object cap to shard"
   },
   "retention": {
-    "stated": "not recorded; the rejection did not turn on retention",
+    "stated": "not stated on https://bugs.archlinux.org/task/68997",
     "days": null,
     "source_url": "https://bugs.archlinux.org/task/68997",
     "notes": "Binding failure documented in record details."
   },
   "egress": {
-    "terms": "not assessed; the provider was rejected before its egress mattered",
+    "terms": "not stated on https://bugs.archlinux.org/task/68997",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "git",
+    "ssh"
   ],
-  "interface_detail": "not documented",
+  "interface_detail": "The AUR accepts pushes to an ssh git endpoint; a server-side git hook checks each incoming commit.",
   "tooling": "not documented",
-  "chaining": "rejected: it composes with nothing because it does not hold bytes here",
+  "chaining": "not stated on https://bugs.archlinux.org/task/68997",
   "limits": [],
   "limits_note": "the finding is the failure, not a constraint with a number",
   "identity_cost": {
@@ -56,10 +57,24 @@
       "proved": "the AUR blob cap that rejected this offer is still in force",
       "capture": "sha256:d0ec1ddc06e843658c0a632d024b59b74b1f6bccdba37ad7a8bce53214819699",
       "quote": "remote: error: maximum blob size (250.00KiB) exceeded"
+    },
+    {
+      "url": "https://bugs.archlinux.org/task/68997",
+      "date": "2026-11-19",
+      "proved": "AUR pushes go to an ssh git endpoint",
+      "capture": "sha256:d0ec1ddc06e843658c0a632d024b59b74b1f6bccdba37ad7a8bce53214819699",
+      "quote": "To[ssh://aur.archlinux.org/linux-pds.git](ssh://aur.archlinux.org/linux-pds.git)"
+    },
+    {
+      "url": "https://bugs.archlinux.org/task/68997",
+      "date": "2026-11-19",
+      "proved": "a server-side git hook declines the push",
+      "capture": "sha256:d0ec1ddc06e843658c0a632d024b59b74b1f6bccdba37ad7a8bce53214819699",
+      "quote": "remote: error: hook declined to update refs/heads/master"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-11-19T21:13:03.901Z",
+  "verified_at": "2026-11-19T21:15:56.064Z",
   "notes": "250 KiB hard blob cap enforced by a server-side git hook. Off by three orders of magnitude.",
   "history": [],
   "extras": {
