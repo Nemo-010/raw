@@ -65,7 +65,7 @@
   "binding_note": "Events past 1M in a month are permanently dropped on the free plan, so the monthly event count is the first ceiling for an app with traffic; the API rate applies only to reads with a personal key.",
   "identity_cost": {
     "kind": "email",
-    "detail": "An account is tied to an e-mail address: the wizard creates one from an e-mail address and a region. The pricing and sign-up pages state no credit card is required, and the allowance is the same with or without a card on file. Whether a later step asks for a phone number is unverified: behind a sign-up.",
+    "detail": "Registration is tied to an e-mail address and a region: the wizard account is created from 'npx @posthog/wizard@latest --signup --email you@example.com --region us'. The sign-up page states 'Every product has a monthly free tier, and no credit card is required.' and the pricing page states 'No credit card required' and 'Same allowance whether or not you have a card on file.' Neither a card nor a phone number is asked for at sign-up. The e-mail is verified: 'check your inbox for the welcome email and follow the link to set a password'. Any phone or card step that appears only after the visible form is unverified: behind a sign-up.",
     "country": null
   },
   "reliability_note": "Events above the free allowance are permanently dropped and feature flags return a quota-limited response.",
@@ -239,9 +239,37 @@
       "proved": "a distinct_id is limited to 200 characters",
       "capture": "sha256:b7ea16b34e241b99f1a12b636c60d53518f453ee28f869ef8e9d868e914b6bfa",
       "quote": "`distinct_id` is limited to 200 characters."
+    },
+    {
+      "url": "https://us.posthog.com/signup",
+      "date": "2026-11-19",
+      "proved": "the sign-up page states no credit card is required",
+      "capture": "sha256:a2c86e41315e3d53a68f93894a31fa941496f30501147ca521898904ddca5c4d",
+      "quote": "Every product has a monthly free tier, and no credit card is required."
+    },
+    {
+      "url": "https://posthog.com/docs/ai-engineering/wizard-signup",
+      "date": "2026-11-19",
+      "proved": "the account is tied to an email address, so the identity kind is email",
+      "capture": "sha256:d7d65ccec35d58a68bc4e40074b81d6d8fcc3e0ef4048ac18e5ea9ea8c8912c6",
+      "quote": "The wizard creates the account tied to `you@example.com`, provisions a project in the region you pick"
+    },
+    {
+      "url": "https://posthog.com/pricing",
+      "date": "2026-11-19",
+      "proved": "the free allowance is the same with or without a card on file",
+      "capture": "sha256:8b16266b3f6392f022b8c6468525a3fec2727de646b3711cc979b78294fb7948",
+      "quote": "Resets monthly. Same allowance whether or not you have a card on file."
+    },
+    {
+      "url": "https://posthog.com/docs/ai-engineering/wizard-signup",
+      "date": "2026-11-19",
+      "proved": "the email given at sign-up is verified by a welcome email",
+      "capture": "sha256:d7d65ccec35d58a68bc4e40074b81d6d8fcc3e0ef4048ac18e5ea9ea8c8912c6",
+      "quote": "check your inbox for the welcome email and follow the link to set a password"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-02T00:37:34.248Z",
+  "verified_at": "2026-11-19T21:12:32.369Z",
   "notes": "The free plan stops at its limits instead of billing, so an app sending more than 1M events a month loses the excess. Moving to pay-as-you-go needs a card and raises the project count to 6 and event retention to 7 years."
 }
