@@ -35,7 +35,7 @@
   "tooling": "docker/skopeo/ORAS. Auth via IAM auth token ('create an Auth Token via your user settings and login with the Docker CLI').",
   "chaining": "The 20 GB Always Free OSS is small, but egress is 10 TB/month per tenancy and repos can be made public so pulls need no auth: 'if a user has the complete path to the image, they can pull it, with no authentication needed.' Multiple Always Free tenancies are limited. 'One Oracle Cloud Free Trial or Always Free account is permitted per person'. So this scales by tenancy policy, not by unlimited accounts.",
   "limits": [],
-  "limits_note": "500 repos/region, 500 images/repo; public repos pullable anonymously if the path is known; auto-cleanup retention policies available; storage beyond 20 GB Always Free is billed at Object Storage Standard rates.",
+  "limits_note": "500 repos/region, each holding up to 100,000 images; public repos pullable anonymously if the path is known; auto-cleanup retention policies available; storage beyond 20 GB Always Free is billed at Object Storage Standard rates.",
   "identity_cost": {
     "kind": "anonymous",
     "detail": "derived from the record's prose, not from an identity field, and no signup was executed: region. Public pull works but the console is hidden from anonymous users; the binding constraint is the 20 GB storage allowance and the one-tenancy-per-person rule, not throughput. The 2",
@@ -69,10 +69,31 @@
       "url": "https://iad.ocir.io/v2/",
       "date": "2026-10-21",
       "proved": "probe: GET -> 401 with Docker-Distribution-Api-Version: registry/2.0 (public repos still answer anonymously at the repo path, not at /v2/)"
+    },
+    {
+      "url": "https://www.oracle.com/cloud/cloud-native/container-registry/",
+      "date": "2026-11-19",
+      "proved": "Registry has no separate fee and image storage is billed at Object Storage Standard rates",
+      "capture": "sha256:083f3bfbadb771f04309474534265393dd92c378d24eeea3319d96472e1baf90",
+      "quote": "Customers pay only for resources that they consume, such as storage of images at the rate of Object Storage (Standard)."
+    },
+    {
+      "url": "https://www.oracle.com/cloud/cloud-native/container-registry/",
+      "date": "2026-11-19",
+      "proved": "the current first-party page states up to 500 repos per region with 100,000 images each",
+      "capture": "sha256:083f3bfbadb771f04309474534265393dd92c378d24eeea3319d96472e1baf90",
+      "quote": "Host up to 500 container repositories, each with 100,000 images, per region."
+    },
+    {
+      "url": "https://www.oracle.com/cloud/cloud-native/container-registry/faq/",
+      "date": "2026-11-19",
+      "proved": "the FAQ still lists 500 images per repo per region, a figure that conflicts with the overview page's 100,000 images per repo",
+      "capture": "sha256:dcf9bbf82cd4bbccf26aa4e8564f380bbf070a356b845c94d03316c039eea56d",
+      "quote": "Quotas are 500 repos total and 500 images per repo PER region."
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-10-21T00:00:00.000Z",
+  "verified_at": "2026-11-19T21:14:55.864Z",
   "notes": "No registry fee at all, and storage is billed at raw Object Storage rates: 'Oracle does not charge separately for the service. Users pay only for the associated storage and network resources that they consume' / 'Customers pay only for resources that they consume, such as storage of images at the rate of Object Storage (Standard).' The Always Free Object Storage allowance is '20 GB of combined Standard tier, Infrequent Access tier, and Archive tier data' per tenancy. Quotas: 500 repos total and 500 images per repo PER region.",
   "history": [],
   "extras": {
