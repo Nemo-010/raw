@@ -129,6 +129,7 @@ its row at the next render.
 | --- | --- | --- | --- |
 | `brave-search` | Brave Search API | fails-identity | documented |
 | `cfai` | Cloudflare Workers AI | qualifies-with-caveat | documented |
+| `cfbr` | Cloudflare Browser Rendering | qualifies-with-caveat | documented |
 | `dataforseo` | DataForSEO | trial-only | documented |
 | `firecrawl-keyless` | Firecrawl keyless route | qualifies-with-caveat | documented |
 | `linkup` | Linkup | qualifies-with-caveat | documented |
@@ -136,8 +137,11 @@ its row at the next render.
 | `octoparse` | Octoparse | qualifies-with-caveat | documented |
 | `outscraper` | Outscraper | qualifies-with-caveat | documented |
 | `parsehub` | ParseHub | qualifies-with-caveat | documented |
+| `scrapedo` | Scrape.do | qualifies-with-caveat | measured |
 | `scrapingdog` | Scrapingdog | fails-quota | documented |
+| `searchapi` | SearchApi | trial-only | documented |
 | `serperdev` | Serper | trial-only | documented |
+| `tavily-keyless` | Tavily keyless route | qualifies-with-caveat | documented |
 | `valyu` | Valyu | trial-only | documented |
 | `zenserp` | Zenserp | qualifies-with-caveat | documented |
 <!-- generated:end -->
