@@ -123,10 +123,27 @@
       "proved": "a request for limit=2000 was clamped: the next link is at limit=500",
       "capture": "sha256:343b519086f583279b4da4e2fbc157276b257e8626bcb056b22d10ee5fc5f831",
       "quote": "\"next\":\"https://api.spaceflightnewsapi.net/v4/articles/?limit=500&offset=500\""
+    },
+    {
+      "url": "https://api.spaceflightnewsapi.net/v4/docs/",
+      "date": "2026-11-19",
+      "proved": "the API's own docs describe paginated article lists, not a bulk download",
+      "capture": "sha256:3e0b91a97475a1f36bbbf229c89afdfa49af3e2357e01f4227cf7aee27881a17",
+      "quote": "**PaginatedArticleList**"
+    },
+    {
+      "url": "https://github.com/TheSpaceDevs/Tutorials/blob/main/faqs/faq_SNAPI.md",
+      "date": "2026-11-19",
+      "proved": "the FAQ describes pagination only; no bulk download is offered",
+      "capture": "sha256:6727f7d4eeb5d68a785c49d2dcbe241b98864e3f4d6ad1470a661ef5c22de1d8",
+      "quote": "The API supports pagination through the `offset=<number>` filter. This filter is automatically applied to the request URL and provided in the `next` field of the response."
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-11-02T00:23:50.592Z",
+  "verified_at": "2026-11-19T21:11:29.193Z",
   "notes": "Storage: no storage or caching limit is stated in the documentation or the FAQ. Bulk path: page the article list at limit=500 with offset up to 10,000, then filter on published_at_lt with the published_at of the last result; 74 requests cover 36741 articles.",
-  "history": []
+  "history": [],
+  "extras": {
+    "bulk_path": "no bulk path — SNAPI publishes only per-request REST and GraphQL endpoints (articles, blogs, reports, info) with pagination by limit/offset; no dump, torrent, bucket or bulk endpoint is offered on any tier."
+  }
 }
