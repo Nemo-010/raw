@@ -7,13 +7,13 @@
   "verdict": "trial-only",
   "confidence": "documented",
   "confidence_note": "free tier, limits, retention and the deposit rule read on the vendor's pricing and docs pages",
-  "verified_at": "2026-11-02T01:02:34.147Z",
+  "verified_at": "2026-11-19T21:12:22.699Z",
   "free_tier": {
-    "stated": "USD 30 of credits, one time, valid 90 days (about 300 browser hours at USD 0.10 an hour); 10 concurrent sessions of up to 15 minutes",
+    "stated": "Launch: USD 30 of credits, one time, valid 90 days (about 300 browser hours at USD 0.10 an hour). Metered by browser session time from session start until release or timeout, billed by the second; no page allowance is stated. Concurrency and session length are in limits.",
     "unit": "mixed",
     "metered_on": "wall-clock",
-    "source_url": "https://docs.steel.dev/overview/pricinglimits",
-    "read_on": "2026-10-30",
+    "source_url": "https://steel.dev/docs/platform/pricing",
+    "read_on": "2026-11-19",
     "notes": "one-time credit valid for 90 days; no credit card required; CAPTCHA solving and Steel-provided proxies on Launch need a USD 10 paid deposit, which free credits do not cover"
   },
   "per_object_cap": {
@@ -38,26 +38,26 @@
   "interface": [
     "rest"
   ],
-  "interface_detail": "REST sessions and a scrape route; 10 concurrent and 20 requests a minute on Browser Tools",
+  "interface_detail": "REST sessions and a scrape route; 10 concurrent sessions and 60 session creates a minute on Launch, with a separate 20-a-minute limit for /scrape, /screenshot and /pdf per client IP address",
   "tooling": "a session model with a browser control protocol",
   "chaining": "A session model, so it is the wrong shape for a Worker and the right shape for a long agent run",
   "limits": [
     {
       "kind": "request-rate",
-      "value": "10 concurrent browser sessions and 60 requests a minute on the Launch plan",
-      "source": "https://docs.steel.dev/overview/pricinglimits"
+      "value": "10 concurrent sessions, 15-minute session length, 60 session creates per minute and 7-day data retention on Launch",
+      "source": "https://steel.dev/docs/platform/limits"
     },
     {
       "kind": "retention-clamped",
       "value": "the USD 30 credit expires after 90 days",
-      "source": "https://docs.steel.dev/overview/pricinglimits"
+      "source": "https://steel.dev/docs/platform/pricing"
     }
   ],
   "binding": "retention-clamped",
-  "limits_note": "Browser Tools calls (/scrape, /screenshot, /pdf) are limited to 20 requests a minute per organization, under the plan's request rate",
+  "limits_note": "The plan's per-minute limit counts only requests that create a session (60/minute on Launch); /scrape, /screenshot and /pdf each have their own 20-per-minute limit, counted per client IP address, and the MCP scrape tool's 20/minute is per organization.",
   "identity_cost": {
     "kind": "email",
-    "detail": "an account opened with an email address, which the sign-up verifies by a code or a link, or with GitHub or Google; the sign-up configuration has no phone field and no CAPTCHA, makes first and last names optional, and blocks disposable email domains and email sub-addresses; what the dashboard asks after sign-up is unverified: behind a sign-up",
+    "detail": "an account opened with a required email address verified at sign-up by code or link (email_code/email_link), with optional GitHub or Google OAuth; the sign-up configuration disables the phone number, makes first and last names optional, blocks disposable email domains and email sub-addresses, and enables CAPTCHA; what the dashboard asks after sign-up is unverified: behind a sign-up",
     "country": null
   },
   "reliability_note": "no reliability event recorded",
@@ -172,6 +172,97 @@
       "proved": "the pricing and limits page lists the Launch plan at USD 30 of one-time credits valid for 90 days, 10 concurrent sessions, 15-minute sessions, 60 requests a minute and 7 days of data retention",
       "capture": "sha256:55115f2554c7ea9c57b12b64d1fde291f49bdf4ed5ef08894f95e58d349c41e0",
       "quote": "$30 in one-time free usage credits, valid for 90 days ... Concurrent browser sessions | 10 | 100 ... Max session time | 15 minutes | 1 hour ... Requests per minute | 60 | 600 ... Data retention | 7 days | 14 days"
+    },
+    {
+      "url": "https://steel.dev/docs/platform/pricing",
+      "date": "2026-11-19",
+      "proved": "Launch grants USD 30 one-time credits valid 90 days, about 300 browser hours at USD 0.10/hour, billed by the second",
+      "capture": "sha256:f172a4fea321d05b94e469eb92177f38a27173f3fcca20bf927a0348e20dec9d",
+      "quote": "Launch | $0 + usage | $30, one time ... Launch | $30, one time | 90 days after you get them ... Browser hours | $0.10 per hour ... Browser hours | 300 hours ... Browser hours are billed by the second, rounded up to the next whole second for each session."
+    },
+    {
+      "url": "https://steel.dev/docs/platform/pricing",
+      "date": "2026-11-19",
+      "proved": "Launch credits are metered on session browser time (wall-clock), not pages",
+      "capture": "sha256:f172a4fea321d05b94e469eb92177f38a27173f3fcca20bf927a0348e20dec9d",
+      "quote": "A session uses browser time from its start until it is released or it times out."
+    },
+    {
+      "url": "https://steel.dev/docs/platform/pricing",
+      "date": "2026-11-19",
+      "proved": "the current first-party pricing page is at the new URL",
+      "capture": "sha256:f172a4fea321d05b94e469eb92177f38a27173f3fcca20bf927a0348e20dec9d",
+      "quote": "Launch is free, Scale is $250 a month, and Enterprise is priced by contract."
+    },
+    {
+      "url": "https://steel.dev/docs/platform/pricing",
+      "date": "2026-11-19",
+      "proved": "the current pricing page was read on this date",
+      "capture": "sha256:f172a4fea321d05b94e469eb92177f38a27173f3fcca20bf927a0348e20dec9d",
+      "quote": "Launch | $0 + usage | $30, one time ... Launch | $30, one time | 90 days after you get them"
+    },
+    {
+      "url": "https://steel.dev/docs/platform/limits",
+      "date": "2026-11-19",
+      "proved": "the current vendor limits table gives Launch 10 concurrent, 15-minute sessions, 60 creates/minute and 7-day retention",
+      "capture": "sha256:d18f93e765679688f9f1ad49a28e53cb54dd87c2f6220c4b75379ec940db2de1",
+      "quote": "Concurrent sessions | 10 | 100 | 1,000+ ... Session length | 15 minutes | 1 hour | Up to 24 hours ... Session creates per minute | 60 | 600 | No limit ... Data retention | 7 days | 14 days | Custom"
+    },
+    {
+      "url": "https://steel.dev/docs/platform/limits",
+      "date": "2026-11-19",
+      "proved": "the current first-party limits page is at the new URL",
+      "capture": "sha256:d18f93e765679688f9f1ad49a28e53cb54dd87c2f6220c4b75379ec940db2de1",
+      "quote": "Each plan limits concurrent sessions, session length, session creates per minute and data retention."
+    },
+    {
+      "url": "https://steel.dev/docs/platform/pricing",
+      "date": "2026-11-19",
+      "proved": "the current vendor pricing page states the 90-day credit expiry",
+      "capture": "sha256:f172a4fea321d05b94e469eb92177f38a27173f3fcca20bf927a0348e20dec9d",
+      "quote": "Launch | $30, one time | 90 days after you get them"
+    },
+    {
+      "url": "https://steel.dev/docs/platform/limits",
+      "date": "2026-11-19",
+      "proved": "the 20/minute Browser Tools limit is per client IP, separate from the plan's session-create limit",
+      "capture": "sha256:d18f93e765679688f9f1ad49a28e53cb54dd87c2f6220c4b75379ec940db2de1",
+      "quote": "| Scrape (`POST /v1/scrape`) | 20 a minute | Each client IP address | ... Scrape, Screenshot and PDF each have their own limit of 20 requests a minute."
+    },
+    {
+      "url": "https://steel.dev/docs/platform/limits",
+      "date": "2026-11-19",
+      "proved": "the REST interface has 10 concurrent sessions, 60 creates/minute and a separate per-IP 20/minute scrape limit",
+      "capture": "sha256:d18f93e765679688f9f1ad49a28e53cb54dd87c2f6220c4b75379ec940db2de1",
+      "quote": "Concurrent sessions | 10 | 100 | 1,000+ ... Session creates per minute | 60 | 600 | No limit ... | Scrape (`POST /v1/scrape`) | 20 a minute | Each client IP address |"
+    },
+    {
+      "url": "probe:clerk.steel.dev",
+      "date": "2026-11-19",
+      "proved": "the sign-up requires a verified email address; no phone number is required",
+      "capture": "sha256:6ad603a86c1ca6a020bc353f4d20864ecd3971010f931ffa718feccbc0c4e225",
+      "quote": "\"email_address\":{\"enabled\":true,\"required\":true,\"used_for_first_factor\":true"
+    },
+    {
+      "url": "probe:clerk.steel.dev",
+      "date": "2026-11-19",
+      "proved": "sign-up requires verified email, offers GitHub/Google, disables phone, and now enables CAPTCHA",
+      "capture": "sha256:6ad603a86c1ca6a020bc353f4d20864ecd3971010f931ffa718feccbc0c4e225",
+      "quote": "\"email_address\":{\"enabled\":true,\"required\":true ... \"first_factors\":[\"email_code\",\"email_link\"] ... \"phone_number\":{\"enabled\":false,\"required\":false ... \"captcha_enabled\":true ... \"oauth_github\":{\"enabled\":true ... \"oauth_google\":{\"enabled\":true ... \"first_name\":{\"enabled\":true,\"required\":false"
+    },
+    {
+      "url": "https://steel.dev/docs/platform/limits",
+      "date": "2026-11-19",
+      "proved": "the Launch limits are 10 concurrent, 15-minute sessions, 60 creates/minute and 7-day retention",
+      "capture": "sha256:d18f93e765679688f9f1ad49a28e53cb54dd87c2f6220c4b75379ec940db2de1",
+      "quote": "Concurrent sessions | 10 | 100 | 1,000+ ... Session length | 15 minutes | 1 hour | Up to 24 hours ... Session creates per minute | 60 | 600 | No limit ... Data retention | 7 days | 14 days | Custom"
+    },
+    {
+      "url": "probe:clerk.steel.dev",
+      "date": "2026-11-19",
+      "proved": "the sign-up asks for verified email with GitHub/Google options, no phone, and CAPTCHA",
+      "capture": "sha256:6ad603a86c1ca6a020bc353f4d20864ecd3971010f931ffa718feccbc0c4e225",
+      "quote": "\"email_address\":{\"enabled\":true,\"required\":true ... \"first_factors\":[\"email_code\",\"email_link\"] ... \"phone_number\":{\"enabled\":false,\"required\":false ... \"captcha_enabled\":true ... \"oauth_github\":{\"enabled\":true ... \"oauth_google\":{\"enabled\":true ... \"first_name\":{\"enabled\":true,\"required\":false"
     }
   ],
   "notes": "A 421 naming the missing route is the useful shape: it distinguishes a wrong path from a dead host. Every other browser provider in this class answered 401, which proves less.",
