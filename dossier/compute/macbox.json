@@ -1,0 +1,175 @@
+{
+  "topic": "compute",
+  "slug": "macbox",
+  "provider": "macbox",
+  "url": "https://macbox.build/",
+  "category": "cloud Mac for iOS builds",
+  "tier": "Prepaid credit, USD 10 to start",
+  "free_tier": {
+    "stated": "USD 10 of prepaid credit to start, about 200 Mac minutes at USD 0.05 per Mac minute; jobs under a minute are free",
+    "unit": "credits",
+    "metered_on": "wall-clock",
+    "source_url": "https://macbox.build/",
+    "read_on": "2026-11-24",
+    "notes": "A starting credit rather than a recurring free tier; no subscription or minimum. The credit and signup are reached through a GitHub login."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a macOS VM, not an object store; a job's folder is sent to the VM, and files git ignores need an explicit --include",
+    "source_url": "https://api.macbox.build/guide/"
+  },
+  "retention": {
+    "stated": "Code and build cache stay in the user's VM between runs; after 14 days unused all of it is deleted, or immediately with macbox purge. Unsigned device-build zips are kept 24 hours.",
+    "days": 14,
+    "source_url": "https://api.macbox.build/guide/",
+    "notes": "A live session also ends after 10 minutes with nobody watching or 30 minutes of runtime."
+  },
+  "egress": {
+    "terms": "not published: the pricing page gives a per-minute rate with no outbound transfer allowance or per-GB price; the VM can reach the internet to fetch packages but cannot reach other VMs or the operator network",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://api.macbox.build/guide/"
+  },
+  "interface": [
+    "cli",
+    "rest"
+  ],
+  "interface_detail": "One CLI (`macbox build`, `test`, `run`, `screenshot`, `ui`, `status`, `purge`) exposed to agents as MCP tools through `macbox mcp`, plus an Xcode MCP variant; the agent setup is an HTTPS guide fetched by the CLI.",
+  "endpoint": "https://api.macbox.build",
+  "tooling": "curl -fsSL https://api.macbox.build/install.sh | sh installs the CLI; MCP clients attach with npx macbox mcp, and a Claude Code plugin or agent skill is available.",
+  "chaining": "Hands iOS build, XCTest, simulator screenshots and a live simulator link back to a coding agent on any machine; hosted on a single Mac mini with one macOS VM per user, no user-owned hardware.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "USD 0.05 per Mac minute, billed in whole minutes; USD 10 of starting credit is about 200 Mac minutes",
+      "source": "https://macbox.build/"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "a VM's code and build cache are deleted after 14 days unused; a live session ends after 10 minutes unwatched or at a 30-minute job limit",
+      "source": "https://api.macbox.build/guide/"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "two folders can run at once on the one Mac; a third folder waits, and if both are busy the older session ends",
+      "source": "https://api.macbox.build/guide/"
+    }
+  ],
+  "limits_note": "Only native iOS apps, Xcode projects, workspaces, Swift packages, CocoaPods and XcodeGen work today; code signing, TestFlight, React Native and Flutter are not supported, and only the latest Xcode is installed.",
+  "binding": "retention-clamped",
+  "binding_note": "The starting credit is only about 200 Mac minutes and a whole unused VM is deleted after 14 days, so idle time between builds is what consumes the offer before the per-minute rate does.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "macbox login prints a link and a code; the user signs in with GitHub (a GitHub account has an email), and the setup page requests read:user and user:email scopes. The signup URL redirects to the GitHub login page with 'Username or email address'. No card, phone or ID appears on the signup path; any payment detail for top-ups is unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "Code signing, TestFlight and React Native are not supported; only the latest Xcode is installed, an unwatched live session ends after 10 minutes, and an unused VM is deleted after 14 days. Jobs are not charged when the fault is on the provider's side.",
+  "confidence": "documented",
+  "confidence_note": "The rate, starting credit, whole-minute billing, VM deletion window, session limits, GitHub sign-in and support scope are quoted from first-party pages read on 2026-11-24; the signup URL was fetched to the GitHub login page.",
+  "evidence": [
+    {
+      "url": "https://macbox.build/",
+      "date": "2026-11-24",
+      "proved": "the price is USD 0.05 per Mac minute with whole-minute billing and a USD 10 starting credit",
+      "capture": "sha256:1b9307d5f7edf1453d7e2fd9d3524b59ce944032a1255f167185914a17d0e578",
+      "quote": "$0.05 per Mac minute\n\n- You pay only while a build, tests, or a live session runs.\n- Whole minutes only. A job under a minute is free.\n- Uploading, waiting in line, and starting the Mac are free.\n- Prepaid credit. No subscription, no minimums.\n\nStart with **$10 of credit**, about 200 Mac minutes."
+    },
+    {
+      "url": "https://api.macbox.build/guide/",
+      "date": "2026-11-24",
+      "proved": "a whole minute is charged for the part used and only running jobs are billed",
+      "capture": "sha256:5c8958611e6c8a8514232ee5907ae3d82567eb0790075f6295240d45adc4f85b",
+      "quote": "$0.05 per Mac minute. Each job pays for the whole minutes it ran; the part of a minute left over is free, so a job under a minute costs nothing."
+    },
+    {
+      "url": "https://api.macbox.build/guide/",
+      "date": "2026-11-24",
+      "proved": "the VM is reachable over the internet but not from other VMs or the operator network",
+      "capture": "sha256:5c8958611e6c8a8514232ee5907ae3d82567eb0790075f6295240d45adc4f85b",
+      "quote": "Only you use that VM. It can reach the internet (to fetch packages), but not other VMs or our network."
+    },
+    {
+      "url": "https://api.macbox.build/guide/",
+      "date": "2026-11-24",
+      "proved": "code and cache are deleted after 14 days unused",
+      "capture": "sha256:5c8958611e6c8a8514232ee5907ae3d82567eb0790075f6295240d45adc4f85b",
+      "quote": "If you don't run anything for 14 days, we delete all of it. `macbox purge --yes` deletes it now."
+    },
+    {
+      "url": "https://api.macbox.build/guide/",
+      "date": "2026-11-24",
+      "proved": "a live session ends after 10 minutes unwatched or at 30 minutes of runtime",
+      "capture": "sha256:5c8958611e6c8a8514232ee5907ae3d82567eb0790075f6295240d45adc4f85b",
+      "quote": "A session ends with `macbox stop`, a new build, test, or run in the same folder, 10 minutes with nobody using or watching it, or the 30-minute job limit."
+    },
+    {
+      "url": "https://api.macbox.build/guide/",
+      "date": "2026-11-24",
+      "proved": "two folders can run at once on the one Mac and a third waits",
+      "capture": "sha256:5c8958611e6c8a8514232ee5907ae3d82567eb0790075f6295240d45adc4f85b",
+      "quote": "macbox runs two of your folders at the same time, on your one Mac. Each folder keeps its own code and build cache, and each running folder gets its own simulator. A third folder waits until one finishes"
+    },
+    {
+      "url": "https://api.macbox.build/guide/",
+      "date": "2026-11-24",
+      "proved": "sign-in is with GitHub and the starting credit arrives on a new account",
+      "capture": "sha256:5c8958611e6c8a8514232ee5907ae3d82567eb0790075f6295240d45adc4f85b",
+      "quote": "They open it, check the code matches, and sign in with GitHub; a new user gets an account with $10 of credit on the way."
+    },
+    {
+      "url": "https://api.macbox.build/signup?key=1",
+      "date": "2026-11-24",
+      "proved": "the signup page is a GitHub OAuth login asking for a username or email and user:email scope",
+      "capture": "sha256:f74b9b9757626502b964c4f1953bb05272cb8c1d472fc87ab0084088054ffb40",
+      "quote": "scope%3Dread%253Auser%2Buser%253Aemail"
+    },
+    {
+      "url": "https://macbox.build/",
+      "date": "2026-11-24",
+      "proved": "the offer is a real cloud Mac reached by one CLI from any machine",
+      "capture": "sha256:1b9307d5f7edf1453d7e2fd9d3524b59ce944032a1255f167185914a17d0e578",
+      "quote": "From anywhere\n\nYour own Mac, a Linux box, or a cloud agent like Claude Code on the web, Codex, or Cursor. Nothing to install but one CLI."
+    },
+    {
+      "url": "https://api.macbox.build/guide/",
+      "date": "2026-11-24",
+      "proved": "only native iOS projects and the latest Xcode work today; signing and TestFlight are not supported",
+      "capture": "sha256:5c8958611e6c8a8514232ee5907ae3d82567eb0790075f6295240d45adc4f85b",
+      "quote": "Not yet: signing on the Mac, uploading to TestFlight for you, React Native, Flutter, private packages that need SSH keys."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-24T10:11:14.878Z",
+  "price_per_tb_month": null,
+  "notes": "A hosted Mac for agent-driven iOS builds, reached through one CLI or MCP tools. The starting USD 10 credit is prepaid and the whole minute is charged; 14 days of inactivity deletes the VM and its build cache. Egress has no published rate. No self-hosted option is offered.",
+  "extras": {
+    "shape": {
+      "vcpu": null,
+      "ram_gib": null,
+      "disk_gib": null,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "one shared Mac mini running the latest Xcode; per-user macOS VM, machine size not published"
+    },
+    "billing_model": "prepaid credit, whole Mac minutes while a job runs",
+    "free_tier_kind": "starting-credit",
+    "term": "no subscription, no minimum",
+    "price_arithmetic": "$0.05 per Mac minute, whole minutes; $10 of credit is about 200 Mac minutes",
+    "credit_usd": 10,
+    "status": "live; native iOS builds and simulator sessions only",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": false,
+      "ports": "not stated",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": 30,
+      "idle_reap_s": 600,
+      "restart_required": false,
+      "note": "a live session ends after 10 minutes unwatched or at 30 minutes; an unused VM is deleted after 14 days"
+    }
+  }
+}
