@@ -1,0 +1,163 @@
+{
+  "topic": "compute",
+  "slug": "berget-serverless-trial",
+  "provider": "Berget.AI",
+  "url": "https://berget.ai/en/pricing",
+  "category": "inference API",
+  "tier": "Trial (Serverless Inference)",
+  "free_tier": {
+    "stated": "Trial at EUR 0 a month with EUR 5 in starting credits, basic rate limits and community support; the FAQ states 'a card is required at signup to prevent abuse, but nothing is charged', and after the trial an active plan from EUR 25 a month in prepaid credits is required.",
+    "unit": "credits",
+    "metered_on": "request-count",
+    "source_url": "https://berget.ai/en/pricing",
+    "read_on": "2026-11-24",
+    "notes": "The EUR 5 credit is one-time and the console lists it as valid for three months; the code plan lists no card requirement but is a EUR 150 per seat per month offer, not this tier."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is an API request, not a stored object"
+  },
+  "retention": {
+    "stated": "Unused prepaid credits roll over to the next month and remain valid for 12 months; after cancellation the remaining credits can be used for 30 days.",
+    "days": null,
+    "source_url": "https://berget.ai/en/pricing"
+  },
+  "egress": {
+    "terms": "For the managed Kubernetes cluster the pricing page lists 'Data trafficInbound and outbound, not metered' as Included; no separate egress charge is published for Serverless Inference.",
+    "metered": false,
+    "free_allowance": "unmetered inbound and outbound data traffic on the managed Kubernetes cluster",
+    "price_per_tb": null,
+    "source_url": "https://berget.ai/en/pricing"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "OpenAI-compatible inference API at https://api.berget.ai/v1 for chat completions, embeddings and model discovery; the documented call uses a Bearer API key obtained from the console.",
+  "endpoint": "https://api.berget.ai/v1",
+  "tooling": "the official OpenAI SDK with base_url set to https://api.berget.ai/v1, or curl against /v1/chat/completions; SDKs are documented for Python and TypeScript",
+  "chaining": "A drop-in OpenAI endpoint that a coding agent or an existing OpenAI SDK application can point at; the managed Kubernetes cluster adds object storage and unmetered data traffic for pipelines that need it.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "Basic rate limits on Trial, increased on Starter, higher on Team, maximum on Enterprise; the pricing page states 'Rate limits are shared per account' and publishes no number",
+      "source": "https://berget.ai/en/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "EUR 5 in starting credits on Trial, then an active plan from EUR 25 a month in prepaid credits is required for continued API access",
+      "source": "https://berget.ai/en/pricing"
+    }
+  ],
+  "binding": "volume-quota",
+  "binding_note": "The EUR 5 starting credit is a one-time amount that is spent by token usage and gates continued access once exhausted; the rate limit is an unpublished qualifier and is not a number that binds first.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "The pricing FAQ states 'a card is required at signup to prevent abuse, but nothing is charged'. The console registration submits a name, email and timezone and accepts terms, privacy and DPA; a card intervention is conditional on bot detection. No phone number or ID document is stated.",
+    "country": null
+  },
+  "reliability_note": "Rate limits are shared per account and no numeric ceiling is published; unused credits expire 12 months after they are added and 30 days after cancellation.",
+  "confidence": "documented",
+  "confidence_note": "The plan prices, the starting credit, the card gate and the unmetered cluster traffic are quoted from the vendor's pricing page read on 2026-11-24; the signup fields and the trial credit validity come from the console bundle read the same day.",
+  "evidence": [
+    {
+      "url": "https://berget.ai/en/pricing",
+      "date": "2026-11-24",
+      "proved": "the Trial plan is EUR 0 a month with EUR 5 free starting credits and basic rate limits",
+      "capture": "sha256:b65e5562d264fc67806875f93c6367d553f336b59c8c1a9e1d73e5f0db4dc6eb",
+      "quote": "### Trial\n\n€0 / month\n\nFor the hobbyist\n\n- €5 free starting credits\n- Basic rate limits*\n- Community support\n- No monthly cost"
+    },
+    {
+      "url": "https://berget.ai/en/pricing",
+      "date": "2026-11-24",
+      "proved": "a card is required at signup with no charge, and continued API access needs a plan from EUR 25 a month",
+      "capture": "sha256:b65e5562d264fc67806875f93c6367d553f336b59c8c1a9e1d73e5f0db4dc6eb",
+      "quote": "The Trial plan includes €5 in starting credits so you can try the API without a subscription — a card is required at signup to prevent abuse, but nothing is charged. After that, an active plan (from €25 / month in prepaid credits) is required for continued API access — we don't offer pure pay-as-you-go without a plan."
+    },
+    {
+      "url": "https://berget.ai/en/pricing",
+      "date": "2026-11-24",
+      "proved": "the published paid plans start at EUR 25 a month and rate limits are shared per account",
+      "capture": "sha256:b65e5562d264fc67806875f93c6367d553f336b59c8c1a9e1d73e5f0db4dc6eb",
+      "quote": "### Starter\n\n€25 / month\n\nFor small projects\n\n- €25 monthly top-up\n- Increased rate limits*\n- Email support\n- Automatic billing\n\n* Rate limits are shared per account."
+    },
+    {
+      "url": "https://berget.ai/en/pricing",
+      "date": "2026-11-24",
+      "proved": "inbound and outbound data traffic on the managed Kubernetes cluster is unmetered and included",
+      "capture": "sha256:b65e5562d264fc67806875f93c6367d553f336b59c8c1a9e1d73e5f0db4dc6eb",
+      "quote": "| Data trafficInbound and outbound, not metered | — | Included |"
+    },
+    {
+      "url": "https://berget.ai/en/pricing",
+      "date": "2026-11-24",
+      "proved": "unused credits roll over for 12 months and remain available 30 days after cancellation",
+      "capture": "sha256:b65e5562d264fc67806875f93c6367d553f336b59c8c1a9e1d73e5f0db4dc6eb",
+      "quote": "On a paid plan you can add one-off top-ups or set up automatic top-up rules. Unused credits roll over to the next month and remain valid for 12 months."
+    },
+    {
+      "url": "https://console.berget.ai/assets/index-Bjea3Xay.js",
+      "date": "2026-11-24",
+      "proved": "the console's trial entitlement is a EUR 5 initial wallet credit, valid for three months and listed without a card requirement",
+      "capture": "sha256:9abe2a271a50a311feb069075141e23d21876eece631a2514eab5b1d3f3794e9",
+      "quote": "features_list:[\"5€ initial wallet credit\",\"Valid for three months\",\"No credit card required\"]"
+    },
+    {
+      "url": "https://console.berget.ai/assets/index-Bjea3Xay.js",
+      "date": "2026-11-24",
+      "proved": "the console registration submits a name, email and timezone and selects the trial plan",
+      "capture": "sha256:9abe2a271a50a311feb069075141e23d21876eece631a2514eab5b1d3f3794e9",
+      "quote": "b={user:{name:j,email:N,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone},company:H?{name:y.company.name||j,email:y.company.email||N,vatNumber:I?(k=y.company.vatNumber)==null?void 0:k.trim():void 0,address:{street:((R=y.company.address)==null?void 0:R.street)||\"\",city:((A=y.company.address)==null?void 0:A.city)||\"\",zip:((O=y.company.address)==null?void 0:O.zip)||\"\",countryCode:((z=y.company.address)==null?void 0:z.countryCode)||\"SE\"}}:void 0,individual:H?void 0:{countryCode:y.company.countryCode||\"SE\",discountCode:y.company.discountCode||void 0},plans:[{id:\"trial\",quantity:1}]"
+    },
+    {
+      "url": "https://docs.berget.ai/quickstart",
+      "date": "2026-11-24",
+      "proved": "the inference API is OpenAI-compatible at https://api.berget.ai/v1 and needs an account and a console API key",
+      "capture": "sha256:63d2a15dac46092731493c7dac8a39fa58e72ac5432ee403dd7a9be2e604cb74",
+      "quote": "Berget AI Serverless Inference is a drop-in replacement for the OpenAI API. Point any OpenAI-compatible SDK or tool at `https://api.berget.ai/v1` and it works."
+    },
+    {
+      "url": "https://api.berget.ai/",
+      "date": "2026-11-24",
+      "proved": "the API exposes OpenAI-compatible chat completions, embeddings, transcription and model discovery endpoints",
+      "capture": "sha256:4ac0fb45db9c115245c78f14c025056b26412d47ed77c32a47776ddeddfe0183",
+      "quote": "OpenAI-compatible inference API for chat completions, embeddings, audio transcription, and model discovery."
+    },
+    {
+      "url": "https://api.berget.ai/v1/models/",
+      "date": "2026-11-24",
+      "proved": "the model catalogue reports per-model EUR prices and live status without a request key",
+      "capture": "sha256:8a90f52ea9b720a6a6699b2b360a723e24f6f8e1f12d8091db8317a42df30786",
+      "quote": "\"pricing\":{\"currency\":\"EUR\",\"input\":0.25,\"output\":0.5,\"unit\":\"€ / M Token\"}"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-24T10:11:14.624Z",
+  "price_per_tb_month": null,
+  "notes": "The trial requires a card at signup even though nothing is charged; rate limits are tiered but only as words, with no published number. The managed Kubernetes cluster is a separate paid service with unmetered inbound and outbound data traffic; this record prices the Serverless Inference trial.",
+  "extras": {
+    "shape": {
+      "vcpu": null,
+      "ram_gib": null,
+      "disk_gib": null,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "serverless inference: no fixed machine shape is exposed"
+    },
+    "billing_model": "one-time prepaid credits, then a monthly prepaid plan",
+    "free_tier_kind": "one-time-credit",
+    "term": "the console lists the trial credit as valid for three months",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": null,
+      "ports": "not stated",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "no per-session time cap is published"
+    }
+  }
+}
