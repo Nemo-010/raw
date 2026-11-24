@@ -1,0 +1,168 @@
+{
+  "topic": "compute",
+  "slug": "digitalocean-inference",
+  "provider": "DigitalOcean Serverless Inference",
+  "url": "https://docs.digitalocean.com/products/inference/details/pricing/",
+  "category": "serverless inference",
+  "tier": "Serverless Inference (prepaid, Tier 1)",
+  "free_tier": {
+    "stated": "No standing free tier: 'Serverless inference is prepaid only. To send serverless inference requests, you need promotional credits or a positive prepaid balance in your Inference and Agents balance or your account prepayment balance, and we deduct usage charges as you incur them. If your credits and both balances run out, access is suspended until you add funds.' The Inference and Agents balance is funded with a preset amount from $5 to $500; promotional credits, where granted, draw first. A new account's credit amount is not published on the inference pages.",
+    "unit": "credits",
+    "metered_on": "wall-clock",
+    "source_url": "https://docs.digitalocean.com/products/inference/details/pricing/",
+    "read_on": "2026-11-24",
+    "notes": "Prices are shown per 1 million tokens and billed per 1 thousand tokens. The smallest published serverless rate is the open-weight gpt-oss-120b at 'Input $0.10; Output $0.70' USD per 1M tokens. Dedicated Inference is billed per GPU-hour from $2.59 per hour for an AMD MI300X. Any signup credit is unverified: behind a sign-up."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a model request, not a stored object",
+    "notes": "For BYOM, imported models can be up to 200 GB; those weights are stored in a service-managed Spaces location that is not directly accessible."
+  },
+  "retention": {
+    "stated": "Token requests are consumed on call; no stored-object retention applies. BYOM weights persist in a service-managed Spaces location and are billed at $5.00 per month.",
+    "days": null,
+    "source_url": "https://docs.digitalocean.com/products/inference/details/pricing/"
+  },
+  "egress": {
+    "terms": "No per-GB egress price is published for inference requests; web search is $10 per 1000 requests and web fetch is $3 per 1000 requests (not charged with Anthropic models), and each request is billed at the model's per-token rate. Promotional credits are drawn first, then the Inference and Agents balance, then the account prepayment balance; when all are empty, access is suspended.",
+    "metered": true,
+    "free_allowance": "no published per-GB or per-token free allowance on the inference price page; promotional credits only where granted",
+    "price_per_tb": null,
+    "source_url": "https://docs.digitalocean.com/products/inference/details/pricing/"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "An OpenAI-compatible chat-completions REST API; coding agents can use https://inference.do-ai.run as a drop-in proxy, using a model access key. The API base recorded by models.dev is https://inference.do-ai.run/v1 (88 models); a direct GET of that base answered HTTP 404 with a maintenance page on 2026-11-24, so the endpoint is taken from the vendor docs and models.dev.",
+  "endpoint": "https://inference.do-ai.run/v1",
+  "tooling": "Any OpenAI SDK by changing the base URL, the `doctl` CLI and the DigitalOcean API for control-plane tasks, plus the Model Playground in the Cloud Console.",
+  "chaining": "An OpenAI-compatible endpoint behind a prepaid balance can back agent stacks that already speak the OpenAI API; the inference router routes each request to a model at that model's published rate with no extra charge during public preview.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "Tier 1: up to 120 requests per minute (RPM) and up to 1.5M tokens per minute (TPM), with 50K playground tokens per day; limits vary by model and tier up to Tier 5 at 1,200 RPM and 25M TPM",
+      "source": "https://docs.digitalocean.com/products/inference/details/limits/"
+    },
+    {
+      "kind": "write-gated",
+      "value": "prepayment gate: a positive Inference and Agents balance or account prepayment balance, or promotional credits, is required before requests are accepted; otherwise access is suspended",
+      "source": "https://docs.digitalocean.com/products/inference/how-to/manage-serverless-inference-prepayment/"
+    }
+  ],
+  "limits_note": "BYOM limits include at most 10/50/100 imported models per team by resource tier, models up to 200 GB, one import at a time, and no use in agents. All published limits are maximums on shared capacity, not guarantees; constrained capacity can queue, throttle or reject requests with 503 even within limits. Tier 1 and Tier 2 have no Anthropic models and no OpenAI models except gpt-oss-120b.",
+  "binding": "write-gated",
+  "binding_note": "For a new account the prepaid balance is the first gate to a request: with no credit and both balances at zero, the API suspends access before any request-rate ceiling is reached.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "The account signup page offers 'Sign Up with Google', 'Sign Up with GitHub' and 'Sign Up with Email'. The payment-methods documentation says 'To create resources or invite additional team members, you need to add a payment method to your team' and lists credit and debit cards, crypto wallets and ACH, while refusing virtual, electron and prepaid cards; a card preauthorisation hold may appear for up to 7 days. A serverless inference request additionally needs a prepaid balance; a model access key is created after sign-in.",
+    "country": null
+  },
+  "reliability_note": "Published RPM/TPM limits are maximums on shared capacity, not guarantees; requests may be queued, throttled or rejected with 503 or an 'overloaded' response when capacity is constrained, and DigitalOcean may change tiers and model classifications. If credits and both prepaid balances empty, serverless inference access is suspended until funds are added.",
+  "confidence": "documented",
+  "confidence_note": "Rates, prepayment terms, request and token limits, tool charges, model count and the signup/payment gates are quoted from DigitalOcean's own pricing, limits, prepayment, quickstart and payment-methods pages and models.dev captured 2026-11-24.",
+  "evidence": [
+    {
+      "url": "https://docs.digitalocean.com/products/inference/details/pricing/",
+      "date": "2026-11-24",
+      "proved": "serverless inference is prepaid only and suspends access when credits and balances are empty",
+      "capture": "sha256:8c534749b0b6da1f135a54a79e9c127ede2f15e5a87aba25a0d3baa1ab9cbdaf",
+      "quote": "Serverless inference is prepaid only. To send serverless inference requests, you need promotional credits or a positive prepaid balance in your Inference and Agents balance or your account prepayment balance, and we deduct usage charges as you incur them."
+    },
+    {
+      "url": "https://docs.digitalocean.com/products/inference/details/pricing/",
+      "date": "2026-11-24",
+      "proved": "the published rate at its shape is per 1M tokens, with the cheapest open model at $0.10 input / $0.70 output",
+      "capture": "sha256:8c534749b0b6da1f135a54a79e9c127ede2f15e5a87aba25a0d3baa1ab9cbdaf",
+      "quote": "USD per 1 million tokens. Standard, All prompts: Input $0.10; Output $0.70."
+    },
+    {
+      "url": "https://docs.digitalocean.com/products/inference/details/pricing/",
+      "date": "2026-11-24",
+      "proved": "dedicated inference is priced per GPU-hour, from $2.59 an hour",
+      "capture": "sha256:8c534749b0b6da1f135a54a79e9c127ede2f15e5a87aba25a0d3baa1ab9cbdaf",
+      "quote": "Dedicated Inference is billed per GPU-hour based on the GPU you use."
+    },
+    {
+      "url": "https://docs.digitalocean.com/products/inference/details/pricing/",
+      "date": "2026-11-24",
+      "proved": "web search and web fetch carry per-1000-request charges on top of per-token inference",
+      "capture": "sha256:8c534749b0b6da1f135a54a79e9c127ede2f15e5a87aba25a0d3baa1ab9cbdaf",
+      "quote": "Web search: $10 per 1000 requests, not charged when using Anthropic models"
+    },
+    {
+      "url": "https://docs.digitalocean.com/products/inference/details/limits/",
+      "date": "2026-11-24",
+      "proved": "the Tier 1 per-minute request and token ceilings and the daily playground token cap",
+      "capture": "sha256:a94511b2d379bcd196781ed93bc2249eef3b54d65707e07e083713bdde5d19f5",
+      "quote": "| Tier 1     | Up to 120                 | Up to 1.5M              | 50K"
+    },
+    {
+      "url": "https://docs.digitalocean.com/products/inference/details/limits/",
+      "date": "2026-11-24",
+      "proved": "published limits are shared-capacity maximums, not guarantees, and requests can be rejected with 503",
+      "capture": "sha256:a94511b2d379bcd196781ed93bc2249eef3b54d65707e07e083713bdde5d19f5",
+      "quote": "These limits are maximums on shared capacity, not guarantees."
+    },
+    {
+      "url": "https://docs.digitalocean.com/products/inference/how-to/manage-serverless-inference-prepayment/",
+      "date": "2026-11-24",
+      "proved": "the Inference and Agents balance is funded with a preset $5 to $500 and auto-reload is on by default",
+      "capture": "sha256:f7ea0ff496d46ce92c48b8e8018ac9cae0f2572d168eb68f9cd35946b44171ca",
+      "quote": "click **Add funds**, then choose a preset amount from $5 to $500. Auto-reload is on by default on that page"
+    },
+    {
+      "url": "https://models.dev/providers/digitalocean",
+      "date": "2026-11-24",
+      "proved": "the provider id, API base and model count published by models.dev",
+      "capture": "sha256:20544b84f3c3ffa28505beb539e49dbdcbb8f887d7bc87c1d9bd2c20aecc55f8",
+      "quote": "https://inference.do-ai.run/v1"
+    },
+    {
+      "url": "https://docs.digitalocean.com/products/inference/getting-started/quickstart/",
+      "date": "2026-11-24",
+      "proved": "the inference endpoint is used as a drop-in proxy for coding agents and needs a model access key",
+      "capture": "sha256:3d6e0c40a8f9cae32720ca9ce06412a95dd5175db365d2273fded5ba021c6157",
+      "quote": "Coding agents, such as Codex and Claude Code, can use the inference endpoints `https://inference.do-ai.run` as a drop-in proxy to run inference requests on DigitalOcean."
+    },
+    {
+      "url": "https://cloud.digitalocean.com/registrations/new",
+      "date": "2026-11-24",
+      "proved": "the signup page offers Google, GitHub and email registration",
+      "capture": "sha256:2149151b103573096e229a9d89a030962fea2e1b96e517dc12bc727de735b659",
+      "quote": "Sign Up with Google"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-24T10:11:14.707Z",
+  "price_per_tb_month": null,
+  "notes": "Hosted OpenAI-compatible inference across 88 models, billed per 1M tokens (displayed) per 1,000 tokens (billed) from $0.10/$0.70 for gpt-oss-120b, or per GPU-hour for dedicated deployments. Serverless requests are prepaid only; the Inference and Agents balance is funded $5 to $500 with auto-reload on by default. This is a separate offer from the existing Droplet, GPU Droplet and Harness Runtime records, and no standing free tier is published on the inference pages.",
+  "extras": {
+    "shape": {
+      "vcpu": null,
+      "ram_gib": null,
+      "disk_gib": null,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "serverless token billing; dedicated deployments use AMD MI300X/MI325X/MI350X or NVIDIA H100/H200/B300 GPUs at $2.59-$83.10 per hour"
+    },
+    "billing_model": "usage-based per 1M tokens billed per 1,000, prepaid balance required; dedicated per GPU-hour",
+    "free_tier_kind": "none-published",
+    "term": "pay as you go against prepaid funds",
+    "price_arithmetic": "gpt-oss-120b input $0.10 per 1M tokens and output $0.70 per 1M tokens; $5 minimum fund covers 50M input tokens at that rate",
+    "status": "live, prepaid only",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": null,
+      "ports": "a synchronous and an asynchronous serverless endpoint; agent endpoints can be made public without a key",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "Tier 1 up to 120 RPM and 1.5M TPM; batch jobs target a 24-hour completion window"
+    }
+  }
+}
