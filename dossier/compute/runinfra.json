@@ -1,0 +1,169 @@
+{
+  "topic": "compute",
+  "slug": "runinfra",
+  "provider": "RunInfra",
+  "url": "https://runinfra.ai/pricing",
+  "category": "inference API",
+  "tier": "Pay-as-you-go credits (USD 1 free on signup)",
+  "free_tier": {
+    "stated": "$1 free for a new account. A workspace has one balance, and one credit is USD 1. Two things add to it: the free signup credit of USD 1, once per account, which never expires, and top-ups from USD 5, which last one year from purchase. At zero balance, calls answer 402 and are not billed.",
+    "unit": "credits",
+    "metered_on": "none",
+    "source_url": "https://runinfra.ai/pricing",
+    "read_on": "2026-11-24",
+    "notes": "one-time signup credit, not recurring: at the listed DeepSeek V4.1 Flash input price of USD 0.15 per 1M tokens, USD 1 buys about 6.7M input tokens if spent on input alone"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is API tokens and prepaid credits, not stored objects.",
+    "bytes": null,
+    "source_url": "https://runinfra.ai/pricing",
+    "notes": "machine/API record; no per-object cap published"
+  },
+  "retention": {
+    "stated": "Zero data retention by default. Request and response content is never used for training.",
+    "days": 0,
+    "source_url": "https://runinfra.ai/pricing",
+    "notes": "the gateway keeps usage metadata for billing, not prompt text"
+  },
+  "egress": {
+    "terms": "not published: the pricing and account pages state zero data retention and prompt caching but no egress allowance, quota or per-TB price.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://runinfra.ai/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "OpenAI-compatible Chat Completions at /v1/chat/completions and Anthropic-compatible Messages at /v1/messages through one workspace key, plus the runinfra command-line tool for setting up coding agents.",
+  "endpoint": "https://api.runinfra.ai/v1",
+  "tooling": "the user installs an OpenAI- or Anthropic-compatible SDK or the runinfra CLI and connects to the hosted API; no server binary is run by the user and no hardware is owned.",
+  "chaining": "One key reaches the OpenAI-compatible and Anthropic-compatible routes, so an existing agent loop can be pointed at RunInfra; the free credit is spendable on both, but the 10,000-requests-per-minute key limit and the one-time USD 1 balance bind first.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "10,000 requests per minute per key before the first purchase; 50,000 after a purchase from USD 5; 200,000 at USD 200 in total purchases. The signup credit does not raise the limit.",
+      "source": "https://www.rightnowai.co/docs/open-models/rate-limits"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "USD 1 in credit once on signup, never expiring; top-ups from USD 5. At zero balance, calls answer 402 and are not billed.",
+      "source": "https://runinfra.ai/pricing"
+    }
+  ],
+  "limits_note": "Tokens per minute are each model's own default before USD 50 in purchases, then at least 20,000,000 per minute at USD 50 and no practical limit at USD 200. Concurrent requests are about a quarter of each model before the first purchase.",
+  "binding": "volume-quota",
+  "binding_note": "The one-time USD 1 balance is spent before 10,000 requests a minute is reached at ordinary model prices; after a top-up the request-rate limit becomes the next constraint.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "Sign in with Google, GitHub or an email link, at the email address you already use. If you have no account yet, the first sign-in creates one, with no card required and USD 1 in credit. SAML or OIDC single sign-on is not available today. A card is asked only for a top-up from USD 5, not for the free credit.",
+    "country": null
+  },
+  "reliability_note": "Requests return 402 at zero balance, and a rate-limited request returns 429 with Retry-After; shared-model congestion errors are not cleared by purchases.",
+  "confidence": "documented",
+  "confidence_note": "The free credit, token rates, key rate limits, sign-in methods and egress silence are quoted from the vendor's own pricing, docs and account pages read on 2026-11-24; the API base URL was probed and answered 401 without a key.",
+  "evidence": [
+    {
+      "url": "https://runinfra.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "a new account receives USD 1 in free credit",
+      "capture": "sha256:003ad852766243158d6351755c1a9448740d02b2a88b549c088eb2cc55125457",
+      "quote": "$1 free for a new account"
+    },
+    {
+      "url": "https://runinfra.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the starting request-rate ceiling is 10,000 requests a minute per key, rising with purchases",
+      "capture": "sha256:003ad852766243158d6351755c1a9448740d02b2a88b549c088eb2cc55125457",
+      "quote": "10,000 requests a minute per key to start, 50,000 after your first purchase, 200,000 once your purchases reach USD 200."
+    },
+    {
+      "url": "https://runinfra.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the vendor states zero data retention by default and no training on content",
+      "capture": "sha256:003ad852766243158d6351755c1a9448740d02b2a88b549c088eb2cc55125457",
+      "quote": "Zero data retention by default"
+    },
+    {
+      "url": "https://runinfra.ai/docs/introduction/plans",
+      "date": "2026-11-24",
+      "proved": "the free signup credit is USD 1 once per account and never expires, top-ups start at USD 5, and a card or USDC pays them",
+      "capture": "sha256:ffa1be0e89f8f525d95d100edae35bcb481d4a70d0caba03b7d918fe0e0277e3",
+      "quote": "Free on signup | USD 1, once per account, never expires"
+    },
+    {
+      "url": "https://runinfra.ai/docs/introduction/plans",
+      "date": "2026-11-24",
+      "proved": "top-ups are paid by card or USDC, so a card is not needed for the free credit",
+      "capture": "sha256:ffa1be0e89f8f525d95d100edae35bcb481d4a70d0caba03b7d918fe0e0277e3",
+      "quote": "How you pay | Card, or USDC for one-time top-ups up to USD 10,000"
+    },
+    {
+      "url": "https://www.rightnowai.co/docs/open-models/rate-limits",
+      "date": "2026-11-24",
+      "proved": "the USD 0 tier is 10,000 requests a minute per key and the signup credit does not raise limits",
+      "capture": "sha256:2b61526f913d37fa32db9c4f50fd7b6bc14a46ac23fe14f64fcd61b19cf4bc73",
+      "quote": "USD 0 | 10,000 | The model's own limit | About a quarter of the model"
+    },
+    {
+      "url": "https://runinfra.ai/docs/faq/account",
+      "date": "2026-11-24",
+      "proved": "sign-in uses Google, GitHub or an email link, creates an account with no card and USD 1 in credit",
+      "capture": "sha256:30f7ae9140a7ddeb3625b542e79ef5b2ca9abd525d2c89aa225a856154c48859",
+      "quote": "Sign in with Google, GitHub or an email link, at the email address you already use. If you have no account yet, the first sign-in creates one, with no card required and USD 1 in credit. An expired link says so with a resend option."
+    },
+    {
+      "url": "https://runinfra.ai/docs/faq/account",
+      "date": "2026-11-24",
+      "proved": "no SAML or OIDC single sign-on is offered today",
+      "capture": "sha256:30f7ae9140a7ddeb3625b542e79ef5b2ca9abd525d2c89aa225a856154c48859",
+      "quote": "Sign-in today is Google, GitHub or an email link. SAML or OIDC single sign-on is not available today. If your company needs it, write to [support](https://www.rightnowai.co/docs/open-models/support)."
+    },
+    {
+      "url": "https://models.dev/providers/runinfra",
+      "date": "2026-11-24",
+      "proved": "the API base URL used by the provider is https://api.runinfra.ai/v1",
+      "capture": "sha256:65ea24cb9f0189115445a95762e9e1c60c785d4b65e7ae9493d33adc7f81527b",
+      "quote": "https://api.runinfra.ai/v1"
+    },
+    {
+      "url": "probe:https://api.runinfra.ai/v1/models",
+      "date": "2026-11-24",
+      "proved": "the model list endpoint answered 401 without a key",
+      "capture": "sha256:14bed25b6860535193bd5b5077688e9b16cce72eb859839bf0834165c4ff4a9a",
+      "quote": "\"status\": 401"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-24T10:11:15.041Z",
+  "price_per_tb_month": null,
+  "notes": "The free offer is a one-time USD 1 credit, not a recurring allowance, and the service is a paid-per-token hosted inference API. Token prices range from USD 0.05 per 1M input tokens on Nemotron 3.5 Lightning 30B to USD 1.60 on Kimi K3.1 Pro; cached input is cheaper. The API list needs a key (HTTP 401), so no endpoint was probed beyond reachability. A separate startups program offers up to USD 2,700 in credits after approval and is not the published free tier.",
+  "extras": {
+    "shape": {
+      "vcpu": null,
+      "ram_gib": null,
+      "disk_gib": null,
+      "gpu_class": "hosted open models, GPUs not exposed",
+      "gpu_count": null
+    },
+    "billing_model": "prepaid USD 1 signup credit then per-token payment or a monthly coding plan",
+    "free_tier_kind": "one-time-credit",
+    "term": "one-time credit never expires; top-ups last one year",
+    "status": "published on the current pricing page",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": null,
+      "ports": "not stated",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "10,000 requests a minute per key initially; limits rise with lifetime purchases"
+    }
+  }
+}
