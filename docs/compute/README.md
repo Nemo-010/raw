@@ -61,7 +61,7 @@ physical core is 2 vCPU, so the 2 vCPU / 4 GiB shape is one core plus four
 GiB: USD 0.2380 an hour. The USD 200 and USD 300 grants are one-time.
 
 <!-- generated:start topic=compute kind=totals fields=records,providers,recurring-credit,dead,qualifies labels=records,providers,recurring-credit,dead,qualifies -->
-records 1411; providers 1336; recurring-credit 10; dead 84; qualifies 499
+records 1510; providers 1434; recurring-credit 11; dead 84; qualifies 545
 <!-- generated:end -->
 
 **The binding constraint is time.** Across the sandbox class, what stops a
@@ -254,11 +254,11 @@ from the records.
 | confidence | Records |
 | --- | --- |
 | `measured` | 4 |
-| `documented` | 1207 |
-| `reported` | 179 |
+| `documented` | 1310 |
+| `reported` | 175 |
 | `inferred` | 6 |
 | `unverified` | 15 |
-| **all** | 1411 |
+| **all** | 1510 |
 <!-- generated:end -->
 
 ## Superseded claims
@@ -274,5 +274,103 @@ finds it and the gate's `links` check counts it as cited. A document that names 
 removes its row at the next render.
 
 <!-- generated:start topic=compute kind=uncited -->
-Every `measured` or `documented` record of this topic is named by a document.
+| record | provider | verdict | confidence |
+| --- | --- | --- | --- |
+| `agental` | agental | qualifies-with-caveat | documented |
+| `agnt-sandbox` | AGNT Sandbox | paid-only | documented |
+| `anona-compute` | Anona Compute | qualifies-with-caveat | documented |
+| `apify-ai-code-sandbox` | Apify AI Code Sandbox | qualifies-with-caveat | documented |
+| `appetize-io` | Appetize.io | qualifies-with-caveat | documented |
+| `argent-cloud-ios-simulator-runners` | Argent Cloud (iOS simulator runners) | paid-only | documented |
+| `avrea-sandboxes` | Avrea Sandboxes | qualifies-with-caveat | documented |
+| `aws-device-farm` | AWS Device Farm | trial-only | documented |
+| `berget-serverless-trial` | Berget.AI | qualifies-with-caveat | documented |
+| `blockrun-modal-sandbox` | BlockRun Modal Sandbox | paid-only | documented |
+| `boltz-api` | BoltzLabs | qualifies-with-caveat | documented |
+| `box-by-simular` | box by Simular | qualifies-with-caveat | documented |
+| `boxcompute` | BoxCompute | qualifies-with-caveat | documented |
+| `briq` | briq | qualifies-with-caveat | documented |
+| `browserstack-app-automate` | BrowserStack | paid-only | documented |
+| `buildfunctions` | Buildfunctions | qualifies-with-caveat | documented |
+| `burrowbox` | Burrowbox | paid-only | documented |
+| `cathedral` | Cathedral | paid-only | documented |
+| `chalk-compute-sandboxes` | Chalk Compute (Sandboxes) | paid-only | documented |
+| `cloudferro-sherlock` | CloudFerro Sherlock | paid-only | documented |
+| `cloudish` | Cloudish | qualifies-with-caveat | documented |
+| `codewire` | Codewire | paid-only | documented |
+| `corellium` | Corellium | trial-only | documented |
+| `dcdn-sandbox` | DCDN Sandbox (DCDN Cloud) | paid-only | documented |
+| `digitalocean-inference` | DigitalOcean Serverless Inference | paid-only | documented |
+| `e2b-desktop` | E2B | qualifies-with-caveat | documented |
+| `epho` | Epho | qualifies-with-caveat | documented |
+| `evroc` | evroc | paid-only | documented |
+| `firebase-test-lab` | Firebase Test Lab | qualifies-with-caveat | documented |
+| `gbox` | GBOX | qualifies-with-caveat | documented |
+| `genspark-sb-box` | Genspark SB-Box | paid-only | documented |
+| `genymotion-saas` | Genymotion | paid-only | documented |
+| `getmac` | GetMac | qualifies | documented |
+| `glasshand` | Glasshand | paid-only | documented |
+| `gmi-cloud-agentbox` | GMI Cloud Agentbox | paid-only | documented |
+| `gmi-cloud-inference` | GMI Cloud Inference | qualifies-with-caveat | documented |
+| `google-cloud-workstations` | Google Cloud Workstations | paid-only | documented |
+| `google-developer-device-platform` | Google Developer Device Platform | paid-only | documented |
+| `gravix-layer` | Gravix Layer | qualifies-with-caveat | documented |
+| `hetzner-inference-api` | Hetzner Inference API (experiment) | qualifies-with-caveat | documented |
+| `hpc-ai` | HPC-AI.COM | paid-only | documented |
+| `inngest-sandboxes` | Inngest Sandboxes | paid-only | documented |
+| `iteracompute` | IteraCompute | paid-only | documented |
+| `jilebi` | Jalebi | qualifies-with-caveat | documented |
+| `keln-sandboxes` | Keln Sandboxes | paid-only | documented |
+| `kobiton` | Kobiton | qualifies-with-caveat | documented |
+| `kosem` | kosem | qualifies-with-caveat | documented |
+| `kubi` | Kubi | paid-only | documented |
+| `lightcone-compute` | Lightcone | paid-only | documented |
+| `luxor-agent-cloud-sandbox` | Luxor Agent Cloud | qualifies-with-caveat | documented |
+| `macbox` | macbox | qualifies-with-caveat | documented |
+| `macrent` | MacRent | paid-only | documented |
+| `macrun` | MacRun | paid-only | documented |
+| `macswarm` | Macswarm | trial-only | documented |
+| `mandala-computer` | Mandala Computer | paid-only | documented |
+| `mobilebox` | Mobilebox | qualifies-with-caveat | documented |
+| `mobilerun` | Mobilerun | qualifies-with-caveat | documented |
+| `molted` | Molted | trial-only | documented |
+| `munito-sandboxes-trial` | Munito | trial-only | documented |
+| `my-remote-mac-daily-m4` | My Remote Mac | paid-only | documented |
+| `naive-free` | naïve | qualifies-with-caveat | documented |
+| `nirvana-agent-sandboxes` | Nirvana Labs | paid-only | documented |
+| `nodion-sandboxes` | Nodion | paid-only | documented |
+| `nomac` | NoMac | paid-only | documented |
+| `oblien` | Oblien | qualifies-with-caveat | documented |
+| `offstage` | offstage | qualifies-with-caveat | documented |
+| `openscale-sandboxes` | OpenScale Sandboxes | qualifies-with-caveat | documented |
+| `orble` | Orble | qualifies-with-caveat | documented |
+| `phonebox` | Phonebox | trial-only | documented |
+| `prime-inference` | Prime Inference | paid-only | documented |
+| `promigence` | Promigence | qualifies-with-caveat | documented |
+| `qiniu-las-sandbox` | Qiniu LAS Sandbox | fails-identity | documented |
+| `quave-one-direct` | Quave ONE | paid-only | documented |
+| `quivvo` | Quivvo | qualifies-with-caveat | documented |
+| `rayrun` | Rayrun | qualifies-with-caveat | documented |
+| `regolo-ai` | Regolo AI | trial-only | documented |
+| `roundfleet` | RoundFleet | paid-only | documented |
+| `runinfra` | RunInfra | trial-only | documented |
+| `sandbox-router` | Sandbox Router (ComputeSDK) | qualifies-with-caveat | documented |
+| `sandboxer` | Sandboxer | paid-only | documented |
+| `sandscale` | Sandscale | qualifies-with-caveat | documented |
+| `sauce-labs-free-trial` | Sauce Labs | trial-only | documented |
+| `semaphore-ci-macos` | Semaphore CI (macOS) | qualifies-with-caveat | documented |
+| `sendblue-sandboxes` | Sendblue Sandboxes | qualifies-with-caveat | documented |
+| `shark-magic` | Shark Magic | paid-only | documented |
+| `smol-cloud` | smol cloud | qualifies-with-caveat | documented |
+| `sufy-sandbox` | SUFY Sandbox | qualifies-with-caveat | documented |
+| `superhq-nanite` | SuperHQ (Nanite) | paid-only | documented |
+| `testmu-ai` | TestMu AI (formerly LambdaTest) | trial-only | documented |
+| `voidrun-sandboxes` | VoidRun | qualifies-with-caveat | documented |
+| `volcengine-vci-agent-sandbox` | Volcengine VCI Agent Sandbox | fails-identity | documented |
+| `watasu-sandboxes` | Watasu Sandboxes | qualifies-with-caveat | documented |
+| `wbx-sandbox` | WBX Sandbox | qualifies-with-caveat | documented |
+| `workpaper` | Workpaper | qualifies-with-caveat | documented |
+| `zode` | Zode | qualifies-with-caveat | documented |
+| `dory` | Dory (usedory.dev) (self-hosted) | qualifies-with-caveat | documented |
+| `groundbox` | Groundbox (self-hosted) | qualifies-with-caveat | documented |
 <!-- generated:end -->

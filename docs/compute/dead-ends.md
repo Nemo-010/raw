@@ -16,13 +16,13 @@ recorded dead for having no free tier is re-investigated for the wrong reason.
 | --- | --- |
 | `dead` | 84 |
 | `fails-egress` | 1 |
-| `fails-identity` | 151 |
+| `fails-identity` | 154 |
 | `fails-quota` | 23 |
-| `paid-only` | 520 |
-| `qualifies` | 51 |
-| `qualifies-with-caveat` | 448 |
-| `trial-only` | 133 |
-| **all** | 1411 |
+| `paid-only` | 557 |
+| `qualifies` | 52 |
+| `qualifies-with-caveat` | 493 |
+| `trial-only` | 146 |
+| **all** | 1510 |
 <!-- generated:end -->
 
 ## Withdrawn, with the sentence
