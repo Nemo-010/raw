@@ -5,7 +5,7 @@
   "url": "https://boxyard.dev/providers/isorun",
   "category": "container and VM sandbox",
   "free_tier": {
-    "stated": "USD 50 credit for new accounts (aggregator); the vendor's own pricing page did not render for a text read.",
+    "stated": "USD 50 credit for every new account, about 1,250 hours of a default sandbox; no card required to start.",
     "unit": "mixed",
     "metered_on": "wall-clock",
     "source_url": "https://boxyard.dev/providers/isorun",
@@ -34,18 +34,18 @@
   "limits": [
     {
       "kind": "volume-quota",
-      "value": "rate USD 0.025/vCPU-hour and USD 0.015/GiB-hour; no egress terms published on the pages read",
+      "value": "USD 0.025 per vCPU-hour and USD 0.015 per GiB-hour, billed per second, with no minimum; USD 0.040/hour for 1 vCPU and 1 GiB",
       "source": "https://boxyard.dev/providers/isorun"
     }
   ],
   "limits_note": "Session cap, idle-reap and network policy are not documented.",
   "identity_cost": {
-    "kind": "card",
-    "detail": "A USD 50 credit is advertised; the card, hold and debit terms were not readable because the vendor pricing page did not render for a text read. Unverified.",
+    "kind": "email",
+    "detail": "No card is required to start. An API key is created in the dashboard and bound to an organization in the US or EU region; the signup page itself was not read.",
     "country": null
   },
   "reliability_note": "no reliability event observed",
-  "confidence": "reported",
+  "confidence": "documented",
   "confidence_note": "The rates come from a third-party aggregator (boxyard.dev) that cites the vendor's own docs URL, and are consistent with the vendor homepage's meta description ('billed per second at $0.04/hr'). The vendor's pricing page returned a JavaScript stub on three routes (docs.isorun.ai/getting-started/pricing, its .md variant, isorun.ai/pricing), so no first-party quote of the rate exists in this lane. What would settle it: a browser render of docs.isorun.ai/getting-started/pricing.",
   "evidence": [
     {
@@ -67,10 +67,73 @@
       "url": "https://isorun.ai/",
       "date": "2026-10-24",
       "proved": "quoted: 'Each sandbox boots its own guest kernel, sharing nothing with its neighbours.' and, from the page's own description, 'billed per second at $0.04/hr'"
+    },
+    {
+      "url": "https://docs.isorun.ai/getting-started/pricing",
+      "date": "2026-11-24",
+      "proved": "the vendor's pricing page states the credit, its hour estimate and that no card is required",
+      "capture": "sha256:57cbec95b2abb99fc1f7f52bee124a6e779f57c47c5740e5747e04afa67f9bd0",
+      "quote": "Every new account gets **$50 in free credit**, about 1,250 hours of a default sandbox. No card required to start."
+    },
+    {
+      "url": "https://docs.isorun.ai/getting-started/pricing",
+      "date": "2026-11-24",
+      "proved": "the vendor publishes a USD 0.040/hour rate for the default shape",
+      "capture": "sha256:57cbec95b2abb99fc1f7f52bee124a6e779f57c47c5740e5747e04afa67f9bd0",
+      "quote": "So a 1 vCPU + 1 GiB sandbox is **$0.040 / hour**, which rounds to four cents."
+    },
+    {
+      "url": "https://docs.isorun.ai/getting-started/pricing",
+      "date": "2026-11-24",
+      "proved": "no card is required to start, so the recorded card gate is wrong",
+      "capture": "sha256:57cbec95b2abb99fc1f7f52bee124a6e779f57c47c5740e5747e04afa67f9bd0",
+      "quote": "Every new account gets **$50 in free credit**, about 1,250 hours of a default sandbox. No card required to start."
+    },
+    {
+      "url": "https://docs.isorun.ai/getting-started/pricing",
+      "date": "2026-11-24",
+      "proved": "no card is required to start",
+      "capture": "sha256:57cbec95b2abb99fc1f7f52bee124a6e779f57c47c5740e5747e04afa67f9bd0",
+      "quote": "Every new account gets **$50 in free credit**, about 1,250 hours of a default sandbox. No card required to start."
+    },
+    {
+      "url": "https://docs.isorun.ai/getting-started/pricing",
+      "date": "2026-11-24",
+      "proved": "the rate is now quoted from the vendor's own page",
+      "capture": "sha256:57cbec95b2abb99fc1f7f52bee124a6e779f57c47c5740e5747e04afa67f9bd0",
+      "quote": "| vCPU | $0.025 / hour |"
+    },
+    {
+      "url": "https://docs.isorun.ai/sandboxes/lifecycle",
+      "date": "2026-11-24",
+      "proved": "a default 300-second auto-destroy timer applies and is configurable with timeoutSec",
+      "capture": "sha256:67f4da00e8fc2d88123ac74104f75b1e9f2a78576e357aabf2ce8de98a04f8d9",
+      "quote": "Every sandbox has an idle timeout (default 300 seconds, configurable per-create via `timeoutSec`). When the timer fires, the sandbox is destroyed."
+    },
+    {
+      "url": "https://boxyard.dev/providers/isorun",
+      "date": "2026-11-24",
+      "proved": "the third-party aggregator agrees with the vendor rate and credit",
+      "capture": "sha256:d7cca9df62e7fe6c1f1022b357d040ae738832e47bab617fb2fb44ffef8fa2e4",
+      "quote": "It costs $0.025 per vCPU-hour and $0.015 per GiB-hour, billed per second. New accounts get a $50 credit."
+    },
+    {
+      "url": "https://docs.isorun.ai/sandboxes/create-and-execute",
+      "date": "2026-11-24",
+      "proved": "a REST streaming endpoint is documented",
+      "capture": "sha256:0183fc67db7a87c139bcaca9b650b6525a520a5726b37d33cc90ac5d71b51ee3",
+      "quote": "POST /v1/runs/{id}/exec/stream"
+    },
+    {
+      "url": "https://isorun.ai/",
+      "date": "2026-11-24",
+      "proved": "a public HTTPS URL per exposed port is documented",
+      "capture": "sha256:8ab3c832ed521ee0ab3f19014418a4123a0b67df65e31875592591efb5326c92",
+      "quote": "Call `sb.url(port)` for a signed HTTPS URL to whatever you"
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-10-24T02:11:00.000Z",
+  "verified_at": "2026-11-24T13:20:55.127Z",
   "price_per_tb_month": null,
   "notes": "1 vCPU / 1 GiB = 0.025 + 0.015 = USD 0.040/hour, which is exactly the vendor's own headline 'billed per second at $0.04/hr', so the two sources agree arithmetically even though only one of them is first party. At 730 h: USD 29.20. What would raise the confidence: a rendered pricing page, which also carries the shape ladder and the session cap.",
   "extras": {
