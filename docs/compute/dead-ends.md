@@ -18,10 +18,10 @@ recorded dead for having no free tier is re-investigated for the wrong reason.
 | `fails-egress` | 1 |
 | `fails-identity` | 154 |
 | `fails-quota` | 23 |
-| `paid-only` | 557 |
+| `paid-only` | 556 |
 | `qualifies` | 52 |
 | `qualifies-with-caveat` | 493 |
-| `trial-only` | 146 |
+| `trial-only` | 147 |
 | **all** | 1510 |
 <!-- generated:end -->
 

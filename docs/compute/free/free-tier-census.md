@@ -249,10 +249,10 @@ published. The verdict says the offer ends; the kind says how.
 | `fails-egress` | 1 |
 | `fails-identity` | 154 |
 | `fails-quota` | 23 |
-| `paid-only` | 557 |
+| `paid-only` | 556 |
 | `qualifies` | 52 |
 | `qualifies-with-caveat` | 493 |
-| `trial-only` | 146 |
+| `trial-only` | 147 |
 | **all** | 1510 |
 <!-- generated:end -->
 

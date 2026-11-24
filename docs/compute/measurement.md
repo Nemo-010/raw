@@ -536,7 +536,7 @@ breaking change.
 | Enterprise Compute Initia... | A SGD 150 million programme that passes clo... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/enterprise-compute-initiative.json` |
 | envs.net | a shell account on a Debian 13 host with 20... | qualifies-with-caveat | documented | not applicable: the unit is a m... | files in /tmp are tem... | email | `dossier/compute/envs-net.json` |
 | Epho | Epho's own page states a 'starting credit:... | qualifies-with-caveat | documented | Not an object store: the defaul... | Nothing idles, nothin... | email | `dossier/compute/epho.json` |
-| EQVPS | no free tier; Nano is USD 3.00 a month | qualifies-with-caveat | documented | not applicable: the unit is a m... | the server persists w... | anonymous | `dossier/compute/eqvps-nat-nano.json` |
+| EQVPS | no free tier; Nano is USD 3.00 a month | qualifies-with-caveat | documented | not applicable: the unit is a m... | the server persists w... | email | `dossier/compute/eqvps-nat-nano.json` |
 | Esperanto Technologies | Ceased operations, while its own homepage s... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | anonymous | `dossier/compute/esperanto-technologies.json` |
 | EthernetServers | 1 GB KVM VPS from the vendor's own plan tab... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/ethernetservers.json` |
 | Eurobyte | RUB 14 per day, RUB 290 per month or RUB 29... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/eurobyte.json` |
@@ -777,7 +777,7 @@ breaking change.
 | is_hosting | Lite (order page 2026-11-07): 1 Month USD 6... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/is-hosting.json` |
 | Isle | Free plan at $0 per month: 5 environment-ho... | qualifies-with-caveat | documented | Individual uploads and download... | not stated | email | `dossier/compute/isle.json` |
 | Islo | starting credits at signup with no card; a... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/islo.json` |
-| Isorun | USD 50 credit for every new account, about... | paid-only | documented | the ladder runs past 1 vCPU; th... | not established first... | email | `dossier/compute/isorun.json` |
+| Isorun | USD 50 credit for every new account, about... | trial-only | documented | the ladder runs past 1 vCPU; th... | not established first... | email | `dossier/compute/isorun.json` |
 | IT4Innovations Open Access | The 39th Open Access Grant Competition dist... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/it4innovations-open-access.json` |
 | IteraCompute | unverified: the free Qwen3.8-27B promotion... | paid-only | documented | not applicable: the unit is mod... | unused Auto tokens fr... | email | `dossier/compute/iteracompute.json` |
 | ITIDA StartIT / | USD 10,000 of AWS credit within a one-year... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/itida-startit.json` |
