@@ -5,9 +5,9 @@
   "url": "https://microsandbox.dev/pricing",
   "category": "container and VM sandbox",
   "free_tier": {
-    "stated": "a monthly pool of 5 vCPU-hours, 20 GiB-hours of memory and 20 GiB-hours of disk with a 1 GiB durable-storage cap, and a hard cap of 3 sandboxes at 1 vCPU, 512 MiB and 8 GiB of disk with no overage",
-    "unit": "hours",
-    "metered_on": "wall-clock",
+    "stated": "free trial: USD 10 one-time credit, 1 sandbox at a time, up to 2 vCPU and 1 GiB RAM, up to 32 GiB root disk, 100 services per org and 20 per sandbox; ephemeral with 1-hour sessions. Cloud access is by request (private beta) at USD 0 per trial. Builder is USD 20 a month with USD 20 of usage included",
+    "unit": "credits",
+    "metered_on": "none",
     "source_url": "https://microsandbox.dev/pricing",
     "read_on": "2026-10-22"
   },
@@ -24,34 +24,35 @@
     "notes": "Disk durability across instance stops and deletions is not documented."
   },
   "egress": {
-    "terms": "not published: the pricing page meters vCPU, memory, disk and durable storage and states no egress allowance or price; public internet access is on by default and can be cut to an allowlist or disabled",
+    "terms": "no egress allowance or price is published on the pricing page; the docs describe outbound network rules that can be restricted to allowed hosts. Persistent volumes are USD 0.15 per GiB-month and snapshots USD 0.08 per GiB-month",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
     "source_url": "https://microsandbox.dev/pricing"
   },
   "interface": [
-    "cli"
+    "cli",
+    "rest"
   ],
-  "interface_detail": "CLI (msb), and SDKs for Rust, TypeScript, Python and Go; with an API key the same SDK runs on microsandbox cloud; an MCP server exists",
+  "interface_detail": "CLI (msb), SDKs for Rust, TypeScript, Python, Go and Ruby, and REST endpoints over HTTPS at api.microsandbox.dev with an MSB_API_KEY bearer token; an MCP server card is published",
   "tooling": "not stated",
   "chaining": "not established",
   "limits": [
     {
       "kind": "request-rate",
-      "value": "5 vCPU-hours a month on the free pool, hard-capped with no overage",
+      "value": "USD 10 one-time trial credit; 1 sandbox at a time, up to 2 vCPU and 1 GiB RAM; ephemeral 1-hour sessions",
       "source": "https://microsandbox.dev/pricing"
     },
     {
       "kind": "per-object-cap",
-      "value": "1 GiB of durable storage and 3 sandboxes at 1 vCPU, 512 MiB and 8 GiB of disk",
+      "value": "up to 32 GiB root disk per sandbox; 100 services per org and 20 per sandbox; 1 sandbox at a time on the free trial",
       "source": "https://microsandbox.dev/pricing"
     }
   ],
   "limits_note": "Session cap, idle-reap and network policy are not documented.",
   "identity_cost": {
     "kind": "email",
-    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "detail": "a name, an email and a password are required at signup; no card or phone number appears on the signup page. Cloud access is by request through a waitlist that asks for an email",
     "country": null
   },
   "reliability_note": "no reliability event recorded in the source passes",
@@ -64,11 +65,6 @@
       "proved": "listed in the peli-cloud corpus card at commit f6a71ab0; the card is the source, not the vendor page"
     },
     {
-      "url": "https://microsandbox.dev/pricing",
-      "date": "2026-10-22",
-      "proved": "'every sandbox is a small computer, billed for the time it actually runs. plans bundle a monthly pool of compute' with a free pool of '5 vcpu-hours, 20 memory gib-hours, 20 disk gib-hours, 1 gib durable storage cap' described as 'hard cap. no overage. 3 sandboxes, each 1 vcpu, 512 mib, 8 gib disk', quoted"
-    },
-    {
       "url": "https://microsandbox.dev",
       "date": "2026-11-03",
       "proved": "egress is open by default and no allowance or price is stated",
@@ -76,22 +72,92 @@
       "quote": "by default, sandboxes can reach the public internet."
     },
     {
-      "url": "https://docs.microsandbox.dev/sdk/overview",
-      "date": "2026-11-03",
-      "proved": "the cloud is reached through the SDK with an API key",
-      "capture": "sha256:0eada3da3086a8277a215a45b2e6ec1dc36967da0d609b36ec2fee683b70a903",
-      "quote": "With an API key set, the same SDK runs sandboxes on [microsandbox cloud](https://docs.microsandbox.dev/cloud/overview.md) instead."
-    },
-    {
       "url": "https://docs.microsandbox.dev/changelog/2026-08-21.md",
       "date": "2026-11-18",
       "proved": "the page states the session clock and idle reap recorded here, or states that it publishes none",
       "capture": "sha256:46ac6305bdc5728cc0454fe271c4d96487a7ec950c7d7c458215ce165d18803c",
       "quote": "SSH inactivity timeout keeps its 10-minute default, but you can now change it."
+    },
+    {
+      "url": "https://microsandbox.dev/pricing",
+      "date": "2026-11-24",
+      "proved": "the free offer is a USD 10 one-time trial credit, not a monthly compute pool",
+      "capture": "sha256:108c642d87a113db477bdd3b5abda755b8fd0e55faf91500f89db6b224614236",
+      "quote": "free trial  |  $0/trial  |  $10 one-time credit"
+    },
+    {
+      "url": "https://microsandbox.dev/pricing",
+      "date": "2026-11-24",
+      "proved": "the free allowance is denominated in USD credit, not compute hours",
+      "capture": "sha256:108c642d87a113db477bdd3b5abda755b8fd0e55faf91500f89db6b224614236",
+      "quote": "$10 one-time credit"
+    },
+    {
+      "url": "https://microsandbox.dev/pricing",
+      "date": "2026-11-24",
+      "proved": "the free allowance is a one-time credit with no stated metering basis",
+      "capture": "sha256:108c642d87a113db477bdd3b5abda755b8fd0e55faf91500f89db6b224614236",
+      "quote": "free trial  |  $0/trial  |  $10 one-time credit"
+    },
+    {
+      "url": "https://microsandbox.dev/pricing",
+      "date": "2026-11-24",
+      "proved": "the free trial caps sessions at one hour and runs one sandbox at a time",
+      "capture": "sha256:108c642d87a113db477bdd3b5abda755b8fd0e55faf91500f89db6b224614236",
+      "quote": "ephemeral · 1-hour sessions"
+    },
+    {
+      "url": "https://microsandbox.dev/pricing",
+      "date": "2026-11-24",
+      "proved": "the free trial root disk ceiling is 32 GiB, not 8 GiB",
+      "capture": "sha256:108c642d87a113db477bdd3b5abda755b8fd0e55faf91500f89db6b224614236",
+      "quote": "up to 32 gib root disk"
+    },
+    {
+      "url": "https://microsandbox.dev/signup?plan=free",
+      "date": "2026-11-24",
+      "proved": "the signup page asks for an email address",
+      "capture": "sha256:af792fcbd6069289071812c98eea734dfb794c8c9b6271aaf332c4ba1bbbf2f7",
+      "quote": "email"
+    },
+    {
+      "url": "https://microsandbox.dev/signup?plan=free",
+      "date": "2026-11-24",
+      "proved": "the signup form requires a password of 8 to 128 characters",
+      "capture": "sha256:af792fcbd6069289071812c98eea734dfb794c8c9b6271aaf332c4ba1bbbf2f7",
+      "quote": "password8 to 128 characters"
+    },
+    {
+      "url": "https://microsandbox.dev/pricing",
+      "date": "2026-11-24",
+      "proved": "the pricing page prices persistent volumes but publishes no egress line",
+      "capture": "sha256:108c642d87a113db477bdd3b5abda755b8fd0e55faf91500f89db6b224614236",
+      "quote": "1 gib persistent volumes | $0.15/month | $0.15/month"
+    },
+    {
+      "url": "https://docs.microsandbox.dev/cloud/overview.md",
+      "date": "2026-11-24",
+      "proved": "the managed cloud exposes a documented API reference and a dashboard",
+      "capture": "sha256:3c92bb83fec033552ec16db119fd8e22ea715e9c7410501fbf491e7c8c8344a8",
+      "quote": "[API reference](https://docs.microsandbox.dev/api-reference/overview.md)"
+    },
+    {
+      "url": "https://docs.microsandbox.dev/cloud/connect.md",
+      "date": "2026-11-24",
+      "proved": "the managed cloud is driven through a documented REST API and CLI",
+      "capture": "sha256:76743991579d8edcfba70db317df4d916b91d52d6af8e39dfbec5ac289f9680a",
+      "quote": "See [context commands](https://docs.microsandbox.dev/cli/management.md#msb-context) for JSON output and troubleshooting."
+    },
+    {
+      "url": "https://microsandbox.dev/pricing",
+      "date": "2026-11-24",
+      "proved": "paid tiers convert their monthly fee to usage credit and unused credit does not roll over",
+      "capture": "sha256:108c642d87a113db477bdd3b5abda755b8fd0e55faf91500f89db6b224614236",
+      "quote": "your monthly payment becomes usage credit. extra usage is billed at the rates below. monthly credit does not roll over."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-18T04:45:10.714Z",
+  "verified_at": "2026-11-24T13:20:56.539Z",
   "price_per_tb_month": null,
   "notes": "",
   "extras": {
