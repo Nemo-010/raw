@@ -1,0 +1,215 @@
+{
+  "topic": "compute",
+  "slug": "aws-device-farm",
+  "provider": "AWS Device Farm",
+  "url": "https://aws.amazon.com/device-farm/pricing/",
+  "category": "hosted real-device and browser test farm",
+  "tier": "Metered pay-as-you-go",
+  "free_tier": {
+    "stated": "A one-time trial of 1,000 device minutes, or 250 device minutes as the standard allowance; the trial does not renew, and usage after it is USD 0.17 per device minute.",
+    "unit": "minutes",
+    "metered_on": "wall-clock",
+    "source_url": "https://aws.amazon.com/device-farm/pricing/",
+    "read_on": "2026-11-24",
+    "notes": "The pricing page notes that 1,000 minutes is a limited-time trial in place of the standard 250 minutes, and the FAQ states that the trial is one-time and does not renew."
+  },
+  "per_object_cap": {
+    "stated": "Uploaded app or test archives are capped at 4 GB; generated video and device logs are each truncated at 1 GB and cumulative artifacts at 4 GB",
+    "bytes": 4294967296,
+    "source_url": "https://docs.aws.amazon.com/devicefarm/latest/developerguide/limits.html",
+    "notes": "The 4 GB figure is the per-file upload cap; artifact totals above 4 GB may drop video, logs or custom artifacts."
+  },
+  "retention": {
+    "stated": "Apps and test packages are automatically removed after 30 days; logs, video recordings and other artifacts are stored 400 days; devices are cleaned between sessions and data can persist in some cases.",
+    "days": 30,
+    "source_url": "https://aws.amazon.com/device-farm/faqs/",
+    "notes": "The 30 days applies to uploaded apps and test packages, not to test artifacts, which are kept 400 days."
+  },
+  "egress": {
+    "terms": "All devices have internet connectivity over WiFi; traffic to internal systems can be allow-listed from 54.244.50.32-54.244.50.63, and device traffic is shaped by a chosen network profile. No separate per-GB egress price is published; device minutes are the meter.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://aws.amazon.com/device-farm/faqs/"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "browser"
+  ],
+  "interface_detail": "A console for scheduling runs and remote access, an HTTPS API with AWS SDKs, a Jenkins plug-in and a Gradle plug-in; Appium, XCTest/XCUITest and instrumentation frameworks drive the devices.",
+  "endpoint": "devicefarm.us-west-2.amazonaws.com",
+  "tooling": "the AWS console, AWS CLI purchase-offering and list-offerings commands, the Device Farm API and AWS SDKs, a Jenkins plug-in and a Gradle plug-in; Device Connect bridges local adb to devices in us-west-2.",
+  "chaining": "A CI job uploads an app and test package, schedules a run over a device pool and downloads reports, screenshots and video; because uploaded packages are removed after 30 days, results that must outlive that window need a separate storage record.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "at most 5 devices tested simultaneously by default on metered use; remote-access concurrency quota is 2 and metered concurrency can be raised on request",
+      "source": "https://docs.aws.amazon.com/devicefarm/latest/developerguide/limits.html"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "a 150-minute hard limit on an automated test run and on a remote access session",
+      "source": "https://docs.aws.amazon.com/devicefarm/latest/developerguide/limits.html"
+    },
+    {
+      "kind": "request-rate",
+      "value": "a maximum of 250 in-flight jobs per account, a soft limit; runs remain queued at most 24 hours",
+      "source": "https://docs.aws.amazon.com/devicefarm/latest/developerguide/limits.html"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "4 GB maximum app upload, with video and device logs truncated at 1 GB each",
+      "source": "https://docs.aws.amazon.com/devicefarm/latest/developerguide/limits.html"
+    },
+    {
+      "kind": "write-gated",
+      "value": "iOS simulators always bill metered and cannot use unmetered slots; an account must be approved to purchase the requested number of device slots",
+      "source": "https://docs.aws.amazon.com/devicefarm/latest/developerguide/how-to-purchase-device-slots.html"
+    }
+  ],
+  "limits_note": "Unmetered plans start at USD 250.00 per device slot per month, priced per usage type and device family; private devices start at USD 200 a month; desktop browser tests are USD 0.005 per instance minute.",
+  "binding": "request-rate",
+  "binding_note": "The 1,000 trial device minutes are consumed in parallel across devices, so the default concurrency of five devices running for up to 150 minutes each spends a long run fastest; concurrency and the per-run 150-minute cap bind before the file size caps.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "An AWS account needs a root email address and a phone number verified by SMS, and the advanced sign-up requires a valid payment method before it can proceed; Device Farm further needs an IAM user with permission and the service is available only in us-west-2. Private device and slot purchases are billed to that account.",
+    "country": null
+  },
+  "reliability_note": "Test runs and remote sessions end at 150 minutes, runs queued over 24 hours are dropped, iOS apps are re-signed with a wildcard profile which removes several entitlements, and data can persist between sessions in some cases.",
+  "confidence": "documented",
+  "confidence_note": "The price, trial and plan floors come from the provider pricing page and FAQ read 2026-11-24; limits from the developer guide, identity from the AWS sign-up docs, and egress from the FAQ and device support page.",
+  "evidence": [
+    {
+      "url": "https://aws.amazon.com/device-farm/pricing/",
+      "date": "2026-11-24",
+      "proved": "the metered rate is USD 0.17 per device minute",
+      "capture": "sha256:f21861a682df60fc57229b841db6ae96b1f26f0738058496aec57c0e7eb241ca",
+      "quote": "**$0.17 / DEVICE MINUTE**"
+    },
+    {
+      "url": "https://aws.amazon.com/device-farm/pricing/",
+      "date": "2026-11-24",
+      "proved": "the service opens with a one-time trial of 1,000 device minutes",
+      "capture": "sha256:f21861a682df60fc57229b841db6ae96b1f26f0738058496aec57c0e7eb241ca",
+      "quote": "Device Farm comes with a one-time free trial of 1,000 device minutes."
+    },
+    {
+      "url": "https://aws.amazon.com/device-farm/pricing/",
+      "date": "2026-11-24",
+      "proved": "unmetered plans start at USD 250 per device slot per month",
+      "capture": "sha256:f21861a682df60fc57229b841db6ae96b1f26f0738058496aec57c0e7eb241ca",
+      "quote": "Unmetered pricing is based on the number of device slots you purchase for each usage type (automated test or remote access) and device family (Android or iOS) and are priced at $250.00 per slot per month."
+    },
+    {
+      "url": "https://aws.amazon.com/device-farm/pricing/",
+      "date": "2026-11-24",
+      "proved": "private devices start at USD 200 a month",
+      "capture": "sha256:f21861a682df60fc57229b841db6ae96b1f26f0738058496aec57c0e7eb241ca",
+      "quote": "STARTS AT $200/MONTH."
+    },
+    {
+      "url": "https://aws.amazon.com/device-farm/faqs/",
+      "date": "2026-11-24",
+      "proved": "the 1,000-minute trial is one-time and does not renew",
+      "capture": "sha256:16b30960fb3ec0b1574a3a02aebd4f909b8cfeadebe647efa176350c2b2ce0c0",
+      "quote": "Your first 1000 device minutes are provided free of charge. This is a one-time trial and does not renew."
+    },
+    {
+      "url": "https://aws.amazon.com/device-farm/faqs/",
+      "date": "2026-11-24",
+      "proved": "uploaded apps and tests are removed after 30 days while artifacts stay 400 days",
+      "capture": "sha256:16b30960fb3ec0b1574a3a02aebd4f909b8cfeadebe647efa176350c2b2ce0c0",
+      "quote": "Apps and test packages are automatically removed after 30 days. Logs, video recordings, and other artifacts are stored for 400 days."
+    },
+    {
+      "url": "https://aws.amazon.com/device-farm/faqs/",
+      "date": "2026-11-24",
+      "proved": "devices have WiFi internet access and internal systems can allow-list a fixed IP range",
+      "capture": "sha256:16b30960fb3ec0b1574a3a02aebd4f909b8cfeadebe647efa176350c2b2ce0c0",
+      "quote": "All devices have a WiFi connection with Internet access. If your systems are internal (that is, behind a corporate firewall), you can allow the IP range 54.244.50.32-54.244.50.63."
+    },
+    {
+      "url": "https://docs.aws.amazon.com/devicefarm/latest/developerguide/limits.html",
+      "date": "2026-11-24",
+      "proved": "automated test runs and remote access sessions are capped at 150 minutes",
+      "capture": "sha256:bc687b6247ee5e418800fae5fe3079af0daed49870812056a4becb96d8735a19",
+      "quote": "There is a 150-minute hard limit to the duration of an automated test run"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/devicefarm/latest/developerguide/limits.html",
+      "date": "2026-11-24",
+      "proved": "default simultaneous device count is five",
+      "capture": "sha256:bc687b6247ee5e418800fae5fe3079af0daed49870812056a4becb96d8735a19",
+      "quote": "The maximum number of devices that Device Farm will test simultaneously during a test run is five."
+    },
+    {
+      "url": "https://docs.aws.amazon.com/devicefarm/latest/developerguide/how-to-purchase-device-slots.html",
+      "date": "2026-11-24",
+      "proved": "iOS simulators always bill metered and an account may need approval to buy slots",
+      "capture": "sha256:b7e57cc27ad8618a5c564ba708437d881f76e10cf4d44f9513705cb4de5e911f",
+      "quote": "Tests and remote access sessions on iOS simulators always use metered billing."
+    },
+    {
+      "url": "https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-creating.html",
+      "date": "2026-11-24",
+      "proved": "an AWS account requires a phone number verified for identity",
+      "capture": "sha256:88f466dd7471c854615919418a49a3e71ba094285cc356de16ba1757c3b0cb70",
+      "quote": "Phone number – This number is used for identity verification purposes and to confirm the ownership of your account."
+    },
+    {
+      "url": "https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-creating.html",
+      "date": "2026-11-24",
+      "proved": "sign-up cannot proceed without a valid payment method",
+      "capture": "sha256:88f466dd7471c854615919418a49a3e71ba094285cc356de16ba1757c3b0cb70",
+      "quote": "You can't proceed with the sign-up process until you add a valid payment method."
+    },
+    {
+      "url": "https://docs.aws.amazon.com/devicefarm/latest/developerguide/getting-started.html",
+      "date": "2026-11-24",
+      "proved": "Device Farm needs an AWS account and an IAM user with permission, and is available only in us-west-2",
+      "capture": "sha256:429e32a5b34e19956cbeb11582046363d1e4dd30424b77634c3873d2837be18d",
+      "quote": "You need an AWS account and an AWS Identity and Access Management (IAM) user with permission to access Device Farm."
+    },
+    {
+      "url": "https://docs.aws.amazon.com/devicefarm/latest/developerguide/devices.html",
+      "date": "2026-11-24",
+      "proved": "devices have internet connectivity but no carrier connections",
+      "capture": "sha256:9322ef32988b2b1bc9652a67f6c3ffa39273524c252d7ea346d3ddc0174582e8",
+      "quote": "All devices have internet connectivity. They do not have carrier connections and cannot make phone calls or send SMS messages."
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-24T10:11:14.607Z",
+  "price_per_tb_month": null,
+  "notes": "A one-time 1,000 device-minute trial on real iOS and Android devices at USD 0.17 a minute afterwards; unmetered slots start at USD 250 a month and private devices at USD 200. An AWS account with a verified phone and a card, plus an IAM user, is required before any test can run.",
+  "extras": {
+    "shape": {
+      "vcpu": null,
+      "ram_gib": null,
+      "disk_gib": null,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "real iOS and Android devices and desktop browser instances hosted by AWS; individual device hardware is enumerated in the device list and varies by model"
+    },
+    "billing_model": "one-time device-minute trial, then metered per device minute or flat monthly device slots",
+    "free_tier_kind": "one-time trial",
+    "term": "month-to-month for unmetered slots, per-minute usage otherwise",
+    "price_arithmetic": "1,000 trial device minutes, then USD 0.17 per device minute; USD 250.00 per unmetered slot per month; private devices from USD 200 a month",
+    "status": "live, in us-west-2 only",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": false,
+      "ports": "no inbound listener published; internal systems allow-list 54.244.50.32-54.244.50.63",
+      "static_ip": true,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": 150,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "150-minute hard limit for both automated runs and remote access sessions"
+    }
+  }
+}
