@@ -67,7 +67,7 @@
   "binding_note": "A new org starts at a USD 0 balance and a create needs prepaid credit, and its free shape is capped at 2 vCPU and 2 GiB per sandbox with 4 vCPU running at once; that gate and cap bind before the per-second rate or the 7-day archive timer.",
   "identity_cost": {
     "kind": "email",
-    "detail": "An account is created in the dashboard at https://www.platinum.dev/dashboard#signup; an API key is minted there or through pt login. A verified email and USD 5 paid reach t1, and a verified email, a saved card and USD 25 paid reach t2. The home page advertises USD 10 free credit; the sign-up form itself was not read, so the exact fields are unverified. OAuth public client registration is anonymous but never creates a user, session or access token.",
+    "detail": "An account is created in the dashboard at https://www.platinum.dev/dashboard#signup; \"1. Open https://www.platinum.dev/dashboard#signup and create a Platinum account.\" \"Anonymous registration ... never creates a user, session, access token, or client secret.\" unverified: the signup form's exact fields could not be read on 2026-11-24.",
     "country": null
   },
   "reliability_note": "Only running sandboxes bill compute; stopped sandboxes bill disk and are archived after 7 days by default. At a zero balance, running sandboxes get a 60-minute grace period and are then stopped, never deleted, and disks keep billing so the balance can stay negative. A stop can save only the disk, in which case the next start cold-boots and processes are gone; each stop reports memory_saved and each start reports restore.",
@@ -164,10 +164,31 @@
       "proved": "anonymous OAuth client registration never creates a user, session, access token or client secret",
       "capture": "sha256:c227eb9e0282718019ce747660983c821eeaacaa3fb682a9b320c3baba1dbfdc",
       "quote": "The response contains `client_id`. Anonymous registration is rate limited and never creates a user, session, access token, or client secret."
+    },
+    {
+      "url": "https://www.platinum.dev/auth.md",
+      "date": "2026-11-24",
+      "proved": "a Platinum account is created in the dashboard signup panel; anonymous OAuth registration alone is not an account",
+      "capture": "sha256:c227eb9e0282718019ce747660983c821eeaacaa3fb682a9b320c3baba1dbfdc",
+      "quote": "1. Open https://www.platinum.dev/dashboard#signup and create a Platinum account."
+    },
+    {
+      "url": "https://www.platinum.dev/auth.md",
+      "date": "2026-11-24",
+      "proved": "anonymous OAuth registration is not a user account and grants no capacity",
+      "capture": "sha256:c227eb9e0282718019ce747660983c821eeaacaa3fb682a9b320c3baba1dbfdc",
+      "quote": "The response contains `client_id`. Anonymous registration is rate limited and never creates a user, session, access token, or client secret."
+    },
+    {
+      "url": "https://www.platinum.dev/auth.md",
+      "date": "2026-11-24",
+      "proved": "account creation happens at the dashboard signup panel",
+      "capture": "sha256:c227eb9e0282718019ce747660983c821eeaacaa3fb682a9b320c3baba1dbfdc",
+      "quote": "1. Open https://www.platinum.dev/dashboard#signup and create a Platinum account."
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-11-24T10:11:14.986Z",
+  "verified_at": "2026-11-24T18:47:21.391Z",
   "price_per_tb_month": null,
   "notes": "Platinum sells hardware-isolated Cloud Hypervisor microVM sandboxes for AI agents, billed per second while running. The unbundled rate is USD 0.0324 per vCPU-hour plus USD 0.0108 per GiB-hour of RAM, USD 0.108 an hour for 2 vCPU and 4 GiB; egress is USD 0.04 per GiB, paid from prepaid credit. A new org starts at a USD 0 balance and must add credit before it can create a sandbox, and its free shape is capped at 2 vCPU, 2 GiB and 10 GB per sandbox with 4 vCPU running at once, so credit and the free cap bind first. The home page advertises USD 10 free credit, but the sign-up form is behind a login wall and was not read; the exact credit and identity gate are unverified. An anonymous OAuth client registration grants no sandbox capacity. A self-hosted deployment of the control plane is documented separately and comes last behind this hosted offer.",
   "extras": {
