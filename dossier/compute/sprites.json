@@ -5,9 +5,9 @@
   "url": "https://fly.io/pricing",
   "category": "container and VM sandbox",
   "free_tier": {
-    "stated": "no free tier: compute bills by the second from $0.0030 an hour for a shared-cpu-1x with 256 MB, storage bills on what is provisioned, and a suspended Sprite uses no compute",
-    "unit": "none",
-    "metered_on": "none",
+    "stated": "Free plan gives $1 of one-time credit with no card, expiring after 7 days, and $5 of usage every month once a card is added; new Free organizations with a card also get a $30 Sprites credit. Compute bills by the second from $0.0030 an hour for a shared-cpu-1x with 256 MB",
+    "unit": "credits",
+    "metered_on": "wall-clock",
     "source_url": "https://fly.io/pricing",
     "read_on": "2026-10-22"
   },
@@ -24,16 +24,17 @@
     "notes": "Disk durability across instance stops and deletions is not documented."
   },
   "egress": {
-    "terms": "not published",
-    "metered": false,
-    "free_allowance": null,
+    "terms": "egress bills by destination: $0.02/GB in North America and Europe, $0.04/GB in Asia Pacific, Oceania and South America, and $0.12/GB in Africa and India; inbound transfer is free",
+    "metered": true,
+    "free_allowance": "inbound data transfer is free; the Free plan's $5 monthly usage and $30 Sprites credit can cover outbound transfer",
     "price_per_tb": null,
     "source_url": "https://fly.io/pricing"
   },
   "interface": [
-    "unknown"
+    "cli",
+    "browser"
   ],
-  "interface_detail": "Access interface not documented in published terms.",
+  "interface_detail": "the flyctl CLI runs sign-up, launch and status; apps are opened and managed in a browser dashboard; Machines are reachable over their published network addresses",
   "tooling": "not stated",
   "chaining": "not established",
   "limits": [
@@ -56,7 +57,7 @@
   "limits_note": "Session cap, idle-reap and network policy are not documented.",
   "identity_cost": {
     "kind": "email",
-    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "detail": "sign-up accepts an email address, a Google account or a GitHub account; $1 of credit is available with no card and $5 of monthly usage plus a $30 Sprites credit require a card",
     "country": null
   },
   "reliability_note": "no reliability event recorded in the source passes",
@@ -72,10 +73,87 @@
       "url": "https://fly.io/pricing",
       "date": "2026-10-22",
       "proved": "'Compute bills by the second, storage on what you provision. No plans to pick.' with 'Suspended, it uses no compute' and 'storage are metered per hour of active use; a Sprite that exists but does', plus the preset ladder from 'shared-cpu-1x · 256MB $0.0030 per hour' to 'performance-10x · 20GB $0.4584', quoted"
+    },
+    {
+      "url": "https://docs.fly.io/about/free-plan.md",
+      "date": "2026-11-24",
+      "proved": "the Free plan credit amounts and card gate",
+      "capture": "sha256:a94c3708f3c6e544421257aeffafb0875cc1d917c9222594e588401b7213afe9",
+      "quote": "Every new Fly.io account starts on the Free plan. You get \\$1 of credit no credit card, and \\$5 of usage every month once you add a card."
+    },
+    {
+      "url": "https://docs.fly.io/about/free-plan.md",
+      "date": "2026-11-24",
+      "proved": "the free allowance is a credit amount",
+      "capture": "sha256:a94c3708f3c6e544421257aeffafb0875cc1d917c9222594e588401b7213afe9",
+      "quote": "Without a credit card:** you get **\\$1 of credit** when you create your account. It"
+    },
+    {
+      "url": "https://fly.io/pricing",
+      "date": "2026-11-24",
+      "proved": "usage is metered by time",
+      "capture": "sha256:6d197e1c2f9cedc47f1e44e490462d4e39554adc04c2e91f6c5040a07ade39d9",
+      "quote": "Compute bills by the second, storage on what you provision."
+    },
+    {
+      "url": "https://fly.io/app/sign-up/?plan=free",
+      "date": "2026-11-24",
+      "proved": "the sign-up accepts email, Google or GitHub",
+      "capture": "sha256:dbb9e3db78167ce67ceeaed0e04fbc0369a9e570bfae34f7aa7e917e1ab6dba3",
+      "quote": "Create my Fly.io account. This opens the sign-up page in my browser, where I can use my email address, Google account, or GitHub account."
+    },
+    {
+      "url": "https://fly.io/pricing",
+      "date": "2026-11-24",
+      "proved": "the egress rate for North America and Europe",
+      "capture": "sha256:6d197e1c2f9cedc47f1e44e490462d4e39554adc04c2e91f6c5040a07ade39d9",
+      "quote": "| Egress, North America and Europe | $0.02 / GB |"
+    },
+    {
+      "url": "https://fly.io/pricing",
+      "date": "2026-11-24",
+      "proved": "egress is metered",
+      "capture": "sha256:6d197e1c2f9cedc47f1e44e490462d4e39554adc04c2e91f6c5040a07ade39d9",
+      "quote": "Egress, North America and Europe"
+    },
+    {
+      "url": "https://fly.io/pricing",
+      "date": "2026-11-24",
+      "proved": "the monthly credit can pay for bandwidth",
+      "capture": "sha256:6d197e1c2f9cedc47f1e44e490462d4e39554adc04c2e91f6c5040a07ade39d9",
+      "quote": "The $5 covers Machines, Sprites, volumes, bandwidth and networking, and a Developer Managed Postgres database."
+    },
+    {
+      "url": "https://docs.fly.io/about/free-plan.md",
+      "date": "2026-11-24",
+      "proved": "a free credit exists but continued use needs a card",
+      "capture": "sha256:a94c3708f3c6e544421257aeffafb0875cc1d917c9222594e588401b7213afe9",
+      "quote": "No. Without a card, you get a one-time \\$1 of credit that lasts 7 days. With a card, you get \\$5 of usage every month."
+    },
+    {
+      "url": "https://fly.io/app/sign-up/?plan=free",
+      "date": "2026-11-24",
+      "proved": "the documented client is the flyctl CLI",
+      "capture": "sha256:dbb9e3db78167ce67ceeaed0e04fbc0369a9e570bfae34f7aa7e917e1ab6dba3",
+      "quote": "1. Install flyctl:\n   curl -L https://fly.io/install.sh | sh"
+    },
+    {
+      "url": "https://fly.io/app/sign-up/?plan=free",
+      "date": "2026-11-24",
+      "proved": "flyctl deploys and manages apps",
+      "capture": "sha256:dbb9e3db78167ce67ceeaed0e04fbc0369a9e570bfae34f7aa7e917e1ab6dba3",
+      "quote": "3. From inside my project source directory, launch my app. This detects my framework, generates a Dockerfile and fly.toml if needed, and deploys it to Machines:"
+    },
+    {
+      "url": "https://fly.io/pricing",
+      "date": "2026-11-24",
+      "proved": "the machine price ladder is unchanged",
+      "capture": "sha256:6d197e1c2f9cedc47f1e44e490462d4e39554adc04c2e91f6c5040a07ade39d9",
+      "quote": "| shared-cpu-1x · 256MB | $0.0030 | $2.19 |"
     }
   ],
-  "verdict": "paid-only",
-  "verified_at": "2026-10-22T04:46:55.000Z",
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-24T13:21:04.871Z",
   "price_per_tb_month": null,
   "notes": "",
   "extras": {

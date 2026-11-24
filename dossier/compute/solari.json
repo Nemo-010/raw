@@ -5,7 +5,7 @@
   "url": "https://docs.getsolari.com/pricing",
   "category": "container and VM sandbox",
   "free_tier": {
-    "stated": "$3 of credits a month on a $0 plan, sessions capped at 1 hour, 3 concurrent browsers, 3 profiles and 1 day of replay retention",
+    "stated": "$3 of credits each month on a $0 plan, 3 concurrent browsers, 1 sandbox or desktop and a 1-hour maximum session; credits refill monthly, do not roll over and spending stops at the balance",
     "unit": "mixed",
     "metered_on": "wall-clock",
     "source_url": "https://docs.getsolari.com/pricing",
@@ -24,7 +24,7 @@
     "notes": "Disk durability across instance stops and deletions is not documented."
   },
   "egress": {
-    "terms": "not published: the pricing page (https://docs.getsolari.com/pricing) lists credits, hourly rate, session time, concurrency and replay retention, and no transfer allowance or per-GB price; a hardened sandbox has no outbound network at all",
+    "terms": "no transfer allowance or per-GB egress price is stated on the pricing page; snapshots bill at $0.05 per GB-month with the first 10 GB free, and browser proxies bill per GB on paid plans and are not available on Free",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
@@ -33,13 +33,13 @@
   "interface": [
     "rest"
   ],
-  "interface_detail": "HTTP API (api.getsolari.com) and SDKs for TypeScript, Python, Go, Rust and C++; VMs are also viewed and controlled over VNC; no CLI or SSH found in the docs read",
+  "interface_detail": "a REST HTTP API at api.getsolari.com with a bearer API key and SDKs for TypeScript, Python, Go, Rust and C++; browser sessions are driven over Playwright or CDP WebSockets",
   "tooling": "not stated",
   "chaining": "not established",
   "limits": [
     {
       "kind": "request-rate",
-      "value": "$3 of monthly credits on Free, drawn at $0.15 an hour",
+      "value": "$3 of monthly credits on Free, drawn at $0.15 per browser-hour or $0.0525 per vCPU-hour and $0.0165 per GB-hour for sandboxes",
       "source": "https://docs.getsolari.com/pricing"
     },
     {
@@ -56,7 +56,7 @@
   "limits_note": "Session cap, idle-reap and network policy are not documented.",
   "identity_cost": {
     "kind": "email",
-    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "detail": "the sign-up page states 'Free to start. No card. Pay only for what you use.' and offers a $30 credit with a work email; the console sign-up requires an account and no card; the API uses a console API key as a bearer token",
     "country": null
   },
   "reliability_note": "no reliability event recorded in the source passes",
@@ -93,10 +93,52 @@
       "proved": "SDKs exist in several languages",
       "capture": "sha256:b811b079f2992f43de140ed113e6c1bb2d865345627b24ae79d807f939f64274",
       "quote": "TypeScript and Python are at full parity"
+    },
+    {
+      "url": "https://docs.getsolari.com/pricing",
+      "date": "2026-11-24",
+      "proved": "monthly credits expire at month end",
+      "capture": "sha256:5912d7e96d28736c05c826b0647613ee3f19b48a368941a2e9331eed2147acbd",
+      "quote": "Credits refill each month and don't roll over."
+    },
+    {
+      "url": "https://console.getsolari.com/signup",
+      "date": "2026-11-24",
+      "proved": "an account is required but no card is required to start",
+      "capture": "sha256:3265754a846d522ff38d9a4f1509edc6d789a1f33814463420142f158c3b50ef",
+      "quote": "Free to start. No card. Pay only for what you use."
+    },
+    {
+      "url": "https://docs.getsolari.com/pricing",
+      "date": "2026-11-24",
+      "proved": "the published per-GB storage rate and the separately stated proxy rate",
+      "capture": "sha256:5912d7e96d28736c05c826b0647613ee3f19b48a368941a2e9331eed2147acbd",
+      "quote": "Stored [snapshots](https://docs.getsolari.com/snapshots) of sandboxes and VMs bill at $0.05 per GB-month, pro-rated daily, on every plan."
+    },
+    {
+      "url": "https://docs.getsolari.com/api-reference",
+      "date": "2026-11-24",
+      "proved": "the REST API and its authentication mechanism",
+      "capture": "sha256:9be1c60c268df42f061fb3e387fd1e35e98485cb625300c68cb489d7895d57a3",
+      "quote": "Every route takes your console API key as a bearer token."
+    },
+    {
+      "url": "https://docs.getsolari.com/pricing",
+      "date": "2026-11-24",
+      "proved": "the Free sandbox rate per vCPU-hour",
+      "capture": "sha256:5912d7e96d28736c05c826b0647613ee3f19b48a368941a2e9331eed2147acbd",
+      "quote": "| **Per vCPU-hour** | $0.0525 | $0.035 | $0.0245 | $0.0175 | $0.00525 |"
+    },
+    {
+      "url": "https://docs.getsolari.com/pricing",
+      "date": "2026-11-24",
+      "proved": "the session times and plan table are unchanged",
+      "capture": "sha256:5912d7e96d28736c05c826b0647613ee3f19b48a368941a2e9331eed2147acbd",
+      "quote": "| **Max session time** | 1 hour | 5 hours | 24 hours | Unlimited | Unlimited |"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-04T02:24:18.816Z",
+  "verified_at": "2026-11-24T13:21:04.870Z",
   "price_per_tb_month": null,
   "notes": "",
   "extras": {
