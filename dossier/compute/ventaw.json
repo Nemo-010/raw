@@ -1,0 +1,123 @@
+{
+  "topic": "compute",
+  "slug": "ventaw",
+  "provider": "Ventaw",
+  "url": "https://ventaw.mmogomedia.com/pricing",
+  "category": "sandbox and database cloud",
+  "tier": "API sandboxes (pricing unpublished)",
+  "free_tier": {
+    "stated": "unverified: the vendor's pricing page redirects to a parked domain and no published rate, credit or free allowance was readable on 2026-11-24",
+    "unit": "none",
+    "metered_on": "unstated",
+    "source_url": "https://ventaw.mmogomedia.com/pricing",
+    "read_on": "2026-11-24",
+    "notes": "Unknown is a value: the page could not be read, so no free tier is claimed."
+  },
+  "per_object_cap": {
+    "stated": "unverified: no per-object cap is published on a page that could be read",
+    "bytes": null,
+    "source_url": "https://ventaw.mmogomedia.com/pricing",
+    "notes": "The SDK documents file read, write and list operations in the sandbox workspace but states no size cap."
+  },
+  "retention": {
+    "stated": "unverified: no retention period for sandbox disks or databases is published on a page that could be read",
+    "days": null,
+    "source_url": "https://ventaw.mmogomedia.com/pricing",
+    "notes": "The SDK documents deleting a database and its data, but no automatic retention window."
+  },
+  "egress": {
+    "terms": "unverified: no egress allowance, price or quota is published on a page that could be read; the SDK documents an access_url for sandbox access but does not price data out",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://ventaw.mmogomedia.com/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "unknown"
+  ],
+  "interface_detail": "A JavaScript/TypeScript SDK (npm ventaw-sdk) and a LangChain toolkit (pip langchain-ventaw) drive sandboxes and databases over an API at https://ventaw.mmogomedia.com/v1; the SDK documents create, list, execute, file, git-diff and database methods.",
+  "endpoint": "https://ventaw.mmogomedia.com/v1",
+  "tooling": "npm ventaw-sdk and pip langchain-ventaw; an API key in config.apiKey or VENTAW_API_KEY. No rclone backend is documented.",
+  "chaining": "Ventaw sandboxes and PostgreSQL or Valkey databases are reachable from an agent framework, so they can compose with coding agents and CI; a hosted provider such as Nanite or TestMu AI remains a documented alternative while Ventaw's rate is unread.",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "unverified: the SDK requires an API key in config.apiKey or VENTAW_API_KEY; the identity and payment gate to obtain one is behind a sign-up that could not be read",
+      "source": "https://github.com/ventaw/nodejs"
+    }
+  ],
+  "limits_note": "unverified: the LangChain execute_command tool has a 30-second command timeout and a 180-second default wait for a sandbox or database to start, but no published quota, rate or concurrency cap was readable.",
+  "binding": "write-gated",
+  "binding_note": "The only documented gate is the API key needed to call the API; the rate, concurrency and identity gates are unverified because the pricing page redirects away.",
+  "identity_cost": {
+    "kind": "institution",
+    "detail": "unverified: the SDK requires an API key, but the sign-up page and the identity or payment needed to obtain one could not be read; the API host redirects to a parked domain. Institution is the nearest vocabulary term; the true identity requirement is unknown, not stated to be an institution.",
+    "country": null
+  },
+  "reliability_note": "The API host answered 302 to a parked domain and the pricing page answered 403 on 2026-11-24; current availability and stability are unverified.",
+  "confidence": "unverified",
+  "confidence_note": "The SDK pages were read and quoted, but the vendor's own pricing page could not be read through any route; every rate, quota and identity value is therefore unverified.",
+  "evidence": [
+    {
+      "url": "probe:ventaw.mmogomedia.com/pricing",
+      "date": "2026-11-24",
+      "proved": "the pricing page answered a 302 redirect to a parked domain, so no price or free tier could be read",
+      "capture": "sha256:c050b7d1e42ea030b9fd78443a3f1386bb5b405b11f5379a77fcba0dda432edd",
+      "quote": "\"status\": 302"
+    },
+    {
+      "url": "probe:ventaw.mmogomedia.com/v1/templates",
+      "date": "2026-11-24",
+      "proved": "the API host answered a 302 redirect to a parked domain, so the offer could not be exercised or its limits read",
+      "capture": "sha256:f839807c20e12fbdfc3192a21878f7ae5baf9e806a5a6906d0185d482b41eaf5",
+      "quote": "\"status\": 302"
+    },
+    {
+      "url": "https://github.com/ventaw/nodejs",
+      "date": "2026-11-24",
+      "proved": "the JavaScript SDK requires an API key and drives sandboxes over an API at ventaw.mmogomedia.com/v1",
+      "capture": "sha256:eb9220cf1d6a09141fb87a618d189ac405fb508aea79b409234c7b0ef2e306fd",
+      "quote": "config.apiKey = \"your-api-key\";"
+    },
+    {
+      "url": "https://github.com/ventaw/langchain-ventaw",
+      "date": "2026-11-24",
+      "proved": "the LangChain toolkit uses VENTAW_API_KEY to create sandboxes and PostgreSQL or Valkey databases",
+      "capture": "sha256:76ee78d07ee33bb1014b9ad772a04f6b6d60d870333b961605a8e98cb4a0a4af",
+      "quote": "export VENTAW_API_KEY=..."
+    },
+    {
+      "url": "https://ventaw.mmogomedia.com/pricing",
+      "date": "2026-11-24",
+      "proved": "the broker fetch reached a parked-domain page rather than the vendor's pricing page",
+      "capture": "sha256:13db4539040c908422bb4bf0c10d29cd8cabc606bd89ce3751bff4dd3d826d19",
+      "quote": "x-web-final-url: https://www.hugedomains.com/domain_profile.cfm?d=mmogomedia.com"
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-11-24T10:11:15.113Z",
+  "price_per_tb_month": null,
+  "notes": "Ventaw offers API sandboxes and databases with npm and pip SDKs, but its pricing page and API host redirected to a parked domain on 2026-11-24. The identity gate to obtain an API key is unknown, so the offer is not reachable as documented; the SDK's API-key requirement and the parked-domain answer are the finding. Institution is the nearest identity term for an unknown gate and is named as unknown in the field, so an open_question requests the true term.",
+  "extras": {
+    "billing_model": "unverified: not published on a readable page",
+    "free_tier_kind": "unverified",
+    "term": "unverified",
+    "network_out": {
+      "allow_outbound": null,
+      "allow_inbound_listen": null,
+      "ports": null,
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null,
+      "price": "unverified: not published on a readable page"
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": null,
+      "note": "the LangChain toolkit sets a 30-second command timeout and a 180-second default start wait"
+    }
+  }
+}
