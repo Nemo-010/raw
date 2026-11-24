@@ -5,7 +5,7 @@
   "url": "https://docs.tenstorrent.com/tools/index.html",
   "category": "browser host",
   "free_tier": {
-    "stated": "Tenstorrent's own documentation offers hardware-backed browser inference to people who own none of its hardware: 'No hardware yet? console.tenstorrent.com lets you run LLM inference and image and video generation in the browser, backed by Tenstorrent hardware.' The console catalogue entry adds 'Cloud hardware access and advanced workflows (deployments, agents) available in staged rollout.' The paid lane is Tenstorrent Cloud, sold per instance of 1 to 128 Wormhole or 1 to 32 Blackhole processors, up to 2 TB memory and 96 vCPU, price on request.",
+    "stated": "The docs state 'No hardware yet? console.tenstorrent.com lets you run LLM inference and image and video generation in the browser, backed by Tenstorrent hardware.' The console catalogue adds 'Cloud hardware access and advanced workflows (deployments, agents) available in staged rollout.' The Cloud Services Agreement says 'Certain Cloud Services and Models may be designated as fee-free or otherwise available without triggering a payment for a limited time or based on usage limits.' No catalogue price or free-tier size is published on the pages read.",
     "unit": "TiB",
     "metered_on": "wall-clock",
     "source_url": "https://docs.tenstorrent.com/tools/index.html",
@@ -25,16 +25,17 @@
     "notes": "a machine record: what is lost is the running process, not a stored object"
   },
   "egress": {
-    "terms": "not published: the page read states no egress allowance or price",
+    "terms": "The agreement states 'Fees are published at console.tenstorrent.com/dashboard/pricing, in the Console, or specified in an Order Form.' That pricing page answers a login wall and publishes no egress allowance or price to an anonymous reader.",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
     "source_url": "https://docs.tenstorrent.com/tools/index.html"
   },
   "interface": [
-    "unknown"
+    "browser",
+    "rest"
   ],
-  "interface_detail": "browser console; the cloud page also names remote access but states no protocol (SSH, REST or CLI), so the interface list stays unknown",
+  "interface_detail": "The docs describe an in-browser console; models.dev lists an OpenAI-compatible REST API at https://console.tenstorrent.com/v1.",
   "tooling": "not stated in the finding; the provider documents no client",
   "chaining": "The console is the cheapest way to touch Tensix silicon and it chains with the open-source TT-Metalium and TT-Forge stacks, which compile locally at no cost. It breaks at scale: anything beyond a demo needs a Cloud instance or the Koyeb rental, both billed.",
   "limits": [],
@@ -43,10 +44,10 @@
   "binding_note": "no rate, session length, token allowance or concurrency figure is published for the free console, so the constraint that fails first cannot be named.",
   "identity_cost": {
     "kind": "email",
-    "detail": "as stated by the provider's signup page",
+    "detail": "The Cloud Services Agreement states 'Customer must have an Account to use the Cloud Services'; the signup form itself was not read, so which identifiers the account asks for is unverified.",
     "country": null
   },
-  "reliability_note": "no reliability event observed",
+  "reliability_note": "unverified: https://console.tenstorrent.com/v1 answered HTTP 404 on 2026-11-24; the browser console was not exercised without an account",
   "confidence": "documented",
   "evidence": [
     {
@@ -82,10 +83,66 @@
       "proved": "the page was read on 2026-11-18 and states the egress term recorded here, or states none",
       "capture": "sha256:ae03a761353b4d8df44483b3f611f2eda3a38306942d9a6b40f3178145501248",
       "quote": "# Tools ## Hardware Monitoring"
+    },
+    {
+      "url": "https://console.tenstorrent.com/terms",
+      "date": "2026-11-24",
+      "proved": "the agreement describes fee-free services and models without naming a tier or price",
+      "capture": "sha256:409002a0cbaca7f600baea27fe422d7884e293d65a8e7417bf784b7d3b747544",
+      "quote": "Certain Cloud Services and Models may be designated as fee-free or otherwise available without triggering a payment for a limited time or based on usage limits."
+    },
+    {
+      "url": "https://docs.tenstorrent.com/tools/index.html",
+      "date": "2026-11-24",
+      "proved": "the docs offer browser inference on Tenstorrent hardware without owning hardware",
+      "capture": "sha256:ae03a761353b4d8df44483b3f611f2eda3a38306942d9a6b40f3178145501248",
+      "quote": "No hardware yet? [console.tenstorrent.com](https://console.tenstorrent.com/) lets you run LLM inference and image and video generation in the browser, backed by Tenstorrent hardware."
+    },
+    {
+      "url": "https://docs.tenstorrent.com/tt-awesome/entry/tt-console/",
+      "date": "2026-11-24",
+      "proved": "the console catalogue states browser inference and staged cloud hardware access",
+      "capture": "sha256:1dbb16b2b48b85fca270ce04d3af61722cf027fc06ad5ca540c364db496d596f",
+      "quote": "Cloud hardware access and advanced workflows (deployments, agents) available in staged rollout."
+    },
+    {
+      "url": "https://console.tenstorrent.com/terms",
+      "date": "2026-11-24",
+      "proved": "using the Cloud Services requires an account",
+      "capture": "sha256:409002a0cbaca7f600baea27fe422d7884e293d65a8e7417bf784b7d3b747544",
+      "quote": "Customer must have an Account to use the Cloud Services and is responsible for the information it provides to create the Account"
+    },
+    {
+      "url": "https://console.tenstorrent.com/terms",
+      "date": "2026-11-24",
+      "proved": "fees, if any, are named in the console pricing page or an order form",
+      "capture": "sha256:409002a0cbaca7f600baea27fe422d7884e293d65a8e7417bf784b7d3b747544",
+      "quote": "Fees are published at [console.tenstorrent.com/dashboard/pricing](https://console.tenstorrent.com/dashboard/pricing), in the Console, or specified in an Order Form."
+    },
+    {
+      "url": "https://models.dev/providers/tenstorrent",
+      "date": "2026-11-24",
+      "proved": "models.dev names an HTTP API at the console /v1 endpoint",
+      "capture": "sha256:d98e52f46fe546fc08e22f802e19d6606b23a511df68f5d040f56424db462785",
+      "quote": "API\nhttps://console.tenstorrent.com/v1"
+    },
+    {
+      "url": "https://models.dev/providers/tenstorrent",
+      "date": "2026-11-24",
+      "proved": "the console API is consumed as an OpenAI-compatible REST endpoint",
+      "capture": "sha256:d98e52f46fe546fc08e22f802e19d6606b23a511df68f5d040f56424db462785",
+      "quote": "Package\n@ai-sdk/openai-compatible"
+    },
+    {
+      "url": "probe:https://console.tenstorrent.com/v1",
+      "date": "2026-11-24",
+      "proved": "the GET /v1 endpoint answered HTTP 404 on 2026-11-24",
+      "capture": "sha256:2187773f006d1519d2a98dfbf3c0902dcb044e16f2caae0728ebc4e51169982d",
+      "quote": "\"status\": 404"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-18T04:58:09.431Z",
+  "verified_at": "2026-11-24T13:21:06.616Z",
   "notes": "Two open questions, stated rather than filled: whether the console costs nothing at all, and what it caps. The console terms say 'Certain Cloud Services and Models may be designated as fee-free or otherwise available without triggering a payment for a limited time or based on usage limits', which describes a fee-free tier without naming it. A signup attempt is the only route and verification holds no account.",
   "extras": {
     "wave2": {
