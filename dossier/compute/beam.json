@@ -13,27 +13,29 @@
     "notes": "A plan credit equal to the plan fee. Recording it as a credit would double-count the subscription."
   },
   "per_object_cap": {
-    "stated": "A persistent VM is 'from $0.0306/hr' for '1 vCPU / 1 GiB / 50 GiB root disk' ('1 vCPU $0.0252' plus '1 GiB RAM $0.0054'). Sandboxes are 'from $0.319/hr'.",
+    "stated": "The smallest persistent VM is $0.06/hr for 1 vCPU at $0.05/hr and 1 GiB RAM at $0.01/hr; sandboxes are also from $0.06/hr. Storage is not billed yet.",
     "bytes": null,
     "source_url": "https://www.beam.cloud/pricing",
     "notes": "A stopped VM carries no compute charge, which is what makes the 1 vCPU shape usable for less than a full month."
   },
   "retention": {
-    "stated": "A stopped VM keeps its root disk; the page prices storage separately at '$0.021 per GB / month'. No deletion timer is stated.",
+    "stated": "A stopped VM keeps its disk and discs RAM and processes; storage is not billed yet, with a planned rate of $0.0001 per GB-hour and no free allowance. The Developer plan retains logs for 30 days.",
     "days": null,
     "source_url": "https://www.beam.cloud/pricing"
   },
   "egress": {
-    "terms": "'Egress & bandwidth | Free'.",
+    "terms": "'No. There are no egress or bandwidth fees on any plan.'",
     "metered": false,
     "free_allowance": "unmetered",
     "price_per_tb": null,
     "source_url": "https://www.beam.cloud/pricing"
   },
   "interface": [
-    "unknown"
+    "ssh",
+    "cli",
+    "rest"
   ],
-  "interface_detail": "Access interface not documented in published terms.",
+  "interface_detail": "VMs are reached over SSH through an authenticated tunnel with the CLI or a local SSH key, with Python and JavaScript SDKs and an API token for automation; sandboxes and endpoints have HTTP URLs.",
   "tooling": "not stated",
   "chaining": "not established",
   "limits": [
@@ -44,11 +46,11 @@
     },
     {
       "kind": "volume-quota",
-      "value": "1 vCPU USD 0.0252 an hour and 1 GiB USD 0.0054 an hour, so USD 0.0306 an hour for the smallest VM",
+      "value": "1 vCPU USD 0.05 an hour and 1 GiB RAM USD 0.01 an hour, so USD 0.06 an hour for the smallest VM",
       "source": "https://www.beam.cloud/pricing"
     }
   ],
-  "limits_note": "The Developer plan includes one seat; extra seats are USD 25 each on Team.",
+  "limits_note": "The Developer plan includes one seat and 30 concurrent vCPUs; log retention is 30 days.",
   "identity_cost": {
     "kind": "card",
     "detail": "The USD 20 credit is bought with a USD 20 monthly subscription, which requires a card. No hold amount is stated. There is no card-free path to the credit.",
@@ -77,10 +79,101 @@
       "url": "https://www.beam.cloud/pricing",
       "date": "2026-10-24",
       "proved": "quoted: 'Developer $20/month $20 in credits each month', 'Unused monthly credits expire at renewal', and the VM rate 'VMs from $0.0306/hr' for '1 vCPU / 1 GiB RAM / 50 GiB root disk'"
+    },
+    {
+      "url": "https://www.beam.cloud/pricing",
+      "date": "2026-11-24",
+      "proved": "the Developer plan costs USD 20 a month and returns USD 20 of credits",
+      "capture": "sha256:72e71e3c536be567967a63c664a5f349fc0dc409162d8f129fc18caa2df7eeaa",
+      "quote": "$20/month$20 in credits each month"
+    },
+    {
+      "url": "https://www.beam.cloud/pricing",
+      "date": "2026-11-24",
+      "proved": "the smallest VM's compute rate is USD 0.06 an hour, billed per second",
+      "capture": "sha256:72e71e3c536be567967a63c664a5f349fc0dc409162d8f129fc18caa2df7eeaa",
+      "quote": "Compute rate$0.06/hr$0.0000167/sec"
+    },
+    {
+      "url": "https://www.beam.cloud/pricing",
+      "date": "2026-11-24",
+      "proved": "storage is currently unbilled and the planned rate is USD 0.0001 per GB-hour with no free allowance",
+      "capture": "sha256:72e71e3c536be567967a63c664a5f349fc0dc409162d8f129fc18caa2df7eeaa",
+      "quote": "Storage is not billed yet. Planned: $0.0001 per GB-hour of data stored, with no free allowance."
+    },
+    {
+      "url": "https://www.beam.cloud/pricing",
+      "date": "2026-11-24",
+      "proved": "Beam charges no egress or bandwidth fee on any plan",
+      "capture": "sha256:72e71e3c536be567967a63c664a5f349fc0dc409162d8f129fc18caa2df7eeaa",
+      "quote": "No. There are no egress or bandwidth fees on any plan."
+    },
+    {
+      "url": "https://docs.beam.cloud/v2/vm/processes.md",
+      "date": "2026-11-24",
+      "proved": "VMs are reached over SSH through an authenticated tunnel",
+      "capture": "sha256:f9d165c93899df2d1d5b5fe1063878b99ba9735897676fe7d244f4f742685f8b",
+      "quote": "SSH connects as root through an authenticated Beam tunnel. You do not need to expose an SSH port publicly."
+    },
+    {
+      "url": "https://docs.beam.cloud/v2/security/terms-and-conditions",
+      "date": "2026-11-24",
+      "proved": "registration requires a name, a valid email address and billing information where required",
+      "capture": "sha256:858e42de759953266d2ce71fee1269b2f279bd4448aa9da1ac5aa6e2b8d44802",
+      "quote": "**2.1 Registration.** You must provide accurate, complete, and current information when you register and keep it up to date, including your name, a valid email address, and billing information where required."
+    },
+    {
+      "url": "https://www.beam.cloud/pricing",
+      "date": "2026-11-24",
+      "proved": "the Developer plan allows 30 concurrent vCPUs",
+      "capture": "sha256:72e71e3c536be567967a63c664a5f349fc0dc409162d8f129fc18caa2df7eeaa",
+      "quote": "| Concurrent vCPUs | 30 vCPUs | 1,000 vCPUs | Custom |"
+    },
+    {
+      "url": "https://www.beam.cloud/pricing",
+      "date": "2026-11-24",
+      "proved": "the smallest VM's CPU is priced at USD 0.05 an hour on the Performance tier",
+      "capture": "sha256:72e71e3c536be567967a63c664a5f349fc0dc409162d8f129fc18caa2df7eeaa",
+      "quote": "1 vCPU$0.05"
+    },
+    {
+      "url": "https://www.beam.cloud/pricing",
+      "date": "2026-11-24",
+      "proved": "a GiB of RAM is priced at USD 0.01 an hour",
+      "capture": "sha256:72e71e3c536be567967a63c664a5f349fc0dc409162d8f129fc18caa2df7eeaa",
+      "quote": "1 GiB RAM$0.01"
+    },
+    {
+      "url": "https://www.beam.cloud/pricing",
+      "date": "2026-11-24",
+      "proved": "sandboxes and VMs both start at USD 0.06 an hour and H100s at USD 3.00 an hour",
+      "capture": "sha256:72e71e3c536be567967a63c664a5f349fc0dc409162d8f129fc18caa2df7eeaa",
+      "quote": "Sandboxes from $0.06/hrVMs from $0.06/hrH100s from $3.00/hr"
+    },
+    {
+      "url": "https://www.beam.cloud/pricing",
+      "date": "2026-11-24",
+      "proved": "a stopped VM carries no compute charge",
+      "capture": "sha256:72e71e3c536be567967a63c664a5f349fc0dc409162d8f129fc18caa2df7eeaa",
+      "quote": "Persistent Linux VMs for agents. Billed per second while running, with no compute charges while stopped."
+    },
+    {
+      "url": "https://www.beam.cloud/pricing",
+      "date": "2026-11-24",
+      "proved": "log retention is 30 days on the Developer and Team plans",
+      "capture": "sha256:72e71e3c536be567967a63c664a5f349fc0dc409162d8f129fc18caa2df7eeaa",
+      "quote": "| Log Retention | 30 Days | 30 Days | 1 Year |"
+    },
+    {
+      "url": "https://docs.beam.cloud/v2/security/terms-and-conditions",
+      "date": "2026-11-24",
+      "proved": "a plan that incurs fees requires a payment method on file",
+      "capture": "sha256:858e42de759953266d2ce71fee1269b2f279bd4448aa9da1ac5aa6e2b8d44802",
+      "quote": "You must keep a valid payment method on file for any plan that incurs Fees."
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-10-24T03:25:00.000Z",
+  "verified_at": "2026-11-24T11:38:10.230Z",
   "price_per_tb_month": null,
   "notes": "Beam appears in credit tables as a USD 20 plan credit and should not: the money and the subscription are the same USD 20, so the row is 'pay USD 20, get USD 20 of VM time'. At USD 0.0306 an hour that is 653 hours, 89% of a month, and the remaining 77 hours cost USD 2.34 out of pocket.",
   "extras": {
