@@ -9,13 +9,13 @@
     "rest",
     "cli"
   ],
-  "interface_detail": "REST API, CLI and a web console; SSH into an instance",
+  "interface_detail": "REST API, CLI and a web console; SSH into an instance with an uploaded public key and mapped ports",
   "tooling": "the Vast CLI and API, SSH, Docker images",
   "chaining": "the cheapest GPU hour in the market and the least reliable: the host is a third party",
   "limits_note": "prices are set by the host, so the rate for a card changes with supply",
   "reliability_note": "no reliability event observed",
   "confidence": "documented",
-  "verified_at": "2026-11-03T08:50:36.651Z",
+  "verified_at": "2026-11-24T13:21:07.388Z",
   "price_per_tb_month": null,
   "history": [],
   "slug": "vast-ai",
@@ -36,16 +36,16 @@
     "notes": "the disk is on a third party's machine"
   },
   "egress": {
-    "terms": "not published on the page read",
-    "metered": false,
+    "terms": "Host-set bandwidth charges cover both upload and download traffic and apply per byte transferred; each offer card shows its hourly rate plus bandwidth. No fixed allowance or price per TB is published.",
+    "metered": true,
     "free_allowance": null,
     "price_per_tb": null,
-    "source_url": "https://vast.ai/pricing"
+    "source_url": "https://docs.vast.ai/guides/instances/pricing.md"
   },
   "limits": [
     {
       "kind": "retention-clamped",
-      "value": "interruptible instances may be reclaimed at any time; that is the discount",
+      "value": "interruptible instances use bidding, are often 50%+ cheaper than on-demand, and may be paused if outbid; data is preserved while paused but the instance is not functional",
       "source": "https://vast.ai/pricing"
     },
     {
@@ -56,7 +56,7 @@
   ],
   "identity_cost": {
     "kind": "card",
-    "detail": "a card and a balance are required, and the minimum deposit is USD 5, quoted from the vendor's quickstart",
+    "detail": "Create an account, verify an email address, and prepay credits by credit card through Stripe or crypto through BitPay or Crypto.com; the minimum deposit is USD 5 and a card can be saved for autobilling.",
     "country": null
   },
   "evidence": [
@@ -183,6 +183,55 @@
       "proved": "the pricing page loads card prices live, so the static page lists no per-card hourly figure",
       "capture": "sha256:af1a7777bcfd7e9a06553c56ef43eacd24d774207b8b6350ea5e75098d65524e",
       "quote": "Real-time pricing from across the Vast.ai platform. Click any card for detailed specs and history."
+    },
+    {
+      "url": "https://docs.vast.ai/guides/instances/pricing.md",
+      "date": "2026-11-24",
+      "proved": "bandwidth is metered per byte at host-set rates",
+      "capture": "sha256:589cd84f9b986177f573970d52c4ad472d68ab9e9ad2b76a62a7795e25b175f7",
+      "quote": "Data transfer costs vary by host and include both upload and download traffic. Charges apply per byte transferred."
+    },
+    {
+      "url": "https://docs.vast.ai/guides/get-started/quickstart",
+      "date": "2026-11-24",
+      "proved": "a USD 5 prepaid deposit is required before renting",
+      "capture": "sha256:50b440496002cf69bbfded7e6ab1136314db09915e293c2b455a13737334f17b",
+      "quote": "The minimum deposit amount on Vast.ai is \\$5."
+    },
+    {
+      "url": "https://docs.vast.ai/guides/get-started/quickstart",
+      "date": "2026-11-24",
+      "proved": "SSH with an uploaded public key is the instance access path",
+      "capture": "sha256:50b440496002cf69bbfded7e6ab1136314db09915e293c2b455a13737334f17b",
+      "quote": "For SSH access: generate an SSH key pair"
+    },
+    {
+      "url": "https://docs.vast.ai/guides/instances/choosing/instance-types.md",
+      "date": "2026-11-24",
+      "proved": "preemption is the binding clock for interruptible capacity",
+      "capture": "sha256:d91bf2a43b4bd6dec1e12b59a27f5be6e8dcbbd7482eddcee80bfb3c5649cb38",
+      "quote": "* **May be paused** if outbid or if on-demand requested"
+    },
+    {
+      "url": "https://vast.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "market-set pricing and no free tier are unchanged",
+      "capture": "sha256:63fcfcdffbf9e15d1ade8344aa004ebb50ba3b2c0f6fd37564ef847134999b64",
+      "quote": "Prices set by supply and demand across 40+ data centers."
+    },
+    {
+      "url": "https://vast.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "per-second billing with no minimum is unchanged",
+      "capture": "sha256:63fcfcdffbf9e15d1ade8344aa004ebb50ba3b2c0f6fd37564ef847134999b64",
+      "quote": "Pay only for what you use, down to the second. No minimum hours, no rounding up, no surprise charges."
+    },
+    {
+      "url": "https://docs.vast.ai/guides/reference/billing.md",
+      "date": "2026-11-24",
+      "proved": "rental needs prepaid credits",
+      "capture": "sha256:1adb2d1bfaaa666321409ae816dd74af8668e5049e5eedaeda5540545c6ae607",
+      "quote": "Vast requires pre-payment of credits for GPU rentals."
     }
   ],
   "verdict": "paid-only",
