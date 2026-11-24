@@ -1,0 +1,167 @@
+{
+  "topic": "compute",
+  "slug": "sufy-sandbox",
+  "provider": "SUFY Sandbox",
+  "url": "https://developer.sufy.com/compute-service/sandbox/overview",
+  "category": "serverless sandbox",
+  "tier": "pay-as-you-go sandbox",
+  "free_tier": {
+    "stated": "Pay-as-you-go with per-second billing that stops when the sandbox stops. 20 GiB of local sandbox storage is free; persistent storage has 10 GiB per account per month free, with excess at USD 0.00002727 per GiB-hour.",
+    "unit": "GiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://developer.sufy.com/compute-service/sandbox/overview.md",
+    "read_on": "2026-11-24",
+    "notes": "No free plan is published for the sandbox service itself. The SUFY home page advertises 10GB Object Storage/mo FREE and 100 GB CDN/mo FREE for the storage and CDN services, not for sandbox compute."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a sandbox, not an object; local storage is 20 GiB and persistent storage is billed above 10 GiB per account per month",
+    "source_url": "https://developer.sufy.com/compute-service/sandbox/overview.md"
+  },
+  "retention": {
+    "stated": "Local and persistent storage persist until deleted; persistent storage continues to be billed while the sandbox is not running. A sandbox runs 5 minutes by default, with a default maximum of 1 hour per sandbox.",
+    "days": null,
+    "source_url": "https://developer.sufy.com/compute-service/sandbox/lifecycle.md"
+  },
+  "egress": {
+    "terms": "Network traffic is currently not billed separately; sandbox internet access is on by default and can be disabled or restricted with allowOut and denyOut rules.",
+    "metered": false,
+    "free_allowance": "not billed separately",
+    "price_per_tb": null,
+    "source_url": "https://developer.sufy.com/compute-service/sandbox/overview.md"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "Fully compatible with the E2B SDK, with an E2B_API_KEY and an E2B_API_URL pointing at a regional sandbox endpoint; an X-API-Key REST API manages sandbox instances.",
+  "endpoint": "https://us-south-1-sandbox.sufyapi.com",
+  "tooling": "npm i @e2b/code-interpreter or pip install e2b-code-interpreter, pointed at the SUFY endpoint with E2B_API_URL; the sandbox instance API is also callable with curl and an X-API-Key.",
+  "chaining": "An E2B-compatible sandbox can run a coding-agent harness and mount S3-compatible object storage, so it combines with external storage for state that outlives the sandbox's 5-minute default lifetime.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "a sandbox runs 5 minutes by default, with a default maximum runtime of 1 hour per sandbox; longer runtimes require contact with the vendor",
+      "source": "https://developer.sufy.com/compute-service/sandbox/lifecycle.md"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "compute shape is 1 to 8 vCPU and memory in multiples of 512 MiB from 512 MiB to 8192 MiB; billed at USD 0.00000564 per core-second and USD 0.00000282 per GiB-second",
+      "source": "https://developer.sufy.com/compute-service/sandbox/overview.md"
+    }
+  ],
+  "limits_note": "Persistent storage is billed hourly for anything above the 10 GiB per account per month allowance, with partial hours billed as full hours. If the account is in arrears, new sandboxes cannot be created and running sandboxes are released.",
+  "binding": "retention-clamped",
+  "binding_note": "The 5-minute default lifetime and 1-hour default maximum stop a workload before the vCPU and memory meter or the 10 GiB persistent-storage allowance does, so the clock binds first.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The signup page asks for Email, Account name, Password and a Verification code sent by email, plus acknowledgement of the Privacy Policy and Cloud Service Agreement. The Cloud Service Agreement says users automatically subscribe to the FREE PLAN on first sign in and that a card is added later as a payment method based on usage needs.",
+    "country": null
+  },
+  "reliability_note": "A sandbox is released at its timeout, and if the account is in arrears new sandboxes cannot be created while running ones are released; persistent storage keeps billing after the sandbox stops until the data is deleted.",
+  "confidence": "documented",
+  "confidence_note": "Rates, the free allowances, egress terms and the lifecycle clock are quoted from the vendor's own developer documentation read on 2026-11-24; the identity gate is quoted from the vendor's signup page. Account-specific credit and plan discounts are unverified: they are shown only in an authenticated account.",
+  "evidence": [
+    {
+      "url": "https://developer.sufy.com/compute-service/sandbox/overview.md",
+      "date": "2026-11-24",
+      "proved": "the sandbox service bills per second and stops billing when the sandbox stops",
+      "capture": "sha256:6aa598f2b0d15e08d90f2e27bc503466d25333033e9cb74b73d42a8ef94cd588",
+      "quote": "The Sandbox Service uses a pay-as-you-go model with per-second billing. Billing stops as soon as the sandbox stops running."
+    },
+    {
+      "url": "https://developer.sufy.com/compute-service/sandbox/overview.md",
+      "date": "2026-11-24",
+      "proved": "vCPU is USD 0.00000564 per core-second for 1 to 8 cores",
+      "capture": "sha256:6aa598f2b0d15e08d90f2e27bc503466d25333033e9cb74b73d42a8ef94cd588",
+      "quote": "| vCPU | $0.00000564/core/second | Billed linearly based on the actual number of allocated vCPU cores, ranging from 1 to 8 cores. |"
+    },
+    {
+      "url": "https://developer.sufy.com/compute-service/sandbox/overview.md",
+      "date": "2026-11-24",
+      "proved": "memory is USD 0.00000282 per GiB-second in multiples of 512 MiB up to 8192 MiB",
+      "capture": "sha256:6aa598f2b0d15e08d90f2e27bc503466d25333033e9cb74b73d42a8ef94cd588",
+      "quote": "| Memory | $0.00000282/GiB/second | Memory must be configured in multiples of 512 MiB, ranging from 512 MiB to 8192 MiB. |"
+    },
+    {
+      "url": "https://developer.sufy.com/compute-service/sandbox/overview.md",
+      "date": "2026-11-24",
+      "proved": "20 GiB of local storage is free and persistent storage has a 10 GiB per account per month allowance above which USD 0.00002727 per GiB-hour is charged",
+      "capture": "sha256:6aa598f2b0d15e08d90f2e27bc503466d25333033e9cb74b73d42a8ef94cd588",
+      "quote": "Each sandbox is automatically allocated **20 GiB** of local storage space, which is **free** of charge."
+    },
+    {
+      "url": "https://developer.sufy.com/compute-service/sandbox/overview.md",
+      "date": "2026-11-24",
+      "proved": "network traffic is not billed separately",
+      "capture": "sha256:6aa598f2b0d15e08d90f2e27bc503466d25333033e9cb74b73d42a8ef94cd588",
+      "quote": "Network traffic is currently not billed separately."
+    },
+    {
+      "url": "https://developer.sufy.com/compute-service/sandbox/lifecycle.md",
+      "date": "2026-11-24",
+      "proved": "a sandbox runs 5 minutes by default and has a 1-hour default maximum runtime",
+      "capture": "sha256:4d55af2ac97da571e0da284beafdd791c05fb8e6341fe1f0aa9f53efc93d460f",
+      "quote": "**Default behavior:** A sandbox runs for 5 minutes by default, but custom timeout settings are supported."
+    },
+    {
+      "url": "https://developer.sufy.com/compute-service/sandbox/quickstart.md",
+      "date": "2026-11-24",
+      "proved": "the sandbox service is E2B SDK compatible with an API key and regional endpoint",
+      "capture": "sha256:a35d0ff96f588e439d8e03b8fa9b7babe56e3f21fb04b3a39c379203b22580bc",
+      "quote": "**Note:** The Sufy sandbox service is fully compatible with the E2B API, so you can use the E2B SDK directly. When using the Sufy service, configure both the `E2B_API_KEY` and `E2B_API_URL` environment variables."
+    },
+    {
+      "url": "https://developer.sufy.com/compute-service/sandbox/quickstart.md",
+      "date": "2026-11-24",
+      "proved": "sandbox access requires an account created at the signup page",
+      "capture": "sha256:a35d0ff96f588e439d8e03b8fa9b7babe56e3f21fb04b3a39c379203b22580bc",
+      "quote": "If you don't already have a Sufy account, create one at the [Sufy signup page](https://sufy.com/signup)."
+    },
+    {
+      "url": "https://sufy.com/user/signup?redirect=https%3A%2F%2Fsufy.com%2F",
+      "date": "2026-11-24",
+      "proved": "the signup form asks for Email, Account name, Password and a Verification code",
+      "capture": "sha256:cd7490763a8a4886dced5ec8902b116155397ec4eecb32629b9c44d7cc08fb87",
+      "quote": "# Sign up for SUFY\n\nEmail\n\nAccount name\n\nPassword\n\nVerification code"
+    },
+    {
+      "url": "https://sufy.com/agreements/cloud-service-agreement",
+      "date": "2026-11-24",
+      "proved": "users automatically subscribe to the FREE PLAN on first sign in and a card is added later as a payment method based on usage",
+      "capture": "sha256:76cb4e84ab662b2dae0e4924cb20cbef214bbe6b8807260b9afd8221c290529c",
+      "quote": "Users automatically subscribe to “FREE PLAN” the first time they sign in, and “FREE PLAN” will not charge you anything."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-24T10:11:15.094Z",
+  "price_per_tb_month": null,
+  "notes": "An E2B-compatible per-second sandbox: USD 0.00000564 per core-second and USD 0.00000282 per GiB-second, unmetered network traffic, 20 GiB free local storage and 10 GiB per account per month of free persistent storage. The 5-minute default lifetime and 1-hour default maximum are the practical bound; the SUFY home page's free storage and CDN allowances are separate services, not sandbox compute.",
+  "extras": {
+    "shape": {
+      "vcpu": 2,
+      "ram_gib": 2,
+      "disk_gib": 20,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "1 to 8 vCPU and 512 MiB to 8192 MiB memory in 512 MiB steps; 20 GiB local storage per sandbox"
+    },
+    "billing_model": "per-second compute with hourly persistent storage above a monthly allowance",
+    "free_tier_kind": "free-allowance",
+    "term": "pay as you go, monthly settlement",
+    "price_arithmetic": "1 vCPU is USD 0.020304 per hour and 1 GiB memory is USD 0.010152 per hour at the published per-second rates; a 2 vCPU / 2 GiB sandbox running 8 hours a day is about USD 0.49 a day including storage",
+    "status": "hosted service",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": null,
+      "ports": "not published",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": "network traffic is not billed separately"
+    },
+    "session_cap": {
+      "wall_clock_min": 60,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "5-minute default lifetime, 1-hour default maximum, extendable on request; pause and resume preserve filesystem and memory"
+    }
+  }
+}
