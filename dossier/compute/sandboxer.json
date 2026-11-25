@@ -1,0 +1,176 @@
+{
+  "topic": "compute",
+  "slug": "sandboxer",
+  "provider": "Sandboxer",
+  "url": "https://sandboxer.com/pricing",
+  "category": "container and VM sandbox",
+  "tier": "$20/month plan",
+  "free_tier": {
+    "stated": "No free tier: plans start at $20 a month, charged when you subscribe and renewing monthly until you cancel; the first month buys 100 running sandboxes and machine time at $0.036 an hour for the default 4 vCPU, 8 GB, 50 GB size, billed by the second.",
+    "unit": "hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://sandboxer.com/docs/billing",
+    "read_on": "2026-11-25",
+    "notes": "The $20 plan returns the whole $20 as machine time; it is about 555 hours of the default size. A wallet without a plan has 10 GB of stopped storage, and no sandboxes can be created without a plan and card."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not a stored object; a command output keeps 8 MiB per stream and a file upload is limited by the 413 file_too_large error without a published size",
+    "bytes": null,
+    "source_url": "https://sandboxer.com/docs/limits"
+  },
+  "retention": {
+    "stated": "A stopped sandbox keeps its disk and memory snapshot free for 14 days after it last stopped; named snapshots are kept until deleted, and all stopped data counts toward the plan's included storage (50 GB on the $20 plan).",
+    "days": 14,
+    "source_url": "https://sandboxer.com/pricing"
+  },
+  "egress": {
+    "terms": "not metered: 'Do you bill bandwidth? No.' Outbound traffic is not priced, and each sandbox gets a public IPv6 address and HTTPS URLs for its ports.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://sandboxer.com/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "ssh"
+  ],
+  "interface_detail": "A documented REST API with an OpenAPI spec, a static sbx CLI, TypeScript, Python and Daytona-compatible SDKs, plus SSH and SCP into each full Ubuntu 24.04 microVM.",
+  "endpoint": "https://sandboxer.com/api/v1/sandboxes",
+  "tooling": "curl -fsSL https://sandboxer.com/install | sh installs the sbx CLI; sbx new, sbx exec, sbx ssh, sbx host and sbx fork, and the Python and TypeScript SDKs mirror the API.",
+  "chaining": "A stopped sandbox resumes from a memory snapshot with its processes intact, which makes a warmed dev server reusable across agent tasks; with no charge for bandwidth, it can serve traffic directly on a public HTTPS port without a separate egress service.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "$20 a month of machine time at $0.036 an hour for the default size; time packs of $20 never expire",
+      "source": "https://sandboxer.com/docs/billing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "600 API calls a minute per API key, with short bursts up to 300 requests and a refill of 10 a second",
+      "source": "https://sandboxer.com/docs/limits"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "stopped sandboxes and automatic snapshots are kept 14 days after the last stop; named snapshots until deleted",
+      "source": "https://sandboxer.com/pricing"
+    },
+    {
+      "kind": "write-gated",
+      "value": "creating, forking or restoring a sandbox answers 402 payment_method_required until a card and plan are added; xlarge requires the $100 plan",
+      "source": "https://sandboxer.com/docs/billing"
+    }
+  ],
+  "limits_note": "The $20 plan runs 100 sandboxes at once with 12 starts a minute, 60 an hour and 200 a day. Above each window, starts cost $0.03 to $0.07 each up to 3x the limit, then are refused. Storage is 50 GB on the $20 plan and is not billed, but it blocks new sandboxes when full.",
+  "binding": "write-gated",
+  "binding_note": "With no free tier and no way to start a sandbox without a plan and a card, the payment gate stops use before the monthly $20 of machine time or the 600-per-minute API rate does.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "Sign in uses GitHub, Google, an email code, or an email and password. A card is required to start any sandbox: 'Choosing one (dashboard Billing, or sbx billing plan 20) adds your card and charges the first month right away. There's no free trial.' Without a card the dashboard, docs and CLI are usable, but every create answers 402 payment_method_required. No phone or identity document is asked for.",
+    "country": null
+  },
+  "reliability_note": "At zero balance, creates and resumes fail with 402, running sandboxes get a 24-hour grace period and are then stopped with memory and disk kept. Over included storage, new sandboxes wait until data is deleted or the plan is upgraded; auto-delete, off by default, removes least-recently-used stopped sandboxes with at least 7 days' notice. A trial that started before the free trial ended slows a sandbox using 90% of its vCPUs to 1 vCPU.",
+  "confidence": "documented",
+  "confidence_note": "The prices, plans, free-tier answer, storage, bandwidth answer, sign-in methods, card requirement and limits are read from the vendor's pricing, billing, quickstart and limits pages on 2026-11-25 and quoted below.",
+  "evidence": [
+    {
+      "url": "https://paste.ajam.dev/raw/WCLUsa",
+      "date": "2026-11-25",
+      "proved": "the operator's list places Sandboxer at $0.018 an hour for a 2 vCPU and 4 GB box; a lead, not the basis for the record's values",
+      "capture": "sha256:4d220f8008ed2a6126e4b7f8bc4639bd9e625605ec428846fde2bdf593cc5c95",
+      "quote": "16. Sandboxer → $0.018/h · billed per second"
+    },
+    {
+      "url": "https://sandboxer.com/",
+      "date": "2026-11-25",
+      "proved": "the smallest published size is 2 vCPU, 4 GB and 12 GB disk at $0.018 an hour, and the default is 4 vCPU, 8 GB at $0.036 an hour",
+      "capture": "sha256:b06c1df7d0891a5c4bab746b54ff5094e30421bd1422fae6a9bdee03508b7624",
+      "quote": "small0.5×\n\n$0.018 / hour\n\n2 vCPU · 4 GB · 12 GB disk"
+    },
+    {
+      "url": "https://sandboxer.com/",
+      "date": "2026-11-25",
+      "proved": "plans start at $20 a month and the first sandbox needs only a CLI install",
+      "capture": "sha256:b06c1df7d0891a5c4bab746b54ff5094e30421bd1422fae6a9bdee03508b7624",
+      "quote": "macOS, Linux and Windows. Plans start at $20/month, renewing monthly until you cancel."
+    },
+    {
+      "url": "https://sandboxer.com/pricing",
+      "date": "2026-11-25",
+      "proved": "there is no free tier",
+      "capture": "sha256:9953739b31eb2408adacb4578d3bc9ba9b757d5e16b8d905c827ba91544f6da9",
+      "quote": "### Is there a free tier?\n\nNo. Plans start at $20/month; the first month is charged when you subscribe, and the plan renews monthly until you cancel."
+    },
+    {
+      "url": "https://sandboxer.com/pricing",
+      "date": "2026-11-25",
+      "proved": "bandwidth is not billed",
+      "capture": "sha256:9953739b31eb2408adacb4578d3bc9ba9b757d5e16b8d905c827ba91544f6da9",
+      "quote": "### Do you bill bandwidth?\n\nNo."
+    },
+    {
+      "url": "https://sandboxer.com/pricing",
+      "date": "2026-11-25",
+      "proved": "stopped sandboxes and automatic snapshots are free for 14 days and the $20 plan includes 50 GB of storage",
+      "capture": "sha256:9953739b31eb2408adacb4578d3bc9ba9b757d5e16b8d905c827ba91544f6da9",
+      "quote": "Nothing. Its disk, memory snapshot and automatic snapshots are kept at no charge for 14 days after it last stopped"
+    },
+    {
+      "url": "https://sandboxer.com/docs/billing",
+      "date": "2026-11-25",
+      "proved": "a card is added when a plan is chosen, the first month is charged at once, and there is no free trial",
+      "capture": "sha256:3954a921fb3c2627f68d656cd7645f6dde933b30a0c110dcda05c10f07a52591",
+      "quote": "You need a plan before you can start a sandbox. Choosing one (dashboard **Billing**, or `sbx billing plan 20`) adds your card and charges the first month right away. Plans renew monthly until you cancel. There's no free trial."
+    },
+    {
+      "url": "https://sandboxer.com/docs/billing",
+      "date": "2026-11-25",
+      "proved": "without a card the account can sign in and browse, but sandbox creation returns 402",
+      "capture": "sha256:3954a921fb3c2627f68d656cd7645f6dde933b30a0c110dcda05c10f07a52591",
+      "quote": "Without a card you can still sign in, read the docs, use the CLI and look around the dashboard. Creating, forking or restoring a sandbox answers `402 payment_method_required` until you add one."
+    },
+    {
+      "url": "https://sandboxer.com/docs/quickstart",
+      "date": "2026-11-25",
+      "proved": "sign-in methods are GitHub, Google, an email code, or an email and password",
+      "capture": "sha256:ef4815c39aa5ee4741ac0413aeaa211cc5fdb0cc92a3cb8f2befdee7bbf0f447",
+      "quote": "opens your browser so you can sign in with GitHub, Google, an email code, or an email and password"
+    },
+    {
+      "url": "https://sandboxer.com/docs/limits",
+      "date": "2026-11-25",
+      "proved": "API calls are limited to 600 a minute per key, with a burst of 300 requests and a refill of 10 a second",
+      "capture": "sha256:4da922e9f653b32178a24e08c7029071f8c5c8978cd77f99abbfc24fbac16c54",
+      "quote": "API calls (and hosted MCP calls) are limited to **600 a minute per API key**, or per account when you're signed in to the dashboard or CLI without a key."
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-25T02:12:34.610Z",
+  "price_per_tb_month": null,
+  "notes": "The smallest published size, 2 vCPU and 4 GB, is $0.018 an hour, matching the operator's list. Every plan returns its price as machine time, and stopped sandboxes cost nothing. There is no free trial, so the card is the price of any use.",
+  "extras": {
+    "shape": {
+      "vcpu": 4,
+      "ram_gib": 8,
+      "disk_gib": 50,
+      "gpu_class": null,
+      "gpu_count": null
+    },
+    "billing_model": "monthly prepaid plan at per-second machine rates, with non-expiring time packs",
+    "free_tier_kind": "none",
+    "session_cap": {
+      "wall_clock_min": 43200,
+      "idle_reap_s": 1800,
+      "restart_required": false,
+      "note": "auto-stop in one hour by default, or never; the $20 plan pauses an idle sandbox after 30 minutes"
+    },
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "public HTTPS URL for each port and a public IPv6 address",
+      "static_ip": null,
+      "ipv6": true,
+      "per_session_bytes": null
+    }
+  }
+}
