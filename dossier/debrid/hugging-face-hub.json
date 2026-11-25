@@ -101,10 +101,31 @@
       "proved": "the anonymous and free account windows are unchanged",
       "capture": "sha256:715c9e0765ce504cd71f0933e7ca01cd484a4f6ef30c781ec9c5a49cefc38812",
       "quote": "Here are the current rate limits (in September '25) based on your plan:"
+    },
+    {
+      "url": "probe:https://huggingface.co/api/models",
+      "date": "2026-11-25",
+      "proved": "an anonymous API read answered 200 and its RateLimit-Policy header advertises 500 requests per 300-second window, matching the recorded API window",
+      "capture": "sha256:366aabc23c9fc51016428caea600cbb004521e9defa2f895ae56bbf174572ac7",
+      "quote": "q=500;w=300"
+    },
+    {
+      "url": "probe:https://huggingface.co/api/whoami-v2",
+      "date": "2026-11-25",
+      "proved": "an anonymous identity check returned 401 while a public model file was read without a token",
+      "capture": "sha256:0c32c6c7a1c6458f92cb9ae29592735d87cf43e2366c49c17adb69b411bfaf60",
+      "quote": "\"status\": 401"
+    },
+    {
+      "url": "probe:https://huggingface.co/openai-community/gpt2/resolve/main/pytorch_model.bin",
+      "date": "2026-11-25",
+      "proved": "an anonymous ranged GET through /resolve/ returned 206 over 268435456 bytes of a public model file with no token",
+      "capture": "sha256:0e839f12019443cf2b35771520f2466b13fcc411f87a659b05f239a4fd6bccfd",
+      "quote": "\"status\": 206"
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-11-25T09:46:50.792Z",
+  "verified_at": "2026-11-25T12:00:09.166Z",
   "price_per_tb_month": "USD 0",
   "history": [],
   "notes": "The lane's answer sits here: about 40 MiB/s over one connection with no account, which is 3.3 TiB/day if the rate held for a day. The eight-connection run is the trap - it is half the speed, so a client that opens eight streams to go faster gets there slower.",
