@@ -1,0 +1,155 @@
+{
+  "topic": "compute",
+  "slug": "quivvo",
+  "provider": "Quivvo",
+  "url": "https://tryquivvo.com/pricing",
+  "category": "VM sandbox",
+  "tier": "Free",
+  "free_tier": {
+    "stated": "The Free plan costs nothing and adds $5 of one-time credit with no card needed, once per email address; credit does not expire. The credit buys running machine time at $0.005 per vCPU-hour and $0.011 per GiB-hour: 93 hours of the 2 vCPU, 4 GiB size (the registered list's figure).",
+    "unit": "hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://tryquivvo.com/pricing",
+    "read_on": "2026-11-25",
+    "notes": "A 2 vCPU, 4 GiB machine costs $0.054 per running hour, so the $5 credit is about 93 running hours; suspended and stopped machines still pay for disk ($0.20 per GiB-month, plus $0.225 per GiB-month for the template system disk while stopped) and disk charges can take the balance below zero. The Free plan runs 1 machine at a time, allows 3 machines and disks up to 20 GiB each, and caps snapshots at 3."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a microVM with a persistent disk, not an object",
+    "bytes": null,
+    "source_url": "https://tryquivvo.com/pricing"
+  },
+  "retention": {
+    "stated": "data under /data survives stops, restarts and resizes; if credit stays empty the vendor emails, then deletes machines and snapshots after 7 days, or 30 days if the account has ever paid",
+    "days": null,
+    "source_url": "https://tryquivvo.com/pricing"
+  },
+  "egress": {
+    "terms": "Outbound data is charged per GiB by region of exit: $0.03 from North America and Europe, $0.06 from Asia-Pacific and South America, $0.18 from Africa and India; an inter-region hop is another $0.009 per GiB each way in North America and Europe. Incoming data is free. Usage is reported per machine and charged every ten minutes.",
+    "metered": true,
+    "free_allowance": null,
+    "price_per_tb": "USD 30 per TB from North America and Europe",
+    "source_url": "https://tryquivvo.com/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "ssh"
+  ],
+  "interface_detail": "Each machine is a Firecracker microVM with root and a persistent disk, driven from a CLI, a REST API with an OpenAPI document, or a hosted MCP server; the docs also show ssh, scp and curl against routed machine and port URLs.",
+  "endpoint": "https://tryquivvo.com/api/mcp (hosted MCP server); REST API documented at https://tryquivvo.com/docs/api",
+  "tooling": "npm i -g quivvo@latest (Node.js 22 or later), or npx quivvo@latest; TypeScript and Python SDKs; a hosted MCP server for Claude Code, Cursor and Codex; standard ssh, scp and curl.",
+  "chaining": "The CLI, REST API and hosted MCP server let a coding agent create, drive and snapshot its own Linux machine, publish a port as an HTTPS URL, and keep work under /data across restarts, so an agent workflow can move between machines with snapshots and forks.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "$5 one-time credit on the Free plan: about 93 running hours of a 2 vCPU, 4 GiB machine at $0.054/hour",
+      "source": "https://tryquivvo.com/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "Free plan: 1 machine running at once, 3 machines total, largest machine 2 vCPUs and 4 GiB, disk up to 20 GiB per machine and 3 snapshots",
+      "source": "https://tryquivvo.com/pricing"
+    }
+  ],
+  "binding": "volume-quota",
+  "binding_note": "The one-time $5 credit is the first thing to run out, at $0.054 per running hour for the default machine; disk charges continue while a machine is suspended or stopped.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "An account is per email address and the Free plan needs no card: 'New accounts get $5 of credit, with no card needed, once per email address.' The quickstart signs in with a code in the browser; the agent setup runbook has the agent request a login code that its owner approves. No phone, ID document or institution is asked for on the published pages.",
+    "country": null
+  },
+  "reliability_note": "Machines suspend themselves after 30 idle minutes, or 15 on the Free plan, and only pay for disk while suspended; with an empty balance they are suspended or stopped, and after 7 days (30 if the account has paid) machines and snapshots are deleted. The disk is charged until then, so a balance can go below zero.",
+  "confidence": "documented",
+  "confidence_note": "Prices, the free $5 credit, plan limits, suspension rules and egress rates are quoted from the vendor's own pricing and quickstart pages read on 2026-11-25; the $0.054/hour and 93-hour figures are in the captured vendor pricing text and the registered list respectively.",
+  "evidence": [
+    {
+      "url": "https://tryquivvo.com/pricing",
+      "date": "2026-11-25",
+      "proved": "running machines bill by the second at $0.005 per vCPU-hour and $0.011 per GiB-hour, disk $0.20 per GiB-month, with a 2 vCPU 4 GiB machine at $0.054/hour",
+      "capture": "sha256:3eeb5fc19b9f685bebdc05cdc5860076049ad5294b6c4dcaa6581d5c95b12da9",
+      "quote": "Quivvo bills running machines by the second: $0.005 per vCPU-hour and $0.011 per GiB-hour of memory, plus $0.20 per GiB-month of disk while a machine exists, and $0.03 per GiB of data it sends out from North America and Europe. A 2 vCPU, 4 GiB machine costs $0.054 an hour while it runs."
+    },
+    {
+      "url": "https://tryquivvo.com/pricing",
+      "date": "2026-11-25",
+      "proved": "the Free plan is free, adds $5 once and caps running machines, total machines, size, disk and snapshots",
+      "capture": "sha256:3eeb5fc19b9f685bebdc05cdc5860076049ad5294b6c4dcaa6581d5c95b12da9",
+      "quote": "| Free | Free | $5 once | 1 | 3 | 2 vCPUs, 4 GiB | Up to 20 GiB | 3 |"
+    },
+    {
+      "url": "https://tryquivvo.com/pricing",
+      "date": "2026-11-25",
+      "proved": "outbound data is charged per GiB with three regional rates, inbound is free, and usage is charged every ten minutes",
+      "capture": "sha256:3eeb5fc19b9f685bebdc05cdc5860076049ad5294b6c4dcaa6581d5c95b12da9",
+      "quote": "Data a machine sends out is charged per GiB, by where it leaves our provider"
+    },
+    {
+      "url": "https://tryquivvo.com/pricing",
+      "date": "2026-11-25",
+      "proved": "credit does not expire and comes off the balance every minute",
+      "capture": "sha256:3eeb5fc19b9f685bebdc05cdc5860076049ad5294b6c4dcaa6581d5c95b12da9",
+      "quote": "Credit is US dollars. Usage comes off your balance every minute, and plans add credit each month. Credit doesn't expire. Top-ups come in $10, $25, $50 and $100."
+    },
+    {
+      "url": "https://tryquivvo.com/pricing",
+      "date": "2026-11-25",
+      "proved": "with empty credit machines are suspended or stopped and deleted after 7 days, or 30 days if the account has ever paid",
+      "capture": "sha256:3eeb5fc19b9f685bebdc05cdc5860076049ad5294b6c4dcaa6581d5c95b12da9",
+      "quote": "If credit stays empty, we email you, then delete your machines and snapshots 7 days later, or 30 days if you've ever paid."
+    },
+    {
+      "url": "https://tryquivvo.com/",
+      "date": "2026-11-25",
+      "proved": "each machine is a Firecracker microVM with root and a persistent disk, driven by CLI, REST API or hosted MCP server; new accounts get $5 of credit with no card, once per email address",
+      "capture": "sha256:8a8952ccf0c6bb007884854d81535d4c95505a279114b262580b51ea82f12f3a",
+      "quote": "New accounts get $5 of credit, with no card needed, once per email address."
+    },
+    {
+      "url": "https://tryquivvo.com/docs/quickstart.md",
+      "date": "2026-11-25",
+      "proved": "the CLI needs Node.js 22 or later, signs in with a code in the browser, and machines suspend themselves after 30 idle minutes or 15 on Free",
+      "capture": "sha256:56478c24d93d14d86a2bead6d7d6aa5d05205edffd9ceb8db18e1abefd4ef34a",
+      "quote": "That signs you in with a code in the browser, creates a machine called `dev`, and opens a shell in it. New accounts get $5 of credit, with no card needed."
+    },
+    {
+      "url": "https://paste.ajam.dev/raw/WCLUsa",
+      "date": "2026-11-25",
+      "proved": "the registered list records 93 hours of free credit once and a $0.054/h billed-per-second price",
+      "capture": "sha256:4d220f8008ed2a6126e4b7f8bc4639bd9e625605ec428846fde2bdf593cc5c95",
+      "quote": "46. Quivvo → 93 h free (one time) · then $0.054/h"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-25T11:55:06.302Z",
+  "price_per_tb_month": null,
+  "notes": "Hosted Linux microVMs for coding agents with a per-email free $5 credit and no card required. Disk is charged while a machine sleeps, and egress is metered by exit region; the $5 credit covers about 93 running hours of the default 2 vCPU, 4 GiB machine. The sign-in gate and its owner-approval code are the identity finding.",
+  "extras": {
+    "shape": {
+      "vcpu": 2,
+      "ram_gib": 4,
+      "disk_gib": 20,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "Free plan maximum 2 vCPUs, 4 GiB; disk up to 20 GiB per machine"
+    },
+    "billing_model": "per-second running time plus per-GiB-month disk and per-GiB egress; prepaid credit",
+    "free_tier_kind": "one-time-credit",
+    "term": "no commitment, credit does not expire",
+    "price_arithmetic": "$5 / $0.054 per hour = 92.59 hours for a 2 vCPU 4 GiB machine, rounded to 93 in the registered list",
+    "status": "live, documented",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "one published port per machine serves a public HTTPS URL, public or behind a token",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": 900,
+      "restart_required": false,
+      "note": "suspends after 30 idle minutes by default, 15 minutes on Free; background jobs run up to 24 hours"
+    }
+  }
+}
