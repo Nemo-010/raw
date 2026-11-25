@@ -21,7 +21,7 @@
   "retention": {
     "stated": "| write-once: publishing is irreversible, no delete without support intervention, no embargo; 'Submit for Review' spam screen before publication; per-file 2.5 GB in the browser path; 1,000 files/dataset is the observed effectiveDatasetFileCountLimit; S3 direct upload is admin-enabled per install and is the only route past the 2.5 GB file cap.",
     "source_url": "https://support.dataverse.harvard.edu/researchers",
-    "notes": "Extracted from published terms."
+    "notes": "Published datasets have permanent bit-level preservation and cannot be unpublished; deaccession is limited to extreme cases and leaves a public tombstone page; no fixed retention interval is published."
   },
   "egress": {
     "terms": "Free anonymous access without login. Endpoint GET /api/access/datafile/<id> returns HTTP 303 to a signed S3 URL with 1-hour expiration, supporting Range requests.",
@@ -113,10 +113,45 @@
       "proved": "the kgwas collection quota endpoint reports a 2.5 TB allocation",
       "capture": "sha256:efc5f8985587623570159fefbc362a570de31738d2b383e73f987586ac2414d3",
       "quote": "{\"status\":\"OK\",\"data\":{\"message\":\"Total quota allocation for this collection: 2,748,779,069,440 bytes\"}}"
+    },
+    {
+      "url": "https://support.dataverse.harvard.edu/harvard-dataverse-preservation-policy",
+      "date": "2026-11-25",
+      "proved": "the preservation policy states that published datasets are retained permanently and deaccession is exceptional",
+      "capture": "sha256:8ad0e7e7a2d76fe4888dcbf7fd92605ba60a657474341649995e26781301069b",
+      "quote": "In order to ensure long term accessibility of the dataset in the Harvard Dataverse, once a dataset is published it can not be unpublished and can only be deaccessioned under extreme circumstances, such as a legal requirement to destroy that dataset."
+    },
+    {
+      "url": "https://dataverse.harvard.edu/api/dataverses/SEE_Precursors/storage/quota?showInherited=true",
+      "date": "2026-11-25",
+      "proved": "the live quota API still reports the 1 TiB collection allocation",
+      "capture": "sha256:a9298e5188ddd390b74ab1ab5539fa4be14d45c3c97172817e98092530ea81c2",
+      "quote": "Total quota allocation for this collection: 1,099,511,627,776 bytes"
+    },
+    {
+      "url": "https://support.dataverse.harvard.edu/getting-started",
+      "date": "2026-11-25",
+      "proved": "the getting-started page states the 2.5 GB per-file cap",
+      "capture": "sha256:d90ff1afbcb4316def3505a3a12e860353e40a4bbb3a0163bcb4c6dc4e0b49c2",
+      "quote": "Files up to 2.5GB in any format are accepted."
+    },
+    {
+      "url": "https://support.dataverse.harvard.edu/harvard-dataverse-preservation-policy",
+      "date": "2026-11-25",
+      "proved": "the preservation policy states permanent preservation",
+      "capture": "sha256:8ad0e7e7a2d76fe4888dcbf7fd92605ba60a657474341649995e26781301069b",
+      "quote": "Harvard University supports permanent bit-level preservation of all materials directly deposited in the Harvard Dataverse."
+    },
+    {
+      "url": "https://dataverse.harvard.edu/api/dataverses/kgwas/storage/quota?showInherited=true",
+      "date": "2026-11-25",
+      "proved": "the live quota API reports a 2.5 TB allocation for another collection",
+      "capture": "sha256:a447209b0672356deedf8b953b1ea0759066d77f25c3b47ece31cc770bb6d9e0",
+      "quote": "Total quota allocation for this collection: 2,748,779,069,440 bytes"
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-11-10T00:50:18.129Z",
+  "verified_at": "2026-11-25T05:52:39.867Z",
   "notes": "1 TB per Dataverse Collection allocation (2.5 TB for Harvard affiliates). Per-file 2.5 GB through UI/API; larger via the S3 direct-upload path. The 1 TB is enforced as a *collection* allocation, not a per-person cap: GET /api/dataverses/<alias>/storage/quota?showInherited=true returns {\"Total quota allocation for this collection\": 1099511627776} for ordinary collections, and one live collection returns 2748779069440 (2.5 TB).",
   "history": [],
   "extras": {
