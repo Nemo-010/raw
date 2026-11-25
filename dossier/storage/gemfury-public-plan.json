@@ -16,13 +16,13 @@
     "stated": "300 MB per file",
     "bytes": 300000000,
     "source_url": "https://fury.co/pricing/",
-    "notes": "extracted from the quota or limits prose"
+    "notes": "300 MB per file through push.fury.io, the Dashboard and Git builds; 20 MB per file through a repository endpoint."
   },
   "retention": {
-    "stated": "Small independent operator (fury.co, the same shop as the old gemfury.com); the 20 MB repository-endpoint cap silently breaks pushes that work through the API, and cancelled accounts have packages deleted after ~1 month.",
-    "days": 30,
+    "stated": "Packages are deleted one month after account cancellation and cannot be recovered; no expiry is published for active accounts.",
+    "days": null,
     "source_url": "https://fury.co/pricing/",
-    "notes": "Extracted from published terms."
+    "notes": "Packages are deleted one month after account cancellation and cannot be recovered; no expiry is published for active accounts."
   },
   "egress": {
     "terms": "No published bandwidth allowance or per-GB rate for the Public plan; public repos are served from the fury.io edge to anonymous clients (probe below). Nothing meters delivery in the documented plan matrix.",
@@ -48,14 +48,14 @@
     },
     {
       "kind": "retention-clamped",
-      "value": "deleted after ~1 month",
-      "source": "https://fury.co/pricing/"
+      "value": "deleted one month after account cancellation",
+      "source": "https://fury.co/policies/terms/"
     }
   ],
   "limits_note": "HARD per-file ceiling: 300 MB per file via push.fury.io/Dashboard/git builds, and only 20 MB per file through a repository endpoint (gem.fury.io etc.). Git-backed packages: 500 MB per repo, 20 MB per file. Public/private is a per-package toggle; everything uploads private first and must be flipped public. No private packages at all on the free plan.",
   "identity_cost": {
-    "kind": "institution",
-    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: -endpoint cap silently breaks pushes that work through the API, and cancelled accounts have packages deleted after ~1 month. Unlimited packages × unlimited versions per account, and",
+    "kind": "email",
+    "detail": "Email address and password: `fury login --interactive` prompts for both; a card is not required on free accounts.",
     "country": null
   },
   "reliability_note": "Small independent operator (fury.co, the same shop as the old gemfury.com); the 20 MB repository-endpoint cap silently breaks pushes that work through the API, and cancelled accounts have packages deleted after ~1 month.",
@@ -109,10 +109,52 @@
       "proved": "the repository-endpoint per-file cap remains 20 MB",
       "capture": "sha256:8d1ceb13a8bb8d12b66bbfaa04131c62077844432b71639e354d307bdef3bcb2",
       "quote": "For technical reasons, packages uploaded to a repository endpoint (e.g. `gem.fury.io`) are limited to 20MB."
+    },
+    {
+      "url": "https://gemfury.com/help/limits/",
+      "date": "2026-11-25",
+      "proved": "the absolute per-file cap is 300 MB through push.fury.io, the Dashboard and Git builds",
+      "capture": "sha256:841595da353ec7c48d01ba881d9d924cfd2df6a87bed5793011de149bdb068d3",
+      "quote": "Package files have an absolute limit of 300MB per file uploaded. This is effective for uploads to `push.fury.io` and the Dashboard, as well as packages produced by [Git builds][git-push]."
+    },
+    {
+      "url": "https://fury.co/policies/terms/",
+      "date": "2026-11-25",
+      "proved": "packages are deleted one month after account cancellation and cannot be recovered",
+      "capture": "sha256:d9dc13426dea252793ec8d697a69729be01bf84f21bc1c6c55e50fb61c875d21",
+      "quote": "2. All of your Packages will be deleted from the Service one month after cancellation. This information can not be recovered once it has been deleted."
+    },
+    {
+      "url": "https://gemfury.com/guide/cli/authentication/",
+      "date": "2026-11-25",
+      "proved": "the CLI login prompts for an email address and password",
+      "capture": "sha256:1a766d320e4c0ac0751e0f9a1ae951cdc995a8fd229ab50e343c901d32c66fff",
+      "quote": "If a browser is not available, use `fury login --interactive` to enter your email and password"
+    },
+    {
+      "url": "https://gemfury.com/help/limits/",
+      "date": "2026-11-25",
+      "proved": "the repository-endpoint per-file cap is 20 MB",
+      "capture": "sha256:841595da353ec7c48d01ba881d9d924cfd2df6a87bed5793011de149bdb068d3",
+      "quote": "For technical reasons, packages uploaded to a repository endpoint (e.g. `gem.fury.io`) are limited to 20MB."
+    },
+    {
+      "url": "https://fury.co/pricing/",
+      "date": "2026-11-25",
+      "proved": "the public plan does not require a card",
+      "capture": "sha256:68d144780e045e14570b305b6d58aa13d7b55e431a8be1b42808a1a59adc9c65",
+      "quote": "No credit card required. Switch or cancel anytime."
+    },
+    {
+      "url": "https://fury.co/policies/terms/",
+      "date": "2026-11-25",
+      "proved": "free accounts do not require a card number",
+      "capture": "sha256:d9dc13426dea252793ec8d697a69729be01bf84f21bc1c6c55e50fb61c875d21",
+      "quote": "1. A valid credit card is required for paying accounts. Free accounts are not required to provide a credit card number."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-19T21:13:27.694Z",
+  "verified_at": "2026-11-25T05:52:35.680Z",
   "notes": "Free: $0/mo, ∞ Collaborators, - Private Packages, ∞ Public Packages, Unlimited versions",
   "history": [],
   "extras": {
