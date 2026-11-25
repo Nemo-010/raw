@@ -41,14 +41,14 @@
   "chaining": "chains with an Azure VM, which already has the public IP being protected",
   "limits": [
     {
-      "kind": "write-gated",
-      "value": "protection is enabled on an Azure virtual network and covers the public IPs of resources in it",
+      "kind": "per-ip-shaping",
+      "value": "auto-tuned TCP SYN, TCP and UDP mitigation policies are applied for each public IP of the protected resource in the virtual network with DDoS enabled",
       "source": "https://learn.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview"
     }
   ],
   "limits_note": "",
-  "binding": "write-gated",
-  "binding_note": "It cannot be the ingress for a service outside Azure at any volume, so 1 TiB/month never becomes the constraint.",
+  "binding": "per-ip-shaping",
+  "binding_note": "Mitigation is applied per public IP of resources inside the caller's own Azure virtual network; it issues no address that forwards to an origin outside Azure, so there is no egress allowance to bind at 1 TiB a month.",
   "identity_cost": {
     "kind": "card",
     "detail": "An Azure subscription with a virtual network and a public IP inside it.",
@@ -67,10 +67,52 @@
       "url": "https://learn.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview",
       "date": "2026-10-23",
       "proved": "Azure DDoS Protection applies three auto-tuned mitigation policies (TCP SYN, TCP, and UDP) for each public IP of the protected resource, in the virtual network that has DDoS enabled."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview",
+      "date": "2026-11-25",
+      "proved": "the service is still a mitigation policy on public IPs inside a caller's own virtual network, not a forwarding proxy that can ingress for another origin",
+      "capture": "sha256:bc5465ed0e874036ca524636bf6e4d60fe6191a22551b0654a12a34fa456bae0",
+      "quote": "Azure DDoS Protection applies three auto-tuned mitigation policies (TCP SYN, TCP, and UDP) for each public IP of the protected resource, in the virtual network that has DDoS enabled."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview",
+      "date": "2026-11-25",
+      "proved": "the protection is scoped to Azure resources inside a virtual network and publishes no traffic allowance",
+      "capture": "sha256:bc5465ed0e874036ca524636bf6e4d60fe6191a22551b0654a12a34fa456bae0",
+      "quote": "It's automatically tuned to help protect your specific Azure resources in a virtual network."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview",
+      "date": "2026-11-25",
+      "proved": "the published constraint is a mitigation policy applied per public IP",
+      "capture": "sha256:bc5465ed0e874036ca524636bf6e4d60fe6191a22551b0654a12a34fa456bae0",
+      "quote": "Azure DDoS Protection applies three auto-tuned mitigation policies (TCP SYN, TCP, and UDP) for each public IP of the protected resource, in the virtual network that has DDoS enabled."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview",
+      "date": "2026-11-25",
+      "proved": "the published constraint is a per-public-IP mitigation policy with no byte allowance",
+      "capture": "sha256:bc5465ed0e874036ca524636bf6e4d60fe6191a22551b0654a12a34fa456bae0",
+      "quote": "Azure DDoS Protection applies three auto-tuned mitigation policies (TCP SYN, TCP, and UDP) for each public IP of the protected resource, in the virtual network that has DDoS enabled."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview",
+      "date": "2026-11-25",
+      "proved": "the per-public-IP scope is the binding constraint described by the first-party page",
+      "capture": "sha256:bc5465ed0e874036ca524636bf6e4d60fe6191a22551b0654a12a34fa456bae0",
+      "quote": "Azure DDoS Protection applies three auto-tuned mitigation policies (TCP SYN, TCP, and UDP) for each public IP of the protected resource, in the virtual network that has DDoS enabled."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview",
+      "date": "2026-11-25",
+      "proved": "the per-IP scoping to the caller's own virtual network is the published constraint",
+      "capture": "sha256:bc5465ed0e874036ca524636bf6e4d60fe6191a22551b0654a12a34fa456bae0",
+      "quote": "for each public IP of the protected resource, in the virtual network that has DDoS enabled."
     }
   ],
   "verdict": "fails-egress",
-  "verified_at": "2026-10-23T00:00:00.000Z",
+  "verified_at": "2026-11-25T11:43:45.618Z",
   "price_per_tb_month": "unpublished in this lane",
   "history": [],
   "notes": "Provides DDoS mitigation for public IP addresses associated with Azure Virtual Networks. Does not provide standalone proxy addresses, origin mapping or port forwarding.",
