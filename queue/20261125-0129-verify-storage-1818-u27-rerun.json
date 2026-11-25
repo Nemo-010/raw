@@ -1,0 +1,18 @@
+{
+ "id": "20261125-0129-verify-storage-1818-u27-rerun",
+ "kind": "verify",
+ "topic": "storage",
+ "question": "Re-read each record against its first-party page and establish the values its unknown classes name, at least the retention and per-object-cap notes, plus any interface, chaining, retention, per-object-cap or egress value listed for it.\nAn audit of the first attempt judged these claims unsupported by their sources; settle each one first:\n- storage/gitlab-container-registry $.interface: Page names the registry endpoint only; nothing on oci or rclone as interfaces.\n- storage/gitlab-com-git-lfs $.egress.metered: Page covers a request rate limit only. It says nothing about egress being metered or unmetered.\n- storage/gitlab-container-registry $.egress.terms: Page names the endpoint only; no statement on egress charges or anonymous pulls/JWT.\n- storage/gitlab-package-registry $.interface: REST API is documented; rclone appears nowhere on the page.\n- storage/gitlab-package-registry $.chaining: No statement of unlimited projects, 200 projects per day, or separate accounting from repository limits on this page. The 5 GB figure is on the limits page, not this one.\n- storage/gitlab-container-registry $.egress.metered: Page names the endpoint only; nothing on egress metering.\n- storage/gitlab-package-registry $.retention.notes: Five-update history is stated; the page has no cleanup policy text, so \"cleanup policy can delete package assets only if explicitly configured\" is not on it.\n- storage/gitlab-com-snippets $.chaining: No 300/hour creation limit, no \"NOT enforced\" storage statement; page says snippet repos count toward namespace storage.\n- storage/gitlab-com-git-lfs $.free_tier.stated: 10 GiB, repository and LFS, and 500 GiB Premium/Ultimate are stated. Page lists only container registry, package registry and build artifacts as outside the limit; snippets, uploads and wikis are not stated as out, and the quoted phrase \"Large File Storage (LFS)\" is not verbatim.\n- storage/gitlab-com-snippets $.limits_note: No 300 creations/hour or GraphQL createSnippet mention; page states a 50 MB default maximum snippet size, contradicting \"no size cap found\".\n- storage/gitlab-com-git-lfs $.interface: LFS over HTTP is stated; \"rest\" is not named as an interface.",
+ "scope": {
+  "rids": [
+   "storage/gitlab-com-git-lfs",
+   "storage/gitlab-com-snippets",
+   "storage/gitlab-container-registry",
+   "storage/gitlab-package-registry",
+   "storage/gitlab-snippets-gitlab-com-projects",
+   "storage/gnu-savannah-download-area"
+  ]
+ },
+ "origin": "audit u104 of 20261125-0129-verify-storage-1818/u27 failed: 11 of 30 unsupported",
+ "created": "2026-11-25T11:42:54Z"
+}
