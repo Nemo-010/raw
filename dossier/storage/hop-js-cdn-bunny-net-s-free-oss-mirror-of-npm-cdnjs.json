@@ -5,7 +5,7 @@
   "url": "https://hopjs.bunny.net/",
   "category": "cdn",
   "free_tier": {
-    "stated": "No quota of its own. It is a permanent mirror: every file is copied into Bunny Storage SSD and served from there, so your ceiling is the npm cap. Probed single files of 32.2 MB, 54.0 MB and 64.5 MB. All served complete and byte-identical to the unpkg copy (sha256 match on the 53,974,528-byte .node and the 64,458,752-byte .exe). No per-file cap was hit at any size tried.",
+    "stated": "A free CDN for open source projects; the home and about pages state no storage quota.",
     "unit": "unlimited",
     "metered_on": "stored-bytes",
     "source_url": "https://hopjs.bunny.net/about/",
@@ -13,18 +13,18 @@
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "single files of 32.2 MB",
-    "bytes": 32200000,
+    "stated": "A file of 64,458,752 bytes answers HTTP 200 (HEAD, declared Content-Length); no per-file cap is stated on the home or about pages.",
+    "bytes": null,
     "source_url": "https://hopjs.bunny.net/about/",
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "No quota of its own. It is a permanent mirror: every file is copied into Bunny Storage SSD and served from there, so your ceiling is the npm cap",
+    "stated": "Every package is permanently distributed across Bunny Storage’s globally deployed SSD regions.",
     "source_url": "https://hopjs.bunny.net/about/",
     "notes": "Extracted from published terms."
   },
   "egress": {
-    "terms": "Free and unmetered. It is a free public CDN; no account, no key, no billing surface at all. Origin->CDN transit is Bunny's own storage, so there is no origin bill either.",
+    "terms": "Described as a free CDN for open source projects; the home and about pages state no traffic limit or price.",
     "metered": false
   },
   "interface": [
@@ -47,7 +47,7 @@
     },
     {
       "kind": "per-object-cap",
-      "value": "single files of 32.2 MB",
+      "value": "no per-file cap stated; a 64,458,752-byte file is served",
       "source": "https://hopjs.bunny.net/about/"
     }
   ],
@@ -99,10 +99,38 @@
       "proved": "the mirror permanently distributes packages across Bunny Storage SSD regions",
       "capture": "sha256:16ed1904cfdffb3660fb04375636533f463733f4d85aedbc09283030d4f13229",
       "quote": "Every package is permanently distributed across Bunny Storage’s globally deployed SSD regions, turning “misses” into near-hits."
+    },
+    {
+      "url": "https://hopjs.bunny.net/about/",
+      "date": "2026-11-25",
+      "proved": "packages are stated to be permanently distributed across Bunny Storage SSD regions",
+      "capture": "sha256:16ed1904cfdffb3660fb04375636533f463733f4d85aedbc09283030d4f13229",
+      "quote": "Every package is permanently distributed across Bunny Storage’s globally deployed SSD regions"
+    },
+    {
+      "url": "https://hopjs.bunny.net/",
+      "date": "2026-11-25",
+      "proved": "the home page calls hop.js a free CDN for open source projects",
+      "capture": "sha256:05ce50c741f48823523b7f91c7c0c54296da69a78cad8d2e314fb327468711e2",
+      "quote": "# A free CDN for open source projects"
+    },
+    {
+      "url": "probe:cdn.hopjs.net/npm/@ffmpeg-installer/win32-x64@4.1.0/ffmpeg.exe",
+      "date": "2026-11-25",
+      "proved": "a 64,458,752-byte file is served with HTTP 200",
+      "capture": "sha256:af6a3954806322b715722761fa9df7258b855543cf7a1eef877242d4827aa8ae",
+      "quote": "\"content-length\": \"64458752\""
+    },
+    {
+      "url": "probe:cdn.hopjs.net/npm/@ffmpeg-installer/win32-x64@4.1.0/ffmpeg.exe",
+      "date": "2026-11-25",
+      "proved": "a 64,458,752-byte file is served with HTTP 200, above the recorded 32,200,000",
+      "capture": "sha256:af6a3954806322b715722761fa9df7258b855543cf7a1eef877242d4827aa8ae",
+      "quote": "\"content-length\": \"64458752\""
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-19T21:13:58.579Z",
+  "verified_at": "2026-11-25T12:15:43.595Z",
   "notes": "Every package is permanently distributed across Bunny Storage’s globally deployed SSD regions, turning “misses” into near-hits.",
   "history": [],
   "extras": {
