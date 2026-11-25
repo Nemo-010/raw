@@ -1,0 +1,126 @@
+{
+  "topic": "compute",
+  "slug": "wbx-sandbox",
+  "provider": "WBX Sandbox",
+  "url": "https://sandbox.wbx.cz/pricing",
+  "category": "container and vm sandbox",
+  "tier": "Pay as you go",
+  "free_tier": {
+    "stated": "A free welcome credit is granted to a new account with no card required: the sign-up page states USD 20 welcome credit, USD 8 after email verification and USD 12 after the first day. A no-signup try sandbox runs for 5 minutes, then is deleted, and allows network only to package registries.",
+    "unit": "credits",
+    "metered_on": "wall-clock",
+    "source_url": "https://sandbox.wbx.cz/signup",
+    "read_on": "2026-11-25",
+    "notes": "The operator list's $0.108/h is the Pro/Team rate for a 2 vCPU / 4 GB sandbox: $0.032 per vCPU-hour plus $0.011 per GB RAM-hour. Pay as you go is $0.038/vCPU-hour plus $0.013/GB-hour, which the pricing table gives as $0.128 for the same box."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the metered unit is a running Firecracker microVM, not a stored object; the free plan offers up to 6 hours per sandbox and 10 vCPU / 10 GB RAM in total",
+    "source_url": "https://sandbox.wbx.cz/pricing"
+  },
+  "retention": {
+    "stated": "An idle sandbox falls asleep and keeps its files at no CPU or memory cost; on pay as you go it is kept 7 days, extendable to 14, and its disk bills at $0.06 per GB-month above the plan allowance.",
+    "days": 7,
+    "source_url": "https://sandbox.wbx.cz/pricing"
+  },
+  "egress": {
+    "terms": "A sandbox has full internet, an allowlist or no network, with IPv4, IPv6 or both, and a public HTTPS URL for any port; the pricing page states no separate egress volume allowance or per-GB price.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://sandbox.wbx.cz/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "ssh",
+    "browser",
+    "chat"
+  ],
+  "interface_detail": "A REST API at https://sandbox.wbx.cz/v1, a Python SDK and a TypeScript SDK, an MCP server at https://sandbox.wbx.cz/mcp for AI assistants, a terminal command, and a portal; sandboxes are Firecracker microVMs hosted in the EU.",
+  "endpoint": "https://sandbox.wbx.cz/v1",
+  "tooling": "The user installs the Python or TypeScript SDK or calls the REST API; MCP lets a coding agent drive sandboxes without a client of its own.",
+  "chaining": "USD 20 of welcome credit and a per-job price ceiling let an agent run bounded code tasks and batches, with sleeping named sandboxes that keep files between runs.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "USD 20 welcome credit on sign-up, paid by usage at $0.038/vCPU-hour and $0.013/GB-hour on pay as you go; 10 concurrent sandboxes, 10 vCPU / 10 GB RAM total, up to 6 hours per sandbox",
+      "source": "https://sandbox.wbx.cz/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "The no-signup try sandbox is limited to 5 minutes, smallest compute and disk, and network only to PyPI and npm",
+      "source": "https://sandbox.wbx.cz/try"
+    }
+  ],
+  "limits_note": "Fixed-price plans are Solo $15/month (3 concurrent, 6 vCPU / 8 GB total, 4 h per sandbox), Pro $49/month with $25 usage credit (25 concurrent, 24 h), and Team $99/month with $50 credit (100 concurrent, 48 h); all prices exclude VAT.",
+  "binding": "volume-quota",
+  "binding_note": "Welcome credit and then prepaid balance are what run out first: when credit is exhausted new sandboxes stop starting while running ones finish normally, well before the concurrency cap matters.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The sign-up form asks for Your name, Email and a password of at least 10 characters, plus terms acceptance; Google and GitHub sign-in are offered. 'No card required.' Billing details (country, company) are asked only when paying, by card through Stripe or GoPay for EU customers. The no-signup try sandbox needs 'no account, no card'.",
+    "country": null
+  },
+  "reliability_note": "When credit runs out new sandboxes stop starting and the user is emailed; running sandboxes finish normally. Idle sandboxes sleep and are deleted after the plan's retention period (2 days' email warning); paid sandboxes falling asleep after 30 minutes or 10 minutes without a command stop running programs but keep files.",
+  "confidence": "documented",
+  "confidence_note": "The rate table, welcome credit, sign-up fields, sleeping-sandbox retention and no-signup trial are quoted from first-party pages read on 2026-11-25. Egress volumes are not published.",
+  "evidence": [
+    {
+      "url": "https://sandbox.wbx.cz/pricing",
+      "date": "2026-11-25",
+      "proved": "the free welcome credit requires no card",
+      "capture": "sha256:e88e342ec3748d0a2272450b7bdf308632f5d057db285b6f3b5e6f9e0a6909d1",
+      "quote": "Start free – no card required"
+    },
+    {
+      "url": "https://sandbox.wbx.cz/pricing",
+      "date": "2026-11-25",
+      "proved": "pay-as-you-go 2 vCPU / 4 GB costs $0.128 an hour",
+      "capture": "sha256:e88e342ec3748d0a2272450b7bdf308632f5d057db285b6f3b5e6f9e0a6909d1",
+      "quote": "| Pay as you go | $0.038 | $0.013 | $0.128 |"
+    },
+    {
+      "url": "https://sandbox.wbx.cz/pricing",
+      "date": "2026-11-25",
+      "proved": "Pro's $0.032/vCPU-hour plus $0.011/GB-hour gives the list's $0.108/h for 2 vCPU / 4 GB",
+      "capture": "sha256:e88e342ec3748d0a2272450b7bdf308632f5d057db285b6f3b5e6f9e0a6909d1",
+      "quote": "| Pro | $0.032 | $0.011 | $0.108 |"
+    },
+    {
+      "url": "https://sandbox.wbx.cz/pricing",
+      "date": "2026-11-25",
+      "proved": "pay-as-you-go sleeping sandboxes are kept 7 days and extendable to 14, disk at $0.06 per GB-month",
+      "capture": "sha256:e88e342ec3748d0a2272450b7bdf308632f5d057db285b6f3b5e6f9e0a6909d1",
+      "quote": "| Pay as you go | – | $0.06 | 7 days | 14 days |"
+    },
+    {
+      "url": "https://sandbox.wbx.cz/signup",
+      "date": "2026-11-25",
+      "proved": "a new account gets USD 20 welcome credit with USD 8 after email verification, no card required",
+      "capture": "sha256:5690100504b8904d70ab2b924582c1c927299470eced9725f4e1c4dcb34b9725",
+      "quote": "Start free with <strong>$20 welcome credit</strong> – $8 right after you verify your email, the remaining $12 after your first day. No card required."
+    },
+    {
+      "url": "https://sandbox.wbx.cz/try",
+      "date": "2026-11-25",
+      "proved": "a 5-minute no-signup, no-card try sandbox with network restricted to package registries",
+      "capture": "sha256:9b80d2f14b6c5e1ec1825c088b8ad82a9e340c14fb964501fb152452b8a9ea56",
+      "quote": "no account, no card"
+    },
+    {
+      "url": "https://sandbox.wbx.cz/docs/guides/first-result",
+      "date": "2026-11-25",
+      "proved": "creating a WBX account is free and needs no card",
+      "capture": "sha256:5bf7d086182a9a7d5e84907bd80a86bcd8cde6dcaf2d4998649df9c25f4371c0",
+      "quote": "A **WBX Sandbox account**. [Create one for free](https://sandbox.wbx.cz/signup) – no card needed."
+    },
+    {
+      "url": "https://sandbox.wbx.cz/pricing",
+      "date": "2026-11-25",
+      "proved": "paid plans are bought by card through Stripe or GoPay",
+      "capture": "sha256:e88e342ec3748d0a2272450b7bdf308632f5d057db285b6f3b5e6f9e0a6909d1",
+      "quote": "By card through Stripe, or through GoPay for EU customers. Every payment comes with a VAT invoice."
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-11-25T11:55:06.371Z"
+}
