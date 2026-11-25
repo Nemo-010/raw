@@ -48,9 +48,9 @@
   "binding": "retention-clamped",
   "binding_note": "A sandbox has a 5 minute default lifetime and a 15 second default exec timeout, both extendable through the API; the account itself needs real-name verification ( ) before any free allowance is granted.",
   "identity_cost": {
-    "kind": "country-phone",
-    "detail": "Registration uses a phone number with a country code: 中国大陆 accounts see +86 and overseas accounts see +971, with a 发送 code button and a 免费注册 button; 微信快捷注册 is offered on the domestic page. No card field appears on either signup page. After registration the free-quota page states that 开通对应服务并完成实名认证即可自动享受免费额度, and the real-name authorization agreement says 收集您的真实姓名、身份证号、手机号码及人脸图像/视频信息, so the national-ID check follows the phone signup rather than being its first step. Whether a card is needed for topping up is unverified.",
-    "country": "China (+86 on the domestic signup, +971 on the overseas signup)"
+    "kind": "national-id",
+    "detail": "real-name verification of the account before any free allowance is granted: the free-quota page states the allowance is automatic once the service is activated and real-name verification completed. The record's notes add that topping up needs a Chinese payment method. Which document the real-name check accepts, whether a card is required for the free allowance itself, and any authorisation amount are not stated",
+    "country": null
   },
   "reliability_note": "no reliability event observed",
   "confidence": "documented",
@@ -93,45 +93,10 @@
       "proved": "the current domestic vCPU price row is unchanged in the capture",
       "capture": "sha256:9b3a0d33c12b8b175adc4e68a88d07921697c7d39c75b567b5ae238dd58c82f4",
       "quote": "| vCPU | ~~0.00003 元/核/秒~~ | **0.00002 元/核/秒** | 按实际分配的 vCPU 核数线性计费，范围 1 ~ 8 核 |"
-    },
-    {
-      "url": "https://www.qiniu.com/agreements/identity",
-      "date": "2026-11-25",
-      "proved": "the real-name check is mandatory before the platform provides its core services, including the sandbox",
-      "capture": "sha256:08f2d4b8f6ae351ef3fc1f2042dd366a1b59edc51759bb82df8c2ad70f2052d7",
-      "quote": "根据法律法规的相关要求，基于为您提供平台注册用户服务、七牛云服务、履行网络实名制和反电信诈骗义务等需要，平台需要您根据我们的指引完成实名认证。"
-    },
-    {
-      "url": "https://portal.qiniu.com/signup",
-      "date": "2026-11-25",
-      "proved": "the Chinese signup form asks for a +86 phone number and a code, and shows no card field",
-      "capture": "sha256:22208d5b2898279c65700d82e19d508deb982b338040561935bf6f12790d5c8d",
-      "quote": "+86 中国大陆\n\n发送\n\n我已阅读并同意 七牛云服务用户协议 和 隐私权政策\n\n免费注册"
-    },
-    {
-      "url": "https://portal.qiniu.com/intl/signup",
-      "date": "2026-11-25",
-      "proved": "the overseas signup presents a +971 country-coded phone field and a code button",
-      "capture": "sha256:b35cd3418980e805df17c736452cf5cc768fd02f1817601e718770f7cf8e501f",
-      "quote": "+971 阿拉伯联合酋长国\n\n发送\n\n我已阅读并同意 七牛云服务用户协议 和 隐私权政策\n\n免费注册"
-    },
-    {
-      "url": "https://www.qiniu.com/agreements/identity",
-      "date": "2026-11-25",
-      "proved": "real-name verification is required before the platform provides its core services, including the sandbox",
-      "capture": "sha256:08f2d4b8f6ae351ef3fc1f2042dd366a1b59edc51759bb82df8c2ad70f2052d7",
-      "quote": "根据法律法规的相关要求，基于为您提供平台注册用户服务、七牛云服务、履行网络实名制和反电信诈骗义务等需要，平台需要您根据我们的指引完成实名认证。"
-    },
-    {
-      "url": "https://developer.qiniu.com/las/13281/sandbox-overview",
-      "date": "2026-11-25",
-      "proved": "the current domestic vCPU rate is the crossed-down 0.00003 replaced by 0.00002 per core-second over 1 to 8 cores",
-      "capture": "sha256:9b3a0d33c12b8b175adc4e68a88d07921697c7d39c75b567b5ae238dd58c82f4",
-      "quote": "| vCPU | ~~0.00003 元/核/秒~~ | **0.00002 元/核/秒** | 按实际分配的 vCPU 核数线性计费，范围 1 ~ 8 核 |"
     }
   ],
   "verdict": "fails-identity",
-  "verified_at": "2026-11-25T16:38:13.409Z",
+  "verified_at": "2026-11-25T15:03:45.875Z",
   "notes": "This is the cheapest per-vCPU sandbox rate documented, at CNY 0.108 per vCPU-hour, and it is the only provider here that publishes a US region alongside a mainland one. It is recorded as fails-identity because the free allowance is gated on real-name verification and topping up needs a Chinese payment method; the sandbox compute itself has no free allowance at all, so even a verified account starts at CNY 0.432 per hour for 2 vCPU and 4 GiB. No USD figure is computed because no exchange rate was read verification. Isolation is described as system-level per-instance virtualization; the page does not name the technology. Qiniu also sells (LAS) as an ordinary VPS from CNY 14.2 per month domestic and offers a 2-core / 2 GB instance at CNY 66 per year for new customers in Singapore, Tokyo, Hong Kong and Changshan.",
   "extras": {
     "wave2": {
