@@ -1130,7 +1130,7 @@ breaking change.
 | RUVDS | A 3-day free trial of any configuration cos... | trial-only | documented | not applicable: the unit is a m... | The trial is three da... | any-phone | `dossier/compute/ruvds.json` |
 | RuWeb | Six days of VPS free, activated automatical... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/ruweb.json` |
 | Sail Research (Sailboxes) | no free compute tier: the page prices model... | paid-only | documented | not stated | not stated | email | `dossier/compute/sail.json` |
-| Sailboxes | A USD 5 monthly credit is advertised when a... | qualifies-with-caveat | documented | sandbox sizes S, M and L with a... | Independent disks and... | card | `dossier/compute/sailboxes.json` |
+| Sailboxes | A USD 5 monthly credit is stated on the ven... | qualifies-with-caveat | documented | sandbox sizes S, M and L with a... | Independent disks and... | card | `dossier/compute/sailboxes.json` |
 | Sakura Internet Cloud | no free tier: servers bill monthly, daily o... | paid-only | documented | not stated | not stated | email | `dossier/compute/sakura-cloud.json` |
 | Sakura Cloud | No free trial, stated outright: 'さくらのクラウドは無... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/sakura-cloud-2.json` |
 | Sakura Cloud certification | A one-month free Sakura Cloud learning envi... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | country-phone | `dossier/compute/sakura-cloud-certification.json` |
@@ -1275,7 +1275,7 @@ breaking change.
 | Tencent Cloud SCF | a free quota exists for 云函数 (SCF), listed i... | qualifies-with-caveat | documented | not stated | not stated | national-id | `dossier/compute/tencent-scf.json` |
 | Tenki Sandbox | USD 100 in free credits on a new account: U... | qualifies-with-caveat | documented | Starter caps a machine at 4 cor... | A paused sandbox stop... | card | `dossier/compute/tenki.json` |
 | TensorDock | no free tier: homepage 'From' rates per hou... | paid-only | documented | not stated | not stated | email | `dossier/compute/tensordock.json` |
-| Tensorlake Sandboxes | a true Free tier at $0 forever with 1 sandb... | qualifies-with-caveat | documented | not stated | 7 d | email | `dossier/compute/tensorlake.json` |
+| Tensorlake Sandboxes | a true Free tier at $0 forever with 1 sandb... | qualifies-with-caveat | documented | not stated | the pricing page's SO... | email | `dossier/compute/tensorlake.json` |
 | TensorPool | no price is published: the home page sells... | paid-only | documented | not stated | not stated | email | `dossier/compute/tensorpool.json` |
 | Tenstorrent TT Console | The docs state 'No hardware yet? console.te... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/tenstorrent-tt-console.json` |
 | Terabix | CVM-4GB-M at USD 6/month: 2 vCPU (AMD EPYC... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/terabix.json` |
