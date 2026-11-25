@@ -15,12 +15,12 @@
   "per_object_cap": {
     "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
-    "notes": "No per-blob or per-layer object cap is documented for the GitLab container registry: the registry documentation states there is no storage limitation and images can have arbitrary sizes. The authorization-token duration is documented on the settings page, but it is not a size cap."
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
     "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
-    "notes": "Tagged image layers persist; untagged image layers are automatically deleted after 24 hours while unreferenced, and a garbage-collection run is scheduled 24 hours after a tag deletion. Tag removal can be automated by an optional cleanup policy, which is disabled by default. No fixed retention period is published for tagged layers."
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
     "terms": "Free, Cloudflare + Google Cloud CDN. Blob requests 307-redirect to cdn.registry.gitlab-static.net with a signed URL. Directly cacheable by an external Cloudflare zone.",
@@ -74,38 +74,10 @@
       "proved": "the container registry is excluded from the per-project storage limit; a Free project has 10 GiB for repo and LFS only",
       "capture": "sha256:32cb9b13bd82d6395449b56d639b10c9214fbcf89a1a5fa1493dad8fe2e46c49",
       "quote": "Only the project's repository and LFS are included in the storage limit. The container registry, package registry, and build artifacts are not included in the limit."
-    },
-    {
-      "url": "https://docs.gitlab.com/user/packages/container_registry/reduce_container_registry_storage/",
-      "date": "2026-11-25",
-      "proved": "the retention rule for unreferenced image layers is 24 hours",
-      "capture": "sha256:dd8cc42fc28568000e58c4f527a91c436f86456cdde731ffcbdb9e59d08d35f7",
-      "quote": "Untagged image layers are automatically deleted after 24 hours if they remain unreferenced during that period."
-    },
-    {
-      "url": "https://docs.gitlab.com/user/packages/container_registry/reduce_container_registry_storage/",
-      "date": "2026-11-25",
-      "proved": "cleanup policies are an optional scheduled tag-removal facility",
-      "capture": "sha256:dd8cc42fc28568000e58c4f527a91c436f86456cdde731ffcbdb9e59d08d35f7",
-      "quote": "The cleanup policy is a scheduled job you can use to remove tags from the container registry."
-    },
-    {
-      "url": "https://docs.gitlab.com/administration/packages/container_registry/index.html",
-      "date": "2026-11-25",
-      "proved": "the registry documentation states no storage or image-size limit",
-      "capture": "sha256:5608f84542007cf30351e5a0bd786b74b0dc7c8d13f5bc0f366996eea788ab55",
-      "quote": "There is no storage limitation, which means a user can upload an infinite amount of Docker images with arbitrary sizes."
-    },
-    {
-      "url": "https://docs.gitlab.com/user/storage_usage_quotas/",
-      "date": "2026-11-25",
-      "proved": "the container registry is excluded from the per-project storage limit",
-      "capture": "sha256:c31fa88d40120be518fbe9f17f5155d6812a549ba671ca04939f01cc78377e71",
-      "quote": "Only the project’s repository and LFS are included in the storage limit."
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-11-25T05:52:37.755Z",
+  "verified_at": "2026-11-19T21:13:26.679Z",
   "notes": "No published storage cap. Explicitly excluded from the per-project 10 GiB limit; unlimited container repositories per project is the practical reading.",
   "history": [],
   "extras": {
