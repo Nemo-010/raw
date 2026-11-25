@@ -5,7 +5,7 @@
   "url": "https://github.com/qaiu/netdisk-fast-download",
   "category": "resolver, not a store",
   "free_tier": {
-    "stated": "free software with a free public instance, no allowance stated: https://github.com/qaiu/netdisk-fast-download links a 公益 (free public) instance at lz.qaiu.top and prints no quota, unit or price",
+    "stated": "free public resolver at lz.qaiu.top, listed as a 公益 instance",
     "unit": "none",
     "metered_on": "none",
     "source_url": "https://github.com/qaiu/netdisk-fast-download",
@@ -17,7 +17,7 @@
     "source_url": "https://github.com/qaiu/netdisk-fast-download"
   },
   "retention": {
-    "stated": "Not applicable; the server caches a resolved link for a per-pan time in minutes set in its configuration (shipped values: 5 for ecpan, 20 for feijipan, 30 for lanzou), and a pan with no entry is not cached",
+    "stated": "a resolved ecpan link is cached for 5 minutes in the server the user runs",
     "days": null,
     "source_url": "https://github.com/qaiu/netdisk-fast-download"
   },
@@ -36,7 +36,7 @@
   "limits": [
     {
       "kind": "request-rate",
-      "value": "the server code has an optional per-IP request limiter, off unless rateLimit.enable is set; the example in the shipped configuration is 10 requests per 10 seconds on /v2/ paths",
+      "value": "a rate limiter block is present but commented out in the shipped configuration",
       "source": "https://raw.githubusercontent.com/qaiu/netdisk-fast-download/main/web-service/src/main/resources/app-dev.yml"
     },
     {
@@ -50,7 +50,7 @@
     "detail": "the hosted instance is keyless. Self-hosting needs a VPS and no account with any pan",
     "country": null
   },
-  "reliability_note": "Individual parsers break whenever a provider changes its markup. The project is actively maintained, so pinning a version and watching the README changelog is the operational answer. The README warns that feijipan blocks mainland datacentre IPs and that the public instance should not be depended on",
+  "reliability_note": "the README asks users not to over-rely on the public instance",
   "confidence": "reported",
   "evidence": [
     {
@@ -165,10 +165,38 @@
       "proved": "the program can also be self-hosted through a Docker image",
       "capture": "sha256:6db0683295073400965eaad83a2c121f5603936be7fa72d1ff7b6ad18fb59992",
       "quote": "#### 海外服务器Docker部署 ... docker pull ghcr.io/qaiu/netdisk-fast-download:latest"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/qaiu/netdisk-fast-download/main/README.md",
+      "date": "2026-11-25",
+      "proved": "the README still links the free public instance and states no quota, unit or price",
+      "capture": "sha256:fa782304219f2cc962dd77ead2d6615672bce125f352c7ba971e5945a7c82122",
+      "quote": "[公益解析，lz站](https://lz.qaiu.top)"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/qaiu/netdisk-fast-download/main/web-service/src/main/resources/app-dev.yml",
+      "date": "2026-11-25",
+      "proved": "the shipped config sets the ecpan cache to 5 minutes",
+      "capture": "sha256:f22ce30e77f56191f653d93c68a231113c70a92484df06f884de98b135b516b4",
+      "quote": "ec: 5 # 移动云空间"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/qaiu/netdisk-fast-download/main/web-service/src/main/resources/app-dev.yml",
+      "date": "2026-11-25",
+      "proved": "the shipped config leaves the rate limiter commented out",
+      "capture": "sha256:f22ce30e77f56191f653d93c68a231113c70a92484df06f884de98b135b516b4",
+      "quote": "#rateLimit:"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/qaiu/netdisk-fast-download/main/README.md",
+      "date": "2026-11-25",
+      "proved": "the README warns against over-relying on the public instance",
+      "capture": "sha256:fa782304219f2cc962dd77ead2d6615672bce125f352c7ba971e5945a7c82122",
+      "quote": "请不要过度依赖 lz.qaiu.top"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-04T01:03:29.207Z",
+  "verified_at": "2026-11-25T13:26:32.573Z",
   "history": [],
   "binding": "write-gated",
   "binding_note": "The resolver is free and fast and stores nothing, so what binds is the auth table: the pans most in demand, including Baidu, Quark and UC, need a cookie or sit behind the paid professional endpoint.",

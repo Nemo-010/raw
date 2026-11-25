@@ -26,14 +26,14 @@
     "source_url": "https://alist.zlion.top/"
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
   "tooling": "none: no client reaches it",
   "chaining": "excluded",
   "limits": [
     {
       "kind": "retention-clamped",
-      "value": "the host stopped serving: no TCP service",
+      "value": "the listing readme marks the WebDAV mount stopped",
       "source": "probe:https://alist.zlion.top/api/public/settings"
     }
   ],
@@ -42,7 +42,7 @@
     "detail": "no account would have helped",
     "country": null
   },
-  "reliability_note": "Anonymous JSON listing of 5 root directories returned by the AList API on a fresh probe; guest session with permission 0; the earlier no-TCP-service state is not observed at this check.",
+  "reliability_note": "the AList settings API answers with site title Zlion",
   "confidence": "measured",
   "evidence": [
     {
@@ -77,13 +77,69 @@
       "proved": "the host answers the AList settings API with title Zlion and version v4.2.9",
       "capture": "sha256:ceec46d0e235b0c6f9d72d15a9c1cb6b2e8979850e37eb34adb282ce6be43dff",
       "quote": "\"site_title\":\"Zlion\""
+    },
+    {
+      "url": "probe:https://alist.zlion.top/api/public/settings",
+      "date": "2026-11-25",
+      "proved": "the settings API identifies the live instance as Zlion",
+      "capture": "sha256:ceec46d0e235b0c6f9d72d15a9c1cb6b2e8979850e37eb34adb282ce6be43dff",
+      "quote": "\"site_title\":\"Zlion\""
+    },
+    {
+      "url": "probe:https://alist.zlion.top/api/fs/list",
+      "date": "2026-11-25",
+      "proved": "the anonymous REST listing answers with five root entries",
+      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
+      "quote": "\"total\":5"
+    },
+    {
+      "url": "probe:https://alist.zlion.top/api/fs/list",
+      "date": "2026-11-25",
+      "proved": "the readme warns that excessive downloads will shut the site down",
+      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
+      "quote": "若发现下载行为过多，将直接关停本站"
+    },
+    {
+      "url": "probe:https://alist.zlion.top/api/fs/list",
+      "date": "2026-11-25",
+      "proved": "the REST listing API answers anonymously",
+      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
+      "quote": "\"code\":200,\"message\":\"success\",\"data\":{\"content\""
+    },
+    {
+      "url": "probe:https://alist.zlion.top/api/public/settings",
+      "date": "2026-11-25",
+      "proved": "the settings API still identifies this Zlion instance",
+      "capture": "sha256:ceec46d0e235b0c6f9d72d15a9c1cb6b2e8979850e37eb34adb282ce6be43dff",
+      "quote": "\"site_title\":\"Zlion\""
+    },
+    {
+      "url": "probe:https://alist.zlion.top/api/fs/list",
+      "date": "2026-11-25",
+      "proved": "the anonymous REST listing still returns five root entries",
+      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
+      "quote": "\"total\":5"
+    },
+    {
+      "url": "probe:https://alist.zlion.top/api/fs/list",
+      "date": "2026-11-25",
+      "proved": "the listing readme marks the WebDAV mount stopped",
+      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
+      "quote": "以下为挂载信息(\\u003cstrong style=\\\"color:red\\\"\\u003e已停用\\u003c/strong\\u003e)"
+    },
+    {
+      "url": "probe:https://alist.zlion.top/api/me",
+      "date": "2026-11-25",
+      "proved": "the session is an anonymous guest",
+      "capture": "sha256:7ff3ac9d0c289a36e4ea6bc73e4cec8b627c6d6738ee1e86ef31971bfa3dd40d",
+      "quote": "\"username\":\"guest\""
     }
   ],
   "verdict": "dead",
-  "verified_at": "2026-11-19T21:12:45.420Z",
+  "verified_at": "2026-11-25T13:26:32.572Z",
   "binding": "retention-clamped",
   "binding_note": "The host is not slow or capped, it is gone; the constraint is that it stopped.",
-  "notes": "Zlion instance with media collections where WebDAV access is inactive due to excessive bandwidth utilization. TCP service is offline.",
+  "notes": "the anonymous REST listing returns five root directories",
   "history": [],
   "extras": {
     "access_mode": "public-instance",
