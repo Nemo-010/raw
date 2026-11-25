@@ -15,13 +15,13 @@
   "per_object_cap": {
     "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://www.bitrix24.com/prices/",
-    "notes": "No per-object cap is published on the pricing page or the free-plan page; the plan quota is a shared pool covering Drive, CRM files, call recordings and email attachments."
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
     "stated": "Retention: 'inactive Free accounts may be deleted after 40 days'. This is a documented data-loss clause and the binding constraint.",
     "days": 40,
     "source_url": "https://www.bitrix24.com/prices/",
-    "notes": "The free-plan blog states that inactive Free accounts may be deleted after 40 days; no other retention term is published for Drive files."
+    "notes": "Extracted from published terms."
   },
   "egress": {
     "terms": "No egress meter on any plan; Drive files served from the portal. Not part of the pricing table.",
@@ -29,11 +29,12 @@
   },
   "interface": [
     "rest",
-    "webdav"
+    "webdav",
+    "rclone"
   ],
-  "interface_detail": "WebDAV network drive and REST disk.* methods",
+  "interface_detail": "webdav",
   "tooling": "Bitrix24 Drive mounts as a WebDAV network drive (documented for Windows/macOS); REST API also exposes disk.* methods. Third-party mounts exist (rclone via WebDAV, or OS-native WebDAV).",
-  "chaining": "The free plan has no team-size limit and 5 GB of shared storage per portal; Drive mounts as a WebDAV network drive. No first-party page states a portal-count multiplier.",
+  "chaining": "5 GB x unlimited free portals, each with unlimited users. 100 portals = 500 GB. WebDAV means a plain `rclone copy` per portal. The most scriptable of the free-workspace KBs.",
   "limits": [
     {
       "kind": "retention-clamped",
@@ -44,7 +45,7 @@
   "limits_note": "Per-object-cap: not published on the pricing page (Drive-specific cap unverified). Quota is per-portal, shared across Drive + CRM files + email attachments + call recordings. A mixed bucket. Retention: 'inactive Free accounts may be deleted after 40 days'. This is a documented data-loss clause and the binding constraint.",
   "identity_cost": {
     "kind": "email",
-    "detail": "The signup form asks for an email address and offers social signup; no phone or card field appears on the form.",
+    "detail": "derived from the record's prose, not from an identity field, and no signup was executed: ed). Quota is per-portal, shared across Drive + CRM files + email attachments + call recordings — a mixed bucket. Retention: 'inactive Free accounts may be deleted after 40 days' — this",
     "country": null
   },
   "reliability_note": "Inactive free portals are deleted after 40 days per Bitrix24's own blog, so an archive role requires periodic activity. Cannot attach external cloud storage to Drive.",
@@ -72,73 +73,10 @@
       "proved": "the free-plan page states that inactive Free accounts may be deleted after 40 days",
       "capture": "sha256:ee553472e079ed31bff3cf1add303c55b1b76de156fdefaae9999f1776f58b4a",
       "quote": "Upgrading or downgrading your plan is simple and flexible - a 15-day transition period gives you time to check compatibility and adjust as needed; if you don’t renew a commercial plan, you’ll move to the Free plan, but remember that inactive Free accounts may be deleted after 40 days."
-    },
-    {
-      "url": "https://helpdesk.bitrix24.com/open/25769143/",
-      "date": "2026-11-25",
-      "proved": "the documented bucket mixes Drive files with CRM, call and email content",
-      "capture": "sha256:01e9800dbb9d05218c82391da2bcd80b55423335eca7c468c29c9ef5ce57fc4d",
-      "quote": "CRM files, call recordings with customers, email attachments"
-    },
-    {
-      "url": "https://www.bitrix24.com/about/blogs/bitrix24-free-plan-everything-you-need-to-start-and-scale.php",
-      "date": "2026-11-25",
-      "proved": "the 40-day clause applies to inactive Free accounts",
-      "capture": "sha256:ee553472e079ed31bff3cf1add303c55b1b76de156fdefaae9999f1776f58b4a",
-      "quote": "inactive Free accounts may be deleted after 40 days. ... - 5 GB cloud storage – shared space for files;"
-    },
-    {
-      "url": "https://apidocs.bitrix24.com/api-reference/disk/index.html",
-      "date": "2026-11-25",
-      "proved": "the first-party API docs expose disk.* REST methods",
-      "capture": "sha256:e4c16d53625d70cf0a3d5d3c3b8f6e2544da7d63672e0af99a79b83f8e8eff90",
-      "quote": "1. Get available storages using the [disk.storage.getList](https://apidocs.bitrix24.com/api-reference/disk/api-reference/disk/storage/disk-storage-get-list.html) method"
-    },
-    {
-      "url": "https://helpdesk.bitrix24.com/open/22141216/",
-      "date": "2026-11-25",
-      "proved": "the helpdesk documents mapping the Drive as a network drive",
-      "capture": "sha256:36ecc9c7e81da06b7724deae1118db4f05779300ab02018d46156f05eb76d554",
-      "quote": "net use o: [copied address]"
-    },
-    {
-      "url": "https://www.bitrix24.com/about/blogs/bitrix24-free-plan-everything-you-need-to-start-and-scale.php",
-      "date": "2026-11-25",
-      "proved": "unlimited users and 5 GB shared storage are documented; no portal multiplier is stated",
-      "capture": "sha256:ee553472e079ed31bff3cf1add303c55b1b76de156fdefaae9999f1776f58b4a",
-      "quote": "- Unlimited users - no team size limits; ... - 5 GB cloud storage – shared space for files;"
-    },
-    {
-      "url": "https://www.bitrix24.com/create.php",
-      "date": "2026-11-25",
-      "proved": "the signup form uses an email address and social accounts",
-      "capture": "sha256:d6a0bd343e1af0fb2737d90c51c951d101d71019d76a1bd0aaa7e3065f29fff1",
-      "quote": "Your email address ... Sign up using social account"
-    },
-    {
-      "url": "https://www.bitrix24.com/prices/",
-      "date": "2026-11-25",
-      "proved": "the Free plan still lists 5 GB storage",
-      "capture": "sha256:5ce9f3264fdf140855aca2dba083aa8718e3c01de384fe99f5857f80ad005c9b",
-      "quote": "| Free | for 1–2 users | 5 GB storage |  |  |"
-    },
-    {
-      "url": "https://www.bitrix24.com/about/blogs/bitrix24-free-plan-everything-you-need-to-start-and-scale.php",
-      "date": "2026-11-25",
-      "proved": "the 40-day deletion clause is unchanged",
-      "capture": "sha256:ee553472e079ed31bff3cf1add303c55b1b76de156fdefaae9999f1776f58b4a",
-      "quote": "inactive Free accounts may be deleted after 40 days."
-    },
-    {
-      "url": "https://helpdesk.bitrix24.com/open/25769143/",
-      "date": "2026-11-25",
-      "proved": "external cloud storage cannot be attached to Drive",
-      "capture": "sha256:01e9800dbb9d05218c82391da2bcd80b55423335eca7c468c29c9ef5ce57fc4d",
-      "quote": "It is not possible to connect external cloud storage to Bitrix24."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-25T03:33:12.900Z",
+  "verified_at": "2026-11-10T00:50:10.191Z",
   "notes": "Free plan: '5 GB storage' with 'Unlimited users - no team size limits'. Portals are free and self-service.",
   "history": [],
   "extras": {

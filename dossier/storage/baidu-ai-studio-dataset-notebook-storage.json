@@ -16,25 +16,27 @@
     "stated": "50 GB per file",
     "bytes": 50000000000,
     "source_url": "https://ai.baidu.com/ai-doc/AISTUDIO/5k39vd65f",
-    "notes": "The FAQ caps a dataset file below 50 GB and a dataset at 50 GB; the notebook preview limit is 10 MB for the .ipynb main file."
+    "notes": "extracted from the quota or limits prose"
   },
   "retention": {
     "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://ai.baidu.com/ai-doc/AISTUDIO/5k39vd65f",
-    "notes": "Notebook每个用户提供 **100G** 的云端持久化存储空间作为个人工作区，访问路径为 /home/aistudio/work/。写到该目录下的文件将被实时持久化存储. ... Data目录为非持久化目录, 在Data下进行的文件操作, 重启之后会被自动恢复. ... docker容器闲置一段时间后会被回收，并且系统为docker容器强制设置了最长有效期"
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
     "terms": "Free for public datasets. Downloads are anonymous HTTP from Baidu's CDN with no egress line and no per-GB charge anywhere in the docs. No metered-egress surface exists because AI Studio is not a cloud-storage product with a billing meter.",
     "metered": false
   },
   "interface": [
+    "s3-compatible",
+    "rest",
     "git",
-    "cli",
-    "browser"
+    "rclone",
+    "cli"
   ],
-  "interface_detail": "SDK/CLI, git+LFS and the web uploader",
+  "interface_detail": "rest",
   "tooling": "First-party pip package aistudio-sdk: `aistudio upload --repo-type {model,dataset} --include ... --max-workers N` with a User Access Token from aistudio.baidu.com/account/accessToken. Also git+LFS, and a web uploader. Python SDK + CLI both documented. No rclone backend, no S3 API.",
-  "chaining": "The FAQ shows datasets being attached to a project with an add-dataset action and files above 150 MB routed through datasets; no numerical cap on dataset count is published.",
+  "chaining": "Quota is 50 GB per dataset, separate from the 100 GB workspace limit. Multiple datasets can be created and mounted simultaneously into a single project. Published documentation does not state a numerical cap on total dataset count per user account.",
   "limits": [
     {
       "kind": "per-object-cap",
@@ -78,66 +80,10 @@
       "proved": "the page states a 50 GB per-file limit for dataset uploads",
       "capture": "sha256:d0209ed9aa76dafd1e16cd0b917f0f6706a14f32860a187fee79dc6609070767",
       "quote": "单个文件大小要小于50GB，一个数据集最多可上传50G数据内容."
-    },
-    {
-      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/5k39vd65f",
-      "date": "2026-11-25",
-      "proved": "the FAQ states the file and dataset ceilings and the notebook preview ceiling",
-      "capture": "sha256:aeb635179e0210a9973b7fca89fc8c77ca76e8020793325d0ba4dfe96aaf0be2",
-      "quote": "单个文件大小要小于50GB，一个数据集最多可上传50G数据内容. ... 当前上限为10MB"
-    },
-    {
-      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/5k39vd65f",
-      "date": "2026-11-25",
-      "proved": "the work directory persists in real time, the Data directory is reset on restart, and containers have a forced maximum lifetime; no dataset expiry is stated",
-      "capture": "sha256:aeb635179e0210a9973b7fca89fc8c77ca76e8020793325d0ba4dfe96aaf0be2",
-      "quote": "Notebook每个用户提供 **100G** 的云端持久化存储空间作为个人工作区，访问路径为 /home/aistudio/work/。写到该目录下的文件将被实时持久化存储. ... Data目录为非持久化目录, 在Data下进行的文件操作, 重启之后会被自动恢复. ... docker容器闲置一段时间后会被回收，并且系统为docker容器强制设置了最长有效期"
-    },
-    {
-      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/nme7yirqi",
-      "date": "2026-11-25",
-      "proved": "the upload docs list SDK/CLI, git+LFS and a web uploader; no S3 API or rclone backend is documented",
-      "capture": "sha256:0ba3f89b19369a3553423270a9b63f38f874cba56532f98d9418b6d1b0be07a1",
-      "quote": "- 使用 SDK 上传 ... - 网页上传 ... git lfs install ... pip install --upgrade aistudio-sdk"
-    },
-    {
-      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/nme7yirqi",
-      "date": "2026-11-25",
-      "proved": "dataset uploads use an Access Token from the account console through the SDK, git or web uploader",
-      "capture": "sha256:0ba3f89b19369a3553423270a9b63f38f874cba56532f98d9418b6d1b0be07a1",
-      "quote": "上传数据集文件需要数据集所有者的Access Token，可在 [我的控制台--令牌](https://aistudio.baidu.com/account/accessToken) 处获取"
-    },
-    {
-      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/5k39vd65f",
-      "date": "2026-11-25",
-      "proved": "datasets attach to projects and larger files are routed through the dataset path, with no published count cap",
-      "capture": "sha256:aeb635179e0210a9973b7fca89fc8c77ca76e8020793325d0ba4dfe96aaf0be2",
-      "quote": "如果项目文件较大(>150mb), 请使用数据集功能上传, 然后挂载到项目中. ... 在项目的详情页面中, 点击\"修改\", 然后选择\"添加数据集\"即可"
-    },
-    {
-      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/5k39vd65f",
-      "date": "2026-11-25",
-      "proved": "the 100 G workspace and 50 GB dataset figures are unchanged",
-      "capture": "sha256:aeb635179e0210a9973b7fca89fc8c77ca76e8020793325d0ba4dfe96aaf0be2",
-      "quote": "Notebook每个用户提供 **100G** 的云端持久化存储空间作为个人工作区 ... 单个文件大小要小于50GB，一个数据集最多可上传50G数据内容."
-    },
-    {
-      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/5k39vd65f",
-      "date": "2026-11-25",
-      "proved": "the 50 GB per-file cap is unchanged",
-      "capture": "sha256:aeb635179e0210a9973b7fca89fc8c77ca76e8020793325d0ba4dfe96aaf0be2",
-      "quote": "单个文件大小要小于50GB，一个数据集最多可上传50G数据内容."
-    },
-    {
-      "url": "https://ai.baidu.com/ai-doc/AISTUDIO/nme7yirqi",
-      "date": "2026-11-25",
-      "proved": "git+LFS upload with an access token is documented",
-      "capture": "sha256:0ba3f89b19369a3553423270a9b63f38f874cba56532f98d9418b6d1b0be07a1",
-      "quote": "git clone https://{access_token}@git.aistudio.baidu.com/{repo_id}.git"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-25T03:33:12.899Z",
+  "verified_at": "2026-11-10T00:50:10.189Z",
   "notes": "Two separate pools, which is the interesting part: (1) Notebook persistent workspace. Verbatim 'Notebook每个用户提供 100G 的云端持久化存储空间作为个人工作区，访问路径为 /home/aistudio/work' (100 GB per user, persisted in real time); (2) Datasets. '单个文件大小要小于50GB，一个数据集最多可上传50G数据内容' (single file under 50 GB, one dataset holds at most 50 GB of content). So 100 GB standing + 50 GB per dataset, and datasets are a separately-created object, not a folder in the workspace.",
   "history": [],
   "extras": {

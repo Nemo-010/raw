@@ -15,12 +15,12 @@
   "per_object_cap": {
     "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://www.ebi.ac.uk/biostudies/submit",
-    "notes": "No per-object byte cap is published; the submit page recommends Aspera for volumes above 10 GiB and discusses hundreds of GiB as routine."
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
     "stated": "Binding constraint on read is per-ip-shaping. 1 stream 7 KB/s, 16 parallel 25 KB/s against the EBI FTP edge. Retention: permanent, DOI auto-assigned; files can sit 'hold until published' indefinitely before release.",
     "source_url": "https://www.ebi.ac.uk/biostudies/submit",
-    "notes": "Public datasets remain permanently accessible. Files in the upload area are expected to stay no longer than 3 months before submission, and files persisting beyond 3 months may be deleted."
+    "notes": "Extracted from published terms."
   },
   "egress": {
     "terms": "Free and anonymous. 'Anonymous downloads are enabled' over FTP; also HTTPS. No egress meter anywhere in the docs.",
@@ -28,9 +28,9 @@
   },
   "interface": [
     "ftp",
-    "rest"
+    "nfs"
   ],
-  "interface_detail": "FTP and REST (HTTP) with Aspera and Globus for transfers",
+  "interface_detail": "ftp",
   "tooling": "Submission Tool + FTP + Aspera (ascp) in; anonymous FTP/HTTPS out. Path is predictable: /biostudies/<mode>/<COLL>/<COLL0-99>/<ACC>/Files/ where mode is `fire` or `nfs`.",
   "chaining": "ArrayExpress is a BioStudies collection, so one account covers both. Unlimited accessions per account; each accession gets its own directory tree. Read side anonymous per-file HTTP, so it fronts to a CDN trivially.",
   "limits": [
@@ -102,66 +102,10 @@
       "proved": "the submission page states deposition and data access are free of charge",
       "capture": "sha256:34bb0cfe538eaeaf07e9049557b0e1973cce33cc837e3f4f7edc6cfc3a03da15",
       "quote": "No, both deposition of data to BioStudies and data access are free of charge."
-    },
-    {
-      "url": "https://www.ebi.ac.uk/biostudies/submit",
-      "date": "2026-11-25",
-      "proved": "the submit page gives a transfer recommendation, not an object-size limit",
-      "capture": "sha256:34bb0cfe538eaeaf07e9049557b0e1973cce33cc837e3f4f7edc6cfc3a03da15",
-      "quote": "We recommend Aspera transfer for medium to large (10 GiB+) volumes of data. ... larger data volumes (hundreds of GiB) may take hours."
-    },
-    {
-      "url": "https://www.ebi.ac.uk/biostudies/help",
-      "date": "2026-11-25",
-      "proved": "public datasets are permanent while upload-area files have a 3-month ceiling",
-      "capture": "sha256:77224dcd1356a7b9cd22f8eb3f8021ef93a45ae993e2401cceb01f52ce550e8b",
-      "quote": "All datasets made public will remain\n**permanently accessible as part of the scientific record** ... We expect any given data file to remain in a data upload area for no longer than\n**3 months**\nbefore it forms part of a submission. We reserve the right to routinely delete any data files that\npersist in that area for more than 3 months."
-    },
-    {
-      "url": "https://www.ebi.ac.uk/biostudies/help",
-      "date": "2026-11-25",
-      "proved": "documented programmatic interfaces are FTP and the REST API; nfs is a path mode",
-      "capture": "sha256:77224dcd1356a7b9cd22f8eb3f8021ef93a45ae993e2401cceb01f52ce550e8b",
-      "quote": "In addition to file download from the BioStudies website, we also support FTP and Aspera based ... You can get the FTP link for a study from the /info REST API endpoint"
-    },
-    {
-      "url": "https://www.ebi.ac.uk/biostudies/help",
-      "date": "2026-11-25",
-      "proved": "FTP, Aspera and Globus transfers plus REST and anonymous HTTP are documented",
-      "capture": "sha256:77224dcd1356a7b9cd22f8eb3f8021ef93a45ae993e2401cceb01f52ce550e8b",
-      "quote": "In addition to file download from the BioStudies website, we also support FTP and Aspera based ... Anonymous downloads are enabled."
-    },
-    {
-      "url": "https://www.ebi.ac.uk/biostudies/submit",
-      "date": "2026-11-25",
-      "proved": "free deposition and access are unchanged",
-      "capture": "sha256:34bb0cfe538eaeaf07e9049557b0e1973cce33cc837e3f4f7edc6cfc3a03da15",
-      "quote": "No, both deposition of data to BioStudies and data access are free of charge."
-    },
-    {
-      "url": "https://www.ebi.ac.uk/biostudies/help",
-      "date": "2026-11-25",
-      "proved": "anonymous downloads are still documented",
-      "capture": "sha256:77224dcd1356a7b9cd22f8eb3f8021ef93a45ae993e2401cceb01f52ce550e8b",
-      "quote": "Anonymous downloads are enabled."
-    },
-    {
-      "url": "https://www.ebi.ac.uk/biostudies/help",
-      "date": "2026-11-25",
-      "proved": "ArrayExpress is a BioStudies collection with a predictable FTP path scheme",
-      "capture": "sha256:77224dcd1356a7b9cd22f8eb3f8021ef93a45ae993e2401cceb01f52ce550e8b",
-      "quote": "E-MTAB for data belonging to the ArrayExpress collection. ... ftp://ftp.ebi.ac.uk/biostudies/ **mode**/ **path**/Files"
-    },
-    {
-      "url": "https://www.ebi.ac.uk/biostudies/submit",
-      "date": "2026-11-25",
-      "proved": "public datasets cannot be made private again or have files deleted",
-      "capture": "sha256:34bb0cfe538eaeaf07e9049557b0e1973cce33cc837e3f4f7edc6cfc3a03da15",
-      "quote": "After a dataset has become public, some operations are restricted, e.g., making it private again, or deleting data files."
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-11-25T03:33:12.900Z",
+  "verified_at": "2026-11-10T00:50:10.190Z",
   "notes": "Free deposit, no published cap. 'Is there a cost to deposit data in BioStudies? No, both deposition of data to BioStudies and data access are free of charge.' Docs discuss 'larger data volumes (hundreds of GiB)' as routine.",
   "history": [],
   "extras": {
