@@ -61,7 +61,7 @@ physical core is 2 vCPU, so the 2 vCPU / 4 GiB shape is one core plus four
 GiB: USD 0.2380 an hour. The USD 200 and USD 300 grants are one-time.
 
 <!-- generated:start topic=compute kind=totals fields=records,providers,recurring-credit,dead,qualifies labels=records,providers,recurring-credit,dead,qualifies -->
-records 1510; providers 1434; recurring-credit 11; dead 84; qualifies 545
+records 1524; providers 1439; recurring-credit 11; dead 85; qualifies 543
 <!-- generated:end -->
 
 **The binding constraint is time.** Across the sandbox class, what stops a
@@ -254,11 +254,11 @@ from the records.
 | confidence | Records |
 | --- | --- |
 | `measured` | 4 |
-| `documented` | 1310 |
+| `documented` | 1325 |
 | `reported` | 175 |
 | `inferred` | 6 |
-| `unverified` | 15 |
-| **all** | 1510 |
+| `unverified` | 14 |
+| **all** | 1524 |
 <!-- generated:end -->
 
 ## Superseded claims
@@ -274,5 +274,18 @@ finds it and the gate's `links` check counts it as cited. A document that names 
 removes its row at the next render.
 
 <!-- generated:start topic=compute kind=uncited -->
-Every `measured` or `documented` record of this topic is named by a document.
+| record | provider | verdict | confidence |
+| --- | --- | --- | --- |
+| `bitrise-remote-dev-environments` | Bitrise Remote Dev Environments | trial-only | documented |
+| `boltzlabs-sandboxes` | BoltzLabs | qualifies-with-caveat | documented |
+| `corellium-solo` | Corellium | qualifies-with-caveat | documented |
+| `expo-simulators-eas` | Expo Simulators (EAS) | paid-only | documented |
+| `gmi-cloud-on-demand-gpu` | GMI Cloud | paid-only | documented |
+| `luxor-agent-cloud` | Luxor Agent Cloud | qualifies-with-caveat | documented |
+| `munito-sandboxes` | Munito AI Sandboxes | trial-only | documented |
+| `my-remote-mac` | My Remote Mac | paid-only | documented |
+| `quave-one-agent-sandboxes-direct` | Quave ONE | paid-only | documented |
+| `sauce-labs` | Sauce Labs | trial-only | documented |
+| `testmu-ai-real-device-automation` | TestMu AI (formerly LambdaTest) | trial-only | documented |
+| `ventaw` | Ventaw | qualifies-with-caveat | documented |
 <!-- generated:end -->
