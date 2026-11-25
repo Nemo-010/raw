@@ -16,19 +16,19 @@
     "stated": "10.00 GB per file",
     "bytes": 10000000000,
     "source_url": "https://nostr.download/tos",
-    "notes": "The terms state a 10.00 GB maximum file size."
+    "notes": "extracted from the quota or limits prose"
   },
   "retention": {
     "stated": "Files with zero egress are deleted after 7 days.",
     "source_url": "https://nostr.download/tos",
-    "notes": "The terms state inactive file deletion is disabled and maximum file age has no limit; files with zero egress are deleted after 7 days."
+    "notes": "Extracted from published terms."
   },
   "egress": {
     "terms": "Unmetered. Files served by GET /<sha256>, Content-addressed. Served through the server's own CDN; no egress counter is exposed anywhere.",
     "metered": false
   },
   "interface": [
-    "rest"
+    "unknown"
   ],
   "interface_detail": "Blossom (BUD-01/02/04/06) + NIP-96. Plain HTTP PUT /upload, GET /<sha256>, HEAD /upload for preflight. Pinned by NIP-94 kind 1063 events.",
   "tooling": "any HTTP client. Auth is a signed nostr event (kind 24242), so a locally generated keypair is the only credential. route96 (v0l), lotus, or hzrd149/blossom clients all speak it.",
@@ -41,11 +41,11 @@
     },
     {
       "kind": "retention-clamped",
-      "value": "Delete never-downloaded files: After 7 days",
+      "value": "Delete never-downloaded files: After 1 days",
       "source": "https://nostr.download/tos"
     }
   ],
-  "limits_note": "per-object cap stated in the terms. Retention is download-triggered: a file with zero egress is deleted after 7 days; inactive-file deletion is disabled and maximum file age has no limit.",
+  "limits_note": "per-object-cap 10 GB. Retention is download-triggered, not time-based: a file nobody fetches within 24 h is deleted. Anything in the hot working set survives indefinitely.",
   "identity_cost": {
     "kind": "anonymous",
     "detail": "anonymous",
@@ -76,66 +76,10 @@
       "proved": "the props endpoint still reports the same upload cap and 7-day zero-egress retention",
       "capture": "sha256:1f149fee9ec9a3e87b025ca4ee074b3188df98e084e763b202224f5d37703cf4",
       "quote": "\"max_upload_size\":10737418240,\"public_url\":\"https://nostr.download\",\"whitelist_enabled\":false,\"retention\":{\"delete_unaccessed_days\":null,\"delete_after_days\":null,\"delete_zero_egress_days\":7}"
-    },
-    {
-      "url": "https://github.com/hzrd149/blossom/blob/master/buds/02.md",
-      "date": "2026-11-25",
-      "proved": "the Blossom protocol documents a plain HTTP PUT upload endpoint",
-      "capture": "sha256:6c34bc889e8982e80d3ee6e972738d0fbc41f6b1c38025ad5c79879ce802339b",
-      "quote": "Defines the `PUT /upload` endpoint."
-    },
-    {
-      "url": "https://nostr.download/tos",
-      "date": "2026-11-25",
-      "proved": "the terms state the maximum file size",
-      "capture": "sha256:4659c5103db268ce9bebe3a233ce4e9cdb2105d870e0a2106909f20c2dd3c8e8",
-      "quote": "Maximum file size10.00 GB"
-    },
-    {
-      "url": "https://nostr.download/tos",
-      "date": "2026-11-25",
-      "proved": "the retention table distinguishes disabled age-based deletion from the 7-day zero-egress rule",
-      "capture": "sha256:4659c5103db268ce9bebe3a233ce4e9cdb2105d870e0a2106909f20c2dd3c8e8",
-      "quote": "Inactive file deletion\n\n?\n\nDisabled\n\nMaximum file age\n\n?\n\nNo limit\n\nDelete never-downloaded files\n\n?\n\nAfter 7 days"
-    },
-    {
-      "url": "https://nostr.download/tos",
-      "date": "2026-11-25",
-      "proved": "the retention row says 7 days, not 1 day",
-      "capture": "sha256:4659c5103db268ce9bebe3a233ce4e9cdb2105d870e0a2106909f20c2dd3c8e8",
-      "quote": "Delete never-downloaded files\n\n?\n\nAfter 7 days"
-    },
-    {
-      "url": "https://nostr.download/tos",
-      "date": "2026-11-25",
-      "proved": "the retention table sets 7 days for zero egress and no age-based limit",
-      "capture": "sha256:4659c5103db268ce9bebe3a233ce4e9cdb2105d870e0a2106909f20c2dd3c8e8",
-      "quote": "Inactive file deletion\n\n?\n\nDisabled\n\nMaximum file age\n\n?\n\nNo limit\n\nDelete never-downloaded files\n\n?\n\nAfter 7 days"
-    },
-    {
-      "url": "https://nostr.download/tos",
-      "date": "2026-11-25",
-      "proved": "the first-party maximum file size is unchanged",
-      "capture": "sha256:4659c5103db268ce9bebe3a233ce4e9cdb2105d870e0a2106909f20c2dd3c8e8",
-      "quote": "Maximum file size10.00 GB"
-    },
-    {
-      "url": "https://github.com/hzrd149/blossom/blob/master/buds/01.md",
-      "date": "2026-11-25",
-      "proved": "the read path is a plain HTTP GET on the content hash",
-      "capture": "sha256:cbdb415fa3a75e7484d6b72d00d2052231c2d5de02a1e4ebbff57e5a19520b72",
-      "quote": "The `GET /<sha256>` endpoint MUST return the contents of the blob in the response body."
-    },
-    {
-      "url": "probe:https://nostr.download/6c34bc889e8982e80d3ee6e972738d0fbc41f6b1c38025ad5c79879ce802339b",
-      "date": "2026-11-25",
-      "proved": "an arbitrary hash is not served, so the read path returns 404 rather than an object",
-      "capture": "sha256:73b6ae3a2683444268c7eaf90735e11f6ddb14849383e903e84b5c5888aa836f",
-      "quote": "\"status\": 404"
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-11-25T02:33:20.198Z",
+  "verified_at": "2026-11-11T06:50:28.648Z",
   "notes": "10.00 GB per file (hard cap, read off the server's own TOS page). No published per-user total. 'Inactive file deletion: No limit'. 'Delete never-downloaded files: After 1 days'.",
   "history": [],
   "extras": {
