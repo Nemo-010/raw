@@ -15,15 +15,15 @@
   "per_object_cap": {
     "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://hosthatch.com/products",
-    "notes": "The products page re-read on 2026-11-25 sells whole storage VMs with a stated disk size and bandwidth and publishes no per-object cap; the renter controls the filesystem through root access."
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
     "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://hosthatch.com/products",
-    "notes": "No data-retention period is published for storage VMs; the features page offers optional automated daily, weekly or monthly backups at 20% of the VM's monthly cost, which is a backup schedule rather than a deletion clock."
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
-    "terms": "The re-read products page quotes a 2.5x storage bandwidth allowance: 1 TB plans include 2,500 GB, 2 TB plans 5,000 GB and 10 TB plans 25,000 GB, with a note that APAC bandwidth limits differ.",
+    "terms": "Metered with throttle-on-exceed, no published per-TB overage price. Ratios are 2.5x storage: 1 TB plan = 2.5 TB, 2 TB = 5 TB, 5 TB = 12.5 TB, 10 TB = 25 TB. Exceeding it is throttling, not billing. A holder of the 2 TB Hong Kong plan reports '2.5 TB (throttled to about 5 Mbps after limit from my experience)' (LET thread 217891). APAC bandwidth is a separate, smaller pool: a HostHatch rep confirmed on LET that 'the actual limit is 3TB per month for Singapore' while the site quoted 7.5 TB (thread 194949).",
     "metered": true,
     "free_allowance": "3TB per month"
   },
@@ -35,7 +35,7 @@
   ],
   "interface_detail": "sftp, rsync, rest (self-hosted)",
   "tooling": "rclone SFTP, Borg/Restic, root KVM",
-  "chaining": "A hosted storage VM with 40 GbE public and private networking; the private interface lets the renter connect VMs in one location for local transfer, alongside the public bandwidth allowance.",
+  "chaining": "Root KVM. Note the array is RAID-50 on some nodes. HostHatch itself conceded on LET that 'RAID 50 comes with an inherently higher risk as compared to RAID 10' (thread 188952).",
   "limits": [
     {
       "kind": "per-ip-shaping",
@@ -86,45 +86,10 @@
       "proved": "the products page states eight locations and enterprise-grade spinning hard disk drives",
       "capture": "sha256:eb05a4760c129cc5c9337994b46d569c0907cee78ad63b123d5089d190f0a16e",
       "quote": "Available in 8 strategic locations. Built for mass storage and backups and running large enterprise-grade spinning hard disk drives."
-    },
-    {
-      "url": "https://hosthatch.com/products",
-      "date": "2026-11-25",
-      "proved": "the page sells a whole storage VM by disk size and bandwidth and names no object cap",
-      "capture": "sha256:eb05a4760c129cc5c9337994b46d569c0907cee78ad63b123d5089d190f0a16e",
-      "quote": "Storage 10TB from $38.00 / month 2 vCPU cores 2048 MB 10000 GB 25000 GB"
-    },
-    {
-      "url": "https://hosthatch.com/features",
-      "date": "2026-11-25",
-      "proved": "the features page describes an optional backup schedule and states no retention period",
-      "capture": "sha256:b321ce28e30a43599cd91be161826941c5bc7258d222e497ea6e4c3e013ce976",
-      "quote": "Daily, weekly or monthly backups - similar to snapshots but fully automated and configurable for 20% of the monthly cost of your VM."
-    },
-    {
-      "url": "https://hosthatch.com/products",
-      "date": "2026-11-25",
-      "proved": "the products page lists a 25,000 GB bandwidth allowance on the 10 TB plan",
-      "capture": "sha256:eb05a4760c129cc5c9337994b46d569c0907cee78ad63b123d5089d190f0a16e",
-      "quote": "25000 GB"
-    },
-    {
-      "url": "https://hosthatch.com/features",
-      "date": "2026-11-25",
-      "proved": "the features page documents 40 GbE public and private networking on the hosted VMs",
-      "capture": "sha256:b321ce28e30a43599cd91be161826941c5bc7258d222e497ea6e4c3e013ce976",
-      "quote": "We offer high-performing 40 GbE public and private networking."
-    },
-    {
-      "url": "https://hosthatch.com/products",
-      "date": "2026-11-25",
-      "proved": "the products page still offers storage VMs in 8 locations",
-      "capture": "sha256:eb05a4760c129cc5c9337994b46d569c0907cee78ad63b123d5089d190f0a16e",
-      "quote": "Storage VMs Available in 8 strategic locations."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-25T06:41:40.812Z",
+  "verified_at": "2026-11-10T00:50:20.509Z",
   "price_per_tb_month": "$3.80/TB/mo at 10 TB ($38/mo, 25 TB included). At 5 TB: $20/mo = $4.00/TB (12.5 TB included). At 20 TB: two 10 TB VMs = $76/mo = $3.80/TB. Pricing is linear — no volume break — so the 10 TB rung is the only sensible buy.",
   "notes": "1 / 2 / 3 / 4 / 5 / 6 / 8 / 10 TB HDD, 'enterprise-grade spinning hard disk drives', 8 locations.",
   "history": [],
