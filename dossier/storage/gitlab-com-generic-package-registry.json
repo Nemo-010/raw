@@ -16,13 +16,13 @@
     "stated": "5 GB maximum per upload",
     "bytes": 5000000000,
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
-    "notes": "extracted from the quota or limits prose"
+    "notes": "GitLab.com caps a Generic package upload at 5 GB per file. Other formats are 5 GB for Conan, Maven, npm, NuGet and PyPI, 5 MB for Helm, 1 GB for Terraform, and 10 GB for machine-learning models with uploads capped at 5 GB."
   },
   "retention": {
     "stated": "Artifacts expire in 30 days, packages do not.",
     "days": 30,
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
-    "notes": "Extracted from published terms."
+    "notes": "Packages have no published automatic expiry. Cleanup is manual or policy-driven: the package cleanup policy is disabled by default and runs about every 12 hours when enabled; a separate generic-package rule can delete packages not downloaded for a set number of days (1 to 3650) via the GraphQL API."
   },
   "egress": {
     "terms": "Free and Cloudflare-fronted. GitLab.com is behind Cloudflare and blobs are served from Google Cloud Storage / the GitLab CDN (cdn.registry.gitlab-static.net). No egress billing for public projects.",
@@ -88,10 +88,38 @@
       "proved": "the GitLab.com package registry limits a Generic package upload to 5 GB per file",
       "capture": "sha256:68f43c79110ad21fc9f3aeb8e6336cc2b463e9f9868ec094f2325dc676a4d44d",
       "quote": "| Generic | 5 GB |"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/packages/package_registry/reduce_package_registry_storage/",
+      "date": "2026-11-25",
+      "proved": "no automatic package cleanup runs unless the user enables a policy",
+      "capture": "sha256:dd51bd1b3750550f6cf7a1b4ea70cf30ebcb467217f0d0fd8bb52f250f4fbd28",
+      "quote": "By default, the packages cleanup policy is disabled."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/packages/package_registry/reduce_package_registry_storage/",
+      "date": "2026-11-25",
+      "proved": "package deletion is irreversible once performed",
+      "capture": "sha256:dd51bd1b3750550f6cf7a1b4ea70cf30ebcb467217f0d0fd8bb52f250f4fbd28",
+      "quote": "Deleted packages cannot be restored."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/gitlab_com/index.html",
+      "date": "2026-11-25",
+      "proved": "the Generic package file-size cap on GitLab.com is 5 GB",
+      "capture": "sha256:68f43c79110ad21fc9f3aeb8e6336cc2b463e9f9868ec094f2325dc676a4d44d",
+      "quote": "| Generic | 5 GB |"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/gitlab_com/index.html",
+      "date": "2026-11-25",
+      "proved": "the same settings page lists the other GitLab.com size limits in the same limits table",
+      "capture": "sha256:68f43c79110ad21fc9f3aeb8e6336cc2b463e9f9868ec094f2325dc676a4d44d",
+      "quote": "Artifacts maximum size (compressed) | 1 GB"
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-11-19T21:13:26.679Z",
+  "verified_at": "2026-11-25T05:52:37.756Z",
   "notes": "5 GB maximum per uploaded file (Generic). No per-project or per-namespace package storage cap is documented; the package registry is explicitly excluded from the 10 GiB project storage limit.",
   "history": [],
   "extras": {

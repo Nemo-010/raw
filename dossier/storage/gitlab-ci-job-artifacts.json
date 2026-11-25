@@ -15,13 +15,13 @@
   "per_object_cap": {
     "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
-    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+    "notes": "GitLab.com limits a compressed job artifact archive to 1 GB. This is an archive-size cap, not an object-count cap; artifacts are also excluded from the per-project 10 GiB repository and LFS storage limit."
   },
   "retention": {
     "stated": "Default expiry 30 days, but `expire_in: never` is a valid documented value and the latest-successful-job artifact on every ref is exempt from expiry entirely",
     "days": 30,
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
-    "notes": "Extracted from published terms."
+    "notes": "GitLab.com sets a 30-day default expiry unless otherwise specified; older artifacts have no expiry according to the settings page. The `expire_in` keyword accepts `never`, and its expiry does not affect artifacts from the latest job unless that behaviour is disabled. Expired artifacts are deleted hourly."
   },
   "egress": {
     "terms": "Free, anonymous for public projects. Verified a 321 MB anonymous download.",
@@ -65,10 +65,38 @@
       "proved": "build artifacts are still excluded from the per-project storage limit",
       "capture": "sha256:32cb9b13bd82d6395449b56d639b10c9214fbcf89a1a5fa1493dad8fe2e46c49",
       "quote": "Only the project’s repository and LFS are included in the storage limit. The container registry, package registry, and build artifacts are not included in the limit."
+    },
+    {
+      "url": "https://docs.gitlab.com/ee/ci/yaml/index.html",
+      "date": "2026-11-25",
+      "proved": "expired job artifacts are deleted hourly and become inaccessible",
+      "capture": "sha256:aecf5cde8e77499343f2bb7f0fcb2fc779a87a690b6330f450ad32be0d640101",
+      "quote": "After their expiry, artifacts are deleted hourly by default (using a cron job), and are not accessible anymore."
+    },
+    {
+      "url": "https://docs.gitlab.com/ee/ci/yaml/index.html",
+      "date": "2026-11-25",
+      "proved": "the YAML reference documents the exemption of latest-job artifacts from expiry",
+      "capture": "sha256:aecf5cde8e77499343f2bb7f0fcb2fc779a87a690b6330f450ad32be0d640101",
+      "quote": "The `expire_in` setting does not affect:"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/gitlab_com/index.html",
+      "date": "2026-11-25",
+      "proved": "the maximum compressed artifact archive on GitLab.com is 1 GB",
+      "capture": "sha256:68f43c79110ad21fc9f3aeb8e6336cc2b463e9f9868ec094f2325dc676a4d44d",
+      "quote": "Artifacts maximum size (compressed) | 1 GB"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+      "date": "2026-11-25",
+      "proved": "build artifacts are excluded from the per-project storage limit",
+      "capture": "sha256:c31fa88d40120be518fbe9f17f5155d6812a549ba671ca04939f01cc78377e71",
+      "quote": "Only the project’s repository and LFS are included in the storage limit."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-19T21:13:28.596Z",
+  "verified_at": "2026-11-25T05:52:37.755Z",
   "notes": "Not counted against the 10 GiB project storage limit ('build artifacts are not included in the limit'). 1 GB compressed maximum per artifact archive on GitLab.com.",
   "history": [],
   "extras": {
