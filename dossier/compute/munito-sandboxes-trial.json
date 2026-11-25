@@ -1,0 +1,148 @@
+{
+  "topic": "compute",
+  "slug": "munito-sandboxes-trial",
+  "provider": "Munito",
+  "url": "https://munito.ai/pricing",
+  "category": "sandbox compute (Linux microVM)",
+  "tier": "Sandboxes Trial",
+  "free_tier": {
+    "stated": "The trial gives $0.90 of sandbox time for 7 days; during it the organization runs 2 sandboxes at once, each at most 4 vCPUs and 8 GiB with a timeout of at most 7,200 seconds. A card is added to start and is not charged then. Separate from sandboxes, the inference service has a free tier on spare capacity for a new account with a verified phone number, with daily token limits.",
+    "unit": "credits",
+    "metered_on": "wall-clock",
+    "source_url": "https://munito.ai/pricing",
+    "read_on": "2026-11-24",
+    "notes": "USD 0.90 of time at USD 0.018 an hour for the default 2 vCPU / 4 GiB size is 50 hours; quota is in credits and metered by the second. The inference free tier belongs to the separate inference offer and its daily cap is 2,000,000 tokens for four named chat models and 4,000,000 for each other chat model."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object; the largest custom size is 16 vCPUs and 32,768 MiB, and a file write is at most 100 MiB"
+  },
+  "retention": {
+    "stated": "A sandbox runs until its timeout or a delete and its files go with a delete; a persistent sandbox keeps files and processes across a pause and its saved state is priced at $0.0002 per GiB-hour while the sandbox runs and while it is paused.",
+    "days": null,
+    "source_url": "https://docs.munito.ai/sandboxes/pricing"
+  },
+  "egress": {
+    "terms": "A new sandbox has no outbound internet access; setting \"internet\": true enables it, and SMTP mail is not available. Inbound connections come only through ports and SSH. No outbound volume allowance or per-TB price is published.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://docs.munito.ai/sandboxes/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "ssh"
+  ],
+  "interface_detail": "An OpenAI-compatible REST API creates sandboxes, runs commands and reads and writes files; a CLI runs a coding agent in a sandbox with one command; SSH takes public keys and no password, and public ports are exposed at a URL per port.",
+  "endpoint": "https://console.munito.ai/registration",
+  "tooling": "the REST API, the Python and TypeScript SDKs and the munito command line tool; a sandbox starts from a base, ubuntu, agent or desktop template or a custom container image",
+  "chaining": "A paid plan after the trial sets how many sandboxes run at once (50 for Starter, 2,000 for Fleet) and pays its price back as credits; the same credit balance pays the open-model inference API, so a job chain can run code and call a model without a second vendor, and outputs must be written to another record's storage to survive a sandbox delete.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "$0.90 of sandbox time over 7 days; usage past the card-free trial needs a plan",
+      "source": "https://munito.ai/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "2 sandboxes at once during the trial; each at most 4 vCPUs and 8 GiB and a timeout of at most 7,200 seconds; 8,000 API requests a minute from one IP",
+      "source": "https://docs.munito.ai/sandboxes/pricing"
+    }
+  ],
+  "limits_note": "A sandbox runs for 10 to 86,400 seconds and 7,200 at most during the trial. A command runs at most 1,800 seconds, writes a file of at most 100 MiB and returns at most 1 MiB per stream.",
+  "binding": "volume-quota",
+  "binding_note": "The USD 0.90 credit, 50 hours at the default size, ends within the 7-day window and stops the sandboxes when used up, before the concurrency and per-command caps bind a single job.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "Adding a card on the Billing page starts the trial and is not charged then; the card requires 3D Secure in some jurisdictions. Registration offers email, Google and GitHub sign-in. The separate inference free tier requires a verified phone number, which the sandbox trial does not state.",
+    "country": null
+  },
+  "reliability_note": "A sandbox that reaches its timeout or whose credits run out stops; with automatic top-up off, the sandboxes stop when the balance is spent. Sandboxes on one host share its vCPUs, so a busy host slows a command, and a create above the plan's concurrency gets 429.",
+  "confidence": "documented",
+  "confidence_note": "The credit, 7 days, two sandboxes, sizes and timeouts, card gate, sign-in options, network default and the per-size rates are quoted from the vendor's pricing pages read on 2026-11-24. The signup page quote establishes the email and social options.",
+  "evidence": [
+    {
+      "url": "https://munito.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the trial gives $0.90 of sandbox time for 7 days",
+      "capture": "sha256:1304e1c10b1f9e7bf68c3fbc25c09c0e3062f72fbcda6882e236c914fce63b98",
+      "quote": "The trial gives $0.90 of sandbox time for 7 days. After it, sandboxes need a plan."
+    },
+    {
+      "url": "https://docs.munito.ai/sandboxes/pricing",
+      "date": "2026-11-24",
+      "proved": "the trial starts with a card that is not charged, runs two sandboxes at once and caps their size and timeout",
+      "capture": "sha256:ebb5a66112f66d76a3c7234a1c98ee468ddd53251ab7b2ca858b96c292fae69f",
+      "quote": "During the trial, your organization runs 2 sandboxes at once. Each one has at most 4 vCPUs and 8 GiB, and a `timeout` of at most 7,200 seconds."
+    },
+    {
+      "url": "https://docs.munito.ai/sandboxes/pricing",
+      "date": "2026-11-24",
+      "proved": "a new sandbox has no outbound internet access and inbound connections come only through ports and SSH",
+      "capture": "sha256:ebb5a66112f66d76a3c7234a1c98ee468ddd53251ab7b2ca858b96c292fae69f",
+      "quote": "A new sandbox has no outbound internet access. Set"
+    },
+    {
+      "url": "https://console.munito.ai/registration",
+      "date": "2026-11-24",
+      "proved": "registration offers email, GitHub and Google as sign-in options",
+      "capture": "sha256:2ece91464a89561cab8b1083617b9556e1adfabf61d3b283be5cb3c6b726f42d",
+      "quote": "Continue with GitHubContinue with Google"
+    },
+    {
+      "url": "https://docs.munito.ai/rate-limits",
+      "date": "2026-11-24",
+      "proved": "the inference free tier is limited to 2,000,000 tokens a day for four chat models and 4,000,000 for each other chat model",
+      "capture": "sha256:535cb8df8b4b02f756ef824fda2e19bb5a1cd5d50713f16d6254df25a19c194d",
+      "quote": "`deepseek-ai/deepseek-v4.1-flash-1017`, `munito/deepseek-v4.1-flash-1017-abliterated`, `zai-org/glm-5.3-flash` and `deepseek-ai/deepseek-v4-flash`: 2,000,000 tokens a day each."
+    },
+    {
+      "url": "https://docs.munito.ai/rate-limits",
+      "date": "2026-11-24",
+      "proved": "each other chat model has a daily cap of 4,000,000 tokens",
+      "capture": "sha256:535cb8df8b4b02f756ef824fda2e19bb5a1cd5d50713f16d6254df25a19c194d",
+      "quote": "Each other chat model: 4,000,000 tokens a day."
+    },
+    {
+      "url": "https://docs.munito.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the standard global price of DeepSeek-V4-Flash is $0.099 input, $0.019 cached input and $0.25 output per million tokens",
+      "capture": "sha256:a3aaf91612179a381a8619d30be6418b503807c136c61b44c0da26cd7fc24b4f",
+      "quote": "Global | `standard` | $0.099 | $0.019 | $0.25"
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-24T10:11:14.932Z",
+  "price_per_tb_month": null,
+  "notes": "The sandbox trial is $0.90 of time for 7 days over two sandboxes, and a paid plan is required when it ends. From 2026-11-21 the global standard rate of DeepSeek-V4-Flash is $0.099 per million input tokens, $0.019 cached and $0.25 output; the sandbox default size costs $0.018 an hour. A hosted sandbox service; the software is run by the vendor, not installed by the user.",
+  "extras": {
+    "shape": {
+      "vcpu": 2,
+      "ram_gib": 4,
+      "disk_gib": 10,
+      "gpu_class": "NVIDIA L4 optional at $0.78 per hour",
+      "gpu_count": null,
+      "note": "the default sandbox preset; tiny, small, large and custom sizes are published"
+    },
+    "billing_model": "7-day card-gated trial with a fixed credit, then a monthly plan plus per-second usage",
+    "free_tier_kind": "time-boxed-trial",
+    "term": "7 days",
+    "price_arithmetic": "$0.018 per hour for the default 2 vCPU / 4 GiB size; $0.90 is about 50 hours",
+    "status": "published trial",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "16 public ports per sandbox",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null,
+      "note": "outbound is off by default and enabled with internet: true; no volume price is published"
+    },
+    "session_cap": {
+      "wall_clock_min": 120,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "a sandbox timeout is at most 7,200 seconds during the trial"
+    }
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "topic": "compute",
+  "slug": "volcengine-vci-agent-sandbox",
+  "provider": "Volcengine VCI Agent Sandbox",
+  "url": "https://www.volcengine.com/docs/6460/111933",
+  "category": "container and sandbox compute",
+  "tier": "VCI pay-as-you-go, general-purpose n4i (mainland China)",
+  "free_tier": {
+    "stated": "VCI 当前免费赠送极速型 ESSD_PL0 类型系统盘 30 GiB 可用存储空间。如需扩容，可通过如下 Annotation 自定义配置系统盘容量。超出 30 GiB 的部分会产生计费。",
+    "unit": "GiB",
+    "metered_on": "stored-bytes",
+    "source_url": "https://www.volcengine.com/docs/6460/111933",
+    "read_on": "2026-11-24",
+    "notes": "The only free allowance published for VCI is 30 GiB of ESSD_PL0 system disk per instance; sandbox compute and mirror-cache storage are billed by usage. No free trial credit for VCI Agent Sandbox is published."
+  },
+  "per_object_cap": {
+    "stated": "沙箱环境下，Pod 副本数与 Container 数量均为 1。多次镜像 Commit 后，可能会触发镜像自身的 Layer 限制，目前限制为 128 层。",
+    "bytes": null,
+    "source_url": "https://docs.volcengine.com/docs/vke/Feature_introduction?lang=zh",
+    "notes": "The sandbox runs one Pod replica and one container; image commits are capped at 128 layers. No maximum single data object is stated."
+  },
+  "retention": {
+    "stated": "沙箱控制器负责管理 Pod 的整个生命周期，包括创建、定时删除、暂停以及恢复操作; VCI 不会自动清理镜像仓库的镜像。",
+    "days": null,
+    "source_url": "https://docs.volcengine.com/docs/vke/Feature_introduction?lang=zh",
+    "notes": "Scheduled deletion is configurable and the page states no default retention period; sandbox disk snapshots are stored on EBS."
+  },
+  "egress": {
+    "terms": "公网 IP is listed as a separately billed IaaS resource in the VCI pay-as-you-go pricing page ('公网 IP | 用于实现相关资源与公网通信。'), and the feature page states sandbox network access is controllable. No included free traffic volume or per-GB rate is published for VCI Agent Sandbox itself.",
+    "metered": true,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.volcengine.com/docs/6460/111933"
+  },
+  "interface": [
+    "rest",
+    "unknown"
+  ],
+  "interface_detail": "The sandbox is exposed as a Kubernetes Agent Sandbox CRD and supports the E2B protocol: 'VCI Agent Sandbox CRD ... 创建、定时删除、暂停、恢复' and 'E2B 协议（Agent Execution Protocol）是一套基于 Protobuf + HTTP/2 + Server\\-Sent Events（SSE）的标准化通信协议'. Neither maps cleanly to the closed interface vocabulary; REST/gRPC-style HTTP/2 control-plane calls are used.",
+  "endpoint": "https://api.watasu.io/v1/sandboxes is NOT this provider; VCI is reached through the VKE Kubernetes API and the E2B control plane; no public endpoint is published",
+  "tooling": "A VKE cluster with the VCI Agent Sandbox controller, SandboxTemplate/SandboxClaim/SandboxWarmPool CRDs and kubectl; SDKs built on the E2B protocol are documented.",
+  "chaining": "An agent uses the Sandbox CRD or E2B protocol to run code in a Kata-isolated MicroVM and writes results to EBS snapshots or a separately billed object store, while public egress runs over separately billed public IP or NAT gateway resources.",
+  "limits": [
+    {
+      "kind": "per-object-cap",
+      "value": "one Pod replica and one container per sandbox; image commit layer limit 128 layers",
+      "source": "https://docs.volcengine.com/docs/vke/Feature_introduction?lang=zh"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "30 GiB of ESSD_PL0 system disk free; the excess over 30 GiB is billed at 0.000000292 元/GiB/秒 in mainland China",
+      "source": "https://www.volcengine.com/docs/6460/111933"
+    }
+  ],
+  "limits_note": "Instance billing is by the second and settled hourly; unit prices by family (mainland China) are n4i vCPU 0.000021401 元/秒/核 and memory 0.000011907 元/秒/GiB. Cluster and VCI quotas can be raised in the quota center, but a cluster quota table is published rather than a single sandbox concurrency number.",
+  "binding": "volume-quota",
+  "binding_note": "Every running second of requested vCPU and memory is metered with no published free compute allowance, so usage spend accrues from the first second; the 30 GiB disk is the only published free allowance.",
+  "identity_cost": {
+    "kind": "national-id",
+    "detail": "Registration requires '+86 手机号' (a mainland-China mobile number) and, before buying or using cloud products, 实名认证: an individual must supply 姓名 and 身份证号码 and pass face verification or supply a bank card and its reserved mobile number; overseas phone numbers are not supported. Account balance above CNY 100 is required when creating certain VKE resources.",
+    "country": "CN"
+  },
+  "reliability_note": "Billing is per second and settled hourly; snapshots must be finished before restore and image repositories are not cleaned up automatically, so image layers and stored snapshots accumulate until manually managed. One Pod replica and one container per sandbox.",
+  "confidence": "documented",
+  "confidence_note": "Prices, the 30 GiB free disk and per-second billing are quoted from the vendor's own VCI pay-as-you-go and billing-overview pages; the sandbox shape, CRD and E2B protocol from the vendor's VKE documentation; and the identity gate from the vendor's account and real-name verification pages, all read 2026-11-24. Egress pricing could not be established and is marked unverified.",
+  "evidence": [
+    {
+      "url": "https://www.volcengine.com/docs/6460/111933",
+      "date": "2026-11-24",
+      "proved": "the n4i mainland-China vCPU price is CNY 0.000021401 per vCPU-second",
+      "capture": "sha256:d725f2ac5ffcd31bc7a376abb66e284f4d704dc3180b5492be53fd3dc8bbe00f",
+      "quote": "|通用型 n4i |vCPU |0.000021401 元/秒/核 |0.0770436 元/小时/核 |"
+    },
+    {
+      "url": "https://www.volcengine.com/docs/6460/111933",
+      "date": "2026-11-24",
+      "proved": "the n4i mainland-China memory price is CNY 0.000011907 per GiB-second",
+      "capture": "sha256:d725f2ac5ffcd31bc7a376abb66e284f4d704dc3180b5492be53fd3dc8bbe00f",
+      "quote": "|内存 |0.000011907 元/秒/GiB |0.0428652 元/小时/GiB |"
+    },
+    {
+      "url": "https://www.volcengine.com/docs/6460/111933",
+      "date": "2026-11-24",
+      "proved": "VCI gives 30 GiB of free ESSD_PL0 system disk; excess is billed",
+      "capture": "sha256:d725f2ac5ffcd31bc7a376abb66e284f4d704dc3180b5492be53fd3dc8bbe00f",
+      "quote": "VCI 当前免费赠送极速型 ESSD_PL0 类型系统盘 30 GiB 可用存储空间。"
+    },
+    {
+      "url": "https://www.volcengine.com/docs/6460/111933",
+      "date": "2026-11-24",
+      "proved": "excess system disk is CNY 0.000000292 per GiB-second in mainland China",
+      "capture": "sha256:d725f2ac5ffcd31bc7a376abb66e284f4d704dc3180b5492be53fd3dc8bbe00f",
+      "quote": "|ESSD_PL0（默认盘型） |0.000000292 元/GiB/秒 |0.000000467 元/GiB/秒 |"
+    },
+    {
+      "url": "https://www.volcengine.com/docs/6460/111933",
+      "date": "2026-11-24",
+      "proved": "public IP is a separately billed resource for VCI",
+      "capture": "sha256:d725f2ac5ffcd31bc7a376abb66e284f4d704dc3180b5492be53fd3dc8bbe00f",
+      "quote": "|公网 IP |用于实现相关资源与公网通信。 |[公网 IP 计费说明](https://www.volcengine.com/docs/6402/68413) |"
+    },
+    {
+      "url": "https://www.volcengine.com/docs/6460/76912",
+      "date": "2026-11-24",
+      "proved": "VCI bills instance specs by running time from image download to release or terminal state",
+      "capture": "sha256:e51f04cf7300224a2884914ef3bddace2e1e02e868ee6634c168e20f67be4c19",
+      "quote": "VCI 默认赠送 30 GiB 系统盘免费空间，若您通过 Annotation：`vci.vke.volcengine.com/desired-system-storage`自定义了系统盘大小，则超出 30 GiB 的部分产生计费。"
+    },
+    {
+      "url": "https://www.volcengine.com/docs/6460/76908",
+      "date": "2026-11-24",
+      "proved": "VCI bills by actual running time, per second, settled hourly",
+      "capture": "sha256:92bccdd20821eb29db1041f453b4fe699286cca7be5645208b9f0b7b4806ba32",
+      "quote": "按量按秒付费 |支持一站式管理 VCI 实例的生命周期，并根据 VCI 实例的实际运行时长付费。计费周期精确到秒，按小时结算该周期内生成的账单"
+    },
+    {
+      "url": "https://docs.volcengine.com/docs/vke/Feature_introduction?lang=zh",
+      "date": "2026-11-24",
+      "proved": "VCI Agent Sandbox is compatible with the community Agent Sandbox CRD and supports create, timed delete, pause and resume",
+      "capture": "sha256:a33be8546a130909bf798509d3ec57a593348375574305d6574382b53b33780e",
+      "quote": "完全兼容社区 Agent Sandbox CRD，支持对沙箱进行创建、定时删除、暂停、恢复等全生命周期管理。"
+    },
+    {
+      "url": "https://docs.volcengine.com/docs/vke/Feature_introduction?lang=zh",
+      "date": "2026-11-24",
+      "proved": "the sandbox runs one Pod replica and one container, and image commits are limited to 128 layers",
+      "capture": "sha256:a33be8546a130909bf798509d3ec57a593348375574305d6574382b53b33780e",
+      "quote": "沙箱环境下，Pod 副本数与 Container 数量均为 1。详情请参见 [生命周期管理](https://www.volcengine.com/docs/6460/2230011)。"
+    },
+    {
+      "url": "https://docs.volcengine.com/docs/vke/E2B-Overview?lang=zh",
+      "date": "2026-11-24",
+      "proved": "VCI Agent Sandbox supports the E2B protocol over Protobuf, HTTP/2 and SSE",
+      "capture": "sha256:4a302219c29c5c6e0ce54b6d3919cf12cdc355e5f195f8543e94de072157dc54",
+      "quote": "E2B 协议（Agent Execution Protocol）是一套基于 Protobuf + HTTP/2 + Server\\-Sent Events（SSE）的标准化通信协议"
+    },
+    {
+      "url": "https://www.volcengine.com/docs/6261/64925",
+      "date": "2026-11-24",
+      "proved": "registration requires a mainland-China mobile number; overseas mobile numbers are not supported",
+      "capture": "sha256:eb7f4d8684d93cbc883450becfe6a86bd5015f4fe0810232ffbf95a9df13c38c",
+      "quote": "- 必需项：1 个可正常接收短信的手机号（+86）"
+    },
+    {
+      "url": "https://www.volcengine.com/docs/6261/64935",
+      "date": "2026-11-24",
+      "proved": "real-name verification with a national ID is required before buying or using cloud products",
+      "capture": "sha256:cbbeffacb28156eda1951c7379bb82d6b7274247d9757ff406bbc8ec1c4c833f",
+      "quote": "按照中国国家法律（如《中华人民共和国网络安全法》和《中华人民共和国反电信网络诈骗法》）要求，购买火山引擎产品或服务前，必须先完成实名认证。没有实名认证，您将无法购买、续费或使用大部分云服务。"
+    },
+    {
+      "url": "https://www.volcengine.com/docs/6261/64925",
+      "date": "2026-11-24",
+      "proved": "overseas mobile numbers cannot register a Volcengine account",
+      "capture": "sha256:eb7f4d8684d93cbc883450becfe6a86bd5015f4fe0810232ffbf95a9df13c38c",
+      "quote": "海外手机号可以注册火山引擎账号吗？ | 不支持"
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-11-24T10:11:15.131Z",
+  "price_per_tb_month": null,
+  "notes": "The published rate shape is per-second vCPU and GiB of memory (n4i mainland China: CNY 0.000021401/vCPU-second and CNY 0.000011907/GiB-second), plus image-cache and excess system-disk storage; the only free allowance is 30 GiB of system disk. Identity is the binding gate: registration needs a +86 mobile number and real-name verification with a national ID before buying cloud products, so this offer is unreachable without a mainland-China identity. This is a separate offer from AgentKit/veFaaS (compute/volcengine-agentkit), which has its own per-second sandbox-template rates and a 24-hour lifetime cap.",
+  "extras": {
+    "billing_model": "pay-as-you-go per second, settled hourly",
+    "free_tier_kind": "included-disk",
+    "shape": {
+      "vcpu": null,
+      "ram_gib": null,
+      "disk_gib": 30,
+      "gpu_class": "optional GPU families gni3, gni2, ini2, g1v",
+      "note": "shape chosen by spec family; n4i vCPU and memory prices quoted above"
+    },
+    "price_note": "n4i mainland China: vCPU 0.000021401 元/秒/核; memory 0.000011907 元/秒/GiB; image cache 0.00025 元/GiB/小时; system disk ESSD_PL0 0.000000292 元/GiB/秒 above 30 GiB",
+    "network_out": {
+      "allow_outbound": true,
+      "egress_price": "unverified: per-GB or per-TB price not published on the VCI billing pages"
+    },
+    "session_cap": {
+      "note": "sandbox lifecycle including timed delete, pause and resume is managed by the Sandbox CRD controller; no default lifetime is published"
+    }
+  }
+}

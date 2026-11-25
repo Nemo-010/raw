@@ -1,0 +1,188 @@
+{
+  "topic": "compute",
+  "slug": "luxor-agent-cloud-sandbox",
+  "provider": "Luxor Agent Cloud",
+  "url": "https://luxor.ai/docs/pricing.md",
+  "category": "VM sandbox for AI agents",
+  "tier": "Sandbox, Starter plan",
+  "free_tier": {
+    "stated": "USD 100 one-time credit when a payment method is added; Starter plan is USD 0 plus usage beyond the credit",
+    "unit": "credits",
+    "metered_on": "wall-clock",
+    "source_url": "https://luxor.ai/docs/pricing.md",
+    "read_on": "2026-11-24",
+    "notes": "The credit is released only after a card or Link wallet passes a USD 0 authorization; no card means no credit. Credits are spent at the standard per-unit rates."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a virtual machine, not an object store; the first 5 GiB of sandbox disk is included",
+    "source_url": "https://luxor.ai/docs/pricing.md"
+  },
+  "retention": {
+    "stated": "A paused sandbox keeps its files and memory; a non-sticky session is paused automatically at its maximum duration; disks are wiped on teardown; persistent volumes and snapshots are managed separately.",
+    "days": null,
+    "source_url": "https://luxor.ai/products/sandbox"
+  },
+  "egress": {
+    "terms": "not published: the pricing rate card lists vCPU, memory, disk and storage with no outbound transfer allowance or per-GB price; the sandbox page states 'Tunneled, authenticated connections. No public IPs.'",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://luxor.ai/docs/pricing.md"
+  },
+  "interface": [
+    "cli",
+    "ssh"
+  ],
+  "interface_detail": "The `luxor` CLI and Go, TypeScript and Python SDKs against https://api.luxor.ai; the sandbox CLI reference documents port exposure and SSH into a session. No public IP is assigned.",
+  "endpoint": "https://api.luxor.ai",
+  "tooling": "curl -fsSL https://luxor.ai/install.sh | sh installs the CLI; SDKs are npm install @luxorai/sandbox, pip install luxor-ai and go get go.luxor.ai/sandbox.",
+  "chaining": "Creates isolated full Linux VMs for agent tasks with snapshots and persistent volumes; hosted only, with no user-owned hardware involved.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "Starter caps a machine at 4 cores / 8 GB RAM, 5 concurrent sessions and 100 GiB of workspace storage; raises to 16 cores / 64 GB, 100 sessions and 1,000 GiB on Team",
+      "source": "https://luxor.ai/docs/pricing.md"
+    },
+    {
+      "kind": "request-rate",
+      "value": "at the concurrency limit a job queues rather than fails; a Starter job targeting a larger size is blocked rather than queued",
+      "source": "https://luxor.ai/docs/runners/limits-and-concurrency.md"
+    },
+    {
+      "kind": "write-gated",
+      "value": "when the workspace has no usable credit, new jobs and sessions are rejected until a top-up of at least $20 or auto-reload",
+      "source": "https://luxor.ai/docs/pricing.md"
+    }
+  ],
+  "limits_note": "Sandbox rates beyond the credit are $0.00084 per vCPU-minute, $0.00027 per GiB-minute, $0.0000018 per GiB-minute of disk after the first 5 GiB, and $0.20 per GiB-month of storage from the first byte. Billing is per second with no minimums.",
+  "binding": "volume-quota",
+  "binding_note": "The USD 100 credit and the Starter machine ceiling bind first: credit covers roughly 25,000 minutes on a 2 vCPU runner and a larger Starter size is blocked until a payment method is on file.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "Registration starts GitHub sign-up at app.luxor.ai/auth/registration; the USD 100 credit requires adding a card or Link wallet from the Billing tab, and Stripe verifies it with a USD 0 authorization. The registration page itself shows no separate email, phone or ID gate.",
+    "country": null
+  },
+  "reliability_note": "SSD disks are mounted from Ceph; a sandbox is not paused for inactivity, so a running session accrues charges until paused or terminated; jobs are balance-gated and stop starting when credit runs out. Auto-reload adds $20 when the balance drops below $5.",
+  "confidence": "documented",
+  "confidence_note": "The credit gate, per-second rates, plan ceilings, card check, concurrency and no-public-IP statement are quoted from first-party pages read on 2026-11-24.",
+  "evidence": [
+    {
+      "url": "https://luxor.ai/docs/pricing.md",
+      "date": "2026-11-24",
+      "proved": "Starter is free plus usage and new accounts get USD 100 one-time credit only when a payment method is added",
+      "capture": "sha256:66594e507c2e4d28a2399b828534a25922b25fe71f89791ec76ac3e4e21f6b93",
+      "quote": "| Included credits    | $100 one-time credit when you add a payment method | $100 monthly credits"
+    },
+    {
+      "url": "https://luxor.ai/docs/pricing.md",
+      "date": "2026-11-24",
+      "proved": "the Starter plan caps sessions at 5, storage at 100 GiB, and machines at 4 cores / 8 GB",
+      "capture": "sha256:66594e507c2e4d28a2399b828534a25922b25fe71f89791ec76ac3e4e21f6b93",
+      "quote": "| Concurrent sessions | Up to 5                                            | Up to 100                                                                         |\n| Storage             | Up to 100 GiB                                      | Up to 1,000 GiB                                                                   |\n| Machine size        | Up to 4 cores and 8 GB RAM                         | Up to 16 cores and 64 GB RAM"
+    },
+    {
+      "url": "https://luxor.ai/docs/pricing.md",
+      "date": "2026-11-24",
+      "proved": "the sandbox rate card prices vCPU, memory, disk and storage beyond the credit",
+      "capture": "sha256:66594e507c2e4d28a2399b828534a25922b25fe71f89791ec76ac3e4e21f6b93",
+      "quote": "| vCPU     | $0.00084 / vCPU·min                          |\n| Memory   | $0.00027 / GiB·min                           |\n| Disk     | $0.0000018 / GiB·min (5 GiB free)            |\n| Storage  | $0.20 / GiB·mo (charged from the first byte) |"
+    },
+    {
+      "url": "https://luxor.ai/docs/pricing.md",
+      "date": "2026-11-24",
+      "proved": "everything is billed per second with no minimums and no queue charge",
+      "capture": "sha256:66594e507c2e4d28a2399b828534a25922b25fe71f89791ec76ac3e4e21f6b93",
+      "quote": "Everything is billed per second, with no minimums or per-seat fees. Compute is quoted per minute, storage per month and code reviews per review."
+    },
+    {
+      "url": "https://luxor.ai/docs/account/free-credits.md",
+      "date": "2026-11-24",
+      "proved": "the credit needs a card or Link wallet verified by a USD 0 authorization, and auto-reload adds USD 20 below USD 5",
+      "capture": "sha256:2237470eba1fc18c502ca9f6fc8416ca097720be36696c5cd86aaa25da474ead",
+      "quote": "Create your account, then add a card or Link wallet from the workspace's [Billing tab](/docs/account/payment&#x29;. Stripe verifies the card with a $0 authorization, and the workspace receives a one-time **$100 credit**."
+    },
+    {
+      "url": "https://luxor.ai/docs/account/free-credits.md",
+      "date": "2026-11-24",
+      "proved": "auto-reload adds USD 20 when the balance drops below USD 5",
+      "capture": "sha256:2237470eba1fc18c502ca9f6fc8416ca097720be36696c5cd86aaa25da474ead",
+      "quote": "Adding the payment method also turns on auto-reload, which adds $20 whenever your balance drops below $5."
+    },
+    {
+      "url": "https://luxor.ai/docs/account/free-credits.md",
+      "date": "2026-11-24",
+      "proved": "USD 100 buys about 25,000 minutes on a 2 vCPU runner at USD 0.002 per vCPU-minute",
+      "capture": "sha256:2237470eba1fc18c502ca9f6fc8416ca097720be36696c5cd86aaa25da474ead",
+      "quote": "For a 2 vCPU x64 runner billed at **$0.002 per vCPU / minute**, $100 in credits buys roughly **25,000 minutes**."
+    },
+    {
+      "url": "https://luxor.ai/docs/pricing.md",
+      "date": "2026-11-24",
+      "proved": "when the balance runs out, new jobs and sessions stop until a top-up of at least USD 20 or auto-reload",
+      "capture": "sha256:66594e507c2e4d28a2399b828534a25922b25fe71f89791ec76ac3e4e21f6b93",
+      "quote": "When your balance runs out, Luxor Agent Cloud stops starting new jobs and sessions until you top up (minimum $20) or turn on auto-reload."
+    },
+    {
+      "url": "https://luxor.ai/products/sandbox",
+      "date": "2026-11-24",
+      "proved": "sandboxes have no public IPs and are wiped on teardown",
+      "capture": "sha256:51016127dcd215eb751477f1b383e067282b6176a531180c61bea0f5accc075c",
+      "quote": "### Wiped on teardown\n\nDisk and memory are gone when the session ends.\n\n### Secrets never cross boundaries\n\nCredentials are scoped to one session.\n\n### Encrypted in transit\n\nTunneled, authenticated connections. No public IPs."
+    },
+    {
+      "url": "https://luxor.ai/products/sandbox",
+      "date": "2026-11-24",
+      "proved": "a running sandbox is not paused for inactivity and accrues compute charges until paused or terminated",
+      "capture": "sha256:51016127dcd215eb751477f1b383e067282b6176a531180c61bea0f5accc075c",
+      "quote": "Sandboxes are not paused for inactivity: a running sandbox accrues compute charges until you pause or terminate it, or until a non-sticky session reaches its maximum duration and is paused."
+    },
+    {
+      "url": "https://luxor.ai/docs/runners/limits-and-concurrency.md",
+      "date": "2026-11-24",
+      "proved": "the shared concurrency limit is 5 on Starter and 100 on Team, and jobs above it queue rather than fail",
+      "capture": "sha256:43d80766c2497a339cd8209780506bed12fe6b653e86fc93bd789322af2f0bf4",
+      "quote": "| Starter    | Up to 5                       |\n| Team       | Up to 100                     |\n| Enterprise | Custom (unlimited on request) |"
+    },
+    {
+      "url": "https://luxor.ai/",
+      "date": "2026-11-24",
+      "proved": "registration starts GitHub sign-up directly",
+      "capture": "sha256:4442004dd705d2289b401ac7e69d5b9cc99ed7333ed82ea9c3d222d7dc3742a3",
+      "quote": "For a new user, the Luxor Agent Cloud-owned URL starts GitHub sign-up directly; the user can choose another sign-in method if needed."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-24T10:11:14.878Z",
+  "price_per_tb_month": null,
+  "notes": "A hosted sandbox lane of the same platform that sells GitHub Actions runners and AI code review. The USD 100 credit is released only after a USD 0 card authorization, so an email alone cannot spend it; egress has no published rate. Self-hosting is not offered for this service.",
+  "extras": {
+    "shape": {
+      "vcpu": 4,
+      "ram_gib": 8,
+      "disk_gib": 100,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "Starter ceiling of 4 cores / 8 GB RAM and 100 GiB workspace storage; 2 vCPU is one physical core"
+    },
+    "billing_model": "per-second usage against a one-time credit on the free Starter plan",
+    "free_tier_kind": "credit-on-card",
+    "term": "Starter has no monthly fee; Team is $250 monthly or $200 yearly",
+    "price_arithmetic": "$0.00084 per vCPU-minute plus $0.00027 per GiB-minute, with the first 5 GiB of disk included",
+    "credit_usd": 100,
+    "status": "Starter plan live",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": false,
+      "ports": "no public IPs; port exposure is documented in the CLI",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "a non-sticky session is paused at an unstated maximum duration; no inactivity pause for sandboxes"
+    }
+  }
+}

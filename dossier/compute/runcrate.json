@@ -5,12 +5,12 @@
   "url": "https://www.runcrate.ai/pricing",
   "category": "GPU cloud",
   "free_tier": {
-    "stated": "no free GPU tier is published; the live rate card read on 2026-11-03 lists 19 GPU types from USD 0.36 an hour: H100 80GB USD 3.86, A100 80GB USD 1.73, L40S 48GB USD 0.54, L40 USD 0.47, RTX 4090 USD 0.57, H200 USD 4.63, B200 USD 7.67. No L4 is listed. Billed by the second on most GPUs and by the minute on a few; booting is never billed.",
+    "stated": "no free GPU tier is published; the live rate card read on 2026-11-24 lists 24 GPU types from USD 0.23 an hour: H100 80GB USD 3.87, A100 80GB USD 1.73, L40S 48GB USD 0.55, L4 USD 0.58, RTX 4090 USD 0.63. Billed by the second on most GPUs and by the minute on a few; booting is never billed.",
     "unit": "none",
     "metered_on": "wall-clock",
     "source_url": "https://www.runcrate.ai/pricing",
     "read_on": "2026-11-03",
-    "notes": "prepaid terms of 1 to 12 months are up to 15% off; the aggregator shows H100 SXM at USD 2.49 where the provider rate card shows USD 3.86"
+    "notes": "prepaid terms of 1 to 12 months are up to 15% off; the live rate card is also published as JSON at /api/gpu-pricing without a key"
   },
   "per_object_cap": {
     "stated": "not applicable: the unit is a machine, not an object",
@@ -25,7 +25,7 @@
     "notes": "credits do not expire; storage volumes are kept when the instance is deleted"
   },
   "egress": {
-    "terms": "not published on the pages read",
+    "terms": "no egress fees: GPU instances bill by runtime and storage volumes by provisioned GB-month",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
@@ -36,7 +36,7 @@
     "cli",
     "ssh"
   ],
-  "interface_detail": "taken from the pricing page, which lists SSH, a CLI and an unauthenticated /api/gpu-pricing endpoint; not probed",
+  "interface_detail": "SSH with a CLI and an OpenAI-compatible API at https://api.runcrate.ai/v1, which returns a missing-API-key error to an anonymous caller; a keyless /api/gpu-pricing JSON rate card",
   "tooling": "SSH, Jupyter and VS Code in the browser, Python and TypeScript SDKs, a CLI and an MCP server; an OpenAI-compatible inference API on the same balance",
   "chaining": "One prepaid balance pays for GPU hours, token-billed inference and storage volumes; the public /api/gpu-pricing endpoint publishes the live rate card without a key.",
   "limits": [
@@ -100,14 +100,63 @@
       "proved": "sign-up asks for name, email and password"
     },
     {
-      "url": "https://computeprices.com/providers/runcrate",
-      "date": "2026-11-03",
-      "capture": "sha256:ba188a70377a2a7eeba069ea9eb10b87a6553745984b147adf872c6461cbeb80",
-      "quote": "| [L4](https://computeprices.com/providers/runcrate/gpus/l4)1× | $1.24/hr |",
-      "proved": "the aggregator lists an L4 for Runcrate at USD 1.24 an hour"
+      "url": "https://www.runcrate.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the lowest listed GPU rate is USD 0.23 an hour on an RTX 3090",
+      "capture": "sha256:2104e9586d59eb892ec0cac315ef0497ab1978ba0e08bffb941b2360424aa314",
+      "quote": "| RTX 3090 Ampere | 24GB | $0.23/hr |"
+    },
+    {
+      "url": "https://www.runcrate.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the live GPU rate card is available as JSON without a key",
+      "capture": "sha256:2104e9586d59eb892ec0cac315ef0497ab1978ba0e08bffb941b2360424aa314",
+      "quote": "GET [/api/gpu-pricing](/api/gpu-pricing)"
+    },
+    {
+      "url": "https://runcrate.ai/docs/billing/pricing.md",
+      "date": "2026-11-24",
+      "proved": "Runcrate publishes that it charges no egress fees",
+      "capture": "sha256:0f12c8d12016056d97dcb33dc251dc9362a3dc13213d6d2637d8e84a1a2fcb21",
+      "quote": "No egress fees. You only pay for provisioned volume size."
+    },
+    {
+      "url": "https://api.runcrate.ai/v1",
+      "date": "2026-11-24",
+      "proved": "the inference API requires a bearer key and the anonymous response reports the authentication requirement",
+      "capture": "sha256:aaf92c1f67e2e3e380fb6ba6d329ad089c900fc14b3a64008d7235784a9dc5b6",
+      "quote": "Missing API key. Pass Authorization: Bearer rc_live_..."
+    },
+    {
+      "url": "https://www.runcrate.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the H100 80GB rate is now USD 3.87 an hour",
+      "capture": "sha256:2104e9586d59eb892ec0cac315ef0497ab1978ba0e08bffb941b2360424aa314",
+      "quote": "| H100 Hopper | 80GB | $3.87/hr |"
+    },
+    {
+      "url": "https://www.runcrate.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "an L4 is listed at USD 0.58 an hour, correcting the record's note that none was listed",
+      "capture": "sha256:2104e9586d59eb892ec0cac315ef0497ab1978ba0e08bffb941b2360424aa314",
+      "quote": "| L4 Ada Lovelace | 24GB | $0.58/hr |"
+    },
+    {
+      "url": "https://www.runcrate.ai/auth/signup",
+      "date": "2026-11-24",
+      "proved": "the sign-up form asks for name, email, password and confirmation plus an age consent checkbox",
+      "capture": "sha256:db88879f55eb7bfbdb5e9c7b27ac2711570a3acbf5c64e76f0107c5bfe6fc8c7",
+      "quote": "Name Email Password Confirm password"
+    },
+    {
+      "url": "https://models.dev/providers/runcrate",
+      "date": "2026-11-24",
+      "proved": "the provider registry names the API base URL as https://api.runcrate.ai/v1",
+      "capture": "sha256:17a73619f7113a4f534e1d2cd01bc8d3005ae376f11ced93c5a80b749ee2a38b",
+      "quote": "API https://api.runcrate.ai/v1"
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-11-03T07:36:22.304Z",
+  "verified_at": "2026-11-24T13:21:02.389Z",
   "notes": "Found via computeprices.com (provider slug runcrate). The aggregator row for L4 (USD 1.24) is not on the provider rate card read 2026-11-03. Not read: the L4 availability."
 }

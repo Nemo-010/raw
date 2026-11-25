@@ -5,15 +5,15 @@
   "url": "https://boxlite.ai/",
   "category": "cloud VM",
   "free_tier": {
-    "stated": "USD 100 in free credits, so you can build and run against Cloud before spending anything of your own.",
-    "unit": "mixed",
+    "stated": "No card-free credit published. 'Usage is charged to your prepaid wallet. Boxes are priced per hour, and the console shows the rate for a given size before you create it.' Starter is USD 5 a month with USD 20 of included quota; its 3-day trial needs card verification.",
+    "unit": "none",
     "metered_on": "wall-clock",
     "source_url": "https://boxlite.ai/",
     "read_on": "2026-10-24",
     "notes": "credit"
   },
   "per_object_cap": {
-    "stated": "per-box ceiling of 4 vCPU, 32 GiB of memory and 120 GiB of storage on every plan"
+    "stated": "per-box maximum depends on the plan: 1 vCPU / 2 GB / 10 GB on Pay as you go, 2 vCPU / 4 GB / 20 GB on Starter, and 16 vCPU / 32 GB / 100 GB on Team."
   },
   "retention": {
     "stated": "Around 10 GiB of real disk per box, and 'Packages, files and environment are still there after a stop and a start'.",
@@ -28,13 +28,13 @@
   "interface": [
     "rest"
   ],
-  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "interface_detail": "the hosted Cloud boxes are reached with an API key and a REST endpoint (BOXLITE_REST_URL defaults to https://api.boxlite.ai) from the same SDK as the local runtime",
   "tooling": "not stated in the finding; the provider documents no client",
   "chaining": "No free lane fits this provider: the cheapest start is USD 19 a month on Starter with USD 30 of included usage. Free network traffic still matters for the egress topic, because the same workload on bunny.net would pay USD 0.01 per GB in Europe.",
   "limits": [
     {
       "kind": "per-object-cap",
-      "value": "4 vCPU, 32 GiB and 120 GiB per box on every plan",
+      "value": "1 vCPU / 2 GB / 10 GB on Pay as you go, 2 vCPU / 4 GB / 20 GB on Starter, 16 vCPU / 32 GB / 100 GB on Team",
       "source": "https://boxlite.ai/"
     }
   ],
@@ -42,8 +42,8 @@
   "binding": "per-object-cap",
   "binding_note": "The shape ceiling is 4 vCPU, but the deciding wall is the rate: USD 0.0504 per vCPU-hour and USD 0.0144 per GiB-hour put the smallest box at USD 48.62 a month.",
   "identity_cost": {
-    "kind": "card",
-    "detail": "A prepaid wallet funds usage and paid top-ups are refundable within 14 days; the card type, hold and debit terms were not stated on the page read. Unverified.",
+    "kind": "email",
+    "detail": "An account and API key are created in the console; pay-as-you-go needs no plan, and a plan is optional with a 3-day trial that requires card verification. Payments are processed by Stripe; the full card number is not stored, and paid wallet top-ups are refundable within 14 days.",
     "country": null
   },
   "reliability_note": "Files survive a stop and a start; no reliability event observed.",
@@ -88,10 +88,73 @@
       "url": "https://boxlite.ai/",
       "date": "2026-10-24",
       "proved": "quoted: 'Packages, files and environment are still there after a stop and a start, so you are not rebuilding the world on every boot.' and 'Start with $100 in free credits'"
+    },
+    {
+      "url": "https://boxlite.ai/",
+      "date": "2026-11-24",
+      "proved": "start is pay-as-you-go from a prepaid wallet with no free credit published",
+      "capture": "sha256:2c04ad1952775d73b6a46b7562aa0015e234d1ddcc73191d05efd0014e1b0f1e",
+      "quote": "Usage is charged to your prepaid wallet. Boxes are priced per hour, and the console shows the rate for a given size before you create it."
+    },
+    {
+      "url": "https://boxlite.ai/",
+      "date": "2026-11-24",
+      "proved": "there is no free grant denominated in any unit",
+      "capture": "sha256:2c04ad1952775d73b6a46b7562aa0015e234d1ddcc73191d05efd0014e1b0f1e",
+      "quote": "Usage is charged to your prepaid wallet. Boxes are priced per hour, and the console shows the rate for a given size before you create it."
+    },
+    {
+      "url": "https://boxlite.ai/",
+      "date": "2026-11-24",
+      "proved": "the per-box shape ceiling is plan dependent, up to 16 vCPU / 32 GB / 100 GB on Team",
+      "capture": "sha256:2c04ad1952775d73b6a46b7562aa0015e234d1ddcc73191d05efd0014e1b0f1e",
+      "quote": "Max Box size depends on your plan: 1C · 2G · 10G on Pay as you go, 2C · 4G · 20G on Starter, and 16C · 32G · 100G on Team (CPU · memory · disk)."
+    },
+    {
+      "url": "https://boxlite.ai/",
+      "date": "2026-11-24",
+      "proved": "the largest single box is 16 vCPU / 32 GB / 100 GB, and the free-start ceiling is 1 vCPU / 2 GB / 10 GB",
+      "capture": "sha256:2c04ad1952775d73b6a46b7562aa0015e234d1ddcc73191d05efd0014e1b0f1e",
+      "quote": "Max Box size depends on your plan: 1C · 2G · 10G on Pay as you go, 2C · 4G · 20G on Starter, and 16C · 32G · 100G on Team (CPU · memory · disk)."
+    },
+    {
+      "url": "https://boxlite.ai/",
+      "date": "2026-11-24",
+      "proved": "the hosted service interface is a REST URL plus SDK",
+      "capture": "sha256:2c04ad1952775d73b6a46b7562aa0015e234d1ddcc73191d05efd0014e1b0f1e",
+      "quote": "Create an API key in the console, then point the SDK at the REST endpoint: BOXLITE_API_KEY holds the key (it looks like blk_live_… and is shown in full only once), and BOXLITE_REST_URL defaults to https://api.boxlite.ai."
+    },
+    {
+      "url": "https://boxlite.ai/",
+      "date": "2026-11-24",
+      "proved": "a wallet-only start needs no plan and therefore no card at sign-up",
+      "capture": "sha256:2c04ad1952775d73b6a46b7562aa0015e234d1ddcc73191d05efd0014e1b0f1e",
+      "quote": "No. You can run wallet-only with no plan, take a plan on its own, or combine the two — a plan's included quota covers usage first and a prepaid wallet funds the rest."
+    },
+    {
+      "url": "https://boxlite.ai/legal/terms",
+      "date": "2026-11-24",
+      "proved": "payments go through Stripe and the full card number is not stored by the provider",
+      "capture": "sha256:877cc733b06f3bc028e4917e5f5cab4c91c501a691e3ffe138c10459ca740ef6",
+      "quote": "Payments are processed by Stripe. We do not receive or store your full card number."
+    },
+    {
+      "url": "https://boxlite.ai/",
+      "date": "2026-11-24",
+      "proved": "a stopped box keeps its files across a stop and start",
+      "capture": "sha256:2c04ad1952775d73b6a46b7562aa0015e234d1ddcc73191d05efd0014e1b0f1e",
+      "quote": "Packages, files and environment are still there after a stop and a start, so you are not rebuilding the world on every boot."
+    },
+    {
+      "url": "https://boxlite.ai/",
+      "date": "2026-11-24",
+      "proved": "outbound traffic from a box can be restricted to a named allowlist",
+      "capture": "sha256:2c04ad1952775d73b6a46b7562aa0015e234d1ddcc73191d05efd0014e1b0f1e",
+      "quote": "Outbound traffic can be pinned to an allowlist, so the box reaches only what you named."
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-10-24T02:11:00.000Z",
+  "verified_at": "2026-11-24T11:38:11.104Z",
   "notes": "Check of the vendor's own arithmetic: 0.0504 + 0.0144 + 10 x 0.00018 = USD 0.0666/hour, which is exactly the headline 'smallest box' figure, so the rate card and the summary agree. At 730 h: 0.0666 x 730 = USD 48.62. The docs page (docs.boxlite.ai/cloud/pricing) returned a JavaScript shell on two attempts, so the plan table (Starter USD 19/month with USD 30 of quota, Pro USD 149, Max USD 499) is unverified among evaluated providers.",
   "extras": {
     "wave2": {

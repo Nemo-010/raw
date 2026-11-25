@@ -1,0 +1,160 @@
+{
+  "topic": "compute",
+  "slug": "promigence",
+  "provider": "Promigence",
+  "url": "https://www.promigence.ai/pricing",
+  "category": "sandbox",
+  "tier": "Free, $0 pay as you go",
+  "free_tier": {
+    "stated": "USD 100 of free credit included on the pay-as-you-go Free tier, then USD 0.0504 per vCPU-hour plus USD 0.0162 per GiB-hour per second; 20 sandboxes at once and sessions up to an hour; the credit is claimed once in a browser with no card",
+    "unit": "credits",
+    "metered_on": "wall-clock",
+    "source_url": "https://www.promigence.ai/pricing",
+    "read_on": "2026-11-24",
+    "notes": "The Free tier is metered per second at list after the credit; paused time is not billed. A run is quoted before it starts and held to a hard spend cap. Sign-up takes an invite code that the vendor emails after a request-access form."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a running sandbox, not a stored object",
+    "notes": "Snapshot storage is included in every plan; the published limits give a count of sandboxes rather than an object size."
+  },
+  "retention": {
+    "stated": "a paused sandbox is kept for 30 days and deleted with its files when that period ends; resuming starts the 30 days again",
+    "days": 30,
+    "source_url": "https://www.promigence.ai/docs/limits"
+  },
+  "egress": {
+    "terms": "included: registries and git hosts are not metered separately; the Free tier caps data out at 20 GB a month, and at the cap sandboxes lose internet access until the 1st of the month, 00:00 UTC",
+    "metered": true,
+    "free_allowance": "20 GB of data out a month",
+    "price_per_tb": null,
+    "source_url": "https://www.promigence.ai/pricing"
+  },
+  "interface": [
+    "cli",
+    "rest",
+    "ssh",
+    "sftp",
+    "scp"
+  ],
+  "interface_detail": "CLI commands fork, exec, files put/get, sandbox shell and sandbox ssh; an MCP server, a TypeScript SDK and a Python SDK; the CLI's `sandbox ssh` supports scp, sftp and port forwarding. An OpenAPI contract is published at https://www.promigence.ai/openapi.json.",
+  "tooling": "Hosted sandboxes driven by the promigence npm CLI and SDK or the Python package pip-installed by the user; a shell terminal, scp, sftp and an E2B-style compatibility Sandbox class are available.",
+  "chaining": "Sandboxes can be forked in batches under one spend cap for evals or CI, and GitHub Actions and GitLab CI jobs can be routed to Promigence runners.",
+  "limits": [
+    {
+      "kind": "per-ip-shaping",
+      "value": "20 GB of data out a month for a new account; at the cap sandboxes lose internet access until the 1st of the month, 00:00 UTC",
+      "source": "https://www.promigence.ai/docs/limits"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "20 sandboxes at once on a new account, each up to an hour (15 minutes unless --timeout asks for more), on sizes up to 8 vCPU",
+      "source": "https://www.promigence.ai/docs/limits"
+    },
+    {
+      "kind": "request-rate",
+      "value": "a request over an account limit is refused before anything starts with concurrency_limit, tier_over_plan, storage_limit_reached or egress_cap_reached",
+      "source": "https://www.promigence.ai/docs/limits"
+    }
+  ],
+  "limits_note": "A run's spend cap is a hard limit; a sandbox that reaches it is paused with its files kept, and idempotency keys deduplicate starts within 24 hours.",
+  "binding": "per-ip-shaping",
+  "binding_note": "The 20 GB monthly data-out allowance is the allowance that runs out first on a Free account: the pricing page includes egress but the trial caps it, and the limits page states that at the cap new runs needing internet are refused until the 1st of the month, while compute is metered per second with no stated time quota beyond the per-sandbox hour.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "Sign-up takes an invite code emailed to the person after a request-access form; the account is created in a browser at console.promigence.ai/signup or with `promigence signup`, and the USD 100 credit is claimed once in the browser with no card. The CLI stores an API key on the machine after browser sign-in. No phone or ID document is named on the pages read; a card is optional and brings USD 40 more credit on the validity offer. The exact signup form fields beyond the invite code are unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "Paused sandboxes are deleted after 30 days; at the monthly data-out cap terminals and SSH sessions end and new internet-bound runs are refused until the 1st, 00:00 UTC.",
+  "confidence": "documented",
+  "confidence_note": "The rate, credit, concurrency, session, egress, retention and invite-code gate come from the vendor's own pricing, limits, quickstart, root page and facts file read on 2026-11-24.",
+  "evidence": [
+    {
+      "url": "https://www.promigence.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the published list rate is USD 0.0504 per vCPU-hour plus USD 0.0162 per GiB-hour, billed per second",
+      "capture": "sha256:30d7e96325fa5a045a1ccea812acbee10ab7140833828e75d1d9861cb684205b",
+      "quote": "Metered per second at $0.0504 per vCPU-hour plus $0.0162 per GiB-hour, the market's standard list rate."
+    },
+    {
+      "url": "https://www.promigence.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the published per-second rates of the Small, Medium and Large sizes",
+      "capture": "sha256:30d7e96325fa5a045a1ccea812acbee10ab7140833828e75d1d9861cb684205b",
+      "quote": "Small | 2 vCPU · 4 GiB | $0.17 per hour | $0.000046 per second ($0.1656 per hour)"
+    },
+    {
+      "url": "https://www.promigence.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the Free tier includes USD 100 of credit, 20 sandboxes at once and sessions of an hour, with a hard spend cap",
+      "capture": "sha256:30d7e96325fa5a045a1ccea812acbee10ab7140833828e75d1d9861cb684205b",
+      "quote": "20 sandboxes at once, sessions up to an hour"
+    },
+    {
+      "url": "https://www.promigence.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the trial caps data out at 20 GB a month while registries and git hosts are not metered separately",
+      "capture": "sha256:30d7e96325fa5a045a1ccea812acbee10ab7140833828e75d1d9861cb684205b",
+      "quote": "Egress: Included. Registries and git hosts are not metered separately. The trial caps data out at 20 GB a month."
+    },
+    {
+      "url": "https://www.promigence.ai/docs/limits",
+      "date": "2026-11-24",
+      "proved": "a new account runs 20 sandboxes at once for at most an hour on sizes up to 8 vCPU with 20 GB a month of data out",
+      "capture": "sha256:37ca5d295aa6b36c7295778e3ccc92a04f4d89bffc83f31c002f2be82be02e9d",
+      "quote": "A new account runs 20 sandboxes at once, each for up to an hour (15 minutes unless --timeout asks for more), on sizes up to large (8 vCPU), with 20 GB of data out a month."
+    },
+    {
+      "url": "https://www.promigence.ai/docs/limits",
+      "date": "2026-11-24",
+      "proved": "a paused sandbox is kept 30 days and deleted with its files at the end of that period",
+      "capture": "sha256:37ca5d295aa6b36c7295778e3ccc92a04f4d89bffc83f31c002f2be82be02e9d",
+      "quote": "It is kept for 30 days, and resuming it starts the 30 days again."
+    },
+    {
+      "url": "https://www.promigence.ai/",
+      "date": "2026-11-24",
+      "proved": "sign-up takes an invite code that the vendor emails with free credit",
+      "capture": "sha256:923e2cfb65fe530ae1a379af4e560b20287c40e37b8522435b78e404115f9fe5",
+      "quote": "No account yet? Sign-up takes an invite code."
+    },
+    {
+      "url": "https://www.promigence.ai/",
+      "date": "2026-11-24",
+      "proved": "the CLI and SDK are installed by the user and the MCP server offers read-only tools and a spend cap",
+      "capture": "sha256:923e2cfb65fe530ae1a379af4e560b20287c40e37b8522435b78e404115f9fe5",
+      "quote": "npm i -g promigence        # the CLI, with the TypeScript SDK in the same package (needs Node.js)"
+    },
+    {
+      "url": "https://www.promigence.ai/",
+      "date": "2026-11-24",
+      "proved": "sandboxes are billed by the second while they run and paused time is not billed",
+      "capture": "sha256:923e2cfb65fe530ae1a379af4e560b20287c40e37b8522435b78e404115f9fe5",
+      "quote": "A sandbox gives you your own computer to work in: run commands, install packages, edit files, start servers, and throw"
+    },
+    {
+      "url": "https://www.promigence.ai/facts.json",
+      "date": "2026-11-24",
+      "proved": "the invite code with USD 100 of free credit is claimed in a browser with no card",
+      "capture": "sha256:f7f51687718675633bb380ef5d8cbcd41bda2612ec59c0117d830ed759c65998",
+      "quote": "\"answer\": \"Request access at www.promigence.ai: Promigence emails an invite code with $100 of free credit. With the code, sign up at console.promigence.ai/signup, or with `promigence signup` from the CLI. The credit is claimed in the browser (console Billing, or `promigence credits claim`) with no card.\""
+    },
+    {
+      "url": "https://www.promigence.ai/facts.json",
+      "date": "2026-11-24",
+      "proved": "sandbox SSH supports scp, sftp and port forwarding",
+      "capture": "sha256:f7f51687718675633bb380ef5d8cbcd41bda2612ec59c0117d830ed759c65998",
+      "quote": "\"summary\": \"Logs you in to a sandbox over SSH, with the key and access set up for you; `scp`, `sftp` and port forwarding with `-L` work too."
+    },
+    {
+      "url": "https://www.promigence.ai/docs/quickstart",
+      "date": "2026-11-24",
+      "proved": "the free credit covers a first run and there is no card to add; sign-up takes an invite code emailed by the vendor",
+      "capture": "sha256:ca8aba214b8b1e8cfe10812de713f2c0d27c7787b4cc7073152ed358deab165c",
+      "quote": "Sign-up takes an invite code: [request access](https://www.promigence.ai/?ref=docs#request-access), and we email you one with $100 of free credit."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-24T10:11:15.004Z",
+  "price_per_tb_month": null,
+  "notes": "The hosted Free tier ships USD 100 of credit with invite-only sign-up and no card; the per-second rate is USD 0.0504 per vCPU-hour plus USD 0.0162 per GiB-hour. A 20 GB monthly data-out allowance is the first limit that binds for a Free account. Paid plans (USD 50, USD 250, USD 500 and custom) are described on the same pricing page; running one's own cloud account is offered only in the Enterprise plan."
+}

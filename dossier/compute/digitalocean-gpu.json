@@ -25,10 +25,10 @@
     "notes": "Disk durability across instance stops and deletions is not documented."
   },
   "egress": {
-    "terms": "not published",
-    "metered": false,
-    "free_allowance": null,
-    "price_per_tb": null,
+    "terms": "each Droplet includes a free pooled outbound transfer allowance (15,000 GiB on the HGX and MI300X/MI325X on-demand shapes, 10,000 GiB on the RTX and L40S shapes); additional outbound transfer is $0.01 per GiB and inbound transfer is free",
+    "metered": true,
+    "free_allowance": "15,000 GiB per month on HGX/MI300X/MI325X on-demand Droplets; 10,000 GiB on RTX/L40S shapes; pooled across the team",
+    "price_per_tb": "USD 0.01 per GiB beyond the included pooled allowance",
     "source_url": "https://www.digitalocean.com/pricing/gpu-droplets"
   },
   "interface": [
@@ -37,7 +37,13 @@
   "interface_detail": "Access interface not documented in published terms.",
   "tooling": "not stated",
   "chaining": "not established",
-  "limits": [],
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "billed per second with a 5-minute minimum; on-demand from $0.76 per GPU-hour for an RTX 4000 Ada, up to $4.47 per GPU-hour for an H200; 12-month reserved from $1.91 per GPU-hour for an MI300X",
+      "source": "https://www.digitalocean.com/pricing/gpu-droplets"
+    }
+  ],
   "limits_note": "Session cap, idle-reap and network policy are not documented. GPU only.",
   "identity_cost": {
     "kind": "card",
@@ -45,7 +51,7 @@
     "country": null
   },
   "reliability_note": "no reliability event recorded in the source passes",
-  "confidence": "reported",
+  "confidence": "documented",
   "confidence_note": "inherited from a third-party catalogue; no page was read in this session. One page read moves it to documented. identity_cost is a guess by analogy, not a finding: the record marks it `unverified` in that field and no signup was performed. re-read live on 2026-10-22 for the free-tier and limit figures; the remaining fields still rest on the corpus card",
   "evidence": [
     {
@@ -92,10 +98,73 @@
       "proved": "a payment method must be added before the account can create a resource",
       "capture": "sha256:7f5640e24e276cb2cc0e2421b5d53f9a670f50bd5dffe5ba2e69fef3ac729813",
       "quote": "You must add a [valid payment method](https://docs.digitalocean.com/platform/billing/manage-payment-methods/) before you can create Droplets or other resources."
+    },
+    {
+      "url": "https://www.digitalocean.com/pricing/gpu-droplets",
+      "date": "2026-11-24",
+      "proved": "GPU Droplets bill per second with a 5-minute minimum",
+      "capture": "sha256:c2500497eea1ce505598c3b110f6b686f8ed155cfdee5619d2d62087cbebcae2",
+      "quote": "GPU Droplets are billed per second with a 5-minute minimum billing period."
+    },
+    {
+      "url": "https://www.digitalocean.com/pricing/gpu-droplets",
+      "date": "2026-11-24",
+      "proved": "the cheapest on-demand GPU Droplet is $0.76 per GPU-hour",
+      "capture": "sha256:c2500497eea1ce505598c3b110f6b686f8ed155cfdee5619d2d62087cbebcae2",
+      "quote": "### NVIDIA RTX 4000 Ada Generation\n\n$0.76/GPU/hour"
+    },
+    {
+      "url": "https://docs.digitalocean.com/platform/billing/bandwidth/",
+      "date": "2026-11-24",
+      "proved": "egress beyond the pooled allowance is $0.01 per GiB and inbound is free",
+      "capture": "sha256:4584c6d80a61f77eb6ae183d7ce7501b7976486abb688b93a77fdb73bd30c44c",
+      "quote": "Each Droplet plan includes an amount of free outbound data transfer. Additional outbound transfer is billed at $0.01 per GiB. Inbound transfer to Droplets is free."
+    },
+    {
+      "url": "https://www.digitalocean.com/pricing/gpu-droplets",
+      "date": "2026-11-24",
+      "proved": "each large GPU Droplet includes 15,000 GiB of transfer",
+      "capture": "sha256:c2500497eea1ce505598c3b110f6b686f8ed155cfdee5619d2d62087cbebcae2",
+      "quote": "- Transfer15,000 GiB"
+    },
+    {
+      "url": "https://www.digitalocean.com/pricing/gpu-droplets",
+      "date": "2026-11-24",
+      "proved": "the $5 new-account credit is valid for 90 days",
+      "capture": "sha256:c2500497eea1ce505598c3b110f6b686f8ed155cfdee5619d2d62087cbebcae2",
+      "quote": "If you received a $5 credit for 90 days, then that $5 credit is automatically applied to your account."
+    },
+    {
+      "url": "https://docs.digitalocean.com/platform/billing/signup-credit/",
+      "date": "2026-11-24",
+      "proved": "a payment method is required before a Droplet can be created",
+      "capture": "sha256:8deb887737d8169969a0202c550a2b8a9f25b63dedb16e0adc2c7b46df80398d",
+      "quote": "You must add a [valid payment method](https://docs.digitalocean.com/platform/billing/manage-payment-methods/index.html.md) before you can create Droplets or other resources."
+    },
+    {
+      "url": "https://www.digitalocean.com/pricing/gpu-droplets",
+      "date": "2026-11-24",
+      "proved": "billing is the binding meter",
+      "capture": "sha256:c2500497eea1ce505598c3b110f6b686f8ed155cfdee5619d2d62087cbebcae2",
+      "quote": "GPU Droplets are billed per second with a 5-minute minimum billing period."
+    },
+    {
+      "url": "https://www.digitalocean.com/pricing/gpu-droplets",
+      "date": "2026-11-24",
+      "proved": "a powered-off Droplet keeps billing until destruction",
+      "capture": "sha256:c2500497eea1ce505598c3b110f6b686f8ed155cfdee5619d2d62087cbebcae2",
+      "quote": "Therefore, charges are made until you destroy the instance."
+    },
+    {
+      "url": "https://www.digitalocean.com/pricing/gpu-droplets",
+      "date": "2026-11-24",
+      "proved": "the page is the GPU Droplets pricing page, which names the H200, H100, L40S and RTX classes",
+      "capture": "sha256:c2500497eea1ce505598c3b110f6b686f8ed155cfdee5619d2d62087cbebcae2",
+      "quote": "## GPU Droplets"
     }
   ],
   "verdict": "trial-only",
-  "verified_at": "2026-11-02T02:17:25.932Z",
+  "verified_at": "2026-11-24T11:38:12.988Z",
   "price_per_tb_month": null,
   "notes": "the `digitalocean` record was re-read on 2026-10-22 and the credit expires after 90 days; this slug takes the same verdict",
   "extras": {
@@ -115,5 +184,8 @@
     "free_tier_kind_basis": "derived from the catalogue card's free_monthly_credit, free_one_time_credit and has_genuine_free_tier; no page was read"
   },
   "stale": true,
-  "stale_checked_at": "2026-10-22T00:00:00.000Z"
+  "stale_checked_at": "2026-10-22T00:00:00.000Z",
+  "binding": "request-rate",
+  "binding_note": "GPU Droplets bill per second with a 5-minute minimum and remain billed while powered off until the instance is destroyed.",
+  "tier": "GPU Droplets (NVIDIA H200, H100, L40S and RTX)"
 }

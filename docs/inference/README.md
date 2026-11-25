@@ -281,14 +281,12 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `infersia` | Infersia | qualifies-with-caveat | documented |
 | `inferx` | InferX | paid-only | documented |
 | `isoquant` | Isoquant | paid-only | documented |
-| `iteracompute` | IteraCompute | qualifies-with-caveat | documented |
 | `jad-ai` | Jad AI | qualifies-with-caveat | documented |
 | `jalapeno` | Jalapeno Cloud | paid-only | documented |
 | `jiekou` | Jiekou.AI | paid-only | documented |
 | `jina-ai-embeddings-reranker` | Jina AI embeddings and reranker API | trial-only | documented |
 | `joingonka` | JoinGonka | paid-only | documented |
 | `jzstoken` | JZSTOKEN | trial-only | documented |
-| `keln` | Keln | paid-only | documented |
 | `kenari` | Kenari | qualifies-with-caveat | documented |
 | `kitani` | Kitani | paid-only | documented |
 | `klavo` | Klavo AI | paid-only | documented |
@@ -323,7 +321,6 @@ Each `measured` or `documented` record of this topic that no other document of `
 | `moneo` | Moneo | trial-only | documented |
 | `moonshot-kimi-api-international` | Moonshot Kimi API Platform international | paid-only | documented |
 | `moonshotai-cn` | Moonshot AI (China) | paid-only | documented |
-| `munito` | Munito AI | qualifies-with-caveat | documented |
 | `munito-eu` | Munito AI (EU) | fails-identity | documented |
 | `nano-gpt` | NanoGPT | paid-only | documented |
 | `nearai` | NEAR AI Cloud | paid-only | documented |

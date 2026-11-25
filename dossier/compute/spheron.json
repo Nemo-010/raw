@@ -5,7 +5,7 @@
   "url": "https://docs.spheron.ai/getting-started/",
   "category": "GPU cloud",
   "free_tier": {
-    "stated": "GPU marketplace that aggregates capacity from multiple data center partners, with no free allowance: the first step after signup is to add credits, 'minimum $15 by card or $50 by crypto, maximum $5,000 per transaction'. Cheapest live on-demand rate per GPU-hour on the pricing page: H100 $2.98 (spot $2.79), A100 80 GB $1.43 (spot $1.19), L40S $0.96, RTX 4090 $0.48; L4 is not listed. The pricing page states a 20-minute minimum runtime on every instance (60 minutes on a 2x AMD MI300X) and per-minute billing after it; the billing docs state pay-per-second billing",
+    "stated": "GPU marketplace with no free allowance: credits must be added before deployment, minimum $15 by card or $50 by crypto. Live on-demand rates: H100 $2.98 (spot $2.20), A100 80 GB $1.48 (spot $1.19), L40S $0.96, RTX 4090 $0.72; a 20-minute minimum runtime applies to every instance and a 60-minute one to a 2x AMD MI300X, with per-minute billing after it",
     "unit": "none",
     "metered_on": "wall-clock",
     "source_url": "https://docs.spheron.ai/getting-started/",
@@ -25,16 +25,17 @@
     "notes": "a machine record: what is lost is the running process, not a stored object"
   },
   "egress": {
-    "terms": "not published on the page read: no egress term was found, so nothing is asserted",
+    "terms": "the pricing FAQ states the hourly rate covers network bandwidth and a dedicated IP with no hidden fees or surcharges; a first-party post states Spheron charges no data egress fees",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
     "source_url": "https://docs.spheron.ai/getting-started/"
   },
   "interface": [
-    "unknown"
+    "ssh",
+    "browser"
   ],
-  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "interface_detail": "a dashboard and an SSH key for instance access; instances are deployed through the dashboard and reached over SSH, and the billing docs describe an API reference for billing",
   "tooling": "not stated in the finding; the provider documents no client",
   "chaining": "USD 15 at USD 0.52 per hour is about 28 hours of one RTX 4090, so a single minimum deposit funds a week of evening experiments; the deposit is prepaid balance, not a credit grant.",
   "limits": [
@@ -146,10 +147,52 @@
       "proved": "the site describes Spheron as a marketplace aggregating supply from data center partners",
       "capture": "sha256:7facf2e51160198b188f079638b892ce6960ef2345840ecff8e554fcf9fc23f7",
       "quote": "Spheron is not a single cloud provider. It is a marketplace that aggregates GPU supply from multiple enterprise-grade data center partners."
+    },
+    {
+      "url": "https://www.spheron.network/pricing",
+      "date": "2026-11-24",
+      "proved": "network bandwidth is included in the hourly rate",
+      "capture": "sha256:fb00f5864409b6fcbf9048ff0ffa89577a86fc4eb3d36c696030087e06838fdf",
+      "quote": "The hourly rate covers everything you need to get started: a fully provisioned VM or bare metal instance with your selected GPU, high-speed NVMe SSD storage, network bandwidth, and a dedicated IP address with full root access. There are no hidden fees or surcharges."
+    },
+    {
+      "url": "https://www.spheron.network/pricing",
+      "date": "2026-11-24",
+      "proved": "the live RTX 4090 on-demand rate",
+      "capture": "sha256:fb00f5864409b6fcbf9048ff0ffa89577a86fc4eb3d36c696030087e06838fdf",
+      "quote": "$0.72/hr"
+    },
+    {
+      "url": "https://docs.spheron.ai/getting-started/",
+      "date": "2026-11-24",
+      "proved": "SSH is the instance access interface",
+      "capture": "sha256:8f31f08271d4e759cdcdbc265e4ed53e291ad8499f317de0e5c9268b01610859",
+      "quote": "SSH keys are required to access your GPU instances securely."
+    },
+    {
+      "url": "https://docs.spheron.ai/getting-started/",
+      "date": "2026-11-24",
+      "proved": "SSH is a documented access interface",
+      "capture": "sha256:8f31f08271d4e759cdcdbc265e4ed53e291ad8499f317de0e5c9268b01610859",
+      "quote": "SSH keys are required to access your GPU instances securely."
+    },
+    {
+      "url": "https://docs.spheron.ai/billing",
+      "date": "2026-11-24",
+      "proved": "the identity gate and minimum deposit are unchanged",
+      "capture": "sha256:fa2427d3d52afbcb01798129f5d08ff3904477b3fd7b54c290350987cd2ae707",
+      "quote": "- Verified email address. Google and GitHub sign-ins count as verified"
+    },
+    {
+      "url": "https://www.spheron.network/blog/aws-ec2-g7-pricing-2026/",
+      "date": "2026-11-24",
+      "proved": "a first-party post states there is no egress fee",
+      "capture": "sha256:696fadf1af83a675c00363735270beaa484f98ac197e027c822c2274fbaa8a4b",
+      "quote": "Spheron also charges no data egress fees"
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-11-03T10:24:24.029Z",
+  "verified_at": "2026-11-24T13:21:04.871Z",
   "notes": "The site publishes no free credit; a third-party blog mentions a trial signup button, which the current flow does not show. The docs overview states that Spheron is not a blockchain network; no first-party page read describes EigenLayer or AVS matching.",
   "extras": {
     "wave2": {

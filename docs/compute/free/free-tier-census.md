@@ -20,53 +20,93 @@ between its markers, so it cannot disagree with the records it counts.
 <!-- generated:start topic=compute kind=breakdown field=extras.free_tier_kind -->
 | free tier kind | Records |
 | --- | --- |
-| `-` | 834 |
-| `none` | 254 |
-| `allowance` | 121 |
-| `one-time-credit` | 54 |
-| `trial` | 34 |
+| `-` | 851 |
+| `none` | 261 |
+| `allowance` | 120 |
+| `one-time-credit` | 64 |
+| `trial` | 35 |
 | `always-free` | 18 |
 | `credit` | 12 |
+| `recurring-credit` | 11 |
 | `free-forever-with-quota` | 10 |
-| `recurring-credit` | 10 |
 | `perpetual` | 8 |
+| `recurring-allowance` | 8 |
 | `free-forever` | 7 |
+| `none-published` | 6 |
 | `renewable-free` | 4 |
 | `closed` | 3 |
+| `free-allowance` | 3 |
 | `free-forever-with-feature-gate` | 3 |
+| `none published` | 3 |
+| `one-time credit` | 3 |
 | `plan-credit` | 3 |
+| `signup-credit` | 3 |
+| `time-boxed-trial` | 3 |
 | `capped-free` | 2 |
-| `free-allowance` | 2 |
 | `free-plan` | 2 |
 | `monthly-allowance` | 2 |
+| `one-time grant` | 2 |
+| `one-time-trial` | 2 |
+| `self-hosted-software` | 2 |
 | `trial-only` | 2 |
+| `campaign-credit` | 1 |
+| `credit offer unverified; free shape c...` | 1 |
+| `credit-on-card` | 1 |
 | `credit-pool` | 1 |
 | `dead` | 1 |
+| `evaluation-only Hobby region, unbille...` | 1 |
+| `expiring trial credit` | 1 |
+| `expiring-credit` | 1 |
 | `fair-use-hosted` | 1 |
 | `feature-gated` | 1 |
 | `free container` | 1 |
 | `free service` | 1 |
 | `free-forever-with-unpublished-quota` | 1 |
 | `free-instance-hours` | 1 |
+| `free-plan-with-usage-billing` | 1 |
 | `free-preview` | 1 |
 | `hours` | 1 |
+| `included-disk` | 1 |
+| `included-usage` | 1 |
+| `local-software-only` | 1 |
+| `manually-approved-time-boxed-trial` | 1 |
 | `monthly-grant` | 1 |
 | `monthly-resource-allowance` | 1 |
 | `monthly-spending-discount` | 1 |
 | `monthly-usage-credit` | 1 |
 | `monthly-vcpu-minute` | 1 |
+| `none for hosted sandbox` | 1 |
+| `none published for Sherlock; separate...` | 1 |
+| `none, with a trial period of unstated...` | 1 |
+| `none-published-for-sandboxes` | 1 |
+| `none-with-card-credit` | 1 |
+| `none; retired one-shot free test` | 1 |
 | `one-free-instance` | 1 |
-| `one-time grant` | 1 |
-| `one-time-trial` | 1 |
+| `one-hour anonymous trial per device` | 1 |
+| `one-time credit grant` | 1 |
+| `one-time credit on a free plan` | 1 |
+| `one-time credit plus an anonymous fiv...` | 1 |
+| `one-time grant on an anonymous key` | 1 |
+| `one-time trial` | 1 |
+| `one-time trial on request` | 1 |
+| `paid-lease` | 1 |
+| `permanent sandbox` | 1 |
 | `prepaid-credit` | 1 |
-| `recurring-allowance` | 1 |
+| `recurring monthly allowance` | 1 |
+| `recurring monthly credit` | 1 |
+| `recurring-minutes plus one-time-minutes` | 1 |
 | `renewable` | 1 |
 | `renewable-trial` | 1 |
+| `signup-credit-with-matched-topup` | 1 |
+| `starting-credit` | 1 |
 | `static-only` | 1 |
 | `top-up-match` | 1 |
 | `trial-credit` | 1 |
 | `trial-hours` | 1 |
-| **all** | 1411 |
+| `unlimited duration, metered by tool c...` | 1 |
+| `unmetered-free-experimental` | 1 |
+| `unverified` | 1 |
+| **all** | 1510 |
 <!-- generated:end -->
 
 Twelve rows out of 405 carry a credit that renews. That is 3.0 per cent of the
@@ -207,13 +247,13 @@ published. The verdict says the offer ends; the kind says how.
 | --- | --- |
 | `dead` | 84 |
 | `fails-egress` | 1 |
-| `fails-identity` | 151 |
+| `fails-identity` | 154 |
 | `fails-quota` | 23 |
-| `paid-only` | 520 |
-| `qualifies` | 51 |
-| `qualifies-with-caveat` | 448 |
-| `trial-only` | 133 |
-| **all** | 1411 |
+| `paid-only` | 556 |
+| `qualifies` | 52 |
+| `qualifies-with-caveat` | 493 |
+| `trial-only` | 147 |
+| **all** | 1510 |
 <!-- generated:end -->
 
 ⚠ Four hundred and forty-eight `qualifies-with-caveat` is not a finding, it is the

@@ -5,8 +5,8 @@
   "url": "https://vers.sh/pricing",
   "category": "cloud VM",
   "free_tier": {
-    "stated": "A single metered rate of USD 0.04 per vCPU-hour, billed per second, with memory included and no tiers. Paused VMs, stopped VMs, commits, snapshots and branches do not accrue compute. No monthly minimum and no per-fork fee. 'New accounts get credits to prototype and run small experiments before a card is required' (amount not stated).",
-    "unit": "hours",
+    "stated": "The pricing page states USD 0.04 per vCPU-hour plus USD 0.01 per GiB-hour of memory and USD 0.09 per GB of network traffic in and out, metered per MB. New organizations get USD 5 in usage credits and USD 50 more when they add a card. From December 1, 2026 disks and commits cost USD 0.10 per GiB-month.",
+    "unit": "credits",
     "metered_on": "wall-clock",
     "source_url": "https://vers.sh/pricing",
     "read_on": "2026-10-22",
@@ -25,10 +25,10 @@
     "notes": "a machine record: what is lost is the running process, not a stored object"
   },
   "egress": {
-    "terms": "not published on the page read: no egress term was found, so nothing is asserted",
-    "metered": false,
+    "terms": "All network traffic in and out of VMs, in both directions, is metered per MB and billed at USD 0.09 per GB; there is no free allowance.",
+    "metered": true,
     "free_allowance": null,
-    "price_per_tb": null,
+    "price_per_tb": "USD 90 per TB",
     "source_url": "https://vers.sh/pricing"
   },
   "interface": [
@@ -41,10 +41,10 @@
   "limits": [],
   "limits_note": "No session cap, no idle reap and no monthly minimum are published; the first thing that actually stops a fleet is the monthly card charge for whatever ran, since paused VMs accrue nothing.",
   "binding": "none",
-  "binding_note": "No session cap, no idle reap and no monthly minimum are published; the first thing that actually stops a fleet is the monthly card charge for whatever ran, since paused VMs accrue nothing.",
+  "binding_note": "No monthly minimums, tier floors or annual commits are published. Vers is prepaid: usage is deducted hourly and new computers cannot start at a zero balance.",
   "identity_cost": {
-    "kind": "email",
-    "detail": "no card to start: the pricing page states 'New accounts get credits to prototype and run small experiments before a card is required', so the first lane needs no payment method and no hold exists. The credit amount is not stated, and which identifier the account is created with is not stated in the evidence",
+    "kind": "card",
+    "detail": "New organizations receive USD 5 in usage credits without a card and USD 50 more when they add a card. The page does not state which identifier opens the account; prepaid credit is bought with a card and running computers are paused when the balance falls USD 5 below zero.",
     "country": null
   },
   "reliability_note": "no reliability event observed",
@@ -85,11 +85,88 @@
       "proved": "the provider documents a standalone vers CLI binary against an HTTPS control plane",
       "capture": "sha256:3dbd07e2e943584653e10836777eca4a993d31927ffc8cf88182474f07c2c568",
       "quote": "The standalone `vers` binary talks directly to the HTTPS control plane."
+    },
+    {
+      "url": "https://vers.sh/pricing",
+      "date": "2026-11-24",
+      "proved": "memory, network-traffic, storage and per-GB rates are stated on the pricing page",
+      "capture": "sha256:6b25419d1c54fa3ff2d24cb8d1e020d087b5c7454b365e852e4080ec365cab8e",
+      "quote": "Plus $0.01 per GiB-hour of memory allocated to a running VM, billed per second, $0.09 per GB of network traffic in and out of your VMs, metered per MB, and from December 1, 2026 $0.10 per GiB-month for VM disks and commits."
+    },
+    {
+      "url": "https://vers.sh/pricing",
+      "date": "2026-11-24",
+      "proved": "the free allowance is a credit amount, not hours",
+      "capture": "sha256:6b25419d1c54fa3ff2d24cb8d1e020d087b5c7454b365e852e4080ec365cab8e",
+      "quote": "Yes. New organizations get $5 in usage credits, and $50 more when they add a card. Credits are applied automatically to compute, memory, and network traffic. When they run out, buy more with a card or turn on auto-reload."
+    },
+    {
+      "url": "https://vers.sh/pricing",
+      "date": "2026-11-24",
+      "proved": "network traffic in both directions is metered per MB at USD 0.09 per GB",
+      "capture": "sha256:6b25419d1c54fa3ff2d24cb8d1e020d087b5c7454b365e852e4080ec365cab8e",
+      "quote": "All data in and out of your VMs' network interfaces, in both directions, including traffic between your own VMs. It's metered per MB and billed at $0.09 per GB."
+    },
+    {
+      "url": "https://vers.sh/pricing",
+      "date": "2026-11-24",
+      "proved": "network traffic is metered per MB",
+      "capture": "sha256:6b25419d1c54fa3ff2d24cb8d1e020d087b5c7454b365e852e4080ec365cab8e",
+      "quote": "All data in and out of your VMs' network interfaces, in both directions, including traffic between your own VMs. It's metered per MB and billed at $0.09 per GB."
+    },
+    {
+      "url": "https://vers.sh/pricing",
+      "date": "2026-11-24",
+      "proved": "the page states USD 0.09 per GB of network traffic",
+      "capture": "sha256:6b25419d1c54fa3ff2d24cb8d1e020d087b5c7454b365e852e4080ec365cab8e",
+      "quote": "$0.09 per GB"
+    },
+    {
+      "url": "https://vers.sh/pricing",
+      "date": "2026-11-24",
+      "proved": "adding a card unlocks a further USD 50 of credit",
+      "capture": "sha256:6b25419d1c54fa3ff2d24cb8d1e020d087b5c7454b365e852e4080ec365cab8e",
+      "quote": "Yes. New organizations get $5 in usage credits, and $50 more when they add a card. Credits are applied automatically to compute, memory, and network traffic. When they run out, buy more with a card or turn on auto-reload."
+    },
+    {
+      "url": "https://vers.sh/pricing",
+      "date": "2026-11-24",
+      "proved": "the credit tiers depend on whether a card was added",
+      "capture": "sha256:6b25419d1c54fa3ff2d24cb8d1e020d087b5c7454b365e852e4080ec365cab8e",
+      "quote": "Yes. New organizations get $5 in usage credits, and $50 more when they add a card. Credits are applied automatically to compute, memory, and network traffic. When they run out, buy more with a card or turn on auto-reload."
+    },
+    {
+      "url": "https://vers.sh/pricing",
+      "date": "2026-11-24",
+      "proved": "no monthly minimums, tier floors or annual commits",
+      "capture": "sha256:6b25419d1c54fa3ff2d24cb8d1e020d087b5c7454b365e852e4080ec365cab8e",
+      "quote": "No monthly minimums, no tier floors, no annual commits. Pay for what you use."
+    },
+    {
+      "url": "https://vers.sh/pricing",
+      "date": "2026-11-24",
+      "proved": "storage is billed from December 1, 2026 at a stated per-GiB-month rate",
+      "capture": "sha256:6b25419d1c54fa3ff2d24cb8d1e020d087b5c7454b365e852e4080ec365cab8e",
+      "quote": "from December 1, 2026 $0.10 per GiB-month for VM disks and commits"
+    },
+    {
+      "url": "https://vers.sh/pricing",
+      "date": "2026-11-24",
+      "proved": "vCPU time is billed per second and paused VMs and commits do not accrue",
+      "capture": "sha256:6b25419d1c54fa3ff2d24cb8d1e020d087b5c7454b365e852e4080ec365cab8e",
+      "quote": "Charged per second of wall-clock time a VM is allocated CPU. Paused VMs and commits don't accrue vCPU time."
+    },
+    {
+      "url": "https://docs.vers.sh/cli-reference/overview.md",
+      "date": "2026-11-24",
+      "proved": "the locally installed CLI defaults to 2 vCPUs and 4096 MiB",
+      "capture": "sha256:4b335ddc33334a2225989cce8b186408f8f3555e5639b5c5d78a449b09654f5b",
+      "quote": "Defaults are 2 vCPUs, 4096 MiB memory, a 120-second wait, and the platform's managed default image."
     }
   ],
   "verdict": "trial-only",
-  "verified_at": "2026-11-04T05:24:47.110Z",
-  "notes": "The free credit amount is not published anywhere I read, so the free lane is recorded as unquantified rather than guessed. Storage for kept commits is billed and its rate is not on the pricing page. Isolation is a full VM rather than a microVM or container. For a month of 24/7 at the CLI default of 2 vCPU / 4 GiB the arithmetic is 2 x 730 x 0.04 = USD 58.40, which sits between bunny.net (USD 43.80 at 2 core / 4 GB) and inis.run (about USD 29.50 equivalent).",
+  "verified_at": "2026-11-24T14:51:50.059Z",
+  "notes": "The pricing page quantifies the starting credit as USD 5, plus USD 50 when a card is added. Storage is billed from December 1, 2026 at USD 0.10 per GiB-month for VM disks and commit snapshots. The CLI defaults to 2 vCPUs and 4096 MiB, so vCPU time alone at the published rate is USD 58.40 for 730 hours of 24/7 use.",
   "extras": {
     "wave2": {
       "provider_as_written": "Vers",
