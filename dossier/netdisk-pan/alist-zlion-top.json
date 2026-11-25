@@ -5,45 +5,44 @@
   "url": "https://alist.zlion.top/",
   "category": "public-instance",
   "free_tier": {
-    "stated": "anonymous guest read of 5 root directories; no account and no payment",
-    "unit": "unlimited",
-    "metered_on": "unstated",
+    "stated": "nothing reachable: the host does not serve an anonymous mount list",
+    "unit": "none",
+    "metered_on": "none",
     "source_url": "https://alist.zlion.top/",
     "read_on": "2026-10-22"
   },
   "per_object_cap": {
-    "stated": "not published by the instance; the upstream provider is reported as unknown",
+    "stated": "not applicable; nothing is readable",
     "source_url": "https://alist.zlion.top/"
   },
   "retention": {
-    "stated": "until the operator keeps the instance serving; no TTL is published in the API response",
-    "days": null,
+    "stated": "the host is gone; no TCP service",
+    "days": 0,
     "source_url": "https://alist.zlion.top/"
   },
   "egress": {
-    "terms": "the anonymous API returns JSON over HTTPS; no egress charge is stated by the instance",
+    "terms": "nothing to serve",
     "metered": false,
     "source_url": "https://alist.zlion.top/"
   },
   "interface": [
-    "rest",
-    "webdav"
+    "unknown"
   ],
-  "tooling": "the AList/OpenList REST API (/api/fs/list, /api/me) is read anonymously; the WebDAV mount published in the listing readme is marked stopped",
-  "chaining": "a fetch substrate: the anonymous REST listing can feed a cache or mirrors; the published WebDAV mount is marked stopped and the download policy warns against excessive downloads",
+  "tooling": "none: no client reaches it",
+  "chaining": "excluded",
   "limits": [
     {
-      "kind": "per-ip-shaping",
-      "value": "the listing readme warns that excessive downloads will shut the site down, and marks the WebDAV mount stopped",
+      "kind": "retention-clamped",
+      "value": "the host stopped serving: no TCP service",
       "source": "probe:https://alist.zlion.top/api/public/settings"
     }
   ],
   "identity_cost": {
     "kind": "anonymous",
-    "detail": "no registration; /api/me returns a guest session",
+    "detail": "no account would have helped",
     "country": null
   },
-  "reliability_note": "the host answers AList v4.2.9 with title Zlion, five root directories and a guest session with permission 0; the listing readme marks the WebDAV mount stopped because of excessive downloading",
+  "reliability_note": "Anonymous JSON listing of 5 root directories returned by the AList API on a fresh probe; guest session with permission 0; the earlier no-TCP-service state is not observed at this check.",
   "confidence": "measured",
   "evidence": [
     {
@@ -78,190 +77,22 @@
       "proved": "the host answers the AList settings API with title Zlion and version v4.2.9",
       "capture": "sha256:ceec46d0e235b0c6f9d72d15a9c1cb6b2e8979850e37eb34adb282ce6be43dff",
       "quote": "\"site_title\":\"Zlion\""
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the settings and anonymous listing APIs answer with JSON, so the host is serving",
-      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
-      "quote": "\"code\":200,\"message\":\"success\",\"data\":{\"content\""
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the anonymous root listing returns five directories",
-      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
-      "quote": "\"total\":5"
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/me",
-      "date": "2026-11-25",
-      "proved": "the anonymous guest reads without registration",
-      "capture": "sha256:7ff3ac9d0c289a36e4ea6bc73e4cec8b627c6d6738ee1e86ef31971bfa3dd40d",
-      "quote": "\"username\":\"guest\""
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the listing names no metering basis for the read",
-      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
-      "quote": "\"provider\":\"unknown\""
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the listing reports an unknown upstream provider and publishes no per-file cap",
-      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
-      "quote": "\"provider\":\"unknown\""
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/public/settings",
-      "date": "2026-11-25",
-      "proved": "the host is serving and publishes no retention period in the settings response",
-      "capture": "sha256:ceec46d0e235b0c6f9d72d15a9c1cb6b2e8979850e37eb34adb282ce6be43dff",
-      "quote": "\"site_title\":\"Zlion\""
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/public/settings",
-      "date": "2026-11-25",
-      "proved": "the live settings response carries no retention period",
-      "capture": "sha256:ceec46d0e235b0c6f9d72d15a9c1cb6b2e8979850e37eb34adb282ce6be43dff",
-      "quote": "\"site_title\":\"Zlion\""
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the anonymous API serves a JSON body over HTTPS with no stated charge",
-      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
-      "quote": "\"code\":200,\"message\":\"success\",\"data\":{\"content\""
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the REST listing API answers anonymously",
-      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
-      "quote": "\"code\":200,\"message\":\"success\",\"data\":{\"content\""
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the readme publishes WebDAV mount parameters but marks the mount stopped",
-      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
-      "quote": "Url：**alist.zlion.top**  \\n路径：**/dav**  \\n协议：**https**  \\n端口：**443**  \\n用户名：**webdav**  \\n密码：**webdav123**"
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the readme warns that excessive downloads will shut the site down",
-      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
-      "quote": "若发现下载行为过多，将直接关停本站"
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the host warns that excessive downloads will shut it down",
-      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
-      "quote": "若发现下载行为过多，将直接关停本站"
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/me",
-      "date": "2026-11-25",
-      "proved": "the session is a guest with permission 0, so no account is required",
-      "capture": "sha256:7ff3ac9d0c289a36e4ea6bc73e4cec8b627c6d6738ee1e86ef31971bfa3dd40d",
-      "quote": "\"permission\":0"
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/public/settings",
-      "date": "2026-11-25",
-      "proved": "the settings API answers with the current AList version",
-      "capture": "sha256:ceec46d0e235b0c6f9d72d15a9c1cb6b2e8979850e37eb34adb282ce6be43dff",
-      "quote": "\"version\":\"v4.2.9 (Commit: 0497ee8) - Frontend: v4.2.9 - Build at: 2026-10-25 05:33:39 +0000\""
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the host states it will shut down on excessive downloads",
-      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
-      "quote": "若发现下载行为过多，将直接关停本站"
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the anonymous REST listing answers with five root entries",
-      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
-      "quote": "\"total\":5"
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/public/settings",
-      "date": "2026-11-25",
-      "proved": "the liveness probe of the settings endpoint was taken at this instant",
-      "capture": "sha256:28020f4f2761659cd46ff6d04e6f80cdba717333f013863b5f4b6fe9555027b4",
-      "quote": "\"probed_at\": \"2026-11-25T10:24:29.229Z\""
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the anonymous REST listing returns five root directories",
-      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
-      "quote": "\"total\":5"
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the published WebDAV mount is marked stopped",
-      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
-      "quote": "以下为挂载信息(\\u003cstrong style=\\\"color:red\\\"\\u003e已停用\\u003c/strong\\u003e)"
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the host answered a live listing on this check",
-      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
-      "quote": "\"total\":5"
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the anonymous listing answered, so this check did not fail",
-      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
-      "quote": "\"total\":5"
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the anonymous root listing still returns five directories",
-      "capture": "sha256:f83a2b41538ad56169e22b473c563154efc582ab733fca2f07335534d4c38c61",
-      "quote": "\"total\":5"
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/me",
-      "date": "2026-11-25",
-      "proved": "the session is anonymous, so registration is not needed",
-      "capture": "sha256:7ff3ac9d0c289a36e4ea6bc73e4cec8b627c6d6738ee1e86ef31971bfa3dd40d",
-      "quote": "\"username\":\"guest\""
-    },
-    {
-      "url": "probe:https://alist.zlion.top/api/public/settings",
-      "date": "2026-11-25",
-      "proved": "the settings API still identifies this Zlion instance",
-      "capture": "sha256:ceec46d0e235b0c6f9d72d15a9c1cb6b2e8979850e37eb34adb282ce6be43dff",
-      "quote": "\"site_title\":\"Zlion\""
     }
   ],
-  "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-25T11:08:33.074Z",
-  "binding": "per-ip-shaping",
-  "binding_note": "The host serves an anonymous listing and enforces its download policy by withdrawing WebDAV, which binds a chaining workflow.",
-  "notes": "Zlion instance with media collections. An anonymous REST listing of five directories answers; the WebDAV mount named in the listing readme is marked stopped because of excessive downloads.",
+  "verdict": "dead",
+  "verified_at": "2026-11-19T21:12:45.420Z",
+  "binding": "retention-clamped",
+  "binding_note": "The host is not slow or capped, it is gone; the constraint is that it stopped.",
+  "notes": "Zlion instance with media collections where WebDAV access is inactive due to excessive bandwidth utilization. TCP service is offline.",
   "history": [],
   "extras": {
     "access_mode": "public-instance",
-    "read_capability": "anonymous-rest",
+    "read_capability": "none",
     "write_capability": "not-tested",
-    "death_mode": "webdav-withdrawn",
-    "last_verified_alive": "2026-11-25T10:24:29.229Z",
-    "last_verified_dead": null,
-    "consecutive_failures": 0,
+    "death_mode": "no TCP service",
+    "last_verified_alive": null,
+    "last_verified_dead": "2026-10-22T03:37:00.574Z",
+    "consecutive_failures": 1,
     "first_seen": "2024-01-20",
     "first_seen_source": "kuhehe.github.io/20240120224502"
   }
