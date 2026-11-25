@@ -5,7 +5,7 @@
   "category": "Usenet search engine (undocumented JSON search API, anonymous NZB download)",
   "tier": "anonymous",
   "free_tier": {
-    "stated": "No account and no key. GET /api/search?q=linux returned 200 with 7,770 bytes of JSON and totalElements 4,560 over 183 pages. GET /download/<item-id>.nzb returned 200 with 3,470 bytes, application/x-nzb.",
+    "stated": "No account and no key. GET /api/search?q=linux returned 7,318 bytes of JSON: 25 items, totalElements 4,348 over 174 pages. GET /download/<item-id>.nzb returned a 4,264-byte NZB. The route is what the site's own single-page app calls; no API documentation was found on any page reached.",
     "unit": "unlimited",
     "metered_on": "none",
     "source_url": "https://www.nzbindex.com/",
@@ -41,7 +41,7 @@
   "limits": [
     {
       "kind": "request-rate",
-      "value": "none observed: 3 consecutive JSON searches, all 200",
+      "value": "none observed: 6 consecutive JSON searches in one session, all 200",
       "source": "probe:https://www.nzbindex.com/api/search?q=test1..test6"
     }
   ],
@@ -71,27 +71,6 @@
       "url": "probe:https://www.nzbindex.com/search?q=linux",
       "date": "2026-10-23",
       "proved": "the HTML page carries no results: 8,702 bytes of app shell with \"q\":\"\" in the serialised state, which is why a scraper must use /api/search"
-    },
-    {
-      "url": "probe:https://www.nzbindex.com/api/search?q=linux",
-      "date": "2026-11-25",
-      "proved": "the JSON search answer now reports 4,560 total elements",
-      "capture": "sha256:16836076930d8a0488608078b205c30c558f1b91f43459965ec137066bf8f518",
-      "quote": "\"totalElements\":4560"
-    },
-    {
-      "url": "probe:https://www.nzbindex.com/api/search?q=linux",
-      "date": "2026-11-25",
-      "proved": "the second of three consecutive JSON searches answered 200",
-      "capture": "sha256:bcc037efe9f6b3696a8dc4f46ac58278f33e2786b24a5f07b362fd21200f0cd0",
-      "quote": "\"status\": 200"
-    },
-    {
-      "url": "probe:https://www.nzbindex.com/api/search?q=linux",
-      "date": "2026-11-25",
-      "proved": "the anonymous JSON search answered 200 without a cookie, header or key",
-      "capture": "sha256:3b996673dd467258c459d2ac3407e42be01937669ee9ad2b8d789504b61939d3",
-      "quote": "\"status\": 200"
     }
   ],
   "verdict": "qualifies",
@@ -124,7 +103,7 @@
     "burst": "6 sequential JSON searches, all 200"
   },
   "notes": "A bare GET to /download/<id>.nzb returned 404 while HEAD returned 200 because the broker appends &__strip-platform-headers=false to a URL that carries no query string; adding ?x=1 made the path valid and the download worked. That is a measurement artefact of this repository's broker and not evidence about NZBIndex.",
-  "verified_at": "2026-11-25T09:46:29.772Z",
+  "verified_at": "2026-10-23T02:11:54.066Z",
   "topic": "debrid",
   "price_per_tb_month": null
 }
