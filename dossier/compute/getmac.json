@@ -1,0 +1,165 @@
+{
+  "topic": "compute",
+  "slug": "getmac",
+  "provider": "GetMac",
+  "url": "https://getmac.io/pricing",
+  "category": "hosted macOS VM / CI runner",
+  "tier": "Free plan",
+  "free_tier": {
+    "stated": "USD 0 a month with 100 compute minutes per month and up to 1 concurrent virtual machine",
+    "unit": "minutes",
+    "metered_on": "wall-clock",
+    "source_url": "https://getmac.io/pricing",
+    "read_on": "2026-11-25",
+    "notes": "Compute minutes are consumed with a machine-type multiplier: the Mac M4 Base is 1x, the M4 Pro is 2x and the M4 Max is 4x; only the 4-core 8 GB Base is generally available. The Developer plan is USD 11.99 a month with 1000 compute minutes."
+  },
+  "per_object_cap": {
+    "stated": "not an object-storage offer; no per-file size ceiling is published on the pricing or instance pages",
+    "bytes": null,
+    "source_url": "https://getmac.io/pricing"
+  },
+  "retention": {
+    "stated": "not stated on the pricing page; CI runners are provisioned per workflow job and deleted when the job completes, while dashboard VMs persist until stopped",
+    "days": null,
+    "source_url": "https://getmac.io/docs"
+  },
+  "egress": {
+    "terms": "not published: the pricing page states no egress allowance or transfer price; the paid Team plan rate is quoted at USD 0.011 per compute minute against GitHub Hosted at USD 0.062 per minute",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://getmac.io/pricing"
+  },
+  "interface": [
+    "ssh",
+    "rest",
+    "browser"
+  ],
+  "interface_detail": "a REST API for VM management, an integrated remote terminal and remote display in the dashboard, and SSH access to a virtual machine; GitHub Actions and GitLab CI jobs use a custom runner label",
+  "tooling": "a GitHub account to install the GetMac GitHub App, or the GetMac dashboard; Golang and Python SDKs are published; a GitHub Actions workflow sets runs-on: getmac",
+  "chaining": "the free 100 compute minutes a month cover short Xcode and Fastlane CI jobs through a drop-in GitHub Actions runner label, with longer or parallel jobs requiring a paid plan.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "100 compute minutes a month on Free; up to 1 concurrent virtual machine; extra usage needs a paid plan",
+      "source": "https://getmac.io/pricing"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "machine type multiplier: Mac M4 Base 4 cores/8 GB at 1x, M4 Pro 2x and M4 Max 4x, the latter two marked Coming Soon",
+      "source": "https://getmac.io/pricing"
+    },
+    {
+      "kind": "write-gated",
+      "value": "a GetMac account is required; sign-in offers Google, GitHub or an email address",
+      "source": "https://cloud.getmac.io"
+    }
+  ],
+  "limits_note": "The pricing page does not state a job wall-clock cap, an idle reap rule or an egress quota.",
+  "binding": "volume-quota",
+  "binding_note": "The 100 compute minutes a month and single concurrent VM limit what a Free account can run before it must move to a paid plan.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "the marketing page says no credit card is required; the dashboard sign-in page offers Continue with Google, Continue with GitHub or an Email field with Continue with email. No phone or ID document is requested on that page.",
+    "country": null
+  },
+  "reliability_note": "The vendor states a 99.9% uptime SLA on owned Apple Silicon hardware in a TIER III data center; runner jobs use fresh isolated macOS environments. The pricing page does not state a job timeout or idle reap rule.",
+  "confidence": "documented",
+  "confidence_note": "the pricing page, landing page, documentation index and dashboard sign-in page were read on 2026-11-25; the quoted lines establish the free allowance, concurrent VM cap, no-card statement and signup gate. The sign-in page's public form was read directly; the rung stays documented because no live VM was measured.",
+  "evidence": [
+    {
+      "url": "https://getmac.io/pricing",
+      "date": "2026-11-25",
+      "proved": "the Free plan is USD 0 a month and includes 100 compute minutes a month",
+      "capture": "sha256:8c4ed07f2363156dace2b1aec88d2e0b9501e79a1b57eb23e47099de510ea99f",
+      "quote": "Includes 100 compute minutes per month"
+    },
+    {
+      "url": "https://getmac.io/pricing",
+      "date": "2026-11-25",
+      "proved": "the Free plan allows up to 1 concurrent virtual machine",
+      "capture": "sha256:8c4ed07f2363156dace2b1aec88d2e0b9501e79a1b57eb23e47099de510ea99f",
+      "quote": "Up to 1 concurrent virtual machine"
+    },
+    {
+      "url": "https://getmac.io/pricing",
+      "date": "2026-11-25",
+      "proved": "the smallest instance is a 4-core 8 GB Mac M4 at a 1x multiplier, with larger multipliers marked Coming Soon",
+      "capture": "sha256:8c4ed07f2363156dace2b1aec88d2e0b9501e79a1b57eb23e47099de510ea99f",
+      "quote": "4 Cores - 8GB • Perfect for development and testing"
+    },
+    {
+      "url": "https://getmac.io/pricing",
+      "date": "2026-11-25",
+      "proved": "the paid Team rate used in the savings calculator is USD 0.011 per compute minute",
+      "capture": "sha256:8c4ed07f2363156dace2b1aec88d2e0b9501e79a1b57eb23e47099de510ea99f",
+      "quote": "Estimates based on new GitHub standard pricing ($0.062/min) vs GetMac Team plan pricing ($0.011/min)."
+    },
+    {
+      "url": "https://getmac.io/",
+      "date": "2026-11-25",
+      "proved": "the landing page says no credit card is required",
+      "capture": "sha256:552bd8cd19eb787f8360346bb8ccc94df31c8c66049c2b2d43237bedeec61912",
+      "quote": "No credit card required • 5-minute setup"
+    },
+    {
+      "url": "https://getmac.io/",
+      "date": "2026-11-25",
+      "proved": "a REST API and SSH access are offered for the VMs",
+      "capture": "sha256:552bd8cd19eb787f8360346bb8ccc94df31c8c66049c2b2d43237bedeec61912",
+      "quote": "Automate with our REST API"
+    },
+    {
+      "url": "https://getmac.io/",
+      "date": "2026-11-25",
+      "proved": "the hardware is owned Apple Silicon in a TIER III data center with a 99.9% uptime SLA",
+      "capture": "sha256:552bd8cd19eb787f8360346bb8ccc94df31c8c66049c2b2d43237bedeec61912",
+      "quote": "99.9% uptime SLA, because every build matters"
+    },
+    {
+      "url": "https://cloud.getmac.io",
+      "date": "2026-11-25",
+      "proved": "the dashboard sign-in offers Google, GitHub or email, with no card field",
+      "capture": "sha256:d90e7eff97f8040df80a8fe2adceb1dc8971dbf39dc0023d5b861939f8c37076",
+      "quote": "Choose a sign-in method to continue to the dashboard"
+    },
+    {
+      "url": "https://cloud.getmac.io",
+      "date": "2026-11-25",
+      "proved": "an email sign-in option exists",
+      "capture": "sha256:d90e7eff97f8040df80a8fe2adceb1dc8971dbf39dc0023d5b861939f8c37076",
+      "quote": "Continue with email"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-25T02:12:34.836Z",
+  "price_per_tb_month": null,
+  "notes": "The operator's provider list prices GetMac at USD 0.66/h billed per minute, which corresponds to the paid Team plan at USD 0.011 per compute minute (derived: 0.011 x 60 = USD 0.66 per hour); the Free plan is 100 compute minutes a month. The free allowance is a small monthly quota, hence the caveat.",
+  "extras": {
+    "shape": {
+      "vcpu": 4,
+      "ram_gib": 8,
+      "disk_gib": null,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "Mac M4 Base at a 1x compute-minute multiplier; M4 Pro and M4 Max are marked Coming Soon"
+    },
+    "billing_model": "monthly compute-minute allowance, paid plans add minutes",
+    "free_tier_kind": "recurring-allowance",
+    "price_arithmetic": "Free: 100 compute minutes a month; Team: USD 33.99 a month for 3000 minutes (USD 0.01133 per minute)",
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "no job wall-clock cap or idle reap rule published on the pricing page"
+    },
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": null,
+      "ports": "not published",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    }
+  }
+}
