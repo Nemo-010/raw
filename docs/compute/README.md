@@ -61,7 +61,7 @@ physical core is 2 vCPU, so the 2 vCPU / 4 GiB shape is one core plus four
 GiB: USD 0.2380 an hour. The USD 200 and USD 300 grants are one-time.
 
 <!-- generated:start topic=compute kind=totals fields=records,providers,recurring-credit,dead,qualifies labels=records,providers,recurring-credit,dead,qualifies -->
-records 1411; providers 1336; recurring-credit 10; dead 84; qualifies 499
+records 1510; providers 1434; recurring-credit 11; dead 84; qualifies 545
 <!-- generated:end -->
 
 **The binding constraint is time.** Across the sandbox class, what stops a
@@ -254,11 +254,11 @@ from the records.
 | confidence | Records |
 | --- | --- |
 | `measured` | 4 |
-| `documented` | 1207 |
-| `reported` | 179 |
+| `documented` | 1310 |
+| `reported` | 175 |
 | `inferred` | 6 |
 | `unverified` | 15 |
-| **all** | 1411 |
+| **all** | 1510 |
 <!-- generated:end -->
 
 ## Superseded claims

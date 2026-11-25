@@ -24,9 +24,9 @@
     "notes": "Disk durability across instance stops and deletions is not documented."
   },
   "egress": {
-    "terms": "not published",
-    "metered": false,
-    "free_allowance": null,
+    "terms": "Egress from Containers is priced at $0.025 a GB past 1 TB a month in North America and Europe, $0.05 a GB past 500 GB in Oceania, Korea and Taiwan, and $0.04 a GB past 500 GB elsewhere.",
+    "metered": true,
+    "free_allowance": "1 TB a month in North America and Europe; 500 GB a month elsewhere",
     "price_per_tb": null,
     "source_url": "https://developers.cloudflare.com/containers/platform/pricing/"
   },
@@ -56,7 +56,7 @@
   "limits_note": "Session cap, idle-reap and network policy are not documented.",
   "identity_cost": {
     "kind": "email",
-    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "detail": "unverified: dash.cloudflare.com/sign-up answered HTTP 403 to a direct probe on 2026-11-24 and to every broker pin, fetch and archive route; the signup fields could not be read",
     "country": null
   },
   "reliability_note": "no reliability event recorded in the source passes",
@@ -72,10 +72,59 @@
       "url": "https://developers.cloudflare.com/containers/platform/pricing/",
       "date": "2026-10-22",
       "proved": "'Containers are billed for every 10ms that they are actively running ... with included monthly usage as part of the $5 USD per month Workers Paid plan' and the Free row reads 'N/A / N/A', with '25 GiB-hours/month included', '375 vCPU-minutes/month' and '200 GB-hours/month' on Workers Paid, quoted"
+    },
+    {
+      "url": "https://developers.cloudflare.com/containers/platform/pricing/",
+      "date": "2026-11-24",
+      "proved": "the egress price per GB and the included monthly allotment are published by region",
+      "capture": "sha256:582e31fb615fa622aa766613384e90fd7ce432e67d6276af5c69969962984134",
+      "quote": "| North America & Europe | $0.025 | 1 TB |\n| Oceania, Korea, Taiwan | $0.05 | 500 GB |\n| Everywhere Else | $0.04 | 500 GB |"
+    },
+    {
+      "url": "https://developers.cloudflare.com/containers/platform/pricing/",
+      "date": "2026-11-24",
+      "proved": "egress has a price past the included allotment",
+      "capture": "sha256:582e31fb615fa622aa766613384e90fd7ce432e67d6276af5c69969962984134",
+      "quote": "| North America & Europe | $0.025 | 1 TB |"
+    },
+    {
+      "url": "https://developers.cloudflare.com/containers/platform/pricing/",
+      "date": "2026-11-24",
+      "proved": "1 TB a month is included in North America and Europe",
+      "capture": "sha256:582e31fb615fa622aa766613384e90fd7ce432e67d6276af5c69969962984134",
+      "quote": "| North America & Europe | $0.025 | 1 TB |"
+    },
+    {
+      "url": "https://developers.cloudflare.com/containers/platform/pricing/",
+      "date": "2026-11-24",
+      "proved": "the page publishes a regional egress price table",
+      "capture": "sha256:582e31fb615fa622aa766613384e90fd7ce432e67d6276af5c69969962984134",
+      "quote": "Egress from Containers is priced at the following rates:"
+    },
+    {
+      "url": "https://developers.cloudflare.com/containers/platform/pricing/",
+      "date": "2026-11-24",
+      "proved": "the Free plan has no memory or CPU allowance",
+      "capture": "sha256:582e31fb615fa622aa766613384e90fd7ce432e67d6276af5c69969962984134",
+      "quote": "| **Free** | N/A | N/A |  |"
+    },
+    {
+      "url": "probe:dash.cloudflare.com/sign-up",
+      "date": "2026-11-24",
+      "proved": "the sign-up page answered 403 to a direct probe",
+      "capture": "sha256:de1f0d33a5674a306aa61441ebe212c7dcbe4ecdbfb6ec50caed599f106bbc9b",
+      "quote": "\"status\": 403"
+    },
+    {
+      "url": "probe:dash.cloudflare.com/sign-up",
+      "date": "2026-11-24",
+      "proved": "the sign-up page was walled, so its registration fields are unknown",
+      "capture": "sha256:de1f0d33a5674a306aa61441ebe212c7dcbe4ecdbfb6ec50caed599f106bbc9b",
+      "quote": "\"status\": 403"
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-10-22T04:46:38.000Z",
+  "verified_at": "2026-11-24T11:38:11.670Z",
   "price_per_tb_month": null,
   "notes": "",
   "extras": {

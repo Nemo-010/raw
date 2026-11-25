@@ -1,0 +1,185 @@
+{
+  "topic": "compute",
+  "slug": "voidrun-sandboxes",
+  "provider": "VoidRun",
+  "url": "https://void-run.com/pricing",
+  "category": "disposable cloud sandbox",
+  "tier": "Usage-first (Lane 1)",
+  "free_tier": {
+    "stated": "Up to ₹4,600.00 free credits, then pay only for consumed compute, memory, and storage. The FAQ states no card is needed to start: 'No. You can start with free credits and add payment later.'",
+    "unit": "credits",
+    "metered_on": "wall-clock",
+    "source_url": "https://void-run.com/pricing",
+    "read_on": "2026-11-24",
+    "notes": "A one-time credit allowance of up to INR 4,600.00, not a recurring monthly grant. The exchange rate stated on the page is '$1 = ₹92.00 (fallback)'. No expiry for the credits is stated on the pricing page."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a sandbox, not an object",
+    "bytes": null,
+    "source_url": "https://void-run.com/pricing"
+  },
+  "retention": {
+    "stated": "Files persist as long as the sandbox exists. When you delete a sandbox, all files are permanently removed. A sandbox that stays snapshotted past the retention window is deleted; the documented default is 7 days snapshotted (604800 s).",
+    "days": 7,
+    "source_url": "https://void-run.com/docs/core-concepts/lifecycle.md",
+    "notes": "Idle sandboxes are snapshotted after 60 seconds; auto-delete after being snapshotted defaults to 7 days. These are hosted-VoidRun defaults."
+  },
+  "egress": {
+    "terms": "No egress price or included traffic volume is published. Outbound internet access can be restricted at the MicroVM level with allowlists and blocklists, or disabled entirely, and each published sandbox port gets a stable public HTTPS URL served by the VoidRun gateway.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://void-run.com/docs/networking/internet-access.md"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "ssh"
+  ],
+  "interface_detail": "Create a sandbox using API or CLI; the SDKs & API page documents REST routes with X-API-Key authentication and a WebSocket PTY; SSH and VNC access are documented for sandboxes.",
+  "endpoint": "https://platform.void-run.com/api/sandboxes",
+  "tooling": "npm install @voidrun/sdk, pip install voidrun, npm install -g @voidrun/cli, or curl against the REST API with an X-API-Key header; an SSH client reaches sandboxes directly.",
+  "chaining": "A sandbox runs untrusted code and writes results out through the file download API before teardown, with external object storage used when data must outlive the 7-day snapshot retention window.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "auto-delete after snapshotted defaults to 7 days (604800 s), after which the sandbox and its snapshot are removed",
+      "source": "https://void-run.com/docs/core-concepts/lifecycle.md"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "up to ₹4,600.00 in free credits, then usage-metered compute at ₹0.0010304/second, memory at ₹0.0003312/GB second and storage at ₹0.000002208/GB second (beta: ₹0.000000/GB second)",
+      "source": "https://void-run.com/pricing"
+    }
+  ],
+  "limits_note": "Unlimited workspaces and team members are stated for Lane 1. Compute unit equivalence: ₹89.03/day or ₹2,670.80/month; memory GB equivalence: ₹28.62/day or ₹858.47/month; storage GB equivalence: ₹0.190771/day or ₹5.72/month. No free credit expiry is stated on the pricing page.",
+  "binding": "volume-quota",
+  "binding_note": "The INR 4,600.00 credit allowance is a one-time amount that is spent before any published meter begins charging, while the 7-day snapshot deletion only applies after a sandbox goes idle.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The sign-up page offers 'Continue with GitHub' or an email address field with first and last name optional; it asks for no phone number and no card. The quickstart requires a VoidRun API key from the dashboard to use the API, SDKs or CLI.",
+    "country": null
+  },
+  "reliability_note": "Snapshotted sandboxes are auto-deleted after 7 days by default and an open PTY connection does not count as activity; deletion is permanent and destroys files and snapshots.",
+  "confidence": "documented",
+  "confidence_note": "The credit amount, per-second meters and the no-card statement are quoted from the vendor's pricing page; the sign-up fields from the vendor's sign-up page; and the retention default from the vendor's lifecycle documentation, all read on 2026-11-24. The egress price is unverified because no page states one.",
+  "evidence": [
+    {
+      "url": "https://void-run.com/pricing",
+      "date": "2026-11-24",
+      "proved": "the usage-first lane includes up to INR 4,600.00 in free credits before metered usage",
+      "capture": "sha256:4d48ff10f119a30b41e93956bda67d964e8cbbd5f97738737a5f2dae54e08dd0",
+      "quote": "Up to ₹4,600.00 free credits, then pay only for consumed compute, memory, and storage."
+    },
+    {
+      "url": "https://void-run.com/pricing",
+      "date": "2026-11-24",
+      "proved": "no card is needed to start; payment is added only when higher limits are needed",
+      "capture": "sha256:4d48ff10f119a30b41e93956bda67d964e8cbbd5f97738737a5f2dae54e08dd0",
+      "quote": "No. You can start with free credits and add payment later."
+    },
+    {
+      "url": "https://void-run.com/pricing",
+      "date": "2026-11-24",
+      "proved": "compute is metered at INR 0.0010304 per second and memory at INR 0.0003312 per GB second",
+      "capture": "sha256:4d48ff10f119a30b41e93956bda67d964e8cbbd5f97738737a5f2dae54e08dd0",
+      "quote": "Compute meter ₹0.0010304 /second"
+    },
+    {
+      "url": "https://void-run.com/pricing",
+      "date": "2026-11-24",
+      "proved": "storage is metered at INR 0.000002208 per GB second, with a beta charge of INR 0.000000 per GB second",
+      "capture": "sha256:4d48ff10f119a30b41e93956bda67d964e8cbbd5f97738737a5f2dae54e08dd0",
+      "quote": "₹0.000002208/GB second"
+    },
+    {
+      "url": "https://dash.void-run.com/sign-up",
+      "date": "2026-11-24",
+      "proved": "the sign-up form asks for an email address, with GitHub SSO as the alternative and no card or phone field",
+      "capture": "sha256:5d3ffedb25d58ea707e7de2558efc9ba1561c7337cdc169362326413f9bd0975",
+      "quote": "Email address"
+    },
+    {
+      "url": "https://void-run.com/docs/core-concepts/lifecycle.md",
+      "date": "2026-11-24",
+      "proved": "auto-delete after snapshotted defaults to 7 days for hosted VoidRun",
+      "capture": "sha256:44d848f44722322ba99720c50cd1358d7225d99963aed8bcfa1729be1e8a02f0",
+      "quote": "Auto-delete after snapshotted | **7 days** (604800 s) | `AUTO_LIFECYCLE_DELETE_AFTER_SNAPSHOTTED_SEC` |"
+    },
+    {
+      "url": "https://void-run.com/docs/core-concepts/file-system.md",
+      "date": "2026-11-24",
+      "proved": "files are lost permanently when a sandbox is deleted",
+      "capture": "sha256:46bef30122f66f048d8ac43484a050611f1d948d53d61b88a91769a79d8dd7bb",
+      "quote": "When you delete a sandbox, all files are permanently removed."
+    },
+    {
+      "url": "https://void-run.com/docs/core-concepts/file-system.md",
+      "date": "2026-11-24",
+      "proved": "files can be read back out over the REST file download endpoint",
+      "capture": "sha256:46bef30122f66f048d8ac43484a050611f1d948d53d61b88a91769a79d8dd7bb",
+      "quote": "curl -X GET \"https://api.void-run.com/api/sandboxes/<sandbox-id>/fs/download?path=/app/output.json\""
+    },
+    {
+      "url": "https://void-run.com/",
+      "date": "2026-11-24",
+      "proved": "sandboxes are created through an API or a CLI",
+      "capture": "sha256:b4ad070f7f4d08e0e6cf7ac2f5b399e7a542ee27cd4f99cb9ee8abd8639bd39c",
+      "quote": "Create a sandbox using API or CLI"
+    },
+    {
+      "url": "https://void-run.com/docs/networking/public-urls.md",
+      "date": "2026-11-24",
+      "proved": "each published port gets a public HTTPS URL through the gateway",
+      "capture": "sha256:a0fffce029cc3df86e2171619f362b6a854dd5577d94d329d877ad13bfeb97c5",
+      "quote": "Every sandbox port you publish gets a stable public HTTPS URL served by the VoidRun gateway."
+    },
+    {
+      "url": "https://void-run.com/docs/networking/internet-access.md",
+      "date": "2026-11-24",
+      "proved": "outbound access can be restricted at the MicroVM level",
+      "capture": "sha256:3234b5f7d45f64d2e7092583cb04593877d913aedda9bcbe8597b6434b05169a",
+      "quote": "VoidRun provides granular network control at the MicroVM level, allowing you to restrict outbound connections"
+    },
+    {
+      "url": "https://void-run.com/docs/sdks/overview.md",
+      "date": "2026-11-24",
+      "proved": "REST endpoints authenticate with an X-API-Key header",
+      "capture": "sha256:4a1e60ec1beae66b8136c554be831e813896d4f42373e66bedaf10501fedc00a",
+      "quote": "Authenticated endpoints expect your API key on every request:"
+    },
+    {
+      "url": "https://void-run.com/docs/getting-started/quickstart.md",
+      "date": "2026-11-24",
+      "proved": "using the API needs an API key obtained from the dashboard",
+      "capture": "sha256:f5f7a1a523f7bf8c1045ff70d26ef887aa5d36244a671857b09eb6fcb6f6d0c1",
+      "quote": "A VoidRun API key (get one from the [VoidRun Dashboard](https://dash.void-run.com))"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-24T10:11:15.131Z",
+  "price_per_tb_month": null,
+  "notes": "Free credits are a one-time INR 4,600.00 allowance, not a monthly grant. The meters are per-second for CPU, per GB-second for memory and per GB-second for storage, with the storage meter marked beta at INR 0.000000. An enterprise lane is priced by annual contract and is a separate offer. Self-hosted deployments are documented but the offer priced here is the hosted platform.",
+  "extras": {
+    "billing_model": "one-time free credits then per-second usage billing",
+    "free_tier_kind": "one-time-credit",
+    "shape": {
+      "vcpu": null,
+      "ram_gib": null,
+      "disk_gib": null,
+      "note": "the pricing page meters compute units, GB-seconds of memory and GB-seconds of disk; the example workload quoted is 4 compute units, 8 GB memory and 120 GB disk"
+    },
+    "price_note": "compute INR 0.0010304/second, memory INR 0.0003312/GB second, storage INR 0.000002208/GB second; page states $1 = ₹92.00 (fallback)",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "public HTTPS URL per published port",
+      "egress_price": "unverified: no price or included volume published"
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": 60,
+      "note": "idle sandboxes are snapshotted after 60 seconds by default; running sandboxes have no maximum execution time"
+    }
+  }
+}

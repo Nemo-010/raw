@@ -1,0 +1,178 @@
+{
+  "topic": "compute",
+  "slug": "gmi-cloud-agentbox",
+  "provider": "GMI Cloud Agentbox",
+  "url": "https://docs.gmicloud.ai/agentbox-marketplace/overview",
+  "category": "agent sandbox platform",
+  "tier": "Host on GMI (per-second sandbox compute)",
+  "free_tier": {
+    "stated": "Registration of a template, launching a private copy from the Agent Marketplace and publishing a listing cost nothing; compute bills per second only while a sandbox is running, and without account balance or credit a sandbox stops a few seconds after launch. No recurring free sandbox allowance is published.",
+    "unit": "none",
+    "metered_on": "wall-clock",
+    "source_url": "https://docs.gmicloud.ai/agentbox-marketplace/overview",
+    "read_on": "2026-11-24",
+    "notes": "The vendor's overview states 'Registering costs nothing until you launch a sandbox' and the SDK limits page states that a sandbox without balance or credit stops within seconds. No free tier of running compute is published; a 24-hour default lifetime and 7-day paused retention are limits, not a free allowance. A promotional 12-hour free unlimited GLM 5.2 offer appears in a vendor social post and is not a standing tier."
+  },
+  "per_object_cap": {
+    "stated": "about 500 MB per sandbox file upload; larger uploads return 413",
+    "bytes": null,
+    "source_url": "https://docs.gmicloud.ai/agentbox-sdk/errors-and-limits",
+    "notes": "The cap is on a single upload to a sandbox, not a stored-object quota; command stdout and stderr each return at most 1 MiB."
+  },
+  "retention": {
+    "stated": "a running sandbox has a default lifetime of 24 hours if timeout_seconds is not set; a paused sandbox is kept for up to 7 days and then deleted with its disk",
+    "days": 7,
+    "source_url": "https://docs.gmicloud.ai/agentbox-sdk/errors-and-limits",
+    "notes": "The 7 days apply to paused sandboxes; a running sandbox's default is 24 hours and both can be changed with set_timeout or resume."
+  },
+  "egress": {
+    "terms": "sandboxes use a shared data center outbound IP; some sites block cloud IPs, and GMI offers an allowlist or a dedicated egress IP on contact. No included outbound byte allowance is published.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://docs.gmicloud.ai/agentbox-sdk/errors-and-limits"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "browser"
+  ],
+  "interface_detail": "Python and Go SDKs and a REST control plane at https://api.gmi-serving.com/v1/agents; sandboxes were launched through POST /v1/containers and expose their own endpoint. The Agent Marketplace is used through the browser console, with interactive shell over a WebSocket data-plane host.",
+  "endpoint": "https://api.gmi-serving.com/v1/agents",
+  "tooling": "gmi-agentbox-sdk Python package and github.com/GMISWE/agentbox-sdk-go Go module; a GMI_AGENTBOX_API_KEY created in the Compute panel's API Keys page is required. Docker is not available inside a sandbox.",
+  "chaining": "A sandbox runs a container image that binds an internal port and can call GMI models through one API key and one bill; model tokens bill through MaaS and sandbox compute bills per second, so a long-running worker needs its state checkpointed outside the sandbox to survive the 24-hour default lifetime or the 7-day paused expiry.",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "an API key and a funded account are required: a sandbox without balance or credit stops a few seconds after launch; template registration and marketplace listing need a console account",
+      "source": "https://docs.gmicloud.ai/agentbox-sdk/errors-and-limits"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "24-hour default sandbox lifetime; paused sandboxes deleted after up to 7 days with their disk",
+      "source": "https://docs.gmicloud.ai/agentbox-sdk/errors-and-limits"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "about 500 MB per upload; larger returns 413; stdout and stderr each return at most 1 MiB",
+      "source": "https://docs.gmicloud.ai/agentbox-sdk/errors-and-limits"
+    },
+    {
+      "kind": "request-rate",
+      "value": "429 on too many requests; a synchronous execute waits at most 25 seconds and each HTTP request times out after 30 seconds by default",
+      "source": "https://docs.gmicloud.ai/agentbox-sdk/errors-and-limits"
+    }
+  ],
+  "limits_note": "One shell connection at a time per sandbox; a build artifact or a container image must be in a registry GMI can pull from. Hosted agents use a Container tier of 2 vCPU, 4 GB RAM, 10 GiB ephemeral and 30 GiB data storage, billed per second; the vendor blog gives a worked planning figure of about USD 0.06 per container-hour.",
+  "binding": "write-gated",
+  "binding_note": "The funded-account gate binds first: template registration is free but a sandbox stops within seconds unless the organization has credit, before any lifetime or upload cap is reached.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "A GMI Cloud Console account, created with email and password or Google, GitHub or Hugging Face sign-in, and a GMI_AGENTBOX_API_KEY created in the Compute panel's Access > API Keys page are needed; a sandbox additionally needs balance or credit. No phone or identity document is stated on the pages read.",
+    "country": null
+  },
+  "reliability_note": "A sandbox with no credit stops within seconds of launch; the shared data center egress IP is blocked by some sites; a paused sandbox is deleted with its disk after up to 7 days and a running one has a 24-hour default lifetime; 429 rate-limit and 5xx server errors are returned without SDK retries.",
+  "confidence": "documented",
+  "confidence_note": "The billing shape, account gate, sandbox and paused lifetimes, upload cap, egress address, console signup fields and API base were read from first-party vendor pages on 2026-11-24; the per-container-hour planning figure is from a vendor blog's worked example, not a published rate card.",
+  "evidence": [
+    {
+      "url": "https://docs.gmicloud.ai/agentbox-marketplace/overview",
+      "date": "2026-11-24",
+      "proved": "template registration costs nothing until a sandbox is launched, and compute bills per second while running",
+      "capture": "sha256:e0d4fa3e468d2a1f7fa9a5919467bbf766f7939b6f2d017d168b5eabbbdcd217",
+      "quote": "Registering costs nothing until you launch a sandbox."
+    },
+    {
+      "url": "https://docs.gmicloud.ai/agentbox-marketplace/overview",
+      "date": "2026-11-24",
+      "proved": "compute is billed per second while a sandbox runs and the hourly rate is shown at launch",
+      "capture": "sha256:e0d4fa3e468d2a1f7fa9a5919467bbf766f7939b6f2d017d168b5eabbbdcd217",
+      "quote": "Compute | Per second while a sandbox is running, once you launch one. The hourly rate is shown in the **Live Cost Estimate** when you launch."
+    },
+    {
+      "url": "https://docs.gmicloud.ai/agentbox-sdk/errors-and-limits",
+      "date": "2026-11-24",
+      "proved": "a sandbox without balance or credit stops seconds after launch, so no free running compute exists",
+      "capture": "sha256:0e4ae80db86c5b2272fd489ea8afc7313dcfba5e00792c0267dc4a7dd2fc772e",
+      "quote": "Account balance | Without balance or credit, a sandbox stops a few seconds after launch | Top up or redeem credit"
+    },
+    {
+      "url": "https://docs.gmicloud.ai/agentbox-sdk/errors-and-limits",
+      "date": "2026-11-24",
+      "proved": "the default sandbox lifetime is 24 hours",
+      "capture": "sha256:0e4ae80db86c5b2272fd489ea8afc7313dcfba5e00792c0267dc4a7dd2fc772e",
+      "quote": "Default lifetime | 24 hours if `timeout_seconds` is not set | Set `timeout_seconds` in tests; adjust with `set_timeout`"
+    },
+    {
+      "url": "https://docs.gmicloud.ai/agentbox-sdk/errors-and-limits",
+      "date": "2026-11-24",
+      "proved": "paused sandboxes are deleted with their disk after up to 7 days",
+      "capture": "sha256:0e4ae80db86c5b2272fd489ea8afc7313dcfba5e00792c0267dc4a7dd2fc772e",
+      "quote": "Paused sandboxes | Kept for up to 7 days, then deleted with their disk | Resume before `paused_expire_at`"
+    },
+    {
+      "url": "https://docs.gmicloud.ai/agentbox-sdk/errors-and-limits",
+      "date": "2026-11-24",
+      "proved": "outbound traffic uses a shared data center IP and GMI offers an allowlist or dedicated egress IP",
+      "capture": "sha256:0e4ae80db86c5b2272fd489ea8afc7313dcfba5e00792c0267dc4a7dd2fc772e",
+      "quote": "Outbound IP | Shared data center egress address; some sites block cloud IPs | Contact GMI for an allowlist or a dedicated egress IP"
+    },
+    {
+      "url": "https://docs.gmicloud.ai/agentbox-sdk/errors-and-limits",
+      "date": "2026-11-24",
+      "proved": "uploads are capped at about 500 MB and larger ones return 413",
+      "capture": "sha256:0e4ae80db86c5b2272fd489ea8afc7313dcfba5e00792c0267dc4a7dd2fc772e",
+      "quote": "Upload size | About 500 MB per upload; larger returns 413 | Split the file, or download it from inside the sandbox"
+    },
+    {
+      "url": "https://docs.gmicloud.ai/agentbox-sdk/quickstart",
+      "date": "2026-11-24",
+      "proved": "the SDK API root is https://api.gmi-serving.com/v1/agents and a console-created key is required",
+      "capture": "sha256:b7666fb992e39b6f39c5e81e497349f8a6e2b4d135452d46da215ab826f8cec1",
+      "quote": "Defaults to `https://api.gmi-serving.com/v1/agents`."
+    },
+    {
+      "url": "https://www.gmicloud.ai/en/blog/document-processing-agents-gemini-3-8-flash-isolated-runtime",
+      "date": "2026-11-24",
+      "proved": "hosted agents use a 2 vCPU, 4 GB RAM container tier with per-second billing",
+      "capture": "sha256:cc7b6bd44c5635f6deb592cf72fee8a6412bbbdf204e2aaf2fc96a4af35ea864",
+      "quote": "Hosted agents run on the Container compute tier, \"2 vCPU · 4 GB RAM · Ephemeral Storage 10 GiB · Data Storage 30 GiB,\" with compute billed per second"
+    },
+    {
+      "url": "https://www.gmicloud.ai/en/blog/document-processing-agents-gemini-3-8-flash-isolated-runtime",
+      "date": "2026-11-24",
+      "proved": "the vendor's worked planning figure is about USD 0.06 per container-hour from USD 432 a month for 10 agents",
+      "capture": "sha256:cc7b6bd44c5635f6deb592cf72fee8a6412bbbdf204e2aaf2fc96a4af35ea864",
+      "quote": "the Agentbox page prices compute through a worked comparison: $432 a month for 10 agents at 2 vCPU and 4 GiB running 730 hours, or about $0.06 per container-hour."
+    },
+    {
+      "url": "https://console.gmicloud.ai/auth/sign-up",
+      "date": "2026-11-24",
+      "proved": "the console account gate asks for email and password and offers social sign-in, with no card on the form",
+      "capture": "sha256:452ec477f4c30df2d33f762c41e1284d0e909f3efd07a90176ecd7cea7fd1c8e",
+      "quote": "Enter email to access your account and enjoy our services."
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-24T10:11:14.784Z",
+  "price_per_tb_month": null,
+  "notes": "Template registration and marketplace listing are free, but running a sandbox needs account credit and bills per second; there is no standing free compute tier. A vendor social post advertised 12 hours of free unlimited GLM 5.2 calls as a one-off promotion and is not a tier. The Connect-your-agent path is software the user hosts; the hosted Host-on-GMI lane is the offer priced here, and is not self-hosted.",
+  "self_hosted": false,
+  "extras": {
+    "agent": "u41",
+    "shape": {
+      "vcpu": 2,
+      "ram_gib": 4,
+      "disk_gib": null,
+      "note": "Container tier: 2 vCPU, 4 GB RAM, 10 GiB ephemeral storage, 30 GiB data storage; larger instance types exist"
+    },
+    "billing_model": "per-second sandbox compute plus per-token model inference",
+    "planning_rate": "about $0.06 per container-hour from the $432 / 10 agents / 730 hours example",
+    "identity_gate": "email account plus API key plus funded balance or credit",
+    "network_out": {
+      "allow_outbound": true,
+      "dedicated_egress_ip": "on contact",
+      "shared_egress": true
+    }
+  }
+}

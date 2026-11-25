@@ -2,14 +2,14 @@
   "topic": "compute",
   "slug": "lyceum",
   "provider": "Lyceum",
-  "url": "https://gpuperhour.com/providers/lyceum",
+  "url": "https://www.lyceum.technology/pricing",
   "category": "GPU cloud",
   "free_tier": {
-    "stated": "GPUs are billed per second with no subscription. USD per GPU hour, on demand / spot: NVIDIA H100 80 GB $4.69 / $2.39, NVIDIA A100 80 GB $2.29 / $1.19, NVIDIA L40S 48 GB $1.99 / not offered. The page lists no RTX 4090 or L4 and states no minimum bill. A third-party index lists the L40S in Europe with 12 vCPU, 128 GB RAM and 100 GB storage at the same USD 1.99 per GPU-hour, and an A100 PCIe 80 GB at USD 2.29 per GPU-hour on a 16 vCPU, 120 GB host.",
+    "stated": "USD per GPU hour, billed per second with no subscription: NVIDIA H100 USD 5.39 on demand / USD 2.69 spot; NVIDIA A100 USD 2.59 / USD 1.29; NVIDIA L40S USD 2.19 / USD 1.09.",
     "unit": "hours",
     "metered_on": "wall-clock",
     "source_url": "https://www.lyceum.technology/pricing",
-    "read_on": "2026-11-03",
+    "read_on": "2026-11-24",
     "notes": "none"
   },
   "per_object_cap": {
@@ -34,16 +34,16 @@
   "interface": [
     "rest"
   ],
-  "interface_detail": "inferred from the tooling the provider documents; not probed",
-  "tooling": "the about block states 'On-demand and spot price book exposed through the API' and 'Email and webhook GPU availability r', the sentence truncated in the extract; no API documentation URL is given",
-  "chaining": "USD 1.99 an hour for a 48 GB L40S with European residency is the row to take when the data may not leave the EU: it is EUR-equivalent to Atlantic.net's USD 1.67 in the United States and the difference buys jurisdiction, not speed. The 100 GB disk is small for a training job, so checkpoints have to go elsewhere",
+  "interface_detail": "OpenAI-compatible REST endpoint at https://api.lyceum.technology/openai/v1.",
+  "tooling": "OpenAI-compatible endpoint at https://api.lyceum.technology/openai/v1; POST /chat/completions and GET /models; Lyceum API key (lk_...).",
+  "chaining": "An L40S in Europe is listed on the vendor page at USD 2.19 per GPU-hour on demand; the third-party index lists the L40S at USD 2.39 per GPU-hour with 12 vCPU and 128 GB RAM.",
   "limits": [],
   "limits_note": "No quota is stated on the page: price, VRAM, host specs, region and status are all it publishes. The page's own differentiator is per-second billing and a spot book exposed through an API, neither of which is a quota.",
   "binding": "none",
   "binding_note": "No quota is stated on the page: price, VRAM, host specs, region and status are all it publishes. The page's own differentiator is per-second billing and a spot book exposed through an API, neither of which is a quota.",
   "identity_cost": {
     "kind": "email",
-    "detail": "not read: sign-up requirements unverified",
+    "detail": "The dashboard sign-up page says 'Sign up or log in' and offers 'Continue with Google', 'Continue with GitHub', 'Continue with SSO' and 'Continue with email'. The page asks for no card, phone number or ID document.",
     "country": null
   },
   "reliability_note": "no reliability event observed; the 8x configuration of the same card was Sold Out while the 1x and 2x were Available on the read, which is the kind of movement the index records.",
@@ -89,24 +89,24 @@
     },
     {
       "url": "https://www.lyceum.technology/pricing",
-      "date": "2026-11-03",
-      "proved": "H100 80 GB is USD 4.69 per GPU hour on demand and USD 2.39 spot",
-      "capture": "sha256:b9913cc9d3ededa9a80fd834142db63e54804b07af3046ba97b466c0f00f8f22",
-      "quote": "NVIDIA H10080 GB$4.69$2.39"
+      "date": "2026-11-24",
+      "proved": "H100 80 GB is USD 5.39 per GPU hour on demand and USD 2.69 spot",
+      "capture": "sha256:d96ca0a94aff717ad52a20678ee0ea5730245e4ae177d95a290181fe24991e5e",
+      "quote": "NVIDIA H10080 GB$5.39$2.69"
     },
     {
       "url": "https://www.lyceum.technology/pricing",
-      "date": "2026-11-03",
-      "proved": "A100 80 GB is USD 2.29 per GPU hour on demand and USD 1.19 spot",
-      "capture": "sha256:b9913cc9d3ededa9a80fd834142db63e54804b07af3046ba97b466c0f00f8f22",
-      "quote": "NVIDIA A10080 GB$2.29$1.19"
+      "date": "2026-11-24",
+      "proved": "A100 80 GB is USD 2.59 per GPU hour on demand and USD 1.29 spot",
+      "capture": "sha256:d96ca0a94aff717ad52a20678ee0ea5730245e4ae177d95a290181fe24991e5e",
+      "quote": "NVIDIA A10080 GB$2.59$1.29"
     },
     {
       "url": "https://www.lyceum.technology/pricing",
-      "date": "2026-11-03",
-      "proved": "L40S 48 GB is USD 1.99 per GPU hour on demand and not offered on spot",
-      "capture": "sha256:b9913cc9d3ededa9a80fd834142db63e54804b07af3046ba97b466c0f00f8f22",
-      "quote": "NVIDIA L40S48 GB$1.99Not offered"
+      "date": "2026-11-24",
+      "proved": "L40S 48 GB is USD 2.19 per GPU hour on demand and USD 1.09 spot",
+      "capture": "sha256:d96ca0a94aff717ad52a20678ee0ea5730245e4ae177d95a290181fe24991e5e",
+      "quote": "NVIDIA L40S48 GB$2.19$1.09"
     },
     {
       "url": "https://gpuperhour.com/providers/lyceum",
@@ -121,11 +121,67 @@
       "proved": "the vendor pricing page confirms per-second billing and the listed GPU rates",
       "capture": "sha256:b9913cc9d3ededa9a80fd834142db63e54804b07af3046ba97b466c0f00f8f22",
       "quote": "USD per GPU hour, billed per second with no subscription"
+    },
+    {
+      "url": "https://www.lyceum.technology/pricing",
+      "date": "2026-11-24",
+      "proved": "GPU prices are per GPU-hour with per-second billing and no subscription",
+      "capture": "sha256:d96ca0a94aff717ad52a20678ee0ea5730245e4ae177d95a290181fe24991e5e",
+      "quote": "USD per GPU hour, billed per second with no subscription"
+    },
+    {
+      "url": "https://docs.lyceum.technology/docs/inference/serverless",
+      "date": "2026-11-24",
+      "proved": "the inference API has a documented base URL",
+      "capture": "sha256:51e7ed7fc2d72ae916bb840e48b883c24a228d01d9195bd1a0c9398185bd747c",
+      "quote": "The base URL for serverless inference is:"
+    },
+    {
+      "url": "https://docs.lyceum.technology/docs/inference/serverless",
+      "date": "2026-11-24",
+      "proved": "the API requires a Lyceum API key",
+      "capture": "sha256:51e7ed7fc2d72ae916bb840e48b883c24a228d01d9195bd1a0c9398185bd747c",
+      "quote": "Authenticate with your Lyceum API key (`lk_...`) as a Bearer token."
+    },
+    {
+      "url": "https://gpuperhour.com/providers/lyceum",
+      "date": "2026-11-24",
+      "proved": "the third-party index lists the L40S at USD 2.39 per GPU-hour with 12 vCPU, 128 GB RAM and 100 GB storage",
+      "capture": "sha256:36a30c4543a9ccede09db4b59efb6005adf9cdf99ff41ee9b92bdf8e948d286c",
+      "quote": "NVIDIA L40S48GB VRAM | 48GB | 12 vCPU128GB RAM100GB Storage | 🌍Europe | $2.39/GPU/hr | Available"
+    },
+    {
+      "url": "probe:https://api.lyceum.technology/openai/v1",
+      "date": "2026-11-24",
+      "proved": "the bare API endpoint answered HTTP 404",
+      "capture": "sha256:6bce8c7607f017f2e00f3717b79fa9531ea3ce2a2dd85155157f363da85c9cf6",
+      "quote": "\"status\": 404"
+    },
+    {
+      "url": "https://www.lyceum.technology/pricing",
+      "date": "2026-11-24",
+      "proved": "the pricing page lists reserved blocks and GPU rates but no egress volume terms",
+      "capture": "sha256:d96ca0a94aff717ad52a20678ee0ea5730245e4ae177d95a290181fe24991e5e",
+      "quote": "Reserved"
+    },
+    {
+      "url": "https://dashboard.lyceum.technology/",
+      "date": "2026-11-24",
+      "proved": "Lyceum account creation is gated by email or an OAuth/SSO account",
+      "capture": "sha256:2ab46d555e58fb955db09ee542e4afde3a79aacf9e643febec034cfb01ae6449",
+      "quote": "Continue with Google\n\nContinue with GitHub\n\nContinue with SSO\n\nContinue with email"
+    },
+    {
+      "url": "https://dashboard.lyceum.technology/",
+      "date": "2026-11-24",
+      "proved": "an email or an OAuth/SSO account is the sign-up gate, with no card, phone or ID on the page",
+      "capture": "sha256:2ab46d555e58fb955db09ee542e4afde3a79aacf9e643febec034cfb01ae6449",
+      "quote": "Continue with Google\n\nContinue with GitHub\n\nContinue with SSO\n\nContinue with email"
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-11-03T08:50:28.020Z",
-  "notes": "Found via gpuperhour. verification criteria: the vendor's own price book through its API, which the about block says exists but does not link.",
+  "verified_at": "2026-11-24T18:47:20.587Z",
+  "notes": "The GPU rates are on the vendor's pricing page; the bare inference endpoint answers 404 to GET without a key.",
   "extras": {
     "wave2": {
       "provider_as_written": "Lyceum",

@@ -5,7 +5,7 @@
   "url": "https://lambda.ai/pricing",
   "category": "GPU cloud",
   "free_tier": {
-    "stated": "no free tier: self-serve instances priced per GPU-hour: NVIDIA HGX H100 80 GB $3.99, NVIDIA HGX A100 80 GB $2.79, NVIDIA HGX A100 40 GB $1.99, NVIDIA HGX B200 180 GB $6.69 and NVIDIA Tesla V100 16 GB $0.79. The page lists no L40S, RTX 4090 or L4, names no spot tier, and states no billing granularity and no minimum bill. 1-Click Clusters of 16 or more GPUs run on terms of 2 weeks to 1 year",
+    "stated": "no free tier: self-serve instances priced per GPU-hour: NVIDIA HGX H100 80 GB $4.59, NVIDIA HGX A100 80 GB $3.19, NVIDIA HGX A100 40 GB $1.99, NVIDIA HGX B200 180 GB $7.69 and NVIDIA Tesla V100 16 GB $0.79. 1-Click Clusters of 16 to 2,000+ GPUs run on terms of 2 weeks to 1 year",
     "unit": "none",
     "metered_on": "none",
     "source_url": "https://lambda.ai/pricing",
@@ -24,14 +24,15 @@
     "notes": "Disk durability across instance stops and deletions is not documented."
   },
   "egress": {
-    "terms": "not published",
+    "terms": "no egress fee: the vendor states transparent pricing with no egress fees; the billing page states no charge for ingress or egress",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
     "source_url": "https://lambda.ai/pricing"
   },
   "interface": [
-    "unknown"
+    "rest",
+    "cli"
   ],
   "interface_detail": "Access interface not documented in published terms.",
   "tooling": "not stated",
@@ -39,7 +40,7 @@
   "limits": [
     {
       "kind": "request-rate",
-      "value": "$0.79 a GPU-hour for a V100 up to $6.69 for a B200 SXM6 on demand",
+      "value": "USD 0.79 a GPU-hour for a V100 up to USD 7.69 for a B200 on demand",
       "source": "https://lambda.ai/pricing"
     },
     {
@@ -55,8 +56,8 @@
   ],
   "limits_note": "Session cap, idle-reap and network policy are not documented. GPU only.",
   "identity_cost": {
-    "kind": "email",
-    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "kind": "card",
+    "detail": "An account is required: registration collects email address, first name, last name, phone number and company affiliation. Paid use needs a credit card or other payment method accepted by Lambda. The signup page was bot-walled; unverified whether a card is asked for at signup itself.",
     "country": null
   },
   "reliability_note": "no reliability event recorded in the source passes",
@@ -121,10 +122,66 @@
       "proved": "the pricing page lists the on-demand H100 rate",
       "capture": "sha256:730e1b0f3ef8247953a93a191c639dfdd4d917c7f1a3320756bd69564aaea1a9",
       "quote": "| NVIDIA HGX H100 | 80 GB | 208 | 1800 GiB | 22 TiB SSD | $3.99 |"
+    },
+    {
+      "url": "https://lambda.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the HGX H100 on-demand rate is USD 4.59 per GPU-hour",
+      "capture": "sha256:91f2f6e4dea1d1cbdd39ffb09a85758543785cfcb3d923a276cb83b185039751",
+      "quote": "| NVIDIA HGX H100 | 80 GB | 208 | 1800 GiB | 22 TiB SSD | $4.59 |"
+    },
+    {
+      "url": "https://lambda.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the B200 on-demand rate is USD 7.69 per GPU-hour",
+      "capture": "sha256:91f2f6e4dea1d1cbdd39ffb09a85758543785cfcb3d923a276cb83b185039751",
+      "quote": "| NVIDIA HGX B200 | 180 GB | 208 | 2900 GiB | 22 TiB SSD | $7.69 |"
+    },
+    {
+      "url": "https://lambda.com/instances",
+      "date": "2026-11-24",
+      "proved": "egress carries no separate fee",
+      "capture": "sha256:319b0948a0b11bb585d1b345467fd40ff1510ae9899037bf5f04546c652d1220",
+      "quote": "Transparent pricing with no egress fees."
+    },
+    {
+      "url": "https://lambda.com/instances",
+      "date": "2026-11-24",
+      "proved": "egress is not billed per gigabyte",
+      "capture": "sha256:319b0948a0b11bb585d1b345467fd40ff1510ae9899037bf5f04546c652d1220",
+      "quote": "Transparent pricing with no egress fees."
+    },
+    {
+      "url": "https://lambda.com/instances",
+      "date": "2026-11-24",
+      "proved": "a REST API and a CLI are documented",
+      "capture": "sha256:319b0948a0b11bb585d1b345467fd40ff1510ae9899037bf5f04546c652d1220",
+      "quote": "Automate with the [Lambda Cloud API](https://docs-api.lambda.ai/api/cloud) to create, stop, and restart instances from your CLI, CI/CD, or orchestration scripts."
+    },
+    {
+      "url": "https://lambda.com/legal/terms-of-service",
+      "date": "2026-11-24",
+      "proved": "a payment method is required for paid service",
+      "capture": "sha256:a61cedac2d1c2f110743b3e11895cd7bec5d628d70f81387682a2b16a6c90679",
+      "quote": "By providing a credit card or other payment method accepted by Lambda"
+    },
+    {
+      "url": "https://lambda.com/legal/privacy-policy",
+      "date": "2026-11-24",
+      "proved": "registration collects email, name, phone and company affiliation",
+      "capture": "sha256:fb1506c2f54132c428aca9b529ea80b726db6807315f800918dd06fe34435bce",
+      "quote": "- **Registration and Account Information.** When you register to use our GPU Cloud, to participate in a Lambda Forum, or any other type of Lambda account we will ask you to create an account and may collect your email address, first name, last name, phone number, and company affiliation."
+    },
+    {
+      "url": "https://lambda.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "1-Click Clusters start at 16 GPUs",
+      "capture": "sha256:91f2f6e4dea1d1cbdd39ffb09a85758543785cfcb3d923a276cb83b185039751",
+      "quote": "Production-ready clusters from 16 to 2,000+ NVIDIA B200 or H100 GPUs."
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-11-03T08:50:28.019Z",
+  "verified_at": "2026-11-24T13:20:55.129Z",
   "price_per_tb_month": null,
   "notes": "",
   "extras": {

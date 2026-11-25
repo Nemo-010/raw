@@ -1,0 +1,143 @@
+{
+  "topic": "compute",
+  "slug": "groundbox",
+  "provider": "Groundbox",
+  "url": "https://groundbox.io/",
+  "category": "self-hosted shared-filesystem and agent-memory server",
+  "tier": "MIT open-source server",
+  "free_tier": {
+    "stated": "The MIT open-source distribution is the whole product at no charge: server, macOS client, BRAIN and the seven MCP tools, installed on the user's own machine and server. A licensed enterprise edition adds SSO, directory sync, enforced MFA, audit export and retention, and managed upgrades, priced per organization and never per seat with terms on request. The enterprise price is unverified: terms on request, not published.",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://groundbox.io/",
+    "read_on": "2026-11-24",
+    "notes": "The MIT tier has no hosted allocation: the user installs and runs the server. The /pricing page is a login-walled SPA whose own rates could not be read; see the probe evidence."
+  },
+  "per_object_cap": {
+    "stated": "No object-size cap is published. A Space can be larger than the local disk through on-demand hydration; blobs are content-addressed with FastCDC chunks of about 1 MiB and BLAKE3-256.",
+    "bytes": null,
+    "source_url": "https://groundbox.io/"
+  },
+  "retention": {
+    "stated": "Real files in a Git-style commit log with content-addressed chunks are authoritative; the index is rebuildable. Conflict copies are kept rather than merged. No automatic deletion period is published.",
+    "days": null,
+    "source_url": "https://groundbox.io/"
+  },
+  "egress": {
+    "terms": "No egress price or allowance is published: the server and object store are installed and run by the user, so outbound traffic is the user's own infrastructure and is not metered by Groundbox.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://groundbox.io/"
+  },
+  "interface": [
+    "cli",
+    "git",
+    "unknown"
+  ],
+  "interface_detail": "Seven MCP tools (spaces_list, search, get, history, events, write, promote) plus a macOS File Provider that mounts a synced folder; the sync protocol is client-neutral. No remote HTTP API shape is published for the MIT tier.",
+  "tooling": "The user installs and runs one Go binary, Postgres with pgvector, and an S3 or MinIO object store, plus the macOS File Provider client (18 MiB, macOS 14+). Agents reach it through seven MCP tools and manifests; no harness-side plugin is needed.",
+  "chaining": "Groundbox exposes a folder of ordinary Markdown, Office and PDF files, so any agent that can read a file can use it, and export is a folder copy. It is self-hosted software: the user installs and runs the server. Hosted sandboxes such as Gravix Layer and Google Developer Device Platform are separate records and come first in any list.",
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "a curated Space turns every write into a proposal awaiting maintainer approval",
+      "source": "https://groundbox.io/"
+    },
+    {
+      "kind": "write-gated",
+      "value": "an agent has no permissions of its own; it acts only within the grants of the person it serves, and an ungranted file returns not_found",
+      "source": "https://groundbox.io/"
+    }
+  ],
+  "limits_note": "No numeric quota, rate or object cap is published on the public site; the binding constraint is that the reader installs and operates the server, not a meter.",
+  "binding": "write-gated",
+  "binding_note": "There is no published hosted quota: the first constraint a new user meets is the grant model and, in a curated Space, maintainer approval before a write lands.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The MIT download asks for no registration on the public site. The /pricing page's sign-in route was probed: the app's login form asks for an Organization slug, Email and Password; no card is named for the MIT tier. The enterprise edition is 'licensed per organization, never per seat · terms on request', so its sign-up fields are unverified: terms on request and behind a login wall.",
+    "country": null
+  },
+  "reliability_note": "Conflicts produce conflict copies rather than merges. The index is derived and rebuildable from the files. The pricing page is a JavaScript SPA behind a login wall, so its own rates are unverified.",
+  "confidence": "documented",
+  "confidence_note": "The MIT terms, enterprise pricing shape, interface and identity gate are quoted from the vendor's own homepage read 2026-11-24; the /pricing page's own rates are unverified because it is a login-walled JavaScript shell with no pricing numbers in its body, registered as a probe row.",
+  "evidence": [
+    {
+      "url": "https://groundbox.io/",
+      "date": "2026-11-24",
+      "proved": "the MIT distribution is free and runs on the user's own machine and server",
+      "capture": "sha256:da203e2b63088537ffd65beb024e995e3cb99dce2a3c90f2d4a8e013320928a2",
+      "quote": "Open source · MIT · your machine · your server · export by copying a folder"
+    },
+    {
+      "url": "https://groundbox.io/",
+      "date": "2026-11-24",
+      "proved": "the enterprise edition is licensed per organization with no published price",
+      "capture": "sha256:da203e2b63088537ffd65beb024e995e3cb99dce2a3c90f2d4a8e013320928a2",
+      "quote": "licensed per organization, never per seat · terms on request"
+    },
+    {
+      "url": "https://groundbox.io/",
+      "date": "2026-11-24",
+      "proved": "what the user installs and runs",
+      "capture": "sha256:da203e2b63088537ffd65beb024e995e3cb99dce2a3c90f2d4a8e013320928a2",
+      "quote": "One Go binary, Postgres and an object store, all of it MIT."
+    },
+    {
+      "url": "https://groundbox.io/",
+      "date": "2026-11-24",
+      "proved": "the seven MCP tools are the full agent interface",
+      "capture": "sha256:da203e2b63088537ffd65beb024e995e3cb99dce2a3c90f2d4a8e013320928a2",
+      "quote": "Seven MCP tools and no more. No database identifiers, no raw SQL, no admin mode."
+    },
+    {
+      "url": "https://groundbox.io/",
+      "date": "2026-11-24",
+      "proved": "the client and server build and the platform requirement",
+      "capture": "sha256:da203e2b63088537ffd65beb024e995e3cb99dce2a3c90f2d4a8e013320928a2",
+      "quote": "MIT · macOS client · self-hosted server · 0.1 (43), 18 MiB, macOS 14+"
+    },
+    {
+      "url": "https://groundbox.io/",
+      "date": "2026-11-24",
+      "proved": "an agent's writes are scoped to the person's grants",
+      "capture": "sha256:da203e2b63088537ffd65beb024e995e3cb99dce2a3c90f2d4a8e013320928a2",
+      "quote": "An agent has no permissions of its own"
+    },
+    {
+      "url": "https://groundbox.io/",
+      "date": "2026-11-24",
+      "proved": "the open-source tier includes the whole product and is run by the user",
+      "capture": "sha256:da203e2b63088537ffd65beb024e995e3cb99dce2a3c90f2d4a8e013320928a2",
+      "quote": "The complete product: server, macOS client, BRAIN, the seven MCP tools. Clone it, run it on your own hardware and never talk to us."
+    },
+    {
+      "url": "https://groundbox.io/pricing",
+      "date": "2026-11-24",
+      "proved": "the pricing URL returns a JavaScript shell with no rates in its body; the SPA needs JavaScript",
+      "capture": "sha256:06a326caeab8773968b57397dea532bcf51c35cd3e5f98b59a343eefd24172bf",
+      "quote": "Groundbox needs JavaScript to be enabled."
+    },
+    {
+      "url": "probe:https://groundbox.io/pricing",
+      "date": "2026-11-24",
+      "proved": "the pricing URL answered HTTP 200 with a 1,988-byte HTML shell and no challenge under the direct probe",
+      "capture": "sha256:e4611dce9f1a6d4a790c4e7888f4d7e6ecd74c160b7ce0f4ba5caf55163ae33e",
+      "quote": "\"status\": 200"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-24T10:11:14.804Z",
+  "price_per_tb_month": null,
+  "self_hosted": true,
+  "notes": "Self-hosted MIT software: the user installs and runs the Go server, Postgres and an object store plus the macOS client. The enterprise layer is licensed per organization on request. The /pricing page is a login-walled SPA whose body carries no rates, so the enterprise price is unverified. Listed after every hosted offer.",
+  "extras": {
+    "billing_model": "MIT software at no charge; enterprise edition licensed per organization on request",
+    "free_tier_kind": "self-hosted-software",
+    "status": "released; version 0.1 (43) macOS client",
+    "network_out": {
+      "allow_outbound": null,
+      "note": "the user's own server and object store; no vendor-metered egress"
+    }
+  }
+}

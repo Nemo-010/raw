@@ -5,8 +5,8 @@
   "url": "https://astraflow.ucloud.cn/docs/agent-sandbox",
   "category": "container and VM sandbox",
   "free_tier": {
-    "stated": "no published free tier: sandboxes pause and resume with full state preserved, a Volume is independent persistent storage that mounts into several sandboxes in beta, and the API has an E2B compatibility mode",
-    "unit": "none",
+    "stated": "The fee page grants real-name verified accounts 480 CPU core-hours plus 960 GiB-hours of free Agent Sandbox use on first access, valid 30 days and claimable once per account (one 2C4G sandbox for 10 days or twenty 2C4G sandboxes for 12 hours), with vCPU billed by the second thereafter and the first 10 GB of local storage free.",
+    "unit": "core-hours",
     "metered_on": "none",
     "source_url": "https://astraflow.ucloud.cn/docs/agent-sandbox",
     "read_on": "2026-10-22"
@@ -24,16 +24,17 @@
     "notes": "Disk durability across instance stops and deletions is not documented."
   },
   "egress": {
-    "terms": "not published: the fee page (https://astraflow.ucloud.cn/docs/agent-sandbox/product/fee.md) lists vCPU, memory, local storage and persistent storage and no outbound transfer allowance or price; every sandbox has outbound internet access by default",
+    "terms": "Every sandbox has outbound internet access by default and the platform controls it with allow and deny lists; the fee page bills vCPU, memory, local and persistent storage and publishes no per-GB outbound price.",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
     "source_url": "https://astraflow.ucloud.cn/docs/agent-sandbox"
   },
   "interface": [
-    "cli"
+    "cli",
+    "rest"
   ],
-  "interface_detail": "Python SDK (`pip install ucloud-sandbox`, authenticated with `UCLOUD_SANDBOX_API_KEY`), the UCloud Sandbox CLI and an E2B-compatible mode; no SSH or REST reference read",
+  "interface_detail": "Python SDK (`pip install ucloud-sandbox`), a CLI, an E2B-compatible SDK and a REST API are documented; authentication uses the UCLOUD_SANDBOX_API_KEY environment variable.",
   "tooling": "not stated",
   "chaining": "not established",
   "limits": [
@@ -49,14 +50,14 @@
     },
     {
       "kind": "write-gated",
-      "value": "the billing and quota details are on pages this record does not cite",
+      "value": "The fee page bills vCPU and memory by the second and grants the first 10 GB of local storage free with a 60 GB persistent-storage allowance; the quota page caps CPU at 8 cores, memory at 8 GB, 20 concurrent sandboxes and 10 GB of storage per user.",
       "source": "https://astraflow.ucloud.cn/docs/agent-sandbox"
     }
   ],
   "limits_note": "Session cap, idle-reap and network policy are not documented.",
   "identity_cost": {
-    "kind": "email",
-    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "kind": "national-id",
+    "detail": "The free grant requires a real-name verified account; the SDK authenticates with an API key from the key-management page.",
     "country": null
   },
   "reliability_note": "no reliability event recorded in the source passes",
@@ -100,10 +101,52 @@
       "proved": "the page states the session clock and idle reap recorded here, or states that it publishes none",
       "capture": "sha256:7faadcd0503bb4cb648435d6aff0ea276c043926b9d03ed9d4a7540240b38230",
       "quote": "运行时长有上限**：沙箱的总运行时长默认不超过 **24 小时**，超时的沙箱会被强制回收，请及时保存重要数据。"
+    },
+    {
+      "url": "https://astraflow.ucloud.cn/docs/agent-sandbox/product/fee.md",
+      "date": "2026-11-24",
+      "proved": "real-name verified accounts receive 480 CPU core-hours and 960 GiB-hours of free sandbox use for 30 days",
+      "capture": "sha256:fb43eda6bee3c266b01354221bb2decb7d08b50a1e371bff85a5404470ab7fb5",
+      "quote": "新用户免费额度：面向实名认证账号提供 Agent Sandbox 免费体验额度：实名认证账号首次访问Agent Sandbox时，赠送 480核时CPU＋960GiB时内存（支持1个2C4G沙箱持续运行10天或者20个2C4G沙箱持续运行12小时），有效期30天。"
+    },
+    {
+      "url": "https://astraflow.ucloud.cn/docs/agent-sandbox/product/fee.md",
+      "date": "2026-11-24",
+      "proved": "vCPU bills by core count and runtime to the second, with no charge after the sandbox stops",
+      "capture": "sha256:fb43eda6bee3c266b01354221bb2decb7d08b50a1e371bff85a5404470ab7fb5",
+      "quote": "| vCPU | 按照使用的 vCPU 核心数和运行时长计费，精确到秒。实时价格。沙箱停止后不再计费。 |"
+    },
+    {
+      "url": "https://astraflow.ucloud.cn/docs/agent-sandbox/network/internet-access.md",
+      "date": "2026-11-24",
+      "proved": "every sandbox has outbound internet access by default",
+      "capture": "sha256:e6623207d3b8b69ca2da107ed78f7178395d4b8179a82e5a9bfb10dc38425a44",
+      "quote": "默认情况下，每个沙箱都拥有出站互联网访问权限。"
+    },
+    {
+      "url": "https://astraflow.ucloud.cn/docs/agent-sandbox/product/prerequisites.md",
+      "date": "2026-11-24",
+      "proved": "an API key from the key-management page is required",
+      "capture": "sha256:f89b8d380eefbca93b10d79704604a6d72f89d71358fdb93e66e56444c6e93b7",
+      "quote": "前往密钥管理页面获取您的 API 密钥："
+    },
+    {
+      "url": "https://astraflow.ucloud.cn/docs/agent-sandbox/product/ratelimit.md",
+      "date": "2026-11-24",
+      "proved": "the platform exposes a REST API and sandbox ports",
+      "capture": "sha256:de522cbda5fb09058f739e9166d5810a8803896a261bab7cc9c5056918dac33c",
+      "quote": "直接调用 REST API 或沙箱端口时，将返回 `429 Too Many Requests`"
+    },
+    {
+      "url": "https://astraflow.ucloud.cn/docs/agent-sandbox/product/quickstart.md",
+      "date": "2026-11-24",
+      "proved": "the Python SDK is installed with pip",
+      "capture": "sha256:65e175531f5a05dea74c5bee7a158c5d60a2430289b24671fa75cedc5a7f4b93",
+      "quote": "pip install ucloud-sandbox"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-18T04:45:13.524Z",
+  "verified_at": "2026-11-24T13:21:06.619Z",
   "price_per_tb_month": null,
   "notes": "",
   "extras": {

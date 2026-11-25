@@ -4,7 +4,7 @@ Every claim in this topic carries one rung of the evidence ladder, and the
 counts below are rendered from the records rather than typed.
 
 <!-- generated:start topic=compute kind=totals fields=records,reported,documented,measured,unverified labels=records,reported,documented,measured,unverified -->
-records 1411; reported 179; documented 1207; measured 4; unverified 15
+records 1510; reported 175; documented 1310; measured 4; unverified 15
 <!-- generated:end -->
 
 The `reported` rows came from a pinned third-party catalogue and no page was
@@ -122,7 +122,7 @@ answered for the records that were read and carried as a gap for the rest. The t
 counts below are rendered from the records.
 
 <!-- generated:start topic=compute kind=totals fields=has:extras.network_out,has:extras.session_cap,has:extras.persistent_storage labels=network_out,session_cap,persistent_storage -->
-network_out 298; session_cap 552; persistent_storage 77
+network_out 377; session_cap 621; persistent_storage 77
 <!-- generated:end -->
 
 **Egress.** The schema has an `egress` field, structured rather than the string
@@ -174,7 +174,9 @@ breaking change.
 | Agent 37 | USD 5 of credit after adding a card; no per... | qualifies-with-caveat | documented | not applicable: the unit is a m... | disk billed while you... | card | `dossier/compute/agent-37.json` |
 | Agent Relay | free to start and free to connect agents, w... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/agent-relay.json` |
 | Agent37 | Add a card from the billing page (nothing i... | qualifies-with-caveat | documented | not applicable: the unit is a m... | Stopped or sleeping i... | card | `dossier/compute/agent37.json` |
+| agental | $5 free every month; save a card, charged n... | qualifies-with-caveat | documented | not applicable: the unit is a w... | 14 d | card | `dossier/compute/agental.json` |
 | AgentComputer | no free tier: pay-as-you-go at $0.07 a CPU-... | paid-only | documented | not stated | not stated | email | `dossier/compute/agentcomputer.json` |
+| AGNT Sandbox | No hosted sandbox minutes are free: Communi... | paid-only | documented | not applicable: the unit is a s... | Sandboxes live at mos... | email | `dossier/compute/agnt-sandbox.json` |
 | AI Grant | The page still advertises '$5,000 - $50,000... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/ai-grant.json` |
 | AI Horde | Text and image generation on volunteer GPUs... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | anonymous | `dossier/compute/ai-horde.json` |
 | AI Singapore | Co-funding of up to SGD 150,000 per project... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/ai-singapore.json` |
@@ -192,7 +194,7 @@ breaking change.
 | ALCF Director's Discretio... | A rolling award available year-round, usual... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/alcf-director-s-discretionary.json` |
 | AlexHost | EUR 6.00/month for U1 in Moldova: 1 vCore,... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/alexhost.json` |
 | Alfred P. Sloan | 'The Foundation does not make grants to ind... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/alfred-p-sloan.json` |
-| Alibaba Cloud AgentBay | the Basic plan is free and pays only for re... | qualifies-with-caveat | documented | not stated | not stated | card | `dossier/compute/alibaba-agentbay.json` |
+| Alibaba Cloud AgentBay | the Basic plan is free but pays for compute... | qualifies-with-caveat | documented | not stated | not stated | card | `dossier/compute/alibaba-agentbay.json` |
 | Alibaba Cloud Agent Sandb... | no credit and no free compute; the only fre... | qualifies-with-caveat | documented | not stated | not stated | national-id | `dossier/compute/alibaba-agentrun.json` |
 | Alibaba Cloud ESA | The Entrance plan is a permanently free tie... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/alibaba-cloud-esa.json` |
 | Alibaba Cloud International | On 2026-10-23 the international free-trial... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/alibaba-cloud-international.json` |
@@ -213,13 +215,16 @@ breaking change.
 | AMD Developer Cloud | 25 hours of complimentary cloud credit, sta... | trial-only | documented | not applicable: the unit is a m... | Two destruction trigg... | card | `dossier/compute/amd-developer-cloud.json` |
 | AMD Radeon Cloud | AMD runs two sites. On the China site the A... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | any-phone | `dossier/compute/amd-radeon-cloud.json` |
 | AMD University Program | Node-hour allocations on a cluster of dual... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/amd-university-program.json` |
-| Amika | $50 of credits per organisation, unlimited... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/amika.json` |
+| Amika | Free is $0 a month with up to 3 members, un... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/amika.json` |
 | Amp Orbs | no free tier: orbs bill by the minute from... | paid-only | documented | not stated | not stated | email | `dossier/compute/amp.json` |
 | Anchor Browser | Free plan: 5 credits per month, 0.1 credits... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/anchor-browser.json` |
+| Anona Compute | $0 a month with $25 of usage included once,... | qualifies-with-caveat | documented | not applicable: the unit is a r... | A running sandbox is... | email | `dossier/compute/anona-compute.json` |
 | Anthropic AI | 'If successful, we will apply up to $20,000... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/anthropic-ai.json` |
 | Anyscale | USD 100 of credit on a new account, from 'G... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/anyscale.json` |
 | ApexWeave | 'a 14-day live trial plus a 120-day grace p... | trial-only | documented | not applicable: the unit is a m... | the free window is a... | email | `dossier/compute/apexweave.json` |
+| Apify AI Code Sandbox | The Actor is free to use and the user pays... | qualifies-with-caveat | documented | Files written through the sandb... | Filesystem changes ar... | email | `dossier/compute/apify-ai-code-sandbox.json` |
 | Apoxy | a free plan during an invite-only beta, req... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/apoxy.json` |
+| Appetize.io | Free plan $0 a month: single user, 2 active... | qualifies-with-caveat | documented | not applicable: the unit is a s... | A session ends when t... | email | `dossier/compute/appetize-io.json` |
 | Appish | Free plan, quoted: '1 slot', '4 hours each,... | qualifies-with-caveat | documented | not applicable: the unit is a m... | a free slot expires a... | email | `dossier/compute/appish.json` |
 | Apply.Build | 'Free tier: 0.5 vCPU and 512 MiB' and 'No c... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/apply-build.json` |
 | Aptible | no free tier is published: deployment runs... | paid-only | documented | not stated | not stated | email | `dossier/compute/aptible.json` |
@@ -227,10 +232,11 @@ breaking change.
 | ARC Prize Foundation | '$2M in prizes. 3 tracks. Open source progr... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/arc-prize-foundation.json` |
 | Archal | $20 in free usage, no card: $5 at signup an... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/archal.json` |
 | ARCHER2 Pump Priming | Pump Priming is always open and awards a ma... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/archer2-pump-priming.json` |
-| Archil | Free includes 5 disks of up to 10 GB each,... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/archil.json` |
+| Archil | Free includes 5 file systems of up to 10 GB... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/archil.json` |
 | Arct Cloud | USD 3.89 per month for cvm.pico in the Cost... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/arct-cloud.json` |
 | ArenaStreaming | No free tier. LXC NAT Basic is Rp10.000,00... | qualifies-with-caveat | documented | not applicable: the unit is a m... | the container persist... | email | `dossier/compute/arenastreaming-lxc-nat-basic.json` |
 | Arga Labs | service twins that are short-lived or perma... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/arga-labs.json` |
+| Argent Cloud (iOS simulat... | No published free tier: USD 299 per Runner... | paid-only | documented | 1 GiB per file uploaded through... | Nothing survives a se... | email | `dossier/compute/argent-cloud-ios-simulator-runners.json` |
 | Arker | no free tier: the product is priced as a mu... | paid-only | documented | not stated | not stated | email | `dossier/compute/arker.json` |
 | Arm Virtual Hardware | A free trial that is documented with real n... | trial-only | documented | not applicable: the unit is a m... | 100 core hours inside... | email | `dossier/compute/arm-virtual-hardware.json` |
 | Artillery | Free tier with the quota row reading 'no li... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/artillery.json` |
@@ -247,6 +253,7 @@ breaking change.
 | AvenaCloud | KVM VPS/VDS 10 at EUR 5.50 per month, or EU... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/avenacloud.json` |
 | Avian Compute | No free tier and no credit on the compute p... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/avian-compute.json` |
 | Avoro | Basic S at EUR 4.07 per month excluding VAT... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/avoro.json` |
+| Avrea Sandboxes | Pay as you go includes USD 12 in credit eac... | qualifies-with-caveat | documented | not applicable: the unit is a V... | 7 d | email | `dossier/compute/avrea-sandboxes.json` |
 | AwardSpace | Free plan, quoted: 'Storage: 1 GB', 'Bandwi... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/awardspace.json` |
 | AWS Academy | 'AWS Academy provides higher education inst... | fails-quota | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/aws-academy.json` |
 | AWS Activate, Founders | The Activate Founders tier offers USD 1,000... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/aws-activate-founders.json` |
@@ -254,6 +261,7 @@ breaking change.
 | AWS Amplify Hosting | Free Tier for 12 months: 1,000 build minute... | trial-only | documented | not applicable: the unit is a m... | the 12-month clock en... | card | `dossier/compute/aws-amplify-hosting.json` |
 | AWS Cloud Credit | 'Student awards will be up to a maximum of... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/aws-cloud-credit.json` |
 | AWS Cloud Credits | 'we've provided AWS Promotional Credits to... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/aws-cloud-credits.json` |
+| AWS Device Farm | A one-time trial of 1,000 device minutes, o... | trial-only | documented | Uploaded app or test archives a... | 30 d | card | `dossier/compute/aws-device-farm.json` |
 | AWS Educate | 'AWS Educate is open to any individual, reg... | fails-quota | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/aws-educate.json` |
 | Amazon Web Services (Free... | Quoted from the t4g page: 'Free Trial: Try... | qualifies-with-caveat | documented | 750 hours a month of t4g.small,... | 'After your free acco... | email | `dossier/compute/aws-free-plan-t4g.json` |
 | AWS Lambda | 400,000 GB-seconds and 1 million requests a... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/aws-lambda.json` |
@@ -273,7 +281,7 @@ breaking change.
 | Microsoft Dev Box (closed... | no free tier published | paid-only | documented | not stated | not stated | email | `dossier/compute/azure-dev-box.json` |
 | Azure Functions | "Consumption plan pricing includes a monthl... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/azure-functions.json` |
 | Microsoft Azure GPU VMs | USD 200 of Azure credit for 30 days on a ne... | qualifies-with-caveat | documented | not stated | not stated | card | `dossier/compute/azure-gpu.json` |
-| Azure Pipelines | one Microsoft-hosted CI/CD job with 1,800 m... | qualifies-with-caveat | documented | 60 minutes per Microsoft-hosted... | not stated | card | `dossier/compute/azure-pipelines.json` |
+| Azure Pipelines | one Microsoft-hosted CI/CD job with 1,800 m... | qualifies-with-caveat | documented | 60 minutes per free Microsoft-h... | not stated | card | `dossier/compute/azure-pipelines.json` |
 | Azure Research Credits | The vendor page offers no amount at all. It... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/azure-research-credits.json` |
 | Azure Virtual Machines (L... | no free allowance for a Linux VM; the USD 2... | qualifies-with-caveat | documented | not stated | not stated | card | `dossier/compute/azure-vm.json` |
 | Azure Virtual Machines (W... | 750 hours each of B2ts v2, B2pts v2 and B2a... | qualifies-with-caveat | documented | not stated | not stated | card | `dossier/compute/azure-windows.json` |
@@ -283,42 +291,51 @@ breaking change.
 | BandwagonHost | The host most often named in Chinese-langua... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/bandwagonhost.json` |
 | Baponi | Free forever, no card: 1,000 credits a mont... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/baponi.json` |
 | Baseten | No free tier, no credit and no trial on the... | paid-only | documented | not applicable: the unit is a s... | not applicable: no fr... | card | `dossier/compute/baseten.json` |
-| Beam | No signup credit. 'Developer $20/month $20... | paid-only | documented | A persistent VM is 'from $0.030... | A stopped VM keeps it... | card | `dossier/compute/beam.json` |
+| Beam | No signup credit. 'Developer $20/month $20... | paid-only | documented | The smallest persistent VM is $... | A stopped VM keeps it... | card | `dossier/compute/beam.json` |
 | Beget | A perpetual free shared-hosting account: 1... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | country-phone | `dossier/compute/beget.json` |
 | Bentaus | no free tier and no credit on the B300 page... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/bentaus.json` |
+| Berget.AI | Trial at EUR 0 a month with EUR 5 in starti... | qualifies-with-caveat | documented | not applicable: the unit is an... | Unused prepaid credit... | card | `dossier/compute/berget-serverless-trial.json` |
 | BERO HOST | No free tier. The provider's forum post adv... | dead | documented | not applicable: the unit is a m... | the vendor's IPv6 lin... | email | `dossier/compute/bero-host-ipv6-anniversary-xs.json` |
 | Beyond.pl | no free tier or credit is stated on the GPU... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | any-phone | `dossier/compute/beyond-pl.json` |
 | Bitbucket Pipelines | 50 build minutes a month on the Free plan,... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/bitbucket-pipelines.json` |
-| Bitrise (mobile CI) | a Free plan with build credits for a small... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/bitrise.json` |
+| Bitrise (mobile CI) | The Hobby plan is free, with 500 build minu... | qualifies-with-caveat | documented | not stated | not stated | card | `dossier/compute/bitrise.json` |
 | Bittensor | Permissionless GPU network of 128 subnets w... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/bittensor.json` |
 | Bizfly Cloud | A 3-day free trial of one Cloud Server at u... | trial-only | documented | not applicable: the unit is a m... | The server trial is t... | country-phone | `dossier/compute/bizfly-cloud.json` |
 | Black Forest Labs | Pay-as-you-go credits with a published calc... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/black-forest-labs.json` |
 | Blacksmith (GitHub Action... | 3,000 free minutes a month on every plan th... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/blacksmith.json` |
 | Blaxel | 'Up to $200 in free credits' on the pay-as-... | qualifies-with-caveat | documented | No per-sandbox vCPU or memory c... | 7 d | email | `dossier/compute/blaxel.json` |
 | Blinkenshell | 100 MB disk quota, 128 MB memory limit, SSH... | fails-identity | documented | not applicable: the unit is a m... | no expiry is publishe... | any-phone | `dossier/compute/blinkenshell.json` |
-| boat | No signup credit. 'Your first plan starts w... | paid-only | documented | Sizes: 'small 2 vCPU / 4 GB / 1... | 14 d | card | `dossier/compute/boat.json` |
+| BlockRun Modal Sandbox | No free tier published: every sandbox sessi... | paid-only | documented | not applicable: the unit is a s... | A sandbox lives betwe... | anonymous | `dossier/compute/blockrun-modal-sandbox.json` |
+| boat | No card-free tier. 'Your first plan starts... | paid-only | documented | Sizes: 'small' 2 vCPU / 4 GB /... | 14 d | card | `dossier/compute/boat.json` |
 | Bolt | Bolt Free: "Monthly AI Tokens 1M", "Daily T... | qualifies | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/bolt.json` |
+| BoltzLabs | After signing up for an account in the API... | qualifies-with-caveat | documented | not applicable: the unit is a b... | 30 d | institution | `dossier/compute/boltz-api.json` |
 | Botkeep | A perpetual free container that runs 24/7 w... | qualifies-with-caveat | documented | not applicable: the unit is a m... | An inactivity rule th... | email | `dossier/compute/botkeep.json` |
+| box by Simular | 5,000 credits once, valid 90 days, on the F... | qualifies-with-caveat | documented | not applicable: the unit is a c... | 14 d | email | `dossier/compute/box-by-simular.json` |
+| BoxCompute | $5 compute credit, valid for 14 days, added... | qualifies-with-caveat | documented | no object unit: the offer is a... | A VM stops after 30 m... | email | `dossier/compute/boxcompute.json` |
 | boxd | €30 of free credits to start; RAM is billed... | qualifies-with-caveat | documented | not stated | not stated | card | `dossier/compute/boxd.json` |
 | BoxedTux | A free student vServer: '1 vCPU', '1 GB DDR... | fails-identity | documented | not applicable: the unit is a v... | 'Renew each semester... | institution | `dossier/compute/boxedtux.json` |
 | boxes.dev | Trial plan, $0: 20 hours of compute include... | trial-only | documented | not stated | not stated | email | `dossier/compute/boxes-dev.json` |
-| BoxLite Cloud | USD 100 in free credits, so you can build a... | paid-only | documented | per-box ceiling of 4 vCPU, 32 G... | Around 10 GiB of real... | card | `dossier/compute/boxlite-cloud.json` |
+| BoxLite Cloud | No card-free credit published. 'Usage is ch... | paid-only | documented | per-box maximum depends on the... | Around 10 GiB of real... | email | `dossier/compute/boxlite-cloud.json` |
 | BoxyBSD | Personal plan: EUR 0 a month for 1 vCPU, 1... | qualifies-with-caveat | documented | not applicable: the unit is a v... | Quoted: 'BoxyBSD rese... | email | `dossier/compute/boxybsd.json` |
 | Bpifrance | A grant of 'un montant maximum de 30 000 EU... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/bpifrance.json` |
 | Bright Data Browser API | a recurring 5,000 credits a month with 1 GB... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/bright-data-browser.json` |
 | Brimble Sandboxes | a Free plan at $0/mo for hobby projects; th... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/brimble.json` |
+| briq | Every new account gets €10 of credits on it... | qualifies-with-caveat | documented | no object unit: the offer is a... | A briq goes to sleep... | email | `dossier/compute/briq.json` |
 | Browser Use | USD 15 of one-time credit; browsers cost US... | trial-only | documented | not applicable: the unit is a m... | credits never expire;... | email | `dossier/compute/browser-use.json` |
 | BrowserAct | 200 free credits on signup, 2 free agent bu... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/browseract.json` |
 | Browserbase | Free: 3 concurrent browsers, 1 browser hour... | trial-only | documented | not applicable: the unit is a m... | session recordings an... | email | `dossier/compute/browserbase.json` |
 | BrowserCloud | 1 browser-hour on the free tier, against 12... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/browsercloud.json` |
 | Browserless | Free plan at USD 0 a month, no card require... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not stated in catalog... | email | `dossier/compute/browserless.json` |
-| Buddy Sandboxes | a free tier with 2 concurrency slots, 1 sea... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/buddy.json` |
+| BrowserStack | A free trial includes 100 minutes of automa... | paid-only | documented | not applicable: the unit is a d... | Test-session duration... | email | `dossier/compute/browserstack-app-automate.json` |
+| Buddy Sandboxes | a free Trial with 1 seat, 2 concurrents, US... | trial-only | documented | not stated | not stated | card | `dossier/compute/buddy.json` |
+| Buildfunctions | USD 0 per month plus USD 5.00 per month of... | qualifies-with-caveat | documented | not applicable: the unit is a f... | Sandboxes are destroy... | email | `dossier/compute/buildfunctions.json` |
 | Buildkite | Quoted from the Free plan: 'Up to 5 users',... | qualifies-with-caveat | documented | not applicable: the unit is a m... | 'Once the job is comp... | email | `dossier/compute/buildkite.json` |
 | Buildkite hosted agents | a Free plan with no card: up to 10 concurre... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/buildkite-hosted.json` |
 | BulkVM | Starter at USD 5/month: 1 vCore Intel, 1 GB... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/bulkvm.json` |
 | Bullethost | Linux I at EUR 4.99/month: 2 vCores, 4 GB R... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/bullethost.json` |
 | Bulutova | no free tier; the ladder starts at 99.83 TL... | fails-identity | documented | not applicable: the unit is a m... | the disk persists whi... | national-id | `dossier/compute/bulutova-vps-8.json` |
 | Bunny Sandbox | A sandbox billed at Magic Containers rates:... | trial-only | documented | not applicable: the unit is a m... | The trial ends at 14... | email | `dossier/compute/bunny-sandbox.json` |
+| Burrowbox | A one-time USD 1 welcome credit is added on... | paid-only | documented | not applicable: the unit is a p... | A stopped machine is... | card | `dossier/compute/burrowbox.json` |
 | BuyVM | SLICE 512: 1 core at 3.50+ GHz with fair-sh... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/buyvm.json` |
 | BuyVM | no free tier; the ladder starts at 'SLICE 5... | paid-only | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/buyvm-slice-2048.json` |
 | BuyVM | No free tier. SLICE 512 is USD 24.00 a year... | paid-only | documented | not applicable: the unit is a m... | The slice persists wh... | email | `dossier/compute/buyvm-slice-512.json` |
@@ -334,14 +351,16 @@ breaking change.
 | CambridgeNexus | no free tier, no trial and no published rat... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/cambridgenexus.json` |
 | Capy | no free tier: the entry offer is $1 for 7 d... | paid-only | documented | not stated | not stated | card | `dossier/compute/capy.json` |
 | Cartesia | Free plan at USD 0 with '20K credits / mont... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/cartesia.json` |
+| Cathedral | No free tier. Every sandbox is paid at a fl... | paid-only | documented | not applicable: the unit is a s... | Billing starts when t... | card | `dossier/compute/cathedral.json` |
 | Caution | no free tier published | paid-only | documented | not stated | not stated | email | `dossier/compute/caution.json` |
 | CDTI Neotec 2026 | Subsidies of up to 70 percent of the eligib... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/cdti-neotec-2026.json` |
-| Celesto Cloud | a one-time $5 runtime credit valid for 30 d... | trial-only | documented | not stated | not stated | email | `dossier/compute/celesto.json` |
+| Celesto Cloud | a one-time $5 Micro runtime credit, no card... | trial-only | documented | not stated | 30 d | email | `dossier/compute/celesto.json` |
 | centron | a starting credit of EUR 200 for new accoun... | trial-only | documented | not applicable: the unit is a m... | not stated on the pag... | email | `dossier/compute/centron.json` |
 | CepatCloud.id | A perpetual free VPS: 15 GB SSD, 1 core, 2... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | any-phone | `dossier/compute/cepatcloud-id.json` |
 | Cerebras Inference | No recurring free allowance. The FAQ reads:... | trial-only | documented | not applicable: the unit is a m... | the 30-day credit exp... | card | `dossier/compute/cerebras-inference.json` |
 | Cerebras Inference Research | 'Selected Principal Investigators (PIs) may... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/cerebras-inference-research.json` |
-| Cerebrium | a Free tier priced as 'Free + compute a mon... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/cerebrium.json` |
+| Cerebrium | the Hobby tier is 'Free + compute / month'... | qualifies-with-caveat | documented | not stated | 1 d | email | `dossier/compute/cerebrium.json` |
+| Chalk Compute (Sandboxes) | unverified: no free allowance for Runtime s... | paid-only | documented | not applicable: the unit is a c... | A sandbox is an ephem... | email | `dossier/compute/chalk-compute-sandboxes.json` |
 | Chameleon Cloud | "Chameleon operates on a 'soft allocation m... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/chameleon-cloud.json` |
 | Cheap-Host | no free tier; NAT Start is 59 RUB a month | qualifies-with-caveat | documented | not applicable: the unit is a m... | 1 d | email | `dossier/compute/cheap-host-nat-start.json` |
 | Cheap-Host | No free tier. NAT Start is 59 RUB a month:... | qualifies-with-caveat | documented | not applicable: the unit is a m... | 3 d | email | `dossier/compute/cheap-host-nat-start-de.json` |
@@ -350,7 +369,7 @@ breaking change.
 | Chutes | The free tier is retired. Announcement quot... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | anonymous | `dossier/compute/chutes.json` |
 | CINECA ISCRA | ISCRA Class C awards up to 10,000 GPU hours... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/cineca-iscra.json` |
 | Cinfu (Closco Ltd) | No free tier. The German IPv6-only ladder s... | dead | documented | not applicable: the unit is a m... | billed monthly throug... | email | `dossier/compute/cinfu-ex2de-ipv6.json` |
-| CircleCI | free tier published without a credit amount | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/circleci.json` |
+| CircleCI | the Free plan includes 30,000 free credits... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/circleci.json` |
 | Cirrus CI | The allowance was real and is now gone. Quo... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/cirrus-ci.json` |
 | Cirrus Runners | none: Cirrus Runners is a subscription of $... | dead | documented | not stated | not stated | email | `dossier/compute/cirrus-runners.json` |
 | Cirun | Quoted from the Open Source plan: 'Always f... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/cirun.json` |
@@ -372,6 +391,7 @@ breaking change.
 | CloudCone | no free tier; WC2-3 is USD 62.75/month, and... | paid-only | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/cloudcone-windows.json` |
 | CloudCruise | 2 automation hours of workflow runtime, the... | trial-only | documented | not stated | not stated | email | `dossier/compute/cloudcruise.json` |
 | Cloudfanatic (formerly Se... | no free tier; the 1 GB standard plan is USD... | qualifies | documented | not applicable: the unit is a m... | the VPS persists whil... | card | `dossier/compute/cloudfanatic-standard-1gb.json` |
+| CloudFerro Sherlock | unverified: no free token allowance for She... | paid-only | documented | not applicable: the unit is tok... | Zero logs and zero st... | email | `dossier/compute/cloudferro-sherlock.json` |
 | Cloudflare Browser Run /... | Workers Free includes 10 minutes of browser... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/cloudflare-browser.json` |
 | Cloudflare Containers | no free plan: the pricing table's Free row... | paid-only | documented | largest instance type standard-... | billing stops when th... | card | `dossier/compute/cloudflare-containers.json` |
 | Cloudflare Durable Objects | 13,000 GB-seconds of Durable Object duratio... | qualifies-with-caveat | documented | not applicable: the unit is a m... | SQLite-backed storage... | email | `dossier/compute/cloudflare-durable-objects.json` |
@@ -383,6 +403,7 @@ breaking change.
 | Cloudflare Workers for Pl... | no free tier published | paid-only | documented | not stated | not stated | email | `dossier/compute/cloudflare-workers-for-platforms.json` |
 | CloudGPU | no free tier and no signup credit: a prepai... | paid-only | documented | not applicable: the unit is a m... | Destroying an instanc... | email | `dossier/compute/cloudgpu.json` |
 | Clouding.io | A 1 GB cloud server at EUR 0.004/hour cappe... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/clouding-io.json` |
+| Cloudish | New keys start with 0.1 credits, subject to... | qualifies-with-caveat | documented | not applicable: the unit is a r... | A persistent volume s... | anonymous | `dossier/compute/cloudish.json` |
 | CloudLab | CloudLab gives free bare-metal nodes with n... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/cloudlab.json` |
 | Cloudnium LLC | No free tier. IPv6-1 is USD 1.50 a month: 1... | qualifies | documented | not applicable: the unit is a m... | monthly billing; the... | email | `dossier/compute/cloudnium-ipv6-1.json` |
 | CloudRift AI Grant | USD 100 to USD 1,000 in GPU compute credits... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/cloudrift-ai-grant.json` |
@@ -394,10 +415,11 @@ breaking change.
 | Coasty | $5 of credit at signup on a $0.05-a-managed... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/coasty.json` |
 | CoCalc | a free trial project with no expiry, descri... | fails-quota | documented | not applicable: the unit is a s... | trial projects do not... | email | `dossier/compute/cocalc-free.json` |
 | Codeberg Forgejo Actions | 'The following runners are available on Cod... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not stated on the pag... | email | `dossier/compute/codeberg-forgejo-actions.json` |
-| Codemagic (mobile CI) | the managed hosted Patch service is free be... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/codemagic.json` |
+| Codemagic (mobile CI) | the managed hosted Patch service is free be... | qualifies-with-caveat | documented | not stated | 30 d | email | `dossier/compute/codemagic.json` |
 | CodeSandbox | CodeSandbox Free: "Every Free workspace get... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/codesandbox.json` |
-| CodeSandbox SDK | catalogue documentation records a free mont... | trial-only | documented | not applicable: the unit is a m... | hibernation stops com... | email | `dossier/compute/codesandbox-sdk.json` |
+| CodeSandbox SDK | the Build plan is free and allows 10 concur... | trial-only | documented | not applicable: the unit is a m... | hibernation stops com... | email | `dossier/compute/codesandbox-sdk.json` |
 | Codesphere | A Free plan at USD 0 that publishes exactly... | fails-quota | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/codesphere.json` |
+| Codewire | Local VMs are free forever with no account... | paid-only | documented | not applicable: the unit is a r... | A stopped sandbox kee... | email | `dossier/compute/codewire.json` |
 | Cohere trial keys | A trial (evaluation) key is free but limite... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/cohere-trial-keys.json` |
 | Cohesivity | Free tier is a metered monthly bucket on ho... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/cohesivity.json` |
 | Collimate | a free demo key with no card: 2 concurrent... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/collimate.json` |
@@ -415,6 +437,7 @@ breaking change.
 | Contabo | no free tier; Cloud VPS 8 is EUR 14.00/mont... | paid-only | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/contabo-windows.json` |
 | Containarium | One price of USD 20 per seat per month for... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/containarium.json` |
 | CoolVDS | No free tier published on the pricing page;... | qualifies-with-caveat | documented | not applicable: the unit is a m... | Not stated on the pri... | card | `dossier/compute/coolvds.json` |
+| Corellium | No free tier: Corellium Solo is priced at U... | trial-only | documented | not applicable: the unit is a v... | 14 d | email | `dossier/compute/corellium.json` |
 | CORESERVER V2 | CORE-X is JPY 830 a month on the monthly su... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/coreserver-v2.json` |
 | CoreWeave | no free tier: GPU capacity at on-demand rat... | paid-only | documented | not stated | not stated | email | `dossier/compute/coreweave.json` |
 | CrateDB Cloud | Free plan, quoted: 'Free Plan Available', '... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/cratedb-cloud.json` |
@@ -444,8 +467,9 @@ breaking change.
 | Daytona | USD 200 in free compute included, one time.... | qualifies-with-caveat | documented | One sandbox is capped at 4 vCPU... | Container sandboxes k... | email | `dossier/compute/daytona.json` |
 | Daytona GPU | The same platform sells GPUs by the hour, a... | paid-only | documented | not applicable: the unit is a m... | The preemptible tier... | email | `dossier/compute/daytona-gpu.json` |
 | Daytona (Windows sandboxes) | $200 of free compute, no card: a Windows sa... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/daytona-windows.json` |
+| DCDN Sandbox (DCDN Cloud) | No standing free sandbox allowance is publi... | paid-only | documented | not applicable: the unit is a c... | Snapshots save state,... | email | `dossier/compute/dcdn-sandbox.json` |
 | Declaw | $100 of sandbox compute credit and a separa... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/declaw.json` |
-| Dedalus Labs | $20 of one-time sign-up credit with up to 4... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/dedalus-labs.json` |
+| Dedalus Labs | $20 one-time sign-up credit with up to 4 vC... | qualifies-with-caveat | documented | not stated | 30 d | email | `dossier/compute/dedalus-labs.json` |
 | DediOne | Los Angeles KVM at USD 3.99 a month for 2 v... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/dedione.json` |
 | DediRock | Yearly Promo VPS Saver at USD 10.88/year: 1... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/dedirock.json` |
 | DediRock | no free tier; the page sells annual promo p... | dead | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/dedirock-black-friday.json` |
@@ -457,7 +481,7 @@ breaking change.
 | Deepgram Startup Program | 'Apply to Deepgram for Startups and get up... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/deepgram-startup-program.json` |
 | DeepInfra DeepStart | 50,000,000,000 free inference tokens for an... | fails-identity | documented | not applicable: the unit is a m... | the funding gate fail... | institution | `dossier/compute/deepinfra-deepstart.json` |
 | DeepInfra GPU | No free GPU allowance. Dedicated GPU rates... | paid-only | documented | not applicable: the unit is a m... | All container data is... | card | `dossier/compute/deepinfra-gpu.json` |
-| DeepInfra Sandboxes | no free tier: 'the nano plan starts at just... | paid-only | documented | not applicable: the unit is a s... | 7 d | card | `dossier/compute/deepinfra-sandboxes.json` |
+| DeepInfra Sandboxes | no free tier: 'the nano plan starts at just... | paid-only | documented | not applicable: the unit is a s... | 7 d | email | `dossier/compute/deepinfra-sandboxes.json` |
 | Deepnote Education plan | 'Our Education plan is 100% free for studen... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/deepnote-education-plan.json` |
 | Deepnote | Free forever, including the Basic machine a... | qualifies-with-caveat | documented | not applicable: the unit is a s... | not stated on the pri... | email | `dossier/compute/deepnote-free.json` |
 | DeepSeek API | No free grant on the vendor's own pricing p... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/deepseek-api.json` |
@@ -466,7 +490,7 @@ breaking change.
 | Deno Deploy | Free at USD 0: 1 million requests a month,... | qualifies-with-caveat | documented | a 768 MB default memory allocat... | revision storage is 1... | email | `dossier/compute/deno-deploy.json` |
 | Deno Sandbox | a free plan with a monthly request allowanc... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/deno-sandbox.json` |
 | Deplexo | Free plan, quoted: '1 app', 'CPU per app 0.... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/deplexo.json` |
-| Depot (GitHub Actions run... | No free tier: a 7-day trial, then the Devel... | trial-only | documented | not stated | not stated | email | `dossier/compute/depot.json` |
+| Depot (GitHub Actions run... | No free tier: a 7-day trial, then the Devel... | trial-only | documented | snapshots are limited to 25 GiB... | not stated | email | `dossier/compute/depot.json` |
 | DesignSafe-CI | A Startup Allocation may request up to 20,0... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/designsafe-ci.json` |
 | Deta Space | nothing reachable: deta.space returned a Cl... | dead | documented | not applicable | data was deleted at t... | email | `dossier/compute/deta-space.json` |
 | Devin , including | Devin Free: "Free $0", "Light quota to code... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/devin-including.json` |
@@ -477,13 +501,15 @@ breaking change.
 | DigitalCloud | Lite Cloud: USD 7.99 list with printed disc... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/digitalcloud.json` |
 | DigitalOcean Droplets | No current signup amount is published. Both... | paid-only | documented | not stated | not stated | card | `dossier/compute/digitalocean.json` |
 | DigitalOcean | no free tier; the cheapest droplet is '512... | paid-only | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/digitalocean-droplet-1gb.json` |
+| DigitalOcean GPU Droplets | USD 5 of credit for a new account, valid fo... | trial-only | documented | not stated | not stated | card | `dossier/compute/digitalocean-gpu.json` |
 | DigitalOcean Gradient AI | The prize carries cloud credit alongside ca... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/digitalocean-gradient-ai.json` |
 | DigitalOcean Harness Runtime | Hardware-isolated microVM sandboxes with Ch... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/digitalocean-harness-runtime.json` |
 | DigitalOcean Hatch | Hatch was DigitalOcean's startup credit pro... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/digitalocean-hatch.json` |
+| DigitalOcean Serverless I... | No standing free tier: 'Serverless inferenc... | paid-only | documented | not applicable: the unit is a m... | Token requests are co... | card | `dossier/compute/digitalocean-inference.json` |
 | DigitalOcean Startups | 12 months of DigitalOcean credits for accep... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/digitalocean-startups.json` |
 | DigitalOcean student credit | The pack's cloud-credit headline is gone. Q... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/digitalocean-student-credit.json` |
 | dimension.sh | A tilde community that is now a memorial: q... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | anonymous | `dossier/compute/dimension-sh.json` |
-| Docker Cloud Sandboxes | no free tier: compute bills per second from... | paid-only | documented | not stated | not stated | email | `dossier/compute/docker-cloud-sandboxes.json` |
+| Docker Cloud Sandboxes | a one-time $250 Cloud Sandboxes compute cre... | paid-only | documented | not stated | not stated | card | `dossier/compute/docker-cloud-sandboxes.json` |
 | Dockerhosting.ru | no free tier; the entry plan is 'Start 299... | qualifies | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/dockerhosting-prodv.json` |
 | Dockerhosting.ru | no free tier; Start at 299 RUB a month is t... | qualifies | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/dockerhosting-start.json` |
 | Dockup | a Free-forever plan alongside $45 a month f... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/dockup.json` |
@@ -492,6 +518,7 @@ breaking change.
 | Dreamify AI (Dreamifly, n... | 10 credits on each day the account visits,... | qualifies-with-caveat | documented | not applicable: the unit is a g... | 2 d | email | `dossier/compute/dreamify-ai.json` |
 | DrivenData / DOE | 'Total Prize Pool: $300,000', split as 'Ini... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | country-phone | `dossier/compute/drivendata-doe.json` |
 | E2B | Hobby is USD 0 a month with 'One-time $100... | qualifies-with-caveat | documented | Sandboxes can be configured wit... | Sandbox storage is in... | email | `dossier/compute/e2b.json` |
+| E2B | The E2B Desktop Sandbox is a hosted Ubuntu... | qualifies-with-caveat | documented | Not an object store: a desktop... | A desktop sandbox is... | email | `dossier/compute/e2b-desktop.json` |
 | E2E Networks | no recurring free tier: GPU resources bill... | fails-identity | documented | not stated | not stated | institution | `dossier/compute/e2e-networks.json` |
 | EcoHash | A USD 1.00 welcome credit on every new acco... | trial-only | documented | not applicable: the unit is a m... | Terminating the insta... | email | `dossier/compute/ecohash.json` |
 | EFN | A free UNIX shell across Linux, BSD and Sol... | qualifies-with-caveat | documented | not applicable: the unit is a m... | The 60-day login cloc... | email | `dossier/compute/efn.json` |
@@ -508,7 +535,8 @@ breaking change.
 | Enterprise | A Start-up Grant of EUR 20,000 at 80 percen... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/enterprise.json` |
 | Enterprise Compute Initia... | A SGD 150 million programme that passes clo... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/enterprise-compute-initiative.json` |
 | envs.net | a shell account on a Debian 13 host with 20... | qualifies-with-caveat | documented | not applicable: the unit is a m... | files in /tmp are tem... | email | `dossier/compute/envs-net.json` |
-| EQVPS | no free tier; Nano is USD 3.00 a month | qualifies-with-caveat | documented | not applicable: the unit is a m... | the server persists w... | anonymous | `dossier/compute/eqvps-nat-nano.json` |
+| Epho | Epho's own page states a 'starting credit:... | qualifies-with-caveat | documented | Not an object store: the defaul... | Nothing idles, nothin... | email | `dossier/compute/epho.json` |
+| EQVPS | no free tier; Nano is USD 3.00 a month | qualifies-with-caveat | documented | not applicable: the unit is a m... | the server persists w... | email | `dossier/compute/eqvps-nat-nano.json` |
 | Esperanto Technologies | Ceased operations, while its own homepage s... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | anonymous | `dossier/compute/esperanto-technologies.json` |
 | EthernetServers | 1 GB KVM VPS from the vendor's own plan tab... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/ethernetservers.json` |
 | Eurobyte | RUB 14 per day, RUB 290 per month or RUB 29... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/eurobyte.json` |
@@ -521,14 +549,15 @@ breaking change.
 | Eventual | free tier published without a credit amount | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/eventual.json` |
 | Everstack | Sandbox compute bills per second at USD 0.0... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/everstack.json` |
 | Evolution Host | EUR 5.00/month for Starter: 1 CPU core at 4... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/evolution-host.json` |
-| exe.dev | No free tier; a 7-day trial with a paid Cha... | paid-only | documented | not applicable: the unit is a m... | Persistent disks are... | card | `dossier/compute/exe-dev.json` |
+| evroc | evroc's own documentation states Shared Mod... | paid-only | documented | Not an object store: the unit i... | The shared inference... | email | `dossier/compute/evroc.json` |
+| exe.dev | No free tier; a 7-day trial with a paid Cha... | paid-only | documented | not applicable: the unit is a m... | Persistent disks are... | institution | `dossier/compute/exe-dev.json` |
 | Exoscale | no free instance: resources bill by the sec... | paid-only | documented | not stated | not stated | email | `dossier/compute/exoscale.json` |
-| Expo | Expo and the SDK are free and open source u... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/expo.json` |
+| Expo | Expo and the Expo SDK are free and open sou... | qualifies-with-caveat | documented | not stated | Observe data retentio... | email | `dossier/compute/expo.json` |
 | ExtraVM | The 1 GB plan at USD 4.50 per month (1 core... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/extravm.json` |
 | Faable | Free plan, quoted: 'up to 3 projects per ac... | qualifies-with-caveat | documented | not applicable: the unit is a m... | a Free app sleeps aft... | email | `dossier/compute/faable.json` |
 | FABRIC | FABRIC is an NSF-funded instrument of 29 si... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/fabric.json` |
 | Factory | no free tier: individual plans are Pro at U... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/factory.json` |
-| fal | free tier published without a credit amount | paid-only | documented | not stated | not stated | email | `dossier/compute/fal.json` |
+| fal | No free GPU credit amount is published. The... | paid-only | documented | not stated | not stated | email | `dossier/compute/fal.json` |
 | fal Research Grants | Free compute on fal's inference platform. T... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/fal-research-grants.json` |
 | Fast Grants | The programme is offline. The domain now re... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/fast-grants.json` |
 | Fastly Compute | "10 Million Compute requests free" a month... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/fastly-compute.json` |
@@ -540,6 +569,7 @@ breaking change.
 | Filecoin Foundation Next | 'Next Step Microgrants are awarded in the a... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/filecoin-foundation-next.json` |
 | Firebase Hosting | On the no-cost Spark plan, Hosting storage... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/firebase-hosting.json` |
 | Firebase Studio | "Firebase Studio is sunsetting on March 22,... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/firebase-studio.json` |
+| Firebase Test Lab | Spark plan (no-cost): 10 test runs per day... | qualifies-with-caveat | documented | not applicable: the unit is a d... | Test result summary i... | email | `dossier/compute/firebase-test-lab.json` |
 | Firecrawl Interact / Brow... | Free plan: 1,000 credits every month, no cr... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/firecrawl.json` |
 | FireVM | No free allowance. Single-tenant bare-metal... | paid-only | documented | not applicable: the unit is a m... | Month to month: no lo... | national-id | `dossier/compute/firevm.json` |
 | Fireworks AI, Muse | A free first LoRA fine-tune with no card: '... | trial-only | documented | not applicable: the unit is a m... | the 2026-11-30 window... | email | `dossier/compute/fireworks-ai-muse.json` |
@@ -547,12 +577,12 @@ breaking change.
 | FirstVDS | No free GPU trial; the minimum paid period... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/firstvds.json` |
 | Flapjacks | No free tier. HK-T1ION-IPv6-Mini is USD 2.9... | dead | documented | not applicable: the unit is a m... | annual prepay; no del... | card | `dossier/compute/flapjacks-hk-t1ion-ipv6-mini.json` |
 | Flightcontrol | The Single user plan is free with unlimited... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/flightcontrol.json` |
-| Flow Swiss Mac Bare Metal | no free tier: Mac hardware from CHF 0.27 an... | paid-only | documented | not stated | not stated | email | `dossier/compute/flow-swiss-mac.json` |
+| Flow Swiss Mac Bare Metal | no free tier: Mac hardware from CHF 0.27 an... | paid-only | documented | not stated | not stated | any-phone | `dossier/compute/flow-swiss-mac.json` |
 | FlowVPS | The entry tier on the vendor's own pricing... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/flowvps.json` |
 | Fluence | A multi-provider neocloud selling CPU and G... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/fluence.json` |
 | Fluidstack | no free tier published | paid-only | documented | not stated | not stated | email | `dossier/compute/fluidstack.json` |
 | Fly.io | no free tier: 'New organizations don't have... | trial-only | documented | not applicable: the unit is a M... | a stopped Machine bil... | card | `dossier/compute/fly-io.json` |
-| Fly.io Machines | No. New organizations don't have a free tie... | trial-only | documented | not applicable: the unit is a m... | A stopped Machine kee... | card | `dossier/compute/fly-machines.json` |
+| Fly.io Machines | Yes. Every new account starts on the Free p... | trial-only | documented | not applicable: the unit is a m... | A stopped Machine kee... | card | `dossier/compute/fly-machines.json` |
 | Fosshost | Free VPS, web hosting, mirror and AArch64 c... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | anonymous | `dossier/compute/fosshost.json` |
 | FOSSVPS | FOSSVPS is a free 2 vCPU / 4 GiB / 64 GiB V... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/fossvps.json` |
 | FreeMach | 'FreeMach™ is a community-powered project t... | fails-identity | documented | '10/10 VMs Allocated (0 slots f... | not published as a cl... | institution | `dossier/compute/freemach-free.json` |
@@ -568,6 +598,7 @@ breaking change.
 | Galaxy Australia | "Galaxy Australia is one of the internation... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/galaxy-australia.json` |
 | Galaxy Europe | "On the European Galaxy server every user h... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/galaxy-europe.json` |
 | Galaxy Main | "The main Galaxy site at https://usegalaxy.... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/galaxy-main.json` |
+| GBOX | USD 100 in credits on signup; the Linux box... | qualifies-with-caveat | documented | 10 GiB of storage is free to us... | not stated: the prici... | email | `dossier/compute/gbox.json` |
 | Gcore Cloud / Functions /... | no free tier: VMs from EUR 8.93 a month, wi... | paid-only | documented | not stated | not stated | email | `dossier/compute/gcore.json` |
 | Google Compute Engine (Li... | 1 non-preemptible e2-micro instance for the... | qualifies-with-caveat | documented | not stated | not stated | card | `dossier/compute/gcp-compute.json` |
 | Google Compute Engine GPU... | not stated on https://cloud.google.com/prod... | paid-only | documented | not stated | not stated | card | `dossier/compute/gcp-compute-gpu.json` |
@@ -575,10 +606,13 @@ breaking change.
 | GEANT Testbeds Service | "GTS is currently available to researchers... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/geant-testbeds-service.json` |
 | Gemini API code execution | 'There's no additional charge for enabling... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/gemini-code-execution.json` |
 | Genesis Cloud | trial credits exist and the amount is not p... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/genesis-cloud.json` |
+| Genspark SB-Box | None for SB-Box: Free is not supported, SB-... | paid-only | documented | Every sandbox gets a 20 GB root... | 14 d | card | `dossier/compute/genspark-sb-box.json` |
+| Genymotion | A free 60-minute trial is available on requ... | paid-only | documented | not applicable: the unit is a r... | Device data is destro... | card | `dossier/compute/genymotion-saas.json` |
+| GetMac | $0 per month, including 100 compute minutes... | qualifies | documented | not applicable: the unit is a r... | Virtual machines are... | email | `dossier/compute/getmac.json` |
 | Gigalixir | Free tier, quoted: '1 App Replica (0.5 GB m... | qualifies-with-caveat | documented | not applicable: the unit is a m... | a Free app 'Sleeps af... | card | `dossier/compute/gigalixir.json` |
 | GitHub Actions | On a public repository: 'Use of the standar... | qualifies-with-caveat | documented | not applicable: the unit is a m... | 'When the job begins,... | email | `dossier/compute/github-actions.json` |
 | GitHub Codespaces | 'All GitHub personal accounts include a quo... | qualifies | documented | not applicable: the unit is a s... | 30 d | email | `dossier/compute/github-codespaces.json` |
-| GitHub Copilot cloud sand... | a metered quota on the Copilot plan, with c... | qualifies-with-caveat | documented | not stated | not stated | card | `dossier/compute/github-copilot-cloud-sandboxes.json` |
+| GitHub Copilot cloud sand... | a metered quota on the Copilot plan, with c... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/github-copilot-cloud-sandboxes.json` |
 | GitHub Copilot Student | Quoted from the pack: 'GitHub Copilot Stude... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/github-copilot-student.json` |
 | GitHub Secure Open | Quoted from the programme page: 'It is $10,... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/github-secure-open.json` |
 | GitHub Sponsors | 'Anyone who contributes to an open source p... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/github-sponsors.json` |
@@ -589,8 +623,11 @@ breaking change.
 | GKE Agent Sandbox | USD 300 of one-time Free Trial credit, vali... | qualifies-with-caveat | documented | not stated | suspending a sandbox... | card | `dossier/compute/gke-agent-sandbox.json` |
 | Gladia | 'New accounts get EUR 50 in free credits, v... | qualifies-with-caveat | documented | not applicable: the unit is a m... | the wallet is one yea... | email | `dossier/compute/gladia.json` |
 | Gladiolus (vm.gl) | 'Virtual machines for people building thing... | qualifies-with-caveat | documented | not applicable: the unit is a m... | 'No expiration: Keep... | email | `dossier/compute/gladiolus-vm-gl.json` |
+| Glasshand | no free tier: a real iPhone is USD 60 per m... | paid-only | documented | not applicable: the unit is a d... | The device is dedicat... | card | `dossier/compute/glasshand.json` |
 | Glitch | shut down: the newest post on the blog is 2... | dead | documented | not applicable | project hosting ended... | email | `dossier/compute/glitch.json` |
 | Global AI Hackathon | 'Compete for total $70,000+ in cash and clo... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/global-ai-hackathon.json` |
+| GMI Cloud Agentbox | Registration of a template, launching a pri... | paid-only | documented | about 500 MB per sandbox file u... | 7 d | email | `dossier/compute/gmi-cloud-agentbox.json` |
+| GMI Cloud Inference | Free model endpoints on select open-source... | qualifies-with-caveat | documented | not applicable: the unit is tok... | unverified: no retent... | email | `dossier/compute/gmi-cloud-inference.json` |
 | GMI Cloud SCALE | a six-week equity-free cohort for AI startu... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/gmi-cloud-scale.json` |
 | Godlike.Host | USD 2.00/month for Nitro 1 on a 1 Gbps port... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/godlike-host.json` |
 | Golem Network | Peer-to-peer compute priced by each provide... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/golem-network.json` |
@@ -606,8 +643,10 @@ breaking change.
 | Google Cloud Spot | Google publishes two numbers that answer th... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/google-cloud-spot.json` |
 | Google Cloud Text-to-Speech | A recurring monthly free allowance per voic... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/google-cloud-text-to-speech.json` |
 | Google Cloud Free Trial (... | Signing up for the Free Trial creates a Fre... | trial-only | documented | not applicable: the offer is a... | 90 d | card | `dossier/compute/google-cloud-trial.json` |
+| Google Cloud Workstations | none for Cloud Workstations: the service is... | paid-only | documented | not applicable: the unit is a m... | the workstation persi... | card | `dossier/compute/google-cloud-workstations.json` |
 | Google Colab | free of charge access to computing resource... | qualifies-with-caveat | documented | not applicable: the unit is a s... | the VM disk is delete... | email | `dossier/compute/google-colab.json` |
 | Google Colab (paid tiers) | no published quota on any tier: Colab state... | fails-quota | documented | not applicable: the unit is a m... | a VM is deleted when... | card | `dossier/compute/google-colab-paid.json` |
+| Google Developer Device P... | No free tier is published. During public pr... | paid-only | documented | not applicable: the unit is a d... | not stated: the prici... | email | `dossier/compute/google-developer-device-platform.json` |
 | Google Gemini API | The free tier still exists and the pricing... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/google-gemini-api.json` |
 | Google Open Source | 'you can claim rewards for proactive improv... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/google-open-source.json` |
 | Google Summer | 'large projects range from $3000 to $6600 U... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/google-summer.json` |
@@ -617,6 +656,7 @@ breaking change.
 | GPU Outlet | no free tier and no rented machine: a marke... | fails-identity | documented | not applicable: the unit is res... | not applicable: the m... | institution | `dossier/compute/gpu-outlet.json` |
 | Grafana Cloud | Free plan, quoted: 'Always free Always', '$... | qualifies-with-caveat | documented | 256kb per log line (max_line_si... | 14 d | email | `dossier/compute/grafana-cloud.json` |
 | Graphcore IPU Cloud | The free tier is gone and what remains is a... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/graphcore-ipu-cloud.json` |
+| Gravix Layer | Early access includes USD 250 in free credi... | qualifies-with-caveat | documented | A verified Tier 0 account can u... | Kill removes the runt... | email | `dossier/compute/gravix-layer.json` |
 | Green Compute | No free tier. RTX 4090 rental is USD 0.40 p... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/green-compute.json` |
 | GreenCloudVPS | no free tier; the sale's smallest rung is t... | qualifies-with-caveat | documented | not applicable: the unit is a m... | annual prepay; the ca... | card | `dossier/compute/greencloud-budget-kvm-8gb.json` |
 | GreenCloudVPS | Budget KVM Sale: 22 of the 44 order lines a... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/greencloudvps.json` |
@@ -642,6 +682,7 @@ breaking change.
 | Hetzner Cloud | no free tier; the entry shape CX23 is EUR 5... | paid-only | documented | not applicable: the unit is a m... | a VM is retained all... | card | `dossier/compute/hetzner-cloud.json` |
 | Hetzner | no free tier; the cheapest cloud server is... | paid-only | documented | not applicable: the unit is a m... | the server is billed... | card | `dossier/compute/hetzner-cx23.json` |
 | Hetzner GPU servers | no free tier: GEX GPU servers from EUR 214.... | paid-only | documented | not stated | not stated | email | `dossier/compute/hetzner-gpu.json` |
+| Hetzner Inference API (ex... | Free of charge as long as the Inference API... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the A... | email | `dossier/compute/hetzner-inference-api.json` |
 | Hetzner Server Auction | The auction listing served on 2026-10-22 ho... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/hetzner-server-auction.json` |
 | Hetzner SX storage servers | Three SX models, all with SATA HDD plus NVM... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/hetzner-storage.json` |
 | Hex | Community is free and includes Small comput... | qualifies-with-caveat | documented | not applicable: the unit is a s... | 7 d | email | `dossier/compute/hex-community.json` |
@@ -680,7 +721,8 @@ breaking change.
 | HostSlate | A newly launched Chinese-language merchant... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/hostslate.json` |
 | Hostwinds | no free tier; Managed Windows SSD Cloud 7 i... | paid-only | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/hostwinds-windows.json` |
 | Hot Aisle | AMD-only GPU host: the pricing page lists n... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/hot-aisle.json` |
-| Huawei Cloud AgentArts | the trial edition grants 20 CU of runtime o... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/huawei-cloud.json` |
+| HPC-AI.COM | No standing free tier: the pricing page lis... | paid-only | documented | not applicable: the unit is a G... | Data disks are not pe... | card | `dossier/compute/hpc-ai.json` |
+| Huawei Cloud AgentArts | the trial edition grants 20 CU once, free,... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/huawei-cloud.json` |
 | Huawei Cloud International | Withdrawn. The international free-packages... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/huawei-cloud-international.json` |
 | Huawei Cloud (international) | 'Free trial is available for each product o... | fails-identity | documented | one newcomer package per user:... | Not stated on the fre... | card | `dossier/compute/huawei-cloud-intl-free-trial.json` |
 | Hub71 | For the Access Programme: 'AED 250,000 wort... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/hub71.json` |
@@ -694,7 +736,7 @@ breaking change.
 | HyperAI | A membership whose monthly fee buys a fixed... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/hyperai.json` |
 | Hyperbeam | 10,000 free minutes every month, then pay a... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/hyperbeam.json` |
 | Hyperbolic | no free tier: on-demand GPU rental at start... | paid-only | documented | not stated | not stated | email | `dossier/compute/hyperbolic.json` |
-| Hyperbrowser | 5,000 credits on a free account, enough for... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not stated on the pag... | email | `dossier/compute/hyperbrowser.json` |
+| Hyperbrowser | 5,000 credits on a free account, enough for... | qualifies-with-caveat | documented | not applicable: the unit is a m... | 7 d | email | `dossier/compute/hyperbrowser.json` |
 | Hyperstack | no free tier: GPU and CPU capacity billed p... | paid-only | documented | not stated | not stated | email | `dossier/compute/hyperstack.json` |
 | IBM Cloud | The free page states: 'You get credit for y... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/ibm-cloud.json` |
 | IBM Cloud VPC | no free tier: new VPC clients get 70% off f... | trial-only | documented | not stated | not stated | card | `dossier/compute/ibm-cloud-vpc.json` |
@@ -713,19 +755,20 @@ breaking change.
 | Inference.net | Pay as you go is priced '$0+ usage' and inc... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/inference-net.json` |
 | Inference-Time Compute Ha... | 'Participants will also receive serious com... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/inference-time-compute-hackathon.json` |
 | InfluxDB Cloud Serverless | Two offers on one page. The Free Plan, quot... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/influxdb-cloud-serverless.json` |
-| Infomaniak Public Cloud | 'Get started free of charge with CHF 300.-... | fails-identity | documented | once per customer: 'this offer... | the credits expire: '... | card | `dossier/compute/infomaniak-public-cloud.json` |
+| Infomaniak Public Cloud | 'Get started free of charge with CHF 300.-... | fails-identity | documented | once per customer: 'this offer... | the credits expire: '... | country-phone | `dossier/compute/infomaniak-public-cloud.json` |
 | Infrawire | EUR 8.30/month for VPS Entry in Istanbul, p... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/infrawire.json` |
 | inis.run | New accounts get EUR 1.00 in credit, no car... | trial-only | documented | not applicable: the unit is a m... | The continuous-live b... | email | `dossier/compute/inis-run.json` |
+| Inngest Sandboxes | No free Sandbox allowance: Sandboxes are in... | paid-only | documented | not applicable: the unit is a m... | A Sandbox boot in und... | email | `dossier/compute/inngest-sandboxes.json` |
 | InsForge (InstaCloud) | $10 of usage credit a month that refreshes,... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/insforge-instacloud.json` |
-| InstaBox | 'Free gives you one 4 vCPU / 8 GiB machine... | qualifies-with-caveat | documented | not applicable: the unit is a m... | The five-machine gran... | email | `dossier/compute/instabox.json` |
-| InstaVM | Free with a $0 base price, $50 of credits t... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/instavm.json` |
+| InstaBox | Free gives one 4 vCPU / 8 GiB machine at US... | qualifies-with-caveat | documented | not applicable: the unit is a m... | The five-machine gran... | email | `dossier/compute/instabox.json` |
+| InstaVM | Free has a $0 base price, $50 of credits to... | qualifies-with-caveat | documented | not stated | not stated | card | `dossier/compute/instavm.json` |
 | Intel Liftoff | The programme promises 'Free cloud credits... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/intel-liftoff.json` |
 | Intel Tiber Developer | Free sandbox for oneAPI work: 120 days of a... | trial-only | documented | not applicable: the unit is a m... | the account expires a... | email | `dossier/compute/intel-tiber-developer.json` |
 | InterServer | USD 3.00/month for 1 slice: 1 core, 2 GB me... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/interserver.json` |
 | InterServer | no free tier; the Windows product starts at... | paid-only | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/interserver-windows.json` |
 | Intuned | the $0 plan includes 3 compute hours, a $5... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/intuned.json` |
 | Invs | The page is titled 'Server rental from 1200... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/invs.json` |
-| io.net Intelligence | A free daily inference allowance exists and... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/io-net-intelligence.json` |
+| io.net Intelligence | The Standard plan gives free, light daily a... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/io-net-intelligence.json` |
 | IONOS Cloud | no free tier: CPU, RAM, storage and GPU tem... | paid-only | documented | not stated | not stated | card | `dossier/compute/ionos.json` |
 | IONOS | VPS S+: 1 vCore, 2 GB RAM, 60 GB NVMe, unli... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/ionos-2.json` |
 | IONOS CLOUD | 'During the trial period, 8 cores, 20 GB RA... | fails-identity | documented | the trial pool is shared across... | 'After the test phase... | card | `dossier/compute/ionos-cloud-trial.json` |
@@ -734,7 +777,9 @@ breaking change.
 | is_hosting | Lite (order page 2026-11-07): 1 Month USD 6... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/is-hosting.json` |
 | Isle | Free plan at $0 per month: 5 environment-ho... | qualifies-with-caveat | documented | Individual uploads and download... | not stated | email | `dossier/compute/isle.json` |
 | Islo | starting credits at signup with no card; a... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/islo.json` |
+| Isorun | USD 50 credit for every new account, about... | trial-only | documented | the ladder runs past 1 vCPU; th... | not established first... | email | `dossier/compute/isorun.json` |
 | IT4Innovations Open Access | The 39th Open Access Grant Competition dist... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/it4innovations-open-access.json` |
+| IteraCompute | unverified: the free Qwen3.8-27B promotion... | paid-only | documented | not applicable: the unit is mod... | unused Auto tokens fr... | email | `dossier/compute/iteracompute.json` |
 | ITIDA StartIT / | USD 10,000 of AWS credit within a one-year... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/itida-startit.json` |
 | iWebFusion | Tiny at $9.38 per month: 1 CPU core, 4 GB R... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/iwebfusion.json` |
 | iwinv | no free tier; the smallest server is KRW 5,... | fails-identity | documented | not applicable: the unit is a m... | monthly billing; the... | national-id | `dossier/compute/iwinv.json` |
@@ -744,6 +789,7 @@ breaking change.
 | JetBrains AI | JetBrains AI Free: "Unlimited AI completion... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/jetbrains-ai.json` |
 | JetBrains Student Pack | The Student Pack is quoted as '10 JetBrains... | fails-quota | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/jetbrains-student-pack.json` |
 | Jetstream2 | Jetstream2 bills every instance in ACCESS s... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/jetstream2.json` |
+| Jalebi | Free plan: 500 credits a month, 1 auto-prov... | qualifies-with-caveat | documented | not applicable: the unit is an... | short-term memory wit... | email | `dossier/compute/jilebi.json` |
 | JJFLY (拼好鸡) | No free tier. 荷兰NAT is CNY 1.00 a month: 25... | qualifies | documented | not applicable: the unit is a m... | refunds rather than r... | email | `dossier/compute/jjfly-nl-nat.json` |
 | JSC Test | Test projects grant a computing-time budget... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/jsc-test.json` |
 | Jules | Jules free plan: 15 daily tasks on a rollin... | qualifies | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/jules.json` |
@@ -757,6 +803,7 @@ breaking change.
 | Kamatera | no free tier on the pricing page; 'Our serv... | qualifies | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/kamatera-basic.json` |
 | Kamatera | no free tier; the 4 vCPU Type A shape with... | paid-only | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/kamatera-windows.json` |
 | Kedge | $5 of usage a month, recurring, consumed be... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/kedge.json` |
+| Keln Sandboxes | unverified: no free sandbox allowance or tr... | paid-only | documented | request body 1 MB; file uploads... | 1 d | card | `dossier/compute/keln-sandboxes.json` |
 | Kencang | no free tier; K-1 at Rp29.900 a month is th... | qualifies | documented | not applicable: the unit is a m... | the disk persists whi... | email | `dossier/compute/kencang-k3.json` |
 | Kernel | free: USD 0 a month plus usage, USD 5 of fr... | qualifies-with-caveat | documented | not applicable: the unit is a m... | 1 d | email | `dossier/compute/kernel.json` |
 | KhanWebHost (KhanWebHost... | No free tier. FR 256 MB NAT is USD 5.99 a y... | qualifies-with-caveat | documented | not applicable: the unit is a m... | annual prepay; the st... | card | `dossier/compute/khanwebhost-fr-256mb-nat-kvm.json` |
@@ -766,27 +813,32 @@ breaking change.
 | Kimsufi (OVHcloud) | no free tier; KS-3 is USD 30.00 a month for... | qualifies-with-caveat | documented | not applicable: the unit is a m... | the disks persist whi... | card | `dossier/compute/kimsufi-windows.json` |
 | KINX IXcloud | The 기본 인스턴스 ladder starts at 1 vCPU with 1... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/kinx-ixcloud.json` |
 | Koara Cloud | RUB 279 per month for START-1 in Germany: 1... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/koara-cloud.json` |
+| Kobiton | A free trial of the platform with 300 testi... | qualifies-with-caveat | documented | not applicable: the metered uni... | unverified: no test-r... | email | `dossier/compute/kobiton.json` |
+| kosem | $0 per month plus usage, with $10 of starte... | qualifies-with-caveat | documented | up to 50 MiB per file and up to... | 90 d | email | `dossier/compute/kosem.json` |
 | Koyeb | One Free Instance per organization: 512 MB... | fails-identity | documented | one Free Instance per organizat... | no persistent storage... | card | `dossier/compute/koyeb.json` |
 | Krova Cloud | Claim $5 in free credit - one-time, per acc... | qualifies-with-caveat | documented | not applicable: the unit is a m... | Power off a Cube and... | email | `dossier/compute/krova-cube.json` |
-| Lambda | no free tier: self-serve instances priced p... | paid-only | documented | not stated | not stated | email | `dossier/compute/lambda.json` |
+| Kubi | There is no free tier: disposable screens r... | paid-only | documented | file upload or download is capp... | 30 d | email | `dossier/compute/kubi.json` |
+| Lambda | no free tier: self-serve instances priced p... | paid-only | documented | not stated | not stated | card | `dossier/compute/lambda.json` |
 | Lambda Cloud credits | Get USD 1,000 in cloud credits to build AI... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/lambda-cloud-credits.json` |
 | Lambda Research Grant | 'We're committed to supporting groundbreaki... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/lambda-research-grant.json` |
 | LandVPS | RUB 90/month (RU-0): 1 vCore Intel Gold at... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/landvps.json` |
-| LangSmith Sandboxes | one free seat and one free Serverless (Smal... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/langsmith-sandbox.json` |
+| LangSmith Sandboxes | one free Developer seat and 8 LSU of Sandbo... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/langsmith-sandbox.json` |
 | Latitude.sh | no free compute tier: metal, VM and GPU ins... | paid-only | documented | not stated | not stated | email | `dossier/compute/latitude-sh.json` |
 | LayerOne | no free tier; the cheapest plan, gc.pico, i... | paid-only | documented | not applicable: the unit is a m... | a server runs and bil... | email | `dossier/compute/layerone.json` |
 | LCCF Horizon Leadership | Large allocations from 125,000 to 500,000 S... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/lccf-horizon-leadership.json` |
 | LeaderGPU | European dedicated bare-metal GPU servers s... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/leadergpu.json` |
 | Leafcloud | 50 GPU hours a month, free, every month, on... | qualifies-with-caveat | documented | not applicable: the unit is a m... | Persistent storage is... | card | `dossier/compute/leafcloud-run.json` |
-| Leap0 | machines that spin up in 100 ms and tear do... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/leap0.json` |
+| Leap0 | Free during public preview — no credit card... | qualifies-with-caveat | documented | A sandbox has a 10 GiB disk rat... | A sandbox has a 10 Gi... | email | `dossier/compute/leap0.json` |
 | Leapcell | Hobby at USD 0 per seat a month: 20 project... | qualifies-with-caveat | documented | up to 3 vCPUs and 4 GB RAM per... | not stated on the pri... | email | `dossier/compute/leapcell.json` |
 | LeapSwitch | USD 9.00/month (G2-LU-4G): 2 Epyc vCPUs, 4,... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/leapswitch.json` |
 | Leonardo.Ai | Free plan at USD 0 a month with 'Fast Token... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/leonardo-ai.json` |
 | LFX Mentorship | Quoted from the funding announcement: 'we s... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/lfx-mentorship.json` |
 | Liara | 'هزینه اعتبار اولیه لیارا برای افتتاح حساب،... | trial-only | documented | not applicable: the unit is a m... | One charge, then a ha... | email | `dossier/compute/liara.json` |
+| Lightcone | unverified: the pricing page states no free... | paid-only | documented | File uploads to a desktop are c... | A computer is destroy... | email | `dossier/compute/lightcone-compute.json` |
 | Lightning AI | one CPU Studio free 24/7 with a restart eve... | dead | documented | not applicable: the unit is a m... | a Studio keeps its fi... | any-phone | `dossier/compute/lightning-ai.json` |
 | LightNode | no free tier; the Tokyo Start plan is USD 7... | paid-only | documented | not applicable: the unit is a m... | hourly billing; the i... | email | `dossier/compute/lightnode-tokyo.json` |
 | Lightpanda | Explorer: USD 0 for ever, 10 browser hours... | qualifies-with-caveat | documented | not applicable: the unit is a m... | no session storage is... | email | `dossier/compute/lightpanda.json` |
+| Limrun | Free trial with 120 one-time credits at USD... | trial-only | documented | not stated | Disk snapshots restor... | email | `dossier/compute/limrun.json` |
 | Linceris | EUR 14.99/month for VPS Package 1 in Frankf... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | any-phone | `dossier/compute/linceris.json` |
 | Akamai Cloud / Linode | No English signup credit is published. The... | paid-only | documented | not stated | not stated | card | `dossier/compute/linode.json` |
 | Linuxzoo | 'Learn Linux from the safety of your chair... | fails-egress | documented | 'You are allowed to have only o... | 'This previous image... | email | `dossier/compute/linuxzoo.json` |
@@ -798,7 +850,7 @@ breaking change.
 | LittleCreek | USD 7.95/month (Starter VPS): 2 vCPU, 4 GB... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/littlecreek.json` |
 | Lium | Quoted, read 2026-10-22: 'New accounts can... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/lium.json` |
 | Livepeer Studio | Sandbox plan, free: 1,000 transcoding minut... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/livepeer-studio.json` |
-| Lizard | 'Pro costs $19 a month and includes $19 in... | trial-only | documented | 'Sandboxes come in three sizes... | A successful pause st... | card | `dossier/compute/lizard.json` |
+| Lizard | USD 19 Pro includes USD 19 of usage; a 7-da... | trial-only | documented | Six sandbox sizes: Nano 0.5 vCP... | A paused sandbox and... | card | `dossier/compute/lizard.json` |
 | Locaweb | no free tier; R$ 15,90 a month on a 24-mont... | fails-identity | documented | not applicable: the unit is a m... | the server persists w... | national-id | `dossier/compute/locaweb-vps.json` |
 | Lovable | Lovable Free: "Daily build credits 5/day, 3... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/lovable.json` |
 | LowHosting | EUR 3.00/month (RKVMProtected, 1 GB): 1 Ryz... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/lowhosting.json` |
@@ -806,24 +858,30 @@ breaking change.
 | LumaDock | no free tier; VPS.S1 at USD 4.99 is the che... | qualifies-with-caveat | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/lumadock-vps-s1.json` |
 | LUMI | Access to LUMI requires membership of a pro... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/lumi.json` |
 | luo_cloud | no free tier; the smallest card on the stor... | qualifies | documented | not applicable: the unit is a m... | the container persist... | email | `dossier/compute/luo-cloud-lxc-nat.json` |
+| Luxor Agent Cloud | USD 100 one-time credit when a payment meth... | qualifies-with-caveat | documented | not applicable: the unit is a v... | A paused sandbox keep... | card | `dossier/compute/luxor-agent-cloud-sandbox.json` |
 | Luxvps | EUR 4.50/month (KVM Rootserver Tiny): 1 Int... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/luxvps.json` |
-| Lyceum | GPUs are billed per second with no subscrip... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/lyceum.json` |
-| machine0 | no free tier: per-minute billing from $0.01... | paid-only | documented | not stated | not stated | email | `dossier/compute/machine0.json` |
-| MacinCloud | no free tier and no trial on dedicated plan... | paid-only | documented | not stated | not stated | email | `dossier/compute/macincloud.json` |
-| MacStadium | no free tier: Mac hosting on fixed monthly... | paid-only | documented | not stated | not stated | email | `dossier/compute/macstadium.json` |
+| Lyceum | USD per GPU hour, billed per second with no... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/lyceum.json` |
+| macbox | USD 10 of prepaid credit to start, about 20... | qualifies-with-caveat | documented | not applicable: the unit is a m... | 14 d | email | `dossier/compute/macbox.json` |
+| machine0 | No free tier: per-minute billing from USD 0... | paid-only | documented | not stated | A suspended VM keeps... | email | `dossier/compute/machine0.json` |
+| MacinCloud | No free tier and no trial on dedicated plan... | paid-only | documented | not stated | not stated | email | `dossier/compute/macincloud.json` |
+| MacRent | none: no free allowance, trial or credit is... | paid-only | documented | not applicable: the rented unit... | Machines are wiped wh... | card | `dossier/compute/macrent.json` |
+| MacRun | none: no free allowance, trial or credit is... | paid-only | documented | not applicable: the rented unit... | When your lease ends,... | card | `dossier/compute/macrun.json` |
+| MacStadium | no free tier: individual hosted Macs are li... | paid-only | documented | not stated | not stated | email | `dossier/compute/macstadium.json` |
+| Macswarm | 3 Pod-hours free, once, with 1 Pod at a tim... | trial-only | documented | not applicable: the Pod is a ma... | 30 d | email | `dossier/compute/macswarm.json` |
 | Magalu Cloud | R$ 100 in promotional credits in the first... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | national-id | `dossier/compute/magalu-cloud.json` |
 | Malaysia Digital Accelera... | Up to RM 2 million in performance-based fun... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/malaysia-digital-acceleration.json` |
+| Mandala Computer | No free tier stated: a paid plan or prepaid... | paid-only | documented | Files of up to 2 GiB go into a... | Files, logins and ins... | email | `dossier/compute/mandala-computer.json` |
 | Manus | Manus Free: "Free Plan Price: $0/month", "D... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/manus.json` |
 | Manus Cloud Computer | no free tier: Cloud Computer is a persisten... | paid-only | documented | not stated | not stated | email | `dossier/compute/manus-cloud-computer.json` |
-| Maritime | Free at $0/mo, no card needed; the first pa... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/maritime.json` |
+| Maritime | new accounts get a 7-day free trial with up... | qualifies-with-caveat | documented | not stated | not stated | card | `dossier/compute/maritime.json` |
 | Marlin | TEE and ZK coprocessors for delegating work... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/marlin.json` |
 | Massed Compute | Operator-run on-demand GPU VMs with a full... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/massed-compute.json` |
-| Mastra | Mastra Platform Starter, $0 a month: 100K e... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/mastra.json` |
+| Mastra | Mastra Platform Free, USD 0 a month: 40 vCP... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/mastra.json` |
 | Matpool | Chinese GPU cloud (JuChiYun) publishing per... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | country-phone | `dossier/compute/matpool.json` |
 | Metorial | a free Dev plan, a fixed-price Scale plan a... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/metorial.json` |
 | 喵云 (miaomiao.moe) | No free tier. HGC-Nano is CNY 6.60 a month,... | qualifies-with-caveat | documented | not applicable: the unit is a m... | monthly billing; no d... | card | `dossier/compute/miaomiao-hgc-nat-nano.json` |
 | microLXC | 'Get a free LXC container with instant* dep... | qualifies-with-caveat | documented | not applicable: the unit is a c... | no retention term is... | institution | `dossier/compute/microlxc-tiny.json` |
-| microsandbox | a monthly pool of 5 vCPU-hours, 20 GiB-hour... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/microsandbox.json` |
+| microsandbox | free trial: USD 10 one-time credit, 1 sandb... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/microsandbox.json` |
 | Microsoft | Up to USD 200 in Startup credits immediatel... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/microsoft.json` |
 | Microsoft Agents Academy | The official rules award no cloud credit. T... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/microsoft-agents-academy.json` |
 | Microsoft AI | 'a total of $5 million in Azure service cre... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/microsoft-ai.json` |
@@ -840,10 +898,13 @@ breaking change.
 | Mitos | USD 100 of signup credit, no card; prepaid... | paid-only | documented | not applicable: the unit is a m... | Storage is metered at... | email | `dossier/compute/mitos.json` |
 | mivoCloud | S1 at EUR 5.00/month billed monthly, EUR 14... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/mivocloud.json` |
 | MLPerf | MLPerf awards no compute at all. The progra... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/mlperf.json` |
+| Mobilebox | No priced free tier: new workspaces get fre... | qualifies-with-caveat | documented | not applicable: the unit is a p... | A parked phone keeps... | email | `dossier/compute/mobilebox.json` |
+| Mobilerun | Free, $0 a month: 1 concurrent phone, 60 ph... | qualifies-with-caveat | documented | not applicable: the unit is pho... | A stopped Android pho... | institution | `dossier/compute/mobilerun.json` |
 | Modal | Starter has no monthly fee and includes USD... | fails-identity | documented | not applicable: the unit is a s... | Volumes persist while... | card | `dossier/compute/modal.json` |
 | Modal for Academics | Stated as 'Unlock up to $10k of credits to... | fails-identity | documented | not applicable: the unit is a c... | not applicable: the g... | institution | `dossier/compute/modal-for-academics.json` |
 | Modelence | a free tier for hobby projects and prototyp... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/modelence.json` |
 | molab | free: 4 CPUs and 32 GB RAM per notebook, an... | qualifies | documented | not applicable: the unit is a s... | a limited amount of p... | email | `dossier/compute/molab.json` |
+| Molted | No free tier. A time-boxed trial credits th... | trial-only | documented | not applicable: the unit is an... | A versioned workspace... | email | `dossier/compute/molted.json` |
 | Mondoze | 2GB LINUX VPS ('2 GB Linux VPS (MY) V2') at... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/mondoze.json` |
 | MongoDB | Free MongoDB Atlas credits and Voyage AI to... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/mongodb.json` |
 | Moonshot Kimi Hosted Agen... | no free tier: each hosted-agent session run... | paid-only | documented | not stated | not stated | email | `dossier/compute/moonshot-kimi.json` |
@@ -855,9 +916,12 @@ breaking change.
 | Mozilla Foundation Human-... | 'Applicants to this cohort will be eligible... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/mozilla-foundation-human-scale.json` |
 | Mozilla Open Source | 'Generally anyone who maintains an open sou... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/mozilla-open-source.json` |
 | MrVM | The cheapest entry on the largest price-sor... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/mrvm.json` |
+| Munito | The trial gives $0.90 of sandbox time for 7... | trial-only | documented | not applicable: the unit is a m... | A sandbox runs until... | card | `dossier/compute/munito-sandboxes-trial.json` |
+| My Remote Mac | The shortest lease is 24 hours at $14 for t... | paid-only | documented | not applicable: the unit is a p... | 7 d | card | `dossier/compute/my-remote-mac-daily-m4.json` |
 | Binder (mybinder.org) | free and unauthenticated: at least 1 GB RAM... | fails-quota | documented | not applicable: the unit is a s... | none: 'We do not offe... | anonymous | `dossier/compute/mybinder.json` |
 | NAIRR Pilot | Compute, model and platform allocations fro... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/nairr-pilot.json` |
 | NAISS / PDC | Small test allocations on the NAISS Dardel... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/naiss-pdc.json` |
+| naïve | Start free with 5,000 credits to try the wh... | qualifies-with-caveat | documented | not applicable: the unit is an... | Included credit rolls... | email | `dossier/compute/naive-free.json` |
 | Namespace | a 30-day free trial of Compute, Devboxes, G... | trial-only | documented | not stated | not stated | email | `dossier/compute/namespace.json` |
 | nanoHUB | "Each free nanoHUB account comes with 10 GB... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/nanohub.json` |
 | Naranja | no free tier; the cheapest listed plan is '... | paid-only | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/naranja-kvm-nvme-2gb.json` |
@@ -873,7 +937,7 @@ breaking change.
 | Nebius | no free tier: computing resources bill per... | paid-only | documented | not stated | not stated | email | `dossier/compute/nebius.json` |
 | Nebius ConTree (Token Fac... | free while in beta: runs do not consume cre... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/nebius-contree.json` |
 | Nebius research grants | GPU cloud credits, Token Factory tokens and... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/nebius-research-grants.json` |
-| NeevCloud | 'Sign up today and claim INR 2,000 in FREE... | trial-only | documented | not applicable: the unit is a m... | The CPU credit burns... | email | `dossier/compute/neevcloud.json` |
+| NeevCloud | The sign-up page advertises '₹15,000 free c... | trial-only | documented | not applicable: the unit is a m... | The CPU credit burns... | national-id | `dossier/compute/neevcloud.json` |
 | Neo4j AuraDB | AuraDB Free, quoted from the quotas page: '... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/neo4j-auradb.json` |
 | NEOXIS Corp. | no free tier is published; one fixed-term p... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/neoxis.json` |
 | NERSC Exploratory | "Research projects that are new to NERSC an... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/nersc-exploratory.json` |
@@ -891,9 +955,12 @@ breaking change.
 | NexusBytes | no free tier; the cheapest advertised VPS i... | paid-only | documented | not applicable: the unit is a m... | not stated on the pri... | card | `dossier/compute/nexusbytes.json` |
 | NHN Cloud | KRW 200,000 signup credit after registering... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | country-phone | `dossier/compute/nhn-cloud.json` |
 | Nineteen AI | Bittensor subnet 19 (Rayon Labs) advertises... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/nineteen-ai.json` |
+| Nirvana Labs | No recurring free sandbox allowance is publ... | paid-only | documented | not applicable: the unit is a s... | Ephemeral sandboxes h... | card | `dossier/compute/nirvana-agent-sandboxes.json` |
 | Nobus Cloud | Up to NGN 500,000,000 of cloud credit acros... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/nobus-cloud.json` |
 | NoctHost | no free tier is published; GPU VPS by the h... | paid-only | documented | not applicable: the unit is a m... | a GPU server is delet... | email | `dossier/compute/nocthost-gpu.json` |
-| Nodus Compute | no free tier: six CPU and memory sizes from... | paid-only | documented | not stated | not stated | email | `dossier/compute/nodus-compute.json` |
+| Nodion | No recurring free tier. New accounts can ea... | paid-only | documented | workspace disk is 16 GB on GP-G... | A sandbox lives until... | email | `dossier/compute/nodion-sandboxes.json` |
+| Nodus Compute | no free tier: six CPU and memory sizes from... | paid-only | documented | not stated | 30 d | card | `dossier/compute/nodus-compute.json` |
+| NoMac | No free tier is stated. Mac time is prepaid... | paid-only | documented | a 20 GB encrypted drive at ~/dr... | 30 d | email | `dossier/compute/nomac.json` |
 | Nomic | a Free plan that needs no card: 'No credit... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/nomic.json` |
 | Northflank | Sandbox plan at USD 0: 'Up to $20/mo of res... | fails-identity | documented | 2 services, 2 jobs and 1 databa... | resources persist whi... | card | `dossier/compute/northflank.json` |
 | Nosana | The USD 50 is real as an announcement but n... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/nosana.json` |
@@ -907,11 +974,13 @@ breaking change.
 | NVIDIA Inception | A free program with no application fees, de... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/nvidia-inception.json` |
 | NVIDIA LaunchPad | Withdrawn. The 2024-02-29 capture states 'N... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/nvidia-launchpad.json` |
 | O'Shaughnessy Fellowship | '1 Year. Up to $100,000.' The site states '... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/o-shaughnessy-fellowship.json` |
-| OakHost | no free tier: dedicated Mac mini hosting fr... | paid-only | documented | not stated | not stated | email | `dossier/compute/oakhost.json` |
+| OakHost | no free tier: dedicated Mac mini hosting fr... | paid-only | documented | not stated | The Mac is dedicated... | email | `dossier/compute/oakhost.json` |
 | oblako.kz | A free test server for up to 5 days for leg... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | any-phone | `dossier/compute/oblako-kz.json` |
+| Oblien | Sign up free, get 500 credits; the earlier... | qualifies-with-caveat | documented | not applicable: the billable un... | 30 d | email | `dossier/compute/oblien.json` |
 | Oblivus | no free GPU tier is published; on-demand ra... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/oblivus.json` |
 | Observable | free notebooks with 'Few tokens / day' of a... | fails-quota | documented | not applicable: the unit is a s... | not stated | email | `dossier/compute/observable-free.json` |
 | Ocean Network / | A self-serve grant with no wallet extension... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/ocean-network.json` |
+| offstage | $5.00 of free credit, no card needed; a new... | qualifies-with-caveat | documented | a sandbox file write or read ma... | 7 d | email | `dossier/compute/offstage.json` |
 | OLCF Director's Discretio... | The OLCF Director's Discretionary program a... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/olcf-director-s-discretionary.json` |
 | Omega Gradient | no free tier is published; the marketplace... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/omega-gradient.json` |
 | Omnara | no platform fee: the software is free and u... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/omnara.json` |
@@ -926,12 +995,13 @@ breaking change.
 | Open Technology Fund | 'Awards are between $10,000 and $900,000 fo... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/open-technology-fund.json` |
 | Open Telekom Cloud / T Cl... | EUR 250 of starting credit on a booked cont... | trial-only | documented | not stated | not stated | institution | `dossier/compute/open-telekom-cloud.json` |
 | OpenAI Codex | 'Open-source maintainers can apply for API... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/openai-codex.json` |
-| OpenAI Containers (Code I... | no container tier: the API is priced per mi... | paid-only | documented | not stated | not stated | email | `dossier/compute/openai-containers.json` |
+| OpenAI Containers (Code I... | no free container tier: Hosted Shell and Co... | paid-only | documented | not stated | Container files are d... | email | `dossier/compute/openai-containers.json` |
 | OpenComputer | a Free tier with up to 2 shared vCPU, 2 GB... | paid-only | documented | not applicable: the unit is a m... | not stated | card | `dossier/compute/opencomputer.json` |
-| OpenPond Cloud Sandboxes | a Free tier with limited monthly hosted usa... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/openpond.json` |
+| OpenPond Cloud Sandboxes | no free tier stated: the pricing page is he... | paid-only | documented | not stated | not stated | email | `dossier/compute/openpond.json` |
 | OpenRelay | no free GPU tier is published; list rates p... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/openrelay.json` |
-| OpenReward Sandboxes | no free tier for compute: resources bill by... | fails-identity | documented | not stated | not stated | institution | `dossier/compute/openreward.json` |
+| OpenReward Sandboxes | no free tier for compute: CPU USD 0.0504 pe... | fails-identity | documented | not stated | not stated | institution | `dossier/compute/openreward.json` |
 | OpenRouter | Free-model requests (model ids ending in:fr... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/openrouter.json` |
+| OpenScale Sandboxes | New accounts get free credit to try the API... | qualifies-with-caveat | documented | 25 GB of disk is included per s... | A sandbox lives until... | email | `dossier/compute/openscale-sandboxes.json` |
 | Red Hat OpenShift (Harbor... | not stated: https://www.redhat.com/en/techn... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/openshift.json` |
 | OpenSSF Alpha-Omega | 'With an annual budget of over $7M, Alpha-O... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/openssf-alpha-omega.json` |
 | Opensteer | $5 of model credits at signup plus $5 a mon... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/opensteer.json` |
@@ -942,6 +1012,7 @@ breaking change.
 | Oracle Cloud Free Trial (... | Oracle Cloud Free Tier allows you to sign u... | trial-only | documented | not applicable: the offer is a... | 30 d | card | `dossier/compute/oracle-cloud-trial.json` |
 | Oracle Cloud Always Free | up to two VM.Standard.E2.1.Micro instances,... | qualifies-with-caveat | documented | 200 GB of combined boot and blo... | 7 d | card | `dossier/compute/oracle-cloud-vpn-node.json` |
 | Oracle Startup Growth | Oracle may provide selected participants wi... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/oracle-startup-growth.json` |
+| Orble | unverified: no free allowance is stated on... | qualifies-with-caveat | documented | not applicable: the unit is a L... | Idle boxes suspend au... | email | `dossier/compute/orble.json` |
 | Ori Global Cloud | no free lane and no self-serve signup. Ori... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/ori-global-cloud.json` |
 | orkestr Sandboxes | free to start with no credit card, on per-s... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/orkestr.json` |
 | OSPool | "The OSPool is a source of computing capaci... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/ospool.json` |
@@ -966,33 +1037,38 @@ breaking change.
 | PenDC | Two months of free server hosting, stated o... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/pendc.json` |
 | ph24 (ProHosting24) | No free tier. Cheapest orderable monthly of... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/ph24.json` |
 | ph24 Cloud (ProHosting24) | No free tier: every B1 server carries an ho... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/ph24-cloud.json` |
-| Phala Cloud | Confidential VMs from USD 0.06 per hour and... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/phala-cloud.json` |
+| Phala Cloud | no free tier: the smallest CPU instance is... | paid-only | documented | not applicable: the unit is a m... | the data of a stopped... | card | `dossier/compute/phala-cloud.json` |
 | phoenixNAP dedicated outlet | The all-servers price list opens at EUR 89.... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/phoenixnap-dedicated-outlet.json` |
+| Phonebox | New accounts get a free 7-day trial with US... | trial-only | documented | An APK upload is at most 524,28... | 30 d | card | `dossier/compute/phonebox.json` |
 | PhotonVPS | NVMe - X at USD 5.00/month: 1 CPU core, 204... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/photonvps.json` |
 | Pika | A USD 0 plan exists but carries no credit:... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/pika.json` |
-| PillDrops | Start free with a $5 usage credit and no ca... | qualifies-with-caveat | documented | not applicable: the unit is a m... | unknown: Personal and... | email | `dossier/compute/pilldrops.json` |
+| PillDrops | Start free with $5 of usage credit and no c... | qualifies-with-caveat | documented | not applicable: the unit is a m... | unknown: Personal and... | email | `dossier/compute/pilldrops.json` |
 | Pipekit | a free trial rather than a free tier; the p... | trial-only | documented | not stated | not stated | email | `dossier/compute/pipekit.json` |
 | Pipeshift | no free tier published | paid-only | documented | not stated | not stated | email | `dossier/compute/pipeshift.json` |
+| Platinum | unverified: the billing page says a new org... | paid-only | documented | not applicable: the unit is a m... | 7 d | email | `dossier/compute/platinum.json` |
 | Play with Docker | no longer available: Play with Docker is un... | dead | documented | not applicable: the unit is a m... | the service is withdrawn | anonymous | `dossier/compute/play-with-docker.json` |
 | Playgent | no free tier published | paid-only | documented | not stated | not stated | email | `dossier/compute/playgent.json` |
 | Podway | During early access, 'your first app on a M... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/podway.json` |
 | Porter | a startup programme granting 6 months free;... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/porter.json` |
 | Posit Cloud | USD 0 forever: 25 compute hours a month, 1... | qualifies-with-caveat | documented | not applicable: the unit is a s... | 25 projects persist o... | email | `dossier/compute/posit-cloud-free.json` |
 | PPIO GPU | RTX 4090 24GB in a 16 vCPU / 62 GiB contain... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/ppio-gpu.json` |
-| PPIO Agent Sandbox | no free tier: vCPU and RAM bill independent... | paid-only | documented | not stated | not stated | email | `dossier/compute/ppio-sandbox.json` |
+| PPIO Agent Sandbox | no general free tier: vCPU and RAM bill ind... | paid-only | documented | not stated | not stated | email | `dossier/compute/ppio-sandbox.json` |
 | PQ.Hosting | No server is sold at this domain. pq.hostin... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | anonymous | `dossier/compute/pq-hosting.json` |
 | PRACE | PRACE no longer runs its own access calls;... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | anonymous | `dossier/compute/prace.json` |
 | Predibase | gone as an independent product. The pricing... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/predibase.json` |
-| Prime Intellect Sandboxes | no free tier: tier-free per-second pricing... | paid-only | documented | not stated | not stated | email | `dossier/compute/prime-intellect.json` |
+| Prime Inference | unverified: no first-party page read states... | paid-only | documented | not applicable: the unit is a t... | unverified: no first-... | card | `dossier/compute/prime-inference.json` |
+| Prime Intellect Sandboxes | no free tier: tier-free metered pricing at... | paid-only | documented | not stated | a paused sandbox keep... | email | `dossier/compute/prime-intellect.json` |
 | Prime Intellect | The grant program is gone. Its own page now... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/prime-intellect-2.json` |
 | PrivateByte | USD 5.99/month for Flare: 1 vCPU, 2 GB RAM,... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/privatebyte.json` |
 | Privex (Privex Inc.) | No free tier. VNANO-SE-SSD is USD 0.99 a mo... | qualifies | documented | not applicable: the unit is a m... | 25 d | email | `dossier/compute/privex-vnano-se-ssd-ipv6.json` |
-| Prized | 'New workspaces get $30 of free credit, onc... | qualifies-with-caveat | documented | On the free credit 'Nano, Micro... | Asleep, a box costs o... | email | `dossier/compute/prized.json` |
+| Prized | 'New workspaces get $30 of free credit, onc... | qualifies-with-caveat | documented | On the free credit 'Nano, Micro... | a paused sandbox is d... | email | `dossier/compute/prized.json` |
+| Promigence | USD 100 of free credit included on the pay-... | qualifies-with-caveat | documented | not applicable: the unit is a r... | 30 d | email | `dossier/compute/promigence.json` |
 | PSC Neocortex | Free wafer-scale accelerator time on Cerebr... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/psc-neocortex.json` |
 | Psifactor | 'kontener LXC zarządzany przez Incus', 'do... | qualifies-with-caveat | documented | 'możliwość podmontowania zasobó... | 'Nie można posiadać V... | card | `dossier/compute/psifactor-free.json` |
 | PythonAnywhere | USD 0 a month: one web app, up to 2 console... | fails-quota | documented | not applicable: the unit is a m... | not stated on the pri... | email | `dossier/compute/pythonanywhere.json` |
 | QDE | Ryzen Mini at EUR 3.95 a month on the cart'... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/qde.json` |
 | Qiniu Cloud AI | Per-second billing with no free compute all... | fails-identity | documented | not applicable: the unit is a m... | A sandbox has a 5 min... | national-id | `dossier/compute/qiniu-cloud-ai.json` |
+| Qiniu LAS Sandbox | CNY 0 free standing compute allowance is pu... | fails-identity | documented | not applicable: the unit is a r... | the local filesystem... | national-id | `dossier/compute/qiniu-las-sandbox.json` |
 | Qoddi | The free tier covers static sites only: 'St... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/qoddi.json` |
 | Qodo | no permanent free tier: "We don't offer a p... | trial-only | documented | not applicable: the unit is a m... | 14 days then zero, so... | email | `dossier/compute/qodo.json` |
 | Qovery | No free plan. Starter is USD 299 a month bi... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/qovery.json` |
@@ -1000,6 +1076,8 @@ breaking change.
 | Quansight | This was the clearest free-GPU-CI offer in... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/quansight.json` |
 | Quantum Inspire | "Quantum Computing for everybody - Quick an... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/quantum-inspire.json` |
 | Quarto Pub | no free tier available: 'Quarto Pub is clos... | dead | documented | not applicable: the unit is a s... | not applicable to a n... | email | `dossier/compute/quarto-pub.json` |
+| Quave ONE | No free zCloud allowance on Direct: zCloud... | paid-only | documented | not applicable: the unit is an... | 7 d | email | `dossier/compute/quave-one-direct.json` |
+| Quivvo | Free plan: $5 of credit once per email addr... | qualifies-with-caveat | documented | not applicable: the unit is a w... | 14 d | email | `dossier/compute/quivvo.json` |
 | Qyrax | USD 3.00 per month for the Stryx plan in Ne... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/qyrax.json` |
 | Rabisu | Aydin VPS x4 at USD 2.99 a month on the car... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/rabisu.json` |
 | RackNerd | 1 GB KVM VPS at USD 21.99/year: 1 vCPU, 1 G... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/racknerd.json` |
@@ -1012,43 +1090,47 @@ breaking change.
 | Rainyun | A one-yuan one-day trial of each product, q... | trial-only | documented | not applicable: the unit is a m... | The trial is one day... | national-id | `dossier/compute/rainyun.json` |
 | ransomIT | KVM2GB at AUD 20 / month, on a page that st... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/ransomit.json` |
 | RareCloud | The vendor's pricing feed lists Micro KVM a... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/rarecloud.json` |
+| Rayrun | Free: $0, no card, no expiry, for one devel... | qualifies-with-caveat | documented | not applicable: the unit is a t... | 30 d | email | `dossier/compute/rayrun.json` |
 | ReadyDedis | AMD-1 at USD 5.00/month: 1 core, 1 GB RAM,... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/readydedis.json` |
 | ReconV | No free tier. The smallest LXC plan is PLN... | qualifies | documented | not applicable: the unit is a m... | not stated on any pag... | email | `dossier/compute/reconv-vps-nat512mb.json` |
 | Red Hat Developer Sandbox | 'The Developer Sandbox provides you with a... | qualifies-with-caveat | documented | one project per sandbox, on a p... | 'Your Developer Sandb... | any-phone | `dossier/compute/red-hat-developer-sandbox.json` |
 | Reflex | a Free plan at $0 with limited usage for AI... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/reflex.json` |
 | Refresh | no free tier published | paid-only | documented | not stated | not stated | email | `dossier/compute/refresh.json` |
+| Regolo AI | Get full access to all Core Models. No cred... | trial-only | documented | not applicable: the unit is API... | Zero Data Retention m... | email | `dossier/compute/regolo-ai.json` |
 | Release | no free tier published | paid-only | documented | not stated | not stated | email | `dossier/compute/release.json` |
 | Remote Browser | 1 browser-hour a month on Free with no card... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/remote-browser.json` |
 | RemoteHost | Starter is USD 20 per month and includes 61... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/remotehost.json` |
 | Render | A Free web service with an ephemeral filesy... | qualifies-with-caveat | documented | no per-object cap; the free tie... | the filesystem is eph... | email | `dossier/compute/render.json` |
 | Render Hobby | Batch 1 recorded Render's Hobby plan at 5 G... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/render-hobby.json` |
 | Render Network | The credit offer is withdrawn. Page quoted:... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/render-network.json` |
-| RentaMac (rentamac.io) | no free tier: continuous 24/7 Mac access bi... | paid-only | documented | not stated | not stated | email | `dossier/compute/rentamac.json` |
+| RentaMac (rentamac.io) | no free tier: continuous 24/7 Mac access bi... | paid-only | documented | not stated | not stated | card | `dossier/compute/rentamac.json` |
 | Replicas | $100 of free usage with no card required | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/replicas.json` |
-| Replicate | no free tier: hardware bills per second fro... | paid-only | documented | not stated | not stated | email | `dossier/compute/replicate.json` |
+| Replicate | no free tier: hardware bills per second fro... | paid-only | documented | not stated | not stated | anonymous | `dossier/compute/replicate.json` |
 | Replit | Starter is free: daily Agent credits up to... | trial-only | documented | not applicable: the unit is a s... | 30 d | email | `dossier/compute/replit.json` |
 | RES | RES resources are free of charge through op... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/res.json` |
 | Rescale | no free tier published | paid-only | documented | not stated | not stated | email | `dossier/compute/rescale.json` |
 | Retzor | EUR 3 per month for 1 vCPU, 1 GB ECC REG, 1... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/retzor.json` |
 | Rev AI | Pay-as-you-go with 'Free credits equivalent... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/rev-ai.json` |
-| Revyl | a free start on a mobile test-automation se... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/revyl.json` |
+| Revyl | Free plan at USD 0 with up to 1,200 device... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/revyl.json` |
 | Rivet (Actors & agentOS) | 100,000 awake actor hours a month on the fr... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/rivet.json` |
 | Riza Code Interpreter | an execution runtime with hard per-invocati... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/riza.json` |
+| RoundFleet | unverified: the pricing page lists only pai... | paid-only | documented | not applicable: the unit is a d... | All of your Content w... | email | `dossier/compute/roundfleet.json` |
 | ROUTE64 (AS212895) | free IPv6 tunnel with a routed /56 subnet o... | qualifies-with-caveat | documented | a routed /56 per tunnel endpoin... | static IP allocations... | email | `dossier/compute/route64-tunnel.json` |
 | Royal-Server.Ro | no free tier; the cheapest Linux VPS is Int... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/royal-server-ro.json` |
 | Run Cloud | no longer available to new organizations; e... | dead | documented | not applicable: the unit is a m... | a sandbox can be snap... | card | `dossier/compute/run-cloud.json` |
 | Runcrate | no free GPU tier is published; the live rat... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/runcrate.json` |
+| RunInfra | $1 free for a new account. A workspace has... | trial-only | documented | not applicable: the unit is API... | Zero data retention b... | email | `dossier/compute/runinfra.json` |
 | RunKit | a Node.js notebook in the browser with ever... | paid-only | documented | not stated | not stated | email | `dossier/compute/runkit.json` |
-| Runloop | 'Start Your Free Pro Trial', 'No credit car... | trial-only | documented | No devbox shape is published on... | '100 GB Free Storage'... | email | `dossier/compute/runloop.json` |
+| Runloop | 'New accounts start with $50 in usage credi... | trial-only | documented | The pricing page states a stand... | Suspension stops CPU... | email | `dossier/compute/runloop.json` |
 | RunMyJob | Batch 1 recorded RunMyJob as a perpetual fr... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/runmyjob.json` |
-| RunPod | no free GPU tier is published; the on-deman... | paid-only | documented | not applicable: the unit is a m... | network storage is bi... | card | `dossier/compute/runpod.json` |
+| RunPod | no free GPU tier is published; the on-deman... | paid-only | documented | not applicable: the unit is a m... | network storage is bi... | email | `dossier/compute/runpod.json` |
 | Runsite | The free tier is static sites only: 'Static... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/runsite.json` |
 | Runta | $50 trial balance with no payment method, c... | trial-only | documented | not stated | not stated | email | `dossier/compute/runta.json` |
 | Runway | Free plan, printed as 'Free forever' with '... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/runway.json` |
 | RUVDS | A 3-day free trial of any configuration cos... | trial-only | documented | not applicable: the unit is a m... | The trial is three da... | any-phone | `dossier/compute/ruvds.json` |
 | RuWeb | Six days of VPS free, activated automatical... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/ruweb.json` |
 | Sail Research (Sailboxes) | no free compute tier: the page prices model... | paid-only | documented | not stated | not stated | email | `dossier/compute/sail.json` |
-| Sailboxes | A USD 5 monthly credit is advertised when a... | qualifies-with-caveat | documented | sandbox sizes S, M and L with a... | Independent disks and... | card | `dossier/compute/sailboxes.json` |
+| Sailboxes | A USD 5 monthly credit is stated on the ven... | qualifies-with-caveat | documented | sandbox sizes S, M and L with a... | Independent disks and... | card | `dossier/compute/sailboxes.json` |
 | Sakura Internet Cloud | no free tier: servers bill monthly, daily o... | paid-only | documented | not stated | not stated | email | `dossier/compute/sakura-cloud.json` |
 | Sakura Cloud | No free trial, stated outright: 'さくらのクラウドは無... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/sakura-cloud-2.json` |
 | Sakura Cloud certification | A one-month free Sakura Cloud learning envi... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | country-phone | `dossier/compute/sakura-cloud-certification.json` |
@@ -1056,19 +1138,23 @@ breaking change.
 | Sakura Cloud student | 'アンバサダーには、毎月10万円分のクラウドリソースが無償で提供されます' (amba... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/sakura-cloud-student.json` |
 | Sakura Internet (さくらのVPS) | no free tier; the 512 MB plan is JPY 590 a... | qualifies | documented | not applicable: the unit is a m... | the instance persists... | any-phone | `dossier/compute/sakura-vps.json` |
 | Sakura VPS 2-week | Every plan is free for two weeks when the o... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/sakura-vps-2-week.json` |
-| Salad | No free trial; pay-as-you-go with no minimu... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/salad.json` |
+| Salad | No free trial; pay-as-you-go with no minimu... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/salad.json` |
 | SambaNova Cloud | No free lane left. The Free plan now reads... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/sambanova-cloud.json` |
 | Samsung SDS Cloud Platform | no free tier: services bill by the used hou... | paid-only | documented | not stated | not stated | email | `dossier/compute/samsung-cloud.json` |
 | Samsung Cloud Platform | KRW 300,000 of credit to a new account that... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/samsung-cloud-platform.json` |
-| Sandbox as a Service | $5 of signup credit, which the page estimat... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/sandbox-as-a-service.json` |
-| Sandbox0 | $5 of free credit for new users with no car... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/sandbox0.json` |
+| Sandbox as a Service | $5 of signup credit, which the page estimat... | qualifies-with-caveat | documented | not stated | A sandbox is destroye... | email | `dossier/compute/sandbox-as-a-service.json` |
+| Sandbox Router (ComputeSDK) | $5 in free compute credit to start; no prov... | qualifies-with-caveat | documented | not applicable: the offer is ro... | A sandbox keeps runni... | email | `dossier/compute/sandbox-router.json` |
+| Sandbox0 | one-time $5 usage credit for eligible new u... | qualifies-with-caveat | documented | not stated | not stated | card | `dossier/compute/sandbox0.json` |
+| Sandboxer | No free trial and no free tier: plans start... | paid-only | documented | not applicable: the offer is a... | 14 d | card | `dossier/compute/sandboxer.json` |
 | Sandock | Plus is USD 5 per month for 5 sandboxes, 2... | paid-only | documented | not applicable: the unit is a m... | The session timeout i... | card | `dossier/compute/sandock.json` |
+| Sandscale | Free is $0 with 100 awake vCPU-hours a mont... | qualifies-with-caveat | documented | not applicable: the unit is a m... | A sandbox keeps its f... | email | `dossier/compute/sandscale.json` |
 | Sanfengyun | A free cloud server at 1 core, 1 GiB RAM, 5... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | national-id | `dossier/compute/sanfengyun.json` |
 | SAP Business Technology | "When using Kyma, the free plan is availabl... | trial-only | documented | not applicable: the unit is a m... | Kyma, the managed Kub... | card | `dossier/compute/sap-business-technology.json` |
+| Sauce Labs | 28-day free trial with 60 automated and liv... | trial-only | documented | an artifact size cap is not pub... | 30 d | email | `dossier/compute/sauce-labs-free-trial.json` |
 | Savannaa | 750 hours a month of a t2.micro (1 vCPU, 1... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/savannaa.json` |
-| Scaleway Instances | no free tier: instances from EUR 0.01428 an... | paid-only | documented | not stated | not stated | card | `dossier/compute/scaleway.json` |
+| Scaleway Instances | no free tier for Personal project accounts... | paid-only | documented | not stated | not stated | card | `dossier/compute/scaleway.json` |
 | Scaleway | STARDUST1-S: 1 shared vCPU (AMD EPYC 7281 o... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/scaleway-2.json` |
-| Scaleway Apple silicon (M... | no free tier: Apple Silicon instances from... | paid-only | documented | not stated | not stated | email | `dossier/compute/scaleway-apple-silicon.json` |
+| Scaleway Apple silicon (M... | no free tier: Apple Silicon instances from... | paid-only | documented | not stated | not stated | card | `dossier/compute/scaleway-apple-silicon.json` |
 | Scaleway | no offer: the page reads 'No Black Friday d... | dead | documented | not applicable: the unit is a m... | not applicable; no of... | card | `dossier/compute/scaleway-black-friday.json` |
 | Scaleway GPU instances | no free tier: pay-as-you-go GPU instances,... | paid-only | documented | not stated | not stated | email | `dossier/compute/scaleway-gpu.json` |
 | Scaleway | no free tier; STARDUST1-S is 'EUR 0.0006 /H... | paid-only | documented | not applicable: the unit is a m... | the instance persists... | card | `dossier/compute/scaleway-stardust1-s.json` |
@@ -1082,6 +1168,8 @@ breaking change.
 | Sealos DevBox | no free tier: fixed monthly resource packag... | paid-only | documented | not stated | not stated | card | `dossier/compute/sealos-devbox.json` |
 | Segfault (THC) | 'Segfault offers free unlimited Root Server... | qualifies | documented | one root server per SECRET; a n... | 'Data in your home di... | anonymous | `dossier/compute/segfault-net.json` |
 | Selectel | No free test. The provider's own FAQ states... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/selectel.json` |
+| Semaphore CI (macOS) | USD 15 of free credits per month for every... | qualifies-with-caveat | documented | an artifact size cap is not sta... | 400 d | email | `dossier/compute/semaphore-ci-macos.json` |
+| Sendblue Sandboxes | Free Sandbox at USD 0: full API access, a s... | qualifies-with-caveat | documented | media sent through the API is c... | not stated on the pri... | any-phone | `dossier/compute/sendblue-sandboxes.json` |
 | Senko Digital | EUR 2.29 per month for DE-BUDGET-1 in Frank... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/senko-digital.json` |
 | Sentry | Open-Source Sponsorship Plan, granted on ap... | qualifies-with-caveat | documented | unverified: the sponsorship pla... | unverified: the spons... | email | `dossier/compute/sentry.json` |
 | serv00 | 3 GB of SSD storage, unlimited data transfe... | qualifies-with-caveat | documented | not applicable: the unit is a m... | 90 d | email | `dossier/compute/serv00.json` |
@@ -1100,10 +1188,11 @@ breaking change.
 | Sevalla | static site hosting at USD 0 a month; appli... | paid-only | documented | not applicable to application h... | not applicable: nothi... | email | `dossier/compute/sevalla.json` |
 | SF Compute (GPU | A market for whole 8-GPU nodes, not single... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/sf-compute-gpu.json` |
 | SF Tensor | No per-GPU hourly price is listed on the pa... | paid-only | documented | not stated | not stated | email | `dossier/compute/sf-tensor.json` |
-| SF Compute (GPU market +... | no free compute. The pricing table lists on... | paid-only | documented | not stated | not stated | email | `dossier/compute/sfcompute.json` |
+| SF Compute (GPU market +... | no free compute. The table lists h100-1 at... | paid-only | documented | not stated | not stated | email | `dossier/compute/sfcompute.json` |
 | Shadeform | no free compute allowance is stated on the... | paid-only | documented | not stated | not stated | email | `dossier/compute/shadeform.json` |
-| Shardflux | a trial at Pro limits that ends at the cap... | trial-only | documented | not stated | not stated | email | `dossier/compute/shardflux.json` |
-| shellbox | No free tier; a prepaid balance with a USD... | qualifies-with-caveat | documented | not applicable: the unit is a m... | Parked (stopped) boxe... | anonymous | `dossier/compute/shellbox.json` |
+| Shardflux | a 7-day trial at Pro limits for a new accou... | trial-only | documented | not stated | not stated | email | `dossier/compute/shardflux.json` |
+| Shark Magic | No separate free plan. Shark Pro is USD 5 a... | paid-only | documented | not applicable: the unit is a S... | 7 d | email | `dossier/compute/shark-magic.json` |
+| shellbox | No free tier; a prepaid balance with a USD... | qualifies-with-caveat | documented | not applicable: the unit is a m... | Stopped boxes keep th... | anonymous | `dossier/compute/shellbox.json` |
 | shellter.me | 'A free bash account on a shared FreeBSD ho... | qualifies | documented | not applicable: the unit is a Z... | 90 d | email | `dossier/compute/shellter-me.json` |
 | Shin VPS | The 1 GB plan with 1 core and 30 GB NVMe is... | paid-only | documented | not applicable: the unit is a m... | The minimum term is t... | card | `dossier/compute/shin-vps.json` |
 | Shiper | Free Hobby plan, quoted: 'USD 0 /mo - Autom... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/shiper.json` |
@@ -1123,13 +1212,14 @@ breaking change.
 | Skyvern | Free with 5,000 credits and 1 concurrent ru... | qualifies-with-caveat | documented | not stated | not stated | card | `dossier/compute/skyvern.json` |
 | SmartHost | USD 2.95/month: 10 GB NVMe, 1 GB guaranteed... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/smarthost.json` |
 | SmokyHosts | Mini VPS at USD 2.95/month: 1 vCPU, 1 GB RA... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/smokyhosts.json` |
+| smol cloud | New accounts receive USD 100.00 of one-time... | qualifies-with-caveat | documented | not applicable: the unit is a L... | The machine filesyste... | email | `dossier/compute/smol-cloud.json` |
 | smol machines | $100 of one-time credit that behaves as ord... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/smol-machines.json` |
 | Smooth | a free tier with basic features and limited... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/smooth.json` |
 | SnapDeploy | One Small container per app, up to 4 apps,... | qualifies-with-caveat | documented | not applicable: the unit is a m... | 100 running hours a m... | email | `dossier/compute/snapdeploy.json` |
 | Snowflake | Start your 30-day Snowflake trial with USD... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/snowflake.json` |
 | SoftShellWeb | USD 5.00/month in Amsterdam: 1 core, 1 GB E... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/softshellweb.json` |
 | SoftShellWeb | No free tier. The cheapest plan is USD 9.95... | qualifies | documented | not applicable: the unit is a m... | The container persist... | email | `dossier/compute/softshellweb-lxc-ipv6-only.json` |
-| Solari | $3 of credits a month on a $0 plan, session... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/solari.json` |
+| Solari | $3 of credits each month on a $0 plan, 3 co... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/solari.json` |
 | SolidVPS | LNX-CS-2GB at USD 5.95/month: 1 vCore, 2 GB... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/solidvps.json` |
 | Sourcegraph Cody | "As of July 23, 2025, the following plans w... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/sourcegraph-cody.json` |
 | Sovereign Tech Fellowship | 'we will hire up to twelve Sovereign Tech F... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/sovereign-tech-fellowship.json` |
@@ -1141,17 +1231,18 @@ breaking change.
 | SpectraIP | VPS X2 at EUR 3.50/month: 1 CPU core, 2 GB... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/spectraip.json` |
 | Speechmatics | 'Start with $100 in free credits, no card r... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/speechmatics.json` |
 | SpeedyPage | AMD Ryzen VPS at GBP 3.50/month: 1 Ryzen co... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/speedypage.json` |
-| Spheron | GPU marketplace that aggregates capacity fr... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/spheron.json` |
-| Sprites (Fly.io) | no free tier: compute bills by the second f... | paid-only | documented | not stated | not stated | email | `dossier/compute/sprites.json` |
+| Spheron | GPU marketplace with no free allowance: cre... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/spheron.json` |
+| Sprites (Fly.io) | Free plan gives $1 of one-time credit with... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/sprites.json` |
 | SST | The SST Console is free for workspaces with... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/sst.json` |
 | ST-Hosting | No free tier. The smallest IPv6-only LXC pl... | qualifies | documented | not applicable: the unit is a m... | 14 d | email | `dossier/compute/st-hosting-ipv6-lxc-type9.json` |
 | Stability AI | 'Get started with 25 free credits', where '... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/stability-ai.json` |
+| STACKIT Compute Engine | none: Compute Engine is billed pay-as-you-g... | paid-only | documented | not stated | not stated | institution | `dossier/compute/stackit.json` |
 | StarSling | no free tier: per-minute runners from $0.00... | paid-only | documented | not stated | not stated | email | `dossier/compute/starsling.json` |
 | Start-Up Chile | Equity-free co-financing for a 4-month prog... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/start-up-chile.json` |
 | Startup India Seed | Up to INR 20 lakh as a milestone-based gran... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/startup-india-seed.json` |
 | Startup SG Tech | Competitive grant for deep-tech commerciali... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/startup-sg-tech.json` |
 | StarverseAI student support | Quoted from the vendor announcement dated 2... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/starverseai-student-support.json` |
-| StateSet Sandbox | Hobby is USD 0 a month 'plus usage, billed... | trial-only | documented | max sandbox runtime 45 minutes... | Not stated on the pri... | card | `dossier/compute/stateset.json` |
+| StateSet Sandbox | Hobby is USD 0 a month plus usage billed pe... | trial-only | documented | max sandbox runtime 45 minutes... | Not stated on the pri... | email | `dossier/compute/stateset.json` |
 | Staxa | Free plan is a sandbox: '$0 - Tenants inclu... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/staxa.json` |
 | Steel | Launch: USD 0 a month plus usage, USD 30 of... | trial-only | documented | not applicable: the unit is a m... | 7 d | email | `dossier/compute/steel.json` |
 | Strapi Cloud | removed plan: the Free plan included 10 GB... | dead | documented | not applicable: the unit is a m... | Both dates are in the... | email | `dossier/compute/strapi-cloud.json` |
@@ -1159,21 +1250,24 @@ breaking change.
 | Strike | Budget line 'Pico' at EUR 25.00/year: 1 vCP... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/strike.json` |
 | Strong Compute | a free account in demo mode, plus a 3-month... | paid-only | documented | not stated | not stated | email | `dossier/compute/strong-compute.json` |
 | student voucher | A CNY 300 no-threshold voucher quoted as 通过... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/student-voucher.json` |
+| SUFY Sandbox | Pay-as-you-go with per-second billing that... | qualifies-with-caveat | documented | not applicable: the unit is a s... | Local and persistent... | email | `dossier/compute/sufy-sandbox.json` |
 | Suga | Free plan at USD 0 with no credit card: 1 p... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/suga.json` |
 | Suno | Free plan at USD 0: the vendor's own help c... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/suno.json` |
-| Superserve | Free with $100 of credit, pay-as-you-go aft... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/superserve.json` |
+| SuperHQ (Nanite) | None published: Nanite runs on prepaid cred... | paid-only | documented | not applicable: the unit is a L... | A disk that stays: pa... | email | `dossier/compute/superhq-nanite.json` |
+| Superserve | Start free, no card required, then pay for... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/superserve.json` |
 | SURF | A Small Compute application can request "up... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/surf.json` |
 | Surfsky | free credit at signup with no card, 10 conc... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/surfsky.json` |
 | SwedenDedi | NVMe SSD VPS 2 GB at EUR 10.00 per month in... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/swedendedi.json` |
 | Swiss AI Initiative | Small project grants of 'typically ... betw... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/swiss-ai-initiative.json` |
 | Tabnine | no free lane and no self-serve price: tabni... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/tabnine.json` |
 | tama | no free tier: machines from 1 to 32 vCPU an... | paid-only | documented | not stated | not stated | email | `dossier/compute/tama.json` |
+| Tangle Sandbox | The Free plan is USD 0 a month with no incl... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/tangle-sandbox.json` |
 | TAPGPU (listed as Stabili... | No free tier stated; GPU instances are bill... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | country-phone | `dossier/compute/tapgpu.json` |
 | Targon | No signup credit. Inventory page, price per... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/targon.json` |
 | Technology Innovation Agency | Grant funding for technology development at... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/technology-innovation-agency.json` |
 | Teclada | a Free tier for non-commercial use; paid pl... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/teclada.json` |
 | Tembo | Free trial: 'included usage allowance, up t... | paid-only | documented | not applicable: the unit is a m... | unknown: 'Stopped, sn... | email | `dossier/compute/tembo-computer.json` |
-| Tencent Cloud Agent Runti... | no free tier: CPU bills at CNY 0.000081 a c... | paid-only | documented | not stated | not stated | email | `dossier/compute/tencent-agent-runtime.json` |
+| Tencent Cloud Agent Runti... | no free tier: CPU 0.000081 元/核/秒 and memory... | paid-only | documented | not stated | the rootfs system dis... | email | `dossier/compute/tencent-agent-runtime.json` |
 | Tencent Cloud International | A 3-month free trial of one Lighthouse 2C2G... | fails-identity | documented | not applicable: the unit is a m... | The trial is time-box... | national-id | `dossier/compute/tencent-cloud-international.json` |
 | Tencent Cloud Studio | 免费额度内每月提供5万分钟通用工作空间使用时长和1万分钟高性能空间使用时长，超出后按量... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/tencent-cloud-studio.json` |
 | Tencent CNB | translated from the CNB pricing table: clou... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | any-phone | `dossier/compute/tencent-cnb.json` |
@@ -1181,11 +1275,12 @@ breaking change.
 | Tencent Cloud SCF | a free quota exists for 云函数 (SCF), listed i... | qualifies-with-caveat | documented | not stated | not stated | national-id | `dossier/compute/tencent-scf.json` |
 | Tenki Sandbox | USD 100 in free credits on a new account: U... | qualifies-with-caveat | documented | Starter caps a machine at 4 cor... | A paused sandbox stop... | card | `dossier/compute/tenki.json` |
 | TensorDock | no free tier: homepage 'From' rates per hou... | paid-only | documented | not stated | not stated | email | `dossier/compute/tensordock.json` |
-| Tensorlake Sandboxes | $5 to $20 prepaid credit packs to start, up... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/tensorlake.json` |
+| Tensorlake Sandboxes | a true Free tier at $0 forever with 1 sandb... | qualifies-with-caveat | documented | not stated | the pricing page's SO... | email | `dossier/compute/tensorlake.json` |
 | TensorPool | no price is published: the home page sells... | paid-only | documented | not stated | not stated | email | `dossier/compute/tensorpool.json` |
-| Tenstorrent TT Console | Tenstorrent's own documentation offers hard... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/tenstorrent-tt-console.json` |
+| Tenstorrent TT Console | The docs state 'No hardware yet? console.te... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/tenstorrent-tt-console.json` |
 | Terabix | CVM-4GB-M at USD 6/month: 2 vCPU (AMD EPYC... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/terabix.json` |
 | Test Flight | 'One weekend, and $300,000 in compute credi... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/test-flight.json` |
+| TestMu AI (formerly Lambd... | Free, USD 0, Free Forever: 300 minutes of t... | trial-only | documented | not applicable: the unit is a b... | 30 d | email | `dossier/compute/testmu-ai.json` |
 | Texel.ai | no price is published: the home page descri... | paid-only | documented | not stated | not stated | email | `dossier/compute/texel-ai.json` |
 | The Catalyst | A ten-week in-person incubation in Riyadh f... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/the-catalyst.json` |
 | The Eigenprize | 'No-strings-attached prize money for talent... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/the-eigenprize.json` |
@@ -1195,7 +1290,7 @@ breaking change.
 | TheAI Cloud | No free tier and no single-GPU rental: whol... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/theai-cloud.json` |
 | Theta EdgeCloud | On-demand GPU rental, from USD 0.05 per hou... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/theta-edgecloud.json` |
 | Thiel Fellowship | 'The Thiel Fellowship gives $250,000 to you... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/thiel-fellowship.json` |
-| Thunder Compute | no free tier: on-demand, non-preemptible GP... | fails-identity | documented | not stated | not stated | institution | `dossier/compute/thunder-compute.json` |
+| Thunder Compute | No general free tier: on-demand instances b... | fails-identity | documented | not stated | not stated | card | `dossier/compute/thunder-compute.json` |
 | TierHive | Four preset plans inside one calculator, al... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/tierhive.json` |
 | TierHive (Kernel Keepers... | No free tier, but a free startup credit tha... | qualifies-with-caveat | documented | not applicable: the unit is a m... | 3 d | email | `dossier/compute/tierhive-micro.json` |
 | TierNet | VPS Bronze at USD 8.99/month: 1 core, 4 GB... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/tiernet.json` |
@@ -1219,22 +1314,22 @@ breaking change.
 | Tinfoil | no free tier published | paid-only | documented | not stated | not stated | email | `dossier/compute/tinfoil.json` |
 | TinyFish | Search and Fetch are free at any wallet bal... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/tinyfish.json` |
 | TNAHosting | SSD KVM 1GB at USD 1.33/month billed USD 16... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/tnahosting.json` |
-| Together Code Sandbox | no separate sandbox allowance: model infere... | paid-only | documented | not stated | not stated | email | `dossier/compute/together-code-sandbox.json` |
-| Together AI | no free GPU allowance. The pricing page lis... | paid-only | documented | not stated | not stated | email | `dossier/compute/together-gpu.json` |
+| Together Code Sandbox | No free sandbox allowance: the Code Sandbox... | paid-only | documented | not stated | not stated | card | `dossier/compute/together-code-sandbox.json` |
+| Together AI | No free GPU allowance: GPU Clusters price t... | paid-only | documented | not stated | not stated | card | `dossier/compute/together-gpu.json` |
 | TopCloud.vn | No free tier. Cực Rẻ 1 is VND 12,000 for th... | dead | documented | not applicable: the unit is a m... | monthly billing with... | card | `dossier/compute/topcloud-vn-cuc-re-1.json` |
 | Torchbyte | Game VPS Start at EUR 4.65/month: 1 vCPU (A... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/torchbyte.json` |
 | Tothost | Cloud VPS TOT K from VND 67,500/month on th... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/tothost.json` |
 | Trigger.dev | $5 a month of free credits with 20 concurre... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/trigger-dev.json` |
 | True Digital Park | USD 25,000 of Google Cloud credit for verif... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/true-digital-park.json` |
 | Ubicloud | no free tier: billed by the minute on provi... | paid-only | documented | not stated | not stated | email | `dossier/compute/ubicloud.json` |
-| UCloud Agent Sandbox | no published free tier: sandboxes pause and... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/ucloud.json` |
+| UCloud Agent Sandbox | The fee page grants real-name verified acco... | qualifies-with-caveat | documented | not stated | not stated | national-id | `dossier/compute/ucloud.json` |
 | Ultahost | VPS Basic at USD 5.52/month on a 24-month t... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/ultahost.json` |
-| UniHost | LVP-G1 at EUR 6.90 per month excluding VAT,... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/unihost.json` |
+| UniHost | LVP-G1 is EUR 6.90 per month excluding VAT... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | national-id | `dossier/compute/unihost.json` |
 | unsandbox | Free $0 forever: 1 concurrent container, 1... | qualifies-with-caveat | documented | 10 files per execution, 10 MB t... | unknown: sessions and... | card | `dossier/compute/unsandbox.json` |
 | Untether AI | Gone. The vendor's own notice states 'Untet... | dead | documented | not applicable: the unit is a m... | not applicable: the u... | anonymous | `dossier/compute/untether-ai.json` |
 | UpCloud | no free tier: servers from EUR 3 a month or... | paid-only | documented | not stated | not stated | email | `dossier/compute/upcloud.json` |
 | Upstage | no free tier and no signup credit. The pric... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/upstage.json` |
-| Upstash Box | Free: USD 0, 10 concurrent boxes, 5 CPU hou... | qualifies-with-caveat | documented | not applicable: the unit is a m... | standard boxes auto-p... | email | `dossier/compute/upstash-box.json` |
+| Upstash Box | Free: USD 0, up to 10 concurrent boxes and... | qualifies-with-caveat | documented | not applicable: the unit is a m... | standard boxes auto-p... | email | `dossier/compute/upstash-box.json` |
 | Upsun | A 15-day free trial with no credit card, th... | trial-only | documented | not applicable: the unit is a m... | 15 days is the free c... | email | `dossier/compute/upsun.json` |
 | upyun.cc (云上互联) | No free tier. 新加坡NAT 套餐二 is CNY 10.00 a mon... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not stated on any pag... | email | `dossier/compute/upyun-sg-nat-2.json` |
 | use.computer | no free tier: Apple Silicon Mac minis at $0... | paid-only | documented | not stated | not stated | email | `dossier/compute/use-computer.json` |
@@ -1254,7 +1349,7 @@ breaking change.
 | Vercel | Hobby at USD 0: 4 CPU-hours of active CPU,... | qualifies-with-caveat | documented | functions cap at 2 GB of memory... | no persistent disk; a... | email | `dossier/compute/vercel.json` |
 | Vercel Sandbox | 'Sandbox is free for Hobby users within the... | qualifies-with-caveat | documented | 'You can provision 1 or an even... | Snapshot storage is 1... | email | `dossier/compute/vercel-sandbox.json` |
 | Verda (formerly DataCrunch) | no free tier: pay-as-you-go GPU capacity on... | paid-only | documented | not stated | not stated | email | `dossier/compute/verda.json` |
-| Vers | A single metered rate of USD 0.04 per vCPU-... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/vers.json` |
+| Vers | The pricing page states USD 0.04 per vCPU-h... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/vers.json` |
 | VESSL Cloud | Korean GPU cloud with an on-demand rate tab... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/vessl-cloud.json` |
 | Vesuvius Challenge | 'Open prize pool $2,140,000'. Grand prize,... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/vesuvius-challenge.json` |
 | Vibrant Labs | no free tier published | paid-only | documented | not stated | not stated | email | `dossier/compute/vibrant-labs.json` |
@@ -1267,9 +1362,11 @@ breaking change.
 | VK Cloud | RUB 5,000 of welcome bonuses for an individ... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/vk-cloud.json` |
 | VM6_Networks | UK Xeon S (order product Budget VPS UK 1) a... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/vm6-networks.json` |
 | VNG Cloud | 'B n d ng th mi n ph d nh cho kh ch h ng m... | fails-identity | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/vng-cloud.json` |
+| VoidRun | Up to ₹4,600.00 free credits, then pay only... | qualifies-with-caveat | documented | not applicable: the unit is a s... | 7 d | email | `dossier/compute/voidrun-sandboxes.json` |
 | Volcengine (火山引擎) | '免费试用额度仅对完成中国大陆实名认证的账号开放，未完成认证的账号无法触发额度发放逻辑... | fails-identity | documented | one free trial quota per accoun... | Not stated on the art... | national-id | `dossier/compute/volcengine-free-trial.json` |
+| Volcengine VCI Agent Sandbox | VCI 当前免费赠送极速型 ESSD_PL0 类型系统盘 30 GiB 可用存储空间。... | fails-identity | documented | 沙箱环境下，Pod 副本数与 Container 数量均为 1... | 沙箱控制器负责管理 Pod 的整个生命周期... | national-id | `dossier/compute/volcengine-vci-agent-sandbox.json` |
 | VolpaByte | no free tier; the ladder starts at EUR 3.49... | qualifies | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/volpabyte-ryzen-kvm-8gb.json` |
-| Voltage Park | no free tier: HGX H100 capacity from 1 to 8... | paid-only | documented | not stated | not stated | email | `dossier/compute/voltage-park.json` |
+| Voltage Park | No free tier is listed: on-demand and long-... | paid-only | documented | not stated | not stated | email | `dossier/compute/voltage-park.json` |
 | VoltageGPU | No free tier. Prepaid per-second GPU rental... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/voltagegpu.json` |
 | Voyage AI | The first 200 million tokens for voyage-4-l... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/voyage-ai.json` |
 | VPS_Panda | KVM-1G at USD 4.50 per month (store: 'Start... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/vps-panda.json` |
@@ -1287,8 +1384,10 @@ breaking change.
 | wap.ac | No free tier. TW 512 LXC is USD 1.00 a mont... | qualifies-with-caveat | documented | not applicable: the unit is a m... | the container persist... | email | `dossier/compute/wapac-tw-512-lxc.json` |
 | wap.ac (WAPAC) | No free tier. TW 512 LXC is USD 1.00 a mont... | fails-quota | documented | not applicable: the unit is a m... | monthly billing; the... | card | `dossier/compute/wapac-tw-512-lxc-ipv6.json` |
 | Warp | Warp Free: "$0/month" with "Warp Agent CLI... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/warp.json` |
-| WarpBuild (GitHub Actions... | No free allowance is published: the FAQ say... | paid-only | documented | not stated | not stated | email | `dossier/compute/warpbuild.json` |
+| WarpBuild (GitHub Actions... | No free allowance is published: the FAQ nam... | paid-only | documented | not stated | not stated | email | `dossier/compute/warpbuild.json` |
 | Wasmer | Free forever: 150 GB of bandwidth, a global... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/wasmer.json` |
+| Watasu Sandboxes | Basic: Free base plan, included disk 10 GiB... | qualifies-with-caveat | documented | Basic teams get a 10 GiB root d... | 7 d | email | `dossier/compute/watasu-sandboxes.json` |
+| WBX Sandbox | Pay as you go at USD 0.00 with welcome cred... | qualifies-with-caveat | documented | not applicable: the unit is a s... | 7 d | email | `dossier/compute/wbx-sandbox.json` |
 | webapp.io | a free trial of hosted test environments th... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/webapp-io.json` |
 | WebARENA Indigo | no free tier and no setup fee; billing is h... | qualifies | documented | not applicable: the unit is a m... | the instance bills fr... | card | `dossier/compute/webarena-indigo.json` |
 | StackBlitz WebContainers | a free Personal plan with unlimited public... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/webcontainers.json` |
@@ -1297,16 +1396,17 @@ breaking change.
 | Whplus (my.whplus.com) | No free tier. IIX NAT VPS 512MB is IDR 12,5... | qualifies-with-caveat | documented | not applicable: the unit is a m... | monthly billing; no d... | email | `dossier/compute/whplus-iix-nat-512mb.json` |
 | Windmill Cloud | Community plan on Windmill Cloud: 1,000 exe... | qualifies-with-caveat | documented | unverified: the getting-started... | unverified: the getti... | email | `dossier/compute/windmill-cloud.json` |
 | Windows 365 Cloud PC (Bus... | no free tier: Windows 365 Business is a mon... | trial-only | documented | not stated | not stated | card | `dossier/compute/windows-365.json` |
-| Windows 365 for Agents | no free tier: $0.40 an hour per Cloud PC on... | paid-only | documented | not stated | not stated | email | `dossier/compute/windows-365-agents.json` |
+| Windows 365 for Agents | no free tier: 'For US Geography, the Window... | paid-only | documented | not stated | not stated | institution | `dossier/compute/windows-365-agents.json` |
 | windowsvps.host | no free tier; DeluxeBox is USD 36.00 a mont... | qualifies-with-caveat | documented | not applicable: the unit is a m... | the disk persists whi... | card | `dossier/compute/windowsvps-host-windows.json` |
-| Runtime (withruntime.com) | 100 free hours of a 1 GB machine in the fir... | qualifies-with-caveat | documented | free tier caps a sandbox at 2 v... | A paused sandbox keep... | email | `dossier/compute/withruntime.json` |
+| Runtime (withruntime.com) | No free plan. A 7-day Pro trial gives $5 of... | trial-only | documented | A Pro machine goes to 8 vCPU an... | A paused machine pays... | card | `dossier/compute/withruntime.json` |
 | WLX | No free tier. Lowest listed server is USD 1... | paid-only | documented | not applicable: the unit is a m... | billed in advance; ca... | card | `dossier/compute/wlx.json` |
 | Woiden.id | A free NAT VPS with a shared IPv4 and a ded... | qualifies-with-caveat | documented | not applicable: the unit is a v... | 'You can renew your V... | any-phone | `dossier/compute/woiden-id.json` |
+| Workpaper | USD 0 free trial: 60 minutes on one small c... | qualifies-with-caveat | documented | not applicable: the unit is a c... | 3 d | anonymous | `dossier/compute/workpaper.json` |
 | WorldBus | Turkey VPS SSD (A) (portal product TR - SSD... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/worldbus.json` |
 | Worldstream | The cheapest of the 43 entries in the vendo... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/worldstream.json` |
 | WSO2 Choreo | The free plan is gone from the pricing page... | trial-only | documented | not applicable: the unit is a m... | there is no perpetual... | email | `dossier/compute/wso2-choreo.json` |
 | 无忧云 (Wuyou Cloud) | No free tier. 德国NAT-LXC is CNY 1.99 a month... | qualifies-with-caveat | documented | not applicable: the unit is a m... | monthly billing; no d... | card | `dossier/compute/wuyoucloud-de-nat-lxc.json` |
-| Apple Xcode Cloud | 25 compute hours a month included with Appl... | qualifies-with-caveat | documented | not stated | not stated | card | `dossier/compute/xcode-cloud.json` |
+| Apple Xcode Cloud | 'You'll get 25 compute hours per month for... | qualifies-with-caveat | documented | not stated | not stated | institution | `dossier/compute/xcode-cloud.json` |
 | XDN IDC | Shared virtual servers from a Guro Digital... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/xdn-idc.json` |
 | xHosts | Budget 1G at GBP 3.50 a month in the cart (... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/xhosts.json` |
 | XServer VPS | no free tier; the entry plan is JPY 1,265 a... | paid-only | documented | not applicable: the unit is a m... | monthly; the server p... | card | `dossier/compute/xserver-vps.json` |
@@ -1318,13 +1418,14 @@ breaking change.
 | Zappie | Starter 512 MB VPS [NZ]: USD 6.50 per month... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/zappie.json` |
 | Zeabur | Free Plan at USD 0: 'No credit card require... | qualifies-with-caveat | documented | a single file upload is capped... | 48 hours of logs on F... | email | `dossier/compute/zeabur.json` |
 | Zenrows Browser Sessions | Free at $0/mo with 5,000 credits a month an... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/zenrows.json` |
-| Zerops | The Lightweight Core project package is fre... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/zerops.json` |
+| Zerops | The Lightweight Core project package is fre... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | card | `dossier/compute/zerops.json` |
 | Zettabyte (zCLOUD) | No free tier. On-demand H100 GPUs from USD... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/zettabyte.json` |
 | Zhipu Z Managed Agents | no free tier published: a managed-agent pla... | paid-only | documented | not stated | not stated | email | `dossier/compute/zhipu.json` |
 | Zibra Labs | no free tier published | paid-only | documented | not stated | not stated | email | `dossier/compute/zibra-labs.json` |
 | Zindi | Quoted from the open challenge read today:... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/zindi.json` |
-| zipbox | 'Every new account can get $25 in credit wi... | qualifies-with-caveat | documented | Four sizes: 'Tiny 1 vCPU · 2 GB... | 'Paused boxes cost $0... | card | `dossier/compute/zipbox.json` |
+| zipbox | 'Every new account gets **$25 in credit** a... | qualifies-with-caveat | documented | Four sizes: Tiny 1 vCPU / 2 GB... | Pausing is free and s... | email | `dossier/compute/zipbox.json` |
 | Zo Computer | a 14-day free trial with limited usage and... | trial-only | documented | not stated | not stated | email | `dossier/compute/zo-computer.json` |
+| Zode | USD 10 of one-time credit with no card to s... | qualifies-with-caveat | documented | not applicable: the unit is a s... | 2 d | email | `dossier/compute/zode.json` |
 | Zoho Catalyst | A monthly allowance that renews forever: '2... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/zoho-catalyst.json` |
 | Zoltan's FLOPs GPU | 'Zoltan's FLOPs is a mini-grant program for... | trial-only | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/zoltan-s-flops-gpu.json` |
 | Zylora open source | USD 500 of GPU credits for startups pre-Ser... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/zylora-open-source.json` |
@@ -1341,11 +1442,13 @@ breaking change.
 | Cua (Cua Spaces) (self-hosted) | no rented Windows machine; the free tier is... | dead | documented | not applicable: no machine is p... | not applicable: no ma... | email | `dossier/compute/cua-windows.json` |
 | Cyberdesk (self-hosted) | no free tier published | paid-only | documented | not stated | not stated | email | `dossier/compute/cyberdesk.json` |
 | Dagger (self-hosted) | the engine is open source and runs locally;... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/dagger.json` |
+| Dory (usedory.dev) (self-hosted) | The whole system is free and open source: '... | qualifies-with-caveat | documented | not applicable: the unit is a V... | A sandbox run is dele... | anonymous | `dossier/compute/dory.json` |
 | Drone CI (self-hosted) | free software, no hosted lane: the Open Sou... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | anonymous | `dossier/compute/drone-ci.json` |
 | Expanse (self-hosted) | no free tier published | paid-only | documented | not stated | not stated | email | `dossier/compute/expanse.json` |
 | Expanso (self-hosted) | Bacalhau-derived pipelines that 'run on you... | paid-only | documented | not applicable: the unit is a m... | not applicable: the u... | institution | `dossier/compute/expanso.json` |
 | Gensyn (self-hosted) | No consumer-facing capacity. Quoted: 'RL Sw... | fails-quota | documented | not applicable: the unit is a m... | not applicable: the u... | email | `dossier/compute/gensyn.json` |
 | Goose (self-hosted) | not stated: https://goose-docs.ai/ prints n... | qualifies-with-caveat | documented | not applicable: the unit is a m... | not applicable: the u... | anonymous | `dossier/compute/goose.json` |
+| Groundbox (self-hosted) | The MIT open-source distribution is the who... | qualifies-with-caveat | documented | No object-size cap is published... | Real files in a Git-s... | email | `dossier/compute/groundbox.json` |
 | HumanLayer (self-hosted) | Free for small teams with up to 200 session... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/humanlayer.json` |
 | joule (self-hosted) | Free access is real but is earned by contri... | fails-quota | documented | not applicable: the unit is a m... | not applicable: the u... | anonymous | `dossier/compute/joule.json` |
 | Kasm Workspaces (self-hosted) | Community Edition is free for individuals a... | qualifies-with-caveat | documented | not stated | not stated | email | `dossier/compute/kasm-workspaces.json` |

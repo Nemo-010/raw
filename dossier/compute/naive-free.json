@@ -1,0 +1,160 @@
+{
+  "topic": "compute",
+  "slug": "naive-free",
+  "provider": "naïve",
+  "url": "https://usenaive.ai/pricing",
+  "category": "managed AI agent platform with hosted computers",
+  "tier": "Free",
+  "free_tier": {
+    "stated": "Start free with 5,000 credits to try the whole team; no card to start. Standard then costs $20 a month with 100,000 credits a month; a separate Standard 7-day trial requires a card.",
+    "unit": "credits",
+    "metered_on": "wall-clock",
+    "source_url": "https://usenaive.ai/pricing",
+    "read_on": "2026-11-24",
+    "notes": "The hosted computer is charged 252 credits per vCPU-hour and 81 credits per GiB-hour, so 5,000 credits pays for about 15 hours of the 1 vCPU / 1 GiB session computer at 333 credits an hour, within its 12-hour cap. Credits roll over and do not expire."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is an agent's computer, not an object; a file read or write is 4 MiB per call, publish_file or fetch_file moves up to 5 GiB per file, and shell output is 262,144 characters per stream"
+  },
+  "retention": {
+    "stated": "Included credit rolls over and never expires; a computer is auto-destroyed at 12 hours from create, and when its balance cannot pay the next 10-minute block it is paused with its disk kept.",
+    "days": null,
+    "source_url": "https://vetta.sh/docs/computer/limits-and-billing.md"
+  },
+  "egress": {
+    "terms": "The hosted computer runs on the platform; no outbound data volume allowance or per-TB price is published. Agent email is 4 credits per send however many recipients, web_fetch about 4 credits per page and web_search about 8 credits, and each phone-minute includes the residential network the traffic exits through.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://vetta.sh/docs/platform/pricing.md"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "chat"
+  ],
+  "interface_detail": "Agents are driven from the studio chat and a REST API such as POST /v1/agents and /v1/computers, with a naive command line tool; computer files and shell are reached through the API's file and shell routes.",
+  "endpoint": "https://app.usenaive.ai/register",
+  "tooling": "the studio, the REST API and the naive CLI; an agent's computer runs commands and files through the API and a browser, phone and mobile device can be attached to it",
+  "chaining": "One company plan covers all agents with no per-person fee, and the same credit balance pays model inference, the hosted computer, web tools, media and phone minutes; files must be published off the computer with publish_file before its 12-hour auto-destroy.",
+  "limits": [
+    {
+      "kind": "retention-clamped",
+      "value": "12 hours maximum computer runtime from create to destroy; no per-computer override",
+      "source": "https://vetta.sh/docs/computer/limits-and-billing.md"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "5,000 credits to start, at 333 credits per hour for the 1 vCPU / 1 GiB session computer",
+      "source": "https://vetta.sh/docs/computer/limits-and-billing.md"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "4 MiB per file read or write call; 5 GiB per publish_file or fetch_file; 262,144 characters per shell output stream",
+      "source": "https://vetta.sh/docs/computer/limits-and-billing.md"
+    }
+  ],
+  "limits_note": "A computer you create yourself is billed ahead in 10-minute blocks and needs a balance covering one block to create or resume; a session's computer is metered per running second. There is no count limit on computers, only the balance.",
+  "binding": "retention-clamped",
+  "binding_note": "The 12-hour fixed lifetime with no override ends a long-running job whatever the balance, before the free credit or the per-call file cap is spent.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "Registration is by email and starts with 5,000 credits and no card; a Google or other social option is not shown on the signup page. A card is required only for the 7-day Standard trial, and one trial is allowed per organization and per person.",
+    "country": null
+  },
+  "reliability_note": "A computer is paused when its balance cannot cover the next 10-minute block and is auto-destroyed at 12 hours; an unfunded mobile device is ended with termination_reason unfunded, and a data or social data run past two minutes is stopped.",
+  "confidence": "documented",
+  "confidence_note": "The free grant, credit rate, card-free signup and paid prices are quoted from the vendor's pricing and registration pages read on 2026-11-24; the runtime ceiling, metering and per-object caps are quoted from its own documentation.",
+  "evidence": [
+    {
+      "url": "https://usenaive.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the free tier gives 5,000 credits to try the whole team",
+      "capture": "sha256:4c4416f7c3b773e99cbd618c70a21b5fbdbb733dbda03331fd5d79ddcf17a8a5",
+      "quote": "5,000 creditsto try it"
+    },
+    {
+      "url": "https://usenaive.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "no card is needed to start the free tier",
+      "capture": "sha256:4c4416f7c3b773e99cbd618c70a21b5fbdbb733dbda03331fd5d79ddcf17a8a5",
+      "quote": "No card to start"
+    },
+    {
+      "url": "https://usenaive.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "one US dollar is 5,000 credits and Standard costs $20 a month",
+      "capture": "sha256:4c4416f7c3b773e99cbd618c70a21b5fbdbb733dbda03331fd5d79ddcf17a8a5",
+      "quote": "Then $20/mo on Standard"
+    },
+    {
+      "url": "https://vetta.sh/docs/platform/pricing.md",
+      "date": "2026-11-24",
+      "proved": "a 15-second Mira edit costs 2,250 credits and an email 4 credits",
+      "capture": "sha256:c538ae3b9e8f2f3088ef2826d9462953e5a043d60e42595f2360229abb549f78",
+      "quote": "A 15-second edit with Mira costs 2,250 credits."
+    },
+    {
+      "url": "https://vetta.sh/docs/computer/limits-and-billing.md",
+      "date": "2026-11-24",
+      "proved": "create and resume need a balance covering one full 10-minute block at the computer's size",
+      "capture": "sha256:0daac77756b6abddb52662e46d39738ad7ce93f30523f3470072f78e6c122b4b",
+      "quote": "Create and resume** need a balance that covers one full block"
+    },
+    {
+      "url": "https://vetta.sh/docs/computer/limits-and-billing.md",
+      "date": "2026-11-24",
+      "proved": "a session computer at 1 vCPU and 1 GiB costs 333 credits for a full running hour",
+      "capture": "sha256:0daac77756b6abddb52662e46d39738ad7ce93f30523f3470072f78e6c122b4b",
+      "quote": "A session's computer is **`1 vCPU / 1 GiB`**, so a full hour of *running* time is **252 + 81 = 333 credits**."
+    },
+    {
+      "url": "https://app.usenaive.ai/register",
+      "date": "2026-11-24",
+      "proved": "the signup page offers email registration and no social or phone option",
+      "capture": "sha256:c9d2cf3a7473b25be66d303a3e9ad617465265fa5558916c49f379678dc3aff9",
+      "quote": "Email"
+    },
+    {
+      "url": "https://vetta.sh/docs/cli/billing.md",
+      "date": "2026-11-24",
+      "proved": "the 7-day Standard trial requires a card and one trial is allowed per organization and per person",
+      "capture": "sha256:2e952ffd542cc34d6066615407f40fe8f45deed0063b73b2c53364d2a823b36f",
+      "quote": "a card is required"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-24T10:11:14.932Z",
+  "price_per_tb_month": null,
+  "notes": "The free tier is 5,000 credits, no card at signup, for a hosted AI agent platform whose agents run a hosted computer billed in credits; the Standard plan is $20 per month with 100,000 credits and Pro is $200 with 1,000,000. Compute is capped at 12 hours per computer, and the documentation is served from a separate domain at vetta.sh. Hosted service; the user runs only the CLI against it.",
+  "extras": {
+    "shape": {
+      "vcpu": 1,
+      "ram_gib": 1,
+      "disk_gib": null,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "the session computer is 1 vCPU and 1 GiB; custom sizes are not published on the pricing page"
+    },
+    "billing_model": "free credits, then a per-organization monthly plan with metered compute, tools and models",
+    "free_tier_kind": "recurring-allowance",
+    "term": "no expiry on credits; 12-hour hard ceiling per computer",
+    "price_arithmetic": "5,000 credits at 5,000 per USD is USD 1; 333 credits an hour gives about 15 hours of the session computer, capped at 12 hours",
+    "status": "published free and paid tiers",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": null,
+      "ports": null,
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null,
+      "note": "web_fetch and web_search are priced per call; no host egress volume price is published"
+    },
+    "session_cap": {
+      "wall_clock_min": 720,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "a computer is auto-destroyed at 12 hours; an unfunded one is paused with its disk kept"
+    }
+  }
+}

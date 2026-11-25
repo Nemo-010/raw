@@ -5,7 +5,7 @@
   "url": "https://www.thundercompute.com/pricing",
   "category": "GPU cloud",
   "free_tier": {
-    "stated": "no free tier: on-demand, non-preemptible GPU instances billed per minute while running, A100 80GB $1.09/hr, H100 SXM $3.20/hr, L40 $0.79/hr and RTX A6000 $0.35/hr (sandboxes bill per second); no L40S, L4 or GeForce card is listed, no minimum bill is stated, the first 100 GB of instance disk per GPU is included and there are no egress fees",
+    "stated": "No general free tier: on-demand instances bill per minute, with H100 SXM at $3.20/hr, A100 80GB at $1.09/hr, L40 at $0.79/hr and RTX A6000 at $0.35/hr; sandboxes bill per second. The first 100 GB of instance disk per GPU is included and data egress is $0.00/GB. A separate $20 student credit is limited to students enrolled at US universities and usable on A6000 or L40 GPUs.",
     "unit": "none",
     "metered_on": "none",
     "source_url": "https://www.thundercompute.com/pricing",
@@ -24,16 +24,17 @@
     "notes": "Disk durability across instance stops and deletions is not documented."
   },
   "egress": {
-    "terms": "not published",
+    "terms": "The pricing page lists \"Data egress | No egress fees | $0.00/GB\" for instances and for sandboxes; no per-GB charge or allowance is published.",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
     "source_url": "https://www.thundercompute.com/pricing"
   },
   "interface": [
-    "unknown"
+    "ssh",
+    "cli"
   ],
-  "interface_detail": "Access interface not documented in published terms.",
+  "interface_detail": "The CLI connects with SSH to a running instance; the console and VS Code extension launch instances, and files move with tnr scp.",
   "tooling": "not stated",
   "chaining": "not established",
   "limits": [
@@ -55,8 +56,8 @@
   ],
   "limits_note": "Session cap, idle-reap and network policy are not documented. GPU only.",
   "identity_cost": {
-    "kind": "institution",
-    "detail": "a university email from a US institution; the page states only students enrolled at US universities qualify",
+    "kind": "card",
+    "detail": "An email address and a payment method are required for a normal account; the student credit instead requires enrolment at a US university and a university email.",
     "country": "US"
   },
   "reliability_note": "no reliability event recorded in the source passes",
@@ -119,10 +120,80 @@
       "proved": "the listed rates are the on-demand rates; reserved terms are quoted by sales",
       "capture": "sha256:69cb665e7f187d4e290d949add24477a502f78981bf40409da686e114572c2cf",
       "quote": "Teams can reserve dedicated GPUs for a fixed term at a lower rate than on-demand"
+    },
+    {
+      "url": "https://www.thundercompute.com/pricing",
+      "date": "2026-11-24",
+      "proved": "the H100 SXM instance lists 80 GB VRAM and an on-demand rate of USD 3.20 per hour",
+      "capture": "sha256:a5bdd739701e1bd9fe70a7d9bc0db1df80069420b3adcbd1f7b3c69977e09bed",
+      "quote": "| H100 SXM | 80 GB | 4 included · 16 max | 32–⁠128 GB | 100–⁠500 GB | $3.20/hr |"
+    },
+    {
+      "url": "https://www.thundercompute.com/pricing",
+      "date": "2026-11-24",
+      "proved": "instances, CPUs and disk bill per minute only while running",
+      "capture": "sha256:69cb665e7f187d4e290d949add24477a502f78981bf40409da686e114572c2cf",
+      "quote": "Instances, including extra vCPUs and disk, are billed per minute only while running."
+    },
+    {
+      "url": "https://www.thundercompute.com/pricing",
+      "date": "2026-11-24",
+      "proved": "the pricing page states no egress fee and zero dollars per GB",
+      "capture": "sha256:a5bdd739701e1bd9fe70a7d9bc0db1df80069420b3adcbd1f7b3c69977e09bed",
+      "quote": "| Data egress | No egress fees | $0.00/GB |"
+    },
+    {
+      "url": "https://www.thundercompute.com/docs/console/quickstart",
+      "date": "2026-11-24",
+      "proved": "a normal account requires an email address",
+      "capture": "sha256:1b6cc6ff9fa9e00fcd692fc2b6fbbd2ff4830d18d4bb088a2821ec2992a19dea",
+      "quote": "Navigate to the [Thunder console](https://console.thundercompute.com/signup) and create an account with your email."
+    },
+    {
+      "url": "https://www.thundercompute.com/docs/console/quickstart",
+      "date": "2026-11-24",
+      "proved": "a payment method is added to the account",
+      "capture": "sha256:1b6cc6ff9fa9e00fcd692fc2b6fbbd2ff4830d18d4bb088a2821ec2992a19dea",
+      "quote": "In the console, [add a payment method](https://console.thundercompute.com/settings/billing) to your account."
+    },
+    {
+      "url": "https://www.thundercompute.com/docs/cli/operations/connecting-to-instances",
+      "date": "2026-11-24",
+      "proved": "the CLI opens an SSH shell on the instance",
+      "capture": "sha256:cee71f05f99da2e5780aba61462c7d923e1b65fc3f00cdc1e6fe6f05278a2c59",
+      "quote": "The CLI will set up SSH access, open the connection, and drop you into a shell on the instance."
+    },
+    {
+      "url": "https://www.thundercompute.com/docs/cli/operations/connecting-to-instances",
+      "date": "2026-11-24",
+      "proved": "the console SSH workflow is documented alongside the CLI connection",
+      "capture": "sha256:cee71f05f99da2e5780aba61462c7d923e1b65fc3f00cdc1e6fe6f05278a2c59",
+      "quote": "Use the console SSH workflow"
+    },
+    {
+      "url": "https://www.thundercompute.com/students",
+      "date": "2026-11-24",
+      "proved": "the student credit is limited to students at US universities who sign up with a university email",
+      "capture": "sha256:52553dde06fb70004c65f21fbb97673bf58b986005f0cb42476d000d02f8f8b8",
+      "quote": "Only students enrolled at US universities qualify. Sign up with your university email; credit is added automatically."
+    },
+    {
+      "url": "https://www.thundercompute.com/students",
+      "date": "2026-11-24",
+      "proved": "the students page states a USD 20.00 student credit",
+      "capture": "sha256:52553dde06fb70004c65f21fbb97673bf58b986005f0cb42476d000d02f8f8b8",
+      "quote": "Student credit\n\n$20.00"
+    },
+    {
+      "url": "https://www.thundercompute.com/students",
+      "date": "2026-11-24",
+      "proved": "student credit is restricted to A6000 and L40 GPUs",
+      "capture": "sha256:52553dde06fb70004c65f21fbb97673bf58b986005f0cb42476d000d02f8f8b8",
+      "quote": "Use on A6000 or L40 GPUs"
     }
   ],
   "verdict": "fails-identity",
-  "verified_at": "2026-11-03T08:50:54.214Z",
+  "verified_at": "2026-11-24T18:27:25.619Z",
   "price_per_tb_month": null,
   "notes": "Corrected 2026-10-22: paid-only read only the pricing page, which lists no signup credit, and missed the students page, which publishes USD 20 of credit for A6000 or L40 use. The gate is a US university enrolment rather than a card, so the capacity exists and fails identity.",
   "extras": {
@@ -174,9 +245,9 @@
   },
   "stale": true,
   "stale_checked_at": "2026-10-22T00:00:00.000Z",
-  "binding": "write-gated",
+  "binding": "none",
   "history": [
     "history/2026-10-22T053000Z/seventy-three-free-tiers-were-not-on-the-page.md"
   ],
-  "binding_note": "the US university enrolment check fails first: there is no other route to the USD 20 credit"
+  "binding_note": "No limits[] row holds a write gate; the student credit is blocked by US university enrolment, which the record states in identity_cost and in the verdict, so no capacity limit binds first."
 }

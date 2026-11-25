@@ -5,53 +5,53 @@
   "url": "https://leap0.dev/",
   "category": "container and VM sandbox",
   "free_tier": {
-    "stated": "machines that spin up in 100 ms and tear down; egress is restricted by domain allowlist, with outbound TCP and DNS exfiltration blocked by default",
+    "stated": "Free during public preview — no credit card required; published rates $0.0504 per vCPU-hour and $0.0162 per GB-hour apply when billing goes live.",
     "unit": "none",
     "metered_on": "none",
     "source_url": "https://leap0.dev/",
     "read_on": "2026-10-22"
   },
   "per_object_cap": {
-    "stated": "not stated",
+    "stated": "A sandbox has a 10 GiB disk rather than an object cap; the maximum request or response is 10 MiB.",
     "bytes": null,
     "source_url": "https://leap0.dev/",
     "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
   },
   "retention": {
-    "stated": "not stated",
+    "stated": "A sandbox has a 10 GiB disk and a 10 MiB maximum request or response; disk durability across stops and deletions is not published.",
     "days": null,
     "source_url": "https://leap0.dev/",
     "notes": "Disk durability across instance stops and deletions is not documented."
   },
   "egress": {
-    "terms": "Sandbox egress is restricted by a per-sandbox firewall that allows only the allowed domains (allow_domains) or ranges (allow_cidrs); outbound TCP is restricted, not stated as blocked; no volume allowance or price is published on the page read",
+    "terms": "Sandbox egress is restricted by a per-sandbox firewall to allowed domains (allow_domains) or ranges (allow_cidrs); outbound TCP, DNS and CIDR access are refused by default; no volume allowance or price is published.",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
     "source_url": "https://leap0.dev/"
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "Access interface not documented in published terms.",
+  "interface_detail": "REST API authenticated with an API key in the authorization or leap0-authorization header; Execute, File, Git and Desktop APIs are listed.",
   "tooling": "not stated",
   "chaining": "not established",
   "limits": [
     {
       "kind": "per-ip-shaping",
-      "value": "egress is restricted by domain allowlist: outbound TCP and DNS exfiltration are refused by default",
+      "value": "egress is restricted by a per-sandbox allowlist of domains or ranges; outbound TCP, DNS and CIDR access are refused by default",
       "source": "https://leap0.dev/"
     },
     {
       "kind": "request-rate",
-      "value": "a machine spins up in 100 ms and is torn down after the run",
+      "value": "sandbox timeout is configurable from 1 minute to 8 hours with a 5 minute default",
       "source": "https://leap0.dev/"
     }
   ],
-  "limits_note": "Session cap, idle-reap and network policy are not documented. Prelaunch only.",
+  "limits_note": "The sandbox timeout ranges from 1 minute to 8 hours with a 5 minute default; the API rate limit is 1000 requests per 60s; an idle-reap clock is not published.",
   "identity_cost": {
     "kind": "email",
-    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "detail": "unverified: no credit card is required for the free public preview; dashboard sign-in fields are not published",
     "country": null
   },
   "reliability_note": "no reliability event recorded in the source passes",
@@ -95,10 +95,52 @@
       "proved": "the page states the session clock and idle reap recorded here, or states that it publishes none",
       "capture": "sha256:d1cc2bbf387bd2f58644b6c5cb4ed934e35f8d33390374f87fc11811c4007921",
       "quote": "Timeout | 1 min - 8 hours (default 5 min)"
+    },
+    {
+      "url": "https://leap0.dev/",
+      "date": "2026-11-24",
+      "proved": "the homepage offers a free preview with no card and says rates apply when billing goes live",
+      "capture": "sha256:e250664dcad41630207658aabd2434385eda2cc2c3c055aafba1b66f9aa35bbe",
+      "quote": "Free during public preview — no credit card required. The rates below apply when billing goes live."
+    },
+    {
+      "url": "https://leap0.dev/",
+      "date": "2026-11-24",
+      "proved": "network egress is controlled by a per-sandbox domain or range allowlist",
+      "capture": "sha256:e250664dcad41630207658aabd2434385eda2cc2c3c055aafba1b66f9aa35bbe",
+      "quote": "Leap0 supports per-sandbox firewall controls so you can allow only the domains or ranges your workflow actually needs."
+    },
+    {
+      "url": "https://leap0.dev/docs/api-keys",
+      "date": "2026-11-24",
+      "proved": "the platform has an authenticated programmatic API",
+      "capture": "sha256:358f67bd4c121e0447ab84f398de1af7384610a780cd3f6cd822e66139e238bd",
+      "quote": "API keys authenticate all requests to the Leap0 API."
+    },
+    {
+      "url": "https://leap0.dev/docs/limits",
+      "date": "2026-11-24",
+      "proved": "the sandbox timeout range and default",
+      "capture": "sha256:d1cc2bbf387bd2f58644b6c5cb4ed934e35f8d33390374f87fc11811c4007921",
+      "quote": "Timeout | 1 min - 8 hours (default 5 min)"
+    },
+    {
+      "url": "https://leap0.dev/docs/limits",
+      "date": "2026-11-24",
+      "proved": "the sandbox disk ceiling",
+      "capture": "sha256:d1cc2bbf387bd2f58644b6c5cb4ed934e35f8d33390374f87fc11811c4007921",
+      "quote": "Disk | 10 GiB"
+    },
+    {
+      "url": "https://leap0.dev/docs/limits",
+      "date": "2026-11-24",
+      "proved": "the per-request size ceiling",
+      "capture": "sha256:d1cc2bbf387bd2f58644b6c5cb4ed934e35f8d33390374f87fc11811c4007921",
+      "quote": "Max request/response | 10 MiB"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-18T04:45:11.643Z",
+  "verified_at": "2026-11-24T13:20:55.904Z",
   "price_per_tb_month": null,
   "notes": "",
   "extras": {
