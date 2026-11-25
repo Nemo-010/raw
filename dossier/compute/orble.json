@@ -1,0 +1,163 @@
+{
+  "topic": "compute",
+  "slug": "orble",
+  "provider": "Orble",
+  "url": "https://orble.tech/pricing",
+  "category": "agent sandbox VM",
+  "tier": "per-second Linux VM boxes (micro and S/M/L)",
+  "free_tier": {
+    "stated": "unverified: no free allowance is stated on the pricing page read; it lists paid per-second box sizes and a USD 20 per month Pro plan",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://orble.tech/pricing",
+    "read_on": "2026-11-24",
+    "notes": "The sign-in page offers Google or GitHub sign-in only. The setup instructions say create_box may report that an account needs a card or credit. Whether a new account receives free credit is behind a sign-up."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a Linux VM, not a stored object",
+    "notes": "The smallest listed box has a 64 GiB disk; no per-object limit is published."
+  },
+  "retention": {
+    "stated": "Idle boxes suspend automatically and resume with state intact; a suspended box is billed only for storage. No automatic deletion timer is stated on the pages read.",
+    "days": null,
+    "source_url": "https://orble.tech/"
+  },
+  "egress": {
+    "terms": "Egress rules are a Pro feature: outbound network access can be allowed or denied by destination. No free egress allowance or per-GB price is published on the pricing page read; unverified: egress price",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://orble.tech/pricing"
+  },
+  "interface": [
+    "rest",
+    "ssh",
+    "cli",
+    "unknown"
+  ],
+  "interface_detail": "Linux VMs with root access, SSH and preinstalled Docker, Claude Code, Codex and Pi; managed through TypeScript and Python SDKs, an MCP server at https://orble.tech/mcp, and E2B and Daytona compatible endpoints.",
+  "endpoint": "https://orble.tech/mcp",
+  "tooling": "an install script, the orble CLI, the @orble/sdk package for TypeScript and Python, the hosted MCP server, and E2B or Daytona SDKs pointed at Orble endpoints.",
+  "chaining": "A box can run an agent with a browser and desktop, keep its memory across suspend and fork, and expose a port at a dedicated HTTPS URL; credentials are held outside the VM and injected into outbound requests by the Pro credentials proxy.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "USD 20 per month Pro plan, or USD 200 per year; boxes billed per second from USD 0.0075 per hour for 1 vCPU, 2 GiB, 64 GiB, suspended boxes USD 0 and storage USD 0.05 per GiB-month",
+      "source": "https://orble.tech/pricing"
+    },
+    {
+      "kind": "write-gated",
+      "value": "create_box may report that the account needs a card or credit",
+      "source": "https://orble.tech/setup.md"
+    }
+  ],
+  "limits_note": "Egress rules, secrets injection, box networks and increased box capacity are Pro features. The egress price and the standard box count ceiling are not published on the pages read.",
+  "binding": "write-gated",
+  "binding_note": "The pricing page publishes no free allowance and the setup instructions warn that box creation may require a card or credit, so that gate decides access before any per-second rate does.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "Sign-in offers Google or GitHub sign-in; signing in creates an account. Google and GitHub sign-ins with the same verified email address reach the same account. Whether a card is required to create a box is unverified: the setup instructions say create_box may report that the account needs a card or credit.",
+    "country": null
+  },
+  "reliability_note": "Idle boxes suspend automatically and resume with state intact; suspended boxes bill only storage. No SLA or deletion timer is stated on the pages read.",
+  "confidence": "documented",
+  "confidence_note": "Prices, box sizes, the Pro fee and the Pro egress rules are quoted from the first-party pricing page read 2026-11-24; the sign-in gate is quoted from the first-party sign-in page and the card warning from the first-party setup instructions. Free credit and the egress price are unverified and would raise the rung if published.",
+  "evidence": [
+    {
+      "url": "https://orble.tech/pricing",
+      "date": "2026-11-24",
+      "proved": "the smallest box is 1 vCPU, 2 GiB, 64 GiB at USD 0.0075 per hour",
+      "capture": "sha256:9b83ed58651c3954aaa1d546daf698071ac3d2abe9f19a203e3db55b5e654e26",
+      "quote": "| μ | 1 | 2 GiB | 64 GiB | $0.0075 |"
+    },
+    {
+      "url": "https://orble.tech/pricing",
+      "date": "2026-11-24",
+      "proved": "compute is billed per second",
+      "capture": "sha256:9b83ed58651c3954aaa1d546daf698071ac3d2abe9f19a203e3db55b5e654e26",
+      "quote": "Compute is billed per second."
+    },
+    {
+      "url": "https://orble.tech/pricing",
+      "date": "2026-11-24",
+      "proved": "the Pro plan is USD 20 a month or USD 200 a year",
+      "capture": "sha256:9b83ed58651c3954aaa1d546daf698071ac3d2abe9f19a203e3db55b5e654e26",
+      "quote": "$20 per month, or $200 per year (save 17%)"
+    },
+    {
+      "url": "https://orble.tech/pricing",
+      "date": "2026-11-24",
+      "proved": "egress rules are a Pro feature; the pricing page publishes no egress price",
+      "capture": "sha256:9b83ed58651c3954aaa1d546daf698071ac3d2abe9f19a203e3db55b5e654e26",
+      "quote": "Egress rules"
+    },
+    {
+      "url": "https://orble.tech/",
+      "date": "2026-11-24",
+      "proved": "idle boxes suspend automatically and resume with state intact, billed only for storage while suspended",
+      "capture": "sha256:ebd63f3adcec3c2217e2a02cc904a3085f1df8fef99d46054aafbfcc8e604762",
+      "quote": "Idle boxes suspend automatically and resume with state intact. While suspended, only storage is billed."
+    },
+    {
+      "url": "https://orble.tech/signin",
+      "date": "2026-11-24",
+      "proved": "signing in with Google or GitHub creates an Orble account",
+      "capture": "sha256:69fa95083781ebb4ce10f9b4d2f446316fda7e3b840756a64ab1e78008762f96",
+      "quote": "[Sign in with Google](https://orble.tech/auth/google?next=%2F)"
+    },
+    {
+      "url": "https://orble.tech/signin",
+      "date": "2026-11-24",
+      "proved": "Google and GitHub sign-ins with the same verified email address reach the same account",
+      "capture": "sha256:69fa95083781ebb4ce10f9b4d2f446316fda7e3b840756a64ab1e78008762f96",
+      "quote": "Signing in creates an Orble account and means agreeing to the terms. Google and GitHub sign-ins with the same verified email address reach the same account."
+    },
+    {
+      "url": "https://orble.tech/setup.md",
+      "date": "2026-11-24",
+      "proved": "box creation may require a card or credit on the account",
+      "capture": "sha256:a21a3a563aaffea8d033ef7f19db01b6be01f21788a89668c7eb3791b2a9cac9",
+      "quote": "If create_box says the account needs a card or credit, show the user its message and wait."
+    },
+    {
+      "url": "https://orble.tech/setup.md",
+      "date": "2026-11-24",
+      "proved": "the MCP server creates and runs Linux VMs called boxes",
+      "capture": "sha256:a21a3a563aaffea8d033ef7f19db01b6be01f21788a89668c7eb3791b2a9cac9",
+      "quote": "With Orble's MCP server at https://orble.tech/mcp, you can create and run Linux VMs, called boxes."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-24T10:11:14.986Z",
+  "price_per_tb_month": null,
+  "notes": "Orble sells per-second Linux VM boxes for AI agents. The published rate is USD 0.0075 an hour for the smallest 1 vCPU, 2 GiB, 64 GiB box; suspended boxes cost nothing and storage is USD 0.05 per GiB-month. No free allowance is published, and the setup instructions warn that box creation may require a card or credit, so the identity gate and prepaid credit bind before the rate. A paid Pro plan at USD 20 a month adds egress rules, secrets injection, box networks and larger fleets. Egress price and any free credit are unverified and would need an account to settle.",
+  "extras": {
+    "shape": {
+      "vcpu": 1,
+      "ram_gib": 2,
+      "disk_gib": 64,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "smallest listed size; the table also lists S 2 vCPU 4 GiB, M 4 vCPU 8 GiB and L 8 vCPU 16 GiB, all with 64 GiB disk"
+    },
+    "billing_model": "per-second, prepaid credit, suspended boxes billed only for storage",
+    "free_tier_kind": "none published",
+    "term": "per-second or Pro monthly or yearly",
+    "price_arithmetic": "USD 0.0075 an hour for the smallest box; USD 0.05 per GiB-month for storage; Pro USD 20 a month or USD 200 a year",
+    "status": "paid per-second service; no free allowance stated",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "each exposed port gets a dedicated HTTPS URL with account authentication or public access",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "idle boxes suspend automatically and resume with state intact; no automatic deletion timer is stated"
+    }
+  }
+}

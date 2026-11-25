@@ -1,0 +1,166 @@
+{
+  "topic": "compute",
+  "slug": "shark-magic",
+  "provider": "Shark Magic",
+  "url": "https://sharkmagic.si/",
+  "category": "serverless sandbox",
+  "tier": "Shark Pro (devbox)",
+  "free_tier": {
+    "stated": "No separate free plan. Shark Pro is USD 5 a month and includes USD 5 of usage; storage has the first 5 GiB free per Space per billing cycle and egress has the first 10 GiB free per Space per billing cycle. Prepaid credit is required beyond the included usage.",
+    "unit": "credits",
+    "metered_on": "wall-clock",
+    "source_url": "https://sharkmagic.si/docs/faq",
+    "read_on": "2026-11-24",
+    "notes": "The included USD 5 of the monthly plan expires at the end of the paid period and does not roll over. There is no free plan; promotions are shown at checkout."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a Space with files, not a single object; a single file upload is capped at 512 MiB and an archive upload at 2 GiB",
+    "source_url": "https://sharkmagic.si/docs/limits"
+  },
+  "retention": {
+    "stated": "Spaces and their files persist across commands; op results and output are kept 7 days (410 op_expired); files stay readable when credit runs out and Spaces are hibernated.",
+    "days": 7,
+    "source_url": "https://sharkmagic.si/docs/limits"
+  },
+  "egress": {
+    "terms": "USD 0.03 per GB, with the first 10 GiB free per Space per billing cycle, overage only; egress is counted as bytes sent and received by commands over the network",
+    "metered": true,
+    "free_allowance": "first 10 GiB per Space per billing cycle",
+    "price_per_tb": "USD 30 per TB at the published USD 0.03 per GB rate",
+    "source_url": "https://sharkmagic.si/docs/billing"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "An HTTP API with Python and TypeScript SDKs, and the shark CLI (shark login, shark connect, shark run, shark cp). SDK Spaces are the default; every command runs in a fresh Firecracker microVM.",
+  "endpoint": "https://hel1.sharkmagic.si",
+  "tooling": "pip install sharkmagic or npm install @sharkmagic/sdk; the shark CLI is downloaded from dl.sharkmagic.si; file reads and listings need no VM and are free.",
+  "chaining": "The REST API and SDKs let a prepaid Sandbox hold an agent's persistent files while each command bills only its own seconds, so it combines with an external model and object storage for checkpointing.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "USD 5 of included usage per month on Shark Pro, then prepaid credit; a new account runs at most 4 commands at once and holds 20 Spaces for the first 7 days",
+      "source": "https://sharkmagic.si/docs/limits"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "op results and output expire after 7 days (410 op_expired); a synchronous exec returns the last 1 MiB of each stream and the op log is capped at 32 MiB per stream",
+      "source": "https://sharkmagic.si/docs/limits"
+    },
+    {
+      "kind": "request-rate",
+      "value": "100 requests per second per credential, burst 500 (429 rate_limited with Retry-After)",
+      "source": "https://sharkmagic.si/docs/limits"
+    }
+  ],
+  "limits_note": "A synchronous exec has a default 120 s timeout and a 900 s maximum; a streaming or async exec defaults to 30 min with a 7200 s maximum. Disk per account on the node is 50 GiB, and a Space holds 8 vCPU / 4 GiB for a command. GPUs, non-Linux guests and a published SLA are not available.",
+  "binding": "volume-quota",
+  "binding_note": "The USD 5 of included monthly usage is what runs out first on the entry plan: at USD 0.12 per compute-hour on the standard 8 vCPU / 4 GiB shape it buys about 41.7 command-hours, before the 100 requests per second credential rate or the 50 GiB disk cap is met.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The signup page says 'Start with your work email'. A paid plan is bought through Stripe Checkout and top-ups are by card, so a card is needed for the plan or a prepaid credit balance; the signup page itself asks only for email.",
+    "country": null
+  },
+  "reliability_note": "At zero balance new work answers 402 credits_exhausted and Spaces are hibernated, though files stay readable; node admission can refuse commands with 503 out_of_capacity, and a synchronous command is capped at 900 s.",
+  "confidence": "documented",
+  "confidence_note": "The rate, plan, included usage and egress allowance are quoted from the vendor's own billing pages read on 2026-11-24; the signup gate is quoted from the vendor's signup page. Account-specific quotas beyond the published defaults are unverified: they are shown only in an authenticated account.",
+  "evidence": [
+    {
+      "url": "https://sharkmagic.si/docs/billing",
+      "date": "2026-11-24",
+      "proved": "compute is USD 0.12 per compute-hour on the standard 8 vCPU / 4 GiB shape, billed per second only while a command runs",
+      "capture": "sha256:3cbb2db8be1af3f43ce9a0bca2dbd08ae533cca6235104e889db971ca5d5bf00",
+      "quote": "| **Compute**, standard 8 vCPU / 4 GiB | $0.12 per compute-hour | none; billed per second only while a command runs |"
+    },
+    {
+      "url": "https://sharkmagic.si/docs/billing",
+      "date": "2026-11-24",
+      "proved": "egress is USD 0.03 per GB with the first 10 GiB free per Space per billing cycle",
+      "capture": "sha256:3cbb2db8be1af3f43ce9a0bca2dbd08ae533cca6235104e889db971ca5d5bf00",
+      "quote": "| **Egress** | $0.03 per GB | first 10 GiB free per Space per billing cycle, overage only |"
+    },
+    {
+      "url": "https://sharkmagic.si/docs/billing",
+      "date": "2026-11-24",
+      "proved": "storage is USD 0.08 per GiB-month with the first 5 GiB free per Space per billing cycle",
+      "capture": "sha256:3cbb2db8be1af3f43ce9a0bca2dbd08ae533cca6235104e889db971ca5d5bf00",
+      "quote": "| **Storage** | $0.08 per GiB-month | first 5 GiB free per Space per billing cycle, overage only |"
+    },
+    {
+      "url": "https://sharkmagic.si/docs/billing",
+      "date": "2026-11-24",
+      "proved": "Shark Pro is USD 5 a month and includes USD 5 of usage",
+      "capture": "sha256:3cbb2db8be1af3f43ce9a0bca2dbd08ae533cca6235104e889db971ca5d5bf00",
+      "quote": "| **Shark Pro** | $5/month | $5 |"
+    },
+    {
+      "url": "https://sharkmagic.si/docs/faq",
+      "date": "2026-11-24",
+      "proved": "there is no separate free plan; the Pro plan's included usage and the storage and egress allowances are the only free capacity",
+      "capture": "sha256:f00cc6c186140d65eabb2b7b8713bf3c4687f33dde2a03ec979dcaf5304f8d07",
+      "quote": "Is there a free tier? The Shark Pro plan includes $5 of usage each month, and storage and egress each have a free monthly allowance per Space. There is no separate free plan; promotions, when offered, are shown at checkout."
+    },
+    {
+      "url": "https://app.sharkmagic.si/#/signup",
+      "date": "2026-11-24",
+      "proved": "the signup gate asks for a work email address",
+      "capture": "sha256:191c2cdf2017d5c6010c9baeeebb0411a504cadbd300337fd91d22b3a806a4ed",
+      "quote": "Start with your work email. You can invite your team after."
+    },
+    {
+      "url": "https://sharkmagic.si/docs/limits",
+      "date": "2026-11-24",
+      "proved": "the request rate per credential is 100 per second with a burst of 500",
+      "capture": "sha256:0b6cad6fa176178c5a13ac21b3cf35bf4f629210c2f48608d4ba3d4f5276ec33",
+      "quote": "| request rate per credential | 100/s, burst 500 (`429 rate_limited` with `Retry-After`) |"
+    },
+    {
+      "url": "https://sharkmagic.si/docs/limits",
+      "date": "2026-11-24",
+      "proved": "op results and output are kept for 7 days before 410 op_expired",
+      "capture": "sha256:0b6cad6fa176178c5a13ac21b3cf35bf4f629210c2f48608d4ba3d4f5276ec33",
+      "quote": "| op retention (result and output) | 7 days | `410 op_expired`; the commit stays in `audit` |"
+    },
+    {
+      "url": "https://sharkmagic.si/docs/",
+      "date": "2026-11-24",
+      "proved": "the hosted node endpoint and the signup route",
+      "capture": "sha256:9f89798c1568c98c377fc0f2c40f9e22fae37bc0fcc07152d79c954e39f1f073",
+      "quote": "Hosted node: `https://hel1.sharkmagic.si`. Sign up at [app.sharkmagic.si](https://app.sharkmagic.si/#/signup)."
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-24T10:11:15.094Z",
+  "price_per_tb_month": null,
+  "notes": "A serverless sandbox that bills only the seconds a command runs and keeps the Space's files between commands. The entry plan is USD 5 a month with USD 5 of usage; at USD 0.12 per compute-hour that is about 41.7 command-hours before prepaid credit is drawn. GPUs, non-Linux guests, process memory across commands and a published SLA are not offered.",
+  "extras": {
+    "shape": {
+      "vcpu": 8,
+      "ram_gib": 4,
+      "disk_gib": null,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "a fresh 8 vCPU / 4 GiB Firecracker microVM per command; no 2 vCPU / 2 GiB compute shape"
+    },
+    "billing_model": "monthly plan with included usage, then prepaid credit; command seconds only",
+    "free_tier_kind": "included-usage",
+    "term": "monthly, one active plan",
+    "price_arithmetic": "USD 5 included usage at USD 0.12 per compute-hour gives about 41.7 command-hours; USD 0.03 per GB egress after the first 10 GiB per Space per billing cycle",
+    "status": "hosted service",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "exposed processes and preview URLs are in beta",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": "first 10 GiB free per Space per billing cycle, then USD 0.03 per GB"
+    },
+    "session_cap": {
+      "wall_clock_min": 15,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "a synchronous exec defaults to 120 s with a 900 s maximum; a streaming or async exec defaults to 30 min with a 7200 s maximum"
+    }
+  }
+}

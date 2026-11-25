@@ -1,7 +1,7 @@
 {
   "topic": "compute",
   "per_object_cap": {
-    "stated": "'Sandboxes come in three sizes ... Small (2 vCPU, 4 GB RAM) at $0.0162/hour, Medium (4 vCPU, 8 GB RAM) at $0.0324/hour, and Large (8 vCPU, 16 GB RAM) at $0.0648/hour.' During the trial the sandbox limit is 5.",
+    "stated": "Six sandbox sizes: Nano 0.5 vCPU / 1 GB, Mini 1 / 2, Small 2 / 4, Medium 4 / 8, Large 8 / 16 and Big 16 / 32 GB; per-hour rates from USD 0.00405 to USD 0.1296.",
     "bytes": null,
     "source_url": "https://lizard.build/pricing",
     "notes": "'They use the same CPU, memory and storage rates as other resources and count toward the $19 of included usage.'"
@@ -13,10 +13,10 @@
   "interface_detail": "REST API and CLI; sandbox create takes a millisecond lifetime",
   "tooling": "lizard CLI, SDK, REST; templates include codex, claude, opencode, pi, desktop",
   "chaining": "2 TB of included egress per account makes it the natural host for a crawler that serves what it collects",
-  "limits_note": "At USD 0.0324 an hour a Medium sandbox costs USD 23.65 for a month, which is more than the USD 19 credit, so the plan cannot hold a Medium up for 730 hours either.",
-  "reliability_note": "When the credit is spent, running apps, databases and Sandboxes pause and no new ones can be created; the data is kept but the service stops.",
+  "limits_note": "Trial runs 1 Small, 2 Mini and 2 Nano sandboxes at once and deletes each sandbox 1 hour after it starts at the latest; the USD 19 credit is below a full month of the Medium sandbox.",
+  "reliability_note": "When the credit is spent, running apps, databases and Sandboxes pause and no new ones can be created; the data is kept.",
   "confidence": "documented",
-  "verified_at": "2026-11-18T04:45:12.575Z",
+  "verified_at": "2026-11-24T13:20:55.906Z",
   "price_per_tb_month": null,
   "history": [
     "history/2026-10-22T030705Z/compute-seed-claims-superseded.md"
@@ -26,20 +26,20 @@
   "url": "https://lizard.build/pricing",
   "category": "container and VM sandbox",
   "free_tier": {
-    "stated": "'Pro costs $19 a month and includes $19 in monthly credits for the whole platform.' The only free path is a trial: 'Pro starts with a 7-day trial and $5 in trial credits. You need a card to start it, but we charge nothing during the 7 days.'",
+    "stated": "USD 19 Pro includes USD 19 of usage; a 7-day trial includes USD 5 of usage and requires a card; sandboxes are billed per second.",
     "unit": "none",
     "metered_on": "wall-clock",
     "source_url": "https://lizard.build/pricing",
     "read_on": "2026-10-24",
-    "notes": "A plan credit equal to the plan fee, and a card-gated trial. There is no grant."
+    "notes": "The plan credit equals the plan fee; the only grant is a 7-day card-gated trial with USD 5 of usage."
   },
   "retention": {
-    "stated": "A successful pause stops compute charges; Persistent Volumes storage continues to be billed while data is kept.",
+    "stated": "A paused sandbox and each snapshot cost USD 0.14 per GB-month of used disk space; Persistent Volumes bill while data is kept.",
     "days": null,
     "source_url": "https://lizard.build/pricing"
   },
   "egress": {
-    "terms": "Sandbox egress has no separate per-GB charge, with '2 TB per account over a rolling 30 days' included; apps and databases pay the per-GB rate.",
+    "terms": "Sandbox egress has no separate per-GB charge; the included allowance is 2 TB per account over a rolling 30 days; apps and databases pay the per-GB rate.",
     "metered": true,
     "free_allowance": "2 TB over a rolling 30 days for sandboxes",
     "price_per_tb": null,
@@ -48,7 +48,7 @@
   "limits": [
     {
       "kind": "volume-quota",
-      "value": "USD 19 monthly credit included in a USD 19 monthly fee",
+      "value": "USD 19 of monthly usage included in a USD 19 monthly Pro fee",
       "source": "https://lizard.build/pricing"
     },
     {
@@ -59,7 +59,7 @@
   ],
   "identity_cost": {
     "kind": "card",
-    "detail": "'You need a card to start it, but we charge nothing during the 7 days.' No hold amount is stated. The card is charged USD 19 when the trial ends unless cancelled.",
+    "detail": "Sign-in through GitHub or Google; a valid card is required to start the 7-day trial and USD 19 is charged when it ends unless cancelled.",
     "country": null
   },
   "evidence": [
@@ -104,10 +104,73 @@
       "proved": "the page states the session clock and idle reap recorded here, or states that it publishes none",
       "capture": "sha256:ccde1a8bec302d0e1d02077793f7c1282fd428a7b44dd93a5ecbc6bc6f92f401",
       "quote": "A create or fork that sets no lifetime (`timeoutMs` `0`, absent, or Never) gets 1 hour; a longer lifetime returns HTTP 403 with `code` set to `TRIAL_SANDBOX_LIFETIME` and `maxTimeoutMs: 3600000`."
+    },
+    {
+      "url": "https://lizard.build/pricing",
+      "date": "2026-11-24",
+      "proved": "the Pro fee returns an equal amount as monthly usage credit",
+      "capture": "sha256:c3f0c353d741060751de4569fab747c7b8b14062e08bc9d819f1e20b2659f9b7",
+      "quote": "Pro costs $19 a month and includes $19 of usage for the whole platform: apps, databases, Sandboxes, storage and egress."
+    },
+    {
+      "url": "https://lizard.build/pricing",
+      "date": "2026-11-24",
+      "proved": "the trial is 7 days with USD 5 of usage and a card gate",
+      "capture": "sha256:c3f0c353d741060751de4569fab747c7b8b14062e08bc9d819f1e20b2659f9b7",
+      "quote": "Pro starts with a 7-day trial that includes $5 of usage. You need a card to start it, but we charge nothing during the 7 days, and you can cancel before the trial ends."
+    },
+    {
+      "url": "https://lizard.build/pricing",
+      "date": "2026-11-24",
+      "proved": "sandbox egress carries no per-GB price and a 2 TB per-account allowance",
+      "capture": "sha256:c3f0c353d741060751de4569fab747c7b8b14062e08bc9d819f1e20b2659f9b7",
+      "quote": "Sandbox egress has no separate per-GB charge; the included allowance is 2 TB per account over a rolling 30 days."
+    },
+    {
+      "url": "https://lizard.build/pricing",
+      "date": "2026-11-24",
+      "proved": "the six sandbox sizes and their per-hour rates and CPU and RAM",
+      "capture": "sha256:c3f0c353d741060751de4569fab747c7b8b14062e08bc9d819f1e20b2659f9b7",
+      "quote": "Sandboxes come in six sizes, priced per hour and billed per second while they run, including idle time: Nano (0.5 vCPU, 1 GB RAM; Base, Claude and Codex templates) at $0.00405/hour, Mini (1 vCPU, 2 GB RAM) at $0.0081/hour, Small (2 vCPU, 4 GB RAM) at $0.0162/hour, Medium (4 vCPU, 8 GB RAM) at $0.0324/hour, Large (8 vCPU, 16 GB RAM) at $0.0648/hour, and Big (16 vCPU, 32 GB RAM; paid plans only) at $0.1296/hour."
+    },
+    {
+      "url": "https://lizard.build/pricing",
+      "date": "2026-11-24",
+      "proved": "the trial's concurrent sandbox sizes and the one-hour deletion clock",
+      "capture": "sha256:c3f0c353d741060751de4569fab747c7b8b14062e08bc9d819f1e20b2659f9b7",
+      "quote": "During the free trial you can run 1 Small, 2 Mini and 2 Nano sandboxes at a time; Medium, Large and Big start after your first payment. Trial sandboxes are deleted after 1 hour at most."
+    },
+    {
+      "url": "https://lizard.build/pricing",
+      "date": "2026-11-24",
+      "proved": "workloads pause and data is kept when credits run out",
+      "capture": "sha256:c3f0c353d741060751de4569fab747c7b8b14062e08bc9d819f1e20b2659f9b7",
+      "quote": "Running apps, databases and Sandboxes pause, and you cannot create new ones. We keep your data."
+    },
+    {
+      "url": "https://lizard.build/docs/platform/limits/",
+      "date": "2026-11-24",
+      "proved": "a paused sandbox and each snapshot bill storage by the used GB-month",
+      "capture": "sha256:ccde1a8bec302d0e1d02077793f7c1282fd428a7b44dd93a5ecbc6bc6f92f401",
+      "quote": "A paused sandbox and each snapshot cost $0.14 per GB-month of used disk space; see storage and billing."
+    },
+    {
+      "url": "https://lizard.build/terms",
+      "date": "2026-11-24",
+      "proved": "an account uses a GitHub or Google sign-in",
+      "capture": "sha256:cb7a20e5f0905ea3032c9108df72b1e72b205b69ae750826e8e3a065a00a6adf",
+      "quote": "Sign in through GitHub or Google."
+    },
+    {
+      "url": "https://lizard.build/terms",
+      "date": "2026-11-24",
+      "proved": "deployments use Git and the documented APIs and CLI",
+      "capture": "sha256:cb7a20e5f0905ea3032c9108df72b1e72b205b69ae750826e8e3a065a00a6adf",
+      "quote": "Users deploy applications, databases (Postgres, Redis), and services by pushing code via Git."
     }
   ],
   "verdict": "trial-only",
-  "notes": "At USD 0.0324 an hour the Medium sandbox is USD 23.65 a month, so the USD 19 credit is 586 hours; the Small at USD 0.0162 is USD 11.83 a month and 1,173 hours, so USD 19 covers a full month with about USD 7 spare. The 7-day trial is card-gated, which makes this a paid row.",
+  "notes": "Sandbox egress is 2 TB per account over a rolling 30 days; rates are per second including idle; the USD 19 credit is a monthly plan allowance, not a grant.",
   "extras": {
     "shape": {
       "vcpu": 4,
@@ -226,7 +289,7 @@
     }
   },
   "binding": "volume-quota",
-  "binding_note": "The USD 19 credit against USD 23.65 a month for the 4 vCPU size is what fails; the 2 vCPU size at USD 11.83 fits with USD 7 to spare.",
+  "binding_note": "The USD 19 credit against USD 23.65 per month for the 4 vCPU size is the binding quota; the 2 vCPU size at USD 11.83 per month fits within it.",
   "tier": "Pro",
   "confidence_note": "Plan, credit, sandbox sizes, rates, the trial terms and the egress allowance are on the pricing page read today."
 }

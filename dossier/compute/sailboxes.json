@@ -2,25 +2,25 @@
   "topic": "compute",
   "slug": "sailboxes",
   "provider": "Sailboxes",
-  "url": "https://sailresearchs.com/sailboxes",
+  "url": "https://www.sailresearch.com/sailboxes",
   "category": "container and VM sandbox",
   "free_tier": {
-    "stated": "A USD 5 monthly credit is advertised when a payment method is attached (aggregator); the vendor page read today states no free allowance.",
+    "stated": "A USD 5 monthly credit is stated on the vendor's own Free plan when a payment method is attached; no other free allowance is stated.",
     "unit": "mixed",
     "metered_on": "wall-clock",
-    "source_url": "https://boxyard.dev/providers/sail/pricing",
-    "read_on": "2026-10-24",
-    "notes": "credit, and it requires a payment method"
+    "source_url": "https://www.sailresearch.com/sailboxes",
+    "read_on": "2026-11-24",
+    "notes": "a monthly credit that requires an attached payment method"
   },
   "per_object_cap": {
     "stated": "sandbox sizes S, M and L with a per-creation fee on the free plan (USD 0.005 / 0.01 / 0.012); the per-size ceilings were not readable first party"
   },
   "retention": {
-    "stated": "Independent disks and persistent state; volume storage is billed at USD 0.000411/GiB-hour and is charged even while the attached Sailbox sleeps.",
+    "stated": "Independent disks and persistent state; snapshots go to S3 every few minutes; volume storage bills for each hour the volume exists even while the attached Sailbox sleeps.",
     "source_url": "https://sailresearchs.com/sailboxes"
   },
   "egress": {
-    "terms": "No egress price and no transfer allowance are published on the page read; metered is recorded as false because nothing is known to be charged per gigabyte, which is an absence of evidence, not a promise of free traffic.",
+    "terms": "No egress price or transfer allowance is published. A Sailbox can reach any host by default; a saved egress policy can restrict the destinations it may connect to.",
     "metered": false,
     "free_allowance": "not stated",
     "source_url": "https://sailresearchs.com/sailboxes"
@@ -37,7 +37,7 @@
     {
       "kind": "volume-quota",
       "value": "USD 0.015 per active vCPU-hour and USD 0.008 per active GB-hour; a free-plan creation fee of USD 0.005 to USD 0.012",
-      "source": "https://sailresearchs.com/sailboxes"
+      "source": "https://www.sailresearch.com/sailboxes"
     }
   ],
   "limits_note": "The smallest Sailbox holds 16 GiB of RAM, and RAM bills whether or not it is touched, so the floor is USD 0.128 per hour before a single vCPU-second is used; USD 5 of monthly credit buys about 39 hours of that.",
@@ -45,10 +45,10 @@
   "binding_note": "Active-CPU metering is the wall in both directions: a busy box costs USD 16.79 a month, and the disk keeps billing even while the box sleeps.",
   "identity_cost": {
     "kind": "card",
-    "detail": "The USD 5 monthly credit is attached to a payment method per the aggregator's plan table; the vendor marketing page states no payment terms. Card type and hold unverified.",
+    "detail": "The first-party marketing page states '$5 in free credits every month when you attach a payment method'; card type and any hold are unverified.",
     "country": null
   },
-  "reliability_note": "In-flight work survives pause and resume, and open connections survive for up to 10 minutes.",
+  "reliability_note": "In-flight work survives pause and resume, and open connections survive pauses up to 10 minutes; the runtime column on the marketing page says Unlimited.",
   "confidence": "documented",
   "evidence": [
     {
@@ -127,15 +127,92 @@
       "quote": "Sailboxes have a public HTTPS API. The SDKs and the CLI are built on it"
     },
     {
-      "url": "https://www.sailresearch.com/sailboxes",
-      "date": "2026-11-18",
-      "proved": "the page states the session clock and idle reap recorded here, or states that it publishes none",
-      "capture": "sha256:860ced6f3a64dd0e22e84922f509557e82ca1240cc60b8daa45223970f48c8a6",
-      "quote": "DON’T PAY FOR IDLE CAPACITY"
+      "url": "https://docs.sailresearch.com/pricing.md",
+      "date": "2026-11-24",
+      "proved": "volume storage bills each hour the volume exists, including while a Sailbox sleeps",
+      "capture": "sha256:3b2391a05a08707646d28438ccb9f7547e4e99363fa44311924aac3bd669814e",
+      "quote": "Volume storage is billed separately for each hour the volume exists, even when attached Sailboxes are sleeping, until it's deleted."
+    },
+    {
+      "url": "https://docs.sailresearch.com/sailbox-sdk.md",
+      "date": "2026-11-24",
+      "proved": "egress policy controls which hosts a Sailbox may reach",
+      "capture": "sha256:7f5b23616af1cb87503d72450ddd8b7015dd106a8491ad00a126cb7702d462c2",
+      "quote": "Which hosts the Sailbox may connect to: a saved `EgressPolicy` (or its id), or a policy document such as `EgressPolicy.allow_only(...)`. Without one the Sailbox can reach any host."
+    },
+    {
+      "url": "https://sailresearchs.com/sailboxes",
+      "date": "2026-11-24",
+      "proved": "the Free plan is a USD 5 monthly credit tied to a payment method",
+      "capture": "sha256:06305c80c3939287dea30f84de3f753f19c4e0201b14d6fee8acc806d23c3e56",
+      "quote": "$5 in free credits every month when you attach a payment method"
+    },
+    {
+      "url": "https://sailresearchs.com/sailboxes",
+      "date": "2026-11-24",
+      "proved": "open connections survive pauses up to 10 minutes",
+      "capture": "sha256:06305c80c3939287dea30f84de3f753f19c4e0201b14d6fee8acc806d23c3e56",
+      "quote": "Open connections survive pauses up to 10 minutes, reducing reconnects when agents resume."
+    },
+    {
+      "url": "https://sailresearchs.com/sailboxes",
+      "date": "2026-11-24",
+      "proved": "the Free plan allows 200 reserved vCPUs",
+      "capture": "sha256:06305c80c3939287dea30f84de3f753f19c4e0201b14d6fee8acc806d23c3e56",
+      "quote": "Up to 200 reserved vCPUs across active Sailboxes"
+    },
+    {
+      "url": "https://sailresearchs.com/sailboxes",
+      "date": "2026-11-24",
+      "proved": "the Pro plan is USD 250 per month",
+      "capture": "sha256:06305c80c3939287dea30f84de3f753f19c4e0201b14d6fee8acc806d23c3e56",
+      "quote": "$250 / month"
+    },
+    {
+      "url": "https://sailresearchs.com/sailboxes",
+      "date": "2026-11-24",
+      "proved": "the runtime column says Unlimited",
+      "capture": "sha256:06305c80c3939287dea30f84de3f753f19c4e0201b14d6fee8acc806d23c3e56",
+      "quote": "Runtime | Unlimited"
+    },
+    {
+      "url": "https://docs.sailresearch.com/sailboxes-pricing",
+      "date": "2026-11-24",
+      "proved": "the used vCPU-hour rate is USD 0.015",
+      "capture": "sha256:9d4ea4e6ccc4c0611370a5c89f13b3cb2e06e39a12ebb8ab102fbb17cc68906f",
+      "quote": "Used vCPU/hour (CPU time of the Sailbox's virtual CPUs) | \\$0.015"
+    },
+    {
+      "url": "https://docs.sailresearch.com/sailboxes-pricing",
+      "date": "2026-11-24",
+      "proved": "usage is sampled per second and not rounded up to whole minutes",
+      "capture": "sha256:9d4ea4e6ccc4c0611370a5c89f13b3cb2e06e39a12ebb8ab102fbb17cc68906f",
+      "quote": "Usage is not rounded up to whole minutes."
+    },
+    {
+      "url": "https://docs.sailresearch.com/sailboxes-devboxes",
+      "date": "2026-11-24",
+      "proved": "devboxes set up SSH",
+      "capture": "sha256:d2f01a607b56d40f5cdd724500239ff20f09b158890d2c1bfaaf697d11225ca2",
+      "quote": "* sets up SSH, so your editor and other SSH tools can connect;"
+    },
+    {
+      "url": "https://docs.sailresearch.com/sailboxes-http-api",
+      "date": "2026-11-24",
+      "proved": "the public HTTPS API underlies the SDKs and CLI",
+      "capture": "sha256:4bd4857f4e1903c0d120d7244d68c0d85dbb8375babd160e753ac04ebfff9533",
+      "quote": "Sailboxes have a public HTTPS API. The SDKs and the CLI are built on it, and you can call it directly from any language, or from `curl`."
+    },
+    {
+      "url": "https://docs.sailresearch.com/sailbox-sdk.md",
+      "date": "2026-11-24",
+      "proved": "the TypeScript SDK is @sailresearch/sdk",
+      "capture": "sha256:7f5b23616af1cb87503d72450ddd8b7015dd106a8491ad00a126cb7702d462c2",
+      "quote": "import { App, Sailbox } from \"@sailresearch/sdk\";"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-18T04:45:11.647Z",
+  "verified_at": "2026-11-24T13:21:03.220Z",
   "notes": "Arithmetic at 1 vCPU / 1 GiB fully active for 730 h: 0.015 x 730 = USD 10.95 + 0.008 x 730 = USD 5.84 = USD 16.79. The metering is on ACTIVE CPU, so a mostly idle box is cheaper: at 5% average CPU the compute line is USD 0.55 and the memory line USD 5.84, which is USD 6.39 and still over the line because memory is charged while the box runs. This is the provider whose pricing model most rewards idling, and it still cannot reach USD 5 at 1 GiB. The 'no runtime limits' claim is the vendor's own and was not tested.",
   "extras": {
     "wave2": {

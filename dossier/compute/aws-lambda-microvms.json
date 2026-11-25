@@ -5,7 +5,7 @@
   "url": "https://aws.amazon.com/lambda/pricing/",
   "category": "cloud VM",
   "free_tier": {
-    "stated": "not stated for Lambda MicroVMs: https://aws.amazon.com/lambda/pricing/ prices MicroVM compute per second, snapshots and data transfer with no free tier; the page's free tier, one million requests and 400,000 GB-seconds per month, is stated for Lambda Event Functions",
+    "stated": "no MicroVM-specific free tier; the AWS account-wide Free Tier gives up to USD 200 in credits over 6 months, USD 100 at account creation and up to USD 100 more",
     "unit": "none",
     "metered_on": "wall-clock",
     "source_url": "https://aws.amazon.com/lambda/pricing/",
@@ -32,10 +32,11 @@
     "source_url": "https://aws.amazon.com/lambda/pricing/"
   },
   "interface": [
-    "unknown"
+    "cli",
+    "rest"
   ],
-  "interface_detail": "Access interface not documented in published terms.",
-  "tooling": "not stated",
+  "interface_detail": "MicroVM images are built from a Dockerfile and artifacts uploaded to Amazon S3 and managed through AWS tooling",
+  "tooling": "AWS CLI and SDKs to build MicroVM images from a Dockerfile and upload artifacts to Amazon S3",
   "chaining": "not established",
   "limits": [
     {
@@ -133,10 +134,59 @@
       "proved": "the page was read on 2026-11-18 and states the egress term recorded here, or states none",
       "capture": "sha256:0a2f1d91a5977dba31dea628d4224cdfcb614006655673a0a64824b57d502377",
       "quote": "- ## Lambda Event Functions Pricing"
+    },
+    {
+      "url": "https://aws.amazon.com/free/",
+      "date": "2026-11-24",
+      "proved": "the account-wide AWS Free Tier credit is up to USD 200 over 6 months and is not a MicroVM-specific allowance",
+      "capture": "sha256:efe50e26f77a55bfa95991cb579bcc5a3680202b29105c51b557258e4539335a",
+      "quote": "When you create a new AWS Free Tier account, you get $100 in credits immediately. As you explore key services, you can earn up to $100 more. That's up to $200 over 6 months"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/lambda/latest/dg/microvms-images.html",
+      "date": "2026-11-24",
+      "proved": "MicroVM images are created from artifacts uploaded to S3, so the path is through AWS tools",
+      "capture": "sha256:7d5a8fbe079eaa81f50675b198762c47abc5f20b5c2184232ad0b7506a8ec757",
+      "quote": "You provide a zip package that contains a `Dockerfile` and your application artifacts, which you upload to Amazon S3."
+    },
+    {
+      "url": "https://docs.aws.amazon.com/lambda/latest/dg/microvms-images.html",
+      "date": "2026-11-24",
+      "proved": "the MicroVM image is the documented resource used to define and create a MicroVM",
+      "capture": "sha256:7d5a8fbe079eaa81f50675b198762c47abc5f20b5c2184232ad0b7506a8ec757",
+      "quote": "A MicroVM image is a resource that defines the filesystem and application environment of a MicroVM."
+    },
+    {
+      "url": "https://docs.aws.amazon.com/lambda/latest/dg/microvms-images.html",
+      "date": "2026-11-24",
+      "proved": "Lambda retrieves packaged MicroVM artifacts from Amazon S3",
+      "capture": "sha256:7d5a8fbe079eaa81f50675b198762c47abc5f20b5c2184232ad0b7506a8ec757",
+      "quote": "Retrieves your packaged artifacts from Amazon S3."
+    },
+    {
+      "url": "https://aws.amazon.com/ec2/pricing/on-demand/",
+      "date": "2026-11-24",
+      "proved": "the 100 GB monthly free egress allowance that Lambda references is stated on the EC2 on-demand page",
+      "capture": "sha256:1f8b073d6e2a8eacbe8f52c8a83484b1ce7ec0918817b8dd1caa0e79b7bdd582",
+      "quote": "AWS customers receive 100 GB of free data transfer out to the internet free each month, aggregated across all AWS Services and Regions (except China and GovCloud)."
+    },
+    {
+      "url": "https://aws.amazon.com/lambda/pricing/",
+      "date": "2026-11-24",
+      "proved": "the Lambda pricing page states that MicroVM data transfer is charged at standard AWS rates",
+      "capture": "sha256:a2db310de13232ba3bcc8b8b868b7f18cb5afa8cea6c6ed6a28c1a9827340c6d",
+      "quote": "You are charged for data transfer at standard [AWS Data Transfer rates](https://aws.amazon.com/ec2/pricing/on-demand/)."
+    },
+    {
+      "url": "https://aws.amazon.com/lambda/pricing/",
+      "date": "2026-11-24",
+      "proved": "the Lambda pricing page still states that MicroVM compute is priced per instance-second",
+      "capture": "sha256:a2db310de13232ba3bcc8b8b868b7f18cb5afa8cea6c6ed6a28c1a9827340c6d",
+      "quote": "Lambda MicroVMs are priced per instance-second."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-18T04:58:09.424Z",
+  "verified_at": "2026-11-24T11:38:09.120Z",
   "price_per_tb_month": null,
   "notes": "",
   "extras": {

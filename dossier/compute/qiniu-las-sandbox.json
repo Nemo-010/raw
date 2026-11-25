@@ -1,0 +1,132 @@
+{
+  "topic": "compute",
+  "slug": "qiniu-las-sandbox",
+  "provider": "Qiniu LAS Sandbox",
+  "url": "https://developer-doc.qiniu.com/products/las/sandbox-overview",
+  "category": "sandbox",
+  "tier": "Pay as you go",
+  "free_tier": {
+    "stated": "CNY 0 free standing compute allowance is published: every sandbox instance gets 20 GiB of local storage free while it runs, and persistent storage has a free allowance of 10 GiB per account per month; compute is billed per second from 2026-11-19 at CNY 0.00002 per vCPU-second and CNY 0.00001 per GiB-second in the China (Yangzhou 1) region",
+    "unit": "mixed",
+    "metered_on": "wall-clock",
+    "source_url": "https://developer-doc.qiniu.com/products/las/sandbox-overview",
+    "read_on": "2026-11-24",
+    "notes": "The free allowance is a monthly persistent-storage volume plus local scratch space, not free sandbox runtime. The documentation for a different Qiniu AI inference product states a 24-hour verification-free trial period; that policy is not stated for the sandbox service and is not applied here."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a running sandbox, not a stored object; each instance receives 20 GiB of local storage free while it runs",
+    "bytes": null,
+    "source_url": "https://developer-doc.qiniu.com/products/las/sandbox-overview"
+  },
+  "retention": {
+    "stated": "the local filesystem is not kept after the sandbox terminates; persistent templates and snapshots survive while billed, and paused sandboxes are not documented here",
+    "days": null,
+    "source_url": "https://developer-doc.qiniu.com/products/las/sandbox-overview",
+    "notes": "unverified: no sandbox-specific retention period in days is published on the pages read"
+  },
+  "egress": {
+    "terms": "network traffic is not charged separately; the China (Yangzhou 1) region blocks outbound port 25 and inbound port 53 by default on full-stack servers",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://developer-doc.qiniu.com/products/las/sandbox-overview"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "The sandbox service is fully E2B API compatible: an E2B SDK drives it with E2B_API_KEY and E2B_API_URL set for the chosen region; qshell is the command-line tool for sandbox, template and key-injection management.",
+  "endpoint": "https://cn-yangzhou-1-sandbox.qiniuapi.com or https://us-south-1-sandbox.qiniuapi.com",
+  "tooling": "The hosted sandbox service is reached with the E2B SDK (npm @e2b/code-interpreter or pip e2b-code-interpreter), which the user installs, and with qshell for command-line management; the account's API key comes from the Qiniu developer console.",
+  "chaining": "An existing E2B client works by changing E2B_API_URL to a Qiniu regional endpoint, so agent code that already calls E2B can be pointed at the China or US region without a second SDK.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "10 GiB of persistent storage per account per month free; excess is CNY 0.000145 per GiB-hour in China (Yangzhou 1) and CNY 0.00019575 per GiB-hour in the US (Dallas 1), rounded up to an hour",
+      "source": "https://developer-doc.qiniu.com/products/las/sandbox-overview"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "1 to 8 vCPU per sandbox and 512 MiB to 8192 MiB of memory in multiples of 512 MiB; each instance gets 20 GiB of local storage free",
+      "source": "https://developer-doc.qiniu.com/products/las/sandbox-overview"
+    },
+    {
+      "kind": "write-gated",
+      "value": "creating a sandbox needs a Qiniu account and an E2B_API_KEY; real-name verification requires a national ID by QR-code face scan, a bank-card check, or a small bank transfer",
+      "source": "https://developer.qiniu.com/af/4062/quick-start-personal-authentication"
+    }
+  ],
+  "limits_note": "unverified: the numeric RPM and TPM caps for unverified accounts are not published on the AI inference product's verification page and are not stated for the sandbox service",
+  "binding": "write-gated",
+  "binding_note": "The real-name check is the first constraint on a new account: creating a sandbox needs an API key from a Qiniu account, and personal verification requires a national ID or bank credential, while the monthly persistent-storage allowance is a volume that has to be exceeded to bind.",
+  "identity_cost": {
+    "kind": "national-id",
+    "detail": "A Qiniu account and an API key from the developer console are required. Personal verification offers a QR-code face scan with personal identity information, a bank-card check with a face photo, or a bank transfer of CNY 0.01 to 0.99 to the applicant's card with the amount returned; enterprise verification needs a business licence. A distinct Qiniu AI inference product grants a 24-hour verification-free trial, but no equivalent sandbox trial is published: unverified for the sandbox service.",
+    "country": "CN"
+  },
+  "reliability_note": "Persistent storage keeps billing while a sandbox is not running; an account in arrears cannot create new sandboxes and running instances are released.",
+  "confidence": "documented",
+  "confidence_note": "The per-second rates, the free persistent-storage allowance, the local storage, the network terms and the E2B-compatible endpoint come from the vendor's sandbox documentation pages read on 2026-11-24; the verification methods come from the vendor's account-finance documentation read the same day.",
+  "evidence": [
+    {
+      "url": "https://developer-doc.qiniu.com/products/las/sandbox-overview",
+      "date": "2026-11-24",
+      "proved": "sandbox compute is metered by the second and stops when the sandbox stops",
+      "capture": "sha256:3685c5631572af369f1ae181a1271426f684a7d5f2aee48c5a09f7aad8051c8a",
+      "quote": "沙箱服务采用按量计费模式，精确到秒级计费。沙箱停止运行后即停止计费。"
+    },
+    {
+      "url": "https://developer-doc.qiniu.com/products/las/sandbox-overview",
+      "date": "2026-11-24",
+      "proved": "China-region vCPU price fell to CNY 0.00002 per core-second and memory to CNY 0.00001 per GiB-second on 2026-11-19, with 1 to 8 vCPU billed linearly",
+      "capture": "sha256:3685c5631572af369f1ae181a1271426f684a7d5f2aee48c5a09f7aad8051c8a",
+      "quote": "vCPU | ~~0.00003 元/核/秒~~ | **0.00002 元/核/秒** | 按实际分配的 vCPU 核数线性计费，范围 1 ~ 8 核 |"
+    },
+    {
+      "url": "https://developer-doc.qiniu.com/products/las/sandbox-overview",
+      "date": "2026-11-24",
+      "proved": "persistent storage has a free allowance of 10 GiB per account per month",
+      "capture": "sha256:3685c5631572af369f1ae181a1271426f684a7d5f2aee48c5a09f7aad8051c8a",
+      "quote": "免费额度 | 每账户每月 **10 GiB**"
+    },
+    {
+      "url": "https://developer-doc.qiniu.com/products/las/sandbox-overview",
+      "date": "2026-11-24",
+      "proved": "each sandbox gets 20 GiB of local storage free while it runs and the filesystem is gone when the instance terminates",
+      "capture": "sha256:3685c5631572af369f1ae181a1271426f684a7d5f2aee48c5a09f7aad8051c8a",
+      "quote": "每个沙箱实例会自动分配 **20 GiB** 本地存储空间，作为该沙箱运行期间的本地文件系统使用，**免费**使用，无需额外付费。"
+    },
+    {
+      "url": "https://developer-doc.qiniu.com/products/las/sandbox-overview",
+      "date": "2026-11-24",
+      "proved": "network traffic is not charged separately",
+      "capture": "sha256:3685c5631572af369f1ae181a1271426f684a7d5f2aee48c5a09f7aad8051c8a",
+      "quote": "网络流量暂不单独计费。"
+    },
+    {
+      "url": "https://developer-doc.qiniu.com/products/las/sandbox-overview",
+      "date": "2026-11-24",
+      "proved": "persistent storage bills even while the sandbox is stopped and arrears release running sandboxes",
+      "capture": "sha256:3685c5631572af369f1ae181a1271426f684a7d5f2aee48c5a09f7aad8051c8a",
+      "quote": "账户欠费后将无法创建新的沙箱实例，运行中的沙箱将被释放"
+    },
+    {
+      "url": "https://developer.qiniu.com/af/4062/quick-start-personal-authentication",
+      "date": "2026-11-24",
+      "proved": "personal verification accepts a QR-code face scan, a bank-card check or a small bank transfer",
+      "capture": "sha256:a7d9c36c83c336f1ed70b5d78d5129e4c01fb3c9fff0803e2af16873a72529e5",
+      "quote": "个人认证有三种认证方式：个人扫码认证；个人银行卡转账认证；个人银行卡认证"
+    },
+    {
+      "url": "https://developer.qiniu.com/aitokenapi/13255/verify-real-name",
+      "date": "2026-11-24",
+      "proved": "a distinct Qiniu AI inference product grants new users a 24-hour verification-free trial, not stated for the sandbox service",
+      "capture": "sha256:20f057c7f7098584bc9c1f15828f97ce59b1b3e5a2594a1f142acee6873155f9",
+      "quote": "为了让您更好地体验我们的 AI 推理服务，我们为新注册用户提供 **24 小时免认证体验期**"
+    }
+  ],
+  "verdict": "fails-identity",
+  "verified_at": "2026-11-24T10:11:15.004Z",
+  "price_per_tb_month": null,
+  "notes": "Hosted E2B-compatible sandboxes in China (Yangzhou 1) and US (Dallas 1). The China vCPU and memory prices were cut by about 33.3% on 2026-11-19 to CNY 0.00002 per core-second and CNY 0.00001 per GiB-second; the US rates are CNY 0.0000405 and CNY 0.00002025. The persistent-storage allowance is 10 GiB per account per month free and network traffic carries no separate charge. A national-ID or bank verification gate applies to a Qiniu account."
+}

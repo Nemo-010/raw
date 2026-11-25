@@ -1,0 +1,137 @@
+{
+  "topic": "compute",
+  "slug": "rayrun",
+  "provider": "Rayrun",
+  "url": "https://ray.run/pricing",
+  "category": "hosted MCP tool runtime",
+  "tier": "Free",
+  "free_tier": {
+    "stated": "Free: $0, no card, no expiry, for one developer: up to 25 source-built services, 50 isolated builds a day and 5 GiB of retained images, 50,000 tool calls a month then $0.20 per thousand, 30 days of activity history, encrypted build logs and 30 days of rollback images.",
+    "unit": "requests",
+    "metered_on": "request-count",
+    "source_url": "https://ray.run/pricing",
+    "read_on": "2026-11-24",
+    "notes": "Every core feature is free for one developer and the free plan has no expiry; the meter that ends it is 50,000 tool calls a month with a $0.20 per-thousand overage."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a tool call and a hosted service, not an object; retained images are capped at 5 GiB on Free and activity history is kept for 30 days",
+    "source_url": "https://ray.run/pricing"
+  },
+  "retention": {
+    "stated": "Free keeps 30 days of activity history and 30 days of rollback images; Team keeps activity history for life. Persistent storage is included for hosted services.",
+    "days": 30,
+    "source_url": "https://ray.run/pricing"
+  },
+  "egress": {
+    "terms": "not published: the pricing and home pages state no outbound data allowance, price or egress quota for the hosted MCP endpoint; each service is reached as one URL behind ray.run/mcp and traffic volume is not priced on the page.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://ray.run/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "browser"
+  ],
+  "interface_detail": "Clients add one Streamable HTTP MCP endpoint at https://ray.run/mcp; a CLI scaffolds, deploys and verifies TypeScript or Python source-built servers; remote MCP, OpenAPI, npm and container-image services are added from the dashboard.",
+  "tooling": "the user's coding agent builds a server with npx rayrun init, npx rayrun deploy --wait uploads it, and an MCP client such as Claude, Codex, Cursor, VS Code, Windsurf or OpenCode connects to the single URL.",
+  "chaining": "One endpoint fronts every connected service, so a client stores one URL and no secrets while Rayrun holds credentials; additional remote MCP, OpenAPI, npm and container services join behind the same endpoint under per-tool access rules.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "50,000 tool calls a month on Free, then $0.20 per thousand; 100,000 tool calls per developer a month pooled on Team, then $0.20 per thousand",
+      "source": "https://ray.run/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "up to 25 source-built services, 50 isolated builds a day and 5 GiB of retained images on Free",
+      "source": "https://ray.run/pricing"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "30 days of activity history and 30 days of rollback images on Free",
+      "source": "https://ray.run/pricing"
+    }
+  ],
+  "limits_note": "The Free plan is for one developer; a team that shares services moves to $25 per developer per month, and Enterprise starts from $1,500 a month. Content scanning, definition review and per-tool allow/ask/block policies apply to every plan.",
+  "binding": "request-rate",
+  "binding_note": "Tool calls bind first: the $0.20 per-thousand overage starts at 50,000 calls a month, while the Free service, build and image allowances are unlikely to be reached by one developer before that.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The sign-up page offers one route, 'Sign up with GitHub', which is a GitHub OAuth login; no card is required on Free. Hobby use starts after that login, and no phone or ID document is asked for on the sign-up page.",
+    "country": null
+  },
+  "reliability_note": "A failed build leaves the current release live and a candidate is verified before traffic moves; changed tool definitions wait for approval. Scanning excludes AWS providers unless deployment setup is done, and the free plan's activity history and rollback images expire after 30 days.",
+  "confidence": "documented",
+  "confidence_note": "Prices, allowances, overage, retention and the GitHub sign-in gate are first-party text quoted from the vendor's pricing, home and sign-up pages read on 2026-11-24.",
+  "evidence": [
+    {
+      "url": "https://ray.run/pricing",
+      "date": "2026-11-24",
+      "proved": "the Free plan is $0 with no card and no expiry for one developer",
+      "capture": "sha256:1d82273775a2c106cf53b15f7431484a46040ae73488f00c43bde7a8b8106f80",
+      "quote": "- Free\n  $0No card, no expiry.\n\n  For one developer."
+    },
+    {
+      "url": "https://ray.run/pricing",
+      "date": "2026-11-24",
+      "proved": "Free includes 50,000 tool calls a month and then charges $0.20 per thousand",
+      "capture": "sha256:1d82273775a2c106cf53b15f7431484a46040ae73488f00c43bde7a8b8106f80",
+      "quote": "50,000 tool calls a month, then $0.20 per thousand"
+    },
+    {
+      "url": "https://ray.run/pricing",
+      "date": "2026-11-24",
+      "proved": "Free includes 25 source-built services, 50 builds a day and 5 GiB of retained images",
+      "capture": "sha256:1d82273775a2c106cf53b15f7431484a46040ae73488f00c43bde7a8b8106f80",
+      "quote": "50 isolated builds a day and 5 GiB of retained images"
+    },
+    {
+      "url": "https://ray.run/pricing",
+      "date": "2026-11-24",
+      "proved": "Free keeps 30 days of activity history",
+      "capture": "sha256:1d82273775a2c106cf53b15f7431484a46040ae73488f00c43bde7a8b8106f80",
+      "quote": "30 days of activity history"
+    },
+    {
+      "url": "https://ray.run/pricing",
+      "date": "2026-11-24",
+      "proved": "Team is $25 per developer a month and Enterprise starts at $1,500 a month",
+      "capture": "sha256:1d82273775a2c106cf53b15f7431484a46040ae73488f00c43bde7a8b8106f80",
+      "quote": "$25per developer, per month"
+    },
+    {
+      "url": "https://ray.run/home",
+      "date": "2026-11-24",
+      "proved": "sign-up uses GitHub OAuth and the free plan requires no card",
+      "capture": "sha256:7b2537a51fabf046e3b6b2b9bc637e3c112f28ef192bb0ac512dcbe0bbb90df4",
+      "quote": "Sign up with GitHub"
+    },
+    {
+      "url": "https://ray.run/",
+      "date": "2026-11-24",
+      "proved": "the service runs MCP servers behind one URL and holds credentials",
+      "capture": "sha256:b55f7da4e93c2672e3e90baabe7a9262cbbd178c0016ab24aec80cc9b52780ad",
+      "quote": "Your coding agent builds the servers. Rayrun runs them behind one URL and holds the credentials. Each call is decided per client, tool, and argument, then recorded."
+    },
+    {
+      "url": "https://ray.run/",
+      "date": "2026-11-24",
+      "proved": "clients connect through a single MCP endpoint and no card is required",
+      "capture": "sha256:b55f7da4e93c2672e3e90baabe7a9262cbbd178c0016ab24aec80cc9b52780ad",
+      "quote": "Free for one developer · No card required"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-24T10:11:15.022Z",
+  "price_per_tb_month": null,
+  "notes": "Rayrun hosts MCP servers behind one endpoint and holds the credentials; Free is $0 with no card for one developer, capped at 50,000 tool calls a month before a $0.20 per-thousand overage. Sign-up is GitHub OAuth. Egress terms are not published on the pricing or home pages.",
+  "extras": {
+    "billing_model": "free tool-call allowance with per-thousand overage",
+    "free_tier_kind": "unlimited duration, metered by tool calls",
+    "endpoint": "https://ray.run/mcp",
+    "published_shape": "$0 for one developer, then $0.20 per thousand tool calls past 50,000 a month",
+    "egress": "not published on the pricing or home pages"
+  }
+}

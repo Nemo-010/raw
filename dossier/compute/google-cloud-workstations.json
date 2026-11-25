@@ -1,0 +1,138 @@
+{
+  "topic": "compute",
+  "slug": "google-cloud-workstations",
+  "provider": "Google Cloud Workstations",
+  "url": "https://cloud.google.com/workstations/pricing",
+  "category": "managed development workstation",
+  "tier": "Pay-as-you-go",
+  "free_tier": {
+    "stated": "none for Cloud Workstations: the service is not listed among the Always Free products, and the Google Cloud Free Trial gives new customers USD 300 of credit for 90 days that can pay for covered products including Workstations before a paid billing account is required.",
+    "unit": "none",
+    "metered_on": "wall-clock",
+    "source_url": "https://cloud.google.com/free/docs/free-cloud-features",
+    "read_on": "2026-11-24",
+    "notes": "The pricing page states every component is charged: Compute Engine and Persistent Disk at normal rates, a management fee of USD 0.05 per vCPU-hour and a control plane fee of USD 0.20 per cluster-hour. The USD 300 trial credit is one-time and requires a card; the Always Free list names e2-micro Compute Engine but not Workstations."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a managed workstation VM, not a stored object",
+    "bytes": null,
+    "source_url": "https://cloud.google.com/workstations/pricing"
+  },
+  "retention": {
+    "stated": "the workstation persists while started; an inactivity time limit automatically stops a workstation after a configured idle period, and stopping ends the management-fee meter",
+    "days": null,
+    "source_url": "https://cloud.google.com/workstations/pricing",
+    "notes": "Persistent Disk data survives a stop; no automatic disk deletion window is stated on the pricing page."
+  },
+  "egress": {
+    "terms": "Internet data transfer out billed separately at Compute Engine rates: under the Premium Tier default, 0 to 1 GiB per account per month is free, then USD 0.12 per GiB to North America, Europe and Asia excluding Korea and Indonesia, USD 0.19 per GiB to Australia, Indonesia, Korea, South America and Saudi Arabia, and USD 0.23 per GiB to China excluding Hong Kong; inbound transfer is free.",
+    "metered": true,
+    "free_allowance": "1 GiB per account per month to North America, Europe and Asia excluding Korea and Indonesia under Premium Tier",
+    "price_per_tb": "USD 0.12 per GiB to North America, Europe and Asia excluding Korea and Indonesia (about USD 122.88 per TiB) beyond 1 GiB",
+    "source_url": "https://cloud.google.com/vpc/network-pricing"
+  },
+  "interface": [
+    "browser",
+    "ssh"
+  ],
+  "interface_detail": "Browser-based IDE, local code editors such as VS Code and JetBrains IDEs, or SSH; access is controlled with Cloud Identity and Access Management rules.",
+  "endpoint": "https://console.cloud.google.com",
+  "tooling": "Google Cloud console, gcloud CLI and the workstations.googleapis.com API; the workstation cluster and configurations are managed through IAM.",
+  "chaining": "A managed IDE with a persistent disk and per-second compute can be stopped by an idle timer to cap spend, and its outbound bytes bill at Compute Engine rates, so a data-heavy build should keep transfers inside Google Cloud or budget the egress tier.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "USD 300 of new-customer Free Trial credit over 90 days, then all Workstations components bill pay-as-you-go",
+      "source": "https://cloud.google.com/free/docs/free-cloud-features"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "Premium Tier internet egress: 1 GiB per account per month free, then USD 0.12 per GiB to North America, Europe and Asia excluding Korea and Indonesia",
+      "source": "https://cloud.google.com/vpc/network-pricing"
+    }
+  ],
+  "limits_note": "The pricing page's worked example bills 198 workstation hours a month at USD 0.32 an hour plus USD 10 for a 100 GB balanced disk and USD 144 a month for one 30-day control plane, a USD 217.36 monthly total for one developer; access to products may be limited during the Free Trial to prevent abuse.",
+  "binding": "volume-quota",
+  "binding_note": "There is no free workstation allowance, so the new-customer credit is the only cap on spend; after 90 days or USD 300 the management fee and control plane fee meter continuously, with the control plane billed even while no workstation runs.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "The Free Trial sign-up requires an email or Google account and a credit card or other payment method valid for the trial, with a temporary USD 0 to USD 1 authorization hold; depending on the country a bank account must also be verified, and identity and payment are verified before the trial starts. Cloud Workstations access is then gated by IAM.",
+    "country": null
+  },
+  "reliability_note": "The control plane fee accrues for every hour of a 30-day month regardless of whether a workstation runs; an idle timer stops a workstation but does not stop the cluster fee; Free Trial access to products may be limited to prevent abuse.",
+  "confidence": "documented",
+  "confidence_note": "Component rates, the worked monthly example, the interface, the lack of a Workstations free-tier entry and the trial card gate were read from first-party Google Cloud pages on 2026-11-24.",
+  "evidence": [
+    {
+      "url": "https://cloud.google.com/workstations/pricing",
+      "date": "2026-11-24",
+      "proved": "the workstation management fee is USD 0.05 per virtual CPU per hour metered from start until stop",
+      "capture": "sha256:344f09a8b99aa42c6d4bb3961b7e122a9f97356002a4089bcc304fcc4785940b",
+      "quote": "Workstations accrue a management fee of $0.05 per virtual CPU, per hour."
+    },
+    {
+      "url": "https://cloud.google.com/workstations/pricing",
+      "date": "2026-11-24",
+      "proved": "the cluster control plane fee is USD 0.20 per hour even when no workstation is in use",
+      "capture": "sha256:344f09a8b99aa42c6d4bb3961b7e122a9f97356002a4089bcc304fcc4785940b",
+      "quote": "Workstation clusters accrue a control plane fee of $0.20 per cluster, per hour, regardless of whether the cluster's workstations are in use."
+    },
+    {
+      "url": "https://cloud.google.com/workstations/pricing",
+      "date": "2026-11-24",
+      "proved": "the published e2-standard-4 default rate in us-central1 is USD 0.33402284 per hour",
+      "capture": "sha256:344f09a8b99aa42c6d4bb3961b7e122a9f97356002a4089bcc304fcc4785940b",
+      "quote": "| e2-standard-4 | 4 | 16 GiB | $0.33402284 / 1 hour | $0.296496452 / 1 hour | $0.272372332 / 1 hour |"
+    },
+    {
+      "url": "https://cloud.google.com/workstations/pricing",
+      "date": "2026-11-24",
+      "proved": "the smallest published shared-core rate is e2-medium at USD 0.08350571 per hour",
+      "capture": "sha256:344f09a8b99aa42c6d4bb3961b7e122a9f97356002a4089bcc304fcc4785940b",
+      "quote": "| e2-medium | 1 | 4 GiB | $0.08350571 / 1 hour | $0.074124113 / 1 hour | $0.068093083 / 1 hour |"
+    },
+    {
+      "url": "https://cloud.google.com/workstations/pricing",
+      "date": "2026-11-24",
+      "proved": "an inactivity time limit can stop a workstation after a configured idle period",
+      "capture": "sha256:344f09a8b99aa42c6d4bb3961b7e122a9f97356002a4089bcc304fcc4785940b",
+      "quote": "that automatically stops workstations after they have been inactive for the specified time period."
+    },
+    {
+      "url": "https://cloud.google.com/workstations/pricing",
+      "date": "2026-11-24",
+      "proved": "the vendor's own one-developer example totals USD 217.36 a month including the control plane",
+      "capture": "sha256:344f09a8b99aa42c6d4bb3961b7e122a9f97356002a4089bcc304fcc4785940b",
+      "quote": "The total monthly bill for this developer would be $73.36 + $144.00 = $217.36 per month."
+    },
+    {
+      "url": "https://docs.cloud.google.com/workstations/docs/overview",
+      "date": "2026-11-24",
+      "proved": "workstations are reached through a browser IDE, local code editors or SSH and gated by IAM",
+      "capture": "sha256:efb3fc13073aafa409520fbcf760d9a5882b55e47ad54d4538829eb2783fe9ea",
+      "quote": "Developers access the workstations through a browser-based IDE, from multiple local code editors (such as VSCode or JetBrains IDEs such as IntelliJ IDEA Ultimate and PyCharm Professional), or through SSH."
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-24T10:11:14.784Z",
+  "price_per_tb_month": null,
+  "notes": "Cloud Workstations has no Always Free tier; the 90-day USD 300 trial credit is the only no-cost path and needs a card. The lowest published machine, e2-medium at USD 0.08350571 an hour, still incurs the USD 0.20 cluster fee each hour and USD 0.05 per vCPU-hour management fee while running.",
+  "extras": {
+    "agent": "u41",
+    "shape": {
+      "vcpu": 1,
+      "ram_gib": 4,
+      "disk_gib": null,
+      "note": "e2-medium shared-core, 1 vCPU and 4 GiB; e2-standard-2 through e2-standard-32, N1, N2, A2 GPU and other types are listed in the pricing table"
+    },
+    "billing_model": "per-hour machine rate plus per-vCPU management fee plus per-cluster control plane fee plus disk and egress",
+    "identity_gate": "Google account, card or payment method for the 90-day trial, IAM to reach a workstation",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "static_ip": null,
+      "ipv6": null,
+      "egress_price": "USD 0.12 per GiB after 1 GiB to North America, Europe and Asia excluding Korea and Indonesia"
+    }
+  }
+}

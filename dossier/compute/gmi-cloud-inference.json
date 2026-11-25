@@ -1,0 +1,154 @@
+{
+  "topic": "compute",
+  "slug": "gmi-cloud-inference",
+  "provider": "GMI Cloud Inference",
+  "url": "https://www.gmicloud.ai/en/pricing",
+  "category": "inference API",
+  "tier": "Serverless Inference (Model-as-a-Service)",
+  "free_tier": {
+    "stated": "Free model endpoints on select open-source models, including DeepSeek R1 Distill Llama 70B and Llama 3.3 70B Instruct Turbo, after account creation with no card required; the vendor's own pricing docs put current per-model input/output rates in the console Model Hub rather than on a public page, so no free token quota is stated.",
+    "unit": "tokens",
+    "metered_on": "request-count",
+    "source_url": "https://www.gmicloud.ai/en/blog/best-gpu-cloud-free-trials-for-llm-inference-in-2026",
+    "read_on": "2026-11-24",
+    "notes": "The vendor blog names the free models but states no token or request allowance; the rate-limit doc states a Tier 1 default of 1,000,000 TPM for all models and ties higher tiers to credit purchases. A USD 5 instant credit is reported by third parties for adding a card, but the vendor blog describes the free endpoints as requiring no card; the credit is not the free models and is not asserted here."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is tokens served by an inference endpoint, not a stored object",
+    "bytes": null,
+    "source_url": "https://docs.gmicloud.ai/inference-engine/ie-intro",
+    "notes": "Inference Storage holds inputs and outputs, but no per-object cap is published on the pages read."
+  },
+  "retention": {
+    "stated": "unverified: no retention window is stated for inference inputs or outputs on the pages read",
+    "days": null,
+    "source_url": "https://docs.gmicloud.ai/inference-engine/ie-intro",
+    "notes": "Serverless endpoints scale to zero with no idle compute charge; what happens to request logs or stored artifacts after a call is not stated."
+  },
+  "egress": {
+    "terms": "unverified: no egress allowance, price or quota for inference response bytes is stated on the pages read; serverless billing is per token and dedicated endpoints bill per GPU-hour",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://docs.gmicloud.ai/inference-engine/ie-intro"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "OpenAI-compatible REST API; GET /v1/models lists models and Bearer API-key auth is required. Dedicated endpoints are private-network deployments with no rate limits.",
+  "endpoint": "https://api.gmi-serving.com/v1",
+  "tooling": "OpenAI-compatible SDKs and HTTP clients; models.dev lists the provider as package @ai-sdk/openai-compatible with 17 models.",
+  "chaining": "An OpenAI-compatible endpoint swaps in with a base-URL change; free endpoints benchmark production H100/H200 behaviour, and paid serverless uses the same API, so a workload can move from free to paid without changing code.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "1,000,000 TPM on Tier 1 for all models; Tier 2 3,000,000 TPM after USD 50 purchased, Tier 3 50,000,000 after USD 500, Tier 4 100,000,000 after USD 1,000; video models are limited in RPH",
+      "source": "https://docs.gmicloud.ai/inference-engine/api-reference/rate-limit"
+    },
+    {
+      "kind": "write-gated",
+      "value": "an account and an API key are required: GET /v1/models answered 401 with {\"group\":\"api_key\",\"message\":\"API key is required.\"} on a keyless request",
+      "source": "probe:https://api.gmi-serving.com/v1/models"
+    }
+  ],
+  "limits_note": "Rate limits are enforced at the organization level and vouchers do not count toward purchase for tier upgrades; dedicated endpoints have no rate limits, with the cap set by the hardware provisioned.",
+  "binding": "request-rate",
+  "binding_note": "On the free endpoint the 1,000,000-token-per-minute Tier 1 ceiling binds before any byte quota, because no free token allowance or egress cap is published and the next tier needs a credit purchase.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The console sign-up form asks for email and password and offers Google, GitHub and Hugging Face sign-in; the free model endpoints are stated to need no credit card, only account creation. The measured keyless GET /v1/models answered 401 API key is required, so a key from the account is needed to call the API.",
+    "country": null
+  },
+  "reliability_note": "Keyless GET /v1/models returned 401 (API key is required) and GET /v1 returned 405 on 2026-11-24; rate limits are enforced per organization and tier upgrades need credit purchases, with vouchers excluded.",
+  "confidence": "documented",
+  "confidence_note": "The free models, no-card claim, signup fields, per-token billing, API endpoint and rate limits were read from first-party pages on 2026-11-24; a keyless probe confirmed the API-key gate, but no token allowance or egress term is published, so those fields are marked unverified.",
+  "evidence": [
+    {
+      "url": "https://models.dev/providers/gmicloud",
+      "date": "2026-11-24",
+      "proved": "models.dev lists the gmicloud provider with API base https://api.gmi-serving.com/v1 and 17 models",
+      "capture": "sha256:caea11b51ebbedec00b21fef95663d6e6dcd078cfab7d2e5701a388dfc0612db",
+      "quote": "https://api.gmi-serving.com/v1"
+    },
+    {
+      "url": "https://www.gmicloud.ai/en/pricing",
+      "date": "2026-11-24",
+      "proved": "the vendor's own pricing page states an on-demand GPU rate starting at USD 2.60 per GPU-hour",
+      "capture": "sha256:c5e06c9eed0a6b2286426cefdbbc1b5c92e96ad8c2dfd7f826b16f0fbfde460a",
+      "quote": "from $2.60/GPU-hour"
+    },
+    {
+      "url": "https://docs.gmicloud.ai/inference-engine/billing/price",
+      "date": "2026-11-24",
+      "proved": "the vendor does not mirror inference prices on a public page; current rates live in the console Model Hub",
+      "capture": "sha256:c59fde7af4e0d18f93b757770b2c9a5d998ed44e822e9cd0c6e1f862bb6501f1",
+      "quote": "Rather than mirror prices here (where they would go stale), the up-to-date rates live in the console."
+    },
+    {
+      "url": "https://www.gmicloud.ai/en/blog/best-gpu-cloud-free-trials-for-llm-inference-in-2026",
+      "date": "2026-11-24",
+      "proved": "select models are free endpoints reachable after account creation with no card and no stated token allowance",
+      "capture": "sha256:f5fd8b54efe2419c0b7f3d498d4653d55381c595f19d369495bf1d965d183421",
+      "quote": "Available free models include DeepSeek R1 Distill Llama 70B and Llama 3.3 70B Instruct Turbo, accessible through an OpenAI-compatible API with no credit card required and no signup friction beyond account creation."
+    },
+    {
+      "url": "https://console.gmicloud.ai/auth/sign-up",
+      "date": "2026-11-24",
+      "proved": "the sign-up gate asks for email and password and offers Google, GitHub and Hugging Face sign-in, with no card on the form",
+      "capture": "sha256:452ec477f4c30df2d33f762c41e1284d0e909f3efd07a90176ecd7cea7fd1c8e",
+      "quote": "Enter email to access your account and enjoy our services."
+    },
+    {
+      "url": "https://docs.gmicloud.ai/inference-engine/api-reference/rate-limit",
+      "date": "2026-11-24",
+      "proved": "Tier 1 is the default and the rate table gives 1,000,000 TPM for all models, rising only after credit purchases",
+      "capture": "sha256:ccbbb56d917667a31d21ed7473fe84c7424dd4b072deb111e4c4ba9cec57c085",
+      "quote": "| All Models | 1,000,000 | 3,000,000 | 50,000,000 | 100,000,000 | 300,000,000 |"
+    },
+    {
+      "url": "https://docs.gmicloud.ai/inference-engine/api-reference/rate-limit",
+      "date": "2026-11-24",
+      "proved": "organizations start at Tier 1 and rate limits are enforced at the organization level",
+      "capture": "sha256:ccbbb56d917667a31d21ed7473fe84c7424dd4b072deb111e4c4ba9cec57c085",
+      "quote": "By default, organizations are assigned to **Tier 1**."
+    },
+    {
+      "url": "https://docs.gmicloud.ai/inference-engine/api-reference/llm-api-reference",
+      "date": "2026-11-24",
+      "proved": "the inference API requires a Bearer API key and lists models at GET /v1/models",
+      "capture": "sha256:25807ad277cf74d7cd60a996a69ae3f91d9549fb74e119073df0c5f83e9370d3",
+      "quote": "The GMI API uses API keys for authentication."
+    },
+    {
+      "url": "https://docs.gmicloud.ai/inference-engine/ie-intro",
+      "date": "2026-11-24",
+      "proved": "serverless inference bills per token with no idle compute charge",
+      "capture": "sha256:e9da8b4d2f1201adff08178d3f9e45931cdc4b8b2d18cacc5579cb19bb6a4eee",
+      "quote": "**Per-token billing.** No idle compute charges."
+    },
+    {
+      "url": "probe:https://api.gmi-serving.com/v1/models",
+      "date": "2026-11-24",
+      "proved": "a keyless request to the model-list endpoint is refused with HTTP 401 and an API-key-required body",
+      "capture": "sha256:72f98b8e435431305dee063ece3898dc11338a40b76991e0334b302759d86ee8",
+      "quote": "\"status\": 401"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-24T10:11:14.784Z",
+  "price_per_tb_month": null,
+  "notes": "Free model endpoints exist on select open-source models with no card, but neither a free token allowance nor an egress term is published; the binding limit is the Tier 1 rate cap and the account/API-key gate. The vendor's public pricing page prices GPU compute, not inference tokens, and the inference pricing doc defers rates to the console. A USD 5 card credit reported by third parties is a separate paid on-ramp and is not asserted as the free tier.",
+  "extras": {
+    "agent": "u41",
+    "shape": {
+      "gpu_class": "shared H100 and H200 inference infrastructure for free model endpoints",
+      "note": "the vendor blog states free models run on the same H100 and H200 hardware as paid customers"
+    },
+    "billing_model": "free model endpoints; serverless per-token; dedicated per-GPU-hour",
+    "identity_gate": "email plus account-created API key, no card for the free endpoints",
+    "network_out": {
+      "allow_outbound": true,
+      "egress_terms": "not published"
+    }
+  }
+}
