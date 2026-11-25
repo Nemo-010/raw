@@ -1,0 +1,126 @@
+{
+  "topic": "compute",
+  "slug": "sandscale",
+  "provider": "Sandscale",
+  "url": "https://sandscale.dev/pricing",
+  "category": "container and vm sandbox",
+  "tier": "Free",
+  "free_tier": {
+    "stated": "100 awake vCPU-hours a month on the Free plan, with up to 2 vCPU per box, 3 boxes running at once, 4 GiB of memory per vCPU, 5 GB of storage and one workspace that sleeps after 30 minutes idle; paused and idle time between tool calls is not billed, hours reset monthly and do not roll over, and Free is one per person. Sessions run up to 4 h. On Free, new boxes wait until next month when the hours run out.",
+    "unit": "core-hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://sandscale.dev/pricing",
+    "read_on": "2026-11-25",
+    "notes": "The unit is awake vCPU-hours: a 2 vCPU box open 10 hours but awake 10% of the time uses 2 awake vCPU-hours. The headline $0.10/h in the operator list is the marginal rate beyond the included hours on paid plans ($0.05 per awake vCPU-hour, or $10 per 500-hour pack), not the Free price."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the metered unit is an awake vCPU-hour on a microVM, not a stored object; the Free plan includes 5 GB of storage for disks, snapshots, templates and objects together",
+    "source_url": "https://sandscale.dev/pricing"
+  },
+  "retention": {
+    "stated": "A persistent workspace is included and sleeps when idle; the vendor does not state a day count for retention of a stopped sandbox. Unverified: retention period not stated on the pricing page.",
+    "days": null,
+    "source_url": "https://sandscale.dev/pricing"
+  },
+  "egress": {
+    "terms": "Network access follows the plan and the organization's policy, with an egress allowlist the user controls; the pricing page states no egress volume allowance or per-GB price.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://sandscale.dev/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "ssh",
+    "browser",
+    "chat"
+  ],
+  "interface_detail": "A REST API at api.sandscale.dev, a TypeScript SDK, a CLI, MCP tools for agents, SSH into workspaces, and a dashboard; sandboxes are Firecracker microVMs.",
+  "endpoint": "https://api.sandscale.dev",
+  "tooling": "The user installs and runs the Sandscale CLI or calls the REST API from an agent; TypeScript SDK and MCP tools are provided.",
+  "chaining": "100 free awake vCPU-hours a month of Firecracker microVMs can run agent code that calls other records' inference or data APIs, with a separate object-storage record for artifacts that must outlive a sandbox.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "100 awake vCPU-hours a month on Free; on paid plans usage beyond included hours is $0.05 per awake vCPU-hour or $10 per 500 awake vCPU-hours",
+      "source": "https://sandscale.dev/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "Up to 3 boxes running at once on Free; up to 2 vCPU per box, 4 GiB per vCPU included; session length up to 4 h",
+      "source": "https://sandscale.dev/pricing"
+    }
+  ],
+  "limits_note": "Free adds one workspace, 5 GB of storage and first 10 GB of snapshots and templates free; enterprise self-hosted or bring-your-own-cloud deployments are listed but are not the hosted offer priced here.",
+  "binding": "volume-quota",
+  "binding_note": "The 100 included awake vCPU-hours run out before the 3-box or 4-hour session cap for a sustained user; on Free, new boxes then wait until next month.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The sign-up form asks for Full name, Work email and Password with acceptance of the terms; the page says 'Verify your email address before you start sandboxes and workspaces. Unverified accounts are removed after 7 days.' A card is asked only for paid plans, which are billed 'by card through Stripe'.",
+    "country": null
+  },
+  "reliability_note": "Paid usage beyond included hours is off by default; on Free, new boxes wait until next month rather than stopping a running box. No written SLA is published for Free, and hours do not carry over.",
+  "confidence": "documented",
+  "confidence_note": "The quota, hours-reset, concurrency, overage price and account fields are quoted from the first-party pricing page read on 2026-11-25, and the sign-up fields from the first-party sign-up page read the same day. Egress volume and retention periods are not stated, so those fields stay unverified rather than guessed.",
+  "evidence": [
+    {
+      "url": "https://sandscale.dev/pricing",
+      "date": "2026-11-25",
+      "proved": "Free is $0 a month with 100 awake vCPU-hours, 3 boxes at once, 5 GB of storage and one workspace",
+      "capture": "sha256:090a6f0398360daa3cf80e8c815c053fe8818902a4bf36e5b495e03a7ba38e05",
+      "quote": "Free\n\nfor trying it out\n\n$0/month\n\n100 awake vCPU-hours · 3 at once · 5 GB storage · One workspace"
+    },
+    {
+      "url": "https://sandscale.dev/pricing",
+      "date": "2026-11-25",
+      "proved": "usage beyond included hours costs $0.05 per awake vCPU-hour on paid plans",
+      "capture": "sha256:090a6f0398360daa3cf80e8c815c053fe8818902a4bf36e5b495e03a7ba38e05",
+      "quote": "Usage beyond your hours | No | $0.05 per awake vCPU-hour, on or off | $0.05 per awake vCPU-hour, on or off | Per agreement"
+    },
+    {
+      "url": "https://sandscale.dev/pricing",
+      "date": "2026-11-25",
+      "proved": "awake vCPU-hours count only awake vCPU time, not wall-clock the box is open",
+      "capture": "sha256:090a6f0398360daa3cf80e8c815c053fe8818902a4bf36e5b495e03a7ba38e05",
+      "quote": "A 2 vCPU agent box open for 10 hours and awake 10% of the time uses 2 awake vCPU-hours."
+    },
+    {
+      "url": "https://sandscale.dev/pricing",
+      "date": "2026-11-25",
+      "proved": "included hours reset monthly and do not roll over",
+      "capture": "sha256:090a6f0398360daa3cf80e8c815c053fe8818902a4bf36e5b495e03a7ba38e05",
+      "quote": "No. Included hours reset every month."
+    },
+    {
+      "url": "https://sandscale.dev/pricing",
+      "date": "2026-11-25",
+      "proved": "Free is one per person and linked accounts share the one allowance",
+      "capture": "sha256:090a6f0398360daa3cf80e8c815c053fe8818902a4bf36e5b495e03a7ba38e05",
+      "quote": "No. Free is one per person: accounts linked by the same card, device or GitHub account share one Free allowance."
+    },
+    {
+      "url": "https://sandscale.dev/pricing",
+      "date": "2026-11-25",
+      "proved": "paid plans are subscribed by card",
+      "capture": "sha256:090a6f0398360daa3cf80e8c815c053fe8818902a4bf36e5b495e03a7ba38e05",
+      "quote": "A monthly or yearly subscription in US dollars, by card through Stripe, with invoices and tax. There are no prepaid credits and no pay as you go."
+    },
+    {
+      "url": "https://cloud.sandscale.dev/auth/signup",
+      "date": "2026-11-25",
+      "proved": "the sign-up form asks for full name, work email and a password",
+      "capture": "sha256:0a65b9917dbfb3a485ca096bcc5853b28ec7107574cf0cc285459b5a277f03d9",
+      "quote": "Full name\n\nWork email\n\nPassword"
+    },
+    {
+      "url": "https://cloud.sandscale.dev/auth/signup",
+      "date": "2026-11-25",
+      "proved": "email verification is required before starting sandboxes, and unverified accounts are removed after 7 days",
+      "capture": "sha256:0a65b9917dbfb3a485ca096bcc5853b28ec7107574cf0cc285459b5a277f03d9",
+      "quote": "Verify your email address before you start sandboxes and workspaces. Unverified accounts are removed after 7 days."
+    }
+  ],
+  "verdict": "qualifies",
+  "verified_at": "2026-11-25T02:12:34.689Z"
+}
