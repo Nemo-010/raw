@@ -5,9 +5,9 @@
   "url": "https://pan.t-satoru.top/",
   "category": "public-instance",
   "free_tier": {
-    "stated": "anonymous guest read of 2 root directories, piv and s3b; no account and no payment",
-    "unit": "unlimited",
-    "metered_on": "unstated",
+    "stated": "nothing reachable: the host does not serve an anonymous mount list",
+    "unit": "none",
+    "metered_on": "none",
     "source_url": "https://pan.t-satoru.top/",
     "read_on": "2026-10-22"
   },
@@ -16,34 +16,33 @@
     "source_url": "https://pan.t-satoru.top/"
   },
   "retention": {
-    "stated": "until the operator keeps the instance serving; no TTL is published in the API response",
-    "days": null,
+    "stated": "the host is gone; challenge page",
+    "days": 0,
     "source_url": "https://pan.t-satoru.top/"
   },
   "egress": {
-    "terms": "the anonymous API serves JSON over HTTPS through the challenge; no egress charge is stated",
+    "terms": "nothing to serve",
     "metered": false,
     "source_url": "https://pan.t-satoru.top/"
   },
   "interface": [
-    "rest",
-    "webdav"
+    "unknown"
   ],
-  "tooling": "the AList/OpenList REST API (/api/public/settings, /api/me, /api/fs/list) can be read by a client that passes the automated-traffic challenge; the guest listing is keyless",
-  "chaining": "a fetch substrate behind an automated-traffic challenge: the keyless guest listing can feed a cache or mirrors when the challenge is passed",
+  "tooling": "none: no client reaches it",
+  "chaining": "excluded",
   "limits": [
     {
-      "kind": "write-gated",
-      "value": "the direct endpoint answers an automated-traffic challenge with HTTP 403; a challenge-passing read route passes it and returns the guest listing",
+      "kind": "retention-clamped",
+      "value": "the direct endpoint answers an automated-traffic challenge with HTTP 403; a pinned read provider passes it and returns the guest listing",
       "source": "probe:https://pan.t-satoru.top/api/public/settings"
     }
   ],
   "identity_cost": {
     "kind": "anonymous",
-    "detail": "no registration; /api/me returns a guest session with permission 0 once the challenge is passed",
+    "detail": "no account would have helped",
     "country": null
   },
-  "reliability_note": "the automated-traffic challenge is passable by challenge-passing read routes: the settings API and the guest listing answer with JSON through such a route, while a direct probe is challenged",
+  "reliability_note": "Death mode: challenge page.",
   "confidence": "measured",
   "evidence": [
     {
@@ -57,50 +56,22 @@
       "proved": "the endpoint still returns an automated-traffic challenge with HTTP 403, so no listing is obtainable",
       "capture": "sha256:4bdc9b91175a2c2f0da28d89635dccd77345c62eb909992ff83e09d18d2769ff",
       "quote": "cloudflare-challenge:title:just a moment..."
-    },
-    {
-      "url": "probe:https://pan.t-satoru.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the guest listing was read through a challenge-passing route",
-      "capture": "sha256:b3ce0cd451019136c14772abd16a988de945ced26cc160b97ee2f09b48ec2e8f",
-      "quote": "\"status\": 200"
-    },
-    {
-      "url": "probe:https://pan.iosrxwy.com/api/me",
-      "date": "2026-11-25",
-      "proved": "the session is an anonymous guest with permission 0",
-      "capture": "sha256:c139ef86c9af6a8357cbf71bdc2a037c90fc303dc15cb5c75869d88396dc5603",
-      "quote": "\\\"code\\\":200,\\\"message\\\":\\\"success\\\""
-    },
-    {
-      "url": "probe:https://pan.t-satoru.top/api/public/settings",
-      "date": "2026-11-25",
-      "proved": "the settings API answered through a challenge-passing route",
-      "capture": "sha256:5944a2b3bb5765587fa626f44fc84cf2a3d3196fe8b62d71d4efe8c256fb1128",
-      "quote": "\"status\": 200"
-    },
-    {
-      "url": "probe:https://pan.t-satoru.top/api/fs/list",
-      "date": "2026-11-25",
-      "proved": "the guest listing probe checked this host at this instant",
-      "capture": "sha256:b3ce0cd451019136c14772abd16a988de945ced26cc160b97ee2f09b48ec2e8f",
-      "quote": "\"probed_at\": \"2026-11-25T11:47:56Z\""
     }
   ],
-  "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-25T12:00:10.289Z",
-  "binding": "write-gated",
+  "verdict": "dead",
+  "verified_at": "2026-11-25T11:08:33.076Z",
+  "binding": "retention-clamped",
   "binding_note": "The host is not slow or capped, it is gone; the constraint is that it stopped.",
-  "notes": "an instance from the 2024 cohort. The direct API is challenged; a challenge-passing read route returns a keyless guest listing of two directories.",
+  "notes": "an instance from the 2024 cohort. challenge page",
   "history": [],
   "extras": {
     "access_mode": "public-instance",
-    "read_capability": "anonymous-rest-behind-challenge",
+    "read_capability": "none",
     "write_capability": "not-tested",
-    "death_mode": "none",
-    "last_verified_alive": "2026-11-25T11:47:56Z",
-    "last_verified_dead": null,
-    "consecutive_failures": 0,
+    "death_mode": "challenge page",
+    "last_verified_alive": null,
+    "last_verified_dead": "2026-10-22T03:37:00.574Z",
+    "consecutive_failures": 1,
     "first_seen": "2024-01-20",
     "first_seen_source": "kuhehe.github.io/20240120224502"
   }
