@@ -9,7 +9,7 @@
     "unit": "GiB",
     "metered_on": "stored-bytes",
     "source_url": "https://www.1yunpan.com/",
-    "read_on": "2026-10-21",
+    "read_on": "2026-11-25",
     "notes": "the pricing block reads '100GB Storage +400GB via check-in' and the check-in panel says 'up to 500GB free'"
   },
   "per_object_cap": {
@@ -53,7 +53,7 @@
     "detail": "an email address at one of a fixed list of domains (including gmail.com, qq.com, icloud.com, 163.com and yahoo.com) and an emailed six-digit code; the register form has username, password, confirm, email, email_code and an agreement checkbox with no phone or mobile input present",
     "country": null
   },
-  "reliability_note": "Reads are real: a 1,326,142,372-byte MP4 came back byte-exact against Content-Length with Range honoured, and a ranged GET returned 206 with a correct Content-Range. The site notice states that files uploaded between 2026-10-05_22:00:00 and 2026-10-30_23:59:59 are temporarily not downloadable and that file upload is temporarily stopped, and config.json sets upload.temporarily_disabled to true. The 400 GB is streak-gated, so an account that stops logging in loses headroom",
+  "reliability_note": "Reads are real: a HEAD and a ranged GET on the demo object still return a matching Content-Length and Content-Range. Upload is enabled again in the site config, and the earlier temporary-download notice is no longer published on the front page. Extra capacity is earned by daily check-in.",
   "confidence": "reported",
   "evidence": [
     {
@@ -148,10 +148,73 @@
       "proved": "the front-page Starter plan still lists 100 GB of storage plus 400 GB via check-in",
       "capture": "sha256:8db69290d523f57ce63a5017f1035788ad618ef51cce49c294e25acefa49caec",
       "quote": "100GB Storage +400GB via check-in"
+    },
+    {
+      "url": "https://www.1yunpan.com/config.json",
+      "date": "2026-11-25",
+      "proved": "the site config now enables upload rather than disabling it",
+      "capture": "sha256:29a7f139780936cd996c246bf88416af61b54d36b5f16ad823decccb36a7ddd8",
+      "quote": "\"temporarily_disabled\": false,"
+    },
+    {
+      "url": "https://www.1yunpan.com/",
+      "date": "2026-11-25",
+      "proved": "the free storage allowance is re-read on this date",
+      "capture": "sha256:8db69290d523f57ce63a5017f1035788ad618ef51cce49c294e25acefa49caec",
+      "quote": "100GB Storage +400GB via check-in"
+    },
+    {
+      "url": "https://www.1yunpan.com/",
+      "date": "2026-11-25",
+      "proved": "the storage allowance is unchanged",
+      "capture": "sha256:8db69290d523f57ce63a5017f1035788ad618ef51cce49c294e25acefa49caec",
+      "quote": "100GB Storage +400GB via check-in"
+    },
+    {
+      "url": "https://www.1yunpan.com/config.json",
+      "date": "2026-11-25",
+      "proved": "the per-upload size cap is unchanged",
+      "capture": "sha256:29a7f139780936cd996c246bf88416af61b54d36b5f16ad823decccb36a7ddd8",
+      "quote": "\"upload_allow_max_size\": 32212254720"
+    },
+    {
+      "url": "probe:https://id5mjj37zbn85c.1yunpan.com/Videos/test.mp4",
+      "date": "2026-11-25",
+      "proved": "the demo object still answers with a Content-Length on a direct HEAD",
+      "capture": "sha256:65ded3c9d605ee1a8a1b7d532ba1306a9dfc469dd1f7fb93bc7447e1df945ef4",
+      "quote": "\"content-length\": \"1326142372\""
+    },
+    {
+      "url": "probe:https://id5mjj37zbn85c.1yunpan.com/Videos/test.mp4#range",
+      "date": "2026-11-25",
+      "proved": "a ranged GET still returns the matching Content-Range",
+      "capture": "sha256:feea591fe8ec1af0c7a1ca6a6c47085d0c4b02ec2bd0f6ff1677f3330ffd8051",
+      "quote": "\"content_range\": \"bytes 1000000-1000255/1326142372\""
+    },
+    {
+      "url": "https://www.1yunpan.com/",
+      "date": "2026-11-25",
+      "proved": "the free tier still publishes 1 TB of monthly bandwidth",
+      "capture": "sha256:8db69290d523f57ce63a5017f1035788ad618ef51cce49c294e25acefa49caec",
+      "quote": "1TB Monthly Bandwidth"
+    },
+    {
+      "url": "https://www.1yunpan.com/config.json",
+      "date": "2026-11-25",
+      "proved": "new user registration is enabled",
+      "capture": "sha256:29a7f139780936cd996c246bf88416af61b54d36b5f16ad823decccb36a7ddd8",
+      "quote": "\"allow_new_users_register\": 1,"
+    },
+    {
+      "url": "https://www.1yunpan.com/config.json",
+      "date": "2026-11-25",
+      "proved": "registration still limits email domains to a whitelist",
+      "capture": "sha256:29a7f139780936cd996c246bf88416af61b54d36b5f16ad823decccb36a7ddd8",
+      "quote": "\"allow_all_email_to_register\": 0,"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-04T00:20:59.760Z",
+  "verified_at": "2026-11-25T03:33:17.038Z",
   "history": [],
   "price_per_tb_month": "Pro at CNY 29/month is 1 TB storage and 10 TB/month; the free tier is not purchasable and has no per-terabyte price",
   "binding": "per-ip-shaping",
