@@ -4,7 +4,8 @@
     "stated": "no per-object cap; the free tier is one service shape, less than one CPU and 512 MB of RAM"
   },
   "interface": [
-    "ssh"
+    "ssh",
+    "browser"
   ],
   "interface_detail": "a git push deploy, a public HTTPS endpoint, and a REST API",
   "tooling": "git-based deploy, a render.yaml blueprint, the Render API",
@@ -54,7 +55,7 @@
   "limits_note": "a WebSocket message from an existing connection resets the 15-minute timer, which the vendor states explicitly",
   "reliability_note": "'Render might restart a Free web service at any time'; a service that initiates an uncommonly high volume of outbound traffic may be suspended",
   "confidence": "documented",
-  "verified_at": "2026-11-03T00:32:31.176Z",
+  "verified_at": "2026-11-24T13:21:02.387Z",
   "price_per_tb_month": null,
   "notes": "The corpus open question 'does a cron job count against the 15-minute sleep' resolves to neither: a cron job is a separate service type that cannot be on the free plan, because 'There is a minimum monthly charge of $1 per cron job service.' Its executions also run in a separate container from the web service and do not keep it awake. What is still unverified is whether a spun-down service wakes purely from an inbound request to a non-HTTP port; the docs name only HTTP requests and new WebSocket connections.",
   "slug": "render",
@@ -238,6 +239,48 @@
       "proved": "the Hobby pipeline allowance is 500 minutes a month; the pricing page lists no build concurrency row",
       "capture": "sha256:a251d71859652fa714dffd2eb734ea8c2e7a79730cbdff26614fb8db356f3d7c",
       "quote": "| - Standard build pipeline | 500 mins per month (then $5 per 1K mins) | 1K mins per month (then $5 per 1K mins) | 5K mins per workspace per mo. (then $5 per 1K mins) | Custom |"
+    },
+    {
+      "url": "https://render.com/docs/free",
+      "date": "2026-11-24",
+      "proved": "the free web service exposes a browser dashboard shell and SSH is a feature of paid plans only",
+      "capture": "sha256:1ac216ffd5518ff357c7b6eb671ced37320ad4ac635451ebea2f486839dfce2c",
+      "quote": "[Shell access](<https://render.com/docs/ssh.md>) via SSH or the Render Dashboard"
+    },
+    {
+      "url": "https://render.com/docs/free",
+      "date": "2026-11-24",
+      "proved": "the free tier's shell is a browser dashboard feature, not SSH",
+      "capture": "sha256:1ac216ffd5518ff357c7b6eb671ced37320ad4ac635451ebea2f486839dfce2c",
+      "quote": "[Shell access](<https://render.com/docs/ssh.md>) via SSH or the Render Dashboard"
+    },
+    {
+      "url": "https://render.com/docs/free",
+      "date": "2026-11-24",
+      "proved": "the free instance-hours allowance is unchanged at 750 per workspace per calendar month",
+      "capture": "sha256:1ac216ffd5518ff357c7b6eb671ced37320ad4ac635451ebea2f486839dfce2c",
+      "quote": "Render grants *750 Free instance hours* to each workspace per calendar month"
+    },
+    {
+      "url": "https://render.com/docs/outbound-bandwidth",
+      "date": "2026-11-24",
+      "proved": "the Hobby included-bandwidth allowance is 5 GB a month",
+      "capture": "sha256:a86c73c8719f17de79911dd50edd4f408341d1eef20d4fe87f0f82414c538e20",
+      "quote": "*Hobby* | 5 GB"
+    },
+    {
+      "url": "https://render.com/docs/compute-plans",
+      "date": "2026-11-24",
+      "proved": "the free compute plan is 0.1 CPU and 512 MB of RAM",
+      "capture": "sha256:593b6c4c1fb33d2e878bf9ad32094efb3578441e0cc61d53e5f53d278ee73997",
+      "quote": "| 0.1 CPU | 512 MB | [*`free`*](<https://render.com/docs/free.md>) |  |"
+    },
+    {
+      "url": "https://dashboard.render.com/register",
+      "date": "2026-11-24",
+      "proved": "the Render sign-up form asks for an email address; no phone or card field is shown",
+      "capture": "sha256:e430d5dd66751fbc8c9455655326fdc7426d0498f092b7e6afdff13d67a76a6b",
+      "quote": "Email"
     }
   ],
   "verdict": "qualifies-with-caveat",

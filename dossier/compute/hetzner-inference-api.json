@@ -1,0 +1,154 @@
+{
+  "topic": "compute",
+  "slug": "hetzner-inference-api",
+  "provider": "Hetzner Inference API (experiment)",
+  "url": "https://experiments.hetzner.com/docs/inference",
+  "category": "inference endpoint, experimental free API",
+  "tier": "Experimental Inference API (free while experimental)",
+  "free_tier": {
+    "stated": "Free of charge as long as the Inference API remains in experimental status; the experiment ends on 8 December 2026. Two open-weight models, Qwen/Qwen3.6-35B-A3B-FP8 and Qwen3.8-27B, each with 262,144 tokens of context and text plus image input. Hetzner says it will email users before the experimental status changes.",
+    "unit": "unlimited",
+    "metered_on": "none",
+    "source_url": "https://docs.hetzner.com/general/company-and-policy/experiments/inference/",
+    "read_on": "2026-11-24",
+    "notes": "The free unit is usage without a token allowance: there is no published credit or byte cap, only per-key rate limits. Usage timestamps and token counts are tracked; request and response content is not stored. The service is offered as is with no availability guarantee and the model list changes during the experiment; GET /v1/models is definitive. models.dev records 2 models at base https://inference.hetzner.com/v1."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a model request, not a stored object; the API stores no request or response content for the caller",
+    "source_url": "https://docs.hetzner.com/general/company-and-policy/experiments/inference/"
+  },
+  "retention": {
+    "stated": "not applicable: the API keeps only usage metadata (request timestamps, token counts) and states it does not store request or response content",
+    "days": null,
+    "source_url": "https://docs.hetzner.com/general/company-and-policy/experiments/inference/"
+  },
+  "egress": {
+    "terms": "The generated response is the payload; no separate egress allowance, quota or price is published for the Inference API.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://docs.hetzner.com/general/company-and-policy/experiments/inference/"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "OpenAI-compatible REST API with three endpoints: /v1/models, /v1/completions and /v1/chat/completions at https://inference.hetzner.com/v1, usable with any OpenAI-compatible SDK or HTTP client.",
+  "endpoint": "https://inference.hetzner.com/v1",
+  "tooling": "Any OpenAI Python or JavaScript SDK pointed at the base URL with a bearer token; the request examples are plain curl and the openai pip package.",
+  "chaining": "An OpenAI-compatible endpoint with no per-token charge while the experiment runs can back agent stacks that already speak the OpenAI API, but the 10-requests-per-60-second ceiling and the 8 December 2026 end date make it a temporary bench rather than a durable dependency; durable state needs a separate storage record.",
+  "limits": [
+    {
+      "kind": "request-rate",
+      "value": "per API key: 10 requests per 60 s, 4M input tokens per 60 s and 100k output tokens per 60 s; exceeding any limit returns HTTP 429",
+      "source": "https://docs.hetzner.com/general/company-and-policy/experiments/inference/"
+    }
+  ],
+  "limits_note": "Only a selected list of models is exposed and it changes during the experimental phase; the selection is not a guarantee. A bearer token is required on every request.",
+  "binding": "request-rate",
+  "binding_note": "With no charge or token cap, the first limit a caller meets is the 10-requests-per-60-second per-key ceiling, well before the 4M input or 100k output token ceilings.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "A bearer token is minted after login to a Hetzner account at experiments.hetzner.com. Account registration requires a valid email address, personal or business contact information and a billing address, with a phone number optional for advanced verification, and the email address must be verified by a link. Whether a card or ID check is required before a token can be created is unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "Experimental service offered as is: performance and availability are not guaranteed during high demand, no backups are created, the model list changes during the experiment, and the experiment ends on 8 December 2026.",
+  "confidence": "documented",
+  "confidence_note": "The free status, end date, endpoints, models, rate limits and retention posture are quoted from Hetzner's own experimental Inference API documentation read on 2026-11-24; the account fields are quoted from Hetzner's account-getting-started page and the model count and base from models.dev the same day. The token-creation gate beyond login is unverified behind a sign-up.",
+  "evidence": [
+    {
+      "url": "https://docs.hetzner.com/general/company-and-policy/experiments/inference/",
+      "date": "2026-11-24",
+      "proved": "the API is free of charge while it remains experimental",
+      "capture": "sha256:4eceafb50956d032f9b79b51ff13f1c1b50e36a436f8165868a04067dd1927f8",
+      "quote": "As long as the Inference API remains in experimental status, it is free of charge."
+    },
+    {
+      "url": "https://docs.hetzner.com/general/company-and-policy/experiments/inference/",
+      "date": "2026-11-24",
+      "proved": "the experiment has a fixed end date of 8 December 2026 and is offered as is with no backups",
+      "capture": "sha256:4eceafb50956d032f9b79b51ff13f1c1b50e36a436f8165868a04067dd1927f8",
+      "quote": "> Note: This Experiment will end on 8 December 2026. This service is provided for experimental purposes only and is offered \"as is\"."
+    },
+    {
+      "url": "https://docs.hetzner.com/general/company-and-policy/experiments/inference/",
+      "date": "2026-11-24",
+      "proved": "the per-key request limit is 10 per 60 seconds",
+      "capture": "sha256:4eceafb50956d032f9b79b51ff13f1c1b50e36a436f8165868a04067dd1927f8",
+      "quote": "| 60s | 10 |"
+    },
+    {
+      "url": "https://docs.hetzner.com/general/company-and-policy/experiments/inference/",
+      "date": "2026-11-24",
+      "proved": "the per-key token limits are 4M input and 100k output tokens per 60 seconds",
+      "capture": "sha256:4eceafb50956d032f9b79b51ff13f1c1b50e36a436f8165868a04067dd1927f8",
+      "quote": "| 60s | 4M | 100k |"
+    },
+    {
+      "url": "https://docs.hetzner.com/general/company-and-policy/experiments/inference/",
+      "date": "2026-11-24",
+      "proved": "the three OpenAI-compatible endpoints and base URL",
+      "capture": "sha256:4eceafb50956d032f9b79b51ff13f1c1b50e36a436f8165868a04067dd1927f8",
+      "quote": "It currently exposes three standard endpoints: `/v1/models`, `/v1/completions` and `/v1/chat/completions`."
+    },
+    {
+      "url": "https://docs.hetzner.com/general/company-and-policy/experiments/inference/",
+      "date": "2026-11-24",
+      "proved": "only usage metadata is stored, not request or response content",
+      "capture": "sha256:4eceafb50956d032f9b79b51ff13f1c1b50e36a436f8165868a04067dd1927f8",
+      "quote": "We do not store the content of request and response and we do not plan on doing so in the future (unless some law requires us to do so)."
+    },
+    {
+      "url": "https://docs.hetzner.com/general/company-and-policy/experiments/inference/",
+      "date": "2026-11-24",
+      "proved": "exceeding a rate limit returns HTTP 429",
+      "capture": "sha256:4eceafb50956d032f9b79b51ff13f1c1b50e36a436f8165868a04067dd1927f8",
+      "quote": "If you exceed any of the rate limits, the API will respond with HTTP Status Code `429`."
+    },
+    {
+      "url": "https://docs.hetzner.com/general/billing-and-account-management/account-getting-started/",
+      "date": "2026-11-24",
+      "proved": "a Hetzner account needs an email address, contact information and a billing address, with a phone number optional",
+      "capture": "sha256:d3e5aa5349963c39e4f56aeb9f2c5f0308880968904d946c8e7ea5b8c5b8ae18",
+      "quote": "- a valid email address\n- personal or business contact information\n- a billing address\n- optionally, a phone number for advanced verification"
+    },
+    {
+      "url": "https://models.dev/providers/hetzner",
+      "date": "2026-11-24",
+      "proved": "models.dev lists 2 models for the Hetzner provider at API base https://inference.hetzner.com/v1",
+      "capture": "sha256:8615615bffdcb052ca3ac3ad403a62eead8c0a19042733e38b37ac8833d2c2c2",
+      "quote": "API\n\nhttps://inference.hetzner.com/v1"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-24T10:11:14.823Z",
+  "price_per_tb_month": null,
+  "notes": "A free, token-unmetered OpenAI-compatible inference endpoint that runs only until 8 December 2026. Two Qwen models are exposed with text and image input. A Hetzner account and bearer token are needed, so it is not anonymous; the first binding constraint is the 10-requests-per-60-seconds per-key limit. Paid Hetzner cloud servers and the separately catalogued Storage Box and Object Storage offers are different products.",
+  "extras": {
+    "shape": {
+      "vcpu": null,
+      "ram_gib": null,
+      "disk_gib": null,
+      "gpu_class": "Hetzner-hosted open-weight models",
+      "gpu_count": null,
+      "note": "the unit is a model request; models are Qwen/Qwen3.6-35B-A3B-FP8 and Qwen3.8-27B at 262,144-token contexts"
+    },
+    "billing_model": "free while experimental, no per-token or per-request charge",
+    "free_tier_kind": "unmetered-free-experimental",
+    "term": "fixed-term experiment ending 2026-12-08",
+    "model_count": 2,
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": null,
+      "ports": null,
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "no session lifetime beyond the experiment end date; per-key rate limits apply"
+    }
+  }
+}

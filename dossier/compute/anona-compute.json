@@ -1,0 +1,160 @@
+{
+  "topic": "compute",
+  "slug": "anona-compute",
+  "provider": "Anona Compute",
+  "url": "https://docs.anonalabs.com/compute/pricing.md",
+  "category": "microVM sandbox",
+  "tier": "Free",
+  "free_tier": {
+    "stated": "$0 a month with $25 of usage included once, about 500 typical agent hours, 5 running sandboxes at once and a one-hour maximum timeout. Preview pricing is not charged.",
+    "unit": "credits",
+    "metered_on": "wall-clock",
+    "source_url": "https://docs.anonalabs.com/compute/pricing.md",
+    "read_on": "2026-11-24",
+    "notes": "Usage is in dollars spent at the published meter rates, not a fixed block of time. The hours figure assumes a typical agent sandbox at about $0.05 an hour."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a running microVM sandbox, not a stored object; a per-file cap is not stated on Anona's pricing or limits page.",
+    "source_url": "https://docs.anonalabs.com/compute/concepts/limits.md"
+  },
+  "retention": {
+    "stated": "A running sandbox is deleted at its timeout by default; a paused sandbox keeps its snapshot until the user deletes it and costs $0.03 per GB-month. Paused sandboxes kept on Free: 5.",
+    "days": null,
+    "source_url": "https://docs.anonalabs.com/compute/concepts/lifecycle.md",
+    "notes": "The free plan's longest timeout is one hour; beyond that a sandbox is deleted unless paused."
+  },
+  "egress": {
+    "terms": "The free plan allows no public internet egress. Paid plans allow it by default; private and internal ranges plus cloud metadata are always blocked. Metered at $0.12 per GB when enabled.",
+    "metered": true,
+    "free_allowance": null,
+    "price_per_tb": "USD 0.12 per GB (USD 120 per TB)",
+    "source_url": "https://docs.anonalabs.com/compute/concepts/networking.md"
+  },
+  "interface": [
+    "rest",
+    "ssh",
+    "cli",
+    "browser",
+    "chat"
+  ],
+  "interface_detail": "E2B-compatible REST gateway at https://api.compute.anonalabs.com; anona-compute CLI with exec, ssh, scp, port forwarding, live view and an MCP server; SDKs for Python and TypeScript; a browser dashboard for sign-in, keys and sandboxes.",
+  "endpoint": "https://api.compute.anonalabs.com",
+  "tooling": "The stock e2b Python and JavaScript SDK packages work against the gateway with E2B_DOMAIN=compute.anonalabs.com; the anona-compute CLI and the anona / @anona-labs/compute-sdk extras add live view and SSH. The CLI is installed on the user's machine; the sandbox itself runs on Anona's hosted platform.",
+  "chaining": "An E2B-compatible microVM for running agent-written code, with pause and resume so a long agent keeps its memory; because free egress is off, a job that needs network access needs a paid plan or a separate hosted relay.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "$25 of usage included once on Free, spent at $0.012 per running sandbox-hour, $0.12 per active vCPU-hour, $0.008 per resident GiB-hour and $0.03 per GB-month of snapshot storage",
+      "source": "https://docs.anonalabs.com/compute/pricing.md"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "1 hour maximum timeout on Free; a longer timeout or -1 is refused with HTTP 400",
+      "source": "https://docs.anonalabs.com/compute/concepts/limits.md"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "5 running sandboxes at once and 5 paused sandboxes kept on Free; creating more answers 429 sandbox_quota_exceeded",
+      "source": "https://docs.anonalabs.com/compute/concepts/limits.md"
+    },
+    {
+      "kind": "write-gated",
+      "value": "Free plan allows no public internet egress; up to 64 allow and 256 deny entries per sandbox",
+      "source": "https://docs.anonalabs.com/compute/concepts/networking.md"
+    }
+  ],
+  "limits_note": "Per-sandbox size limits, per-minute create rates and request rates exist in the plans but are not enforced by the gateway yet. Cold starts wait up to 60 s and return 503 with Retry-After: 30 if a server does not start. Preview pricing is not charged.",
+  "binding": "write-gated",
+  "binding_note": "The one-hour timeout and $25 one-time usage are bounded, but with public internet egress off by default the free sandbox cannot fetch anything from the internet, which fails first for any networked agent workload.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "Dashboard sign-in is by email magic link or GitHub; onboarding creates an organization. The CLI sign-in uses a browser device flow. No card, phone or ID document is asked for, and no card payments are taken during the preview.",
+    "country": null
+  },
+  "reliability_note": "The offer is in preview: pricing is not charged, sign-up and several features are marked Coming soon, cold starts can return 503 with Retry-After, and the timeout action runs about a minute after the deadline. Preview values may change before general availability.",
+  "confidence": "documented",
+  "confidence_note": "All rates, limits, the egress gate and the sign-in methods are quoted from Anona Labs' own preview documentation read on 2026-11-24.",
+  "evidence": [
+    {
+      "url": "https://docs.anonalabs.com/compute/pricing.md",
+      "date": "2026-11-24",
+      "proved": "the four plan prices and that Free includes $25 of usage once",
+      "capture": "sha256:7cee11f076cf8525a0f771c112646676cf28981d4beb4715833fc14da9de9f7f",
+      "quote": "| Price per month | **\\$0** | **\\$20** | **\\$99** | **\\$399** |\n| Usage included | \\$25 once | \\$20 a month | \\$110 a month | \\$450 a month |"
+    },
+    {
+      "url": "https://docs.anonalabs.com/compute/pricing.md",
+      "date": "2026-11-24",
+      "proved": "the sandbox-hour, vCPU-hour, memory, snapshot storage and egress meter rates",
+      "capture": "sha256:7cee11f076cf8525a0f771c112646676cf28981d4beb4715833fc14da9de9f7f",
+      "quote": "| Running sandbox-hour | **\\$0.012** |\n| Active vCPU-hour | **\\$0.12** |\n| Resident memory, GiB-hour | **\\$0.008** |\n| Snapshot storage (paused sandboxes), GB-month | \\$0.03 |\n| Egress, GB | \\$0.12 |"
+    },
+    {
+      "url": "https://docs.anonalabs.com/compute/pricing.md",
+      "date": "2026-11-24",
+      "proved": "preview pricing is metered but no card payments are taken",
+      "capture": "sha256:7cee11f076cf8525a0f771c112646676cf28981d4beb4715833fc14da9de9f7f",
+      "quote": "**No card payments are taken during the preview**: usage is metered and shown in the dashboard, and invoices are drafts."
+    },
+    {
+      "url": "https://docs.anonalabs.com/compute/concepts/limits.md",
+      "date": "2026-11-24",
+      "proved": "the Free plan's concurrent sandbox count and one-hour timeout",
+      "capture": "sha256:579f947443aa824e3c90b1e28340b9ce66d1fd379b3329ee3b885be6e199c058",
+      "quote": "| Running sandboxes at once | 5 | 20 | 100 | 500 |\n| Paused sandboxes kept | 5 | 50 | 200 | 800 |\n| Longest timeout | 1 hour | 24 hours | No maximum (`timeout=-1` allowed) | No maximum |"
+    },
+    {
+      "url": "https://docs.anonalabs.com/compute/concepts/networking.md",
+      "date": "2026-11-24",
+      "proved": "the free plan has no public egress and paid plans allow it by default",
+      "capture": "sha256:86435070572d46c9ce0899f80fc4dc0ec1ad0aa19346152ff3613c6e1244f69c",
+      "quote": "2. **Your plan's limits.** Paid plans allow the public internet by default; the free plan allows no public egress."
+    },
+    {
+      "url": "https://docs.anonalabs.com/compute/dashboard.md",
+      "date": "2026-11-24",
+      "proved": "sign-in requires an email magic link or GitHub, and the CLI uses a browser device flow",
+      "capture": "sha256:de5d6c7adf61718ebef963ba3067b751d95bd2e3fe5791a03826b3d30a721eec",
+      "quote": "| **Sign in** | Email magic link or GitHub |"
+    },
+    {
+      "url": "https://docs.anonalabs.com/compute/overview",
+      "date": "2026-11-24",
+      "proved": "the REST gateway endpoint and that the API is E2B-compatible",
+      "capture": "sha256:9d6bc084009817962097a55790197d89b6e4e77f06a63b711b6b7214d6ca70d2",
+      "quote": "| API | `https://api.compute.anonalabs.com`, the E2B-compatible gateway |"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-24T10:11:14.590Z",
+  "price_per_tb_month": null,
+  "notes": "Preview service: rates are published but not charged, the free tier has no public internet egress and a one-hour maximum sandbox lifetime. Four plans exist: Free $0 with $25 once, Starter $20 with $20 a month, Pro $99 with $110 a month, Scale $399 with $450 a month.",
+  "extras": {
+    "shape": {
+      "vcpu": null,
+      "ram_gib": null,
+      "disk_gib": null,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "sandbox size comes from the template, not per-sandbox selection; the base image is a KVM microVM with its own kernel"
+    },
+    "billing_model": "monthly plan with included dollar usage, metered per sandbox-hour, active vCPU-hour and resident GiB-hour",
+    "free_tier_kind": "one-time-credit",
+    "term": "monthly, preview not charged",
+    "status": "preview",
+    "network_out": {
+      "allow_outbound": false,
+      "allow_inbound_listen": true,
+      "ports": "ports reachable by token or signed preview link; individual ports can be made public on paid plans",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": 60,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "free plan's longest timeout is one hour; pause and resume available"
+    }
+  }
+}

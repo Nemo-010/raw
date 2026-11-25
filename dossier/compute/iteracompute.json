@@ -1,0 +1,136 @@
+{
+  "topic": "compute",
+  "slug": "iteracompute",
+  "provider": "IteraCompute",
+  "url": "https://iteracompute.com/pricing/",
+  "category": "hosted model inference with monthly token plans",
+  "tier": "Free promotion ended; paid 30-day token plans: Lite, Essential, Pro",
+  "free_tier": {
+    "stated": "unverified: the free Qwen3.8-27B promotion has ended and no current free allowance is published; retained monthly Auto allowances apply only where completed top-ups before the promotion ended remain positive after refunds",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://iteracompute.com/free/",
+    "read_on": "2026-11-24"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is model tokens, not stored objects; an Auto request allows up to 128,000 output tokens in a 1,000,000-token context window",
+    "source_url": "https://platform.iteracompute.com/docs.html"
+  },
+  "retention": {
+    "stated": "unused Auto tokens from a plan period expire when the next period starts; inference inputs are retained only as necessary for the stated processing purposes",
+    "days": null,
+    "source_url": "https://iteracompute.com/pricing/"
+  },
+  "egress": {
+    "terms": "the API response is the payload; no separate egress allowance or traffic price is published on the pricing or docs pages",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://iteracompute.com/docs.html"
+  },
+  "interface": [
+    "rest",
+    "chat"
+  ],
+  "interface_detail": "OpenAI-compatible Chat Completions and Responses at https://api.iteracompute.com/v1; the tier is gated on an API key",
+  "endpoint": "https://api.iteracompute.com/v1/chat/completions",
+  "tooling": "the OpenAI SDK or any HTTP client, pointed at https://api.iteracompute.com/v1 with a key minted in the console",
+  "chaining": "a key works across the listed models and coding agents through one OpenAI-compatible endpoint; unused Auto tokens expire at the period boundary, so jobs that need them should run within one 30-day period",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "Lite $10 per 30 days with 100M extra Auto tokens; Essential $20 per 30 days with 200M extra Auto tokens; Pro $50 per 30 days with 500M extra Auto tokens",
+      "source": "https://iteracompute.com/pricing/"
+    },
+    {
+      "kind": "request-rate",
+      "value": "429 is returned for a monthly allowance limit or provider capacity; follow Retry-After and use exponential backoff",
+      "source": "https://platform.iteracompute.com/docs.html"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "unused Auto tokens from the previous plan period expire when a new period starts",
+      "source": "https://iteracompute.com/pricing/"
+    }
+  ],
+  "limits_note": "cash overage uses published per-model retail prices; plan and billing terms are finalised at checkout",
+  "binding": "volume-quota",
+  "binding_note": "the paid plans are denominated in 30-day periods with a fixed Auto token allowance, which runs out before an undisclosed provider-capacity rate for sustained use",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "register and verify an email address or sign in with Google; the signup form asks for an email and a password of at least 12 characters and accepts the service agreement",
+    "country": null
+  },
+  "reliability_note": "Auto selects a model from spare capacity using current demand and cost, so the serving model can change between requests; 429 with free_model_monthly_limit or provider_rate_limit is documented",
+  "confidence": "documented",
+  "confidence_note": "the price and allowance rows come from the vendor pricing page read 2026-11-24; the end of the free promotion and the signup fields come from the vendor's own pages the same day",
+  "evidence": [
+    {
+      "url": "https://iteracompute.com/pricing/",
+      "date": "2026-11-24",
+      "proved": "the Lite paid plan is USD 10 per 30 days",
+      "capture": "sha256:b117bab997a42df6491d33e77fc00dae19c968f537c3dad8a06a3668ec9d88d2",
+      "quote": "**$10**/ 30 days"
+    },
+    {
+      "url": "https://iteracompute.com/pricing/",
+      "date": "2026-11-24",
+      "proved": "Lite includes 100M extra Auto tokens; Essential and Pro include 200M and 500M",
+      "capture": "sha256:b117bab997a42df6491d33e77fc00dae19c968f537c3dad8a06a3668ec9d88d2",
+      "quote": "Auto**Extra 100M tokens**"
+    },
+    {
+      "url": "https://iteracompute.com/pricing/",
+      "date": "2026-11-24",
+      "proved": "unused Auto tokens expire at the period boundary and cash overage uses retail prices",
+      "capture": "sha256:b117bab997a42df6491d33e77fc00dae19c968f537c3dad8a06a3668ec9d88d2",
+      "quote": "Any unused Auto tokens from the previous plan period expire."
+    },
+    {
+      "url": "https://iteracompute.com/free/",
+      "date": "2026-11-24",
+      "proved": "the free promotion has ended and the Qwen3.8-27B free model has been retired",
+      "capture": "sha256:89392711812fc86f193f313218567604afff3a0cf35c1ccd2a4cc0ac01fd3f48",
+      "quote": "The Free promotion has ended"
+    },
+    {
+      "url": "https://iteracompute.com/free/",
+      "date": "2026-11-24",
+      "proved": "retained Auto allowance depends on top-ups completed before the promotion ended",
+      "capture": "sha256:89392711812fc86f193f313218567604afff3a0cf35c1ccd2a4cc0ac01fd3f48",
+      "quote": "You keep your tier’s monthly Auto allowance if the total of your top-ups completed before the Free promotion ended remains positive after refunds. Later top-ups cannot unlock or increase this allowance. Refunds may lower the retained tier. Qwen3.8-27B has been retired."
+    },
+    {
+      "url": "https://platform.iteracompute.com/sign-up",
+      "date": "2026-11-24",
+      "proved": "signup asks for an email address and a password, and offers Google sign-in",
+      "capture": "sha256:618aa33c2f4040871d6c6962f5c2118a81a38f78fc7eb31475bedf0a3901389a",
+      "quote": "Email address"
+    },
+    {
+      "url": "https://platform.iteracompute.com/docs.html",
+      "date": "2026-11-24",
+      "proved": "registration requires a verified email or Google sign-in and no card",
+      "capture": "sha256:f5ce383bfddaa4e539d57f0f4f7e1ed260f544754b89e22b5b057ac9835bdfba",
+      "quote": "Register and verify your email, or sign in with Google."
+    },
+    {
+      "url": "https://platform.iteracompute.com/docs.html",
+      "date": "2026-11-24",
+      "proved": "Auto selects a serving model from spare capacity, so answers are not pinned to one model",
+      "capture": "sha256:f5ce383bfddaa4e539d57f0f4f7e1ed260f544754b89e22b5b057ac9835bdfba",
+      "quote": "Auto matches each request with spare capacity across our listed models, using current demand and cost to select a model."
+    },
+    {
+      "url": "https://platform.iteracompute.com/docs.html",
+      "date": "2026-11-24",
+      "proved": "429 carries a free_model_monthly_limit code for an exhausted allowance and a provider_rate_limit code for capacity",
+      "capture": "sha256:f5ce383bfddaa4e539d57f0f4f7e1ed260f544754b89e22b5b057ac9835bdfba",
+      "quote": "Check your available Auto allowance in Billing. Wallet charges require you to enable pay-as-you-go."
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-24T10:11:14.843Z",
+  "price_per_tb_month": null,
+  "notes": "The free Qwen3.8-27B allowance advertised by the earlier pricing page ended on 2026-11-24; the current pricing page lists only 30-day token plans, and a retained Auto allowance is conditional on pre-cutoff top-ups."
+}

@@ -13,7 +13,7 @@
     "read_on": "2026-10-24"
   },
   "per_object_cap": {
-    "stated": "not applicable: the unit is a sandbox, not an object. Each command defaults to a 60-second timeout with a 30-minute hard cap."
+    "stated": "not applicable: the unit is a sandbox, not an object; each file read or write is capped at 100 MiB per call"
   },
   "retention": {
     "stated": "Stopping keeps /workspace and resets everything else; 'you've got up to 7 days to start() it again before it's permanently deleted'. Only /workspace survives a stop, and failed sandboxes lose /workspace.",
@@ -21,7 +21,7 @@
     "source_url": "https://deepinfra.com/blog/sandboxes"
   },
   "egress": {
-    "terms": "Not published. The overview page and the blog post state the compute and lifecycle meters and say nothing about a traffic allowance or a per-GB egress rate.",
+    "terms": "Public internet egress is allowed, inbound connections are refused, and no per-GB egress price or allowance is published; both egress and ingress are capped at 200 Mbit/s.",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
@@ -50,7 +50,7 @@
   "binding": "retention-clamped",
   "binding_note": "The 24-hour auto-stop is the first hard wall: no configuration on the pages read lifts it, so the machine cannot be an always-on monitor or VPN node even before the price matters.",
   "identity_cost": {
-    "kind": "card",
+    "kind": "email",
     "detail": "A DeepInfra account is required and sandboxes draw on DeepInfra billing; the catalog endpoint refuses an unauthenticated caller, so plan shapes and prices are visible only to a signed-in account. Card types, any authorisation hold, and whether a debit or prepaid card is accepted were not established.",
     "country": null
   },
@@ -77,10 +77,66 @@
       "url": "https://docs.deepinfra.com/sandboxes/overview",
       "date": "2026-10-24",
       "proved": "no public shape/rate table: 'For current plan specs (vCPU, RAM, disk) and hourly pricing, don't hardcode numbers - check the live catalog'"
+    },
+    {
+      "url": "https://deepinfra.com/blog/sandboxes",
+      "date": "2026-11-24",
+      "proved": "the nano plan starts at $0.054 an hour billed per second",
+      "capture": "sha256:15e33b0410b6694c84a12c4f60cfd60fe1df5752fd5229e6813a33d9620fd39f",
+      "quote": "It's cheap to try: the `nano` plan starts at just $0.054/hour, billed by the second, so spinning one up to test a script costs a fraction of a cent, not a rounded-up hour."
+    },
+    {
+      "url": "https://docs.deepinfra.com/sandboxes/overview",
+      "date": "2026-11-24",
+      "proved": "a stopped sandbox is deleted after 7 days",
+      "capture": "sha256:7bc9400b50e3d10f3dc66f2caebcadc632b439c8f20681741092732427c259ec",
+      "quote": "**Retention after stop** — a `stopped` sandbox has up to **7 days** to be `start()`-ed again before it's permanently deleted, `/workspace` included."
+    },
+    {
+      "url": "https://docs.deepinfra.com/sandboxes/overview",
+      "date": "2026-11-24",
+      "proved": "public egress is allowed and inbound connections are refused",
+      "capture": "sha256:7bc9400b50e3d10f3dc66f2caebcadc632b439c8f20681741092732427c259ec",
+      "quote": "A sandbox can reach the public internet (so `pip install` works), but accepts **no inbound connections** at all."
+    },
+    {
+      "url": "https://docs.deepinfra.com/sandboxes/overview",
+      "date": "2026-11-24",
+      "proved": "file transfers are capped at 100 MiB per call",
+      "capture": "sha256:7bc9400b50e3d10f3dc66f2caebcadc632b439c8f20681741092732427c259ec",
+      "quote": "Both `fs.write()` and `fs.read()` are capped at 100 MiB per call (see above)."
+    },
+    {
+      "url": "https://docs.deepinfra.com/sandboxes/overview",
+      "date": "2026-11-24",
+      "proved": "the account may hold up to 25 non-stopped sandboxes",
+      "capture": "sha256:7bc9400b50e3d10f3dc66f2caebcadc632b439c8f20681741092732427c259ec",
+      "quote": "**Active sandboxes** — up to **25 non-stopped sandboxes per account** at a time."
+    },
+    {
+      "url": "https://docs.deepinfra.com/account/authentication.md",
+      "date": "2026-11-24",
+      "proved": "sandbox API access requires an API key from a signed-in account",
+      "capture": "sha256:1e3841c9d4d2e00c1ea8d9dd4af28cef86b987c6d57ea3b593c50597a10da02f",
+      "quote": "Get your API keys from the [Dashboard](https://deepinfra.com/dash/keys). Use them in the `Authorization` header:"
+    },
+    {
+      "url": "https://docs.deepinfra.com/sandboxes/overview",
+      "date": "2026-11-24",
+      "proved": "the interface is a Python SDK and an HTTP API",
+      "capture": "sha256:7bc9400b50e3d10f3dc66f2caebcadc632b439c8f20681741092732427c259ec",
+      "quote": "Manage sandboxes at [Dashboard → Sandboxes](https://deepinfra.com/dash/sandboxes), or drive them entirely from the [Python SDK](#python-sdk) or [HTTP API](#http-api)."
+    },
+    {
+      "url": "https://docs.deepinfra.com/account/signing-in.md",
+      "date": "2026-11-24",
+      "proved": "an account is created by an email address, Google, GitHub or corporate SSO",
+      "capture": "sha256:02aa0af9d31fe46ac160c3318d1334ebd1afe225708a03cd5060ce96bebc03d2",
+      "quote": "You can sign in to DeepInfra at [deepinfra.com/login](https://deepinfra.com/login) with Google, GitHub, email & password, or Corporate SSO."
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-10-24T01:54:08.000Z",
+  "verified_at": "2026-11-24T11:38:12.988Z",
   "price_per_tb_month": null,
   "history": [],
   "notes": "Arithmetic: USD 0.054 an hour × 730 = USD 39.42 a month if the auto-stop did not exist; × 300 h = USD 16.20. The auto-stop makes the 730-hour figure hypothetical, and it is recorded as the price of the meter rather than the price of a machine. What the nano shape actually contains is unverified because the catalog is authenticated. The dossier already carries a DeepInfra record for its DeepStart programme; this is a different product from the same vendor and does not supersede it.",

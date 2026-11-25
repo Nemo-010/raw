@@ -5,7 +5,7 @@
   "url": "https://www.together.ai/pricing",
   "category": "GPU cloud",
   "free_tier": {
-    "stated": "no free GPU allowance. The pricing page lists one card of the five, the NVIDIA HGX H100, per GPU per hour: GPU Clusters preemptible $1.99, on-demand $3.99, reserved $3.69 for 3-30 days, $3.45 for 31-90 days and $3.19 for 91-180 days, and Dedicated Inference on demand $5.49. No A100, L40S, GeForce RTX or L4 card is listed. GPU Clusters are described as 'on an hourly basis', post-training is billed per minute, and the cluster and dedicated tables state no billing granularity or minimum bill; the platform needs a $15 first credit purchase. Inference bills per million tokens from $0.00 on Ternary Bonsai to $15.00 an output MTok.",
+    "stated": "No free GPU allowance: GPU Clusters price the NVIDIA HGX H100 at $1.99 preemptible, $3.99 on demand and $3.69 reserved for 3-30 days per GPU per hour; the current table shows the first three as sold out and quotes the 91+ day term by request. Dedicated Inference lists the H100 at $5.49 per GPU-hour on demand. Post-training bills per minute for each active model resource. The platform requires a minimum $15 first credit purchase.",
     "unit": "none",
     "metered_on": "none",
     "source_url": "https://www.together.ai/pricing",
@@ -24,34 +24,35 @@
     "notes": "Disk durability across instance stops and deletions is not documented."
   },
   "egress": {
-    "terms": "not published",
+    "terms": "The pricing and billing pages read publish no outbound-transfer allowance or per-GB price for GPU clusters.",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
     "source_url": "https://www.together.ai/pricing"
   },
   "interface": [
-    "unknown"
+    "ssh",
+    "cli"
   ],
-  "interface_detail": "Access interface not documented in published terms.",
+  "interface_detail": "GPU clusters offer Kubernetes access with kubectl and the Together CLI, or Slurm clusters reached by SSH into a login node; the platform API uses an API key.",
   "tooling": "not stated",
   "chaining": "not established",
   "limits": [
     {
       "kind": "request-rate",
-      "value": "GPU capacity priced per GPU per hour, on demand or reserved; reserved capacity is sold in throughput units",
+      "value": "GPU clusters are priced per GPU per hour, with preemptible, on-demand and reserved capacity; reserved terms run 3 to 180 days",
       "source": "https://www.together.ai/pricing"
     },
     {
       "kind": "request-rate",
-      "value": "inference bills per million input and output tokens, from $0.00 to $15.00 an output MTok",
+      "value": "Post-training GPUs bill per minute for each active model resource; GPU clusters bill per GPU per hour",
       "source": "https://www.together.ai/pricing"
     }
   ],
   "limits_note": "Session cap, idle-reap and network policy are not documented. GPU only.",
   "identity_cost": {
-    "kind": "email",
-    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "kind": "card",
+    "detail": "Access requires a minimum $15 first credit purchase through a default payment method and there is no free trial.",
     "country": null
   },
   "reliability_note": "no reliability event recorded in the source passes",
@@ -109,10 +110,66 @@
       "proved": "the platform needs a USD 15 first credit purchase and offers no trial",
       "capture": "sha256:142dd66fe6b27a1f44b33ac810b94bd4a8de55101eac54c618b5d911b65f65fb",
       "quote": "Together AI does not currently offer free trials. Access to the Together platform requires a minimum \\$15 credit purchase."
+    },
+    {
+      "url": "https://www.together.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the H100 GPU cluster rates are listed per GPU per hour",
+      "capture": "sha256:ee7f15787629a5edc1981fbcd594f10a74ccb6cf1689847714a955836e4e2b84",
+      "quote": "| NVIDIA HGX H100 | $1.99<br>Sold Out | $3.99<br>Sold Out | $3.69<br>Sold Out | $3.45 | [Request Capacity](https://www.together.ai/gpu-cluster-request) |"
+    },
+    {
+      "url": "https://www.together.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the GPU rate tables are priced per GPU per hour",
+      "capture": "sha256:ee7f15787629a5edc1981fbcd594f10a74ccb6cf1689847714a955836e4e2b84",
+      "quote": "All prices are per GPU per hour."
+    },
+    {
+      "url": "https://docs.together.ai/docs/gpu-clusters-overview.md",
+      "date": "2026-11-24",
+      "proved": "GPU cluster reservations run from 3 to 180 days at discounted rates",
+      "capture": "sha256:51b6e0e90d8ea2cd12090bd60a21588416bb0bd9eef485a7d2e5e4e85d420f78",
+      "quote": "Reserve capacity upfront for 3 to 180 days at discounted rates, pay hourly for on-demand capacity with no commitment, or draw from a project capacity pool for a scheduled window."
+    },
+    {
+      "url": "https://www.together.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "post-training infrastructure bills per minute",
+      "capture": "sha256:ee7f15787629a5edc1981fbcd594f10a74ccb6cf1689847714a955836e4e2b84",
+      "quote": "On-demand training infrastructure, billed per minute for each active model resource."
+    },
+    {
+      "url": "https://docs.together.ai/docs/billing",
+      "date": "2026-11-24",
+      "proved": "the credit purchase uses a default payment method",
+      "capture": "sha256:6b0e6abe68fc167e4a0ea8b9c5be8e139563c1299afd43c7729e3337726e4955",
+      "quote": "The purchase uses your [default payment method](https://docs.together.ai/docs/billing-payment-methods.md)."
+    },
+    {
+      "url": "https://docs.together.ai/docs/billing",
+      "date": "2026-11-24",
+      "proved": "there is no free trial and a minimum USD 15 credit purchase is required",
+      "capture": "sha256:6b0e6abe68fc167e4a0ea8b9c5be8e139563c1299afd43c7729e3337726e4955",
+      "quote": "Together AI doesn't currently offer free trials. To use the platform, you must purchase at least \\$15 of credits."
+    },
+    {
+      "url": "https://docs.together.ai/docs/gpu-clusters-overview.md",
+      "date": "2026-11-24",
+      "proved": "GPU clusters are reached with kubectl and standard Kubernetes tooling",
+      "capture": "sha256:51b6e0e90d8ea2cd12090bd60a21588416bb0bd9eef485a7d2e5e4e85d420f78",
+      "quote": "You reach it with `kubectl` and standard Kubernetes tooling."
+    },
+    {
+      "url": "https://www.together.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the pricing page has a GPU Clusters section with no egress line",
+      "capture": "sha256:ee7f15787629a5edc1981fbcd594f10a74ccb6cf1689847714a955836e4e2b84",
+      "quote": "## GPU Clusters"
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-11-03T08:50:36.650Z",
+  "verified_at": "2026-11-24T13:21:06.618Z",
   "price_per_tb_month": null,
   "notes": "",
   "extras": {

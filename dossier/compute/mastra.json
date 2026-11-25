@@ -5,7 +5,7 @@
   "url": "https://mastra.ai",
   "category": "platform host",
   "free_tier": {
-    "stated": "Mastra Platform Starter, $0 a month: 100K events and 24 CPU hours, then $10 per 100K events and $0.35 per CPU hour; the open-source framework is free to self-host",
+    "stated": "Mastra Platform Free, USD 0 a month: 40 vCPU-hours, 360 GB-hours of memory, 100K observability events, 10 GB shared egress, 5 connections and 15-day trace retention; then USD 0.25 per vCPU-hour, USD 0.25 per GB-hour and USD 10 per 100K events. Starter is USD 25 a month. The open-source framework is free to self-host",
     "unit": "mixed",
     "metered_on": "wall-clock",
     "source_url": "https://mastra.ai/pricing",
@@ -25,22 +25,22 @@
     "notes": "Disk durability across instance stops and deletions is not documented."
   },
   "egress": {
-    "terms": "Starter includes 10 GB of Server data egress, then USD 0.10 per GB; the Teams and Enterprise columns list 100 GB then USD 0.10 per GB",
+    "terms": "Shared egress allowance per workspace: Free 10 GB, Starter 25 GB, Team 50 GB, then USD 0.10 per GB; each dedicated project uses its own egress first",
     "metered": true,
-    "free_allowance": "10 GB (Starter)",
+    "free_allowance": "10 GB (Free plan)",
     "price_per_tb": "USD 100 per TB",
     "source_url": "https://mastra.ai"
   },
   "interface": [
     "cli"
   ],
-  "interface_detail": "the mastra CLI (mastra deploy) pushes a project to a platform environment; no hosted management REST API or SSH was found on the pages read",
+  "interface_detail": "the mastra CLI starts a local server exposing REST endpoints and Studio; the hosted platform is managed in the Mastra console at projects.mastra.ai",
   "tooling": "the mastra CLI with mastra deploy to the hosted platform",
   "chaining": "not established",
   "limits": [
     {
       "kind": "volume-quota",
-      "value": "the hosted Starter plan includes 100K events and 24 CPU hours; usage past them is billed at $10 per 100K events and $0.35 per CPU hour",
+      "value": "the hosted Free plan includes 40 vCPU-hours, 360 GB-hours of memory and 100K events; usage past them is billed at USD 0.25 per vCPU-hour, USD 0.25 per GB-hour and USD 10 per 100K events",
       "source": "https://mastra.ai/pricing"
     }
   ],
@@ -65,29 +65,78 @@
       "proved": "the site was read on 2026-10-22 and describes an open-source TypeScript agent framework with workflows, memory and a harness; it publishes no plan, price or free tier"
     },
     {
-      "url": "https://mastra.ai/pricing",
-      "date": "2026-10-29",
-      "proved": "the hosted Mastra Platform Starter plan is $0 a month with 100K events and 24 CPU hours, then $10 per 100K events and $0.35 per CPU hour",
-      "capture": "sha256:936f71462973221783f3fe021a0488c107af750cc3e991c9a163971d3e209d13",
-      "quote": "24 CPU hours+ $0.35/hr"
-    },
-    {
-      "url": "https://mastra.ai/pricing",
-      "date": "2026-11-03",
-      "proved": "the Starter column of the Server data-egress row: 10 GB, then $0.10 per GB",
-      "capture": "sha256:936f71462973221783f3fe021a0488c107af750cc3e991c9a163971d3e209d13",
-      "quote": "10GBthen $0.10/GB"
-    },
-    {
       "url": "https://mastra.ai/reference/cli/mastra",
       "date": "2026-11-03",
       "proved": "the mastra CLI deploys to the hosted platform",
       "capture": "sha256:ed35f882359bbafecac74947b56b1cf0f171b0d728d6192abf362fb8808a8f66",
       "quote": "Builds and deploys your project to the Mastra platform environment selected by `--env`."
+    },
+    {
+      "url": "https://mastra.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the Free plan includes 40 vCPU-hours then USD 0.25 per vCPU-hour; Starter is a separate USD 25 plan",
+      "capture": "sha256:5ef1bd76b247fd9e47942abad2885dc1f345034a6c704b1312d8c967cc50075f",
+      "quote": "Compute       | vCPU                     | 40 vCPU-hours, then $0.25 / vCPU-hour | 100 vCPU-hours, then $0.25 / vCPU-hour | 400 vCPU-hours, then $0.25 / vCPU-hour | Custom"
+    },
+    {
+      "url": "https://mastra.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the Free allowance is denominated in both vCPU-hours and GB-hours, so the nearest unit term is mixed",
+      "capture": "sha256:5ef1bd76b247fd9e47942abad2885dc1f345034a6c704b1312d8c967cc50075f",
+      "quote": "Compute       | Memory                   | 360 GB-hours, then $0.25 / GB-hour    | 720 GB-hours, then $0.25 / GB-hour     | 3.6K GB-hours, then $0.25 / GB-hour    | Custom"
+    },
+    {
+      "url": "https://mastra.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the egress allowance is 10 GB on Free, 25 GB on Starter and 50 GB on Team, at USD 0.10 per GB overage",
+      "capture": "sha256:5ef1bd76b247fd9e47942abad2885dc1f345034a6c704b1312d8c967cc50075f",
+      "quote": "Data          | Egress                   | 10 GB, then $0.10 / GB                | 25 GB, then $0.10 / GB                 | 50 GB, then $0.10 / GB                 | Custom"
+    },
+    {
+      "url": "https://mastra.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the 10 GB egress allowance belongs to the Free plan, not to Starter",
+      "capture": "sha256:5ef1bd76b247fd9e47942abad2885dc1f345034a6c704b1312d8c967cc50075f",
+      "quote": "Data          | Egress                   | 10 GB, then $0.10 / GB                | 25 GB, then $0.10 / GB                 | 50 GB, then $0.10 / GB                 | Custom"
+    },
+    {
+      "url": "https://mastra.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the Free plan's compute allowance and overage rate are written in the pricing table",
+      "capture": "sha256:5ef1bd76b247fd9e47942abad2885dc1f345034a6c704b1312d8c967cc50075f",
+      "quote": "Compute       | vCPU                     | 40 vCPU-hours, then $0.25 / vCPU-hour | 100 vCPU-hours, then $0.25 / vCPU-hour | 400 vCPU-hours, then $0.25 / vCPU-hour | Custom"
+    },
+    {
+      "url": "https://mastra.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the hosted platform's management interface is a web console",
+      "capture": "sha256:5ef1bd76b247fd9e47942abad2885dc1f345034a6c704b1312d8c967cc50075f",
+      "quote": "Start on the Free plan in the [Mastra console](https://projects.mastra.ai)."
+    },
+    {
+      "url": "https://miosa.ai/register",
+      "date": "2026-11-24",
+      "proved": "a full name field is shown on the signup page",
+      "capture": "sha256:50bc2fd7199ca365b970cc02c3bc89ef33253484f1364197ef54ffc1e97613a4",
+      "quote": "Full name"
+    },
+    {
+      "url": "https://mastra.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the current plans table starts with a Free plan at USD 0 a month",
+      "capture": "sha256:5ef1bd76b247fd9e47942abad2885dc1f345034a6c704b1312d8c967cc50075f",
+      "quote": "Free       | $0 / month   | Build and test your first agents."
+    },
+    {
+      "url": "https://mastra.ai/reference/cli/mastra",
+      "date": "2026-11-24",
+      "proved": "the current CLI docs describe a REST-exposing local server; the old deploy-only quote is no longer on that page",
+      "capture": "sha256:6e3b98474a2caf8c31f7ec443a21dc1356817d70c66f689b4e9dc5357493c34a",
+      "quote": "Starts a server which exposes [Studio](https://mastra.ai/docs/studio/overview) and REST endpoints for your agents, tools, and workflows."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-04T02:24:32.967Z",
+  "verified_at": "2026-11-24T13:20:56.538Z",
   "price_per_tb_month": null,
   "notes": "",
   "extras": {

@@ -1,0 +1,183 @@
+{
+  "topic": "compute",
+  "slug": "sandbox-router",
+  "provider": "Sandbox Router (ComputeSDK)",
+  "url": "https://www.computesdk.com/sandbox-router",
+  "category": "sandbox router",
+  "tier": "Pay as you go",
+  "free_tier": {
+    "stated": "$5 in free compute credit to start; no provider account needed. Sandboxes deduct from the credit balance at the listed per-provider compute rates, and a 5% platform fee applies when buying more credits.",
+    "unit": "credits",
+    "metered_on": "wall-clock",
+    "source_url": "https://www.computesdk.com/pricing",
+    "read_on": "2026-11-24",
+    "notes": "A one-time $5 credit at signup, not a recurring allowance. Compute is billed from the credit balance at the published rates; with BYOK the provider bills compute directly. The $5 is not a per-hour or per-sandbox quota and no separate free sandbox count is published."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the offer is routed compute, and no single-object size cap is published on the pricing or docs pages",
+    "bytes": null,
+    "source_url": "https://www.computesdk.com/pricing",
+    "notes": "A sandbox has a size-specific disk ceiling in the rate table (for example 50 GB for a 1 vCPU / 2 GB sandbox on cloudflare); that is a machine size, not a per-object cap."
+  },
+  "retention": {
+    "stated": "A sandbox keeps running until destroyed or its lifetime expires; sandboxes expire by default after 30 minutes. Files survive while the sandbox exists; destroying it deletes the sandbox and its files.",
+    "days": null,
+    "source_url": "https://docs.computesdk.com/platform/billing",
+    "notes": "Retention is tied to the sandbox lifecycle, not a fixed byte-retention window. The docs state a 30-minute default expiry and that closing a terminal or disconnecting a preview does not destroy a sandbox."
+  },
+  "egress": {
+    "terms": "No separate egress price is published for routed compute: sandboxes deduct from prepaid credit at the listed compute rates, and code running in a sandbox can reach the internet. A sandbox port can be exposed through sandbox_url, which makes it reachable from the public internet. Outbound traffic on an operator's own provider keys is billed by that provider.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.computesdk.com/llms-full.txt"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "chat"
+  ],
+  "interface_detail": "REST API at https://platform.computesdk.com/api/v1 with an OpenAPI spec; a TypeScript SDK (npm computesdk), a CLI (npm @computesdk/cli), and an MCP server at https://platform.computesdk.com/mcp. A console at platform.computesdk.com handles sign-up, keys, provider keys and billing.",
+  "endpoint": "https://platform.computesdk.com/api/v1",
+  "tooling": "npm install computesdk for the SDK; npm install @computesdk/cli or curl -fsSL https://computesdk.com/install | sh for the compute CLI; a hosted MCP server and a REST API are also published.",
+  "chaining": "Routes one sandbox API across many compute providers and bills from one credit balance, so an agent workload can be moved to a specific provider or to an own key without changing the API used by the user.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "$5 in free compute credit at signup, spent at the listed per-provider per-hour compute rates",
+      "source": "https://www.computesdk.com/llms-full.txt"
+    },
+    {
+      "kind": "request-rate",
+      "value": "240 requests per minute per connection; beyond it HTTP 429 with {\"error\":\"rate_limited\"}",
+      "source": "https://www.computesdk.com/llms-full.txt"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "sandboxes expire by default after 30 minutes; they bill until destroyed or expired",
+      "source": "https://www.computesdk.com/llms-full.txt"
+    }
+  ],
+  "limits_note": "Rates in the table are normalized to USD per hour for comparison; each row lists a billing increment when available, and most rows read 'Not specified'. A quote does not reserve capacity, and being listed in the catalog or benchmarks does not grant access to a provider account.",
+  "binding": "volume-quota",
+  "binding_note": "The $5 one-time credit is the first constraint for a new account: at the lowest published sandbox rate of $0.03 an hour (sandbox0 small, 1 vCPU / 2 GB) it covers about 166 hours, and at the highest sandbox rate of $5.4528 an hour (vercel 3xlarge) about 0.9 hours, before the 30-minute default expiry or the 240-request-per-minute API rate becomes relevant.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "An organization is required: 'Every hosted sandbox, provider credential, API key and Actions run belongs to an organization. Start at platform.computesdk.com.' The console sign-up form shows a workspace address, a password field of 'At least 8 characters' and a Terms acceptance, and offers a sign-in link for existing accounts; browser login for the CLI opens a browser and saves a session locally. The pages read do not state whether the address must be verified, and name no phone number, ID document or institution. No card is needed to use the $5 credit; credits beyond it are bought in Settings -> Billing.",
+    "country": null
+  },
+  "reliability_note": "No SLA: the terms state 'SLA: None' and only commercially reasonable efforts to keep the service available. Sandboxes bill until destroyed or expired and a 429 rate limit applies at 240 requests per minute per connection; closing a terminal does not stop billing.",
+  "confidence": "documented",
+  "confidence_note": "The publisher's own pricing, llms.txt, llms-full.txt, authentication, billing, terms pages and console sign-up text were read on 2026-11-24; the rate table in llms-full.txt states it was updated 2026-11-21. The sign-up form's visible text does not enumerate all fields, so its exact identity requirement is partial.",
+  "evidence": [
+    {
+      "url": "https://www.computesdk.com/llms-full.txt",
+      "date": "2026-11-24",
+      "proved": "the free credit is USD 5, one-time, and no provider account is needed",
+      "capture": "sha256:1d3c8a637d90c1451993b0bb0809ae1a5c2158ed5fb7702a5232dc00b0e71b55",
+      "quote": "Free credit: $5 in free compute credit to start; no provider account needed."
+    },
+    {
+      "url": "https://www.computesdk.com/llms-full.txt",
+      "date": "2026-11-24",
+      "proved": "the platform fee is 5% on credit purchases and is not charged on each sandbox run",
+      "capture": "sha256:1d3c8a637d90c1451993b0bb0809ae1a5c2158ed5fb7702a5232dc00b0e71b55",
+      "quote": "Platform fee: 5% on credit purchases. It is not charged again on each sandbox or workflow run."
+    },
+    {
+      "url": "https://www.computesdk.com/llms-full.txt",
+      "date": "2026-11-24",
+      "proved": "the lowest published sandbox rate is USD 0.03 an hour on sandbox0 small",
+      "capture": "sha256:1d3c8a637d90c1451993b0bb0809ae1a5c2158ed5fb7702a5232dc00b0e71b55",
+      "quote": "| sandbox0 | small | 1 vCPU · 2 GB | sandbox | $0.03 | Not specified |"
+    },
+    {
+      "url": "https://www.computesdk.com/llms-full.txt",
+      "date": "2026-11-24",
+      "proved": "the highest published sandbox rate is USD 5.4528 an hour on vercel 3xlarge",
+      "capture": "sha256:1d3c8a637d90c1451993b0bb0809ae1a5c2158ed5fb7702a5232dc00b0e71b55",
+      "quote": "| vercel | 3xlarge | 32 vCPU · 64 GB · 64 GB disk | sandbox | $5.4528 | Not specified |"
+    },
+    {
+      "url": "https://www.computesdk.com/llms-full.txt",
+      "date": "2026-11-24",
+      "proved": "the API rate limit is 240 requests per minute per connection",
+      "capture": "sha256:1d3c8a637d90c1451993b0bb0809ae1a5c2158ed5fb7702a5232dc00b0e71b55",
+      "quote": "Rate limit: 240 requests per minute per connection. Past that, the server returns HTTP `429` with `{\"error\":\"rate_limited\"}`; wait and retry."
+    },
+    {
+      "url": "https://www.computesdk.com/llms-full.txt",
+      "date": "2026-11-24",
+      "proved": "sandboxes expire after 30 minutes by default and bill until destroyed or expired",
+      "capture": "sha256:1d3c8a637d90c1451993b0bb0809ae1a5c2158ed5fb7702a5232dc00b0e71b55",
+      "quote": "**Billing:** sandboxes on managed accounts bill your org's prepaid credit while they run; sandboxes on your own provider keys are billed by that provider. Sandboxes expire on their own (30 minutes by default); destroying them sooner stops billing."
+    },
+    {
+      "url": "https://www.computesdk.com/llms-full.txt",
+      "date": "2026-11-24",
+      "proved": "code in a sandbox reaches the internet and a hosted port can be made public",
+      "capture": "sha256:1d3c8a637d90c1451993b0bb0809ae1a5c2158ed5fb7702a5232dc00b0e71b55",
+      "quote": "Tool calls carry only what the assistant sends for that action, such as a command, a file, or a run id. Sandboxes run on third-party compute providers, and code running in a sandbox can reach the internet."
+    },
+    {
+      "url": "https://www.computesdk.com/llms-full.txt",
+      "date": "2026-11-24",
+      "proved": "the REST base URL, SDK, CLI and MCP endpoint are published",
+      "capture": "sha256:1d3c8a637d90c1451993b0bb0809ae1a5c2158ed5fb7702a5232dc00b0e71b55",
+      "quote": "REST API: base URL `https://platform.computesdk.com/api/v1`. Send `Authorization: Bearer <org API key>` (minted in the console) or an OAuth 2.0 access token."
+    },
+    {
+      "url": "https://docs.computesdk.com/platform/authentication.md",
+      "date": "2026-11-24",
+      "proved": "every hosted sandbox and API key belongs to an organization and browser login opens a browser",
+      "capture": "sha256:66f7188131594616bb2d1ad945a0129836e88b61cbd0e941a0b18d9348695fa9",
+      "quote": "Every hosted sandbox, provider credential, API key and Actions run belongs to an organization. Start at [platform.computesdk.com](https://platform.computesdk.com). Owners and admins manage keys and provider credentials in Settings."
+    },
+    {
+      "url": "https://platform.computesdk.com/signup",
+      "date": "2026-11-24",
+      "proved": "the sign-up form shows a workspace address, a password of at least 8 characters and a Terms acceptance",
+      "capture": "sha256:aa5990e5e14b4ea9d3a7b1c26a19897becc6dc0b0020bc54132bf936ff19754a",
+      "quote": "Its address: /your-name (numbered if taken). You can rename it later."
+    },
+    {
+      "url": "https://www.computesdk.com/terms",
+      "date": "2026-11-24",
+      "proved": "the terms state no uptime commitment",
+      "capture": "sha256:81abd443185cb56df3c3b37beed349cc0fbde38d90d6970054f92dfdba3d43f7",
+      "quote": "**SLA:** None. Snelling, LLC will use commercially reasonable efforts to keep the Cloud Service available, but does not commit to any uptime level or service credits unless specified in a separate Order Form."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-24T10:11:15.057Z",
+  "price_per_tb_month": null,
+  "notes": "The offer is a hosted router over third-party sandboxes: $5 credit to start, then per-hour compute rates with a 5% fee on credit purchases. The lowest published rate is $0.03 an hour and the highest is $5.4528 an hour. Cards are bought from the dashboard; the $5 credit needs no provider account. The exact sign-up fields beyond the visible form are unverified, as is whether a card is required for the free credit.",
+  "extras": {
+    "shape": {
+      "vcpu": null,
+      "ram_gib": null,
+      "disk_gib": null,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "many provider sizes from 1 vCPU / 1 GB to 32 vCPU / 64 GB are routed; no single default shape"
+    },
+    "billing_model": "USD 5 prepaid credit, then per-hour compute rates with a 5% fee on purchases, or BYOK billed by the provider",
+    "free_tier_kind": "one-time-credit",
+    "term": "pay as you go, no commitment",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "a hosted port can be exposed with sandbox_url",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": 30,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "30-minute default expiry; a sandbox bills until destroyed or expired"
+    },
+    "identity_gate_unverified": "the exact sign-up fields beyond the visible workspace address and password are unverified; no account was created"
+  }
+}

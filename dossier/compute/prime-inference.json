@@ -1,0 +1,139 @@
+{
+  "topic": "compute",
+  "slug": "prime-inference",
+  "provider": "Prime Inference",
+  "url": "https://www.primeintellect.ai/inference",
+  "category": "inference API",
+  "tier": "Serverless API (hosted and gateway models)",
+  "free_tier": {
+    "stated": "unverified: no first-party page read states a free inference allowance or a sign-up credit for Prime Inference, and the account dashboard behind sign-in was not opened",
+    "unit": "none",
+    "metered_on": "unstated",
+    "source_url": "https://www.primeintellect.ai/inference",
+    "read_on": "2026-11-24",
+    "notes": "The answer to 'How is inference priced?' on the vendor's inference page states only that the Serverless API, Prime Gateway included, is billed per token and that dedicated capacity is sized and priced with the team. A wallet is funded before requests succeed: the troubleshooting page shows insufficient_funds when the billed account lacks balance."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a token request, not a stored object",
+    "notes": "Model context and maximum output are per-model; the API catalog lists them per model ID."
+  },
+  "retention": {
+    "stated": "unverified: no first-party page read states how long request content is retained",
+    "days": null,
+    "source_url": "https://www.primeintellect.ai/inference"
+  },
+  "egress": {
+    "terms": "no published egress allowance or price for inference requests: the pages read state per-token inference prices and prepaid-credit or card payment, but no separate charge for traffic out of the API",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.primeintellect.ai/inference"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "OpenAI-compatible chat-completions REST API at https://api.pinference.ai/api/v1, with a GET /models catalog; the Prime CLI selects models and manages deployments with `prime inference`.",
+  "endpoint": "https://api.pinference.ai/api/v1",
+  "tooling": "Any OpenAI SDK pointed at the API base URL with a Prime API key; the Prime CLI from uv (`uv tool install prime`, `prime login`) offers the same model list and deployment commands.",
+  "chaining": "The OpenAI-compatible endpoint drops into an existing chat-completions client; team credits are selected per request with the X-Prime-Team-ID header.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "requests stop with insufficient_funds when the wallet funding the API key, or the team selected by X-Prime-Team-ID, has no balance; prepaid credits expire 12 months after purchase",
+      "source": "https://docs.primeintellect.ai/inference/troubleshooting"
+    },
+    {
+      "kind": "request-rate",
+      "value": "unverified: supported parameters and limits are per model and the numeric request-rate values are published only in the account's model catalog, behind sign-in",
+      "source": "https://docs.primeintellect.ai/api-reference/inference-chat-completions"
+    }
+  ],
+  "limits_note": "Pricing, limits and supported features are set per model and shown in the catalog, which was read as a paid model list without a numeric request-rate limit.",
+  "binding": "volume-quota",
+  "binding_note": "The billed wallet is the constraint that stops a request first: the troubleshooting page states that a request returns insufficient_funds when the account billed for it lacks balance, while no numeric request-rate value is published outside the logged-in catalog.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "Account access is documented as `prime login` and an API key generated under Settings -> API Keys; a funded wallet is required for requests, and the terms state that payment is by card or another payment method made available on the platform, with usage drawn down against prepaid credits and automatic top-up optional. The exact fields of the account-creation form (email, password or a sign-in provider) were not visible: unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "A request with an unfunded account returns insufficient_funds; on-demand dedicated endpoints incur GPU-hour charges while serving, including idle time.",
+  "confidence": "documented",
+  "confidence_note": "The per-token billing shape, the API endpoint, the per-model limits and the insufficient-funds condition come from first-party pages and the vendor's JSON model catalog read on 2026-11-24. No free allowance, retention term or signup form was published in those pages.",
+  "evidence": [
+    {
+      "url": "https://www.primeintellect.ai/inference",
+      "date": "2026-11-24",
+      "proved": "the serverless API bills per token and dedicated capacity is quoted by the team",
+      "capture": "sha256:51a775a47f94c2421f674757e9bd87a0e77f4fa425beade22525020a03fc87b7",
+      "quote": "The Serverless API, Prime Gateway included, is billed per token. Dedicated capacity for your own models is sized and priced with our team."
+    },
+    {
+      "url": "https://www.primeintellect.ai/inference",
+      "date": "2026-11-24",
+      "proved": "the API is OpenAI-compatible and a team can change models by name",
+      "capture": "sha256:51a775a47f94c2421f674757e9bd87a0e77f4fa425beade22525020a03fc87b7",
+      "quote": "Yes. Point any OpenAI SDK at Prime Inference's endpoint with your API key, and switch models by changing the model name."
+    },
+    {
+      "url": "https://docs.primeintellect.ai/inference/overview",
+      "date": "2026-11-24",
+      "proved": "pricing and limits are set per model and shown in the catalog",
+      "capture": "sha256:0cf4964e6721c5927fae295115ba63e039f631ba9767bbe7dd160a90d9609181",
+      "quote": "Pricing, limits, and supported features are set per model and shown in the catalog, so check them before choosing a model, especially if where a model runs matters for your workload."
+    },
+    {
+      "url": "https://docs.primeintellect.ai/inference/overview",
+      "date": "2026-11-24",
+      "proved": "the chat-completions endpoint is at the published API base URL",
+      "capture": "sha256:0cf4964e6721c5927fae295115ba63e039f631ba9767bbe7dd160a90d9609181",
+      "quote": "curl https://api.pinference.ai/api/v1/chat/completions \\"
+    },
+    {
+      "url": "https://api.pinference.ai/api/v1/models",
+      "date": "2026-11-24",
+      "proved": "the vendor's model catalog publishes hosted-model prices per million input, output and cached-read tokens; GLM 5.3 Flash is USD 0.0525 input, USD 0.25 output and USD 0.0105 cached read",
+      "capture": "sha256:429da3538947e83e12738552b754de069c3532173bc8b2435af104ed90139fe0",
+      "quote": "\"id\":\"z-ai/glm-5.3-flash\",\"object\":\"model\",\"owned_by\":\"\",\"display_name\":\"GLM 5.3 Flash\",\"serving\":\"hosted\",\"pricing\":{\"input_usd_per_mtok\":0.0525,\"output_usd_per_mtok\":0.25,\"cache_read_usd_per_mtok\":0.0105"
+    },
+    {
+      "url": "https://docs.primeintellect.ai/api-reference/inference-chat-completions",
+      "date": "2026-11-24",
+      "proved": "numeric parameter limits are model-specific and not published on this page",
+      "capture": "sha256:937ca99b74f97c272cc1da98202e60d12ed6cc7d871516a1d72e2e72b12b5462",
+      "quote": "Supported parameters and limits depend on the selected model."
+    },
+    {
+      "url": "https://docs.primeintellect.ai/inference/troubleshooting",
+      "date": "2026-11-24",
+      "proved": "an unfunded billed account stops the request with insufficient_funds",
+      "capture": "sha256:8baa52aa22bfa9e39547e9f89bbe1e4d655ab0d76d6789e55fd2663c4ad0a32f",
+      "quote": "Prime Inference returns this error when the account billed for the request does not have enough balance."
+    },
+    {
+      "url": "https://www.primeintellect.ai/terms-of-service",
+      "date": "2026-11-24",
+      "proved": "payment is by card or another platform method, and prepaid credits are drawn down at the applicable rates",
+      "capture": "sha256:c81b50c2db739b119a53e0c971eb939bb49424004e63b492ccaf4e9b6ae98826",
+      "quote": "**6.2 Payment Methods; Prepaid Credits. **You may pay by card or by any other payment method that we make available on the Platform, through our third-party payment processors."
+    },
+    {
+      "url": "https://docs.primeintellect.ai/cli-reference/introduction",
+      "date": "2026-11-24",
+      "proved": "the CLI authenticates with prime login and accepts an API key from the configuration",
+      "capture": "sha256:2f76963609bf8fab55136dd0d4996727639d1a84a03959fafb4ed6e88ea3c4f2",
+      "quote": "prime login"
+    },
+    {
+      "url": "https://docs.primeintellect.ai/hosted-training/getting-started",
+      "date": "2026-11-24",
+      "proved": "a Prime Intellect account with a funded wallet is the prerequisite for on-demand use",
+      "capture": "sha256:60e961aa76c890381a9f934b90954e01d5b1d19f5ce8fe03113790fb2eafb277",
+      "quote": "A [Prime Intellect account](https://app.primeintellect.ai) with on-demand training enabled and a funded wallet, see [Billing](https://docs.primeintellect.ai/hosted-training/billing.md)"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-24T10:11:15.004Z",
+  "price_per_tb_month": null,
+  "notes": "Hosted inference with no free allowance stated in the pages read. Rates are set per model: the vendor's catalog lists USD 0.0525 per million input tokens, USD 0.25 per million output tokens and USD 0.0105 per million cached-read tokens for the hosted GLM 5.3 Flash model. The sign-up form itself was not visible, so the exact registration fields are unverified: behind a sign-up."
+}

@@ -19,9 +19,9 @@
     "source_url": "https://exe.dev/pricing"
   },
   "egress": {
-    "terms": "200 GiB of network bandwidth included on Personal; additional bandwidth USD 0.05/GiB.",
+    "terms": "200 GB of outbound bandwidth included on Personal; additional bandwidth is billed at the rates on the pricing page, USD 0.05/GiB on that page.",
     "metered": true,
-    "free_allowance": "200 GiB",
+    "free_allowance": "200 GB of outbound bandwidth",
     "source_url": "https://exe.dev/pricing"
   },
   "interface": [
@@ -42,8 +42,8 @@
   "binding": "volume-quota",
   "binding_note": "The binding constraint is the USD 15 minimum monthly spend, which no shape reduces; bandwidth is the metered wall behind it.",
   "identity_cost": {
-    "kind": "card",
-    "detail": "A paid plan implies a card; the pricing page states no card, hold or debit terms. The 7-day trial is gated on a paid ChatGPT subscription. Unverified.",
+    "kind": "institution",
+    "detail": "New accounts can link a paid ChatGPT subscription during signup for a free 7-day trial, with no card. Otherwise an active subscription is needed to create and manage VMs, paid through Stripe checkout. The site states sign-in works with a Google account.",
     "country": null
   },
   "reliability_note": "no reliability event observed; the trial is time-boxed at 7 days.",
@@ -78,10 +78,52 @@
       "url": "https://exe.dev/pricing",
       "date": "2026-10-24",
       "proved": "quoted: 'Minimum Monthly Spend | $15'; 'Additional disk | $0.08 / GiB / month'; 'Additional bandwidth | $0.05 / GiB'; 'KVM-isolated VMs | Included'; 'Persistent disks | Included'"
+    },
+    {
+      "url": "https://exe.dev/docs/billing/overview",
+      "date": "2026-11-24",
+      "proved": "the trial needs a paid ChatGPT subscription and no card; the paid path uses Stripe checkout",
+      "capture": "sha256:be871216380e2295fb6bea2b193fb0b0b91333e5bcf0a596e36965e0252202ee",
+      "quote": "An active subscription is needed to create and manage VMs. New accounts can link a paid ChatGPT subscription during signup for a free 7-day trial, with no card. The trial starts when you create your first VM. Otherwise, subscribe with Stripe checkout."
+    },
+    {
+      "url": "https://exe.dev/docs/billing/personal",
+      "date": "2026-11-24",
+      "proved": "the allowance is 200 GB of outbound bandwidth shared by all VMs",
+      "capture": "sha256:c67a515ccabb66a2410486355a6f1a580868dd485b316ca0307de6ede836b751",
+      "quote": "Every capacity includes 200 GB of outbound bandwidth and up to 50 VMs."
+    },
+    {
+      "url": "https://exe.dev/docs/billing/personal",
+      "date": "2026-11-24",
+      "proved": "the allowance is 200 GB of outbound bandwidth",
+      "capture": "sha256:c67a515ccabb66a2410486355a6f1a580868dd485b316ca0307de6ede836b751",
+      "quote": "Every capacity includes 200 GB of outbound bandwidth and up to 50 VMs."
+    },
+    {
+      "url": "https://exe.dev/docs/billing/overview",
+      "date": "2026-11-24",
+      "proved": "the no-card trial is gated on an existing paid subscription rather than a card at signup",
+      "capture": "sha256:be871216380e2295fb6bea2b193fb0b0b91333e5bcf0a596e36965e0252202ee",
+      "quote": "New accounts can link a paid ChatGPT subscription during signup for a free 7-day trial, with no card."
+    },
+    {
+      "url": "https://exe.dev/pricing",
+      "date": "2026-11-24",
+      "proved": "the Personal plan still lists 200 GiB of network bandwidth",
+      "capture": "sha256:1f614d9f3769e837637c1c444c2c5089d6f33778041f8ba054c3efff82db060b",
+      "quote": "* 200 GiB of network bandwidth"
+    },
+    {
+      "url": "https://exe.dev",
+      "date": "2026-11-24",
+      "proved": "the VM is reachable by SSH with root",
+      "capture": "sha256:a2d725da65df3614954b249b4113680bd8e37a8927bf3b71ebdb20c571288dc0",
+      "quote": "SSH in, and you’ve got root."
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-10-24T02:11:00.000Z",
+  "verified_at": "2026-11-24T11:38:13.593Z",
   "notes": "USD 15 a month is the floor and it buys 2 vCPU / 4 GiB spread over up to 50 VMs, so the per-VM cost is near zero but the bill is three times the budget. Standalone VMs are priced at USD 0.105/hour per 2 vCPU / 4 GiB for accounts above the minimum, which is USD 76.65 at 730 h. Egress arithmetic: USD 0.05/GiB x 1000 GB = USD 50 per TB beyond the 200 GiB allowance. Not established: the payment method and hold.",
   "extras": {
     "wave2": {

@@ -5,7 +5,7 @@
   "url": "https://www.runloop.ai/pricing",
   "category": "container and VM sandbox",
   "free_tier": {
-    "stated": "'Start Your Free Pro Trial', 'No credit card required', '$50 Usage Credit'. Trial sandbox limits: '3 Running Devboxes / 5 blueprints / 10 snapshots / 3 objects'. The Basic plan is 'Free + usage based-compute' with '100 GB Free Storage' and '1st month FREE'.",
+    "stated": "'New accounts start with $50 in usage credits and full Pro feature access. No credit card is required.' Trial sandbox limits: '3 Running Devboxes'. The Basic plan is a 'free subscription with usage billed based on what you use'. The pricing page read on 2026-11-24 states no storage allowance and no first-month-free term.",
     "unit": "mixed",
     "metered_on": "wall-clock",
     "source_url": "https://www.runloop.ai/pricing",
@@ -13,18 +13,18 @@
     "notes": "A one-time USD 50 credit attached to a trial, not a standing free tier."
   },
   "per_object_cap": {
-    "stated": "No devbox shape is published on the pricing page; the rate card is per CPU-hour and per GB-hour, with 'Devbox CPU $0.108 / CPU-hr' and 'Devbox Memory $0.0252 / GB-hr'.",
+    "stated": "The pricing page states a standard 2-CPU / 4 GB devbox and prices compute at 2 x $0.108 per CPU-hour + 4 x $0.0252 per GB-hour; no devbox object-size ceiling is published.",
     "bytes": null,
     "source_url": "https://www.runloop.ai/pricing",
     "notes": "Three concurrent devboxes on the trial."
   },
   "retention": {
-    "stated": "'100 GB Free Storage' on the Basic plan; devbox storage is billed at USD 0.00034236 per GB-hour and snapshots are separate.",
+    "stated": "Suspension stops CPU and memory charges while storage charges continue; the page read on 2026-11-24 states no storage allowance, per-GB-hour storage rate or snapshot retention period.",
     "days": null,
     "source_url": "https://www.runloop.ai/pricing"
   },
   "egress": {
-    "terms": "No egress charge or allowance is stated on the pricing page.",
+    "terms": "No egress price or transfer allowance is stated on the pricing page; per-devbox network egress policies are documented.",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
@@ -50,14 +50,14 @@
     },
     {
       "kind": "volume-quota",
-      "value": "CPU USD 0.108 per CPU-hour and memory USD 0.0252 per GB-hour",
+      "value": "USD 0.108 per CPU-hour and USD 0.0252 per GB-hour",
       "source": "https://www.runloop.ai/pricing"
     }
   ],
   "limits_note": "'Trial sandbox limits (lifted on upgrade)' means the devbox count is a trial restriction rather than a platform ceiling.",
   "identity_cost": {
     "kind": "email",
-    "detail": "'No credit card required' twice on the page, including on the trial call to action. No hold exists because no payment method is taken.",
+    "detail": "'No credit card required' twice on the page, including on the trial call to action, and no payment method is taken, so no hold exists. unverified: no signup form was read, so an email address is the expected gate rather than an observed field.",
     "country": null
   },
   "reliability_note": "The trial ends and the limits lift only on upgrade; a devbox on the trial is capped by the credit rather than by a runtime limit.",
@@ -111,10 +111,73 @@
       "proved": "the page states the session clock and idle reap recorded here, or states that it publishes none",
       "capture": "sha256:5346cd3811e4ba936e938004895742256ebde6d4fa047b29baf61fc2e1e4f145",
       "quote": "The default lifetime is 1 hour, but this can be configured when you create the Devbox / By default, Runloop will do nothing if your Devbox is idle."
+    },
+    {
+      "url": "https://www.runloop.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the trial credit, no-card statement, Basic free subscription and no automatic charge at trial end",
+      "capture": "sha256:7ddc63767a868b75a4190915393627d573d66b81db6fa01657ce8121f36583af",
+      "quote": "New accounts start with $50 in usage credits and full Pro feature access. No credit card is required. Once the trial usage limit is reached, you’ll be prompted to choose how to continue: switch to the Basic plan (free subscription with usage billed based on what you use), or upgrade to a paid Pro or Enterprise plan. There is no automatic charge when the trial ends—you decide how to proceed."
+    },
+    {
+      "url": "https://www.runloop.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the CPU and memory rates and a standard 2-CPU / 4 GB shape",
+      "capture": "sha256:7ddc63767a868b75a4190915393627d573d66b81db6fa01657ce8121f36583af",
+      "quote": "A standard 2-CPU / 4 GB devbox running 8 active hours per day costs approximately $2.73/day in compute (2 x $0.108 + 4 x $0.0252, multiplied by 8 hours). At 22 working days per month that is roughly $60 in compute plus the $250 Pro base."
+    },
+    {
+      "url": "https://www.runloop.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "suspension stops CPU and RAM charges while storage charges continue",
+      "capture": "sha256:7ddc63767a868b75a4190915393627d573d66b81db6fa01657ce8121f36583af",
+      "quote": "No. Suspended devboxes do not accrue compute or memory charges. Billing for CPU and RAM stops the moment suspension begins. Storage charges continue while a devbox is suspended, but compute billing stops entirely."
+    },
+    {
+      "url": "https://www.runloop.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "per-devbox egress policies are available",
+      "capture": "sha256:7ddc63767a868b75a4190915393627d573d66b81db6fa01657ce8121f36583af",
+      "quote": "Runloop provides microVM-level hardware isolation between tenants, SOC2 Type II certification, Credential Gateway for opaque token injection (agents never see raw secrets), network egress policies per devbox, and VPC deployment for teams that need infrastructure inside their own cloud account."
+    },
+    {
+      "url": "https://docs.runloop.ai/docs/tutorials/quickstart",
+      "date": "2026-11-24",
+      "proved": "account creation at the Runloop signup page",
+      "capture": "sha256:87615748b8a9bc5f3ac838a2de524f32226b12c9f8e10a6522477a556865dcb2",
+      "quote": "Visit the [Runloop signup page](https://platform.runloop.ai/auth/register) to create an account."
+    },
+    {
+      "url": "https://docs.runloop.ai/llms.txt",
+      "date": "2026-11-24",
+      "proved": "the rl-cli terminal tool",
+      "capture": "sha256:8ec8be1532739d25c05c43a27c4698e258f611904df656ce263c10339447408d",
+      "quote": "[CLI (`rl-cli`)](https://docs.runloop.ai/docs/tools/rl-cli): Use in terminal environments where you can install tools."
+    },
+    {
+      "url": "https://docs.runloop.ai/llms.txt",
+      "date": "2026-11-24",
+      "proved": "the Python SDK install command",
+      "capture": "sha256:8ec8be1532739d25c05c43a27c4698e258f611904df656ce263c10339447408d",
+      "quote": "- [Python SDK](https://github.com/runloopai/api-client-python): `pip install runloop-api-client`"
+    },
+    {
+      "url": "https://www.runloop.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "REST API and Python and TypeScript SDKs",
+      "capture": "sha256:7ddc63767a868b75a4190915393627d573d66b81db6fa01657ce8121f36583af",
+      "quote": "Integration is straightforward through Runloop's Python and TypeScript SDKs and REST API."
+    },
+    {
+      "url": "https://docs.runloop.ai/llms.txt",
+      "date": "2026-11-24",
+      "proved": "SSH and scp/rsync access to a devbox",
+      "capture": "sha256:8ec8be1532739d25c05c43a27c4698e258f611904df656ce263c10339447408d",
+      "quote": "Connect with rli devbox ssh <devbox-id>; file transfer via rli devbox scp / rsync"
     }
   ],
   "verdict": "trial-only",
-  "verified_at": "2026-11-18T04:45:13.523Z",
+  "verified_at": "2026-11-24T13:21:03.218Z",
   "price_per_tb_month": null,
   "notes": "At 2 vCPU / 4 GiB the hour is USD 0.216 + USD 0.1008 = USD 0.3168, so USD 50 is 158 hours, five and a half days. Boat's comparison table independently prices Runloop at 'USD 0.634' an hour for a 4 vCPU / 8 GB machine, which is exactly double this figure and consistent with the same rate card.",
   "extras": {
