@@ -5,7 +5,7 @@
   "url": "https://gigafile.nu",
   "category": "anonymous-dump",
   "free_tier": {
-    "stated": "1ファイル300Gまで、個数無制限",
+    "stated": "1ファイル500Gまで、個数無制限",
     "unit": "GB",
     "metered_on": "unstated",
     "source_url": "https://gigafile.nu/",
@@ -13,14 +13,14 @@
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "300 GB per file",
-    "bytes": 300000000000,
+    "stated": "500 GB per file",
+    "bytes": 500000000000,
     "source_url": "https://gigafile.nu/",
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "300 GB/file; retention selectable 3/5/7/14/30/60/100 days (default 5); 2 GB/day download per file per IP; optional 4-char download key and email notification; files expire hard after retention, no inactivity reset",
-    "days": 100,
+    "stated": "Retention selectable from 5 to 150 days in seven steps; files are kept at most 150 days after upload and deleted after the chosen period",
+    "days": 150,
     "source_url": "https://gigafile.nu/",
     "notes": "Extracted from published terms."
   },
@@ -33,8 +33,8 @@
     "rclone"
   ],
   "interface_detail": "rest",
-  "tooling": "no rclone backend; plain multipart POST to https://<nn>.gigafile.nu/upload_chunk.php (id, name, chunk, chunks, lifetime, file); chunk_size=100mb, max_size=300gb are published as JS vars in the page source; own client is ~40 lines of python/curl",
-  "chaining": "Quota is per record, not per account. 10 TiB = 35 uploads of 300 GB, 20 TiB = ~70; no account, no identity, so nothing to register and nothing to shard around. Only the 100-day retention forces a re-upload cycle.",
+  "tooling": "no rclone backend; plain multipart POST to https://<nn>.gigafile.nu/upload_chunk.php (id, name, chunk, chunks, lifetime, file); chunk_size=100mb, max_size=500gb are published as JS vars in the page source; own client is ~40 lines of python/curl",
+  "chaining": "Quota is per record, not per account. 10 TiB = 22 uploads of 500 GB, 20 TiB = 44; no account, no identity, so nothing to register and nothing to shard around. Only the 150-day retention forces a re-upload cycle.",
   "limits": [
     {
       "kind": "per-ip-shaping",
@@ -43,21 +43,21 @@
     },
     {
       "kind": "per-object-cap",
-      "value": "300 GB per file",
+      "value": "500 GB per file",
       "source": "https://gigafile.nu/"
     },
     {
       "kind": "per-object-cap",
-      "value": "300 GB/file",
+      "value": "500 GB per file",
       "source": "https://gigafile.nu/"
     },
     {
       "kind": "retention-clamped",
-      "value": "retention selectable 3/5/7/14/30/60/100 days",
+      "value": "retention selectable 5 to 150 days, seven periods",
       "source": "https://gigafile.nu/"
     }
   ],
-  "limits_note": "300 GB/file; retention selectable 3/5/7/14/30/60/100 days (default 5); 2 GB/day download per file per IP; optional 4-char download key and email notification; files expire hard after retention, no inactivity reset",
+  "limits_note": "500 GB/file; retention selectable 5 to 150 days in seven steps",
   "identity_cost": {
     "kind": "anonymous",
     "detail": "derived from the record's prose, not from an identity field, and no signup was executed: 300 GB per file, unlimited number of files, no account required ('1ファイル300Gまで、個数無制限') Download endpoint only serves when called with the referer/cookie chain from the file",
@@ -98,11 +98,46 @@
       "proved": "the upload panel states 300G per file and an unlimited number of files",
       "capture": "sha256:9f722967a178ab789778bb0cedb7742d7fb1cd67ad0892f8a6454eb358179f05",
       "quote": "1ファイル300Gまで、個数無制限"
+    },
+    {
+      "url": "https://gigafile.nu/",
+      "date": "2026-11-25",
+      "proved": "the upload panel states 500G per file and an unlimited number of files",
+      "capture": "sha256:9897f025fa05163f9262f0fa52417bc3e6390371ab61f79b1fcc3c9ef941396c",
+      "quote": "1ファイル500Gまで、個数無制限"
+    },
+    {
+      "url": "https://gigafile.nu/",
+      "date": "2026-11-25",
+      "proved": "the page description states 500G per file and seven selectable retention periods from 5 to 150 days",
+      "capture": "sha256:9897f025fa05163f9262f0fa52417bc3e6390371ab61f79b1fcc3c9ef941396c",
+      "quote": "「５日～１５０日」選べる７種類のファイルの保持期限に加え、１ファイル500Gまでアップロード、共有可能！"
+    },
+    {
+      "url": "https://gigafile.nu/support.php",
+      "date": "2026-11-25",
+      "proved": "the support page states files are kept at most 150 days after upload",
+      "capture": "sha256:157d964e399d624e57882129a81b30c1d34fc8b09872ed58e9303d4ebc6e69fa",
+      "quote": "※ファイルは、アップロード後最大150日間保持されます。"
+    },
+    {
+      "url": "https://gigafile.nu/",
+      "date": "2026-11-25",
+      "proved": "the page source publishes max_size as 500gb",
+      "capture": "sha256:9897f025fa05163f9262f0fa52417bc3e6390371ab61f79b1fcc3c9ef941396c",
+      "quote": "var max_size = \"500gb\";"
+    },
+    {
+      "url": "https://gigafile.nu/",
+      "date": "2026-11-25",
+      "proved": "the page description states no member registration is needed",
+      "capture": "sha256:9897f025fa05163f9262f0fa52417bc3e6390371ab61f79b1fcc3c9ef941396c",
+      "quote": "もちろん容量無制限でアンチウイルス装備。会員登録も不要です。"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-11T05:33:48.335Z",
-  "notes": "1ファイル300Gまで、個数無制限",
+  "verified_at": "2026-11-25T12:15:38.866Z",
+  "notes": "1ファイル500Gまで、個数無制限",
   "history": [],
   "extras": {
     "seed_source": "storage-research",
