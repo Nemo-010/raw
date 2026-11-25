@@ -1,0 +1,187 @@
+{
+  "topic": "compute",
+  "slug": "watasu-sandboxes",
+  "provider": "Watasu Sandboxes",
+  "url": "https://watasu.io/sandboxes/",
+  "category": "Linux sandbox",
+  "tier": "Basic team plan, per-second usage",
+  "free_tier": {
+    "stated": "The Basic team base plan is free, with a 10 GiB included disk, a 1-hour runtime limit on the pricing page (24 hours in the billing docs) and 20 concurrent sandboxes; CPU and memory come from the template, and runtime plus retained storage are billed separately. There is no free runtime: sandbox creation requires a positive balance.",
+    "unit": "hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://watasu.io/pricing",
+    "read_on": "2026-11-25",
+    "notes": "The free item is the team plan base price only. The pricing page says a 1 hour runtime limit; the billing page says 24 hour max runtime for Basic. Runtime is EUR 0.000020 per vCPU-second plus EUR 0.000004 per GiB-second, about EUR 0.1584 an hour for 2 vCPU and 1 GiB as the billing page computes it."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object. Basic teams get a 10 GiB plan-managed root disk.",
+    "bytes": null,
+    "source_url": "https://docs.watasu.io/sandboxes/billing/"
+  },
+  "retention": {
+    "stated": "Inactive sandbox disks expire after seven days, including paused, stopped, failed and lost sandboxes; named persistent volumes and reusable template versions are not subject to this expiry.",
+    "days": 7,
+    "source_url": "https://docs.watasu.io/sandboxes/billing/"
+  },
+  "egress": {
+    "terms": "No bandwidth or egress charge: 'No. Bandwidth is included with your plan, sized to match — normal app traffic at any tier isn't metered, shaped, or invoiced per GB.' Sandbox networking supports an HTTPS preview URL and configurable internet access; no per-sandbox byte allowance is stated.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://watasu.io/pricing"
+  },
+  "interface": [
+    "ssh",
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "One SSH command opens a shell in a fresh sandbox using a template name and the box.watasu.io host; the HTTP API lives under https://api.watasu.io/v1 with an API-key bearer token, and the CLI offers watasu ssh.",
+  "endpoint": "https://api.watasu.io/v1",
+  "tooling": "an SSH client, the watasu CLI and the official Python, JavaScript and Rust SDKs; no rclone backend is documented.",
+  "chaining": "A paused sandbox keeps its disk and machine state for up to seven days, and a named checkpoint can seed a fresh sandbox, so a session can be resumed or branched without rebuilding the environment.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "a positive billing balance is required before a sandbox is created, restored or resumed; at zero the API returns 402 sandbox_balance_required",
+      "source": "https://docs.watasu.io/sandboxes/billing/"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "20 concurrent sandboxes, 8 vCPU and 8192 MiB maximum on the Basic plan, with a 1-second create rate",
+      "source": "https://docs.watasu.io/sandboxes/billing/"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "inactive retained disks expire after 7 days; checkpoints expire 24 hours after creation when no expiry is sent",
+      "source": "https://docs.watasu.io/sandboxes/billing/"
+    },
+    {
+      "kind": "request-rate",
+      "value": "sandbox create and runtime mutation endpoints are rate-limited per authenticated user and remote address, answered with 429 and Retry-After",
+      "source": "https://docs.watasu.io/sandboxes/billing/"
+    }
+  ],
+  "limits_note": "The Basic plan's runtime limit is stated as 1 hour on the pricing page and 24 hours in the billing docs; the discrepancy is unresolved. Retained disk is EUR 0.10 per GiB-month and checkpoints and templates are EUR 0.03 per GiB-month.",
+  "binding": "volume-quota",
+  "binding_note": "The positive-balance start check binds first: a free team plan with no credited balance cannot create a sandbox at all, before runtime or storage meters apply.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The signup form at dash.watasu.io/users/sign_up asks for 'Your name', 'Work email', 'Password' and 'Confirm password'; no phone or identity-document field is shown. A saved card is not required, but a positive balance from a card top-up (minimum EUR 5) is required to start a sandbox. Card and usage details beyond the signup form are unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "At zero or negative balance, sandbox create, restore and resume return 402 sandbox_balance_required; a suspended team blocks new runtime spend and file writes while pause/stop and destroy stay available. Create and mutation endpoints return 429 with Retry-After when rate-limited; retained disks expire after seven days of inactivity.",
+  "confidence": "documented",
+  "confidence_note": "All prices, the free Basic base plan, the 402 start check, the limits, the seven-day disk expiry, egress terms and the signup fields are quoted from first-party pages read on 2026-11-25. Card and balance details inside an account are unverified: behind a sign-up.",
+  "evidence": [
+    {
+      "url": "https://paste.ajam.dev/raw/WCLUsa",
+      "date": "2026-11-25",
+      "proved": "the operator's price list gives Watasu Sandboxes at USD 0.222 per hour, billed per second",
+      "capture": "sha256:4d220f8008ed2a6126e4b7f8bc4639bd9e625605ec428846fde2bdf593cc5c95",
+      "quote": "Watasu Sandboxes → $0.222/h · billed per second"
+    },
+    {
+      "url": "https://watasu.io/pricing",
+      "date": "2026-11-25",
+      "proved": "the Basic team plan base price is free with a 10 GiB disk, 1-hour runtime limit and 20 concurrent sandboxes",
+      "capture": "sha256:c56f10f75b8e5eee1006f16769e7068dcba0f6e2092d0c48ae2cc4ea8bb776e6",
+      "quote": "Free base plan\n\nIncluded disk\n\n10 GiB\n\nRuntime limit\n\n1 hour\n\nConcurrent sandboxes\n\n20"
+    },
+    {
+      "url": "https://watasu.io/pricing",
+      "date": "2026-11-25",
+      "proved": "runtime is billed per second at EUR 0.000020 per vCPU-second and EUR 0.000004 per GiB-second, with a 2 vCPU 1 GiB example at about EUR 0.16 an hour",
+      "capture": "sha256:c56f10f75b8e5eee1006f16769e7068dcba0f6e2092d0c48ae2cc4ea8bb776e6",
+      "quote": "vCPU\n\n€0.000020/vCPU·s\n\nMemory\n\n€0.000004/GiB·s"
+    },
+    {
+      "url": "https://docs.watasu.io/sandboxes/billing/",
+      "date": "2026-11-25",
+      "proved": "a positive balance is required before creating, restoring or resuming a sandbox, and no saved card is required",
+      "capture": "sha256:193be9d907684cd07990ce7dc3b12b4026a0d23da876e5078e7acb34feb49c77",
+      "quote": "The sandbox’s billing account must have a balance greater than zero before you create a sandbox, restore a checkpoint into a new sandbox, or resume/restart a stopped or failed sandbox. For a personal team, this is the owner’s personal balance; for a shared team, it is the team’s balance. A saved payment card is not required."
+    },
+    {
+      "url": "https://docs.watasu.io/sandboxes/billing/",
+      "date": "2026-11-25",
+      "proved": "Basic plan limits are 20 concurrent sandboxes, 8 vCPU, 8192 MiB and a 10 GiB disk, with a 24-hour maximum runtime in the billing docs",
+      "capture": "sha256:193be9d907684cd07990ce7dc3b12b4026a0d23da876e5078e7acb34feb49c77",
+      "quote": "| Basic | Free | 10 GiB | 24 hour max runtime, 20 concurrent sandboxes, template CPU/RAM shape. |"
+    },
+    {
+      "url": "https://docs.watasu.io/sandboxes/billing/",
+      "date": "2026-11-25",
+      "proved": "inactive sandbox disks expire after seven days and checkpoint expiry defaults to 24 hours",
+      "capture": "sha256:193be9d907684cd07990ce7dc3b12b4026a0d23da876e5078e7acb34feb49c77",
+      "quote": "Inactive sandbox disks expire after seven days. This includes paused, stopped, failed, and lost sandboxes."
+    },
+    {
+      "url": "https://watasu.io/pricing",
+      "date": "2026-11-25",
+      "proved": "bandwidth is included and normal app traffic is not metered, shaped or invoiced per GB",
+      "capture": "sha256:c56f10f75b8e5eee1006f16769e7068dcba0f6e2092d0c48ae2cc4ea8bb776e6",
+      "quote": "No. Bandwidth is included with your plan, sized to match — normal app traffic at any tier isn't metered, shaped, or invoiced per GB."
+    },
+    {
+      "url": "https://watasu.io/sandboxes/",
+      "date": "2026-11-25",
+      "proved": "sandboxes are reached by SSH, HTTP API and SDKs, and an HTTPS preview URL can expose a running port",
+      "capture": "sha256:2c9413940bf32fb4e26316e96f6cbbc63f635e81e6e02f3caf290d0f4eb0903d",
+      "quote": "One SSH command opens a shell in a fresh sandbox. Authenticate with your Watasu API token the first time; your public key is registered for future connections."
+    },
+    {
+      "url": "https://docs.watasu.io/sandboxes/overview",
+      "date": "2026-11-25",
+      "proved": "the sandbox API is under https://api.watasu.io/v1 with an API-key bearer token",
+      "capture": "sha256:0ea4276ea0f72a257b911c8120ae677d843bfad640afe7e9b113735cc5429ee8",
+      "quote": "Sandbox APIs live under `https://api.watasu.io/v1`. Use a Watasu API key as a bearer token:"
+    },
+    {
+      "url": "https://dash.watasu.io/users/sign_up",
+      "date": "2026-11-25",
+      "proved": "the signup form asks for a name, a work email, a password and a confirmation, with no phone or document field shown",
+      "capture": "sha256:f8469b67c9229b1e6a3eab4c27696b496875890854d746973dcc5a9e75433d63",
+      "quote": "Your name\n\nWork email\n\nPassword\n\nConfirm password"
+    },
+    {
+      "url": "https://watasu.io/pricing",
+      "date": "2026-11-25",
+      "proved": "the minimum card top-up is EUR 5 and no saved card or auto top-up is required",
+      "capture": "sha256:c56f10f75b8e5eee1006f16769e7068dcba0f6e2092d0c48ae2cc4ea8bb776e6",
+      "quote": "No saved card or auto top-up is required. Card top-ups start at €5; there is no free monthly build allowance."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-25T02:12:34.773Z",
+  "price_per_tb_month": null,
+  "notes": "Hosted EU sandboxes at EUR 0.000020 per vCPU-second plus EUR 0.000004 per GiB-second; the operator's list puts the 2 vCPU/4 GB shape at USD 0.222 an hour, billed per second. The free item is the Basic team base price, not free runtime: a positive balance is required to start. The 1-hour runtime limit on the pricing page conflicts with the 24-hour limit in the billing docs. No self-hosted software is offered.",
+  "extras": {
+    "shape": {
+      "vcpu": 2,
+      "ram_gib": 1,
+      "disk_gib": 10,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "the pricing page's example run is 2 vCPU and 1 GiB RAM at about EUR 0.16 an hour; the operator's price list uses a 2 vCPU / 4 GB shape"
+    },
+    "billing_model": "per-second vCPU and memory runtime plus prorated retained storage, with a free Basic team base plan",
+    "free_tier_kind": "free base plan, no free runtime",
+    "term": "month-to-month team base plan with per-second usage",
+    "price_arithmetic": "EUR 0.000020 per vCPU-second plus EUR 0.000004 per GiB-second; 2 vCPU and 1 GiB for 3600 seconds = EUR 0.1584 an hour",
+    "status": "public beta pricing, hosted in the EU",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "an HTTPS preview URL can expose a running HTTP port",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": 60,
+      "idle_reap_s": 604800,
+      "restart_required": false,
+      "note": "pricing page states a 1-hour runtime limit on Basic; billing docs state 24 hours; inactive disks expire after 7 days"
+    }
+  }
+}
