@@ -1,0 +1,153 @@
+{
+  "topic": "compute",
+  "slug": "superhq-nanite",
+  "provider": "SuperHQ (Nanite)",
+  "url": "https://nanite.run/",
+  "category": "sandbox",
+  "tier": "Nanite hosted microVM sandboxes (prepaid credit)",
+  "free_tier": {
+    "stated": "unverified: no free tier, free credit or trial is stated on https://nanite.run/ or https://superhq.ai/; both pages price the hosted sandbox only by component usage drawn down from prepaid credits ('One credit is one US dollar'), with 'No seats, no plans, no minimums'",
+    "unit": "none",
+    "metered_on": "wall-clock",
+    "source_url": "https://nanite.run/",
+    "read_on": "2026-11-25",
+    "notes": "The sign-up pages superhq.ai/signup and nanite.run/signup answered HTTP 404 on 2026-11-25, so no new-user credit could be confirmed either way. The shuru runtime under the sandbox is Apache 2.0 software the user installs and runs on a Mac or Linux ARM64 machine; Nanite is the hosted service and is the offer priced here."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a microVM with a disk and files, not a single object; uploads are written through the filesystem API",
+    "notes": "New sandboxes get a 20 GiB disk; no per-file cap is published on the pages read."
+  },
+  "retention": {
+    "stated": "unverified: no retention period for sandboxes or checkpoints is stated on the pages read; a sleeping sandbox keeps its disk and files, and when credits run out running sandboxes stop and their disks are kept",
+    "days": null,
+    "source_url": "https://nanite.run/"
+  },
+  "egress": {
+    "terms": "$0.15 per GB out: data sent to the internet is billed, data coming in is free; outbound traffic works out of the box",
+    "metered": true,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://nanite.run/"
+  },
+  "interface": [
+    "rest"
+  ],
+  "interface_detail": "Plain HTTP calls with a bearer key; POST /v1/sandboxes, POST /v1/sandboxes/{name}/exec, PUT /v1/sandboxes/{name}/fs/write, POST /v1/sandboxes/{name}/checkpoint, PUT /v1/sandboxes/{name}/secrets/{key}; interactive sessions use the same routes over a WebSocket. Every endpoint lives under https://api.nanite.run/v1 and takes an API key in the Authorization header.",
+  "endpoint": "https://api.nanite.run/v1/sandboxes",
+  "tooling": "curl and any HTTP client; a shell over a WebSocket; the shuru CLI is the open-source runtime the user can install and run on their own Mac or Linux ARM64 machine, listed last and not the hosted offer priced here.",
+  "chaining": "Prepaid credits draw down per second across sandboxes; a sleeping sandbox costs only its disk, so an agent that parks between messages keeps its files for later calls, and secrets are injected by the proxy only to hosts the user names.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "25 concurrent sandboxes per organisation, 100 kept; 4 vCPU, 8 GiB memory and a 20 GiB disk per new sandbox",
+      "source": "https://nanite.run/"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "a sandbox goes to sleep after 30 seconds with nothing running against it; CPU and memory billing stop while asleep",
+      "source": "https://nanite.run/"
+    }
+  ],
+  "limits_note": "Compute is billed per second on actual CPU and memory in use, minimum 0.125 cores in a container is not stated here; arm64 only, x86 binaries are not supported yet, and the service runs in Sydney, Australia for now.",
+  "binding": "volume-quota",
+  "binding_note": "No free allowance exists, so the first limit a user meets is the paid prepaid-credit balance and the 25-sandbox concurrency cap; idle sandboxes sleep, so wall-clock runtime is not the binding constraint.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "unverified: no public sign-up form was read on 2026-11-25; superhq.ai/signup and nanite.run/signup both answered HTTP 404. An API key is issued by the hosted console, so an email is the nearest kind; whether registration also asks for a card is unverified. ",
+    "country": null
+  },
+  "reliability_note": "A sandbox sleeps after 30 seconds idle and wakes on the next request with its files intact; when prepaid credits run out, running sandboxes stop and keep their disks until the user tops up.",
+  "confidence": "documented",
+  "confidence_note": "The prices, sandbox size, concurrency cap, sleep rule and credit terms are quoted from the first-party nanite.run page and the SuperHQ home page read on 2026-11-25; the identity gate and retention period are unverified because the sign-up pages are gone.",
+  "evidence": [
+    {
+      "url": "https://nanite.run/",
+      "date": "2026-11-25",
+      "proved": "the hosted sandbox bills CPU at $0.072 per vCPU hour, metered per second",
+      "capture": "sha256:999fc9c16924ffe0e457b174fb40e73fe64c61a31c8267e23a86dcad3352cdc6",
+      "quote": "$0.072per vCPU hour"
+    },
+    {
+      "url": "https://nanite.run/",
+      "date": "2026-11-25",
+      "proved": "memory, storage and outbound network each have a stated usage price, and inbound data is free",
+      "capture": "sha256:999fc9c16924ffe0e457b174fb40e73fe64c61a31c8267e23a86dcad3352cdc6",
+      "quote": "$0.15per GB out"
+    },
+    {
+      "url": "https://nanite.run/",
+      "date": "2026-11-25",
+      "proved": "a new sandbox is a 4 vCPU, 8 GiB RAM, 20 GiB disk machine, with 25 concurrent sandboxes and 100 kept per organisation",
+      "capture": "sha256:999fc9c16924ffe0e457b174fb40e73fe64c61a31c8267e23a86dcad3352cdc6",
+      "quote": "New sandboxes get 4 vCPU, 8 GiB of memory and a 20 GiB disk. An organisation can run 25 sandboxes at once and keep 100."
+    },
+    {
+      "url": "https://nanite.run/",
+      "date": "2026-11-25",
+      "proved": "the sandbox sleeps after 30 seconds idle and only storage is billed while asleep",
+      "capture": "sha256:999fc9c16924ffe0e457b174fb40e73fe64c61a31c8267e23a86dcad3352cdc6",
+      "quote": "a sandbox goes to sleep after 30 seconds with nothing running against it."
+    },
+    {
+      "url": "https://nanite.run/",
+      "date": "2026-11-25",
+      "proved": "pricing uses prepaid credits with no seats, plans or minimums",
+      "capture": "sha256:999fc9c16924ffe0e457b174fb40e73fe64c61a31c8267e23a86dcad3352cdc6",
+      "quote": "+No seats, no plans, no minimums"
+    },
+    {
+      "url": "https://nanite.run/",
+      "date": "2026-11-25",
+      "proved": "the API is plain HTTP over a bearer key, with exec, filesystem, checkpoint and secrets routes",
+      "capture": "sha256:999fc9c16924ffe0e457b174fb40e73fe64c61a31c8267e23a86dcad3352cdc6",
+      "quote": "* POST/v1/sandboxes/{name}/exec"
+    },
+    {
+      "url": "https://superhq.ai/",
+      "date": "2026-11-25",
+      "proved": "the hosted service is Nanite microVMs billed by the second, and shuru is the Apache 2.0 runtime the user can run on their own machine",
+      "capture": "sha256:cb695c504bdb4e846bac468a3f70348588b143e7065833e708bf17bea9c559c4",
+      "quote": "The microVM runtime under every Nanite sandbox, Apache 2.0. Run it on your own Mac to give agents a disposable machine with sane defaults."
+    },
+    {
+      "url": "https://superhq.ai/signup",
+      "date": "2026-11-25",
+      "proved": "no public sign-up form was available at this URL; the identity gate is unverified",
+      "capture": "sha256:ec45dec1a7bcb95535810d411e53c4cb63ffc7695d9007090f66b62e42d9c8a4",
+      "quote": "Nothing out here.This page does not exist."
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-25T02:12:34.813Z",
+  "price_per_tb_month": null,
+  "notes": "Hosted compute only: a Nanite microVM with root, 2 vCPU, 2 GiB memory and a 20 GiB disk, or 4 vCPU, 8 GiB and 20 GiB for a new sandbox, billed per second from prepaid credits. Component prices are $0.072/vCPU-hour, $0.0432/GB-hour memory, $0.15/GB-month storage and $0.15/GB out. The 30-second idle sleep makes an idle agent cheap but not free. The self-hosted shuru runtime is listed last and is not the offer priced here.",
+  "extras": {
+    "shape": {
+      "vcpu": 4,
+      "ram_gib": 8,
+      "disk_gib": 20,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "new sandboxes get 4 vCPU, 8 GiB memory and a 20 GiB disk; the home page also mentions a 2 vCPU, 2 GiB, 20 GiB configuration"
+    },
+    "billing_model": "prepaid credits, per-second component metering",
+    "free_tier_kind": "none",
+    "term": "no seats, no plans, no minimums",
+    "price_arithmetic": "$0.072 per vCPU hour + $0.0432 per GB hour + $0.15 per GB month storage + $0.15 per GB out",
+    "status": "hosted and priced; sign-up URL answered 404 on 2026-11-25",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": null,
+      "ports": "preview URLs through the authenticated proxy",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": 30,
+      "restart_required": false,
+      "note": "the sandbox sleeps after 30 seconds idle and wakes with its files intact"
+    }
+  }
+}
