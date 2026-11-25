@@ -13,17 +13,17 @@
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
+    "stated": "As a rule of thumb, items should not be over 100GB and should not contain more than 10,000 files.",
     "source_url": "https://archive.org/developers/items.html",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
+    "stated": "The Help Center states an intention to store and make materials in perpetuity.",
     "source_url": "https://archive.org/developers/items.html",
     "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
-    "terms": "Free / unmetered. Docs: 'high performance downloads are achieved via the archive web infrastructure'. I.e. GET https://archive.org/download/<item>/<file>, which 302s to an iaNNNNNN.us.archive.org datanode. BitTorrent webseeds supplement it.",
+    "terms": "The developer docs say high-performance downloads go through the archive web infrastructure, and the Help Center says 'At this time we have no fees for uploading and preserving materials.' No published download transfer meter was found.",
     "metered": false,
     "source_url": "https://archive.org/download/<item>/<file>"
   },
@@ -34,7 +34,7 @@
   ],
   "interface_detail": "rest",
   "tooling": "plain HTTPS GET with Range (measured: 206 + accept-ranges: bytes); ia CLI download w/ --checksum resume; rclone 'internetarchive' reads back through the same front end",
-  "chaining": "Parallelising across items distributes traffic across different iaNNNNNN datanodes, scaling aggregate throughput with item count rather than single-item connections. Fronting with Cloudflare caching (replay responses carry cache-control: max-age=1800) shields origin nodes from repeated requests.",
+  "chaining": "Use the archival /download/<identifier>/<filename> URL: a file is always downloadable there, while the iaNNNNNN datanode URL it redirects to is not a permalink because items move between servers.",
   "limits": [
     {
       "kind": "per-ip-shaping",
@@ -118,10 +118,52 @@
       "proved": "downloads are served unmetered through the archive web front end",
       "capture": "sha256:467a16d2e9fc7150fbf1ca1ddaeedf3c9ea54b0827e14939343fa4a811c5848c",
       "quote": "high performance downloads are achieved via the archive web infrastructure:"
+    },
+    {
+      "url": "https://archive.org/developers/items.html",
+      "date": "2026-11-25",
+      "proved": "the datanode URL changes while the archival download URL is the stable link",
+      "capture": "sha256:ca13dc2b19abc0a9c42ffadb5e258d6300b5c799d209f66f89a3ac08c8c8d1ba",
+      "quote": "**DO NOT LINK** to any archive.org URL that begins with numbers like this. This refers to the particular machine that we're serving the file from right now, but we move items to new servers all the time. If you link to this sort of URL, instead of the archival URL, your link **WILL** break at some point."
+    },
+    {
+      "url": "https://archive.org/developers/items.html",
+      "date": "2026-11-25",
+      "proved": "the items page publishes a per-item size and file-count rule of thumb",
+      "capture": "sha256:ca13dc2b19abc0a9c42ffadb5e258d6300b5c799d209f66f89a3ac08c8c8d1ba",
+      "quote": "As a rule of thumb, items should:"
+    },
+    {
+      "url": "https://help.archive.org/help/archive-org-information/",
+      "date": "2026-11-25",
+      "proved": "the first-party Help Center states a perpetual storage intention for archived materials",
+      "capture": "sha256:fe9147750a0184115f838677d71f07380a8308305f94c6e515913845a60f9505",
+      "quote": "As an archive our intention is to store and make materials in perpetuity."
+    },
+    {
+      "url": "https://help.archive.org/help/archive-org-information/",
+      "date": "2026-11-25",
+      "proved": "the Help Center states no fees for uploading and preserving materials",
+      "capture": "sha256:fe9147750a0184115f838677d71f07380a8308305f94c6e515913845a60f9505",
+      "quote": "At this time we have no fees for uploading and preserving materials."
+    },
+    {
+      "url": "https://archive.org/developers/ias3.html",
+      "date": "2026-11-25",
+      "proved": "downloads are served through the archive web front end",
+      "capture": "sha256:467a16d2e9fc7150fbf1ca1ddaeedf3c9ea54b0827e14939343fa4a811c5848c",
+      "quote": "Although the s3 interface supports GET and HEAD, high performance downloads are achieved via the archive web infrastructure:"
+    },
+    {
+      "url": "https://archive.org/developers/ias3.html",
+      "date": "2026-11-25",
+      "proved": "the S3-like service documents an HTTP 1.1 REST interface",
+      "capture": "sha256:467a16d2e9fc7150fbf1ca1ddaeedf3c9ea54b0827e14939343fa4a811c5848c",
+      "quote": "Only the HTTP 1.1 REST interface is supported."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-19T21:12:58.115Z",
+  "verified_at": "2026-11-25T09:54:55.957Z",
   "notes": "Serving is unmetered and free; no per-file download cap and no egress fee. Practical ceiling is throughput, not quota.",
   "history": [],
   "extras": {
