@@ -5,21 +5,21 @@
   "url": "https://www.blomp.com/",
   "category": "object-storage (OpenStack Swift) + consumer drive",
   "free_tier": {
-    "stated": "40 GB free on signup, advertised and confirmed as 'Get Up to 400 GB for Free'. +40 GB per friend who joins and stays active, i.e. 40 GB x 10 referrals = 400 GB. Referral ceiling 400 GB is a hard stop on a single account; past that you buy (500 GB $11.88/yr, 2 TB $2.99/mo, 10 TB $9.99/mo).",
+    "stated": "40 GB free on signup, advertised as up to 400 GB. Add 40 GB for every friend who joins and stays active. Paid plans start at 500 GB for USD 11.88 a year, 2 TB for USD 2.99 a month and 10 TB for USD 9.99 a month.",
     "unit": "GB",
     "metered_on": "unstated",
     "source_url": "https://www.blomp.com/",
     "read_on": "2026-10-21",
-    "notes": "Headline offer; binding constraint specified in limits."
+    "notes": "The first-party page lists 40 GB of Storage, Up to 400 GB, and Add 40 GB for every friend who joins and stays active. The paid tiers are 500 GB at USD 11.88/Year, 2 TB at USD 2.99/Month and 10 TB at USD 9.99/Month."
   },
   "per_object_cap": {
-    "stated": "per-object: 5 GB",
+    "stated": "No per-object cap is stated on the first-party plans page; the vendor's support forum reports no set file-size limit and says web uploads are chunked, while BlompLive, BlompGo and third-party tools split files into pieces no larger than 5 GB.",
     "bytes": 5000000000,
     "source_url": "https://www.blomp.com/",
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
+    "stated": "The homepage says files stay in the cloud 'for as long as you want them' and the larger paid plans state 'No Yearly Logins Required'; no first-party expiry interval is published.",
     "source_url": "https://www.blomp.com/",
     "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
@@ -43,11 +43,11 @@
     },
     {
       "kind": "per-object-cap",
-      "value": "per-object: 5 GB",
+      "value": "no published per-object cap; client tools split files at 5 GB",
       "source": "https://www.blomp.com/"
     }
   ],
-  "limits_note": "Per-object: 5 GB+ uploads fail through rclone with 'Operation Forbidden' or 'Too Large Object' unless chunk_size is set correctly. CyberDuck works because it segments at 1 GB (forum.rclone.org/t/blomp-unable-to-upload-5gb-files/42498, 2023-10-24, unresolved in-thread). Referral space is retention-clamped: invited account must log in at least once a year or the granter loses the 40 GB.",
+  "limits_note": "No first-party per-object cap is published. The vendor's support forum states there is no set file-size limit and that BlompLive, BlompGo and some third-party tools split files into pieces no larger than 5 GB; tools without multi-part uploads stall near 5 GB. The referral space depends on invited friends joining and staying active.",
   "identity_cost": {
     "kind": "email",
     "detail": "email",
@@ -124,10 +124,80 @@
       "proved": "the plan table still carries a transfer-fees column with no transfer charge",
       "capture": "sha256:bd19e4da4311daf94c5f44b70ec906f4fb2e3248e3af37220447c19449bc01ff",
       "quote": "Transfer fees"
+    },
+    {
+      "url": "https://www.blomp.com/",
+      "date": "2026-11-25",
+      "proved": "40 GB base and up to 400 GB through active referrals",
+      "capture": "sha256:fe3904f8d3616b5388acbdcabafec1cbdb7a1d1f6dea9c8b379f2e5bf852aadb",
+      "quote": "Blomp gives you 40 GB of free cloud storage, and up to 400 GB when the friends you invite join and stay active."
+    },
+    {
+      "url": "https://www.blomp.com/",
+      "date": "2026-11-25",
+      "proved": "the first-party page lists the paid tiers starting at 500 GB",
+      "capture": "sha256:fe3904f8d3616b5388acbdcabafec1cbdb7a1d1f6dea9c8b379f2e5bf852aadb",
+      "quote": "Need more room? Paid plans start at 500 GB for $11.88 a year, with 2 TB, 10 TB and much bigger plans for apps and businesses."
+    },
+    {
+      "url": "https://support.blomp.com/viewtopic.php?t=1764",
+      "date": "2026-11-25",
+      "proved": "the vendor's forum says there is no set per-file limit and web uploads chunk large files",
+      "capture": "sha256:37aed49d4fa2388a738135e85ee0822fc47c262da33cd10b268827a361dc0235",
+      "quote": "There’s no set limit per se, as we have tested files over 40 GB and didn’t encounter a single hiccup. While using the web interface, large data might be broken into chunks, uploaded, reassembled, and then sent to our data store in the background."
+    },
+    {
+      "url": "https://support.blomp.com/viewtopic.php?t=1764",
+      "date": "2026-11-25",
+      "proved": "5 GB is the maximum piece size used by BlompLive, BlompGo and certain third-party tools",
+      "capture": "sha256:37aed49d4fa2388a738135e85ee0822fc47c262da33cd10b268827a361dc0235",
+      "quote": "For BlompLive and BlompGo, as well as certain third-party tools, files need to be divided into bits no larger than 5GB."
+    },
+    {
+      "url": "https://support.blomp.com/viewtopic.php?t=1764",
+      "date": "2026-11-25",
+      "proved": "5 GB is the client-side piece size for BlompLive, BlompGo and third-party tools",
+      "capture": "sha256:37aed49d4fa2388a738135e85ee0822fc47c262da33cd10b268827a361dc0235",
+      "quote": "For BlompLive and BlompGo, as well as certain third-party tools, files need to be divided into bits no larger than 5GB."
+    },
+    {
+      "url": "https://www.blomp.com/",
+      "date": "2026-11-25",
+      "proved": "the first-party page states storage lasts as long as the user wants and gives no fixed retention interval",
+      "capture": "sha256:fe3904f8d3616b5388acbdcabafec1cbdb7a1d1f6dea9c8b379f2e5bf852aadb",
+      "quote": "Your photos, videos and files stay safe in the cloud for as long as you want them."
+    },
+    {
+      "url": "https://www.blomp.com/",
+      "date": "2026-11-25",
+      "proved": "the 40 GB per active friend referral term is unchanged",
+      "capture": "sha256:fe3904f8d3616b5388acbdcabafec1cbdb7a1d1f6dea9c8b379f2e5bf852aadb",
+      "quote": "Add 40 GB for every friend who joins and stays active"
+    },
+    {
+      "url": "https://support.blomp.com/viewtopic.php?t=1764",
+      "date": "2026-11-25",
+      "proved": "the 5 GB boundary is a client-side piece size for some tools",
+      "capture": "sha256:37aed49d4fa2388a738135e85ee0822fc47c262da33cd10b268827a361dc0235",
+      "quote": "For BlompLive and BlompGo, as well as certain third-party tools, files need to be divided into bits no larger than 5GB."
+    },
+    {
+      "url": "https://www.blomp.com/",
+      "date": "2026-11-25",
+      "proved": "the page's headline is 'Get up to 400 GB of cloud storage free'",
+      "capture": "sha256:fe3904f8d3616b5388acbdcabafec1cbdb7a1d1f6dea9c8b379f2e5bf852aadb",
+      "quote": "Get up to 400 GB of cloud storage free"
+    },
+    {
+      "url": "https://www.blomp.com/cloud-storage/",
+      "date": "2026-11-25",
+      "proved": "the 500 GB plan row lists no transfer fee",
+      "capture": "sha256:bd19e4da4311daf94c5f44b70ec906f4fb2e3248e3af37220447c19449bc01ff",
+      "quote": "| 500 GB | $0.99 / Month | $0.00198 / GB per month | None |"
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-11-19T21:12:57.314Z",
+  "verified_at": "2026-11-25T09:54:56.633Z",
   "price_per_tb_month": "$1.00/TB/mo at 10 TB ($9.99) and at 100 TB ($99.99) — the flat $1/TB/mo floor makes it scale linearly, unlike promo pricing; $1.50/TB/mo at 2 TB ($2.99); $1.98/TB/mo at 500 GB ($11.88/yr)",
   "notes": "40 GB free on signup, advertised and confirmed as 'Get Up to 400 GB for Free'. +40 GB per friend who joins and stays active, i.e. 40 GB x 10 referrals = 400 GB. Referral ceiling 400 GB is a hard stop on a single account; past that you buy (500 GB $11.88/yr, 2 TB $2.99/mo, 10 TB $9.99/mo).",
   "history": [],
