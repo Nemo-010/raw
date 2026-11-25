@@ -31,7 +31,7 @@
   "interface": [
     "rest"
   ],
-  "tooling": "the AList v3.45.1 REST API anonymously. No working WebDAV was observed. The root listing shows eight directories of iOS sideloading content: 自签, Trollstore, IPCC, shortcuts, jailbreak tools, signing tools, shared enterprise certificates and Windows. Five root-level paths are absent from the root listing: /Apple Arcade, /天翼, /看书软件, /越狱插件 and /视频教程. The /天翼 listing is empty",
+  "tooling": "the AList v3.45.1 REST API anonymously. The root listing shows nine directories of iOS sideloading content: 自签, IPCC, Trollstore, 快捷指令, 越狱工具, 签名工具, 共享企业证书, Windows and ipa资源",
   "chaining": "Read-only. The structural point is the important one: a 139Yun-backed public AList proves that a non-Chinese reader can reach Chinese carrier pan bytes through a proxy layer with no account. The access problem is solved by the proxy and only the write problem remains",
   "limits": [
     {
@@ -156,10 +156,31 @@
       "proved": "the settings endpoint answers code 200 with no session and carries the site title and version v3.45.1; it holds no allowance, quota, unit or price field",
       "capture": "sha256:9993727c81cbe25cd44bb82971f481da8e24e04c968f71c83f76a9fe37598be6",
       "quote": "\"site_title\":\"晴天网盘\""
+    },
+    {
+      "url": "probe:https://alist.jiejingfan.vip/api/fs/list?path=%2F&page=1&per_page=0",
+      "date": "2026-11-25",
+      "proved": "the root listing answers with nine entries, the last named ipa资源",
+      "capture": "sha256:b6457225da66befee95f7f8f2856ab22255506476176744ac5b935663a1a5422",
+      "quote": "\"name\":\"ipa资源\" ... \"total\":9"
+    },
+    {
+      "url": "probe:https://alist.jiejingfan.vip/dav/",
+      "date": "2026-11-25",
+      "proved": "the WebDAV path answers 401, so an auth-gated endpoint exists",
+      "capture": "sha256:671e45d76666237871b0d844dea3f7271265bb0cb477be5c89d65fd06cf874d0",
+      "quote": "\"status\": 401"
+    },
+    {
+      "url": "probe:https://alist.jiejingfan.vip/api/fs/list?path=%2F%E5%A4%A9%E7%BF%BC&page=1&per_page=0",
+      "date": "2026-11-25",
+      "proved": "the /天翼 listing is empty",
+      "capture": "sha256:4faa82b9c2d5c725b38257f46388d7e0fe03ca7ae3f3ac47c67acc816d28e2cc",
+      "quote": "\"content\":null,\"total\":0"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-02T09:58:35.803Z",
+  "verified_at": "2026-11-25T15:23:48.868Z",
   "history": [],
   "binding": "write-gated",
   "binding_note": "The read path reaches a Chinese carrier pan and that is the finding. What binds is the write gate plus a tree that is half stubs, so it is a fetch source at best.",
@@ -206,6 +227,8 @@
         "listed_at_root": false,
         "read_at": "/视频教程/Quantumult X教程"
       }
-    ]
+    ],
+    "webdav_endpoint": "/dav/ answers HTTP 401 with a Basic realm to a request with no credentials; no guest login was tried",
+    "tianyi_listing": "/天翼 lists no entries: total 0 and the header reads that the netdisk is under maintenance"
   }
 }
