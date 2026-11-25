@@ -19,25 +19,27 @@
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
+    "stated": "unverified: the book-file guidelines and automated fetching pages state file sizes and crawling; neither states a retention period",
     "source_url": "https://support.google.com/books/partner/answer/3424254?hl=en",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "unverified: neither the book-file guidelines nor the automated content-fetching help page states a retention period"
   },
   "egress": {
     "terms": "Google-served to purchasers; no public hot-link.",
     "metered": false
   },
   "interface": [
-    "unknown"
+    "browser",
+    "sftp",
+    "ftp"
   ],
-  "interface_detail": "Partner Center web upload; also automated content fetching (ONIX/feed) per answer/2763162.",
+  "interface_detail": "Partner Center web upload; automated content fetching pulls from an HTTP/HTTPS/SFTP/FTP/Google Cloud Storage server",
   "tooling": "Web + feed-based automation.",
-  "chaining": "2 GB/file with multi-part naming (ISBN_1of3.pdf) means a large work can be split across parts with no stated part count. The sharding is built into the naming convention.",
+  "chaining": "Content files can be split into numbered multipart PDFs; the fetching page names the part-count form of the filename.",
   "limits": [
     {
       "kind": "write-gated",
-      "value": "review",
-      "source": "https://support.google.com/books/partner/answer/3424254?hl=en"
+      "value": "unverified: neither the book-file guidelines nor the automated content-fetching page states a review gate",
+      "source": "https://support.google.com/books/partner/answer/2763162?hl=en"
     },
     {
       "kind": "per-object-cap",
@@ -113,10 +115,73 @@
       "proved": "the payment profile asks for a phone number",
       "capture": "sha256:f394ce36855d67c43f32bfb309cdffe5c7622261eb99b0cf8f6be511dcbe7e31",
       "quote": "2. Enter your business name, contact name, address, and phone number."
+    },
+    {
+      "url": "https://support.google.com/books/partner/answer/2763162?hl=en",
+      "date": "2026-11-25",
+      "proved": "the fetching page describes a scheduled crawl, not a review gate",
+      "capture": "sha256:0438ed2f823a117297d0eb8a093355e74c10aff054bcaaf173cca66e52105780",
+      "quote": "Google will then periodically retrieve that content on a predefined schedule and incorporate the content into the index of books on Google Play."
+    },
+    {
+      "url": "https://support.google.com/books/partner/answer/2763162?hl=en",
+      "date": "2026-11-25",
+      "proved": "the fetching page is the source for the unverified review-gate value",
+      "capture": "sha256:0438ed2f823a117297d0eb8a093355e74c10aff054bcaaf173cca66e52105780",
+      "quote": "publishers and service providers who use this content fetching system only need to make their content accessible via an HTTP/HTTPS/SFTP/FTP/Google Cloud Storage server"
+    },
+    {
+      "url": "https://support.google.com/books/partner/answer/2763162?hl=en",
+      "date": "2026-11-25",
+      "proved": "the page describes scheduled retrieval and no retention period",
+      "capture": "sha256:0438ed2f823a117297d0eb8a093355e74c10aff054bcaaf173cca66e52105780",
+      "quote": "Google will then periodically retrieve that content on a predefined schedule and incorporate the content into the index of books on Google Play."
+    },
+    {
+      "url": "https://support.google.com/books/partner/answer/2763162?hl=en",
+      "date": "2026-11-25",
+      "proved": "the fetching page states a crawl schedule and no retention term",
+      "capture": "sha256:0438ed2f823a117297d0eb8a093355e74c10aff054bcaaf173cca66e52105780",
+      "quote": "Google will then periodically retrieve that content on a predefined schedule and incorporate the content into the index of books on Google Play."
+    },
+    {
+      "url": "https://support.google.com/books/partner/answer/2763162?hl=en",
+      "date": "2026-11-25",
+      "proved": "the fetching page names SFTP and FTP delivery alongside HTTP/HTTPS",
+      "capture": "sha256:0438ed2f823a117297d0eb8a093355e74c10aff054bcaaf173cca66e52105780",
+      "quote": "publishers and service providers who use this content fetching system only need to make their content accessible via an HTTP/HTTPS/SFTP/FTP/Google Cloud Storage server"
+    },
+    {
+      "url": "https://support.google.com/books/partner/answer/2763162?hl=en",
+      "date": "2026-11-25",
+      "proved": "the fetching page names the protocols used for delivery to Google",
+      "capture": "sha256:0438ed2f823a117297d0eb8a093355e74c10aff054bcaaf173cca66e52105780",
+      "quote": "publishers and service providers who use this content fetching system only need to make their content accessible via an HTTP/HTTPS/SFTP/FTP/Google Cloud Storage server"
+    },
+    {
+      "url": "https://support.google.com/books/partner/answer/2763162?hl=en",
+      "date": "2026-11-25",
+      "proved": "the fetching page documents multipart PDF naming with a count",
+      "capture": "sha256:0438ed2f823a117297d0eb8a093355e74c10aff054bcaaf173cca66e52105780",
+      "quote": "0123456789_1of5.pdf"
+    },
+    {
+      "url": "https://support.google.com/books/partner/answer/2763162?hl=en",
+      "date": "2026-11-25",
+      "proved": "the fetching page documents scheduled crawling, delivery protocols and multipart naming, with no review gate or retention term",
+      "capture": "sha256:0438ed2f823a117297d0eb8a093355e74c10aff054bcaaf173cca66e52105780",
+      "quote": "Google will then periodically retrieve that content on a predefined schedule and incorporate the content into the index of books on Google Play."
+    },
+    {
+      "url": "https://support.google.com/books/partner/answer/3424254?hl=en",
+      "date": "2026-11-25",
+      "proved": "the book-file guidelines state the 2 GB per-file ceiling",
+      "capture": "sha256:ebfdad9b15429b0bdfd4df043d46981788159d92ce2375c4235d9891cfe8fa7e",
+      "quote": "Each file must be less than 2 GB. This limit includes cover image files."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-10T00:50:17.326Z",
+  "verified_at": "2026-11-25T09:54:54.053Z",
   "notes": "2 GB per content file, cover images included; the 100 MB bound on the page is the supplemental PDF, not an audio file; an audiobook is bounded by duration (5 minutes to 100 hours) and may be split into parts.",
   "history": [],
   "extras": {

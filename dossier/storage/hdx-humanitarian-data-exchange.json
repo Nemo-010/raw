@@ -13,12 +13,12 @@
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "If you are uploading a file onto HDX we recommend that you keep file size to under 300MB.",
+    "stated": "Uploaded files should be under 300 MB; linked resources hosted elsewhere have no stated size limit",
     "source_url": "https://docs.humdata.org/publish/publish-data/preparing-and-publishing-data",
     "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
-    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
+    "stated": "unverified: the publishing page states file-size guidance and linking, but no retention period for uploaded files",
     "source_url": "https://docs.humdata.org/publish/publish-data/preparing-and-publishing-data",
     "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
@@ -29,9 +29,9 @@
   "interface": [
     "unknown"
   ],
-  "interface_detail": "CKAN 2.x action API (package_search / package_create / resource_create) plus the `hdx-python-api` wrapper, which is the documented write path.",
+  "interface_detail": "unverified: the publishing page documents an HDX Python API and a share-data web form; it does not name CKAN action methods",
   "tooling": "curl + API token, or `pip install hdx-python-api`. Write operations need an API token from the user profile; token is per-user, free, issued on signup.",
-  "chaining": "CKAN resource_create accepts a URL as well as a local file, so HDX can act as a metadata+mirror layer over another host. Public download URLs are stable and content-addressable by resource id. Reasonable as a serving tier.",
+  "chaining": "HDX accepts a remote URL as a resource and points the HDX version at the live version without re-uploading; overwriting the same resource keeps its resource_id stable for downstream API queries.",
   "limits": [
     {
       "kind": "write-gated",
@@ -101,10 +101,45 @@
       "proved": "the page states the confirmed value",
       "capture": "sha256:c7a0081b0a3bdf73f76b6f326c5a4c4c0abd1f1e0f18c42e345fd7250886b8e0",
       "quote": "If they are already registered on HDX, they will be added immediately. If not, they will receive an email invitation."
+    },
+    {
+      "url": "https://docs.humdata.org/publish/publish-data/preparing-and-publishing-data",
+      "date": "2026-11-25",
+      "proved": "the cited page discusses file sizes only and states no retention period",
+      "capture": "sha256:bd350cba01d872a3dd14ca9f950c67035a78c18a1432ce37ef4028e0bb14d1b2",
+      "quote": "If your resource is a link to a file hosted elsewhere, there is no size limit. If you are uploading a file onto HDX we recommend that you keep file size to under 300MB."
+    },
+    {
+      "url": "https://docs.humdata.org/publish/publish-data/preparing-and-publishing-data",
+      "date": "2026-11-25",
+      "proved": "HDX supports linking to an externally hosted resource",
+      "capture": "sha256:bd350cba01d872a3dd14ca9f950c67035a78c18a1432ce37ef4028e0bb14d1b2",
+      "quote": "The HDX version will automatically point to the live version, keeping everything up to date without re-uploading files."
+    },
+    {
+      "url": "https://docs.humdata.org/publish/publish-data/preparing-and-publishing-data",
+      "date": "2026-11-25",
+      "proved": "the page distinguishes a 300 MB upload recommendation from unlimited linked resources",
+      "capture": "sha256:bd350cba01d872a3dd14ca9f950c67035a78c18a1432ce37ef4028e0bb14d1b2",
+      "quote": "If your resource is a link to a file hosted elsewhere, there is no size limit. If you are uploading a file onto HDX we recommend that you keep file size to under 300MB."
+    },
+    {
+      "url": "https://docs.humdata.org/publish/publish-data/preparing-and-publishing-data",
+      "date": "2026-11-25",
+      "proved": "the page documents the HDX Python API without naming CKAN endpoints",
+      "capture": "sha256:bd350cba01d872a3dd14ca9f950c67035a78c18a1432ce37ef4028e0bb14d1b2",
+      "quote": "This library, built by HDX, offers a simple, Pythonic way to interact with the HDX endpoints. It makes it easier to push, pull, and manage datasets programmatically."
+    },
+    {
+      "url": "https://docs.humdata.org/publish/publish-data/preparing-and-publishing-data",
+      "date": "2026-11-25",
+      "proved": "the publishing page states file-size guidance and no retention period",
+      "capture": "sha256:bd350cba01d872a3dd14ca9f950c67035a78c18a1432ce37ef4028e0bb14d1b2",
+      "quote": "If your resource is a link to a file hosted elsewhere, there is no size limit. If you are uploading a file onto HDX we recommend that you keep file size to under 300MB."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-10T00:50:18.129Z",
+  "verified_at": "2026-11-25T09:54:54.053Z",
   "notes": "No published per-user or per-file quota anywhere in the docs. The platform hosts the files itself ('upload the data file directly to the HDX platform'), S3-backed. Aggregate catalog is 28,359 datasets and growing at organisational pace.",
   "history": [],
   "extras": {
