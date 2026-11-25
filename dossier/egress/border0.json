@@ -38,9 +38,15 @@
   "interface_detail": "connector deployed in the private network, clients authenticate through the portal",
   "tooling": "Border0 connector and client, portal dashboard",
   "chaining": "Private access layer using authenticated sockets; does not provide public arbitrary ingress.",
-  "limits": [],
+  "limits": [
+    {
+      "kind": "write-gated",
+      "value": "socket types are HTTP(s), SSH, MySQL and Postgres databases, and TLS generic TCP ports with authentication; no UDP socket type is listed",
+      "source": "https://docs.border0.com/docs/sockets"
+    }
+  ],
   "limits_note": "",
-  "binding": "none",
+  "binding": "write-gated",
   "binding_note": "No meter is published to bind. The deciding fact is elsewhere: the socket families carry no UDP and the generic TCP socket is explicitly 'with authentication', so a public unauthenticated reader is not the shape of the product.",
   "identity_cost": {
     "kind": "email",
@@ -65,10 +71,45 @@
       "url": "https://tailscale.com/contact/sales-border0",
       "date": "2026-10-23",
       "proved": "the sales path now says 'talk to us about Tailscale PAM', which is where Border0's commercial page leads"
+    },
+    {
+      "url": "https://docs.border0.com/docs/sockets",
+      "date": "2026-11-25",
+      "proved": "generic TCP sockets are offered only with authentication, and no UDP type is listed",
+      "capture": "sha256:9244d5b380258cff86f316583ee740194f85620f710df242157035675ed913e3",
+      "quote": "TLS (Generic TCP ports with authentication)"
+    },
+    {
+      "url": "https://docs.border0.com/docs/sockets",
+      "date": "2026-11-25",
+      "proved": "a public unauthenticated TCP or UDP endpoint is not a socket type",
+      "capture": "sha256:9244d5b380258cff86f316583ee740194f85620f710df242157035675ed913e3",
+      "quote": "TLS (Generic TCP ports with authentication)"
+    },
+    {
+      "url": "https://www.border0.com/blogs/border0-is-joining-tailscale",
+      "date": "2026-11-25",
+      "proved": "the acquisition is announced and the product keeps operating",
+      "capture": "sha256:b40bdb8b1475c3b8628253eecafb79a98c752172a1688798c21776079680605f",
+      "quote": "Today I’m excited to share that Border0 has been acquired by Tailscale."
+    },
+    {
+      "url": "https://www.border0.com/",
+      "date": "2026-11-25",
+      "proved": "the home page still sends visitors to a portal registration",
+      "capture": "sha256:f3396e23f3045b9dac0d0598f0545cef9eba4f7a35a73dce69ad91ce25d57402",
+      "quote": "[Start for free today](https://portal.border0.com/register)"
+    },
+    {
+      "url": "probe:www.border0.com/pricing",
+      "date": "2026-11-25",
+      "proved": "the pricing page answers HTTP 404, so no plan table can be read",
+      "capture": "sha256:a27d0be60b6a8b653261496d1fc05f1b9064873eb22fefe2a39f2d8701b86ae6",
+      "quote": "\"status\": 404"
     }
   ],
   "verdict": "fails-egress",
-  "verified_at": "2026-10-23T00:00:00.000Z",
+  "verified_at": "2026-11-25T15:23:40.146Z",
   "price_per_tb_month": "unverified",
   "history": [],
   "notes": "The 404 and the Tailscale sales link have three possible causes: the provider is dead, the pricing path moved, or the reader rewrote the link. The blog post and a law-firm deal note show the provider is dead only in part - the company was acquired on 2026-03-17 - but its docs still serve and the product still runs, so the record is fails-egress rather than dead. The reader did not rewrite the link: the origin returned a real 404 body with upstream_status 404.",
