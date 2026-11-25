@@ -15,26 +15,25 @@
   "per_object_cap": {
     "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://doeleadershipcomputing.org/incite-faqs/",
-    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+    "notes": "No per-file ceiling is stated on the FAQ or OLCF data page; the limits are per area: 200 TB archival on Kronos and 50 TB per Orion work area."
   },
   "retention": {
-    "stated": "Tenured infrastructure; data survives, but the allocation expires and the archival quota can be clawed back after project end - treat as renewable-while-funded, not permanent.",
+    "stated": "OLCF does not guarantee lifetime data retention. After project end or account deactivation, data in non-purged areas is retained for 90 days, after which OLCF may delete it; Orion files not accessed for 90 days are eligible for purge.",
     "source_url": "https://doeleadershipcomputing.org/incite-faqs/",
-    "notes": "Extracted from published terms."
+    "notes": "Extracted from published terms.",
+    "days": 90
   },
   "egress": {
-    "terms": "Globus/GridFTP and SSH transfer free to allocation holders; no egress meter. Data is not a public HTTP origin.",
+    "terms": "Selected non-proprietary projects are not charged for access to the facilities. The pages read state no egress meter. World Archive directories are readable by any user on the OLCF system.",
     "metered": false
   },
   "interface": [
-    "s3",
-    "sftp",
     "scp",
-    "ssh"
+    "rsync"
   ],
   "interface_detail": "posix",
-  "tooling": "SSH/scp/sftp, Globus, Lustre + HPSS/Kronos nearline mounts; no S3.",
-  "chaining": "One allocation = one project directory on a 100+ PB Lustre (Eagle/Orion) plus up to 200 TB nearline archive. Storage is not separately metered, so a storage-heavy proposal can request a large quota against a small compute request - but the proposal must still justify compute.",
+  "tooling": "scp and rsync to the OLCF data transfer nodes; the 'OLCF Kronos' Globus collection; Orion Lustre work areas and the Kronos nearline archive. HPSS was decommissioned on January 31, 2025.",
+  "chaining": "OLCF: a moderate project without export control restrictions gets archival space on Kronos with a default 200 TB quota shared by the project, world and user archive areas. Orion Lustre (679 PB usable) work areas have 50 TB quotas and purge files not accessed in 90 days. Whether storage is metered separately from compute is not stated on the pages read.",
   "limits": [
     {
       "kind": "write-gated",
@@ -42,7 +41,7 @@
       "source": "https://doeleadershipcomputing.org/incite-faqs/"
     }
   ],
-  "limits_note": "Annual call only (mid-April to mid/late June), awards 1-3 years with a peer-reviewed annual renewal request. Post-project archival storage is explicitly at the facility's discretion ('The facilities reserve the right to limit the amount and duration of archival storage once a project has been completed'). Data must be research data; personal/non-work use prohibited.",
+  "limits_note": "Annual call from mid-April through the end of June. Awards run one to three years; multiyear awards submit annual renewal requests that undergo peer review. The facilities reserve the right to limit the amount and duration of archival storage once a project has been completed.",
   "identity_cost": {
     "kind": "institution",
     "detail": "inferred from the category 'academic'; the source record states no identity cost, so this is a class assumption, not evidence",
@@ -99,10 +98,73 @@
       "proved": "INCITE is open to US and non-US researchers and research organizations",
       "capture": "sha256:e566db0eeb2fee41480f5908599efb6f5f01a3e3a5c160036754be70eb227c62",
       "quote": "The INCITE program is open to US- and non-US-based researchers and research organizations needing large allocations of computer time, supporting resources, and data storage"
+    },
+    {
+      "url": "https://doeleadershipcomputing.org/incite-faqs/",
+      "date": "2026-11-25",
+      "proved": "award length and peer-reviewed renewal",
+      "capture": "sha256:a5526b756a06c5fa3bfacfd1026fedd7f06dea0e95fa2b2b316d59c2f7be1abf",
+      "quote": "INCITE awards can be from one to three years in length. Multiyear awards must submit annual renewal requests, which will undergo peer review."
+    },
+    {
+      "url": "https://docs.olcf.ornl.gov/data/index.html",
+      "date": "2026-11-25",
+      "proved": "the three archive areas share one 200 TB quota",
+      "capture": "sha256:cd3b191bb2a909d888233a8b93009b3f47f2e5f2908a92399c83ba72b40e9351",
+      "quote": "All three archival storage areas above share a single 200TB project-centric quota on Kronos."
+    },
+    {
+      "url": "https://docs.olcf.ornl.gov/data/index.html",
+      "date": "2026-11-25",
+      "proved": "Kronos is reached with scp and rsync, and through Globus",
+      "capture": "sha256:cd3b191bb2a909d888233a8b93009b3f47f2e5f2908a92399c83ba72b40e9351",
+      "quote": "Standard UNIX commands and tools can also be used to interact with Kronos (scp, rsync, etc.)."
+    },
+    {
+      "url": "https://docs.olcf.ornl.gov/data/index.html",
+      "date": "2026-11-25",
+      "proved": "scp and rsync are the named command-line tools",
+      "capture": "sha256:cd3b191bb2a909d888233a8b93009b3f47f2e5f2908a92399c83ba72b40e9351",
+      "quote": "Standard UNIX commands and tools can also be used to interact with Kronos (scp, rsync, etc.)."
+    },
+    {
+      "url": "https://doeleadershipcomputing.org/incite-faqs/",
+      "date": "2026-11-25",
+      "proved": "no charge for access to non-proprietary projects",
+      "capture": "sha256:a5526b756a06c5fa3bfacfd1026fedd7f06dea0e95fa2b2b316d59c2f7be1abf",
+      "quote": "Non-proprietary research projects selected through the INCITE program are not charged for access to the LCFs."
+    },
+    {
+      "url": "https://docs.olcf.ornl.gov/data/index.html",
+      "date": "2026-11-25",
+      "proved": "90 days of retention after project end in non-purged areas",
+      "capture": "sha256:cd3b191bb2a909d888233a8b93009b3f47f2e5f2908a92399c83ba72b40e9351",
+      "quote": "Following a user account deactivation or project end, user and project data in non-purged areas will be retained for 90 days."
+    },
+    {
+      "url": "https://docs.olcf.ornl.gov/data/index.html",
+      "date": "2026-11-25",
+      "proved": "90 days after project end",
+      "capture": "sha256:cd3b191bb2a909d888233a8b93009b3f47f2e5f2908a92399c83ba72b40e9351",
+      "quote": "Following a user account deactivation or project end, user and project data in non-purged areas will be retained for 90 days."
+    },
+    {
+      "url": "https://docs.olcf.ornl.gov/data/index.html",
+      "date": "2026-11-25",
+      "proved": "the Kronos project archive default quota is 200 TB",
+      "capture": "sha256:cd3b191bb2a909d888233a8b93009b3f47f2e5f2908a92399c83ba72b40e9351",
+      "quote": "The default quota is shown on the table at the top of this page (200TB)."
+    },
+    {
+      "url": "https://doeleadershipcomputing.org/incite-faqs/",
+      "date": "2026-11-25",
+      "proved": "the annual award includes 100 trillion bytes",
+      "capture": "sha256:a5526b756a06c5fa3bfacfd1026fedd7f06dea0e95fa2b2b316d59c2f7be1abf",
+      "quote": "Each year the Innovative and Novel Computational Impact on Theory and Experiment (INCITE) program awards to researchers billions of supercomputer processor hours and 100 trillion bytes of data storage space"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-19T21:13:59.617Z",
+  "verified_at": "2026-11-25T12:15:45.588Z",
   "notes": "100 trillion bytes (~100 TB) of data storage awarded across the programme each year; per-project archival quota at OLCF is 200 TB (shared across Project/World/User Archive on Kronos).",
   "history": [],
   "extras": {
