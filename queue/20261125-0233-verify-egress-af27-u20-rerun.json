@@ -1,0 +1,18 @@
+{
+ "id": "20261125-0233-verify-egress-af27-u20-rerun",
+ "kind": "verify",
+ "topic": "egress",
+ "question": "Re-check each record against its first-party page: does the egress path still work, and what limit binds it? Record a limits[] row for the binding constraint where the record lacks one.\nAn audit of the first attempt judged these claims unsupported by their sources; settle each one first:\n- egress/localport $.egress.terms: Bandwidth part is on the page, but the page never mentions TCP or any ingress protocol; 'ingress: tcp' is unsupported.\n- egress/localport $.binding_note: Page says nothing extra is billed and tunnels hard-stop at the cap, so the first failure is a quota stop, not an invoice.\n- egress/localxpose-free $.binding: Free (Starter) plan lists 'Time limits' as a negative and publishes no bandwidth figure; page does not show that nothing binds. The cited quote is a Pro row and says nothing about the free plan's binding.\n- egress/localxpose-free $.verdict: The free plan is HTTP/HTTPS only; TCP and UDP forwarding sit under PRO. A plan with no UDP path is fails-egress by the corpus's own rule (docs/egress/README.md line 135), not qualifies-with-caveat.\n- egress/loophole-cloud $.interface_detail: The FAQ never shows the command 'loophole http 3000 -s name'; the CLI syntax is absent from the capture.",
+ "scope": {
+  "rids": [
+   "egress/localport",
+   "egress/localtonet",
+   "egress/localxpose-free",
+   "egress/lokal-so",
+   "egress/loophole-cloud",
+   "egress/luyouxia"
+  ]
+ },
+ "origin": "audit u61 of 20261125-0233-verify-egress-af27/u20 failed: 5 of 30 unsupported",
+ "created": "2026-11-25T16:37:38Z"
+}
