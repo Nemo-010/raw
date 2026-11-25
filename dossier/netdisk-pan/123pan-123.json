@@ -5,7 +5,7 @@
   "url": "https://www.123pan.com",
   "category": "consumer-pan",
   "free_tier": {
-    "stated": "Free: 50 GB of 专业空间 for own uploads plus 2 TB of 标准空间 for saved shares for accounts registered before 2026-09-24 14:30; new accounts get 50 GB plus 50 GB until real-name verification, then 2 TB standard. The FAQ now also states that a new registrant gets 20 GB of long-term storage, self-uploads are capped at 5 GB per file, and shares download without login",
+    "stated": "Free: 50 GB of 专业空间 (own uploads, no deduplication) plus 2 TB of 标准空间 (files saved from other people's shares, deduplicated) for accounts registered before 2026-09-24 14:30. New accounts get 50 GB plus 50 GB until real-name verification, then 2 TB standard",
     "unit": "mixed",
     "metered_on": "stored-bytes",
     "source_url": "https://www.123pan.com/",
@@ -23,7 +23,7 @@
     "source_url": "https://www.123pan.com/"
   },
   "egress": {
-    "terms": "Uploads and downloads are unlimited in speed. Historical free registrants get 10 GB of self-use download traffic per month, with app and PC client downloads counted at half file size; from 2026-11-04 new registrants get no default monthly traffic and can earn it by watching ads in the app. This traffic applies only to the user's own files and cannot be used on share pages. Share download without login is available, including paid per-download or a sharer-funded traffic pack",
+    "terms": "Uploads and downloads are stated as unlimited in speed (上传下载不限速) with CDN direct links, but a free account is capped at 10 GB of extraction traffic per month across all clients, quoted at CNY 0.05/GB beyond. Since 2025-11-26 every share download requires a login",
     "metered": true,
     "free_allowance": "10 GB per month",
     "price_per_tb": "CNY 0.05/GB beyond the allowance",
@@ -48,7 +48,7 @@
     },
     {
       "kind": "write-gated",
-      "value": "share download without login is stated; from 2026-11-04 new registrants receive no default self-use download traffic and earn it through the app",
+      "value": "share downloads require a login since 2025-11-26",
       "source": "https://www.laoliang.net/news/27693.html"
     }
   ],
@@ -57,7 +57,7 @@
     "detail": "registration takes a mobile number, a login password and an SMS code; WeChat QR login is also offered, and first binding it needs an SMS verification",
     "country": "86"
   },
-  "reliability_note": "The two-space quota regime changed in 2026-09 and the self-use traffic allowance changed again on 2026-11-04: new registrants no longer receive default monthly traffic. The FAQ now states no-login share download. The seeded share key returned a JSON error on 2026-11-25",
+  "reliability_note": "Two independent failure modes seen on the same day: 5104 分享已过期 on most public keys, and 5112 分享方提取流量包不足 on live ones. The sharer's traffic pack is the binding constraint, so a valid share with an exhausted pack is unusable by anyone including a logged-in user. The quota regime changed in 2025-11 and again in 2026-09 and the operator blames bulk registration",
   "confidence": "reported",
   "evidence": [
     {
@@ -122,105 +122,14 @@
       "proved": "a non-mainland phone number cannot be used to log in, so the account phone is a mainland +86 number",
       "capture": "sha256:80adc882dc589f3e104835dc3a98aba0e3a631ad124b62fe4f98316c408b05cd",
       "quote": "注：请勿修改非大陆地区手机号，此操作将会导致无法登录。"
-    },
-    {
-      "url": "https://www.123pan.com/faq?problem=all",
-      "date": "2026-11-25",
-      "proved": "the current FAQ states a 20 GB new-user allocation, a 5 GB free per-file upload cap and no-login share download",
-      "capture": "sha256:1bf5f0a920face49f1e38f074bb099ba6c899dbdf32b0e0457f52baa9fb652bb",
-      "quote": "新用户注册即享20GB长期存储容量，免登录下载分享文件，上传下载不限速。支持超大单文件上传（免费用户5GB，会员30GB），存储空间不足时，购买容量包或开通会员即可扩容。"
-    },
-    {
-      "url": "https://www.123pan.com/faq?problem=all",
-      "date": "2026-11-25",
-      "proved": "the FAQ still confirms free storage and the 5 GB free per-file cap",
-      "capture": "sha256:1bf5f0a920face49f1e38f074bb099ba6c899dbdf32b0e0457f52baa9fb652bb",
-      "quote": "新用户注册即享20GB长期存储容量，免登录下载分享文件，上传下载不限速。支持超大单文件上传（免费用户5GB，会员30GB），存储空间不足时，购买容量包或开通会员即可扩容。"
-    },
-    {
-      "url": "https://www.123pan.com/faq?problem=all",
-      "date": "2026-11-25",
-      "proved": "the FAQ documents the 2026-11-04 removal of default monthly traffic for new registrants and confines it to own-file downloads",
-      "capture": "sha256:1bf5f0a920face49f1e38f074bb099ba6c899dbdf32b0e0457f52baa9fb652bb",
-      "quote": "普通用户：历史注册用户每月享有免费自用下载流量10GB，APP及PC客户端按文件体积的50%计量，最多可下载20GB文件；自2026-11-04日起新注册用户不再默认发放每月流量，可通过App观看广告获取自用下载流量；该流量仅用于本人云盘内下载/播放/预览，分享页不可直接使用；"
-    },
-    {
-      "url": "https://www.123pan.com/faq?problem=all",
-      "date": "2026-11-25",
-      "proved": "the recorded egress text is outdated: new registrants no longer receive default monthly traffic",
-      "capture": "sha256:1bf5f0a920face49f1e38f074bb099ba6c899dbdf32b0e0457f52baa9fb652bb",
-      "quote": "普通用户：历史注册用户每月享有免费自用下载流量10GB，APP及PC客户端按文件体积的50%计量，最多可下载20GB文件；自2026-11-04日起新注册用户不再默认发放每月流量，可通过App观看广告获取自用下载流量；该流量仅用于本人云盘内下载/播放/预览，分享页不可直接使用；"
-    },
-    {
-      "url": "https://www.123pan.com/faq?problem=all",
-      "date": "2026-11-25",
-      "proved": "share downloads without login are available, contradicting the recorded blanket login requirement",
-      "capture": "sha256:1bf5f0a920face49f1e38f074bb099ba6c899dbdf32b0e0457f52baa9fb652bb",
-      "quote": "1. 下载方无需登录即可下载分享页中的文件,即为分享免登录下载；"
-    },
-    {
-      "url": "https://www.123pan.com/faq?problem=all",
-      "date": "2026-11-25",
-      "proved": "share downloads do not require login",
-      "capture": "sha256:1bf5f0a920face49f1e38f074bb099ba6c899dbdf32b0e0457f52baa9fb652bb",
-      "quote": "1. 下载方无需登录即可下载分享页中的文件,即为分享免登录下载；"
-    },
-    {
-      "url": "https://www.123pan.com",
-      "date": "2026-11-25",
-      "proved": "the current VIP capacity tiers differ from those recorded in the note",
-      "capture": "sha256:9d379a560d8823b706d99de5b249dc4ff4ba35f2666a86ef96a329a46d9698da",
-      "quote": "VIP享18TB容量，SVIP享98TB容量，会员有效期内每月额外赠送800GB成长容量，成长容量最高可累积100TB"
-    },
-    {
-      "url": "https://www.123pan.com",
-      "date": "2026-11-25",
-      "proved": "the homepage's paid tiers are unchanged from the new note",
-      "capture": "sha256:9d379a560d8823b706d99de5b249dc4ff4ba35f2666a86ef96a329a46d9698da",
-      "quote": "VIP享18TB容量，SVIP享98TB容量，会员有效期内每月额外赠送800GB成长容量，成长容量最高可累积100TB"
-    },
-    {
-      "url": "https://www.123pan.com",
-      "date": "2026-11-25",
-      "proved": "the homepage advertises browser download of any file size without login or client",
-      "capture": "sha256:9d379a560d8823b706d99de5b249dc4ff4ba35f2666a86ef96a329a46d9698da",
-      "quote": "无论文件多大，无论文件类型，均可在浏览器直接下载，业内独家支持大文件下载，不强制登录、不强制使用客户端下载"
-    },
-    {
-      "url": "https://www.123pan.com/open",
-      "date": "2026-11-25",
-      "proved": "registration still requires a mainland phone number, password and SMS code",
-      "capture": "sha256:9b433fd91bfad498ae3592cc3321077dfa67ac33c8e629fbb8e6c604f1b1a70f",
-      "quote": "新用户首次下载安装123云盘，需要输入手机号码，设置登录密码，获取手机验证码后进行123云盘的账号注册，注册完成后即可登录并使用123云盘。"
-    },
-    {
-      "url": "https://www.123pan.com/UserAgreement",
-      "date": "2026-11-25",
-      "proved": "identity elements still include phone number, ID document and face information",
-      "capture": "sha256:7946bc4c29729553a2da2e297049c07eef2807aa4bb0fc4f543e4898d3cce73d",
-      "quote": "“身份要素”包括但不限于您的账号名称、密码、短信校验码、手机号码、身份证件号码及人脸信息、指纹信息。"
-    },
-    {
-      "url": "probe:123share",
-      "date": "2026-11-25",
-      "proved": "the seeded share key no longer returns a share listing",
-      "capture": "sha256:edca8a8bd97fcaf13d0a436d3d56a11c2692f75cf61761d9ea3518ebbce13b64",
-      "quote": "{\"code\":400,\"message\":\"请输入ParentFileId\",\"data\":null}"
-    },
-    {
-      "url": "probe:123share",
-      "date": "2026-11-25",
-      "proved": "the seeded share key is no longer usable",
-      "capture": "sha256:edca8a8bd97fcaf13d0a436d3d56a11c2692f75cf61761d9ea3518ebbce13b64",
-      "quote": "{\"code\":400,\"message\":\"请输入ParentFileId\",\"data\":null}"
     }
   ],
   "verdict": "fails-identity",
-  "verified_at": "2026-11-25T11:43:49.413Z",
+  "verified_at": "2026-11-25T11:43:49.412Z",
   "history": [],
   "binding": "per-ip-shaping",
   "binding_note": "The capacity is real and large, so the quota is not what stops a plan. 10 GB of extraction traffic a month is 0.03% of the daily target, and the identity gate means the tier cannot even be bought from outside China.",
-  "notes": "The current homepage advertises VIP at 18 TB and SVIP at 98 TB with 800 GB of monthly growth capacity up to 100 TB. The FAQ states a 20 GB new-user allocation, 5 GB free per-file uploads and no-login share download. The 10 GB self-use traffic allowance now applies only to historical registrants.",
+  "notes": "Evaluation covers both capacity and retrieval constraints, with the 10 GB extraction cap identified as binding. The site headline advertises free storage up to 2 TB, VIP at 20 TB, and SVIP at 100 TB, which reflects the tier structure prior to the September 2026 split.",
   "extras": {
     "access_mode": "registration-gated",
     "anonymous_read": "metadata anonymous, bytes refused",
