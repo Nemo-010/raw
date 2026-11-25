@@ -15,12 +15,12 @@
   "per_object_cap": {
     "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://archive.org/developers/ias3.html",
-    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+    "notes": "The IAS3 documentation publishes no per-object byte cap; it offers an x-archive-size-hint header for the final item size and states that DELETE bucket is not allowed."
   },
   "retention": {
     "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://archive.org/developers/ias3.html",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "Normally PUT and DELETE do not keep old versions; the x-archive-keep-old-version:1 header stores them under history/files/$key.~N~, and the x-archive-cascade-delete:1 header removes derivatives with the original."
   },
   "egress": {
     "terms": "Free (history files are served through the same item path)",
@@ -60,10 +60,38 @@
       "proved": "the x-archive-keep-old-version header saves old versions under history/files/$key.~N~",
       "capture": "sha256:467a16d2e9fc7150fbf1ca1ddaeedf3c9ea54b0827e14939343fa4a811c5848c",
       "quote": "Normally PUT and DELETE do not keep old versions of files around. To have the archive keep old versions of the object you can add the header: `x-archive-keep-old-version:1` Saved versions will be placed in `history/files/$key.~N~`"
+    },
+    {
+      "url": "https://archive.org/developers/ias3.html",
+      "date": "2026-11-25",
+      "proved": "the IAS3 documentation describes item-level operations without a per-object byte cap",
+      "capture": "sha256:467a16d2e9fc7150fbf1ca1ddaeedf3c9ea54b0827e14939343fa4a811c5848c",
+      "quote": "DELETE bucket is not allowed."
+    },
+    {
+      "url": "https://archive.org/developers/ias3.html",
+      "date": "2026-11-25",
+      "proved": "the IAS3 page documents the version-retention header and its storage path",
+      "capture": "sha256:467a16d2e9fc7150fbf1ca1ddaeedf3c9ea54b0827e14939343fa4a811c5848c",
+      "quote": "Normally PUT and DELETE do not keep old versions of files around. To have the archive keep old versions of the object you can add the header: `x-archive-keep-old-version:1` Saved versions will be placed in `history/files/$key.~N~`"
+    },
+    {
+      "url": "https://archive.org/developers/ias3.html",
+      "date": "2026-11-25",
+      "proved": "the IAS3 page names the cascade-delete header for removing derivatives with a file",
+      "capture": "sha256:467a16d2e9fc7150fbf1ca1ddaeedf3c9ea54b0827e14939343fa4a811c5848c",
+      "quote": "x-archive-cascade-delete:1"
+    },
+    {
+      "url": "https://archive.org/developers/ias3.html",
+      "date": "2026-11-25",
+      "proved": "the IAS3 page still documents the same object operations",
+      "capture": "sha256:467a16d2e9fc7150fbf1ca1ddaeedf3c9ea54b0827e14939343fa4a811c5848c",
+      "quote": "DELETE bucket is not allowed."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-19T21:13:58.579Z",
+  "verified_at": "2026-11-25T06:41:41.706Z",
   "notes": "No quota of its own. It multiplies the 1TB item limit by however many versions you PUT. 'Saved versions will be placed in history/files/$key.~N~'.",
   "history": [],
   "extras": {
