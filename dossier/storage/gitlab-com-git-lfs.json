@@ -15,12 +15,12 @@
   "per_object_cap": {
     "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
-    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+    "notes": "The GitLab.com limits page documents no per-LFS-object size cap; the 5 GiB value is a maximum git push request per HTTP request, not a per-object limit. A 100 MiB maximum attachment size is listed separately."
   },
   "retention": {
     "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "No expiry or deletion term is stated for repository or LFS objects; a project over quota is set read-only, which blocks pushes rather than deleting data. Groups and projects that are explicitly deleted are permanently removed after a 30-day delay."
   },
   "egress": {
     "terms": "Unmetered. GitLab does not bill or publish any LFS bandwidth quota. The only transfer-side control is a rate limit: 'Git LFS requests are subject to authenticated web request rate limits .. 1000 requests per minute per user. Each Git LFS object uploaded or downloaded generates an HTTP request'.",
@@ -75,10 +75,38 @@
       "proved": "a Free-tier project still has 10 GiB of free storage for repository and LFS",
       "capture": "sha256:32cb9b13bd82d6395449b56d639b10c9214fbcf89a1a5fa1493dad8fe2e46c49",
       "quote": "Each project in a Free tier namespace on GitLab.com has 10 GiB of free storage."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/gitlab_com/",
+      "date": "2026-11-25",
+      "proved": "the limits page states a 100 MiB attachment maximum and names no per-LFS-object cap",
+      "capture": "sha256:68f43c79110ad21fc9f3aeb8e6336cc2b463e9f9868ec094f2325dc676a4d44d",
+      "quote": "| Maximum attachment size | 100 MiB |"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/gitlab_com/",
+      "date": "2026-11-25",
+      "proved": "an explicit deletion is permanent after 30 days; stored objects otherwise have no stated expiry",
+      "capture": "sha256:68f43c79110ad21fc9f3aeb8e6336cc2b463e9f9868ec094f2325dc676a4d44d",
+      "quote": "Projects are permanently deleted after a 30-day delay."
+    },
+    {
+      "url": "https://docs.gitlab.com/rate_limits/git/",
+      "date": "2026-11-25",
+      "proved": "LFS transfers use HTTPS requests and are subject to a 1000-per-minute per-user rate limit, not a byte-based charge",
+      "capture": "sha256:8447f017160510660f036c219853c55b53c1ee9869997f586c77bff60af2cc63",
+      "quote": "Each Git LFS object uploaded or downloaded generates an HTTP request that counts toward this limit."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+      "date": "2026-11-25",
+      "proved": "a Free-tier project still has 10 GiB covering repository and LFS",
+      "capture": "sha256:c31fa88d40120be518fbe9f17f5155d6812a549ba671ca04939f01cc78377e71",
+      "quote": "Each project in a Free tier namespace on GitLab.com has 10 GiB of free storage."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-19T21:13:28.597Z",
+  "verified_at": "2026-11-25T05:52:38.547Z",
   "notes": "10 GiB free storage PER PROJECT on the Free tier, and that 10 GiB explicitly covers 'the project's repository and Large File Storage (LFS)'. Premium/Ultimate: 500 GiB per project. CONFIRMED: LFS is IN the quota while containers, packages, build artifacts, snippets, uploads and wikis are OUT.",
   "history": [],
   "extras": {
