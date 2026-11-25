@@ -5,7 +5,7 @@
   "url": "https://cloud.tencent.com/document/product/1814/133249",
   "category": "container and VM sandbox",
   "free_tier": {
-    "stated": "no free tier: CPU bills at CNY 0.000081 a core-second from a successful start to a stop; a paused instance stops CPU and memory billing and pays only the storage its state needs",
+    "stated": "no free tier: CPU 0.000081 元/核/秒 and memory 0.000025 元/GiB/秒 from a successful start to a stop; the system disk is free up to 15 GiB while running, and a paused instance stops CPU and memory billing but pays for its state storage with no 15 GiB free allowance",
     "unit": "none",
     "metered_on": "none",
     "source_url": "https://cloud.tencent.com/document/product/1814/133249",
@@ -18,7 +18,7 @@
     "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
   },
   "retention": {
-    "stated": "not stated",
+    "stated": "the rootfs system disk is released automatically when the instance is destroyed and its data is then unrecoverable; no fixed retention period is stated",
     "days": null,
     "source_url": "https://cloud.tencent.com/document/product/1814/133249",
     "notes": "Disk durability across instance stops and deletions is not documented."
@@ -44,7 +44,7 @@
     },
     {
       "kind": "retention-clamped",
-      "value": "a paused instance stops CPU and memory billing and continues to pay for the storage its state needs; waking resumes compute billing",
+      "value": "a paused instance stops CPU and memory billing but pays state storage at 0.0021 元/GiB/小时 with no 15 GiB free allowance; waking resumes compute billing",
       "source": "https://cloud.tencent.com/document/product/1814/133249"
     },
     {
@@ -56,7 +56,7 @@
   "limits_note": "Session cap, idle-reap and network policy are not documented.",
   "identity_cost": {
     "kind": "email",
-    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "detail": "unverified: no signup gate is stated on the billing document read; the identity kind is not established",
     "country": null
   },
   "reliability_note": "no reliability event recorded in the source passes",
@@ -72,10 +72,45 @@
       "url": "https://cloud.tencent.com/document/product/1814/133249",
       "date": "2026-10-22",
       "proved": "'按 **实际运行时长** 及 **资源规格** 计费。实例 **启动成功后开始计费**，**停止后停止计费**'  -  billed on actual runtime and spec, from a successful start to a stop  -  with 'CPU 0.000081 元 / 核 / 秒' and '暂停期间 CPU、内存停止计费，保留状态所需存储继续计费，唤醒后计算资源重新计费', quoted"
+    },
+    {
+      "url": "https://cloud.tencent.com/document/product/1814/133249",
+      "date": "2026-11-24",
+      "proved": "the CPU rate and that billing runs with the instance",
+      "capture": "sha256:ef2680505ccab98847d42322a8be077a309b82acbecfb60a20eae166f5a04b88",
+      "quote": "| 计算资源 | CPU | 0.000081 元/核/秒，按实例运行时长计费。 |"
+    },
+    {
+      "url": "https://cloud.tencent.com/document/product/1814/133249",
+      "date": "2026-11-24",
+      "proved": "pause stops compute billing and keeps state-storage billing",
+      "capture": "sha256:ef2680505ccab98847d42322a8be077a309b82acbecfb60a20eae166f5a04b88",
+      "quote": "暂停期间 CPU、内存停止计费，保留状态所需存储继续计费，唤醒后计算资源重新计费。"
+    },
+    {
+      "url": "https://cloud.tencent.com/document/product/1814/133249",
+      "date": "2026-11-24",
+      "proved": "system disk data is released and unrecoverable on instance destruction",
+      "capture": "sha256:ef2680505ccab98847d42322a8be077a309b82acbecfb60a20eae166f5a04b88",
+      "quote": "实例销毁后自动释放，释放后系统盘数据将不可恢复"
+    },
+    {
+      "url": "https://cloud.tencent.com/document/product/1814/133249",
+      "date": "2026-11-24",
+      "proved": "the billing document was updated on 2026-10-27 and states no signup gate",
+      "capture": "sha256:ef2680505ccab98847d42322a8be077a309b82acbecfb60a20eae166f5a04b88",
+      "quote": "最近更新时间：2026-10-27 16:59:00"
+    },
+    {
+      "url": "https://cloud.tencent.com/document/product/1814/133249",
+      "date": "2026-11-24",
+      "proved": "the worked example in the current billing document",
+      "capture": "sha256:ef2680505ccab98847d42322a8be077a309b82acbecfb60a20eae166f5a04b88",
+      "quote": "| 间歇运行 | 1 核 / 2 GiB / 系统盘实际使用量 20 GiB，每天 8 小时，共 30 天。 |"
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-10-22T04:48:09.512Z",
+  "verified_at": "2026-11-24T13:21:05.670Z",
   "price_per_tb_month": null,
   "notes": "",
   "extras": {

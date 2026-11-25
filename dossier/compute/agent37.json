@@ -115,10 +115,59 @@
       "proved": "the page states the session clock and idle reap recorded here, or states that it publishes none",
       "capture": "sha256:c9756708e4356330e6974ee4f15d10daad186a4cd54557ec0926cd5397135dfc",
       "quote": "Once no bytes have moved through any of its URLs for `idle_timeout_seconds` (default 900, from five minutes to a day), the platform checkpoints it and `status` becomes `sleeping`: CPU and memory are released, the disk stays reserved, and billing drops to the disk rate alone (see Billing)."
+    },
+    {
+      "url": "https://www.agent37.com/docs/agents-api/billing.md",
+      "date": "2026-11-24",
+      "proved": "the $5 credit is granted on adding a card, with no charge",
+      "capture": "sha256:6c15b4d306d8108fbe06eb814610911f937d8445b7314b14303845155338c8f6",
+      "quote": "$5 free to start. Add a card from the billing page (nothing is charged) and your workspace gets a one-time \\$5 credit"
+    },
+    {
+      "url": "https://www.agent37.com/docs/agents-api/billing.md",
+      "date": "2026-11-24",
+      "proved": "an instance suspended for 30 days is deleted",
+      "capture": "sha256:6c15b4d306d8108fbe06eb814610911f937d8445b7314b14303845155338c8f6",
+      "quote": "An instance left suspended for 30 days is permanently deleted."
+    },
+    {
+      "url": "https://www.agent37.com/docs/agents-api/billing.md",
+      "date": "2026-11-24",
+      "proved": "the wallet is funded only by card through Stripe, in $5 to $10,000 steps",
+      "capture": "sha256:6c15b4d306d8108fbe06eb814610911f937d8445b7314b14303845155338c8f6",
+      "quote": "Top-ups are \\$5 to \\$10,000 each, paid through Stripe."
+    },
+    {
+      "url": "https://www.agent37.com/docs/agents-api/instance-network.md",
+      "date": "2026-11-24",
+      "proved": "outbound internet is available by default and no byte allowance or per-GB price is stated on the network page",
+      "capture": "sha256:83350de0c05dd7111cfa0edb348d6f6f87cb6f287ff12734e1f82819c956ddcd",
+      "quote": "Every instance can reach the public internet by default."
+    },
+    {
+      "url": "https://www.agent37.com/docs/agents-api/ssh.md",
+      "date": "2026-11-24",
+      "proved": "the vendor documents SSH access to an instance",
+      "capture": "sha256:8d9ac48a920736cf2b0723b0661903e0a5e7d14a92373cc806366ab4744bef9e",
+      "quote": "`ssh` into any instance your workspace owns, with the keypair you already have."
+    },
+    {
+      "url": "https://www.agent37.com/docs/agents-api/instance-sizing.md",
+      "date": "2026-11-24",
+      "proved": "the shape ceiling is 4 vCPU on every type",
+      "capture": "sha256:f3a66f6210cf2b11ef3f44218767023a1faafdad641eff2dac6bd0e5c3a5fa0d",
+      "quote": "These four shapes stop at 4 vCPU."
+    },
+    {
+      "url": "https://www.agent37.com/docs/agents-api/vm-instances.md",
+      "date": "2026-11-24",
+      "proved": "the VM type is a full KVM virtual machine, not the default container",
+      "capture": "sha256:c72abf8473007c74e71eed7c699b323fa68bbc9079da7432e04ab497494106d6",
+      "quote": "A `vm` instance is a full Linux virtual machine with its own kernel and KVM hardware virtualization."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-18T04:45:11.641Z",
+  "verified_at": "2026-11-24T11:38:08.092Z",
   "price_per_tb_month": null,
   "history": [],
   "notes": "Two rows live in this provider and the shape decides the verdict. Default (container) 2 vCPU / 4 GB / 4 GB disk: 2 x 0.80 + 4 x 0.70 + 4 x 0.09 = USD 4.76 a month at 730 running hours - the cheapest 2 vCPU / 4 GiB found, but it is a shared-kernel instance. VM 2 vCPU / 4 GB / 4 GB disk: 2.5 x (1.60 + 2.80) + 0.36 = USD 11.36. A VM under USD 5 is impossible because the smallest VM shape is 2 vCPU / 4 GB. Ingress is the other catch: ports are published as HTTPS at {id}-{port}.agent37.app, so no raw TCP listener and no UDP - it cannot be a WireGuard node.",

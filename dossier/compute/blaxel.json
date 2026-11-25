@@ -19,7 +19,7 @@
     "notes": "The binding cap is lifetime, not shape."
   },
   "retention": {
-    "stated": "Sandboxes sit 'on automatic standby' with memory and filesystem snapshotted; Tier 0 and Tier 1 'enforce expiration dates (Tier 0 and 1, with respectively up to 7 and 30 days)'. In higher tiers unlimited persistence is permitted.",
+    "stated": "Sandboxes sit on automatic standby with memory and filesystem snapshotted; Tier 0 and Tier 1 enforce expiration of up to 7 and 30 days respectively, and higher tiers permit unlimited persistence",
     "days": 7,
     "source_url": "https://docs.blaxel.ai/Sandboxes/Expiration.md",
     "notes": "Seven days at Tier 0 is the hard ceiling on how long one sandbox can exist."
@@ -33,9 +33,10 @@
   },
   "interface": [
     "rest",
-    "cli"
+    "cli",
+    "chat"
   ],
-  "interface_detail": "REST API, TypeScript, Python and Go SDKs, a CLI and an MCP server; no SSH endpoint is documented on the platform: SSH into a sandbox is reached by running Tailscale SSH inside it, and 'bl connect sandbox' opens an interactive terminal similar to SSH",
+  "interface_detail": "The sandbox overview documents a REST API and an MCP server; the SDKs are TypeScript, Python and Go and the CLI offers an interactive terminal similar to SSH. SSH is reached by running Tailscale SSH inside the sandbox.",
   "tooling": "not stated",
   "chaining": "not established",
   "limits": [
@@ -58,7 +59,7 @@
   "limits_note": "Every sandbox scales to zero after inactivity whether or not an expiry policy is set, so 'running' is not a state Blaxel holds by default.",
   "identity_cost": {
     "kind": "email",
-    "detail": "Signup is 'Start for free' with no card shown on the pricing page; no hold is mentioned. Raising the tier requires a top-up, which introduces a card at that point.",
+    "detail": "The console login asks for an email address and the pricing page says 'Start for free' with no card shown; no hold is mentioned. Raising the tier requires a top-up, which introduces a card at that point.",
     "country": null
   },
   "reliability_note": "'Automatic scale-to-zero after 5s inactivity' means a process with no client connection is suspended unless keep-alive is arranged; the docs offer process keep-alive as the workaround.",
@@ -134,10 +135,59 @@
       "proved": "TypeScript, Python and Go SDKs exist",
       "capture": "sha256:a447da4aafe812818234b41124636f8d14cdb4ab9ae21baa6fc3f306d67eb2dd",
       "quote": "Use the Blaxel SDKs for TypeScript, Python, and Go to programmatically manage sandboxes, agents, MCP servers, jobs, and other resources."
+    },
+    {
+      "url": "https://docs.blaxel.ai/Sandboxes/Expiration.md",
+      "date": "2026-11-24",
+      "proved": "a Tier 0 sandbox can exist for at most 7 days",
+      "capture": "sha256:3bbee72ef38f3dd63e728d2a99ba41ead7cbe9370369d7e1a509518a8698c6d6",
+      "quote": "Some quota tiers enforce expiration dates (Tier 0 and 1, with respectively up to 7 and 30 days). In higher tiers, unlimited persistence is permitted."
+    },
+    {
+      "url": "https://docs.blaxel.ai/Sandboxes/Overview.md",
+      "date": "2026-11-24",
+      "proved": "sandboxes expose a REST API and an MCP server",
+      "capture": "sha256:1d2e0bb87cb6743bbb694429ca77fc97334239a74e78573b7adb38f85049c015",
+      "quote": "They provide a basic [REST API interface](https://docs.blaxel.ai/api-reference/filesystem) for accessing the file system and processes, along with an [MCP server](https://docs.blaxel.ai/Sandboxes/MCP.md) that makes these capabilities available as tool calls."
+    },
+    {
+      "url": "https://app.blaxel.ai/",
+      "date": "2026-11-24",
+      "proved": "the console login asks for an email address",
+      "capture": "sha256:88cd96d9c3123750ee0f85ef35f3c931994628a8f1e57793d124f074f4961855",
+      "quote": "Enter your email below to login to your account"
+    },
+    {
+      "url": "https://blaxel.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the pay-as-you-go plan states up to USD 200 in free credits",
+      "capture": "sha256:34ba2b8ed974fc6b8b6f65b92a64cc7729a7b34a687e8d93c15cc059323e3d29",
+      "quote": "- Up to $200 in free credits"
+    },
+    {
+      "url": "https://blaxel.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the free tier allows 10 concurrent sandboxes",
+      "capture": "sha256:34ba2b8ed974fc6b8b6f65b92a64cc7729a7b34a687e8d93c15cc059323e3d29",
+      "quote": "| Tier 0 | Free | 10 |"
+    },
+    {
+      "url": "https://blaxel.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "active CPU is billed at USD 0.0000115 per GB of RAM per second and idle time is not billed",
+      "capture": "sha256:34ba2b8ed974fc6b8b6f65b92a64cc7729a7b34a687e8d93c15cc059323e3d29",
+      "quote": "| Active CPU | Time the sandbox spends actively running, billed by its allocated memory (CPU scales automatically). The runtime auto-suspends when idle: suspended time does not count towards active CPU. | $0.0000115 / GB RAM · second |"
+    },
+    {
+      "url": "https://blaxel.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "internet egress traffic is included with no byte allowance published",
+      "capture": "sha256:34ba2b8ed974fc6b8b6f65b92a64cc7729a7b34a687e8d93c15cc059323e3d29",
+      "quote": "| Internet egress traffic | Outbound traffic from your workloads to the internet. | Included |"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-04T06:20:45.331Z",
+  "verified_at": "2026-11-24T11:38:10.232Z",
   "price_per_tb_month": null,
   "notes": "Blaxel prices CPU inside the RAM rate: USD 0.0000115 per GB of RAM per second is USD 0.0414 per GB-hour, so a 1 GB sandbox is USD 0.0414 an hour and USD 200 would be 4,831 hours, or a 4 GB sandbox USD 0.1656 an hour and 1,208 hours. Neither number is reachable as a month of uptime because of the 7-day Tier 0 expiry and the 5-second standby. The borrow against it: it is the cheapest per GB-hour of the sandbox providers here, and the right tool for bursty agent work.",
   "extras": {

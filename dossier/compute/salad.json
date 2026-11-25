@@ -5,7 +5,7 @@
   "url": "https://salad.com/pricing/",
   "category": "GPU cloud",
   "free_tier": {
-    "stated": "No free trial; pay-as-you-go with no minimum commitment. Billing is per second while an instance is running. Prices are per GPU-hour by priority tier (High, Medium, Low, Lowest), with vCPU and RAM included: RTX 4090 24 GB USD 0.440 High, 0.347 Medium, 0.253 Low, 0.160 Lowest. Classes below the table start at USD 0.015 per GPU-hour at Lowest priority. Medium and Low tiers can be preempted, with a minimum run before reallocation of roughly 30 minutes. The page lists no H100, A100, L40S or L4.",
+    "stated": "No free trial; pay-as-you-go with no minimum commitment. Billing is per second while an instance runs. Prices are per GPU-hour by priority tier, with vCPU and RAM included: RTX 4090 24 GB USD 0.440 High, 0.347 Medium, 0.253 Low, 0.160 Lowest. Classes below the table start at USD 0.015 per GPU-hour at Lowest priority; CPU-only groups are USD 0.005 per vCPU-hour and USD 0.001 per GB-RAM-hour. Medium and Low can be preempted after roughly 30 minutes.",
     "unit": "none",
     "metered_on": "wall-clock",
     "source_url": "https://salad.com/pricing/",
@@ -40,16 +40,16 @@
   "limits": [
     {
       "kind": "volume-quota",
-      "value": "There is no free lane at all, so the binding constraint is the first dollar: a prepaid balance must be funded before any container runs.",
+      "value": "A billing method must be attached before any container can be deployed, and there is no free trial.",
       "source": "https://salad.com/pricing/"
     }
   ],
-  "limits_note": "There is no free lane at all, so the binding constraint is the first dollar: a prepaid balance must be funded before any container runs.",
+  "limits_note": "A billing method is required before a container deploys; CPU-only groups start at USD 0.005 per vCPU-hour and USD 0.001 per GB-RAM-hour and GPU classes at USD 0.015 per GPU-hour at Lowest priority.",
   "binding": "volume-quota",
-  "binding_note": "There is no free lane at all, so the binding constraint is the first dollar: a prepaid balance must be funded before any container runs.",
+  "binding_note": "A billing method is required before the first deployment; once attached, the per-hour rate is USD 0.005 per vCPU-hour for CPU-only groups and USD 0.015 per GPU-hour at Lowest priority.",
   "identity_cost": {
-    "kind": "email",
-    "detail": "as stated by the provider's signup page",
+    "kind": "card",
+    "detail": "Account creation uses only an email: \"Create your Salad account and sign in to the app with an email code or your Google account.\" \"Salad has no passwords. You sign in with a one-time code sent to your email, or with your Google account.\" Then \"Your SaladCloud organization must have a billing method associated with it in order to deploy a container or use any of the inference endpoints.\" The portal signup form itself could not be read on 2026-11-24.",
     "country": null
   },
   "reliability_note": "no reliability event observed",
@@ -97,10 +97,80 @@
       "proved": "there is no free trial and no minimum commitment",
       "capture": "sha256:6518f404333125ae0cea16a10827162bbdce018d02eac2fdd91f2a81909c9c3e",
       "quote": "No. SaladCloud and the Transcription API are pay-as-you-go with no minimum commitment, so you can start with a small, low-cost test before scaling."
+    },
+    {
+      "url": "https://salad.com/pricing/",
+      "date": "2026-11-24",
+      "proved": "CPU-only container groups have their own per-hour rates",
+      "capture": "sha256:ea2b10bcebad63d457e40dc42b3e2ae671d570120cea29a613b75fe7414098a0",
+      "quote": "Billed at $0.005 per vCPU-hour and $0.001 per GB of RAM per hour."
+    },
+    {
+      "url": "https://docs.salad.com/general/tutorials/account-setup",
+      "date": "2026-11-24",
+      "proved": "a billing method must be attached before any deployment",
+      "capture": "sha256:a6786903d8f80d8069ab8a7ba953e0381accec894f5c7efb977d7e225d7dcf85",
+      "quote": "Your SaladCloud organization must have a billing method associated with it in order to deploy a container or use any of the inference endpoints."
+    },
+    {
+      "url": "https://salad.com/pricing/",
+      "date": "2026-11-24",
+      "proved": "the headline USD 0.015 per GPU-hour at Lowest priority",
+      "capture": "sha256:ea2b10bcebad63d457e40dc42b3e2ae671d570120cea29a613b75fe7414098a0",
+      "quote": "Additional classes (RTX 3060, RTX 3070, RTX 3070 Ti, and others) are available in the portal from $0.015 per GPU-hour at Lowest priority."
+    },
+    {
+      "url": "https://salad.com/pricing/",
+      "date": "2026-11-24",
+      "proved": "no free trial; pay-as-you-go with no minimum commitment",
+      "capture": "sha256:ea2b10bcebad63d457e40dc42b3e2ae671d570120cea29a613b75fe7414098a0",
+      "quote": "No. SaladCloud and the Transcription API are pay-as-you-go with no minimum commitment, so you can start with a small, low-cost test before scaling."
+    },
+    {
+      "url": "https://salad.com/pricing/",
+      "date": "2026-11-24",
+      "proved": "per-second billing while an instance runs",
+      "capture": "sha256:ea2b10bcebad63d457e40dc42b3e2ae671d570120cea29a613b75fe7414098a0",
+      "quote": "Billing is per second while an instance is in the running state."
+    },
+    {
+      "url": "https://salad.com/pricing/",
+      "date": "2026-11-24",
+      "proved": "the RTX 4090 four-tier hourly rates",
+      "capture": "sha256:ea2b10bcebad63d457e40dc42b3e2ae671d570120cea29a613b75fe7414098a0",
+      "quote": "**RTX 4090** 24 GB $0.440 $0.347 $0.253 $0.160 $116.80"
+    },
+    {
+      "url": "https://salad.com/pricing/",
+      "date": "2026-11-24",
+      "proved": "Medium and Low tiers may be preempted after roughly 30 minutes",
+      "capture": "sha256:ea2b10bcebad63d457e40dc42b3e2ae671d570120cea29a613b75fe7414098a0",
+      "quote": "May be preempted by higher-priority groups. Minimum run before reallocation is roughly 30 minutes."
+    },
+    {
+      "url": "https://docs.salad.com/general/tutorials/account-setup",
+      "date": "2026-11-24",
+      "proved": "a billing method is required before any compute can deploy, which is the card gate",
+      "capture": "sha256:a6786903d8f80d8069ab8a7ba953e0381accec894f5c7efb977d7e225d7dcf85",
+      "quote": "Your SaladCloud organization must have a billing method associated with it in order to deploy a container or use any of the inference endpoints."
+    },
+    {
+      "url": "https://support.salad.com/guides/getting-started/how-to-register-and-log-into-salad/",
+      "date": "2026-11-24",
+      "proved": "the first-party signup guide shows an email code or Google account and no other identity document",
+      "capture": "sha256:bfb67b85618ee9af5fe5112ce50357fb1a26cd19b051066122573a1e68da3e56",
+      "quote": "Create your Salad account and sign in to the app with an email code or your Google account."
+    },
+    {
+      "url": "https://docs.salad.com/general/tutorials/account-setup",
+      "date": "2026-11-24",
+      "proved": "the billing method is required before deployment",
+      "capture": "sha256:a6786903d8f80d8069ab8a7ba953e0381accec894f5c7efb977d7e225d7dcf85",
+      "quote": "Your SaladCloud organization must have a billing method associated with it in order to deploy a container or use any of the inference endpoints."
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-11-03T08:50:33.434Z",
+  "verified_at": "2026-11-24T18:47:21.392Z",
   "notes": "Salad's USD 0.015/h is the lowest headline GPU rate in the whole class and it is a genuine consumer-GPU network, but the free door is closed. The SSAP grant (USD 5k-10k) is recorded here as a fails-identity door inside a paid-only record: it needs a company, not a person.",
   "extras": {
     "wave2": {

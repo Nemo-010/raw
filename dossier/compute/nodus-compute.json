@@ -18,8 +18,8 @@
     "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
   },
   "retention": {
-    "stated": "not stated",
-    "days": null,
+    "stated": "Finished Jobs are kept for 30 days so their logs and outputs can be read, then deleted. Research capacity is on-demand and interruptible; local scratch is erased when a node is released or reclaimed.",
+    "days": 30,
     "source_url": "https://www.nodus-compute.ai/pricing/",
     "notes": "Disk durability across instance stops and deletions is not documented."
   },
@@ -31,10 +31,11 @@
     "source_url": "https://www.nodus-compute.ai/pricing/"
   },
   "interface": [
-    "unknown"
+    "cli",
+    "rest"
   ],
-  "interface_detail": "Access interface not documented in published terms.",
-  "tooling": "not stated",
+  "interface_detail": "CLI (`nodus`), Python SDK and an API-key-authenticated HTTP API; browser sign-in with GitHub, Google or a device code.",
+  "tooling": "the user installs and runs the `nodus` CLI (pip `nodus-compute`, Homebrew or a standalone binary) or uses the Python SDK",
   "chaining": "not established",
   "limits": [
     {
@@ -50,8 +51,8 @@
   ],
   "limits_note": "Session cap, idle-reap and network policy are not documented. No rate published.",
   "identity_cost": {
-    "kind": "email",
-    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "kind": "card",
+    "detail": "The install guide states 'Verify your email and card in the console before creating an organization. Card verification does not collect a payment or turn on auto-recharge.' Sign-in accepts a browser session, GitHub, Google or a device code; email verification is required for new accounts.",
     "country": null
   },
   "reliability_note": "no reliability event recorded in the source passes",
@@ -67,10 +68,66 @@
       "url": "https://www.nodus-compute.ai/pricing/",
       "date": "2026-10-22",
       "proved": "'| 1 vCPU | 1 GiB | 25 GB | $0.0075 |' through '| 4 vCPU | 16 GiB | 64 GiB | $0.1054 |' with the note 'These six CPU/RAM sizes have nominal Modal equivalents', quoted"
+    },
+    {
+      "url": "https://nodus-compute.ai/docs/getting-started/authentication/",
+      "date": "2026-11-24",
+      "proved": "organization creation requires a verified email and a card",
+      "capture": "sha256:1162b7408fad00e684e502e6507bbeafadac1f8c642e1bf639bb1c75963fc2cc",
+      "quote": "Verify your email and card in the console before creating an organization. Card verification does not collect a payment or turn on auto-recharge."
+    },
+    {
+      "url": "https://nodus-compute.ai/docs/getting-started/authentication/",
+      "date": "2026-11-24",
+      "proved": "email and card verification, with no payment collected by verification, is the sign-up gate",
+      "capture": "sha256:1162b7408fad00e684e502e6507bbeafadac1f8c642e1bf639bb1c75963fc2cc",
+      "quote": "Verify your email and card in the console before creating an organization. Card verification does not collect a payment or turn on auto-recharge."
+    },
+    {
+      "url": "https://nodus-compute.ai/docs/getting-started/authentication/",
+      "date": "2026-11-24",
+      "proved": "the service provides an installable CLI",
+      "capture": "sha256:1162b7408fad00e684e502e6507bbeafadac1f8c642e1bf639bb1c75963fc2cc",
+      "quote": "The `nodus` CLI is one self-contained binary for macOS, Linux and Windows on x86-64 and ARM64. Pick one way to install it."
+    },
+    {
+      "url": "https://nodus-compute.ai/docs/getting-started/authentication/",
+      "date": "2026-11-24",
+      "proved": "the service uses browser sign-in and API keys through a CLI",
+      "capture": "sha256:1162b7408fad00e684e502e6507bbeafadac1f8c642e1bf639bb1c75963fc2cc",
+      "quote": "Your browser opens to confirm the sign-in. If you belong to several orgs, pick the ones this machine should use: the CLI stores one API key per org in the OS keychain"
+    },
+    {
+      "url": "https://nodus-compute.ai/docs/getting-started/authentication/",
+      "date": "2026-11-24",
+      "proved": "the CLI is installed by the user as a Python package",
+      "capture": "sha256:1162b7408fad00e684e502e6507bbeafadac1f8c642e1bf639bb1c75963fc2cc",
+      "quote": "pip install nodus-compute"
+    },
+    {
+      "url": "https://www.nodus-compute.ai/terms/",
+      "date": "2026-11-24",
+      "proved": "artifacts are retrievable for 30 days after termination",
+      "capture": "sha256:49e8bfb257fb26f5009d83f104a63722815b9aa67bb5e86572575710d9cc9524",
+      "quote": "After termination you have 30 days to retrieve artifacts and checkpoints, after which we may delete them."
+    },
+    {
+      "url": "https://www.nodus-compute.ai/terms/",
+      "date": "2026-11-24",
+      "proved": "the artifact retrieval window is 30 days",
+      "capture": "sha256:49e8bfb257fb26f5009d83f104a63722815b9aa67bb5e86572575710d9cc9524",
+      "quote": "After termination you have 30 days to retrieve artifacts and checkpoints, after which we may delete them."
+    },
+    {
+      "url": "https://www.nodus-compute.ai/pricing/",
+      "date": "2026-11-24",
+      "proved": "the pricing page still lists six CPU/RAM sizes with no free tier and no per-object cap",
+      "capture": "sha256:4ee0d69b4ccd88ada1ddb52002b8fe1a567a730d34ebccb32288548832a6d34b",
+      "quote": "These six CPU/RAM sizes have nominal Modal equivalents."
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-10-22T04:47:29.691Z",
+  "verified_at": "2026-11-24T13:20:59.949Z",
   "price_per_tb_month": null,
   "notes": "",
   "extras": {
