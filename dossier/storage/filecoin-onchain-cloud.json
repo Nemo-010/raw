@@ -15,12 +15,12 @@
   "per_object_cap": {
     "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.filecoin.cloud/cookbooks/payments-and-storage/",
-    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+    "notes": "The cookbook states no per-object size cap; it prices add-pieces calls per piece and charges per byte of storage."
   },
   "retention": {
     "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.filecoin.cloud/cookbooks/payments-and-storage/",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "The 30-day figure in the cookbook is a funds lockup, not a data retention term: pieces remain until they are garbage-collected."
   },
   "egress": {
     "terms": "CDN egress 'up to $14/TiB (about $0.014/GiB) downloaded' via Filecoin Beam, about half that from cache. 1 TiB/day = 30 TiB/mo = up to $420/mo",
@@ -28,7 +28,7 @@
     "free_allowance": "30 TiB per month"
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
   "interface_detail": "Synapse SDK; FWSS (Filecoin Warm Storage Service); Filecoin Pay streaming payments",
   "tooling": "synapse-sdk, USDFC deposits, lotus/curio on the provider side",
@@ -71,10 +71,45 @@
       "proved": "storage is $2.50/TiB/month per copy plus a $0.12/data set/month proving fee, and CDN egress is up to $14/TiB",
       "capture": "sha256:3c5676c8403160f28be32e1840ace063e8025b71a2ba4fcee846b00a3a756945",
       "quote": "| **Storage** | $2.50/TiB/month per copy | Charged only while pieces exist. Empty data sets have no recurring cost |"
+    },
+    {
+      "url": "https://docs.filecoin.cloud/cookbooks/payments-and-storage/",
+      "date": "2026-11-25",
+      "proved": "the first-party cookbook documents SDK APIs for storage and payments",
+      "capture": "sha256:3c5676c8403160f28be32e1840ace063e8025b71a2ba4fcee846b00a3a756945",
+      "quote": "**API reference**: [StorageManager](https://docs.filecoin.cloud/reference/filoz/synapse-sdk/storage/classes/storagemanager/) · [PaymentsService](https://docs.filecoin.cloud/reference/filoz/synapse-sdk/payments/classes/paymentsservice/)"
+    },
+    {
+      "url": "https://docs.filecoin.cloud/cookbooks/payments-and-storage/",
+      "date": "2026-11-25",
+      "proved": "the cookbook prices operations per piece and states no per-object size cap",
+      "capture": "sha256:3c5676c8403160f28be32e1840ace063e8025b71a2ba4fcee846b00a3a756945",
+      "quote": "| **Add pieces** | $0.008 + $0.003 per piece |"
+    },
+    {
+      "url": "https://docs.filecoin.cloud/cookbooks/payments-and-storage/",
+      "date": "2026-11-25",
+      "proved": "data is not deleted on a 30-day schedule; the 30-day figure applies to funds",
+      "capture": "sha256:3c5676c8403160f28be32e1840ace063e8025b71a2ba4fcee846b00a3a756945",
+      "quote": "Pieces remain at the provider until they’re garbage-collected, so a fresh rail can re-reference them."
+    },
+    {
+      "url": "https://docs.filecoin.cloud/cookbooks/payments-and-storage/",
+      "date": "2026-11-25",
+      "proved": "the cookbook still states the 30-day fund lockup that the retention note distinguishes",
+      "capture": "sha256:3c5676c8403160f28be32e1840ace063e8025b71a2ba4fcee846b00a3a756945",
+      "quote": "FWSS enforces a **30-day lockup period**: your account must always have enough funds to cover at least 30 days of storage at the current rate."
+    },
+    {
+      "url": "https://docs.filecoin.cloud/cookbooks/payments-and-storage/",
+      "date": "2026-11-25",
+      "proved": "the CDN egress rate is unchanged",
+      "capture": "sha256:3c5676c8403160f28be32e1840ace063e8025b71a2ba4fcee846b00a3a756945",
+      "quote": "| **CDN egress** | up to $14/TiB (≈ $0.014/GiB) downloaded | Optional, via Filecoin Beam. About half this when served from cache |"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-19T21:13:26.682Z",
+  "verified_at": "2026-11-25T02:33:18.816Z",
   "price_per_tb_month": "$2.50/TiB storage + up to $14/TiB egress",
   "notes": "$2.50/TiB/month per copy, plus $0.12 per data-set/month proving fee. 20 TiB = $50/mo per copy; two copies = $100/mo",
   "history": [],
