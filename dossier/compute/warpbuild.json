@@ -5,7 +5,7 @@
   "url": "https://www.warpbuild.com/pricing",
   "category": "macOS host",
   "free_tier": {
-    "stated": "No free allowance is published: the FAQ says a payment method is added when an account reaches its free usage or credit limits, and no page states the size of that free usage. Hosted Linux x86 runners are USD 0.004 a minute for 2 vCPU and 8 GB and USD 0.008 for 4 vCPU and 16 GB; the ARM64 2 vCPU runner is USD 0.003; BYOC runners are USD 0.002 a minute.",
+    "stated": "No free allowance is published: the FAQ names a free usage or credit limit but does not state its size. Hosted Linux x86 runners are USD 0.004 a minute for 2 vCPU and 8 GB and USD 0.008 for 4 vCPU and 16 GB; the ARM64 2 vCPU runner is USD 0.003; BYOC runners are USD 0.002 a minute.",
     "unit": "none",
     "metered_on": "wall-clock",
     "source_url": "https://www.warpbuild.com/pricing",
@@ -24,7 +24,7 @@
     "notes": "Disk durability across instance stops and deletions is not documented."
   },
   "egress": {
-    "terms": "not published",
+    "terms": "Networking through Tailscale is listed as free; no per-GB egress price or allowance is published.",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
@@ -44,7 +44,7 @@
     },
     {
       "kind": "per-object-cap",
-      "value": "cache storage is USD 0.20 a GB-month; SAML SSO is USD 250 a month",
+      "value": "cache storage is USD 0.20 per GB-month; SAML SSO is USD 250 a month; cache write or restore is USD 0.0001 per operation and snapshot restore is USD 0.04 per job",
       "source": "https://www.warpbuild.com/pricing"
     },
     {
@@ -53,10 +53,10 @@
       "source": "https://www.warpbuild.com/pricing"
     }
   ],
-  "limits_note": "no hard concurrency limit: the page says each builder profile is shared across jobs, and it sells no job cap or queue limit",
+  "limits_note": "no hard concurrency limit on cloud runners; each Docker builder machine runs up to one build per 4 vCPUs and extra machines start automatically when more builds run at once",
   "identity_cost": {
     "kind": "email",
-    "detail": "an email address: \"you can sign up with your email and start using WarpBuild immediately. You will be need to add a payment method when you hit the free usage or credit limits\"",
+    "detail": "An email address is enough to sign up and start using the service immediately; a payment method is added when the free usage or credit limit is reached. The size of that limit is not stated.",
     "country": null
   },
   "reliability_note": "no reliability event recorded in the source passes",
@@ -107,12 +107,75 @@
       "proved": "the ARM64 2 vCPU runner is USD 0.003 a minute",
       "capture": "sha256:1090ba0555392e915d690044981cce32f456762095020c56db5512dc82215f51",
       "quote": "Linux from $0.003/min"
+    },
+    {
+      "url": "https://www.warpbuild.com/pricing",
+      "date": "2026-11-24",
+      "proved": "the hosted x86 2 vCPU runner price is USD 0.004 per minute",
+      "capture": "sha256:617100169a5e45bec621fcdb5933c167ea7ad31d62e5bca724c47903a9537a66",
+      "quote": "| 2vCPU, 8GB RAM    | $0.004      |"
+    },
+    {
+      "url": "https://www.warpbuild.com/pricing",
+      "date": "2026-11-24",
+      "proved": "networking via Tailscale is listed as free in the add-ons table",
+      "capture": "sha256:617100169a5e45bec621fcdb5933c167ea7ad31d62e5bca724c47903a9537a66",
+      "quote": "| Networking (Tailscale) | Free                     |"
+    },
+    {
+      "url": "https://www.warpbuild.com/pricing",
+      "date": "2026-11-24",
+      "proved": "signup needs an email and no payment method until the free usage limit",
+      "capture": "sha256:617100169a5e45bec621fcdb5933c167ea7ad31d62e5bca724c47903a9537a66",
+      "quote": "No, you can sign up with your email and start using WarpBuild immediately. You will be need to add a payment method when you hit the free usage or credit limits."
+    },
+    {
+      "url": "https://www.warpbuild.com/pricing",
+      "date": "2026-11-24",
+      "proved": "the add-ons table lists SAML SSO at USD 250 a month",
+      "capture": "sha256:617100169a5e45bec621fcdb5933c167ea7ad31d62e5bca724c47903a9537a66",
+      "quote": "| SAML SSO               | $250/month               |\n\n| Data Residency         | $250/month               |"
+    },
+    {
+      "url": "https://www.warpbuild.com/pricing",
+      "date": "2026-11-24",
+      "proved": "each Docker builder machine runs up to one build per 4 vCPUs",
+      "capture": "sha256:617100169a5e45bec621fcdb5933c167ea7ad31d62e5bca724c47903a9537a66",
+      "quote": "Each builder machine runs up to one build per 4 vCPUs at the same time."
+    },
+    {
+      "url": "https://www.warpbuild.com/pricing",
+      "date": "2026-11-24",
+      "proved": "cache storage is USD 0.20 per GB-month",
+      "capture": "sha256:617100169a5e45bec621fcdb5933c167ea7ad31d62e5bca724c47903a9537a66",
+      "quote": "| Cache Storage          | $0.20 per GB-month       |"
+    },
+    {
+      "url": "https://www.warpbuild.com/pricing",
+      "date": "2026-11-24",
+      "proved": "the add-ons table lists cache write and restore pricing",
+      "capture": "sha256:617100169a5e45bec621fcdb5933c167ea7ad31d62e5bca724c47903a9537a66",
+      "quote": "| Cache Write / Restore  | $0.0001 per operation    |"
+    },
+    {
+      "url": "https://www.warpbuild.com/pricing",
+      "date": "2026-11-24",
+      "proved": "signup is by email with a payment method added at the limit",
+      "capture": "sha256:617100169a5e45bec621fcdb5933c167ea7ad31d62e5bca724c47903a9537a66",
+      "quote": "No, you can sign up with your email and start using WarpBuild immediately. You will be need to add a payment method when you hit the free usage or credit limits."
+    },
+    {
+      "url": "https://www.warpbuild.com/pricing",
+      "date": "2026-11-24",
+      "proved": "networking via Tailscale is free",
+      "capture": "sha256:617100169a5e45bec621fcdb5933c167ea7ad31d62e5bca724c47903a9537a66",
+      "quote": "| Networking (Tailscale) | Free                     |"
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-11-10T02:22:59.202Z",
+  "verified_at": "2026-11-24T14:51:50.062Z",
   "price_per_tb_month": null,
-  "notes": "The plan grid priced at USD 0.004 a minute for 2 vCPU and USD 0.008 for 4 vCPU on the day it was read, with ARM64 2 vCPU at USD 0.003, cache storage at USD 0.20 a GB-month and BYOC at USD 0.002 a minute. No free allowance is published, so a reader cannot size the free usage the FAQ refers to; the USD 0.003 entry that names 2 vCPU is the ARM64 row, not the x86 one.",
+  "notes": "The plan grid prices 2 vCPU at USD 0.004 a minute on x86 and USD 0.003 on ARM64, cache storage at USD 0.20 per GB-month and BYOC runners at USD 0.002 a minute. The USD 0.003 row is the ARM64 tier, not the x86 one; no free allowance is published.",
   "extras": {
     "seed_status": "ranked",
     "talaria_m10h_usd": 54.0,

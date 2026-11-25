@@ -12,11 +12,11 @@
   ],
   "interface_detail": "TypeScript and Python SDKs, a Box CLI, and SSH to <box-id>@us-east-1.box.upstash.com; boxes run on AWS us-east-1 only",
   "tooling": "Upstash SDK and REST; BYOK for model providers on every plan",
-  "chaining": "the split between active-CPU billing and a fixed keep-alive price is the mechanism, and it makes one page carry two products",
-  "limits_note": "5 GB, 10 GB and 20 GB of disk on Small, Medium and Large; disk is the tightest resource on this page",
+  "chaining": "standard boxes freeze when idle and bill only active CPU, while keep-alive boxes run at a fixed $0.0111 per box-hour ($8 a month) for Small; storage is $0.10 per GB-month on pay-as-you-go",
+  "limits_note": "10 GB, 20 GB and 30 GB of disk on Small, Medium and Large; storage bills at USD 0.10 per GB-month on pay-as-you-go",
   "reliability_note": "no reliability event observed",
   "confidence": "documented",
-  "verified_at": "2026-11-18T04:45:11.648Z",
+  "verified_at": "2026-11-24T13:21:07.387Z",
   "price_per_tb_month": null,
   "history": [],
   "slug": "upstash-box",
@@ -24,12 +24,12 @@
   "url": "https://upstash.com/pricing/box",
   "category": "container and VM sandbox",
   "free_tier": {
-    "stated": "Free: USD 0, 10 concurrent boxes, 5 CPU hours a month, USD 1 of LLM token budget a month",
+    "stated": "Free: USD 0, up to 10 concurrent boxes and 5 CPU hours a month; agents use the user's own model provider key and no LLM token budget is included",
     "unit": "hours",
     "metered_on": "wall-clock",
     "source_url": "https://upstash.com/pricing/box",
     "read_on": "2026-10-22",
-    "notes": "after the LLM limit the API returns 400 Bad Request"
+    "notes": "the page no longer publishes an LLM token allowance; model usage needs the user's key"
   },
   "retention": {
     "stated": "standard boxes auto-pause when idle with no CPU charges; keep-alive boxes run continuously at a fixed monthly price",
@@ -50,13 +50,13 @@
     },
     {
       "kind": "per-object-cap",
-      "value": "largest size is Large: 8 vCPU / 16 GB / 20 GB disk",
+      "value": "largest size is Large: 8 vCPU / 16 GB / 30 GB disk; Small has 10 GB and Medium 30 GB",
       "source": "https://upstash.com/pricing/box"
     }
   ],
   "identity_cost": {
     "kind": "email",
-    "detail": "Free plan is USD 0; no card stated on the pricing page",
+    "detail": "Sign up with an Amazon, GitHub or Google account, or with email and password; the account page states that an email address is collected. The pricing page states no card requirement for the USD 0 plan.",
     "country": null
   },
   "evidence": [
@@ -95,10 +95,73 @@
       "proved": "the page states the session clock and idle reap recorded here, or states that it publishes none",
       "capture": "sha256:f0cc17724accaccfffd329c9fdeb2d210342a0683b942d485d93b4cc98722b53",
       "quote": "Standard boxes automatically freeze after inactivity."
+    },
+    {
+      "url": "https://upstash.com/pricing/box",
+      "date": "2026-11-24",
+      "proved": "the free tier has no LLM token allowance any more",
+      "capture": "sha256:7b0261aa1b47cc949b6addc09e01a9217e9912be00ffc641ff336c7a14eb8d68",
+      "quote": "### Free Tier\n\n- Up to 10 concurrent boxes\n- 5 CPU hours per month\n- Agents use your own model provider key"
+    },
+    {
+      "url": "https://https://upstash.com/pricing/box",
+      "date": "2026-11-24",
+      "proved": "model usage is billed by the user's provider, not by Upstash",
+      "capture": "sha256:7b0261aa1b47cc949b6addc09e01a9217e9912be00ffc641ff336c7a14eb8d68",
+      "quote": "Agents use your own model provider key"
+    },
+    {
+      "url": "https://upstash.com/pricing/box",
+      "date": "2026-11-24",
+      "proved": "the disk limits differ from the record's older 5/10/20 GB figures",
+      "capture": "sha256:7b0261aa1b47cc949b6addc09e01a9217e9912be00ffc641ff336c7a14eb8d68",
+      "quote": "Storage limits are 10 GB for Small, 20 GB for Medium, and 30 GB for Large."
+    },
+    {
+      "url": "https://upstash.com/pricing/box",
+      "date": "2026-11-24",
+      "proved": "storage pricing is published and the disk sizes changed",
+      "capture": "sha256:7b0261aa1b47cc949b6addc09e01a9217e9912be00ffc641ff336c7a14eb8d68",
+      "quote": "**Storage:** $0.10 per GB/month (billed separately on Pay as You Go)"
+    },
+    {
+      "url": "https://upstash.com/docs/common/account/createaccount",
+      "date": "2026-11-24",
+      "proved": "registration takes an account, with email/password as an alternative",
+      "capture": "sha256:b122bc2ee2ad1feb60103ffc061a57e534aa642ac3e02475d55aa10ad94a3a53",
+      "quote": "You can sign up for <a href=\"https://console.upstash.com\" target=\"_blank\">Upstash</a> using your Amazon, Github or Google accounts."
+    },
+    {
+      "url": "https://upstash.com/pricing/box",
+      "date": "2026-11-24",
+      "proved": "both billing products are described on one page",
+      "capture": "sha256:7b0261aa1b47cc949b6addc09e01a9217e9912be00ffc641ff336c7a14eb8d68",
+      "quote": "- Keep-alive boxes: fixed rate per hour by size, stay on continuously (see below)"
+    },
+    {
+      "url": "https://upstash.com/pricing/box",
+      "date": "2026-11-24",
+      "proved": "the current Small plan price and shape",
+      "capture": "sha256:7b0261aa1b47cc949b6addc09e01a9217e9912be00ffc641ff336c7a14eb8d68",
+      "quote": "| Small | 2 vCPU | 4 GB RAM | 10 GB | $0.1/active CPU hour | $0.0111/hour ($8/month) |"
+    },
+    {
+      "url": "https://upstash.com/pricing/box",
+      "date": "2026-11-24",
+      "proved": "the idle-freeze behaviour is unchanged",
+      "capture": "sha256:7b0261aa1b47cc949b6addc09e01a9217e9912be00ffc641ff336c7a14eb8d68",
+      "quote": "Standard boxes automatically freeze after inactivity."
+    },
+    {
+      "url": "https://upstash.com/pricing/box",
+      "date": "2026-11-24",
+      "proved": "the idle section is present on the pricing page",
+      "capture": "sha256:7b0261aa1b47cc949b6addc09e01a9217e9912be00ffc641ff336c7a14eb8d68",
+      "quote": "### What happens when a box is idle?"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "notes": "Upstash Box provides serverless container sandboxes with a free tier offering 5 CPU hours monthly, alongside metered usage plans starting from USD 3.29 monthly.",
+  "notes": "Serverless container sandboxes on AWS us-east-1. Free: 10 concurrent boxes and 5 CPU hours monthly, with the user's own model key. Pay-as-you-go bills active CPU at $0.10/$0.20/$0.40 per core-hour by size; keep-alive fixes Small at $0.0111 per box-hour ($8 a month), Medium at $0.0222 ($16) and Large at $0.0444 ($32). Storage is $0.10 per GB-month; no egress rate is published.",
   "extras": {
     "shape": {
       "vcpu": 2,

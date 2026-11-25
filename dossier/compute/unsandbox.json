@@ -22,7 +22,7 @@
     "source_url": "https://unsandbox.com/docs"
   },
   "egress": {
-    "terms": "Not published. Neither the pricing page nor the docs page read states a traffic allowance, a per-GB rate, or an egress quota; the plan card sells concurrency, request rate and container size only. Services are served with automatic HTTPS on *.on.unsandbox.com and custom domains by CNAME.",
+    "terms": "No rate or allowance is published. The docs describe two network modes: zerotrust with complete network isolation and no internet access, and semitrusted with internet access via an egress proxy; services use automatic HTTPS at *.on.unsandbox.com and custom domains by CNAME.",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
@@ -32,7 +32,7 @@
     "rest",
     "cli"
   ],
-  "interface_detail": "REST API with public/secret API keys, a Python client (un.py), 42+ language runtimes, persistent sessions over tmux/screen, and long-running services with automatic TLS.",
+  "interface_detail": "REST API with HMAC-SHA256-signed public/secret keys, a downloadable CLI and 42+ language SDKs, persistent sessions over tmux/screen, and long-running services with automatic TLS.",
   "tooling": "The vendor's own Python client and raw REST. Sessions are reached with a shell over tmux or screen, so existing SSH-style workflows do not transfer: this is an API-first product, not a machine you log into.",
   "chaining": "USD 7 a month buys a 1 vCPU / 2 GB container that can run as a long-lived HTTPS service with a custom domain, freezing between requests. That makes it a candidate for a small always-on endpoint or a scheduled job runner, not for a daily-driver shell and not for a VPN node.",
   "limits": [
@@ -52,10 +52,10 @@
   "binding_note": "At 7 requests a minute a single agent loop or a modest webhook receiver saturates the plan long before the 1 vCPU or the 2 GB is used, and the next step up is USD 91 a month.",
   "identity_cost": {
     "kind": "card",
-    "detail": "The paid path is 'Purchase API Key' from the pricing page, so the USD 7 tier is bought, not registered for. The USD 0 free tier also requires an account. Whether a debit or prepaid card is accepted, whether any authorisation is held, and whether the free tier can be entered without a card are not stated on the pages read.",
+    "detail": "The pricing page's flow is 'Select tier → Choose duration → Pick payment → Get API key instantly', so a payment is part of obtaining a key. The docs say to sign up at unsandbox.com/console for API credentials and the console offers email-based OTP protection; the free tier's card requirement is not published.",
     "country": null
   },
-  "reliability_note": "Nothing observed. A container that is frozen between requests loses in-flight process state on the unfreeze unless the service is designed for it; the docs present freeze as resource saving and do not promise process continuity.",
+  "reliability_note": "Frozen services auto-unfreeze on an HTTP request; snapshots and images are published as preserving data across freezes and container deletion. Interrupt-free process continuity is not promised.",
   "confidence": "documented",
   "confidence_note": "Plan prices, resources and rate caps come from the vendor's pricing page read today; the lifecycle and freeze behaviour come from the docs page read today. What is missing and would change the record: the maximum custom TTL (which decides whether this is an always-on box at all), the egress terms, and the payment/identity gate.",
   "evidence": [
@@ -92,10 +92,59 @@
       "proved": "the page states the session clock and idle reap recorded here, or states that it publishes none",
       "capture": "sha256:433d52663aa3ea3795a80d5ab4a7e1644ab58f9a80fcba4e4e2f10acf606cd57",
       "quote": "✓ 15 minute TTL max"
+    },
+    {
+      "url": "https://unsandbox.com/pricing",
+      "date": "2026-11-24",
+      "proved": "the free tier still carries a 15-minute TTL maximum",
+      "capture": "sha256:38e05ee71c26a6067fe36643b3bc2894efd72bb38c9b56862af80fdf451446bc",
+      "quote": "✓ 15 minute TTL max"
+    },
+    {
+      "url": "https://unsandbox.com/pricing",
+      "date": "2026-11-24",
+      "proved": "a payment step is part of the API-key flow",
+      "capture": "sha256:38e05ee71c26a6067fe36643b3bc2894efd72bb38c9b56862af80fdf451446bc",
+      "quote": "Select tier →\nChoose duration →\nPick payment →\nGet API key instantly →"
+    },
+    {
+      "url": "https://unsandbox.com/docs",
+      "date": "2026-11-24",
+      "proved": "network egress exists through a proxy, with no rate published",
+      "capture": "sha256:1b15831f77edf6d101a22fce8228785ac35324751c69e6e9ed52c951826c8511",
+      "quote": "# Semi-Trusted\n\nInternet access via egress proxy."
+    },
+    {
+      "url": "https://unsandbox.com/docs",
+      "date": "2026-11-24",
+      "proved": "the API uses signed keys and is reachable from the CLI and SDKs",
+      "capture": "sha256:1b15831f77edf6d101a22fce8228785ac35324751c69e6e9ed52c951826c8511",
+      "quote": "All API requests require HMAC-SHA256 signature authentication for security."
+    },
+    {
+      "url": "https://unsandbox.com/docs",
+      "date": "2026-11-24",
+      "proved": "a frozen service wakes on an inbound request",
+      "capture": "sha256:1b15831f77edf6d101a22fce8228785ac35324751c69e6e9ed52c951826c8511",
+      "quote": "# Freeze (auto-unfreezes on HTTP request)"
+    },
+    {
+      "url": "https://unsandbox.com/pricing",
+      "date": "2026-11-24",
+      "proved": "the Development tier price is unchanged at USD 7 a month",
+      "capture": "sha256:38e05ee71c26a6067fe36643b3bc2894efd72bb38c9b56862af80fdf451446bc",
+      "quote": "### Development\n\n$7\n/month"
+    },
+    {
+      "url": "https://console.unikraft.cloud/auth/signin",
+      "date": "2026-11-24",
+      "proved": "captured while checking sign-in routes; not used for an unsandbox value",
+      "capture": "sha256:07d892d5ea287fe71f5e0adc55b094734fd3f5882a9550e28590b211500aa90d",
+      "quote": "Use one of the sign-in methods below to continue."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-18T04:45:10.716Z",
+  "verified_at": "2026-11-24T13:21:07.386Z",
   "price_per_tb_month": null,
   "history": [],
   "notes": "The plan ladder is USD 0 / 7 / 91 / 203, so the USD 7 tier is the only affordable one and its 7 requests a minute is the whole offer. Region and hosting provider are not published. The maximum custom TTL on a paid plan is the single fact that decides whether USD 7 buys an always-on service or an occasionally-running one; it was not recoverable from the pricing or docs pages, and support would have to answer it.",

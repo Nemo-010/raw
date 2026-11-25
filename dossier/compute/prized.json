@@ -19,12 +19,12 @@
     "notes": "A Small is 4 vCPU / 16 GB / 300 GB at USD 0.137 an hour, which burns the whole USD 30 in nine days."
   },
   "retention": {
-    "stated": "Asleep, a box costs only its disk at USD 0.0001 per GB-hour; a Small asleep for a month is about USD 22. Credit rolls over up to two months of the plan.",
+    "stated": "a paused sandbox is deleted 30 days after its last use on the free tier; a stopped box's disk is kept and billed at USD 0.0001 per GB-hour while asleep",
     "days": null,
     "source_url": "https://prized.dev/docs/billing"
   },
   "egress": {
-    "terms": "not published: the page read states no egress allowance or price",
+    "terms": "outbound traffic is not filtered; no allowance or per-GB price is published",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
@@ -36,7 +36,7 @@
     "rest"
   ],
   "interface_detail": "SSH to the box (plain ssh or prized ssh); the prized CLI (macOS, Linux, Windows); an HTTP API for boxes and sandboxes; a browser dashboard",
-  "tooling": "not stated",
+  "tooling": "SSH to a box with a standard client or the prized CLI; a CLI and an HTTP API drive boxes and sandboxes",
   "chaining": "not established",
   "limits": [
     {
@@ -112,10 +112,59 @@
       "proved": "the page was read on 2026-11-18 and states the egress term recorded here, or states none",
       "capture": "sha256:994ad4cb3e680c17e9fb81a68fc91e21f65c316c3c321c18b966865492d31f36",
       "quote": "# Billing > How a monthly plan ($10 to $1,000, or sized to your boxes past that) becomes credit, what boxes cost by the hour, and what happens when the credit runs out."
+    },
+    {
+      "url": "https://prized.dev/docs/billing",
+      "date": "2026-11-24",
+      "proved": "a paused free-tier sandbox is deleted after 30 days of no use",
+      "capture": "sha256:2278966cca02f10aa311eb679c013ee95e2a1169e30592ffd82a4bb8526e43b0",
+      "quote": "on the free tier it is deleted 30 days after its last use"
+    },
+    {
+      "url": "https://prized.dev/docs/machines",
+      "date": "2026-11-24",
+      "proved": "outbound traffic is not filtered",
+      "capture": "sha256:5b9b4df67ed3bb631835690845b6d7a79736b882d8845d5a8ecfda29f13be13e",
+      "quote": "| Outbound | Not filtered |"
+    },
+    {
+      "url": "https://prized.dev/docs",
+      "date": "2026-11-24",
+      "proved": "SSH is the documented way to work on a box",
+      "capture": "sha256:f5e4239821ab67eb405bc10982bda4a87084d72e1c90ba712c5c65dfa88bede7",
+      "quote": "You edit and run everything on the box over SSH."
+    },
+    {
+      "url": "https://prized.dev/docs/billing",
+      "date": "2026-11-24",
+      "proved": "the free credit is USD 30 once per person and needs no card",
+      "capture": "sha256:2278966cca02f10aa311eb679c013ee95e2a1169e30592ffd82a4bb8526e43b0",
+      "quote": "New workspaces get $30 of free credit, once per person, as the owner walks through onboarding or first signs in with `prized login` through the browser (an account a coding agent made gets it, or not, when its code is checked: [Agent sign-in](https://prized.dev/docs/agent-sign-in#boxes-and-billing)); it spends like paid credit, and the tour starts a box on it with no card. It does not refill: at zero, boxes pause ([Running out](#running-out)) and the dashboard opens on the plan picker. Choosing a plan keeps what is left, and the first cycle's credit lands at once."
+    },
+    {
+      "url": "https://prized.dev/docs/billing",
+      "date": "2026-11-24",
+      "proved": "the credit is once per email or Google or GitHub account and needs no card",
+      "capture": "sha256:2278966cca02f10aa311eb679c013ee95e2a1169e30592ffd82a4bb8526e43b0",
+      "quote": "A workspace whose owner already took the free credit, on the same email address or the same Google or GitHub account, gets none, including after [erasing](https://prized.dev/docs/data-retention#closing-a-workspace) the first workspace."
+    },
+    {
+      "url": "https://prized.dev/docs",
+      "date": "2026-11-24",
+      "proved": "SSH is the documented interface",
+      "capture": "sha256:f5e4239821ab67eb405bc10982bda4a87084d72e1c90ba712c5c65dfa88bede7",
+      "quote": "You edit and run everything on the box over SSH."
+    },
+    {
+      "url": "https://prized.dev/docs/billing",
+      "date": "2026-11-24",
+      "proved": "the free-tier sandbox shape and 60-minute run cap are restated",
+      "capture": "sha256:2278966cca02f10aa311eb679c013ee95e2a1169e30592ffd82a4bb8526e43b0",
+      "quote": "**Sandboxes on the free credit** run within the [free tier](https://prized.dev/docs/sandboxes#free-tier): up to 10 at once, each up to 2 vCPU, 4 GB of memory and 60 minutes."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-18T04:58:14.741Z",
+  "verified_at": "2026-11-24T13:21:01.722Z",
   "price_per_tb_month": null,
   "notes": "USD 30 / USD 0.014 = 2,143 hours, which is 89 days of a 2 vCPU / 2 GB box with no card. The page's own claim of 'about three months on a Nano' matches. This is the longest no-card calendar coverage in this category and it is a real VM, not a sandbox, but a 2 vCPU / 2 GB box is also the smallest shape any row here offers for a full month.",
   "extras": {

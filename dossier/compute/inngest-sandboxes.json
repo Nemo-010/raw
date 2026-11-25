@@ -1,141 +1,228 @@
 {
-  "topic": "compute",
-  "slug": "inngest-sandboxes",
-  "provider": "Inngest Sandboxes",
-  "url": "https://www.inngest.com/pricing",
-  "category": "microVM sandbox",
-  "tier": "Pro (sandboxes in open beta)",
-  "free_tier": {
-    "stated": "Sandboxes are in open beta on Pro plans and above; the Free plan lists 50k executions, 5 concurrent steps, 5 seats and $0/mo with no credit card required, but the beta is not available on Free. Pro is $99/mo and above.",
-    "unit": "none",
-    "metered_on": "wall-clock",
-    "source_url": "https://www.inngest.com/pricing",
-    "read_on": "2026-11-25",
-    "notes": "Sandbox compute bills per second: CPU $0.000011 per vCPU-second (about $0.0396 per vCPU-hour) and memory $0.000003 per GB-second (about $0.0108 per GB-hour). The smallest 1 vCPU/1 GB sandbox costs about five cents for a full hour of active runtime, and paused time bills neither CPU nor RAM."
+ "topic": "compute",
+ "slug": "inngest-sandboxes",
+ "provider": "Inngest Sandboxes",
+ "url": "https://www.inngest.com/pricing",
+ "category": "microVM sandbox",
+ "tier": "Pro (sandboxes in open beta)",
+ "free_tier": {
+  "stated": "Sandboxes are in open beta on Pro plans and above; the Free plan lists 50k executions, 5 concurrent steps, 5 seats and $0/mo with no credit card required, but the beta is not available on Free. Pro is $99/mo and above.",
+  "unit": "none",
+  "metered_on": "wall-clock",
+  "source_url": "https://www.inngest.com/pricing",
+  "read_on": "2026-11-25",
+  "notes": "Sandbox compute bills per second: CPU $0.000011 per vCPU-second (about $0.0396 per vCPU-hour) and memory $0.000003 per GB-second (about $0.0108 per GB-hour). The smallest 1 vCPU/1 GB sandbox costs about five cents for a full hour of active runtime, and paused time bills neither CPU nor RAM."
+ },
+ "per_object_cap": {
+  "stated": "not applicable: the billed unit is vCPU-seconds and GB-seconds of a sandbox, not an object; a single event is capped at 3 MiB on Pro",
+  "bytes": null,
+  "source_url": "https://www.inngest.com/pricing"
+ },
+ "retention": {
+  "stated": "Files and processes inside a Sandbox end when the Sandbox does; anything that must outlive it goes to external storage. Trace and log history is 7 days on Pro.",
+  "days": null,
+  "source_url": "https://www.inngest.com/blog/sandboxes-are-a-durability-problem",
+  "notes": "A sandbox can pause as a step, releasing live runtime and checkpointing its filesystem, memory, processes, environment and network identity; paused time is not billed."
+ },
+ "egress": {
+  "terms": "not published: the pricing page and the sandbox announcement state no egress allowance or price for sandboxes",
+  "metered": false,
+  "free_allowance": null,
+  "price_per_tb": null,
+  "source_url": "https://www.inngest.com/pricing"
+ },
+ "interface": [
+  "rest",
+  "cli"
+ ],
+ "interface_detail": "Sandboxes are created as steps inside Inngest functions with step.sandbox.create() in the TypeScript SDK; files and live logs are also available through the direct inngest.sandboxes client.",
+ "tooling": "the Inngest TypeScript SDK with sandboxMiddleware(), plus the free npx inngest-cli dev local server; SSH, S3-backed mounts and a one-call TypeScript helper are listed as coming next.",
+ "chaining": "A sandbox is a durable step in an Inngest function, so it inherits the run's retries, flow control, traces and evals and pauses with the run's waits; the hosted service is the offer, and the open-source Inngest server is a last resort for the orchestration layer.",
+ "limits": [
+  {
+   "kind": "volume-quota",
+   "value": "active runtime capped at one hour per sandbox; paused time does not count",
+   "source": "https://www.inngest.com/blog/sandboxes-are-a-durability-problem"
   },
-  "per_object_cap": {
-    "stated": "not applicable: the billed unit is vCPU-seconds and GB-seconds of a sandbox, not an object; a single event is capped at 3 MiB on Pro",
-    "bytes": null,
-    "source_url": "https://www.inngest.com/pricing"
+  {
+   "kind": "retention-clamped",
+   "value": "maximum sandbox duration 24 hours on Free and Pro, custom on Enterprise; 100 concurrent sandboxes on Pro, 1,000 on Enterprise",
+   "source": "https://www.inngest.com/pricing"
   },
-  "retention": {
-    "stated": "Files and processes inside a Sandbox end when the Sandbox does; anything that must outlive it goes to external storage. Trace and log history is 7 days on Pro.",
-    "days": null,
-    "source_url": "https://www.inngest.com/blog/sandboxes-are-a-durability-problem",
-    "notes": "A sandbox can pause as a step, releasing live runtime and checkpointing its filesystem, memory, processes, environment and network identity; paused time is not billed."
-  },
-  "egress": {
-    "terms": "not published: the pricing page and the sandbox announcement state no egress allowance or price for sandboxes",
-    "metered": false,
-    "free_allowance": null,
-    "price_per_tb": null,
-    "source_url": "https://www.inngest.com/pricing"
-  },
-  "interface": [
-    "rest",
-    "cli"
-  ],
-  "interface_detail": "Sandboxes are created as steps inside Inngest functions with step.sandbox.create() in the TypeScript SDK; files and live logs are also available through the direct inngest.sandboxes client.",
-  "tooling": "the Inngest TypeScript SDK with sandboxMiddleware(), plus the free npx inngest-cli dev local server; SSH, S3-backed mounts and a one-call TypeScript helper are listed as coming next.",
-  "chaining": "A sandbox is a durable step in an Inngest function, so it inherits the run's retries, flow control, traces and evals and pauses with the run's waits; the hosted service is the offer, and the open-source Inngest server is a last resort for the orchestration layer.",
-  "limits": [
-    {
-      "kind": "volume-quota",
-      "value": "active runtime capped at one hour per sandbox; paused time does not count",
-      "source": "https://www.inngest.com/blog/sandboxes-are-a-durability-problem"
-    },
-    {
-      "kind": "retention-clamped",
-      "value": "maximum sandbox duration 24 hours on Free and Pro, custom on Enterprise; 100 concurrent sandboxes on Pro, 1,000 on Enterprise",
-      "source": "https://www.inngest.com/pricing"
-    },
-    {
-      "kind": "volume-quota",
-      "value": "Pro base price $99/mo with 1m executions included, then $50 per 1m",
-      "source": "https://www.inngest.com/pricing"
-    }
-  ],
-  "binding": "volume-quota",
-  "binding_note": "The one-hour active-runtime cap per sandbox binds before the 24-hour maximum duration, because a sandbox stops billing and pausing still preserves it for the run's waits.",
-  "identity_cost": {
-    "kind": "email",
-    "detail": "The signup page says 'SOC 2 Type II certified · Free tier, no card required' and asks for an account; the sandbox beta additionally requires a Pro plan or above, which is a paid tier.",
-    "country": null
-  },
-  "reliability_note": "Sandboxes are in open beta, available on Pro plans and above in the TypeScript SDK only (Python and Go planned); cleanup is the user's function's job during beta, since create does not destroy the machine.",
-  "confidence": "documented",
-  "confidence_note": "The per-second rates, one-hour active cap, sizes, beta scope and signup gate are quoted from Inngest's own pricing page, sandbox announcement and signup page read 2026-11-25.",
-  "evidence": [
-    {
-      "url": "https://www.inngest.com/pricing",
-      "date": "2026-11-25",
-      "proved": "sandboxes bill per second for vCPU and memory, and the Free plan needs no credit card",
-      "capture": "sha256:47ea73ad8adacdf7ed8257ef484abbd4568529fc8479d9be29e76b3e205616e7",
-      "quote": "Billed per second for vCPU and memory."
-    },
-    {
-      "url": "https://www.inngest.com/pricing",
-      "date": "2026-11-25",
-      "proved": "the maximum sandbox duration on Pro is 24 hours and 100 sandboxes can run concurrently",
-      "capture": "sha256:47ea73ad8adacdf7ed8257ef484abbd4568529fc8479d9be29e76b3e205616e7",
-      "quote": "Max sandbox duration"
-    },
-    {
-      "url": "https://www.inngest.com/blog/sandboxes-are-a-durability-problem",
-      "date": "2026-11-25",
-      "proved": "sandboxes bill CPU at $0.000011 per vCPU-second and RAM at $0.000003 per GB-second only while running",
-      "capture": "sha256:517ca84a5f526d2e52d788d29233c65c6b4750cbbb92fc697ab1a77f3731bf3c",
-      "quote": "CPU is $0.000011 per vCPU-second and RAM is $0.000003 per GB-second, so the smallest size, 1 vCPU with 1 GB, comes to about five cents for a full hour of active runtime."
-    },
-    {
-      "url": "https://www.inngest.com/blog/sandboxes-are-a-durability-problem",
-      "date": "2026-11-25",
-      "proved": "active runtime is capped at one hour per sandbox",
-      "capture": "sha256:517ca84a5f526d2e52d788d29233c65c6b4750cbbb92fc697ab1a77f3731bf3c",
-      "quote": "Active runtime is capped at one hour per Sandbox, which bounds what a missed cleanup can cost."
-    },
-    {
-      "url": "https://www.inngest.com/blog/sandboxes-are-a-durability-problem",
-      "date": "2026-11-25",
-      "proved": "the sandbox beta is for Pro plans and above",
-      "capture": "sha256:517ca84a5f526d2e52d788d29233c65c6b4750cbbb92fc697ab1a77f3731bf3c",
-      "quote": "Inngest Sandboxes are now in open beta for every Pro plan and above: isolated microVMs you create as steps inside your existing functions"
-    },
-    {
-      "url": "https://app.inngest.com/sign-up",
-      "date": "2026-11-25",
-      "proved": "signup requires an account and no credit card",
-      "capture": "sha256:78e216de0256375fc31683b9873a3bbeab9fa3b99541251b92ee28688e98b286",
-      "quote": "SOC 2 Type II certified · Free tier, no card required"
-    }
-  ],
-  "verdict": "paid-only",
-  "verified_at": "2026-11-25T02:12:34.709Z",
-  "notes": "Hosted microVM sandboxes that are steps in an Inngest durable function, billed per second of active runtime and paused with the run's waits. The sandbox beta is on Pro ($99/mo) and above, so no free sandbox tier is offered; the general Inngest orchestration service has a separate free record (dev-services/inngest).",
-  "extras": {
-    "shape": {
-      "vcpu": 1,
-      "ram_gib": 1,
-      "disk_gib": null,
-      "gpu_class": "none",
-      "gpu_count": 0,
-      "note": "sizes are 1 vCPU/1024 MiB, 2/2048 or 4/4096"
-    },
-    "billing_model": "per-second CPU and memory while active, paused time free, on a Pro-or-above plan",
-    "free_tier_kind": "none-for-sandboxes",
-    "network_out": {
-      "allow_outbound": true,
-      "allow_inbound_listen": null,
-      "ports": "not stated",
-      "static_ip": null,
-      "ipv6": null,
-      "per_session_bytes": null
-    },
-    "session_cap": {
-      "wall_clock_min": 60,
-      "idle_reap_s": null,
-      "restart_required": false,
-      "note": "one hour of active runtime per sandbox; paused time is excluded"
-    }
+  {
+   "kind": "volume-quota",
+   "value": "Pro base price $99/mo with 1m executions included, then $50 per 1m",
+   "source": "https://www.inngest.com/pricing"
   }
+ ],
+ "binding": "volume-quota",
+ "binding_note": "The one-hour active-runtime cap per sandbox binds before the 24-hour maximum duration, because a sandbox stops billing and pausing still preserves it for the run's waits.",
+ "identity_cost": {
+  "kind": "email",
+  "detail": "The signup page says 'SOC 2 Type II certified · Free tier, no card required' and asks for an account; the sandbox beta additionally requires a Pro plan or above, which is a paid tier.",
+  "country": null
+ },
+ "reliability_note": "Sandboxes are in open beta, available on Pro plans and above in the TypeScript SDK only (Python and Go planned); cleanup is the user's function's job during beta, since create does not destroy the machine.",
+ "confidence": "documented",
+ "confidence_note": "The per-second rates, one-hour active cap, sizes, beta scope and signup gate are quoted from Inngest's own pricing page, sandbox announcement and signup page read 2026-11-25.",
+ "evidence": [
+  {
+   "url": "https://www.inngest.com/pricing",
+   "date": "2026-11-25",
+   "proved": "sandboxes bill per second for vCPU and memory, and the Free plan needs no credit card",
+   "capture": "sha256:47ea73ad8adacdf7ed8257ef484abbd4568529fc8479d9be29e76b3e205616e7",
+   "quote": "Billed per second for vCPU and memory."
+  },
+  {
+   "url": "https://www.inngest.com/pricing",
+   "date": "2026-11-25",
+   "proved": "the maximum sandbox duration on Pro is 24 hours and 100 sandboxes can run concurrently",
+   "capture": "sha256:47ea73ad8adacdf7ed8257ef484abbd4568529fc8479d9be29e76b3e205616e7",
+   "quote": "Max sandbox duration"
+  },
+  {
+   "url": "https://www.inngest.com/blog/sandboxes-are-a-durability-problem",
+   "date": "2026-11-25",
+   "proved": "sandboxes bill CPU at $0.000011 per vCPU-second and RAM at $0.000003 per GB-second only while running",
+   "capture": "sha256:517ca84a5f526d2e52d788d29233c65c6b4750cbbb92fc697ab1a77f3731bf3c",
+   "quote": "CPU is $0.000011 per vCPU-second and RAM is $0.000003 per GB-second, so the smallest size, 1 vCPU with 1 GB, comes to about five cents for a full hour of active runtime."
+  },
+  {
+   "url": "https://www.inngest.com/blog/sandboxes-are-a-durability-problem",
+   "date": "2026-11-25",
+   "proved": "active runtime is capped at one hour per sandbox",
+   "capture": "sha256:517ca84a5f526d2e52d788d29233c65c6b4750cbbb92fc697ab1a77f3731bf3c",
+   "quote": "Active runtime is capped at one hour per Sandbox, which bounds what a missed cleanup can cost."
+  },
+  {
+   "url": "https://www.inngest.com/blog/sandboxes-are-a-durability-problem",
+   "date": "2026-11-25",
+   "proved": "the sandbox beta is for Pro plans and above",
+   "capture": "sha256:517ca84a5f526d2e52d788d29233c65c6b4750cbbb92fc697ab1a77f3731bf3c",
+   "quote": "Inngest Sandboxes are now in open beta for every Pro plan and above: isolated microVMs you create as steps inside your existing functions"
+  },
+  {
+   "url": "https://app.inngest.com/sign-up",
+   "date": "2026-11-25",
+   "proved": "signup requires an account and no credit card",
+   "capture": "sha256:78e216de0256375fc31683b9873a3bbeab9fa3b99541251b92ee28688e98b286",
+   "quote": "SOC 2 Type II certified · Free tier, no card required"
+  },
+  {
+   "url": "https://www.inngest.com/pricing",
+   "date": "2026-11-24",
+   "proved": "sandbox compute is billed per second for vCPU and memory",
+   "capture": "sha256:47ea73ad8adacdf7ed8257ef484abbd4568529fc8479d9be29e76b3e205616e7",
+   "quote": "Billed per second for vCPU and memory."
+  },
+  {
+   "url": "https://www.inngest.com/pricing",
+   "date": "2026-11-24",
+   "proved": "a free $0 plan exists with no credit card required and 50k executions a month",
+   "capture": "sha256:47ea73ad8adacdf7ed8257ef484abbd4568529fc8479d9be29e76b3e205616e7",
+   "quote": "Generous monthly limits to prove it before production. No credit card required.\n\n$0/mo"
+  },
+  {
+   "url": "https://www.inngest.com/pricing",
+   "date": "2026-11-24",
+   "proved": "the Pro plan is $99 a month and the published sandbox duration and concurrency values",
+   "capture": "sha256:47ea73ad8adacdf7ed8257ef484abbd4568529fc8479d9be29e76b3e205616e7",
+   "quote": "Max sandbox duration\n\nLongest a single sandbox can run\n\n24 hours"
+  },
+  {
+   "url": "https://www.inngest.com/platform/sandboxes",
+   "date": "2026-11-24",
+   "proved": "Sandboxes are in open beta on Pro plans and above",
+   "capture": "sha256:5afa0472a8eabb5d98df5bc44cdcb8eae4e43eca3d2a71a06fa0af1779de7813",
+   "quote": "Sandboxes are available on Pro plans and above."
+  },
+  {
+   "url": "https://www.inngest.com/docs/sandboxes",
+   "date": "2026-11-24",
+   "proved": "outbound network access is allowed by default and sandboxes cannot send traffic directly to one another",
+   "capture": "sha256:5afa0472a8eabb5d98df5bc44cdcb8eae4e43eca3d2a71a06fa0af1779de7813",
+   "quote": "outbound network access is allowed by default"
+  },
+  {
+   "url": "https://www.inngest.com/docs/sandboxes",
+   "date": "2026-11-24",
+   "proved": "S3-backed persistent mounts let sandboxes share a backing path",
+   "capture": "sha256:5afa0472a8eabb5d98df5bc44cdcb8eae4e43eca3d2a71a06fa0af1779de7813",
+   "quote": "S3-backed persistent mounts let different Sandboxes use the same backing path."
+  },
+  {
+   "url": "https://www.inngest.com/docs-markdown/sandboxes/limits",
+   "date": "2026-11-24",
+   "proved": "the Pro plan gate returns 403 access_denied on a non-Pro account",
+   "capture": "sha256:2d975aa5ebeb3406582600c77623c7aa4b3004320e38396dce45291315b025ba",
+   "quote": "`403 access_denied` means the account's plan does not include Sandboxes."
+  },
+  {
+   "url": "https://www.inngest.com/docs-markdown/sandboxes/limits",
+   "date": "2026-11-24",
+   "proved": "the beta runtime limit is one hour of active time per Sandbox",
+   "capture": "sha256:2d975aa5ebeb3406582600c77623c7aa4b3004320e38396dce45291315b025ba",
+   "quote": "One hour of active runtime per Sandbox"
+  },
+  {
+   "url": "https://www.inngest.com/docs-markdown/sandboxes/limits",
+   "date": "2026-11-24",
+   "proved": "supported sizes are 1, 2 or 4 vCPU with 1, 2 or 4 GiB of memory per vCPU",
+   "capture": "sha256:2d975aa5ebeb3406582600c77623c7aa4b3004320e38396dce45291315b025ba",
+   "quote": "**1, 2, or 4 vCPU** with **1, 2, or 4 GiB of memory per vCPU**"
+  },
+  {
+   "url": "https://www.inngest.com/docs-markdown/sandboxes/limits",
+   "date": "2026-11-24",
+   "proved": "file uploads are capped at 100 MiB per regular file and snapshot quotas have no published numeric values",
+   "capture": "sha256:2d975aa5ebeb3406582600c77623c7aa4b3004320e38396dce45291315b025ba",
+   "quote": "**100 MiB per regular file**"
+  },
+  {
+   "url": "https://www.inngest.com/docs-markdown/sandboxes/limits",
+   "date": "2026-11-24",
+   "proved": "snapshot and concurrent-Sandbox quotas have no published numeric values",
+   "capture": "sha256:2d975aa5ebeb3406582600c77623c7aa4b3004320e38396dce45291315b025ba",
+   "quote": "Account-specific count and stored-byte quotas, with **no published numeric values**"
+  },
+  {
+   "url": "https://app.inngest.com/sign-up",
+   "date": "2026-11-24",
+   "proved": "the sign-up page states the free tier needs no card",
+   "capture": "sha256:78e216de0256375fc31683b9873a3bbeab9fa3b99541251b92ee28688e98b286",
+   "quote": "SOC 2 Type II certified · Free tier, no card required"
+  }
+ ],
+ "verdict": "paid-only",
+ "verified_at": "2026-11-25T02:12:34.709Z",
+ "notes": "Hosted microVM sandboxes that are steps in an Inngest durable function, billed per second of active runtime and paused with the run's waits. The sandbox beta is on Pro ($99/mo) and above, so no free sandbox tier is offered; the general Inngest orchestration service has a separate free record (dev-services/inngest).",
+ "extras": {
+  "shape": {
+   "vcpu": 1,
+   "ram_gib": 1,
+   "disk_gib": null,
+   "gpu_class": "none",
+   "gpu_count": 0,
+   "note": "sizes are 1 vCPU/1024 MiB, 2/2048 or 4/4096"
+  },
+  "billing_model": "per-second CPU and memory while active, paused time free, on a Pro-or-above plan",
+  "free_tier_kind": "none-for-sandboxes",
+  "network_out": {
+   "allow_outbound": true,
+   "allow_inbound_listen": null,
+   "ports": "not stated",
+   "static_ip": null,
+   "ipv6": null,
+   "per_session_bytes": null
+  },
+  "session_cap": {
+   "wall_clock_min": 60,
+   "idle_reap_s": null,
+   "restart_required": false,
+   "note": "one hour of active runtime per sandbox; paused time is excluded"
+  }
+ },
+ "endpoint": "https://api.inngest.com",
+ "limits_note": "Sizes are 1, 2 or 4 vCPU with 1, 2 or 4 GiB of memory per vCPU; other sizes return 400 invalid_field_format. Disk and concurrent-Sandbox quotas have no published numeric beta values and snapshot quotas are account-specific with no published numbers. The beta does not expose template, VPC or public ingress selection or user-configurable lifetime.",
+ "price_per_tb_month": null
 }

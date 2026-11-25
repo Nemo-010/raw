@@ -1,157 +1,221 @@
 {
-  "topic": "compute",
-  "slug": "blockrun-modal-sandbox",
-  "provider": "BlockRun Modal Sandbox",
-  "url": "https://blockrun.ai/services/modal",
-  "category": "sandbox (hosted Modal runtime, paid per request)",
-  "tier": "public beta, CPU burst and hourly, GPU T4 to H100",
-  "free_tier": {
-    "stated": "none: no free allowance is published; a call is paid per request in USDC over x402, and an unfunded request gets HTTP 402 with the exact price",
-    "unit": "none",
-    "metered_on": "none",
-    "source_url": "https://blockrun.ai/services/modal",
-    "read_on": "2026-11-25",
-    "notes": "the service advertises 'No account required' and 'Pay per run', but nothing in the read pages states a free credit or a free tier"
+ "topic": "compute",
+ "slug": "blockrun-modal-sandbox",
+ "provider": "BlockRun Modal Sandbox",
+ "url": "https://blockrun.ai/services/modal",
+ "category": "sandbox (hosted Modal runtime, paid per request)",
+ "tier": "public beta, CPU burst and hourly, GPU T4 to H100",
+ "free_tier": {
+  "stated": "none: no free allowance is published; a call is paid per request in USDC over x402, and an unfunded request gets HTTP 402 with the exact price",
+  "unit": "none",
+  "metered_on": "none",
+  "source_url": "https://blockrun.ai/services/modal",
+  "read_on": "2026-11-25",
+  "notes": "the service advertises 'No account required' and 'Pay per run', but nothing in the read pages states a free credit or a free tier"
+ },
+ "per_object_cap": {
+  "stated": "not applicable: the unit is a sandbox session, not a stored object"
+ },
+ "retention": {
+  "stated": "no filesystem persistence after terminate; a sandbox keeps state between exec commands only for its own lifetime. A lifetime is 10s to 24h, default 300s.",
+  "days": null,
+  "source_url": "https://blockrun.ai/services/modal"
+ },
+ "egress": {
+  "terms": "Outbound network reaches PyPI, Hugging Face and GitHub over HTTPS; other hosts are blocked. No per-GB egress price is published.",
+  "metered": false,
+  "free_allowance": null,
+  "price_per_tb": null,
+  "source_url": "https://blockrun.ai/services/modal"
+ },
+ "interface": [
+  "rest",
+  "cli"
+ ],
+ "interface_detail": "POST /api/v1/modal/sandbox/create, /exec, /status and /terminate; reachable over a plain HTTP client, the Python and TypeScript SDKs, or the blockrun_modal MCP tool",
+ "tooling": "an HTTP client sending an x402 payment header, the BlockRun Python or TypeScript SDK, the MCP server, or ClawRouter; no account or API key is needed for the paid-per-call path",
+ "chaining": "a disposable Modal sandbox reached per request with a funded wallet, so an agent can run untrusted Python without a Modal account, a monthly plan or a prepaid balance; the paid hourly rate for a 1 vCPU / 1 GiB sandbox is USD 0.25 per hour, with GPU tiers from USD 4.00 (T4) to USD 9.00 (H100) per hour",
+ "limits": [
+  {
+   "kind": "volume-quota",
+   "value": "5 sandboxes running at once per payer, at most 2 with a GPU",
+   "source": "https://blockrun.ai/services/modal"
   },
-  "per_object_cap": {
-    "stated": "not applicable: the unit is a sandbox session, not a stored object"
-  },
-  "retention": {
-    "stated": "no filesystem persistence after terminate; a sandbox keeps state between exec commands only for its own lifetime. A lifetime is 10s to 24h, default 300s.",
-    "days": null,
-    "source_url": "https://blockrun.ai/services/modal"
-  },
-  "egress": {
-    "terms": "Outbound network reaches PyPI, Hugging Face and GitHub over HTTPS; other hosts are blocked. No per-GB egress price is published.",
-    "metered": false,
-    "free_allowance": null,
-    "price_per_tb": null,
-    "source_url": "https://blockrun.ai/services/modal"
-  },
-  "interface": [
-    "rest",
-    "cli"
-  ],
-  "interface_detail": "POST /api/v1/modal/sandbox/create, /exec, /status and /terminate; reachable over a plain HTTP client, the Python and TypeScript SDKs, or the blockrun_modal MCP tool",
-  "tooling": "an HTTP client sending an x402 payment header, the BlockRun Python or TypeScript SDK, the MCP server, or ClawRouter; no account or API key is needed for the paid-per-call path",
-  "chaining": "a disposable Modal sandbox reached per request with a funded wallet, so an agent can run untrusted Python without a Modal account, a monthly plan or a prepaid balance; the paid hourly rate for a 1 vCPU / 1 GiB sandbox is USD 0.25 per hour, with GPU tiers from USD 4.00 (T4) to USD 9.00 (H100) per hour",
-  "limits": [
-    {
-      "kind": "volume-quota",
-      "value": "5 sandboxes running at once per payer, at most 2 with a GPU",
-      "source": "https://blockrun.ai/services/modal"
-    },
-    {
-      "kind": "request-rate",
-      "value": "each exec runs up to 60s; lifetime 10s to 24h, default 300s, and a timeout above 300s bills hourly",
-      "source": "https://blockrun.ai/services/modal"
-    }
-  ],
-  "binding": "volume-quota",
-  "binding_note": "the concurrency ceiling of 5 live sandboxes (2 with a GPU) is what an agent hits first at scale; the exec timeout and the 24h lifetime bound a single session rather than the number of sessions",
-  "identity_cost": {
-    "kind": "anonymous",
-    "detail": "the paid-per-call path needs a locally generated wallet funded with USDC on Base, Solana or Arc; the service states 'No account required', 'No accounts, API keys, or infrastructure setup required for the caller' and 'No registration, no API keys required'. An API key and card or invoice billing are an optional alternative for teams.",
-    "country": null
-  },
-  "reliability_note": "lifetime is billed up front with no refund on early terminate; a sandbox is a fresh image with no persistence after terminate, and the only outbound hosts allowed are PyPI, Hugging Face and GitHub",
-  "confidence": "documented",
-  "confidence_note": "the prices, limits, egress allowlist and identity terms are quoted from the first-party service page and API page read on 2026-11-25; no live sandbox was created, so the rung is documented rather than measured",
-  "evidence": [
-    {
-      "url": "https://blockrun.ai/services/modal",
-      "date": "2026-11-25",
-      "proved": "the sandbox is a hosted Modal runtime reached without an account, and the caller pays per run",
-      "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
-      "quote": "Pay per run with x402 on Base, Solana or Arc. No accounts, API keys, or infrastructure setup required for the caller."
-    },
-    {
-      "url": "https://blockrun.ai/services/modal",
-      "date": "2026-11-25",
-      "proved": "no registration or API key is required to call the paid sandbox endpoint",
-      "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
-      "quote": "Fund your wallet with USDC on Base, Solana or Arc and give your agent a safe place to run code. No registration, no API keys required."
-    },
-    {
-      "url": "https://blockrun.ai/services/modal",
-      "date": "2026-11-25",
-      "proved": "concurrency is capped at 5 live sandboxes per payer, 2 with a GPU",
-      "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
-      "quote": "Each payer can keep at most 5 sandboxes running at once, 2 with a GPU; terminate one to create another."
-    },
-    {
-      "url": "https://blockrun.ai/services/modal",
-      "date": "2026-11-25",
-      "proved": "outbound network is restricted to PyPI, Hugging Face and GitHub over HTTPS",
-      "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
-      "quote": "Outbound network reaches PyPI, Hugging Face and GitHub over HTTPS; other hosts are blocked."
-    },
-    {
-      "url": "https://blockrun.ai/services/modal",
-      "date": "2026-11-25",
-      "proved": "the hourly CPU sandbox rate is USD 0.25 per hour",
-      "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
-      "quote": "| CPU (1 vCPU / 1 GiB) | $0.25 | Long-running batch jobs, scrapers, schedulers |"
-    },
-    {
-      "url": "https://blockrun.ai/services/modal",
-      "date": "2026-11-25",
-      "proved": "the hourly H100 sandbox rate is USD 9.00 per hour",
-      "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
-      "quote": "| H100 (up to 8 vCPU / 32 GiB) | $9.00 | Frontier training, low-latency 70B+ |"
-    },
-    {
-      "url": "https://blockrun.ai/services/modal",
-      "date": "2026-11-25",
-      "proved": "burst GPU create prices range from T4 USD 0.051 to H100 USD 0.401 per sandbox",
-      "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
-      "quote": "T4 $0.051 / L4 $0.081 / A10G $0.101 / A100 $0.201 / H100 $0.401."
-    },
-    {
-      "url": "https://blockrun.ai/services/modal",
-      "date": "2026-11-25",
-      "proved": "a longer lifetime is billed up front for the full requested duration with no refund on early terminate",
-      "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
-      "quote": "Per-hour rate × requested duration, billed upfront in one x402 settlement. No refund on early terminate"
-    },
-    {
-      "url": "https://blockrun.ai/tools/code-sandbox-api",
-      "date": "2026-11-25",
-      "proved": "a team may optionally get an API key and pay by card or invoice",
-      "capture": "sha256:71338fe6e536e8a9874cd31dee607c3b7741c8f34fe8a7c62f5e7a2d5d16721b",
-      "quote": "A team that prefers keys gets one and pays by card or invoice."
-    }
-  ],
-  "verdict": "paid-only",
-  "verified_at": "2026-11-25T02:12:34.793Z",
-  "price_per_tb_month": null,
-  "notes": "A per-request hosted Modal sandbox rather than a monthly plan: the CPU shape is USD 0.25 per hour billed up front, and the H100 shape is USD 9.00 per hour. Callers pay in USDC through x402 without signing up; an optional API-key path bills by card or invoice. Outbound access is limited to PyPI, Hugging Face and GitHub, and a sandbox has no filesystem persistence after terminate.",
-  "extras": {
-    "shape": {
-      "vcpu": 1,
-      "ram_gib": 1,
-      "disk_gib": null,
-      "gpu_class": "T4, L4, A10G, A100 or H100 on request",
-      "gpu_count": null,
-      "note": "CPU burst is up to 1 vCPU and 1 GiB; GPU sandboxes allow up to 8 vCPU and 32 GiB"
-    },
-    "billing_model": "per request in USDC via x402, flat burst fee or hourly rate paid up front",
-    "free_tier_kind": "none",
-    "term": "on demand, lifetime 10s to 24h (default 300s)",
-    "price_arithmetic": "CPU hourly USD 0.25/h; H100 hourly USD 9.00/h; burst create CPU USD 0.011 and T4 USD 0.051 to H100 USD 0.401 plus USD 0.002 per exec, status or terminate call",
-    "network_out": {
-      "allow_outbound": true,
-      "allow_inbound_listen": null,
-      "ports": null,
-      "static_ip": null,
-      "ipv6": null,
-      "per_session_bytes": null
-    },
-    "session_cap": {
-      "wall_clock_min": 1440,
-      "idle_reap_s": null,
-      "restart_required": false,
-      "note": "lifetime is requested at create; each exec is capped at 60s"
-    }
+  {
+   "kind": "request-rate",
+   "value": "each exec runs up to 60s; lifetime 10s to 24h, default 300s, and a timeout above 300s bills hourly",
+   "source": "https://blockrun.ai/services/modal"
   }
+ ],
+ "binding": "volume-quota",
+ "binding_note": "the concurrency ceiling of 5 live sandboxes (2 with a GPU) is what an agent hits first at scale; the exec timeout and the 24h lifetime bound a single session rather than the number of sessions",
+ "identity_cost": {
+  "kind": "anonymous",
+  "detail": "the paid-per-call path needs a locally generated wallet funded with USDC on Base, Solana or Arc; the service states 'No account required', 'No accounts, API keys, or infrastructure setup required for the caller' and 'No registration, no API keys required'. An API key and card or invoice billing are an optional alternative for teams.",
+  "country": null
+ },
+ "reliability_note": "lifetime is billed up front with no refund on early terminate; a sandbox is a fresh image with no persistence after terminate, and the only outbound hosts allowed are PyPI, Hugging Face and GitHub",
+ "confidence": "documented",
+ "confidence_note": "the prices, limits, egress allowlist and identity terms are quoted from the first-party service page and API page read on 2026-11-25; no live sandbox was created, so the rung is documented rather than measured",
+ "evidence": [
+  {
+   "url": "https://blockrun.ai/services/modal",
+   "date": "2026-11-25",
+   "proved": "the sandbox is a hosted Modal runtime reached without an account, and the caller pays per run",
+   "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+   "quote": "Pay per run with x402 on Base, Solana or Arc. No accounts, API keys, or infrastructure setup required for the caller."
+  },
+  {
+   "url": "https://blockrun.ai/services/modal",
+   "date": "2026-11-25",
+   "proved": "no registration or API key is required to call the paid sandbox endpoint",
+   "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+   "quote": "Fund your wallet with USDC on Base, Solana or Arc and give your agent a safe place to run code. No registration, no API keys required."
+  },
+  {
+   "url": "https://blockrun.ai/services/modal",
+   "date": "2026-11-25",
+   "proved": "concurrency is capped at 5 live sandboxes per payer, 2 with a GPU",
+   "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+   "quote": "Each payer can keep at most 5 sandboxes running at once, 2 with a GPU; terminate one to create another."
+  },
+  {
+   "url": "https://blockrun.ai/services/modal",
+   "date": "2026-11-25",
+   "proved": "outbound network is restricted to PyPI, Hugging Face and GitHub over HTTPS",
+   "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+   "quote": "Outbound network reaches PyPI, Hugging Face and GitHub over HTTPS; other hosts are blocked."
+  },
+  {
+   "url": "https://blockrun.ai/services/modal",
+   "date": "2026-11-25",
+   "proved": "the hourly CPU sandbox rate is USD 0.25 per hour",
+   "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+   "quote": "| CPU (1 vCPU / 1 GiB) | $0.25 | Long-running batch jobs, scrapers, schedulers |"
+  },
+  {
+   "url": "https://blockrun.ai/services/modal",
+   "date": "2026-11-25",
+   "proved": "the hourly H100 sandbox rate is USD 9.00 per hour",
+   "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+   "quote": "| H100 (up to 8 vCPU / 32 GiB) | $9.00 | Frontier training, low-latency 70B+ |"
+  },
+  {
+   "url": "https://blockrun.ai/services/modal",
+   "date": "2026-11-25",
+   "proved": "burst GPU create prices range from T4 USD 0.051 to H100 USD 0.401 per sandbox",
+   "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+   "quote": "T4 $0.051 / L4 $0.081 / A10G $0.101 / A100 $0.201 / H100 $0.401."
+  },
+  {
+   "url": "https://blockrun.ai/services/modal",
+   "date": "2026-11-25",
+   "proved": "a longer lifetime is billed up front for the full requested duration with no refund on early terminate",
+   "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+   "quote": "Per-hour rate × requested duration, billed upfront in one x402 settlement. No refund on early terminate"
+  },
+  {
+   "url": "https://blockrun.ai/tools/code-sandbox-api",
+   "date": "2026-11-25",
+   "proved": "a team may optionally get an API key and pay by card or invoice",
+   "capture": "sha256:71338fe6e536e8a9874cd31dee607c3b7741c8f34fe8a7c62f5e7a2d5d16721b",
+   "quote": "A team that prefers keys gets one and pays by card or invoice."
+  },
+  {
+   "url": "https://blockrun.ai/services/modal",
+   "date": "2026-11-24",
+   "proved": "the CPU burst sandbox create price is USD 0.011 and the GPU burst create prices are listed per tier",
+   "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+   "quote": "CPU sandbox/create\n\n$0.011\n\nper sandbox\n\nUp to 1 vCPU, 1 GiB RAM, 300s lifetime\n\nGPU sandbox/create\n\n$0.051 – $0.401\n\nper sandbox by GPU type\n\nT4 $0.051 / L4 $0.081 / A10G $0.101 / A100 $0.201 / H100 $0.401. Up to 1 CPU, 1024 MB, 300s lifetime. Larger sizes, up to 8 CPU and 32 GiB, bill hourly."
+  },
+  {
+   "url": "https://blockrun.ai/services/modal",
+   "date": "2026-11-24",
+   "proved": "the hourly CPU rate is USD 0.25 and exec, status and terminate cost USD 0.002 each",
+   "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+   "quote": "| CPU (1 vCPU / 1 GiB) | $0.25 | Long-running batch jobs, scrapers, schedulers |"
+  },
+  {
+   "url": "https://blockrun.ai/services/modal",
+   "date": "2026-11-24",
+   "proved": "the sandbox lifetime is 10s to 24h with a 300s default and each exec runs at most 60s",
+   "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+   "quote": "A sandbox lives 10s to 24h, default 300s. Each exec runs up to 60s: start longer jobs in the background and poll them with exec."
+  },
+  {
+   "url": "https://blockrun.ai/services/modal",
+   "date": "2026-11-24",
+   "proved": "egress is restricted to three named hosts over HTTPS and all other hosts are blocked",
+   "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+   "quote": "Outbound network reaches PyPI, Hugging Face and GitHub over HTTPS; other hosts are blocked."
+  },
+  {
+   "url": "https://blockrun.ai/services/modal",
+   "date": "2026-11-24",
+   "proved": "each payer can run at most 5 sandboxes at once, 2 with a GPU",
+   "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+   "quote": "Each payer can keep at most 5 sandboxes running at once, 2 with a GPU; terminate one to create another."
+  },
+  {
+   "url": "https://blockrun.ai/services/modal",
+   "date": "2026-11-24",
+   "proved": "no account or API key is needed and USDC funding is the only gate stated for the caller",
+   "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+   "quote": "Fund your wallet with USDC on Base, Solana or Arc and give your agent a safe place to run code. No registration, no API keys required."
+  },
+  {
+   "url": "https://blockrun.ai/tools/code-sandbox-api",
+   "date": "2026-11-24",
+   "proved": "the request is quoted in dollars and paid in USDC with no account and no API key",
+   "capture": "sha256:3df54872de88f0878b8a8f1752c575d559f45324f077171ff618d198dc6f8f1a",
+   "quote": "No account and no API key stand between an agent and the first call: the request is quoted in dollars and the agent's client pays it."
+  },
+  {
+   "url": "https://blockrun.ai/tools/code-sandbox-api",
+   "date": "2026-11-24",
+   "proved": "the create lifetime is at most 86400 seconds and above 1 CPU or 1024 MB the call bills hourly",
+   "capture": "sha256:3df54872de88f0878b8a8f1752c575d559f45324f077171ff618d198dc6f8f1a",
+   "quote": "| timeout | number | Sandbox lifetime in seconds (max 86400 = 24h, default: 300). Above 300s bills hourly. |"
+  },
+  {
+   "url": "https://blockrun.ai/api/v1/modal/sandbox/create",
+   "date": "2026-11-24",
+   "proved": "an unsigned create request is answered with HTTP 402 and x402 payment requirements on Base",
+   "capture": "sha256:f03bdb506661b38635ce9b073101219fb2737d3e7119d635ef76e3bc05fae995",
+   "quote": "\"error\":\"Payment Required\",\"message\":\"This endpoint requires x402 payment. Send a POST request with payment header.\",\"endpoint\":\"/api/v1/modal/sandbox/create\",\"method\":\"POST\",\"available\":[\"sandbox/create\",\"sandbox/exec\",\"sandbox/status\",\"sandbox/terminate\"],\"documentation\":\"https://blockrun.ai/services/modal\",\"paymentInfo\":{\"network\":\"eip155:8453\",\"networkName\":\"Base\",\"asset\":\"USDC\",\"x402Version\":2,\"price\":0.01}}"
+  }
+ ],
+ "verdict": "paid-only",
+ "verified_at": "2026-11-25T02:12:34.793Z",
+ "price_per_tb_month": null,
+ "notes": "A per-request hosted Modal sandbox rather than a monthly plan: the CPU shape is USD 0.25 per hour billed up front, and the H100 shape is USD 9.00 per hour. Callers pay in USDC through x402 without signing up; an optional API-key path bills by card or invoice. Outbound access is limited to PyPI, Hugging Face and GitHub, and a sandbox has no filesystem persistence after terminate.",
+ "extras": {
+  "shape": {
+   "vcpu": 1,
+   "ram_gib": 1,
+   "disk_gib": null,
+   "gpu_class": "T4, L4, A10G, A100 or H100 on request",
+   "gpu_count": null,
+   "note": "CPU burst is up to 1 vCPU and 1 GiB; GPU sandboxes allow up to 8 vCPU and 32 GiB"
+  },
+  "billing_model": "per request in USDC via x402, flat burst fee or hourly rate paid up front",
+  "free_tier_kind": "none",
+  "term": "on demand, lifetime 10s to 24h (default 300s)",
+  "price_arithmetic": "CPU hourly USD 0.25/h; H100 hourly USD 9.00/h; burst create CPU USD 0.011 and T4 USD 0.051 to H100 USD 0.401 plus USD 0.002 per exec, status or terminate call",
+  "network_out": {
+   "allow_outbound": true,
+   "allow_inbound_listen": null,
+   "ports": null,
+   "static_ip": null,
+   "ipv6": null,
+   "per_session_bytes": null
+  },
+  "session_cap": {
+   "wall_clock_min": 1440,
+   "idle_reap_s": null,
+   "restart_required": false,
+   "note": "lifetime is requested at create; each exec is capped at 60s"
+  }
+ },
+ "endpoint": "https://blockrun.ai/api/v1/modal/sandbox/create"
 }

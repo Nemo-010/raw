@@ -1,0 +1,162 @@
+{
+  "topic": "compute",
+  "slug": "quave-one-direct",
+  "provider": "Quave ONE",
+  "url": "https://docs.quave.one/billing/pricing",
+  "category": "PaaS app and sandbox compute on managed regions",
+  "tier": "Direct",
+  "free_tier": {
+    "stated": "No free zCloud allowance on Direct: zCloud compute has no included amount and runs $7.50 per zCloud-month in standard Quave regions. The separate Hobby account is unbilled and needs no credit card, but it is limited to the US-1 Hobby region for testing and evaluation.",
+    "unit": "none",
+    "metered_on": "wall-clock",
+    "source_url": "https://docs.quave.one/billing/pricing",
+    "read_on": "2026-11-24",
+    "notes": "Hobby accounts are unbilled and need no card, but they are evaluation-only and cannot deploy to production regions; a Professional upgrade review is free and unlocks all regions."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is an allocated zCloud (0.5 vCPU and 0.5 GB RAM), not an object; a managed local disk includes 5 GB per allocated zCloud and a managed database backup allowance is 30 GB per app environment in each region",
+    "source_url": "https://docs.quave.one/billing/pricing-details"
+  },
+  "retention": {
+    "stated": "Managed database backups are retained for up to 7 days by default; that 7-day window is the default automatic deletion policy, and 30 GB per app environment per region is a billing allowance rather than a shorter retention cap.",
+    "days": 7,
+    "source_url": "https://docs.quave.one/billing/pricing-details"
+  },
+  "egress": {
+    "terms": "No extra charge for network traffic in supported regions: data can be transferred in and out without additional cost, but some regions cap the included outbound volume per zCloud each month (10 GB in US-5, EU-3 and EU-4; unlimited in US-3, EU-1 and EU-2).",
+    "metered": true,
+    "free_allowance": "unlimited outgoing traffic in US-3, EU-1 and EU-2; 10 GB per zCloud per month in US-5, EU-3 and EU-4",
+    "price_per_tb": null,
+    "source_url": "https://docs.quave.one/billing/pricing-details"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "browser"
+  ],
+  "interface_detail": "Public API for app environments and sandboxes, a platform dashboard with MCP access, and a CLI for source builds and deployment.",
+  "tooling": "a browser dashboard, the Quave ONE public API and MCP, and the Quave CLI; a source build is not needed when deploying a pre-built Docker image.",
+  "chaining": "Direct sandboxes are billed at 3x the regional zCloud rate by allocation, while Hobby accounts are unbilled evaluation slices; workloads needing persistent object storage pair with a separate object-storage record because managed backups are retained for 7 days by default.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "$7.50 per zCloud-month in standard Quave regions; each zCloud is 0.5 vCPU and 0.5 GB RAM, with no included compute amount",
+      "source": "https://docs.quave.one/billing/pricing"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "600 build minutes per account per month, then $0.01 per extra build minute; 60 minutes cap per individual build",
+      "source": "https://docs.quave.one/billing/pricing-details"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "5 GB of local disk per allocated zCloud and 30 GB of database backups per app environment per region included; extra disk $0.06 per GB-month, extra backup $0.05 per GB-month",
+      "source": "https://docs.quave.one/billing/pricing-details"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "10 GB outgoing traffic per zCloud per month in US-5, EU-3 and EU-4; unlimited in US-3, EU-1 and EU-2",
+      "source": "https://docs.quave.one/billing/pricing-details"
+    }
+  ],
+  "limits_note": "A Direct sandbox is charged at 3x the regional zCloud rate on allocated zClouds, billed by the second with no minimum; paused states are not billed. Savings Plans discount zCloud compute only, not storage, builds or sandboxes.",
+  "binding": "volume-quota",
+  "binding_note": "Compute is the meter that starts immediately on Direct: no zCloud amount is included, so the $7.50 per zCloud-month charge binds before the large-disk, backup or build overages that only unusually heavy accounts reach.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "A new user signs up for a user account and then creates an account to deploy. Hobby needs no credit card and is unbilled. The free Professional upgrade review asks for a personal LinkedIn profile link, a company or personal website, a short description of the business and intended use, and how the user found out about the platform.",
+    "country": null
+  },
+  "reliability_note": "Hobby environments are stopped automatically after repeated container failures and the Hobby region is not intended for production. Regions US-3, EU-1 and EU-2 are being retired and are available only to accounts already running workloads there; legacy regions have a higher zCloud price or capped included outbound traffic.",
+  "confidence": "documented",
+  "confidence_note": "Rates, overages, regional outbound allowances and the account gate are first-party text quoted from the vendor's pricing, pricing-details, verification and regions pages read on 2026-11-24.",
+  "evidence": [
+    {
+      "url": "https://docs.quave.one/billing/pricing",
+      "date": "2026-11-24",
+      "proved": "Direct zCloud compute is $7.50 per zCloud-month with no included amount in standard regions",
+      "capture": "sha256:4e41f2bc6aff046adec3c81c0247a59890109d3fe76311a406e6ba92602a4b6d",
+      "quote": "| zCloud compute | None; you choose the zClouds, containers, and hours you run | **$7.50 per zCloud-month** in standard Quave regions | Apps, databases, and services running in Quave-managed regions |"
+    },
+    {
+      "url": "https://docs.quave.one/billing/pricing",
+      "date": "2026-11-24",
+      "proved": "a zCloud is 0.5 vCPU and 0.5 GB RAM",
+      "capture": "sha256:4e41f2bc6aff046adec3c81c0247a59890109d3fe76311a406e6ba92602a4b6d",
+      "quote": "A zCloud is 0.5 vCPU and 0.5 GB RAM."
+    },
+    {
+      "url": "https://docs.quave.one/billing/pricing",
+      "date": "2026-11-24",
+      "proved": "600 build minutes are included monthly, with a $0.01 per-minute overage",
+      "capture": "sha256:4e41f2bc6aff046adec3c81c0247a59890109d3fe76311a406e6ba92602a4b6d",
+      "quote": "| Build overage | **600 build minutes per account per month** | **$0.01 per extra build minute** | Source builds above the included minutes. Customer charging starts with August 2026 billing; July 2026 is internal preview only. |"
+    },
+    {
+      "url": "https://docs.quave.one/billing/pricing",
+      "date": "2026-11-24",
+      "proved": "Connect is a separate paid platform license from $399/month",
+      "capture": "sha256:4e41f2bc6aff046adec3c81c0247a59890109d3fe76311a406e6ba92602a4b6d",
+      "quote": "Quave ONE Connect starts **from $399/month** as a platform license."
+    },
+    {
+      "url": "https://docs.quave.one/billing/pricing-details",
+      "date": "2026-11-24",
+      "proved": "supported regions carry no separate network traffic charge",
+      "capture": "sha256:193609ffd279aa76f8473b1143203d6686b1e095ccb25bf485aa57e8f4d0d5d7",
+      "quote": "We do not charge extra fees for network traffic in our supported regions. You can transfer data in and out of your applications without incurring additional costs."
+    },
+    {
+      "url": "https://docs.quave.one/billing/pricing-details",
+      "date": "2026-11-24",
+      "proved": "some regions cap included outbound traffic at 10 GB per zCloud per month",
+      "capture": "sha256:193609ffd279aa76f8473b1143203d6686b1e095ccb25bf485aa57e8f4d0d5d7",
+      "quote": "| US-5 | 10 GB |"
+    },
+    {
+      "url": "https://docs.quave.one/billing/pricing-details",
+      "date": "2026-11-24",
+      "proved": "included local disk is 5 GB per allocated zCloud and 30 GB backup per app environment, with per-GB overage prices",
+      "capture": "sha256:193609ffd279aa76f8473b1143203d6686b1e095ccb25bf485aa57e8f4d0d5d7",
+      "quote": "| Managed local disk | 5 GB per allocated zCloud (per replica for managed databases) | Average extra allocated GB-month | $0.06 per extra GB-month |"
+    },
+    {
+      "url": "https://docs.quave.one/billing/pricing-details",
+      "date": "2026-11-24",
+      "proved": "managed database backups are retained up to 7 days by default",
+      "capture": "sha256:193609ffd279aa76f8473b1143203d6686b1e095ccb25bf485aa57e8f4d0d5d7",
+      "quote": "We retain managed database [backups](https://docs.quave.one/deploy/storage#backups) for up to 7 days by default."
+    },
+    {
+      "url": "https://docs.quave.one/verification",
+      "date": "2026-11-24",
+      "proved": "Hobby usage is unbilled and requires no credit card",
+      "capture": "sha256:fd0cc0331cad52d40973f5a38fbffe60d0251a32478cd708d82acf7781ed7909",
+      "quote": "Hobby usage is not billed, and no credit card is required."
+    },
+    {
+      "url": "https://docs.quave.one/verification",
+      "date": "2026-11-24",
+      "proved": "the free Professional upgrade review asks for a LinkedIn profile, a website, a business description and how the user found out",
+      "capture": "sha256:fd0cc0331cad52d40973f5a38fbffe60d0251a32478cd708d82acf7781ed7909",
+      "quote": "Your personal LinkedIn profile link"
+    },
+    {
+      "url": "https://docs.quave.one/regions/",
+      "date": "2026-11-24",
+      "proved": "US-1 Hobby is the only region available to Hobby accounts and production regions require Professional",
+      "capture": "sha256:a3f90734dab8bd273a35e95c0e1d27046063d682b3bb12a121e2ca151fb115f4",
+      "quote": "Hobby accounts:"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-24T10:11:15.022Z",
+  "price_per_tb_month": null,
+  "notes": "Direct has no free compute allowance: zCloud compute is $7.50 per zCloud-month in standard regions, and a zCloud is 0.5 vCPU and 0.5 GB RAM. The separate Hobby account is unbilled with no card but is evaluation-only in US-1 Hobby. Connect is a separate paid platform license from $399/month, and sandbox compute is 3x the regional zCloud rate.",
+  "extras": {
+    "connect_license": "from $399/month, billed on a daily tier with a 12-month minimum contract; monthly tier prices are in the Adhesion Agreement rather than on the pricing page",
+    "sandbox_rate": "3x the regional zCloud rate on allocated zClouds, billed by the second with no minimum; paused states are not billed",
+    "free_tier_kind": "evaluation-only Hobby region, unbilled, no card",
+    "published_shape": "$7.50 per zCloud-month; 0.5 vCPU and 0.5 GB RAM per zCloud"
+  }
+}

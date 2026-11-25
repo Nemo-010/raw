@@ -15,11 +15,11 @@
     "stated": "not applicable: the unit is a machine, not an object"
   },
   "retention": {
-    "stated": "Parked (stopped) boxes keep their disk and a memory snapshot at USD 0.50/month per x1 slot; boxes auto-stop when the balance drops below USD 5 and are deleted at USD 0. Unused funds are refundable within 3 months.",
+    "stated": "Stopped boxes keep their disk and a memory snapshot at USD 0.50/month per x1 slot. No backups are performed, and deleted boxes are permanently removed within 24 hours. Boxes stop when the balance falls below USD 5 and are deleted at USD 0; unused funds are refundable within 3 months.",
     "source_url": "https://shellbox.dev/"
   },
   "egress": {
-    "terms": "Not metered on the page read: no traffic allowance and no per-GB price is stated; the box gets a public IPv6 address and a managed HTTPS endpoint.",
+    "terms": "No transfer allowance or per-GB price is stated. Every box gets direct public IPv6 for raw TCP and UDP, a managed HTTPS endpoint and an email endpoint; bandwidth is shared and may be throttled.",
     "metered": false,
     "free_allowance": "not stated",
     "source_url": "https://shellbox.dev/"
@@ -30,22 +30,27 @@
     "sftp"
   ],
   "interface_detail": "SSH to shellbox.dev for control commands (create, list, duplicate, keepalive, cron, funds) and SSH to a box; scp, sftp and mosh work",
-  "tooling": "not stated",
+  "tooling": "an SSH client: control commands run over ssh shellbox.dev and box access uses ssh, scp and sftp; no REST API or SDK",
   "chaining": "not established",
   "limits": [
     {
       "kind": "volume-quota",
       "value": "prepaid balance only; boxes auto-stop below USD 5 and are deleted at USD 0",
       "source": "https://shellbox.dev/"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "per-IP SSH connection rate limit 200 per minute; shared network bandwidth may be throttled",
+      "source": "https://shellbox.dev/"
     }
   ],
-  "limits_note": "Session cap, idle-reap and network policy are not documented.",
+  "limits_note": "No wall-clock session cap is published; in the default mode a box pauses 120 seconds after the last SSH session disconnects. Network bandwidth is shared and may be throttled.",
   "identity_cost": {
     "kind": "anonymous",
     "detail": "No card, no email, no signup form: 'your SSH key fingerprint is your account'. Payment is a prepaid Paddle balance with a USD 10 minimum top-up, refundable within 3 months; no card is stored by Shellbox. No hold.",
     "country": null
   },
-  "reliability_note": "Stopped boxes resume from a memory snapshot in about 3 seconds; auto-stop and deletion are triggered by the prepaid balance, not by time.",
+  "reliability_note": "Stopped boxes resume from a memory snapshot in about 3 seconds; auto-stop and deletion are triggered by the prepaid balance, not by time. Network bandwidth is shared and boxes may be throttled.",
   "confidence": "documented",
   "confidence_note": "Price, slot shape, parked rate, keepalive mode, the IPv6/UDP statement and the key-fingerprint signup are all quoted from the single product page read today. The per-slot price table rendered without its rows, so only the x1 price (USD 0.02/hour) is known; the x2-x8 prices are unverified.",
   "evidence": [
@@ -92,10 +97,59 @@
       "proved": "the page states the session clock and idle reap recorded here, or states that it publishes none",
       "capture": "sha256:eb4481e1d5a6fe3395713344f1bf37792f1c0ecd760852c9bae290d86ff1069d",
       "quote": "After the last SSH session disconnects, wait 120 seconds, then pause. / Shellbox waits 120 seconds before pausing the box."
+    },
+    {
+      "url": "https://shellbox.dev/",
+      "date": "2026-11-24",
+      "proved": "a per-IP SSH rate limit of 200 per minute is documented",
+      "capture": "sha256:eb4481e1d5a6fe3395713344f1bf37792f1c0ecd760852c9bae290d86ff1069d",
+      "quote": "The per-IP SSH connection rate limit has been raised from 100 to 200 connections per minute."
+    },
+    {
+      "url": "https://shellbox.dev/",
+      "date": "2026-11-24",
+      "proved": "the interface is SSH with no REST API or SDK",
+      "capture": "sha256:eb4481e1d5a6fe3395713344f1bf37792f1c0ecd760852c9bae290d86ff1069d",
+      "quote": "No REST endpoints. No API tokens to rotate. No OAuth dance. No SDK to install. Your SSH key authenticates every call."
+    },
+    {
+      "url": "https://shellbox.dev/",
+      "date": "2026-11-24",
+      "proved": "no backups and a 24-hour deletion window for removed boxes",
+      "capture": "sha256:eb4481e1d5a6fe3395713344f1bf37792f1c0ecd760852c9bae290d86ff1069d",
+      "quote": "We do not guarantee data persistence and do not perform backups. You are responsible for backing up your data. Deleted boxes are permanently removed within 24 hours."
+    },
+    {
+      "url": "https://shellbox.dev/",
+      "date": "2026-11-24",
+      "proved": "shared bandwidth and possible throttling",
+      "capture": "sha256:eb4481e1d5a6fe3395713344f1bf37792f1c0ecd760852c9bae290d86ff1069d",
+      "quote": "Network bandwidth is shared. We may throttle boxes that affect other users."
+    },
+    {
+      "url": "https://shellbox.dev/",
+      "date": "2026-11-24",
+      "proved": "the network endpoints included with each box",
+      "capture": "sha256:eb4481e1d5a6fe3395713344f1bf37792f1c0ecd760852c9bae290d86ff1069d",
+      "quote": "Every new box gets direct public IPv6 for ssh / mosh / raw TCP-UDP. Every box also gets a managed HTTPS endpoint with automatic TLS, email endpoint, and custom domain support."
+    },
+    {
+      "url": "https://shellbox.dev/",
+      "date": "2026-11-24",
+      "proved": "the default pause after the disconnect grace period",
+      "capture": "sha256:eb4481e1d5a6fe3395713344f1bf37792f1c0ecd760852c9bae290d86ff1069d",
+      "quote": "After the grace period, the box pauses. All processes, shell history, and files are preserved in a memory snapshot."
+    },
+    {
+      "url": "https://shellbox.dev/",
+      "date": "2026-11-24",
+      "proved": "the rate model and anonymous key-fingerprint account are unchanged",
+      "capture": "sha256:eb4481e1d5a6fe3395713344f1bf37792f1c0ecd760852c9bae290d86ff1069d",
+      "quote": "Pay per minute for what you actually use. No subscription, no login — your SSH key fingerprint *is* your account."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-18T04:45:13.524Z",
+  "verified_at": "2026-11-24T13:21:04.870Z",
   "price_per_tb_month": null,
   "notes": "Arithmetic at 24/7: USD 0.02/hour x 730 = USD 14.60 for 2 vCPU, 4 GB and 50 GB SSD. 10 h/day at 22 days = 220 h = USD 4.40, which is inside the budget only if the box is allowed to sleep. The default mode pauses 120 seconds after the last SSH session disconnects, so a 24/7 workload must be put in keepalive mode explicitly. Runs on bare metal in Hetzner Finland, one region. Not established: the x2 to x8 per-slot prices, whether an IPv4 address exists at all, and the egress terms.",
   "extras": {
