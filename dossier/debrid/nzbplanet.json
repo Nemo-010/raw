@@ -46,7 +46,7 @@
     },
     {
       "kind": "write-gated",
-      "value": "invite code required at registration; a stale code is rejected",
+      "value": "invite code field on the register form is optional; caps still declares registration open=no",
       "source": "https://nzbplanet.net/register?invitecode=INVITECODEHERE"
     },
     {
@@ -60,7 +60,7 @@
   "binding_note": "The first thing that fails is the download allowance, which is zero on free: not a counter that runs out but one that never starts. The invite gate sits in front of it and would bind first only if registration were open.",
   "identity_cost": {
     "kind": "email",
-    "detail": "Email plus an invitation. caps says open=no, and the register page's invitecode field rejects an invented code; premium signup is the documented bypass.",
+    "detail": "Email; the register page labels the invite field 'Invite Code (optional)'. caps says open=no, so a code may still be needed for a free account.",
     "country": null
   },
   "reliability_note": "Free accounts keep full search and zero grabs, so a misconfigured arr stack sees results and fails every download rather than failing at search time.",
@@ -91,6 +91,48 @@
       "url": "https://nzbhydra.com/indexers/",
       "date": "2026-10-23",
       "proved": "third-party: VIP USD 10/year, Platinum USD 24/year, free 200 days retention, free tier '0 calls'"
+    },
+    {
+      "url": "https://nzbplanet.net/register",
+      "date": "2026-11-25",
+      "proved": "the register page marks the invite code as optional",
+      "capture": "sha256:fcb2bd2e3b61e00cf2d13bead96e6d3581f57d9964176a7200100a92184643e5",
+      "quote": "<label class=\"reg-label\" for=\"invitecode\">Invite Code <span class=\"reg-optional\">(optional)</span></label>"
+    },
+    {
+      "url": "https://nzbplanet.net/register",
+      "date": "2026-11-25",
+      "proved": "the register form carries an invitecode input that is not a required gate",
+      "capture": "sha256:fcb2bd2e3b61e00cf2d13bead96e6d3581f57d9964176a7200100a92184643e5",
+      "quote": "<label class=\"reg-label\" for=\"invitecode\">Invite Code <span class=\"reg-optional\">(optional)</span></label>"
+    },
+    {
+      "url": "https://nzbplanet.net/register",
+      "date": "2026-11-25",
+      "proved": "free accounts browse only and downloads require premium",
+      "capture": "sha256:74298311f3d7e7ffed2b6624d36e5845b446d577b6a7f89aca87f07e445a4e0d",
+      "quote": "Join NzbPlanet — free to browse, premium to download."
+    },
+    {
+      "url": "https://nzbplanet.net/register",
+      "date": "2026-11-25",
+      "proved": "email signup with an optional invite field",
+      "capture": "sha256:fcb2bd2e3b61e00cf2d13bead96e6d3581f57d9964176a7200100a92184643e5",
+      "quote": "<label class=\"reg-label\" for=\"invitecode\">Invite Code <span class=\"reg-optional\">(optional)</span></label>"
+    },
+    {
+      "url": "https://nzbplanet.net/api?t=caps",
+      "date": "2026-11-25",
+      "proved": "the Newznab caps still declares a 100-result ceiling",
+      "capture": "sha256:b7e9283ae93e54ff1163e2a6e67d2bb74f39232675d619fbdb5c5c170be24fdb",
+      "quote": "<limits max=\"100\" default=\"100\"/>"
+    },
+    {
+      "url": "https://nzbplanet.net/api?t=caps",
+      "date": "2026-11-25",
+      "proved": "caps still declares registration available but closed",
+      "capture": "sha256:b7e9283ae93e54ff1163e2a6e67d2bb74f39232675d619fbdb5c5c170be24fdb",
+      "quote": "<registration available=\"yes\" open=\"no\" />"
     }
   ],
   "verdict": "fails-quota",
@@ -102,7 +144,7 @@
     "free_downloads": 0
   },
   "notes": "The registerpremium page that search engines still hold returned 404 to a direct request today, so its wording is cited as a snippet and not as a page read.",
-  "verified_at": "2026-10-23T02:11:54.066Z",
+  "verified_at": "2026-11-25T09:46:26.618Z",
   "topic": "debrid",
   "price_per_tb_month": null
 }

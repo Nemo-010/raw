@@ -34,14 +34,14 @@
   "interface": [
     "rest"
   ],
-  "interface_detail": "Newznab API at /api; caps answers anonymously with 100 results per request. The HTML site is behind Cloudflare and returns 403 to automated request egress on every path tried (/, /register, /plans, /faq, /help, /support, /donate, /subscribe, /store), while /api answers normally.",
+  "interface_detail": "Newznab API at /api; caps answers anonymously with 100 results per request. A pinned provider read the register page from the HTML site; the API caps is readable through the same route.",
   "endpoint": "https://drunkenslug.com/api?t=caps ; https://drunkenslug.com/api?t=search&q=<query>&apikey=<key>",
   "tooling": "Native Newznab: Prowlarr, NZBHydra2, Sonarr and Radarr add it with URL plus key once an account exists.",
   "chaining": "A depth index for older and rarer material behind a 5-grab-a-day free cap; it complements a broad index rather than replacing one.",
   "limits": [
     {
       "kind": "request-rate",
-      "value": "5 NZB downloads and 25 API hits per day on the free tier",
+      "value": "Water free tier: 25 API hits and 5 downloads per 24 hours; paid tiers Ale 1000 API hits and 100 downloads, Wine unlimited (vendor register page)",
       "source": "https://forums.redflagdeals.com/drunkenslug-registration-open-2644891/"
     },
     {
@@ -55,7 +55,7 @@
   "binding_note": "The invite gate is what fails first, before any quota is reached: without an account the 5 grabs cannot be spent at all. If an account existed, the daily counter would bind instead.",
   "identity_cost": {
     "kind": "email",
-    "detail": "Invite only. The register page says 'Sorry! The Bar is closed. Please don't contact us asking for invites.' caps agrees: <registration available=\"yes\" open=\"no\"/>.",
+    "detail": "The register page states 'Site registration is open' and asks for an email address; caps declares <registration available=\"yes\" open=\"yes\"/>.",
     "country": null
   },
   "reliability_note": "Registration opens for short windows and closes again, so an account is an asset that cannot be recreated on demand if lost.",
@@ -81,6 +81,55 @@
       "url": "https://www.usenet.com/drunkenslug-nzb-review/",
       "date": "2026-10-23",
       "proved": "third-party tier table: Water free 5 NZBs; Lager 25/250 at EUR 5; Ale 100/1,000 at EUR 10; Wine 200/2,000 at EUR 20"
+    },
+    {
+      "url": "https://drunkenslug.com/register",
+      "date": "2026-11-25",
+      "proved": "registration is open on the vendor register page today",
+      "capture": "sha256:1927a7f06382ba87179b415043f9a6a8c1c1288a2382c82f83db32798c3d0478",
+      "quote": "Site registration is open"
+    },
+    {
+      "url": "https://drunkenslug.com/register",
+      "date": "2026-11-25",
+      "proved": "the vendor publishes the free tier as 25 API hits and 5 downloads per 24 hours",
+      "capture": "sha256:1927a7f06382ba87179b415043f9a6a8c1c1288a2382c82f83db32798c3d0478",
+      "quote": "| Free | Lifetime | Water | 25 API hits<br>5 Downloads |"
+    },
+    {
+      "url": "https://drunkenslug.com/register",
+      "date": "2026-11-25",
+      "proved": "the HTML register page is reachable through a pinned provider",
+      "capture": "sha256:1927a7f06382ba87179b415043f9a6a8c1c1288a2382c82f83db32798c3d0478",
+      "quote": "Site registration is open"
+    },
+    {
+      "url": "https://drunkenslug.com/register",
+      "date": "2026-11-25",
+      "proved": "registration is open and a free tier is listed on the register page",
+      "capture": "sha256:1927a7f06382ba87179b415043f9a6a8c1c1288a2382c82f83db32798c3d0478",
+      "quote": "Site registration is open"
+    },
+    {
+      "url": "https://drunkenslug.com/register",
+      "date": "2026-11-25",
+      "proved": "the free Water tier allowance is 25 API hits and 5 downloads",
+      "capture": "sha256:1927a7f06382ba87179b415043f9a6a8c1c1288a2382c82f83db32798c3d0478",
+      "quote": "| Free | Lifetime | Water | 25 API hits<br>5 Downloads |"
+    },
+    {
+      "url": "https://drunkenslug.com/api?t=caps",
+      "date": "2026-11-25",
+      "proved": "the caps still declares a 100-result ceiling",
+      "capture": "sha256:6e84500daeeace1efc5cf27cf513ad32b35f0fee7f597f7121534b5ab827cc2f",
+      "quote": "<limits max=\"100\" default=\"100\"/>"
+    },
+    {
+      "url": "https://drunkenslug.com/api?t=caps",
+      "date": "2026-11-25",
+      "proved": "caps declares registration open",
+      "capture": "sha256:6e84500daeeace1efc5cf27cf513ad32b35f0fee7f597f7121534b5ab827cc2f",
+      "quote": "<registration available=\"yes\" open=\"yes\"/>"
     }
   ],
   "verdict": "fails-identity",
@@ -91,7 +140,7 @@
     "registration_open": false
   },
   "notes": "The /api path answering while every HTML path is challenged is itself the useful finding: an indexer the browser cannot open still exposes caps, so registration state and result limits are readable without an account.",
-  "verified_at": "2026-10-23T02:11:54.066Z",
+  "verified_at": "2026-11-25T09:46:26.618Z",
   "topic": "debrid",
   "price_per_tb_month": null
 }
