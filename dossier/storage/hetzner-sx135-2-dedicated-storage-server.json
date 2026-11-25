@@ -10,17 +10,17 @@
     "metered_on": "unstated",
     "source_url": "https://docs.hetzner.com/robot/dedicated-server/server-lines/sx-server/",
     "read_on": "2026-10-21",
-    "notes": "The Dedicated Storage Server SX135 gives you ample room to grow with its SATA HDDs; they’re all hotswap capable, meaning you can swap out the drives without downtime."
+    "notes": "The SX135-2 has 8x 16 TB SATA Enterprise HDD and a 10G-uplink add-on."
   },
   "per_object_cap": {
     "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.hetzner.com/robot/dedicated-server/server-lines/sx-server/",
-    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+    "notes": "The SX135 is a dedicated root server with no object store; the SX documentation states no single-object size limit."
   },
   "retention": {
     "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.hetzner.com/robot/dedicated-server/server-lines/sx-server/",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "The customer is responsible for backups; the SX documentation states no retention period for stored bytes."
   },
   "egress": {
     "terms": "Same unlimited clause. SX135 supports the 10G uplink add-on. If you take it, the unlimited policy stops applying and egress over 20 TB is €1.00/TB. On the default 1 Gbit port it stays unlimited.",
@@ -30,7 +30,7 @@
   "interface": [
     "unknown"
   ],
-  "interface_detail": "full root",
+  "interface_detail": "full root access (via SSH on Linux; RDP on Windows)",
   "tooling": "unrestricted",
   "chaining": "as SX65",
   "limits": [],
@@ -44,11 +44,6 @@
   "confidence": "reported",
   "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [
-    {
-      "url": "https://docs.hetzner.com/general/infrastructure-and-availability/price-adjustment/",
-      "date": "2026-10-21",
-      "proved": "SX135-2 €287.30/mo excl. IPv4, setup €144.00"
-    },
     {
       "url": "https://www.hetzner.com/dedicated-rootserver/matrix-sx/",
       "date": "2026-10-21",
@@ -72,11 +67,53 @@
       "proved": "the page describes the SX135 SATA HDDs as hotswap capable",
       "capture": "sha256:36c3f4a73a27e28b958704fd4b0ca129a364ab9e70b28963d80e3bbef8a5905a",
       "quote": "The Dedicated Storage Server SX135 gives you ample room to grow with its SATA HDDs; they’re all hotswap capable, meaning you can swap out the drives without downtime."
+    },
+    {
+      "url": "https://www.hetzner.com/dedicated-rootserver/matrix-sx/",
+      "date": "2026-11-25",
+      "proved": "the current SX matrix states EUR 289.00/month for SX135",
+      "capture": "sha256:52d4acc07d1cc08e5fe965e977eca2af17e1429915d02fd63e641e8d4fc4fa0d",
+      "quote": "€ 289.00 per month, excl. VAT"
+    },
+    {
+      "url": "https://docs.hetzner.com/robot/dedicated-server/server-lines/sx-server/",
+      "date": "2026-11-25",
+      "proved": "the SX documentation gives the SX135-2 disk configuration and 10G add-on",
+      "capture": "sha256:bfedac37c7ddd54fa779077cb3dc7b1141759a40d0552792f9e3309b6c752f15",
+      "quote": "| SX135-2 | AMD Ryzen™ 9 3900 | 128 GB DDR4 ECC | 2x 1.92 TB NVMe SSD Datacenter Edition, 8x 16 TB SATA Enterprise HDD | yes |"
+    },
+    {
+      "url": "https://docs.hetzner.com/robot/dedicated-server/server-lines/sx-server/",
+      "date": "2026-11-25",
+      "proved": "the SX documentation makes the customer responsible for backups",
+      "capture": "sha256:bfedac37c7ddd54fa779077cb3dc7b1141759a40d0552792f9e3309b6c752f15",
+      "quote": "You as the customer are responsible for all normal system administration tasks (software, monitoring, RAID configuration, backups, security, etc.)"
+    },
+    {
+      "url": "https://docs.hetzner.com/robot/dedicated-server/server-lines/sx-server/",
+      "date": "2026-11-25",
+      "proved": "the SX documentation describes system access as full root rights",
+      "capture": "sha256:bfedac37c7ddd54fa779077cb3dc7b1141759a40d0552792f9e3309b6c752f15",
+      "quote": "**System access**: Full root rights, rescue system, VNC installation, etc."
+    },
+    {
+      "url": "https://www.hetzner.com/dedicated-rootserver/sx135/",
+      "date": "2026-11-25",
+      "proved": "the SX135 page states full root access",
+      "capture": "sha256:b5b490396d49b0bc12d14c08bec4a152b2657b3812a93c49f6d96389c7e8eadd",
+      "quote": "- Full root access"
+    },
+    {
+      "url": "https://www.hetzner.com/dedicated-rootserver/sx135/",
+      "date": "2026-11-25",
+      "proved": "the SX135 page states the default traffic policy",
+      "capture": "sha256:b5b490396d49b0bc12d14c08bec4a152b2657b3812a93c49f6d96389c7e8eadd",
+      "quote": "Traffic usage is unlimited and free of charge."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-11T06:09:35.562Z",
-  "price_per_tb_month": "€2.24/TB/mo at 128 TB raw (€287.30 ÷ 128); €2.56/TB at 112 TB RAID-6",
+  "verified_at": "2026-11-25T09:54:54.847Z",
+  "price_per_tb_month": "EUR 2.26/TB/mo at 128 TB raw (EUR 289.00 / 128)",
   "notes": "8× 16 TB SATA = 128 TB raw; 112 TB usable at RAID-6",
   "history": [],
   "extras": {
