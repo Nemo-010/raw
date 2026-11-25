@@ -1,0 +1,176 @@
+{
+  "topic": "compute",
+  "slug": "ventaw",
+  "provider": "Ventaw",
+  "url": "https://www.ventaw.com/pricing",
+  "category": "sandbox",
+  "tier": "Pay as you go",
+  "free_tier": {
+    "stated": "R500 of welcome credit after the first card payment, once per card; credits never expire. Free accounts can run 2 sandboxes at a time, each with up to 2 vCPU, 2 GB of memory and 5 GB of disk.",
+    "unit": "credits",
+    "metered_on": "wall-clock",
+    "source_url": "https://www.ventaw.com/terms",
+    "read_on": "2026-11-25"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a sandbox with up to 5 GB of disk on a free account, not a stored object"
+  },
+  "retention": {
+    "stated": "Files, installed packages and browser logins live on persistent disks and survive restarts; when credits run out, running sandboxes are paused rather than deleted.",
+    "days": null,
+    "source_url": "https://www.ventaw.com/terms"
+  },
+  "egress": {
+    "terms": "Sandboxes cannot reach each other, private networks or cloud metadata; egress is limited to the public internet. Managed internet transfer is not separately priced on the pricing page.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://www.ventaw.com/"
+  },
+  "interface": [
+    "rest",
+    "ssh"
+  ],
+  "interface_detail": "A public HTTPS address per sandbox, SSH access, file APIs, a Python SDK and a hosted MCP server at api.ventaw.com/mcp.",
+  "tooling": "Python SDK, REST API, hosted MCP server, SSH and file APIs; noVNC for browser and desktop templates.",
+  "chaining": "R0.45 per vCPU-hour and R0.15 per GB-hour put a two-vCPU, 4 GB sandbox near R1.50 an hour; a public HTTPS URL lets an agent hand results to a separate object-storage record.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "R500 of welcome credit after the first card payment, once per card; credits never expire",
+      "source": "https://www.ventaw.com/terms"
+    },
+    {
+      "kind": "request-rate",
+      "value": "free accounts run at most 2 sandboxes at a time, each with up to 2 vCPU, 2 GB of memory and 5 GB of disk",
+      "source": "https://www.ventaw.com/terms"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "first 5 GB of storage free, then R3.00 per GB-month; when credits are used up, sandboxes are paused",
+      "source": "https://www.ventaw.com/"
+    }
+  ],
+  "binding": "volume-quota",
+  "binding_note": "The R500 welcome credit is spendable only after a first card payment and bounds how long a sandbox runs; the two-sandbox cap bounds concurrency, not the balance.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "Sign-up asks for first name, surname, email and password, or a third-party sign-in; usage is charged in rand from a prepaid balance topped up by card through Paystack, and the R500 credit is released only after the first card payment.",
+    "country": "South Africa"
+  },
+  "reliability_note": "When the prepaid balance reaches zero, running sandboxes are paused; the vendor states it does not promise that the service will never be interrupted and does not promise data restoration from backups.",
+  "confidence": "documented",
+  "confidence_note": "Prices, the welcome credit, the free-account caps and the signup fields are quoted from the vendor's own pricing page, terms and sign-up page read on 2026-11-25.",
+  "evidence": [
+    {
+      "url": "https://www.ventaw.com/",
+      "date": "2026-11-25",
+      "proved": "usage is billed per second and creating sandboxes is free",
+      "capture": "sha256:5e3aaca19b11698c244186d0325260b8a15288d00e715cba5106e56d401a27d4",
+      "quote": "Pay for what runs, billed per second. Creating sandboxes is free."
+    },
+    {
+      "url": "https://www.ventaw.com/",
+      "date": "2026-11-25",
+      "proved": "compute is R0.45 per vCPU-hour, memory R0.15 per GB-hour and storage R3.00 per GB-month with the first 5 GB free",
+      "capture": "sha256:5e3aaca19b11698c244186d0325260b8a15288d00e715cba5106e56d401a27d4",
+      "quote": "Compute\n\nR0.45\n\nper vCPU-hour\n\nMemory\n\nR0.15\n\nper GB-hour\n\nStorage\n\nR3.00\n\nper GB-month · first 5 GB free"
+    },
+    {
+      "url": "https://www.ventaw.com/",
+      "date": "2026-11-25",
+      "proved": "each sandbox is a Firecracker microVM with a public HTTPS address, SSH and file APIs",
+      "capture": "sha256:5e3aaca19b11698c244186d0325260b8a15288d00e715cba5106e56d401a27d4",
+      "quote": "Every sandbox gets an HTTPS address you can open or share, plus SSH access and file APIs."
+    },
+    {
+      "url": "https://www.ventaw.com/",
+      "date": "2026-11-25",
+      "proved": "egress is limited to the public internet and sandboxes cannot reach each other or private networks",
+      "capture": "sha256:5e3aaca19b11698c244186d0325260b8a15288d00e715cba5106e56d401a27d4",
+      "quote": "Sandboxes cannot reach each other, your private networks or cloud metadata. Egress is limited to the public internet."
+    },
+    {
+      "url": "https://www.ventaw.com/terms",
+      "date": "2026-11-25",
+      "proved": "usage is charged per second in rand from a prepaid balance topped up by card through Paystack",
+      "capture": "sha256:c8b2a6171103c09991fa82ca979c521d308fa83eedf7a4048402297ecaa15595",
+      "quote": "Usage is charged in South African rand, per second, from a prepaid balance that you top up by card through Paystack."
+    },
+    {
+      "url": "https://www.ventaw.com/terms",
+      "date": "2026-11-25",
+      "proved": "the R500 credit follows the first card payment and a free account runs 2 sandboxes with 2 vCPU, 2 GB and 5 GB",
+      "capture": "sha256:c8b2a6171103c09991fa82ca979c521d308fa83eedf7a4048402297ecaa15595",
+      "quote": "You get R500 of welcome credit after your first card payment, once per card. Free accounts can run 2 sandboxes at a time, each with up to 2 vCPU, 2 GB of memory and 5 GB of disk."
+    },
+    {
+      "url": "https://www.ventaw.com/accounts/signup",
+      "date": "2026-11-25",
+      "proved": "the sign-up page asks for a first name and offers the welcome credit after a first card payment",
+      "capture": "sha256:e25a4a16a5269567660ea619fd698a8df22cf07798bd7ea9e3758023fc25e6ad",
+      "quote": "Get R500 of welcome credit after your first card payment."
+    },
+    {
+      "url": "https://www.ventaw.com/accounts/signup",
+      "date": "2026-11-25",
+      "proved": "the sign-up form asks for a first name and a surname",
+      "capture": "sha256:e25a4a16a5269567660ea619fd698a8df22cf07798bd7ea9e3758023fc25e6ad",
+      "quote": "First name"
+    },
+    {
+      "url": "https://www.ventaw.com/accounts/signup",
+      "date": "2026-11-25",
+      "proved": "the sign-up form asks for an email and a password",
+      "capture": "sha256:e25a4a16a5269567660ea619fd698a8df22cf07798bd7ea9e3758023fc25e6ad",
+      "quote": "Password"
+    },
+    {
+      "url": "https://www.ventaw.com/accounts/signup",
+      "date": "2026-11-25",
+      "proved": "the sign-up page offers a third-party sign-in option",
+      "capture": "sha256:e25a4a16a5269567660ea619fd698a8df22cf07798bd7ea9e3758023fc25e6ad",
+      "quote": "Or sign up with"
+    },
+    {
+      "url": "https://www.ventaw.com/pricing",
+      "date": "2026-11-25",
+      "proved": "the always-on plan is R100 a month for 1 shared vCPU, 512 MB and 5 GB, and credits never expire",
+      "capture": "sha256:574b3a15872a9850e9a854f293a324139b580fff9066e7cf9a5cce3808ffa0fb",
+      "quote": "Credits that never expire."
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-25T02:12:34.671Z",
+  "price_per_tb_month": null,
+  "notes": "Prices are published in South African rand: R0.45 per vCPU-hour, R0.15 per GB-hour and R3.00 per GB-month give about R1.50 an hour at two vCPU and 4 GB, which is roughly the operator list's $0.091 an hour at the rand exchange rate; no first-party USD price is published. The R500 welcome credit follows a card payment, so the free usage is card-gated. There is also an R100 per 30 days always-on plan for one 512 MB VM.",
+  "extras": {
+    "shape": {
+      "vcpu": 2,
+      "ram_gb": 4,
+      "disk_gb": 5,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "free accounts are capped at 2 vCPU, 2 GB of memory and 5 GB of disk per sandbox"
+    },
+    "billing_model": "per-second prepaid wallet in rand, topped up by card through Paystack",
+    "free_tier_kind": "card-gated-welcome-credit",
+    "term": "credits never expire; welcome credit once per card",
+    "price_arithmetic": "R0.45 per vCPU-hour x 2 plus R0.15 per GB-hour x 4 is R1.50 an hour at 2 vCPU and 4 GB",
+    "derived": "R0.45 x 2 + R0.15 x 4 = R1.50 per hour; the operator list's $0.091 per hour is a USD conversion of that rand figure, for which no first-party rate was captured",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "a public HTTPS URL per sandbox; no inbound port charge is stated",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "a sandbox can be paused to keep state without paying for CPU; pause stops CPU and memory charges but disk continues"
+    }
+  }
+}
