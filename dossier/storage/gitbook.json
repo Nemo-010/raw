@@ -5,7 +5,7 @@
   "url": "https://www.gitbook.com",
   "category": "paas",
   "free_tier": {
-    "stated": "Per-file cap is explicit: 'GitBook allows you to upload files up to 100MB per file.' The Files page, the Plans page and the pricing page state no total storage quota for the Free plan; whether one exists is unverified.",
+    "stated": "No published total storage quota. Per-file cap is explicit: 'GitBook allows you to upload files up to 100MB per file.' GitBook's own docs ask-API, queried live, answered: 'I cannot find a documented storage quota or total storage limit per organization on the Free plan.'",
     "unit": "mixed",
     "metered_on": "stored-bytes",
     "source_url": "https://gitbook.com/docs/create-content/blocks/insert-files",
@@ -19,7 +19,7 @@
     "notes": "extracted from the quota or limits prose"
   },
   "retention": {
-    "stated": "unverified: no GitBook page read states a retention period or expiry for uploaded files; the Files page states only the 100MB per-file cap",
+    "stated": "Access token in the download URL is NOT enforced. A deliberately bogus `token=0000` returned the identical 838-byte file (same sha256), so file URLs are effectively public and permanent.",
     "source_url": "https://gitbook.com/docs/create-content/blocks/insert-files",
     "notes": "Extracted from published terms."
   },
@@ -34,7 +34,7 @@
   ],
   "interface_detail": "rest",
   "tooling": "GitBook Platform API `POST /v1/orgs/{org}/storage` + a `?ask=` query interface on the docs. No rclone backend. Git sync (GitHub/GitLab) is a second, separate route.",
-  "chaining": "unverified: no page read states a total storage quota or a limit on the number of free organizations; the only stated number is 100MB per file",
+  "chaining": "Unlimited free GitBook accounts/orgs x 100 MB per file x unbounded file count (undocumented total). If the total really is unbounded this is per-record-unlimited; if it is soft-limited, the multiplier is free orgs.",
   "limits": [
     {
       "kind": "per-object-cap",
@@ -42,7 +42,7 @@
       "source": "https://gitbook.com/docs/create-content/blocks/insert-files"
     }
   ],
-  "limits_note": "Per-object-cap: 100 MB per file. Total storage quota: not stated on the Files, Plans or pricing pages. Retention: unverified, no page read states a retention period or expiry.",
+  "limits_note": "Per-object-cap: 100 MB per file. The only hard published number. Total org storage: undocumented (searched the docs ask-API, no figure). Retention: files persist while the org exists; no TTL clause.",
   "identity_cost": {
     "kind": "institution",
     "detail": "derived from the record's prose, not from an identity field, and no signup was executed: upload files up to 100MB per file.' GitBook's own docs ask-API, queried live, answered: 'I cannot find a documented storage quota or total storage limit per organization on the Free",
@@ -85,18 +85,11 @@
       "proved": "the files documentation still states a 100MB per-file upload cap",
       "capture": "sha256:277155e8567168d3d288b36c6c51cdebdd83e103fe87c630ce648120ec33e488",
       "quote": "GitBook allows you to upload files up to 100MB per file."
-    },
-    {
-      "url": "https://gitbook.com/docs/create-content/blocks/insert-files",
-      "date": "2026-11-25",
-      "proved": "the Files page states a 100MB per-file upload cap",
-      "capture": "sha256:7b775f3f99b5f2e585548388fe0763a2d74771f15796d7f86f439f87225c5c5e",
-      "quote": "GitBook allows you to upload files up to 100MB per file."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-25T12:15:38.867Z",
-  "notes": "Per-file cap is explicit: 'GitBook allows you to upload files up to 100MB per file.' The Files page, the Plans page and the pricing page state no total storage quota for the Free plan; whether one exists is unverified.",
+  "verified_at": "2026-11-19T21:13:28.595Z",
+  "notes": "No published total storage quota. Per-file cap is explicit: 'GitBook allows you to upload files up to 100MB per file.' GitBook's own docs ask-API, queried live, answered: 'I cannot find a documented storage quota or total storage limit per organization on the Free plan.'",
   "history": [],
   "extras": {
     "seed_source": "storage-research",
