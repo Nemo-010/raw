@@ -14,9 +14,9 @@
   "tooling": "e2b Python and Node SDKs; templates; sandbox pause and resume",
   "chaining": "pause keeps memory, so a long agent run resumes mid-process rather than replaying its setup",
   "limits_note": "The 1-hour continuous runtime is the headline difference between Hobby and the USD 150 a month Pro plan, so the time cap is a plan gate rather than a technical ceiling. It resets on pause and resume.",
-  "reliability_note": "A sandbox that hits the one-hour limit is destroyed and its in-memory state is lost unless it was paused or snapshotted first; the default timeout when none is set is 5 minutes.",
+  "reliability_note": "A sandbox that hits the one-hour limit loses in-memory state unless it was paused or snapshotted first; the default timeout when none is set is 5 minutes. Some accounts are asked for a one-time $5 card verification before they can start.",
   "confidence": "documented",
-  "verified_at": "2026-10-24T04:05:00.000Z",
+  "verified_at": "2026-11-24T11:38:13.592Z",
   "price_per_tb_month": null,
   "history": [],
   "slug": "e2b",
@@ -24,7 +24,7 @@
   "url": "https://e2b.dev/pricing",
   "category": "container and VM sandbox",
   "free_tier": {
-    "stated": "Hobby is USD 0 a month with 'One-time $100 in usage credits', 'Up to 20 concurrently running sandboxes', 'Up to 1 hour per sandbox session', '10 GiB of sandbox storage, included' and 'No credit card required to start.'",
+    "stated": "Hobby is USD 0 a month with 'One-time $100 in usage credits', 'Up to 10 concurrently running sandboxes', 'Up to 1 hour per sandbox session', '10 GiB of sandbox disk, included' and 'No credit card required to start. Some accounts are asked to verify with a one-time $5 card payment to help prevent abuse.'",
     "unit": "mixed",
     "metered_on": "wall-clock",
     "source_url": "https://e2b.dev/pricing",
@@ -57,7 +57,7 @@
     },
     {
       "kind": "volume-quota",
-      "value": "20 concurrent sandboxes on Hobby",
+      "value": "10 concurrent sandboxes on Hobby",
       "source": "https://e2b.dev/pricing"
     },
     {
@@ -68,7 +68,7 @@
   ],
   "identity_cost": {
     "kind": "email",
-    "detail": "The console signup at console.e2b.dev/registration renders 'Sign up with a social provider or your email.' with 'Continue with GitHub', 'Continue with Google', or fields for 'E-Mail', 'Name' and 'Password'. No phone field and no card field. The pricing page states 'No credit card required to start.' No hold exists because no payment method is taken at signup.",
+    "detail": "The console signup form asks for 'E-Mail', 'Name' and 'Password', or a social provider; no phone and no card field. The pricing page states 'No credit card required to start' but adds 'Some accounts are asked to verify with a one-time $5 card payment to help prevent abuse. The $5 is added to your project as usage credits and is non-refundable.'",
     "country": null
   },
   "evidence": [
@@ -126,6 +126,55 @@
       "url": "https://docs.e2b.dev/faq/index.md",
       "date": "2026-10-24",
       "proved": "quoted: 'No. E2B sandboxes are CPU-only, sized by vCPU and RAM only, with no GPU option in the SDKs, CLI, API, or a template definition.'"
+    },
+    {
+      "url": "https://e2b.dev/pricing",
+      "date": "2026-11-24",
+      "proved": "Hobby concurrency is 10, not 20",
+      "capture": "sha256:86fcafc82a5f8cd27ffe94f81c955dcac3829b1a3f27a68901f9f852b68ada68",
+      "quote": "- Up to 10 concurrently running sandboxes."
+    },
+    {
+      "url": "https://e2b.dev/pricing",
+      "date": "2026-11-24",
+      "proved": "Hobby concurrency limit is 10",
+      "capture": "sha256:86fcafc82a5f8cd27ffe94f81c955dcac3829b1a3f27a68901f9f852b68ada68",
+      "quote": "- Up to 10 concurrently running sandboxes."
+    },
+    {
+      "url": "https://e2b.dev/pricing",
+      "date": "2026-11-24",
+      "proved": "a conditional one-time $5 card verification exists for some accounts",
+      "capture": "sha256:86fcafc82a5f8cd27ffe94f81c955dcac3829b1a3f27a68901f9f852b68ada68",
+      "quote": "No credit card required to start. Some accounts are asked to verify with a one-time $5 card payment to help prevent abuse. The $5 is added to your project as usage credits and is non-refundable."
+    },
+    {
+      "url": "https://e2b.dev/pricing",
+      "date": "2026-11-24",
+      "proved": "conditional card verification is a stated account gate",
+      "capture": "sha256:86fcafc82a5f8cd27ffe94f81c955dcac3829b1a3f27a68901f9f852b68ada68",
+      "quote": "Some accounts are asked to verify with a one-time $5 card payment to help prevent abuse."
+    },
+    {
+      "url": "https://e2b.dev/pricing",
+      "date": "2026-11-24",
+      "proved": "the per-second vCPU rate is unchanged and no capacity-based price is published",
+      "capture": "sha256:86fcafc82a5f8cd27ffe94f81c955dcac3829b1a3f27a68901f9f852b68ada68",
+      "quote": "| vCPU | $0.000014 per vCPU-second |"
+    },
+    {
+      "url": "https://docs.e2b.dev/billing",
+      "date": "2026-11-24",
+      "proved": "paused sandbox retention is unlimited and the no-payment-method block stands",
+      "capture": "sha256:2427e1ba578625ead05b9b4e3d105eee2edb00fb6986437b146ab832ab540d49",
+      "quote": "| **Paused sandbox retention** | Unlimited | Unlimited | Unlimited |"
+    },
+    {
+      "url": "https://docs.e2b.dev/network/public-url.md",
+      "date": "2026-11-24",
+      "proved": "a sandbox port is reachable through a public URL",
+      "capture": "sha256:a8b166fd302d80337ee8cf3d4b20a901597e4909125110b2227b2526ed27164f",
+      "quote": "Every sandbox can be reached by a public URL, which lets you expose and connect to services running inside it."
     }
   ],
   "verdict": "qualifies-with-caveat",

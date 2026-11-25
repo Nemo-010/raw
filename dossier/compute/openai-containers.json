@@ -5,7 +5,7 @@
   "url": "https://developers.openai.com/api/docs/pricing",
   "category": "container and VM sandbox",
   "free_tier": {
-    "stated": "no container tier: the API is priced per million tokens and per audio minute, from $0.10 an input MTok on the cheapest current model",
+    "stated": "no free container tier: Hosted Shell and Code Interpreter containers are priced per 20-minute session at USD 0.03 for 1 GB, USD 0.12 for 4 GB, USD 0.48 for 16 GB and USD 1.92 for 64 GB",
     "unit": "none",
     "metered_on": "none",
     "source_url": "https://developers.openai.com/api/docs/pricing",
@@ -18,7 +18,7 @@
     "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
   },
   "retention": {
-    "stated": "not stated",
+    "stated": "Container files are discarded when the container expires after 20 minutes of non-use or is deleted; users are advised to store needed data on their own systems.",
     "days": null,
     "source_url": "https://developers.openai.com/api/docs/pricing",
     "notes": "Disk durability across instance stops and deletions is not documented."
@@ -31,20 +31,20 @@
     "source_url": "https://developers.openai.com/api/docs/pricing"
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
-  "interface_detail": "Access interface not documented in published terms.",
+  "interface_detail": "Responses API code_interpreter tool with auto or explicit containers, plus the /v1/containers endpoint for files and lifecycle.",
   "tooling": "not stated",
   "chaining": "not established",
   "limits": [
     {
       "kind": "request-rate",
-      "value": "per million input and output tokens, from $0.10 to $30.00 an input MTok on the current models",
+      "value": "container sessions: USD 0.03 per 20 minutes at 1 GB up to USD 1.92 per 20 minutes at 64 GB, billed by the minute with a 5-minute minimum",
       "source": "https://developers.openai.com/api/docs/pricing"
     },
     {
       "kind": "per-object-cap",
-      "value": "audio transcription bills per minute, from $0.0045 to $0.034",
+      "value": "a container expires after 20 minutes without use and its data is discarded; 100 RPM per organization for the tool",
       "source": "https://developers.openai.com/api/docs/pricing"
     }
   ],
@@ -56,7 +56,7 @@
   },
   "reliability_note": "no reliability event recorded in the source passes",
   "confidence": "documented",
-  "confidence_note": "the API pricing page was read on 2026-10-22 and carries model and audio rates only. There is no container product on it, so the record's free-tier framing does not apply and the verdict moves to paid-only",
+  "confidence_note": "the API pricing page read on 2026-11-24 prices Hosted Shell and Code Interpreter containers per 20-minute session; the Code Interpreter guide gives the 20-minute expiry and data-loss rule. No free container tier is published.",
   "evidence": [
     {
       "url": "https://developers.openai.com/api/docs/pricing",
@@ -67,10 +67,66 @@
       "url": "https://developers.openai.com/api/docs/pricing",
       "date": "2026-10-22",
       "proved": "the API pricing page was read on 2026-10-22 and is a per-million-token model table plus per-minute audio rates: 'gpt-6-luna $0.10 / $0.50 per MTok', 'gpt-5.5-pro $30.00 / $180.00', 'gpt-transcribe $0.0045 / minute'. It prices tokens and minutes, not containers"
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/pricing",
+      "date": "2026-11-24",
+      "proved": "the pricing page now carries a per-session container price table",
+      "capture": "sha256:88f7825ffddb006fefea4d3838831bd3deaed6f72df6914ad79aefa021d51355",
+      "quote": "| Containers | Hosted Shell and Code Interpreter | 1 GB $0.03, 4 GB $0.12, 16 GB $0.48, 64 GB $1.92 per 20-minute session per container |"
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/pricing",
+      "date": "2026-11-24",
+      "proved": "container sessions carry a per-minute meter and a 5-minute minimum",
+      "capture": "sha256:88f7825ffddb006fefea4d3838831bd3deaed6f72df6914ad79aefa021d51355",
+      "quote": "Eligible container sessions will be billed by the minute, with a 5-minute minimum per session."
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/guides/tools-code-interpreter",
+      "date": "2026-11-24",
+      "proved": "idle containers expire after 20 minutes and their data is discarded",
+      "capture": "sha256:fb45dbe60494f21fe1e762b1da318ea5ed5457c2448933106ab7bdd4d7cd11b5",
+      "quote": "A container expires if it is not used for 20 minutes."
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/guides/tools-code-interpreter",
+      "date": "2026-11-24",
+      "proved": "the Code Interpreter tool exposes a sandboxed container through the API",
+      "capture": "sha256:fb45dbe60494f21fe1e762b1da318ea5ed5457c2448933106ab7bdd4d7cd11b5",
+      "quote": "A container is a fully sandboxed virtual machine that the model can run Python code in."
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/guides/tools-code-interpreter",
+      "date": "2026-11-24",
+      "proved": "explicit container creation uses the v1/containers HTTP endpoint",
+      "capture": "sha256:fb45dbe60494f21fe1e762b1da318ea5ed5457c2448933106ab7bdd4d7cd11b5",
+      "quote": "Explicit mode: here, you explicitly [create a container](https://developers.openai.com/api/reference/resources/containers/methods/create) using the `v1/containers` endpoint"
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/guides/tools-code-interpreter",
+      "date": "2026-11-24",
+      "proved": "container data is discarded on expiry and is not recoverable",
+      "capture": "sha256:fb45dbe60494f21fe1e762b1da318ea5ed5457c2448933106ab7bdd4d7cd11b5",
+      "quote": "all data associated with the container will be discarded from our systems and not recoverable."
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/pricing",
+      "date": "2026-11-24",
+      "proved": "the pricing page now carries a container product",
+      "capture": "sha256:88f7825ffddb006fefea4d3838831bd3deaed6f72df6914ad79aefa021d51355",
+      "quote": "Container pricing includes [Hosted Shell](https://developers.openai.com/api/docs/guides/tools-shell#hosted-shell-quickstart) and [Code Interpreter](https://developers.openai.com/api/docs/guides/tools-code-interpreter)."
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/pricing",
+      "date": "2026-11-24",
+      "proved": "the pricing page now carries container pricing",
+      "capture": "sha256:88f7825ffddb006fefea4d3838831bd3deaed6f72df6914ad79aefa021d51355",
+      "quote": "Container pricing includes [Hosted Shell](https://developers.openai.com/api/docs/guides/tools-shell#hosted-shell-quickstart) and [Code Interpreter](https://developers.openai.com/api/docs/guides/tools-code-interpreter)."
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-10-22T04:47:36.000Z",
+  "verified_at": "2026-11-24T13:20:59.952Z",
   "price_per_tb_month": null,
   "notes": "",
   "extras": {

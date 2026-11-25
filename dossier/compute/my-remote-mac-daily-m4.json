@@ -1,0 +1,160 @@
+{
+  "topic": "compute",
+  "slug": "my-remote-mac-daily-m4",
+  "provider": "My Remote Mac",
+  "url": "https://myremotemac.com/pricing",
+  "category": "dedicated physical Mac rental",
+  "tier": "Mac mini M4, 24 hours",
+  "free_tier": {
+    "stated": "The shortest lease is 24 hours at $14 for the Mac mini M4 with 16GB memory and 256GB SSD, billed in advance in USD excluding tax. No setup fees and no commitment; auto-renew is on by default and can be turned off before the order.",
+    "unit": "none",
+    "metered_on": "none",
+    "source_url": "https://myremotemac.com/pricing",
+    "read_on": "2026-11-24",
+    "notes": "The published entry price is $14 per 24 hours or $85 a month for the same machine; the 24-hour floor comes from Apple's macOS licence. A card with 3D Secure and a $1 hold is needed to add a payment method."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a physical machine, not an object; the entry machine has a 256GB SSD and a backup disk is an optional add-on at 15% of the plan price"
+  },
+  "retention": {
+    "stated": "When a plan ends the instance is permanently deleted and all data on it is destroyed; a daily Mac without auto-renew is deleted as soon as its 24 hours end. Backups, when the option is bought, are retained for seven days from deletion.",
+    "days": 7,
+    "source_url": "https://myremotemac.com/legal"
+  },
+  "egress": {
+    "terms": "Unmetered 1 Gbps networking with no data cap on a 100 Gbps backbone; 2.5 Gbps for +$20/mo and 5 Gbps for +$35/mo are also unmetered on monthly and annual plans only. Dedicated public IPv4 and IPv6 are included.",
+    "metered": false,
+    "free_allowance": "unmetered",
+    "price_per_tb": null,
+    "source_url": "https://myremotemac.com/pricing"
+  },
+  "interface": [
+    "ssh",
+    "browser"
+  ],
+  "interface_detail": "A root-capable shell over SSH on port 22 with password or public-key authentication; a graphical macOS desktop over VNC / Apple Screen Sharing on port 59010. Instances are dedicated physical machines, allocated 1:1, never shared VMs.",
+  "tooling": "an SSH client and a VNC viewer; Xcode, Jenkins, GitLab runners and GitHub Actions run on the machine, and an iPhone can be connected through VirtualHere or TestFlight",
+  "chaining": "A dedicated Mac runs an iOS CI/CD or Xcode job with full root and unmetered bandwidth; because the instance and its data are deleted at the end of a paid period, artifacts that must outlive the lease need another record's storage, and the 24-hour minimum makes a short job cost a full day.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "24 hours minimum per lease; $14 for the first 24 hours of a Mac mini M4, auto-renewing every 24 hours by default",
+      "source": "https://myremotemac.com/pricing"
+    },
+    {
+      "kind": "per-ip-shaping",
+      "value": "fail2ban bans an IP for 1 hour after 5 failed logins within 10 minutes on both SSH and VNC",
+      "source": "https://docs.myremotemac.com/connect/overview/"
+    }
+  ],
+  "limits_note": "One daily Mac at a time per account; add-ons are not available on daily plans. Monthly and annual plans give a 24-hour or 3-day grace period on a failed payment, while a daily plan has none.",
+  "binding": "volume-quota",
+  "binding_note": "The 24-hour minimum lease is what binds a short job: a single hour of use costs the same $14 as a full day, well before the bandwidth or login limits matter.",
+  "identity_cost": {
+    "kind": "card",
+    "detail": "Every card added goes through 3D Secure verification with a $1 hold released right away, and the first payment is confirmed by the bank at checkout. The account is created with a login email. Identity documents are asked for only if access is restricted for a suspected breach and KYC is required to restore it.",
+    "country": null
+  },
+  "reliability_note": "99.9% monthly network and power availability under the SLA; a daily renewal that is not collected ends the contract with no grace period and the instance and its data are erased once the 24-hour minimum lease allows. A failed payment during a monthly or annual term has a 24-hour or 3-day grace period before deletion.",
+  "confidence": "documented",
+  "confidence_note": "The price, minimum lease, network, card and add-on terms are quoted from the vendor's pricing page read on 2026-11-24; the deletion, grace periods and KYC condition are quoted from its legal page, and the ports and fail2ban rule from its own documentation.",
+  "evidence": [
+    {
+      "url": "https://myremotemac.com/pricing",
+      "date": "2026-11-24",
+      "proved": "the entry Mac mini M4 at 16GB and 256GB SSD costs $85 a month, USD excluding tax",
+      "capture": "sha256:30b6fca42e5cd640457b7c2438be71186598b8597fa03fbaddd6110ce0414955",
+      "quote": "85 /mo"
+    },
+    {
+      "url": "https://myremotemac.com/pricing",
+      "date": "2026-11-24",
+      "proved": "the first 24 hours of that Mac mini M4 cost $14, and a daily Mac auto-renews every 24 hours by default",
+      "capture": "sha256:30b6fca42e5cd640457b7c2438be71186598b8597fa03fbaddd6110ce0414955",
+      "quote": "24 hours One day, auto-renew off | $14 | $85 | $935"
+    },
+    {
+      "url": "https://myremotemac.com/pricing",
+      "date": "2026-11-24",
+      "proved": "networking is unmetered with no data cap, and faster unmetered tiers have a monthly surcharge",
+      "capture": "sha256:30b6fca42e5cd640457b7c2438be71186598b8597fa03fbaddd6110ce0414955",
+      "quote": "### Unmetered 1 Gbps Network"
+    },
+    {
+      "url": "https://myremotemac.com/pricing",
+      "date": "2026-11-24",
+      "proved": "each card is checked with 3D Secure and a $1 hold released immediately",
+      "capture": "sha256:30b6fca42e5cd640457b7c2438be71186598b8597fa03fbaddd6110ce0414955",
+      "quote": "Every card you add goes through 3D Secure verification, with a $1 hold released right away."
+    },
+    {
+      "url": "https://myremotemac.com/pricing",
+      "date": "2026-11-24",
+      "proved": "a daily plan has no payment-failure grace period and the instance and its data are erased",
+      "capture": "sha256:30b6fca42e5cd640457b7c2438be71186598b8597fa03fbaddd6110ce0414955",
+      "quote": "What happens if a daily renewal payment fails?"
+    },
+    {
+      "url": "https://myremotemac.com/legal",
+      "date": "2026-11-24",
+      "proved": "data on a deleted instance is destroyed with no provider copy, and bought backups last seven days",
+      "capture": "sha256:2f1921352e145c0c5165ddbf4c90a1b85ae55cdca66c5abfd1f17325aa3cb349",
+      "quote": "All data stored on the instance is permanently destroyed upon deletion, cannot be recovered, and the Provider retains no copy of it."
+    },
+    {
+      "url": "https://docs.myremotemac.com/connect/overview/",
+      "date": "2026-11-24",
+      "proved": "access is SSH on port 22 and VNC / Screen Sharing on port 59010",
+      "capture": "sha256:4d0aff921105f53a3f0beeedf27ac8551af6b728d35cf7781fb69a55d07cb200",
+      "quote": "SSH is on port `22` and the VNC / Screen Sharing desktop is on port `59010`"
+    },
+    {
+      "url": "https://docs.myremotemac.com/connect/overview/",
+      "date": "2026-11-24",
+      "proved": "an IP is banned for one hour after five failed logins in ten minutes on both SSH and VNC",
+      "capture": "sha256:4d0aff921105f53a3f0beeedf27ac8551af6b728d35cf7781fb69a55d07cb200",
+      "quote": "After **5 failed logins within 10 minutes**, the offending IP is **banned for 1 hour**"
+    },
+    {
+      "url": "https://myremotemac.com/faq",
+      "date": "2026-11-24",
+      "proved": "the minimum lease is 24 hours and the machine is accessed over root SSH and VNC Screen Sharing",
+      "capture": "sha256:9ebfc3eb33cf8a3be3155d21c3726629807a4f32d095778d1a6d1c5e346d63c1",
+      "quote": "Yes, 24 hours: Apple's macOS license sets a 24-hour minimum for every cloud Mac lease."
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-24T10:11:14.932Z",
+  "price_per_tb_month": null,
+  "notes": "The entry offer is a dedicated physical Mac mini M4 with 10c CPU, 16GB memory and 256GB SSD at $14 for 24 hours or $85 a month, USD excluding tax, with unmetered 1 Gbps networking. A hosted physical machine allocated 1:1; the user does not install the hardware or the host, though they install their own software on the Mac.",
+  "extras": {
+    "shape": {
+      "vcpu": 10,
+      "ram_gib": 16,
+      "disk_gib": 256,
+      "gpu_class": "10c GPU",
+      "gpu_count": null,
+      "note": "Mac mini M4 entry plan; 512GB, 24GB, 48GB and 4TB variants are listed at higher prices"
+    },
+    "billing_model": "24-hour prepaid lease, auto-renew by default; monthly and annual terms available",
+    "free_tier_kind": "paid-lease",
+    "term": "24 hours minimum",
+    "price_arithmetic": "$14 per 24 hours or $85 per month, USD excluding tax; annual $935 gives one month free",
+    "status": "published paid offer",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "SSH 22, VNC 59010",
+      "static_ip": true,
+      "ipv6": true,
+      "per_session_bytes": null,
+      "note": "unmetered 1 Gbps, 2.5 or 5 Gbps as paid options"
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "lease end deletes the instance and its data; no idle timeout is published"
+    }
+  }
+}

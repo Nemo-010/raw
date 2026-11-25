@@ -1,7 +1,7 @@
 {
   "topic": "compute",
   "per_object_cap": {
-    "stated": "Sizes: 'small 2 vCPU / 4 GB / 12 GB' at USD 0.018 an hour, 'default 4 vCPU / 8 GB / 50 GB' at USD 0.036, 'large 8 vCPU / 16 GB / 125 GB' at USD 0.072, 'xlarge 16 vCPU / 32 GB / 251 GB' at USD 0.200, the last needing the USD 100 plan.",
+    "stated": "Sizes: 'small' 2 vCPU / 4 GB / 51 GB at USD 0.018 an hour, 'default' 4 vCPU / 8 GB / 51 GB at USD 0.036, 'large' 8 vCPU / 16 GB / 111 GB at USD 0.072, 'xlarge' 16 vCPU / 32 GB / 251 GB at USD 0.200, the last needing the USD 100 plan.",
     "bytes": null,
     "source_url": "https://docs.boat.dev/pricing",
     "notes": "Every size is a full Linux virtual machine with a public IPv6 address and public URLs for its ports."
@@ -10,13 +10,13 @@
     "rest",
     "cli"
   ],
-  "interface_detail": "HTTP API at https://boat.dev/api/v1 plus a CLI; hostPort exposes a port on a public URL",
+  "interface_detail": "HTTP API at https://boat.dev/api/v1 plus a CLI; hostPort exposes a port on a stable public HTTPS URL with a token, and up to 50 ports per sandbox",
   "tooling": "boat CLI, Python SDK, REST; GET /limits reports the balance in seconds of default time",
   "chaining": "the only cheap sandbox here that publishes a public URL per port and an IPv6 address per sandbox",
   "limits_note": "Included plan time expires at the end of the month; credit packs cost USD 20 and never expire, which is the only way to bank time.",
   "reliability_note": "A stopped box loses its disk after 14 days, which is shorter than most providers here and is stated in a warning block rather than a footnote.",
   "confidence": "documented",
-  "verified_at": "2026-11-06T17:20:15.330Z",
+  "verified_at": "2026-11-24T11:38:11.103Z",
   "price_per_tb_month": null,
   "history": [],
   "slug": "boat",
@@ -24,7 +24,7 @@
   "url": "https://docs.boat.dev/pricing",
   "category": "container and VM sandbox",
   "free_tier": {
-    "stated": "No signup credit. 'Your first plan starts with a 7-day free trial. A card is required. The trial has its own lower limits.' A plan is prepaid time: 'boat grants the included time each month. It expires at the end of the month.'",
+    "stated": "No card-free tier. 'Your first plan starts with a free 7-day trial. Checkout asks for a card. There is no free tier without a card.' The trial allows 25 hours of compute in total, 2 sandboxes at once and a required 2-hour auto-stop. A paid plan includes VM time that expires at the end of the billing period.",
     "unit": "none",
     "metered_on": "none",
     "source_url": "https://docs.boat.dev/pricing",
@@ -62,7 +62,7 @@
   ],
   "identity_cost": {
     "kind": "card",
-    "detail": "'A card is required' for the first plan, including the 7-day trial. No hold amount is stated anywhere on the pricing page.",
+    "detail": "'Checkout asks for a card' for the 7-day trial, and 'There is no free tier without a card'. No hold amount is stated.",
     "country": null
   },
   "evidence": [
@@ -180,6 +180,55 @@
       "proved": "the entry plan is still USD 20 a month with 555 hours of the default size",
       "capture": "sha256:1d011157d6ae53d7e220e6a8eedef9cf44aa3663ef8bf8a5a2b62a43da0bd968",
       "quote": "A plan is a monthly price that your card pays."
+    },
+    {
+      "url": "https://docs.boat.dev/pricing",
+      "date": "2026-11-24",
+      "proved": "the default size is 4 vCPU / 8 GB / 51 GB at USD 0.036 per hour",
+      "capture": "sha256:8effd45f6afa43c66eb7033819f72a5b5569f7b9ca837c9365e9467dada89a0c",
+      "quote": "| `default` | **\\$0.036** | 4 vCPU | 8 GB | 51 GB |"
+    },
+    {
+      "url": "https://docs.boat.dev/free-trial",
+      "date": "2026-11-24",
+      "proved": "the 7-day trial needs a card and there is no card-free tier",
+      "capture": "sha256:1e2f598c12d3d048569807f78e4a48fc6bf8550a3972a9a068113c17fa469600",
+      "quote": "Your first plan starts with a free 7-day trial. Checkout asks for a card. **There is no free tier without a card.**"
+    },
+    {
+      "url": "https://docs.boat.dev/free-trial",
+      "date": "2026-11-24",
+      "proved": "the identity gate for the trial and every plan is a card",
+      "capture": "sha256:1e2f598c12d3d048569807f78e4a48fc6bf8550a3972a9a068113c17fa469600",
+      "quote": "Your first plan starts with a free 7-day trial. Checkout asks for a card. **There is no free tier without a card.**"
+    },
+    {
+      "url": "https://docs.boat.dev/hosting",
+      "date": "2026-11-24",
+      "proved": "a hosted port is reachable at a stable public HTTPS URL",
+      "capture": "sha256:cc9444b3c992764d71178bc268741242439e76b1ef769870770eecc82f0e79c5",
+      "quote": "Run a service in your sandbox. boat gives it a stable public HTTPS URL."
+    },
+    {
+      "url": "https://docs.boat.dev/pricing",
+      "date": "2026-11-24",
+      "proved": "boat does not bill egress",
+      "capture": "sha256:8effd45f6afa43c66eb7033819f72a5b5569f7b9ca837c9365e9467dada89a0c",
+      "quote": "Network traffic. boat does not bill egress."
+    },
+    {
+      "url": "https://docs.boat.dev/pricing",
+      "date": "2026-11-24",
+      "proved": "the stopped-sandbox disk retention is at least 14 days",
+      "capture": "sha256:8effd45f6afa43c66eb7033819f72a5b5569f7b9ca837c9365e9467dada89a0c",
+      "quote": "A stopped sandbox keeps its disk for at least 14 days."
+    },
+    {
+      "url": "https://docs.boat.dev/pricing",
+      "date": "2026-11-24",
+      "proved": "every sandbox gets a public IPv6 address and outbound IPv4",
+      "capture": "sha256:8effd45f6afa43c66eb7033819f72a5b5569f7b9ca837c9365e9467dada89a0c",
+      "quote": "A public IPv6 address on every sandbox, and outbound IPv4."
     }
   ],
   "verdict": "paid-only",

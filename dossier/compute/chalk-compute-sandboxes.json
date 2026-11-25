@@ -1,0 +1,149 @@
+{
+  "topic": "compute",
+  "slug": "chalk-compute-sandboxes",
+  "provider": "Chalk Compute (Sandboxes)",
+  "url": "https://chalk.ai/pricing",
+  "category": "agent sandbox",
+  "tier": "Standard, Runtime (pay as you go)",
+  "free_tier": {
+    "stated": "unverified: no free allowance for Runtime sandboxes is published on the pricing page; it states 'Get started today and only pay for what you use, at per-second granularity. No up-front costs.' A free test drive is only offered through 'Book a demo'.",
+    "unit": "none",
+    "metered_on": "wall-clock",
+    "source_url": "https://chalk.ai/pricing",
+    "read_on": "2026-11-24",
+    "notes": "No free credit grant or recurring free sandbox hours are stated. The signup page offers no self-serve trial, only 'Book a demo to take a test drive'."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a container, not a stored object; volumes on the Standard tier are billed at $0.09 per GiB per month with no per-object cap published",
+    "bytes": null,
+    "source_url": "https://chalk.ai/pricing"
+  },
+  "retention": {
+    "stated": "A sandbox is an ephemeral task, torn down when the task finishes; volume bytes are billed per GiB per month. No automatic data-expiry period is published.",
+    "days": null,
+    "source_url": "https://docs.chalk.ai/docs/compute/overview"
+  },
+  "egress": {
+    "terms": "Network egress is $0.04 per GiB; network ingress is 'No charge'. Sandboxes allow outbound access by default and a network policy can restrict destinations. In a private-cloud deployment the sandbox sits in the user's own VPC.",
+    "metered": true,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://chalk.ai/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "browser"
+  ],
+  "interface_detail": "chalkcompute Python SDK (Sandbox, Image, volumes, scaling groups), the chalk CLI, and the Chalk dashboard; sandboxes are created in Python and reached through sandbox.exec or a browser login.",
+  "endpoint": "https://api.chalk.ai",
+  "tooling": "pip package chalkcompute installed by chalk init into a .venv and driven with uv run; the Chalk CLI, dashboard, gRPC query server, and ChatGPT/Claude/Cursor coding-agent integrations; egress controlled by network policy.",
+  "chaining": "Metered sandbox containers combine with point-in-time feature queries from the Chalk Context Engine and encrypted volumes for time-locked agent evaluations; the sandboxes run in the user's own AWS EKS or GCP GKE cluster.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "Standard tier CPU $0.0249 per vCPU-hour preemptible or $0.0747 non-preemptible, memory $0.0080 per GiB-hour preemptible or $0.0240 non-preemptible, GPU $0.74-$8.99 per hour by type, billed per second with no minimum charge or minimum duration; no free monthly allowance is published",
+      "source": "https://chalk.ai/pricing"
+    },
+    {
+      "kind": "write-gated",
+      "value": "Creating a sandbox needs the deploy.create permission (Admin, Owner or Team Manager); a service token needs deploy.read, deploy.create and deploy.redeploy; the Standard tier is self-serve while Enterprise and Business Critical rates require contacting sales",
+      "source": "https://docs.chalk.ai/docs/setup-guide"
+    }
+  ],
+  "limits_note": "Preemptible rates apply unless non-preemptible is requested, and non-preemptible workloads run for up to 24 hours; custom non-preemptible durations are an Enterprise feature. Not every GPU type is available in every environment and quotas are listed in the dashboard. A browser login is needed for chalk login, or a service token from Settings > Access tokens.",
+  "binding": "volume-quota",
+  "binding_note": "At the published Standard rates there is no free monthly allowance and a sandbox bills per second from Ready until exit, so the spend meter is what binds a user with no committed-use contract.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The login page offers 'Continue with your email', Google and Azure AD, and says 'Not yet using Chalk? Book a demo to take a test drive'. Creating a sandbox needs a logged-in project with the deploy.create permission; a service token created in Settings > Access tokens is an alternative for code outside the browser. No card field is visible on the login page; whether signup asks for a card is unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "Preemptible workloads are the default; a non-preemptible workload runs for up to 24 hours. Sandboxes are ephemeral and torn down when the task finishes. gVisor restricts syscalls by default, and outbound network access is allowed unless a policy is attached.",
+  "confidence": "documented",
+  "confidence_note": "The rates, egress price and no-up-front-cost statement are quoted from Chalk's own pricing page read 2026-11-24; the identity gate and permission requirements are quoted from the login and setup pages read the same day. No live request was measured.",
+  "evidence": [
+    {
+      "url": "https://chalk.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the Standard Runtime CPU rate is $0.0249 per vCPU-hour preemptible and $0.0747 non-preemptible",
+      "capture": "sha256:958f58f7a7663853d25f193b2cc818d8a7bc294f18a7be0282d2e5a38420985d",
+      "quote": "| CPU | $0.0249 / vCPU / hr | $0.0747 / vCPU / hr |"
+    },
+    {
+      "url": "https://chalk.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "network egress is $0.04 per GiB and network ingress has no charge",
+      "capture": "sha256:958f58f7a7663853d25f193b2cc818d8a7bc294f18a7be0282d2e5a38420985d",
+      "quote": "| Network egress | $0.04 / GiB |"
+    },
+    {
+      "url": "https://chalk.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "the Standard tier is pay as you go with per-second granularity and no up-front cost, with no stated free allowance",
+      "capture": "sha256:958f58f7a7663853d25f193b2cc818d8a7bc294f18a7be0282d2e5a38420985d",
+      "quote": "Get started today and only pay for what you use, at per-second granularity. No up-front costs."
+    },
+    {
+      "url": "https://chalk.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "preemptible is the default and non-preemptible workloads run for up to 24 hours",
+      "capture": "sha256:958f58f7a7663853d25f193b2cc818d8a7bc294f18a7be0282d2e5a38420985d",
+      "quote": "Preemptible rates apply unless you request non-preemptible workloads, which run for up to 24 hours."
+    },
+    {
+      "url": "https://chalk.ai/pricing",
+      "date": "2026-11-24",
+      "proved": "volumes are billed at $0.09 per GiB per month on the Standard tier",
+      "capture": "sha256:958f58f7a7663853d25f193b2cc818d8a7bc294f18a7be0282d2e5a38420985d",
+      "quote": "| Volumes | $0.09 / GiB / mo |"
+    },
+    {
+      "url": "https://chalk.ai/login",
+      "date": "2026-11-24",
+      "proved": "login offers an email option and a demo is the offered way to try Chalk; no card field appears on the login page",
+      "capture": "sha256:2b7659048fe1925b39c18f3ed88add654ac6b12e321b62c77d0ae98971df50ec",
+      "quote": "Not yet using Chalk? [Book a demo to take a test drive →](https://chalk.ai/book-demo)"
+    },
+    {
+      "url": "https://docs.chalk.ai/docs/setup-guide",
+      "date": "2026-11-24",
+      "proved": "creating a sandbox requires the deploy.create permission held by Admin, Owner or Team Manager roles",
+      "capture": "sha256:689d74641c3db46c20bf76ce76f64c9c359ae45c841c9ab278e8fa8a4f4462da",
+      "quote": "| Create a sandbox, function, or scaling group   | `deploy.create`                                                                                     | Admin, Owner, Team Manager                                                                                  |"
+    },
+    {
+      "url": "https://chalk.ai/blog/chalk-compute",
+      "date": "2026-11-24",
+      "proved": "Chalk Compute deploys sandboxes inside the customer's own cloud, so it is not a hosted capacity service",
+      "capture": "sha256:c204995852fab7ef3e6c0ea9ce73ed58a9ecdcc531591a849cbb36818366b3a6",
+      "quote": "Chalk Compute is an enterprise-grade agent runtime that deploys sandboxes directly inside your private cloud."
+    },
+    {
+      "url": "https://docs.chalk.ai/docs/compute/overview",
+      "date": "2026-11-24",
+      "proved": "a sandbox is an ephemeral task torn down when the task finishes",
+      "capture": "sha256:dfbac255113947e931e374a6b630d28c29b042393bb955c1d06bddc64ba1ebb7",
+      "quote": "Sandbox: an isolated environment for a single ephemeral task, torn down when the task finishes."
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-24T10:11:14.671Z",
+  "notes": "Chalk Compute Standard tier has published per-second rates but no free allowance; Enterprise and Business Critical tiers are contact-sales only. Chalk Compute is a control plane and SDK whose sandbox capacity is provisioned in the customer's own AWS EKS or GCP GKE cluster, so it is listed last behind hosted offers. The blog says the runtime will be open-sourced; whether that has happened is unverified.",
+  "extras": {
+    "shape": {
+      "vcpu": null,
+      "ram_gib": null,
+      "disk_gib": null,
+      "gpu_class": "NVIDIA H100/H200/B200/B300/L4/L40S/A100/A10G/T4/RTX PRO 6000",
+      "gpu_count": null,
+      "note": "resources are requested per sandbox by cpu, memory and gpu strings; no fixed shape is published"
+    },
+    "billing_model": "per-second for requested vCPU, GiB and GPU on the Standard tier; contact sales for committed use",
+    "free_tier_kind": "none published",
+    "term": "month to month, per second",
+    "price_arithmetic": "CPU $0.0249/vCPU/hr preemptible, $0.0747 non-preemptible; memory $0.0080/GiB/hr preemptible, $0.0240 non-preemptible; egress $0.04/GiB; volumes $0.09/GiB/mo",
+    "status": "available for AWS EKS and GCP GKE; Azure AKS listed as coming soon",
+    "deployment": "customer's own cloud account (AWS EKS or GCP GKE), or Chalk-hosted Serverless"
+  }
+}

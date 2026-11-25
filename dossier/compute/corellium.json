@@ -1,0 +1,202 @@
+{
+  "topic": "compute",
+  "slug": "corellium",
+  "provider": "Corellium",
+  "url": "https://support.corellium.com/subscriptions/pricing",
+  "category": "virtual mobile device cloud",
+  "tier": "Solo Explorer / per-device-hour cloud subscription",
+  "free_tier": {
+    "stated": "No free tier: Corellium Solo is priced at USD 3 per device-hour with no pre-paid minimum, for one user and one active device, open to students only; a manually approved trial credits 6 hours over 14 days on a 6-core device, or 18 hours on a 2-core device, and stored devices count USD 0.25 a day against the credit.",
+    "unit": "hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://www.corellium.com/products/solo",
+    "read_on": "2026-11-24",
+    "notes": "The trial is reviewed and approved by the vendor and expires; it is not a standing free tier. Enterprise plans Viper and Falcon come with 1,250 device-hours a month and move to burst hours at the same plan rate. Arm Virtual Hardware has its own record and is a different offer."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a virtual mobile device, not an object; each project has a /23 IP space with 512 addresses and effectively 127 devices when devices have two LAN addresses and one service address",
+    "bytes": null,
+    "source_url": "https://support.corellium.com/administration/virtual-devices"
+  },
+  "retention": {
+    "stated": "A trial expires after 14 days; after expiry, an account not converted to a subscription is suspended and its data is deleted. Stored devices are billed USD 0.25 a day.",
+    "days": 14,
+    "source_url": "https://support.corellium.com/subscriptions/trials"
+  },
+  "egress": {
+    "terms": "Virtual devices have network interfaces connected to the outside world and a per-project private IP range, but the pricing and support pages read state no egress allowance and no price per unit of outbound traffic; unverified: no published egress terms.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://support.corellium.com/subscriptions/pricing"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "ssh",
+    "browser"
+  ],
+  "interface_detail": "A browser-based web interface and product portal, a REST API with API keys, the Corellium CLI installed through npm, and SSH into a jailbroken virtual device over a VPN; ADB, GDB and a serial console are also documented.",
+  "endpoint": "https://app.corellium.com/api/docs",
+  "tooling": "the web interface; the REST API at https://app.corellium.com/api/docs for Solo Cloud customers with API keys; the Corellium CLI installed with 'npm install -g @corellium/corellium-cli'; SSH, ADB, GDB and a serial console; REST and JavaScript and Python API clients",
+  "chaining": "Virtual devices in a project can be driven from a CI workflow with the CLI and REST API, and snapshots and cloning preserve device state; a workflow that needs files to outlive a deleted account needs a separate object-storage record.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "6 hours of trial credit in 14 days for a 6-core device, or 18 hours on a 2-core device; stored devices count USD 0.25 a day against the credit",
+      "source": "https://support.corellium.com/troubleshooting-faqs/why-cant-i-log-into-my-trial"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "Solo at USD 3 per device-hour, one user and one active device; enterprise plans include 1,250 device-hours a month before burst hours at the same rate",
+      "source": "https://support.corellium.com/subscriptions/pricing"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "each project has a /23 IP space of 512 addresses, with an effective limit of 127 devices for products with two LAN addresses and one service address",
+      "source": "https://support.corellium.com/administration/virtual-devices"
+    }
+  ],
+  "limits_note": "Device-hour usage is measured per minute and totaled at month end, then rounded up to the next whole hour. A device is active when it is on, paused, turning on or turning off; a device that is off is not billed. Unused plan hours do not roll over. Trial access requires manual approval.",
+  "binding": "volume-quota",
+  "binding_note": "The 6 trial hours in 14 days run out before the per-project device count or the paid device-hour meter, and the trial is the only no-cost capacity.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "A trial request is required and reviewed: 'Once we receive your trial request, we'll contact you if we need more information. If approved, you will receive a trial invitation by email.' Cloud trials are manually approved for individuals and businesses with automated checks such as an OFAC lookup and a manual review. Solo is for student users only. No card, phone number, ID document or institution field is published on the trial request page.",
+    "country": null
+  },
+  "reliability_note": "Trials are manually approved and can be denied; the vendor states an account left unconverted after the trial is suspended and its data is deleted. Device-hour billing rounds the monthly total up to the next whole hour. Stored devices are billed USD 0.25 a day.",
+  "confidence": "documented",
+  "confidence_note": "The per-device-hour rate, the one-user one-device cap, the trial credit and its 14-day horizon, the approval gate, the interface routes and the per-project address space are quoted from Corellium's own pricing, product, trial and support pages read on 2026-11-24.",
+  "evidence": [
+    {
+      "url": "https://support.corellium.com/subscriptions/pricing",
+      "date": "2026-11-24",
+      "proved": "the Solo Explorer plan rate is USD 3 per device-hour",
+      "capture": "sha256:7b6302afab3f79774f36b9a47274ea481a37c91ce02d2883b5cf3fce5f5057dc",
+      "quote": "Plan Rate**: is in USD unless otherwise specified and reflects the cost of device-hour use. Plan rates are only available for [Solo Explorer](https://www.corellium.com/products/solo) and are currently $3 per/device-hour."
+    },
+    {
+      "url": "https://support.corellium.com/subscriptions/pricing",
+      "date": "2026-11-24",
+      "proved": "enterprise plans include 1,250 device-hours a month and move to burst hours after that",
+      "capture": "sha256:7b6302afab3f79774f36b9a47274ea481a37c91ce02d2883b5cf3fce5f5057dc",
+      "quote": "all our enterprise-level plans ([Viper Essentials](https://www.corellium.com/products/viper), [Viper Advanced](https://www.corellium.com/products/viper), [Falcon](https://www.corellium.com/products/falcon)) come with 1,250 hours per month of device hours. Once all 1,250 hours have been used, you will move into burst hours pricing."
+    },
+    {
+      "url": "https://support.corellium.com/subscriptions/pricing",
+      "date": "2026-11-24",
+      "proved": "burst hours are charged at the same plan rate with no increase or penalty, and unused plan hours do not roll over",
+      "capture": "sha256:7b6302afab3f79774f36b9a47274ea481a37c91ce02d2883b5cf3fce5f5057dc",
+      "quote": "If you go over your Plan Hours in a month, we call them Burst Hours, and they are charged at the same Plan Rate. In other words, there isn’t a rate increase or penalty for exceeding your monthly plan."
+    },
+    {
+      "url": "https://support.corellium.com/subscriptions/pricing",
+      "date": "2026-11-24",
+      "proved": "device-hour usage is measured per minute and rounded up to the next whole hour at month end",
+      "capture": "sha256:7b6302afab3f79774f36b9a47274ea481a37c91ce02d2883b5cf3fce5f5057dc",
+      "quote": "To calculate monthly device-hour usage, we measure individual device usage by the minute, and at the end of the month, we total them all, then round up the total to the next whole hour."
+    },
+    {
+      "url": "https://www.corellium.com/products/solo",
+      "date": "2026-11-24",
+      "proved": "Solo costs USD 3 per device-hour with no pre-paid minimum and one user and one active device, for students only",
+      "capture": "sha256:f63883b2bbe31e3418e4b8f88ac187a5c45992c88adcf0a0edc1fc725e62c45d",
+      "quote": "Solo  $3/device-hour  "
+    },
+    {
+      "url": "https://www.corellium.com/products/solo",
+      "date": "2026-11-24",
+      "proved": "Solo is an education offer for students only",
+      "capture": "sha256:f63883b2bbe31e3418e4b8f88ac187a5c45992c88adcf0a0edc1fc725e62c45d",
+      "quote": "Solo is for student users only. Enterprises should visit [Corellium Viper.](https://cellebrite.com/products/corellium/viper)"
+    },
+    {
+      "url": "https://www.corellium.com/trial-solo",
+      "date": "2026-11-24",
+      "proved": "a trial request is reviewed and the invitation arrives by email",
+      "capture": "sha256:30a22884f594f7368a93383e3eed96221a1b672d22b49ca55e0a84131c4ab159",
+      "quote": "Once we receive your trial request, we'll contact you if we need more information. If approved, you will receive a trial invitation by email."
+    },
+    {
+      "url": "https://support.corellium.com/subscriptions/trials",
+      "date": "2026-11-24",
+      "proved": "cloud trials need manual approval plus automated checks, and an expired unconverted account is suspended with its data deleted",
+      "capture": "sha256:5e16dffb6aa94913f420ffbc5c6d094a490731c58ad12f310a7e0abed61c507e",
+      "quote": "Once your trial expires, you will need to convert it to a subscription to continue using Corellium. If you do not convert your expired trial to a subscription within a certain period of time, your account will be suspended and your data will be deleted."
+    },
+    {
+      "url": "https://support.corellium.com/troubleshooting-faqs/why-cant-i-log-into-my-trial",
+      "date": "2026-11-24",
+      "proved": "a trial gives 6 hours over 14 days on a 6-core device and 18 hours on a 2-core device",
+      "capture": "sha256:c9765bc8c7e53bea5ec6465a3cab28a0af63ebc3634d2b838996595b6036c702",
+      "quote": "You have 14 days to use 6 hours of credit for a 6-core device."
+    },
+    {
+      "url": "https://support.corellium.com/troubleshooting-faqs/why-cant-i-log-into-my-trial",
+      "date": "2026-11-24",
+      "proved": "stored devices are charged USD 0.25 a day against the trial credit",
+      "capture": "sha256:c9765bc8c7e53bea5ec6465a3cab28a0af63ebc3634d2b838996595b6036c702",
+      "quote": "Stored devices ($0.25/day) count towards credit used."
+    },
+    {
+      "url": "https://support.corellium.com/sdk/apis/rest",
+      "date": "2026-11-24",
+      "proved": "a REST API reaches Corellium devices over HTTP and uses API keys for authentication",
+      "capture": "sha256:19fe80178db042319894913b483bad2076910cbcb48d493e79c21fb9031d3c1c",
+      "quote": "The Corellium REST API allows you to interact with your Corellium devices programmatically through HTTP requests"
+    },
+    {
+      "url": "https://support.corellium.com/cli",
+      "date": "2026-11-24",
+      "proved": "the Corellium CLI manages instances and projects from a terminal and installs through npm",
+      "capture": "sha256:461538484c56293f937a18d337a89791bc845d467f7c96072e83df9c27ba0858",
+      "quote": "The Corellium CLI is a command line tool that allows you to manage your Corellium instances from the terminal."
+    },
+    {
+      "url": "https://support.corellium.com/features/connect/ssh",
+      "date": "2026-11-24",
+      "proved": "SSH is documented as a way to connect to a virtual device",
+      "capture": "sha256:905054fdede5c823382d475837d3fb67779c88c0ceebcc3a08db9147e671a66a",
+      "quote": "The Secure Shell protocol, or SSH, is a method of secure remote login from one computer to another."
+    },
+    {
+      "url": "https://support.corellium.com/administration/virtual-devices",
+      "date": "2026-11-24",
+      "proved": "virtual devices have network interfaces connected to the outside world and a per-project private IP range",
+      "capture": "sha256:e2be140310cc566dce66effe936e203038ac53c07757ec9bc6c91d5aad427e91",
+      "quote": "Virtual devices have one or more network (LAN) interfaces that are connected so that they can access the outside world."
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-24T14:32:00.000Z",
+  "price_per_tb_month": null,
+  "notes": "The cloud product is a virtual mobile device service, distinct from the Arm Virtual Hardware offer that has its own record. Solo is USD 3 per device-hour for students, one user and one active device; enterprise Viper and Falcon plans carry 1,250 device-hours a month. The trial is 6 hours in 14 days on a 6-core device and requires manual approval. No egress price or allowance is published on the pages read.",
+  "extras": {
+    "shape": {
+      "vcpu": 6,
+      "ram_gib": null,
+      "disk_gib": null,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "a virtual iOS or Android device; the trial credit names a 6-core or 2-core device"
+    },
+    "billing_model": "per-device-hour, measured per minute and rounded up monthly; trial credit time-boxed",
+    "free_tier_kind": "manually-approved-time-boxed-trial",
+    "term": "subscription with monthly plan hours; no pre-paid minimum on Solo",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "a web interface, REST API, CLI, SSH, ADB, GDB and a serial console over a VPN",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "trial expires after 14 days, and a device that is off is not billed"
+    }
+  }
+}

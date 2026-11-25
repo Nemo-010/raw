@@ -5,7 +5,7 @@
   "url": "https://sandbox.tangle.tools/pricing",
   "category": "container and VM sandbox",
   "free_tier": {
-    "stated": "No free tier and no free credit: the vendor's own plans data says 'Sandbox has no free tier or free credit.' The entry plan is USD 0 a month with usage paid from prepaid credit, one concurrent sandbox, three snapshots per sandbox and 100 GiB of egress a month that is refused past the allowance and never charged. Usage is USD 0.0104 per allocated vCPU-hour and USD 0.0071 per GiB-hour of memory, billed per second with a USD 0.04 minimum charge.",
+    "stated": "The Free plan is USD 0 a month with no included credit, one concurrent sandbox, three snapshots per sandbox and 100 GiB of egress per account each month refused beyond the allowance and never charged; paid calls need prepaid credit on the owner's account. Usage is USD 0.010446 per vCPU-hour, USD 0.007051 per memory GB-hour and USD 0.000734 per disk GB-hour, billed per second with a USD 0.04 hourly minimum",
     "unit": "hours",
     "metered_on": "wall-clock",
     "source_url": "https://sandbox.tangle.tools/pricing",
@@ -25,17 +25,17 @@
     "notes": "a machine record: what is lost is the running process, not a stored object"
   },
   "egress": {
-    "terms": "the provider card records the plans API text 'Sandbox has no free tier or free credit.' and '100 GiB egress per account each month, refused beyond it, never charged', plus USD 0.010445613415710504 per vCPU-hour and a USD 0.04 minimum charge",
+    "terms": "outbound traffic is counted per UTC calendar month and inbound traffic is free; the Free plan allows 100 GiB per account each month and refuses beyond it without charge, Pro and Team allow 2 TB a month and then charge $0.05/GB and $0.04/GB respectively",
     "metered": false,
-    "free_allowance": null,
+    "free_allowance": "100 GiB per account each month on Free, refused beyond it; 2 TB per account each month on Pro and Team",
     "price_per_tb": null,
-    "source_url": "https://github.com/ariana-dot-dev/battleships"
+    "source_url": "https://sandbox.tangle.tools/pricing"
   },
   "interface": [
     "rest",
     "cli"
   ],
-  "interface_detail": "inferred from the tooling the provider documents; not probed",
+  "interface_detail": "an SDK published as @tangle-network/sandbox, the tangle CLI, and plain HTTPS control-plane calls",
   "tooling": "an SDK published as @tangle-network/sandbox with a CLI, driving shells, ports, desktop and trace",
   "chaining": "a prepaid balance plus one concurrent sandbox makes this a single-job lane; parallelism needs a paid plan rather than more credit",
   "limits": [
@@ -50,11 +50,11 @@
   "binding_note": "the entry plan refuses egress beyond 100 GiB a month and allows one concurrent sandbox, so a second parallel job waits rather than bills",
   "identity_cost": {
     "kind": "email",
-    "detail": "self-serve signup for a prepaid account; the vendor documents no further gate",
+    "detail": "email: an owner signs in or creates an account and verifies the email address, then approves a scoped key; no card is required to sign up, but paid calls need prepaid credit on the owner's account",
     "country": null
   },
   "reliability_note": "no reliability event observed",
-  "confidence": "reported",
+  "confidence": "documented",
   "evidence": [
     {
       "url": "https://sandbox.tangle.tools/pricing",
@@ -65,10 +65,80 @@
       "url": "https://github.com/ariana-dot-dev/battleships",
       "date": "2026-10-22",
       "proved": "the provider card records the plans API text 'Sandbox has no free tier or free credit.' and '100 GiB egress per account each month, refused beyond it, never charged', plus USD 0.010445613415710504 per vCPU-hour and a USD 0.04 minimum charge"
+    },
+    {
+      "url": "https://sandbox.tangle.tools/pricing",
+      "date": "2026-11-24",
+      "proved": "the Free plan exists but includes no credit, one sandbox and a 100 GiB refused egress allowance",
+      "capture": "sha256:a7e890d7a64031a0015505bbb68540927669c314b2402e5cbbf05022bd17033e",
+      "quote": "Free $0 No included credit 1 concurrent sandbox 3 snapshots per sandbox 100 GiB egress per account each month, refused beyond it, never charged"
+    },
+    {
+      "url": "https://sandbox.tangle.tools/pricing",
+      "date": "2026-11-24",
+      "proved": "egress metering period, free inbound, per-account allowance and overage rule",
+      "capture": "sha256:a7e890d7a64031a0015505bbb68540927669c314b2402e5cbbf05022bd17033e",
+      "quote": "Outbound traffic is counted per UTC calendar month; inbound traffic is free. Each plan's allowance is per account and shared by its sandboxes; beyond it, egress is billed on paid plans and refused on Free."
+    },
+    {
+      "url": "https://sandbox.tangle.tools/pricing",
+      "date": "2026-11-24",
+      "proved": "the vendor pricing page is the source of the rate and egress terms",
+      "capture": "sha256:3588d027eac9fcbc0b96223bd178b6ff971ea92cb74bdbf0a0a1e5fb217e5869",
+      "quote": "A running sandbox is billed per second for its vCPUs, memory and disk at these hourly rates, and never less than the hourly minimum. A stopped sandbox accrues no compute charge, disk included."
+    },
+    {
+      "url": "https://sandbox.tangle.tools/pricing",
+      "date": "2026-11-24",
+      "proved": "the Free egress allowance",
+      "capture": "sha256:a7e890d7a64031a0015505bbb68540927669c314b2402e5cbbf05022bd17033e",
+      "quote": "100 GiB egress per account each month, refused beyond it, never charged"
+    },
+    {
+      "url": "https://sandbox.tangle.tools/",
+      "date": "2026-11-24",
+      "proved": "the SDK, CLI and HTTPS interfaces are documented",
+      "capture": "sha256:37e7e88a84f9890fd7980f5ab0353691dc8a96102eee1240395cfc9e4d971007",
+      "quote": "You drive it from the @tangle-network/sandbox SDK, the tangle CLI, or plain HTTPS."
+    },
+    {
+      "url": "https://sandbox.tangle.tools/agent-setup.md",
+      "date": "2026-11-24",
+      "proved": "the signup gate is an email account with email verification and no card",
+      "capture": "sha256:bd67ab12eb803697bb94d43576d70e168736baa1684e98f7532441d47c282deb",
+      "quote": "What the owner does, once: sign in (or create an account and verify the email), check the confirmation code, and approve. That is the only human step."
+    },
+    {
+      "url": "https://sandbox.tangle.tools/v1/pricing/sandboxes",
+      "date": "2026-11-24",
+      "proved": "the vendor publishes machine-readable reference rates without a key",
+      "capture": "sha256:7026f42b786379227b1309afae597f7f62f7c90f3f74196ba26f69c8c7e7a28e",
+      "quote": "{\"pools\":{\"general\":{\"cpuCoreHourUsd\":0.010445613415710504,\"memoryGBHourUsd\":0.007050789055604591,\"diskGBHourUsd\":0.0007344571932921447,\"minChargeHourUsd\":0.04,\"source\":\"reference-constants\"}}}"
+    },
+    {
+      "url": "https://sandbox.tangle.tools/pricing",
+      "date": "2026-11-24",
+      "proved": "the Pro plan's credit, concurrency and egress overage are published",
+      "capture": "sha256:a7e890d7a64031a0015505bbb68540927669c314b2402e5cbbf05022bd17033e",
+      "quote": "Pro $29.99/ month $29.99 credit each month Unlimited sandboxes 10 snapshots per sandbox 2 TB egress per account each month, then $0.05/GB"
+    },
+    {
+      "url": "https://sandbox.tangle.tools/v1/pricing/sandboxes",
+      "date": "2026-11-24",
+      "proved": "the full-precision vCPU rate is published by the vendor",
+      "capture": "sha256:7026f42b786379227b1309afae597f7f62f7c90f3f74196ba26f69c8c7e7a28e",
+      "quote": "\"cpuCoreHourUsd\":0.010445613415710504"
+    },
+    {
+      "url": "https://sandbox.tangle.tools/agent-setup.md",
+      "date": "2026-11-24",
+      "proved": "the owner signup gate is a verified email account, with no card",
+      "capture": "sha256:bd67ab12eb803697bb94d43576d70e168736baa1684e98f7532441d47c282deb",
+      "quote": "What the owner does, once: sign in (or create an account and verify the email), check the confirmation code, and approve. That is the only human step."
     }
   ],
   "verdict": "paid-only",
-  "verified_at": "2026-10-22T00:00:00.000Z",
+  "verified_at": "2026-11-24T13:21:05.671Z",
   "notes": "the per-vCPU-hour figure is derived from a provider card rather than read on the vendor page; the open question is whether a stopped sandbox's disk is still billed",
   "extras": {
     "wave2": {

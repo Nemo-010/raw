@@ -1,0 +1,162 @@
+{
+  "topic": "compute",
+  "slug": "blockrun-modal-sandbox",
+  "provider": "BlockRun Modal Sandbox",
+  "url": "https://blockrun.ai/services/modal",
+  "category": "container sandbox / code execution API",
+  "tier": "Burst CPU sandbox (public beta)",
+  "free_tier": {
+    "stated": "No free tier published: every sandbox session is paid in USDC by x402, with CPU sandbox/create at USD 0.011 for a short burst and USD 0.002 each for exec, status and terminate; the public pages advertise 'No account required' and 'No registration, no API keys required', not free execution.",
+    "unit": "none",
+    "metered_on": "wall-clock",
+    "source_url": "https://blockrun.ai/services/modal",
+    "read_on": "2026-11-24",
+    "notes": "The 402 response from the create endpoint quotes USD 0.01 for a default request; the service page quotes USD 0.011 for the same operation. No free credit, trial or allowance is published on either page."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a sandbox session, not a stored object"
+  },
+  "retention": {
+    "stated": "A sandbox lives between 10 seconds and 24 hours, default 300 seconds; nothing persists after terminate and files must be read out through exec before the sandbox is torn down.",
+    "days": null,
+    "source_url": "https://blockrun.ai/services/modal"
+  },
+  "egress": {
+    "terms": "'Outbound network reaches PyPI, Hugging Face and GitHub over HTTPS; other hosts are blocked.' No egress price, allowance or metering term is published on the service or code-sandbox pages.",
+    "metered": false,
+    "free_allowance": "unpublished",
+    "price_per_tb": null,
+    "source_url": "https://blockrun.ai/services/modal"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "Four POST endpoints under https://blockrun.ai/api/v1/modal/: sandbox/create, sandbox/exec, sandbox/status and sandbox/terminate; the same catalog is reachable through the BlockRun MCP server, SDKs and ClawRouter.",
+  "endpoint": "https://blockrun.ai/api/v1/modal/sandbox/create",
+  "tooling": "any HTTP client using the x402 payment header, the BlockRun Python or TypeScript SDK, the blockrun_modal MCP tool, or the ClawRouter CLI; a funded USDC wallet on Base, Solana or Arc pays each call",
+  "chaining": "A per-request sandbox that an agent provisions and tears down inside a workflow; data has to be returned through exec before termination, so a job that survives the session needs a separate storage record.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "Each payer can keep at most 5 sandboxes running at once, 2 with a GPU; terminate one to create another",
+      "source": "https://blockrun.ai/services/modal"
+    },
+    {
+      "kind": "write-gated",
+      "value": "A funded USDC wallet is required: an unsigned create request answers HTTP 402 Payment Required with x402 payment instructions before any code runs",
+      "source": "https://blockrun.ai/api/v1/modal/sandbox/create"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "CPU sandbox: up to 1 vCPU and 1024 MB for the flat rate; GPU sandbox: up to 8 vCPU and 32 GiB; lifetime 10s to 24h, each exec up to 60s",
+      "source": "https://blockrun.ai/services/modal"
+    }
+  ],
+  "binding": "write-gated",
+  "binding_note": "A wallet with USDC is the first thing that stops an unauthenticated call: the create request is met with a 402 before a sandbox can be provisioned, while the sandbox-count cap is a later limit.",
+  "identity_cost": {
+    "kind": "anonymous",
+    "detail": "The service page states 'No account required' and 'No registration, no API keys required'; the caller pays per request in USDC from a wallet on Base, Solana or Arc. An API key billed to a card or invoice is offered as an alternative for teams but is not needed. No email, phone, ID or institution is requested on the pages read.",
+    "country": null
+  },
+  "reliability_note": "The image ships without PyTorch and custom images are not yet available; lifetime is billed up front with no refund on early termination, and outbound network is restricted to PyPI, Hugging Face and GitHub over HTTPS.",
+  "confidence": "documented",
+  "confidence_note": "The rate card, the caps, the wallet gate and the egress allowlist are quoted from the vendor's service and code-sandbox pages read on 2026-11-24; the 402 challenge is a captured response from the vendor's own create endpoint the same day.",
+  "evidence": [
+    {
+      "url": "https://blockrun.ai/services/modal",
+      "date": "2026-11-24",
+      "proved": "the CPU burst sandbox create price is USD 0.011 and the GPU burst create prices are listed per tier",
+      "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+      "quote": "CPU sandbox/create\n\n$0.011\n\nper sandbox\n\nUp to 1 vCPU, 1 GiB RAM, 300s lifetime\n\nGPU sandbox/create\n\n$0.051 – $0.401\n\nper sandbox by GPU type\n\nT4 $0.051 / L4 $0.081 / A10G $0.101 / A100 $0.201 / H100 $0.401. Up to 1 CPU, 1024 MB, 300s lifetime. Larger sizes, up to 8 CPU and 32 GiB, bill hourly."
+    },
+    {
+      "url": "https://blockrun.ai/services/modal",
+      "date": "2026-11-24",
+      "proved": "the hourly CPU rate is USD 0.25 and exec, status and terminate cost USD 0.002 each",
+      "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+      "quote": "| CPU (1 vCPU / 1 GiB) | $0.25 | Long-running batch jobs, scrapers, schedulers |"
+    },
+    {
+      "url": "https://blockrun.ai/services/modal",
+      "date": "2026-11-24",
+      "proved": "the sandbox lifetime is 10s to 24h with a 300s default and each exec runs at most 60s",
+      "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+      "quote": "A sandbox lives 10s to 24h, default 300s. Each exec runs up to 60s: start longer jobs in the background and poll them with exec."
+    },
+    {
+      "url": "https://blockrun.ai/services/modal",
+      "date": "2026-11-24",
+      "proved": "egress is restricted to three named hosts over HTTPS and all other hosts are blocked",
+      "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+      "quote": "Outbound network reaches PyPI, Hugging Face and GitHub over HTTPS; other hosts are blocked."
+    },
+    {
+      "url": "https://blockrun.ai/services/modal",
+      "date": "2026-11-24",
+      "proved": "each payer can run at most 5 sandboxes at once, 2 with a GPU",
+      "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+      "quote": "Each payer can keep at most 5 sandboxes running at once, 2 with a GPU; terminate one to create another."
+    },
+    {
+      "url": "https://blockrun.ai/services/modal",
+      "date": "2026-11-24",
+      "proved": "no account or API key is needed and USDC funding is the only gate stated for the caller",
+      "capture": "sha256:42e1fac0a118cee10336fe19ea7fdc05417cdb13a0e175c552d61fcfc74b38d8",
+      "quote": "Fund your wallet with USDC on Base, Solana or Arc and give your agent a safe place to run code. No registration, no API keys required."
+    },
+    {
+      "url": "https://blockrun.ai/tools/code-sandbox-api",
+      "date": "2026-11-24",
+      "proved": "the request is quoted in dollars and paid in USDC with no account and no API key",
+      "capture": "sha256:3df54872de88f0878b8a8f1752c575d559f45324f077171ff618d198dc6f8f1a",
+      "quote": "No account and no API key stand between an agent and the first call: the request is quoted in dollars and the agent's client pays it."
+    },
+    {
+      "url": "https://blockrun.ai/tools/code-sandbox-api",
+      "date": "2026-11-24",
+      "proved": "the create lifetime is at most 86400 seconds and above 1 CPU or 1024 MB the call bills hourly",
+      "capture": "sha256:3df54872de88f0878b8a8f1752c575d559f45324f077171ff618d198dc6f8f1a",
+      "quote": "| timeout | number | Sandbox lifetime in seconds (max 86400 = 24h, default: 300). Above 300s bills hourly. |"
+    },
+    {
+      "url": "https://blockrun.ai/api/v1/modal/sandbox/create",
+      "date": "2026-11-24",
+      "proved": "an unsigned create request is answered with HTTP 402 and x402 payment requirements on Base",
+      "capture": "sha256:f03bdb506661b38635ce9b073101219fb2737d3e7119d635ef76e3bc05fae995",
+      "quote": "\"error\":\"Payment Required\",\"message\":\"This endpoint requires x402 payment. Send a POST request with payment header.\",\"endpoint\":\"/api/v1/modal/sandbox/create\",\"method\":\"POST\",\"available\":[\"sandbox/create\",\"sandbox/exec\",\"sandbox/status\",\"sandbox/terminate\"],\"documentation\":\"https://blockrun.ai/services/modal\",\"paymentInfo\":{\"network\":\"eip155:8453\",\"networkName\":\"Base\",\"asset\":\"USDC\",\"x402Version\":2,\"price\":0.01}}"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-24T10:11:14.624Z",
+  "price_per_tb_month": null,
+  "notes": "The wallet is the account: no registration, email, phone, card or ID is requested for the per-request lane. Egress is allowlisted to three HTTPS hosts and no egress price is published. The rate card advertises no free tier; the modal free-model lane is a separate inference offer with its own record.",
+  "extras": {
+    "shape": {
+      "vcpu": "1 for the flat-rate CPU sandbox, up to 8 with a GPU",
+      "ram_gib": "1 for the flat-rate CPU sandbox, up to 32 with a GPU",
+      "disk_gib": null,
+      "gpu_class": "T4, L4, A10G, A100 or H100",
+      "gpu_count": null,
+      "note": "the managed Python 3.11 image does not ship PyTorch"
+    },
+    "billing_model": "flat per sandbox for a short burst, otherwise per requested hour, plus USD 0.002 per operation",
+    "free_tier_kind": "none",
+    "term": "per request, up to 24 hours of lifetime",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": null,
+      "ports": "HTTPS to PyPI, Hugging Face and GitHub only",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": 1440,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "each exec call is capped at 60 seconds and a sandbox lives at most 24 hours"
+    }
+  }
+}
