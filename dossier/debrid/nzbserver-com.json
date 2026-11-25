@@ -86,6 +86,41 @@
       "url": "https://nzbhydra.com/indexers/",
       "date": "2026-10-23",
       "proved": "third-party: 'Spotweb-based technology. No login or registration required. Entirely free, no upgrade options. Inconsistent uptime, 4.6s response time when operational.'"
+    },
+    {
+      "url": "https://www.nzbserver.com/api?t=caps",
+      "date": "2026-11-25",
+      "proved": "caps declares registration unavailable",
+      "capture": "sha256:0cb967a08f11f2953211e61ac658ef509edba10380f6a09b7cda6e3958cebad0",
+      "quote": "<registration available=\"no\" open=\"no\"/>"
+    },
+    {
+      "url": "https://www.nzbserver.com/api?t=caps",
+      "date": "2026-11-25",
+      "proved": "caps declares a 500-result maximum and 50-result default",
+      "capture": "sha256:0cb967a08f11f2953211e61ac658ef509edba10380f6a09b7cda6e3958cebad0",
+      "quote": "<limits max=\"500\" default=\"50\"/>"
+    },
+    {
+      "url": "https://www.nzbserver.com/api?t=search&q=linux",
+      "date": "2026-11-25",
+      "proved": "the search endpoint returned a Newznab RSS feed without a key",
+      "capture": "sha256:eb75510a7b952cd7ed33ee63aa78ce869fb4cf928b584ec96a2918ef1e33ce47",
+      "quote": "<atom:link href=\"https://www.nzbserver.com/api\" rel=\"self\" type=\"application/rss+xml\"/>"
+    },
+    {
+      "url": "https://www.nzbserver.com/api?t=g&id=19XKJ8pokN4BLjUagNmQp@spot.net",
+      "date": "2026-11-25",
+      "proved": "the get endpoint returned an NZB document without a key",
+      "capture": "sha256:1fa5bb243bd5452db3b93730dc0ee3ac6c956696ccbb4b68012116e0b26be607",
+      "quote": "<nzb xmlns=\"http://www.newzbin.com/DTD/2003/nzb\">"
+    },
+    {
+      "url": "probe:https://www.nzbserver.com/api?t=caps",
+      "date": "2026-11-25",
+      "proved": "a direct anonymous fetch of caps was answered HTTP 403 by a Cloudflare challenge",
+      "capture": "sha256:b8936b29522fc4552004e91772ba0107133e5dabbc5f50b9eb101bda3fb06d02",
+      "quote": "\"status\": 403"
     }
   ],
   "verdict": "qualifies",
@@ -134,7 +169,7 @@
     "burst": "10 sequential searches, all 200"
   },
   "notes": "The 7,346-byte NZB has the same sha256 as the one spotnzb.com served for the same message-id, so the two instances share a Spotnet backend or mirror the same database; the search feeds differ slightly in size (41,868 vs 41,244 bytes) but start with the same item. Treat them as one catalogue reachable at two hostnames, not as two independent indexers.",
-  "verified_at": "2026-10-23T02:11:54.066Z",
+  "verified_at": "2026-11-25T09:46:22.738Z",
   "topic": "debrid",
   "price_per_tb_month": null
 }
