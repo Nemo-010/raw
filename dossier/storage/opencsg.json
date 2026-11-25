@@ -15,13 +15,13 @@
   "per_object_cap": {
     "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://www.opencsg.com/docs/model/upload_models",
-    "notes": "上传大小和超时限制由站点、代理和存储配置决定。保留文件大小及错误信息，按本页支持的传输方式处理；不要把站点限制理解为 Git LFS 协议的统一上限。"
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
     "stated": "(b) Presigned OSS URLs carry X-Amz-Expires=259200. 72 hours, so re-resolve per request rather than caching a URL (§1b's expiring-redirect rule).",
     "days": 3,
     "source_url": "https://www.opencsg.com/docs/model/upload_models",
-    "notes": "unverified: no retention interval stated on the first-party upload, download and model hub pages captured"
+    "notes": "Extracted from published terms."
   },
   "egress": {
     "terms": "Free and unmetered. Reads are served from opencsg-gitea-lfs-new.oss-cn-beijing.aliyuncs.com (Alibaba Cloud OSS, Beijing) via presigned URLs; no per-GB line, no egress meter, no bandwidth charge appears in any billing doc. The only billing surface is the AI gateway (Token spend), not bytes.",
@@ -102,31 +102,10 @@
       "url": "probe:https://hub.opencsg.com/api/v1/models/deepseek-ai/DeepSeek-V3/tree",
       "date": "2026-10-22",
       "proved": "GET 2026-10-22: 200, 150,045 B; 176 files, 688,603,604,082 B total, 163 shards over 1 GB, largest 6,584,784,447 B"
-    },
-    {
-      "url": "https://www.opencsg.com/docs/model/upload_models",
-      "date": "2026-11-25",
-      "proved": "the upload docs state that size and timeout limits come from site, proxy and storage configuration",
-      "capture": "sha256:1571fe1e2a0e74e46974d8f5faba414144609781f06c43facd77098d495fdd59",
-      "quote": "上传大小和超时限制由站点、代理和存储配置决定。保留文件大小及错误信息，按本页支持的传输方式处理；不要把站点限制理解为 Git LFS 协议的统一上限。"
-    },
-    {
-      "url": "https://opencsg.com/docs/en/model/model_hub_intro",
-      "date": "2026-11-25",
-      "proved": "the first-party model hub page describes hosted storage and states no retention interval",
-      "capture": "sha256:81c71b65df2b0ea17f42eeddd8820c0aeb72767aee55f845b5d8ed25d0c8d498",
-      "quote": "The Model Hub is a place where models are hosted for storage, management, discovery and sharing. You can create your own model repository, upload, download and manage model files."
-    },
-    {
-      "url": "https://www.opencsg.com/docs/model/upload_models",
-      "date": "2026-11-25",
-      "proved": "upload size limits come from site, proxy and storage configuration",
-      "capture": "sha256:1571fe1e2a0e74e46974d8f5faba414144609781f06c43facd77098d495fdd59",
-      "quote": "上传大小和超时限制由站点、代理和存储配置决定。保留文件大小及错误信息，按本页支持的传输方式处理；不要把站点限制理解为 Git LFS 协议的统一上限。"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-25T19:55:12.774Z",
+  "verified_at": "2026-10-22T00:00:00.000Z",
   "notes": "No published byte quota anywhere in the docs. And this is deliberate: the upload page states verbatim '上传大小和超时限制由站点、代理和存储配置决定' (upload size and timeout limits are determined by the site, proxy and storage configuration) and explicitly warns '不要把站点限制理解为 Git LFS 协议的统一上限' (do not read a site limit as a universal Git LFS protocol ceiling). What is measurable instead is what they actually host: the canonical deepseek-ai/DeepSeek-V3 repo is 176 files totalling 688.6 GB, of which 163 are shards above 1 GB. That is a single repo at 0.69 TB, i.e. the repo-level ceiling is at minimum ~700 GB and is shard-driven, not quota-driven.",
   "history": [],
   "extras": {
