@@ -1,0 +1,164 @@
+{
+  "topic": "compute",
+  "slug": "epho",
+  "provider": "Epho",
+  "url": "https://epho.io/",
+  "category": "agent sandbox",
+  "tier": "usage-based agent sandbox",
+  "free_tier": {
+    "stated": "USD 10 of starting credit on signup, roughly 60 hours of the default 2 vCPU/2 GiB instance; OpenCode Zen models ending in -free need no provider key.",
+    "unit": "credits",
+    "metered_on": "wall-clock",
+    "source_url": "https://epho.io/",
+    "read_on": "2026-11-25",
+    "notes": "The USD 10 is a one-time starting credit, not a recurring allowance; it is consumed by sandbox compute at the published per-second rates."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a sandbox, not an object",
+    "notes": "Up to 20 input files and 32 repositories per request are documented; no storage object cap is published."
+  },
+  "retention": {
+    "stated": "A chat's sandbox stops when a turn ends and resumes for the next one; files and agent session survive. Artifact download URLs are presigned for about ten minutes and renewable.",
+    "source_url": "https://epho.io/"
+  },
+  "egress": {
+    "terms": "Not published as a volume or price; the sandbox runs on the vendor's boxes and artifacts return as presigned URLs.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://epho.io/"
+  },
+  "interface": [
+    "rest",
+    "chat"
+  ],
+  "interface_detail": "One REST endpoint POST /api/v1/chat plus /chat/async, streaming server-sent events and a chat_id for a durable multi-turn sandbox; MCP servers and repository tokens are declared in the request.",
+  "tooling": "A single HTTP POST with a JSON body and an API key; no SDK or daemon is required.",
+  "chaining": "Runs can be driven from scripts, CI, cron or a Slack bot, and model tokens bill to the caller's own provider key with no Epho markup.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "USD 10 starting credit on signup; a turn is refused with 402 at zero balance",
+      "source": "https://epho.io/"
+    },
+    {
+      "kind": "request-rate",
+      "value": "teams start with five active turns; extra turns queue at no cost until a slot opens",
+      "source": "https://epho.io/"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "up to 32 repositories and 20 input files per request",
+      "source": "https://epho.io/"
+    }
+  ],
+  "limits_note": "A run is metered from boot to teardown and stops when the run does; one live turn per chat.",
+  "binding": "volume-quota",
+  "binding_note": "The USD 10 starting credit is the first allowance to run out; the five-turn active limit is a concurrency gate that queues rather than stops work.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "A team API key is required and, per a third-party review, sign-up involves email verification. The exact fields of the registration form were not read: the app.epho.io registration page redirected to sign-in and presented a login wall to every reader.",
+    "country": null
+  },
+  "reliability_note": "A dropped stream does not kill a run: events are persisted and replayed on reconnect; the platform re-queues a run on a fallback sandbox backend when a box dies mid-run.",
+  "confidence": "documented",
+  "confidence_note": "Per-second rates and credit are quoted from the vendor home page read on 2026-11-25; the email-verification step is reported by a third party because the registration page was a login wall.",
+  "evidence": [
+    {
+      "url": "https://epho.io/",
+      "date": "2026-11-25",
+      "capture": "sha256:984d0647ee7a1df2e96177a43b4da653a07b577239ca3568821c47ea6b1d7593",
+      "quote": "$0.0000164",
+      "proved": "CPU price per vCPU-second"
+    },
+    {
+      "url": "https://epho.io/",
+      "date": "2026-11-25",
+      "capture": "sha256:984d0647ee7a1df2e96177a43b4da653a07b577239ca3568821c47ea6b1d7593",
+      "quote": "$0.0000053",
+      "proved": "memory price per GiB-second"
+    },
+    {
+      "url": "https://epho.io/",
+      "date": "2026-11-25",
+      "capture": "sha256:984d0647ee7a1df2e96177a43b4da653a07b577239ca3568821c47ea6b1d7593",
+      "quote": "$0.000000036",
+      "proved": "disk price per GiB-second"
+    },
+    {
+      "url": "https://epho.io/",
+      "date": "2026-11-25",
+      "capture": "sha256:984d0647ee7a1df2e96177a43b4da653a07b577239ca3568821c47ea6b1d7593",
+      "quote": "**default instance:** 2 vCPU · 2 GiB · 10 GiB ≈ $0.0000438/s · a one-minute run ≈ $0.0026",
+      "proved": "the default instance and its per-second cost"
+    },
+    {
+      "url": "https://epho.io/",
+      "date": "2026-11-25",
+      "capture": "sha256:984d0647ee7a1df2e96177a43b4da653a07b577239ca3568821c47ea6b1d7593",
+      "quote": "**starting credit:** $10 on signup — roughly 60 hours of the default instance",
+      "proved": "the starting credit"
+    },
+    {
+      "url": "https://epho.io/",
+      "date": "2026-11-25",
+      "capture": "sha256:984d0647ee7a1df2e96177a43b4da653a07b577239ca3568821c47ea6b1d7593",
+      "quote": "the opencode zen models ending in `-free` run without any provider credential. one epho key and a curl is the entire setup.",
+      "proved": "free model option without a provider key"
+    },
+    {
+      "url": "https://epho.io/",
+      "date": "2026-11-25",
+      "capture": "sha256:984d0647ee7a1df2e96177a43b4da653a07b577239ca3568821c47ea6b1d7593",
+      "quote": "**the meter:** read it any time with GET /credits — a turn is refused with 402 once the balance hits zero.",
+      "proved": "balance gate"
+    },
+    {
+      "url": "https://epho.io/",
+      "date": "2026-11-25",
+      "capture": "sha256:984d0647ee7a1df2e96177a43b4da653a07b577239ca3568821c47ea6b1d7593",
+      "quote": "yes — each chat gets its own isolated environment, so fan out as wide as you like. teams start with five active turns; anything past the cap sits in a queue, emits a `queued` status and costs nothing until a slot opens. one live turn per chat, though — parallel work wants parallel chats.",
+      "proved": "active-turn limit"
+    },
+    {
+      "url": "https://techshark.io/tools/epho/",
+      "date": "2026-11-25",
+      "capture": "sha256:36f91cf5209d58478a3e5707587f5024ad7e7b05b4b494b9a647b905d37ae5e1",
+      "quote": "- $10 free compute credit upon sign-up and email verification",
+      "proved": "third-party account of the signup gate"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-25T02:12:34.751Z",
+  "price_per_tb_month": null,
+  "notes": "A hosted coding-agent sandbox sold per second: USD 0.0000438/s for the default box and USD 10 of starting credit. The registration form was behind a login wall, so its exact fields are unverified; a third party reports email verification.",
+  "extras": {
+    "shape": {
+      "vcpu": 2,
+      "ram_gib": 2,
+      "disk_gib": 10,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "default instance 2 vCPU, 2 GiB RAM, 10 GiB disk; other sizes available via the instance field"
+    },
+    "billing_model": "per-second compute, prepaid credit",
+    "free_tier_kind": "one-time credit",
+    "term": "per-second, no recurring free allowance",
+    "price_arithmetic": "2 × $0.0000164 + 2 × $0.0000053 + 10 × $0.000000036 = $0.0000438 per second; $10 / $0.0000438 ≈ 228,310 s ≈ 63.4 h",
+    "status": "live",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": null,
+      "ports": null,
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "sandbox stops at the end of a turn and resumes for the next one; model tokens bill on the caller's own provider key"
+    }
+  }
+}

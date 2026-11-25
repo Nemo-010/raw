@@ -1,0 +1,139 @@
+{
+  "topic": "compute",
+  "slug": "promigence",
+  "provider": "Promigence",
+  "url": "https://www.promigence.ai/llms-full.txt",
+  "category": "agent sandbox",
+  "tier": "Free plan (USD 100 credit)",
+  "free_tier": {
+    "stated": "USD 100 of free credit for 30 days, claimed in the browser with no card, then per-second list pricing; 20 sandboxes at once and sessions up to an hour on the Free plan.",
+    "unit": "credits",
+    "metered_on": "wall-clock",
+    "source_url": "https://www.promigence.ai/faq",
+    "read_on": "2026-11-25",
+    "notes": "Credit is a USD amount spent against compute meters; the trial is time-boxed to 30 days. A separate free, one-time validity report of 1,000 episodes is offered with no card."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a sandbox, not an object",
+    "notes": "No per-object cap is published."
+  },
+  "retention": {
+    "stated": "A paused sandbox is kept for 30 days; waking it starts the 30 days again.",
+    "source_url": "https://www.promigence.ai/llms-full.txt"
+  },
+  "egress": {
+    "terms": "Included; registries and git hosts are not metered separately. The trial caps data out at 20 GB a month.",
+    "metered": true,
+    "free_allowance": "included, with a 20 GB monthly data-out cap on the trial",
+    "price_per_tb": null,
+    "source_url": "https://www.promigence.ai/llms-full.txt"
+  },
+  "interface": [
+    "cli",
+    "rest",
+    "chat"
+  ],
+  "interface_detail": "CLI with a JSON mode, REST API, TypeScript and Python SDKs, and an MCP server; sandboxes are reached through exec, file commands and a shell.",
+  "tooling": "The user installs the promigence CLI or an SDK; the hosted service supplies and bills the sandboxes.",
+  "chaining": "A verified snapshot can be forked into many sandboxes under a spend cap, so eval, CI and coding-agent runs share one environment.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "USD 100 of free credit usable within 30 days; 20 concurrent sandboxes and sessions up to an hour on Free",
+      "source": "https://www.promigence.ai/faq"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "20 GB data out per month on the trial",
+      "source": "https://www.promigence.ai/llms-full.txt"
+    }
+  ],
+  "limits_note": "A run is quoted before it starts and a hard spend cap pauses a sandbox that reaches it; paused time is not billed.",
+  "binding": "volume-quota",
+  "binding_note": "The USD 100 credit with a 30-day expiry is the first allowance to run out; the 20 GB data-out cap is a separate, less likely binding limit.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "Sign-up is invite-only: request access and Promigence emails an invite code with the credit; the console sign-up asks for that invite code. The credit is claimed in the browser with no card. The exact fields of the account form are unverified: the page shows only the invite-code step.",
+    "country": null
+  },
+  "reliability_note": "A sandbox that fails on the vendor side before hand-over is not billed; environment failures are reported apart from task failures. Health checks cannot be starved by workload.",
+  "confidence": "documented",
+  "confidence_note": "Prices, free credit, egress and retention are quoted from the vendor's own reference and FAQ read on 2026-11-25; the account form behind the invite code was not seen.",
+  "evidence": [
+    {
+      "url": "https://www.promigence.ai/llms-full.txt",
+      "date": "2026-11-25",
+      "capture": "sha256:f57fc8211a6db760d39a0d348f8edef2b0b5c81de33d0cefc6ff138ed85a35a0",
+      "quote": "Metered per second at $0.0504 per vCPU-hour plus $0.0162 per GiB-hour, the market's",
+      "proved": "the metered compute rates"
+    },
+    {
+      "url": "https://www.promigence.ai/llms-full.txt",
+      "date": "2026-11-25",
+      "capture": "sha256:f57fc8211a6db760d39a0d348f8edef2b0b5c81de33d0cefc6ff138ed85a35a0",
+      "quote": "| Small | 2 vCPU · 4 GiB | $0.17 per hour | $0.000046 per second ($0.1656 per hour) | A SWE-bench-class episode: clone, patch, run the failing test. Ten minutes costs about $0.03. |",
+      "proved": "the small-tier list and metered price"
+    },
+    {
+      "url": "https://www.promigence.ai/llms-full.txt",
+      "date": "2026-11-25",
+      "capture": "sha256:f57fc8211a6db760d39a0d348f8edef2b0b5c81de33d0cefc6ff138ed85a35a0",
+      "quote": "- **Egress**: Included. Registries and git hosts are not metered separately. The trial caps data out at 20 GB a month.",
+      "proved": "egress is included with a 20 GB monthly trial cap"
+    },
+    {
+      "url": "https://www.promigence.ai/llms-full.txt",
+      "date": "2026-11-25",
+      "capture": "sha256:f57fc8211a6db760d39a0d348f8edef2b0b5c81de33d0cefc6ff138ed85a35a0",
+      "quote": "A paused sandbox is kept for 30 days, and waking it starts the 30 days again.",
+      "proved": "paused-sandbox retention"
+    },
+    {
+      "url": "https://www.promigence.ai/faq",
+      "date": "2026-11-25",
+      "capture": "sha256:6b9750a8309ca069cda486c177df6abc10689159ccfbfacebd4316a1499bcbef",
+      "quote": "Yes: $100 of free credit for 30 days, with 20 concurrent sandboxes and sessions up to an hour. Request access at www.promigence.ai and Promigence emails an invite code with the credit. It is claimed in the browser (console Billing, or `promigence credits claim`) with no card.",
+      "proved": "the free credit, concurrency, session cap and no-card claim"
+    },
+    {
+      "url": "https://console.promigence.ai/signup",
+      "date": "2026-11-25",
+      "capture": "sha256:8e0b48f23e9fb70d25add9ac044dd6824ef92e814d45e3d115c3aa5b1f99d6af",
+      "quote": "Promigence is invite-only for now.",
+      "proved": "the invite gate at sign-up"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-25T02:12:34.751Z",
+  "price_per_tb_month": null,
+  "notes": "List $0.17 per hour for the 2 vCPU/4 GiB small tier; the trial is USD 100 of credit for 30 days with no card. Registration needs an emailed invite code, and the account form behind it was not seen.",
+  "extras": {
+    "shape": {
+      "vcpu": 2,
+      "ram_gib": 4,
+      "disk_gib": null,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "small tier 2 vCPU and 4 GiB; disk size not stated"
+    },
+    "billing_model": "per-second metered with a prepaid credit trial and hard spend caps",
+    "free_tier_kind": "time-boxed credit",
+    "term": "30-day trial credit",
+    "price_arithmetic": "2 vCPU × $0.0504 + 4 GiB × $0.0162 = $0.1656 per hour metered; $0.17 list",
+    "status": "live; invite-only sign-up",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": null,
+      "ports": null,
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": "20 GB data out per month on the trial"
+    },
+    "session_cap": {
+      "wall_clock_min": 60,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "one-hour session cap on the free plan; paused sandboxes kept 30 days"
+    }
+  }
+}

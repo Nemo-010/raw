@@ -1,0 +1,169 @@
+{
+  "topic": "compute",
+  "slug": "keln-sandboxes",
+  "provider": "Keln Sandboxes",
+  "url": "https://docs.keln.ai/sandboxes/",
+  "category": "agent sandbox",
+  "tier": "prepaid sandbox compute",
+  "free_tier": {
+    "stated": "No free sandbox allowance is stated. Workspaces are prepaid by card and requests return 402 at zero balance; the default is 3 running sandboxes before the first paid top-up.",
+    "unit": "none",
+    "metered_on": "wall-clock",
+    "source_url": "https://docs.keln.ai/platform/billing/",
+    "read_on": "2026-11-25",
+    "notes": "No free trial, free credits or recurring free sandbox hours are published on the sandbox, billing or FAQ pages read."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a sandbox, not an object",
+    "notes": "No per-object cap is published."
+  },
+  "retention": {
+    "stated": "A running sandbox is stopped at a 24-hour lifetime from creation or last resume; a paused sandbox holds files, memory and processes until deletion or expiry after 30 days.",
+    "source_url": "https://docs.keln.ai/sandboxes/data-handling/"
+  },
+  "egress": {
+    "terms": "Outbound internet is enabled by default; port 25 is always blocked. Public preview-port URLs are available with an optional token. No data-out price or allowance is published.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://docs.keln.ai/sandboxes/network/"
+  },
+  "interface": [
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "Sandbox API at https://sandbox.keln.ai/v1 with commands, streamed output, file I/O, preview ports and a network policy; an MCP server connects Claude Code, Cursor and Codex.",
+  "tooling": "The user calls the REST API or connects the hosted MCP server; no client install is needed beyond an API key.",
+  "chaining": "Sandboxes share the same prepaid balance and API key as Keln inference, so agent compute and model tokens are billed through one account.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "100 running sandboxes per workspace, or 3 before the first paid top-up",
+      "source": "https://docs.keln.ai/sandboxes/"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "24-hour sandbox lifetime from creation or last resume; paused sandboxes kept at most 30 days",
+      "source": "https://docs.keln.ai/sandboxes/"
+    },
+    {
+      "kind": "request-rate",
+      "value": "500 requests per second, burst to 1,000, per key",
+      "source": "https://docs.keln.ai/sandboxes/"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "1 MB request body; file uploads stream and have no limit",
+      "source": "https://docs.keln.ai/sandboxes/"
+    }
+  ],
+  "limits_note": "A balance must cover the first 5 minutes of runtime at create or resume; images are limited to 20 per workspace and previews to 256 per sandbox.",
+  "binding": "volume-quota",
+  "binding_note": "With no free credits, the prepaid balance and the 3-sandbox pre-top-up cap stop a user before any time limit does.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "Sign-in is with Google, GitHub, or email and password; creating an API key requires a verified email address. Sandbox top-ups are by card, USD 5 to USD 5,000, with a 2.9% plus USD 0.30 fee.",
+    "country": null
+  },
+  "reliability_note": "If the balance runs out while sandboxes are running, Keln stops them after 60 seconds; paused sandboxes remain paused because they incur no charges.",
+  "confidence": "documented",
+  "confidence_note": "Sandbox prices, limits and the prepaid card gate are quoted from the vendor's own docs read on 2026-11-25.",
+  "evidence": [
+    {
+      "url": "https://docs.keln.ai/sandboxes/",
+      "date": "2026-11-25",
+      "capture": "sha256:041ad7c4b8e5399c874f628505ea5ecb93b77e9016daa2fa06bb96229d5c6445",
+      "quote": "| vCPU | $0.0504 per vCPU-hour |",
+      "proved": "the per-vCPU price"
+    },
+    {
+      "url": "https://docs.keln.ai/sandboxes/",
+      "date": "2026-11-25",
+      "capture": "sha256:041ad7c4b8e5399c874f628505ea5ecb93b77e9016daa2fa06bb96229d5c6445",
+      "quote": "| 2 vCPU, 4 GiB | $0.166 |",
+      "proved": "the default-comparable 2 vCPU/4 GiB hourly price"
+    },
+    {
+      "url": "https://docs.keln.ai/sandboxes/",
+      "date": "2026-11-25",
+      "capture": "sha256:041ad7c4b8e5399c874f628505ea5ecb93b77e9016daa2fa06bb96229d5c6445",
+      "quote": "| Running sandboxes | 100, or 3 before your first paid top-up | Per workspace | `429 concurrency_limit` |",
+      "proved": "the running-sandbox cap before a paid top-up"
+    },
+    {
+      "url": "https://docs.keln.ai/sandboxes/",
+      "date": "2026-11-25",
+      "capture": "sha256:041ad7c4b8e5399c874f628505ea5ecb93b77e9016daa2fa06bb96229d5c6445",
+      "quote": "| Lifetime | 24 hours from `created_at` or the last resume | Per sandbox | `400 invalid_parameter` |",
+      "proved": "the sandbox lifetime"
+    },
+    {
+      "url": "https://docs.keln.ai/sandboxes/",
+      "date": "2026-11-25",
+      "capture": "sha256:041ad7c4b8e5399c874f628505ea5ecb93b77e9016daa2fa06bb96229d5c6445",
+      "quote": "| Paused sandboxes | 100, each kept 30 days at most | Per workspace | `429 paused_limit` |",
+      "proved": "paused-sandbox retention"
+    },
+    {
+      "url": "https://docs.keln.ai/platform/billing/",
+      "date": "2026-11-25",
+      "capture": "sha256:8d89a4404a00e32e6934ecdfaa1453069b60440b0021702513ab92e793c16830",
+      "quote": "Top-ups are by card, $5 to $5,000, with a processing fee of 2.9% + $0.30 itemized at checkout.",
+      "proved": "the prepaid card top-up and fee"
+    },
+    {
+      "url": "https://docs.keln.ai/platform/authentication/",
+      "date": "2026-11-25",
+      "capture": "sha256:b86eae10a4ec2316af351545ed3df568dd54eb24b951a6ce53e5afa8e6ad1d72",
+      "quote": "Sign in at [app.keln.ai](https://app.keln.ai/) with Google, GitHub, or email and password.",
+      "proved": "the sign-in options"
+    },
+    {
+      "url": "https://docs.keln.ai/sandboxes/data-handling/",
+      "date": "2026-11-25",
+      "capture": "sha256:cc43edccc75b492f82cf84085c53553f4625c6329ac4e9289dac18331665690f",
+      "quote": "| `paused` | A snapshot of files, memory, and processes | You delete the sandbox, or it expires after 30 days with `end_reason` set to `pause_expired`. |",
+      "proved": "paused sandbox data retention"
+    },
+    {
+      "url": "https://docs.keln.ai/sandboxes/network/",
+      "date": "2026-11-25",
+      "capture": "sha256:c58cbd222c0b4afafb3304b6c3c0021001fd08732f1d4a18736eb6a83955752c",
+      "quote": "Outbound traffic on port 25 is always blocked, even when internet access is enabled.",
+      "proved": "egress restriction"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-25T02:12:34.751Z",
+  "price_per_tb_month": null,
+  "notes": "A paid-only hosted sandbox: USD 0.166 per hour for 2 vCPU/4 GiB, prepaid by card with no free allowance. Public preview URLs and an MCP server are offered.",
+  "extras": {
+    "shape": {
+      "vcpu": 2,
+      "ram_gib": 2,
+      "disk_gib": 10,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "default template 2 vCPU, 2048 MiB memory, 10240 MiB disk; a 2 vCPU/4 GiB configuration is USD 0.166/h"
+    },
+    "billing_model": "prepaid per-second metering",
+    "free_tier_kind": "none",
+    "term": "per-second, no monthly fee",
+    "price_arithmetic": "2 × $0.0504 + 4 × $0.0162 = $0.166 per hour",
+    "status": "live",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "preview ports over HTTPS with an optional token",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": 1440,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "24-hour maximum lifetime; paused sandboxes expire after 30 days"
+    }
+  }
+}
