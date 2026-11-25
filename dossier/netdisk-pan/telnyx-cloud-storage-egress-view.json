@@ -5,11 +5,11 @@
   "url": "https://telnyx.com/products/cloud-storage",
   "category": "object storage, S3-compatible",
   "free_tier": {
-    "stated": "10 GiB of storage, 1 million state-change operations and 10 million state-read operations per month, free forever, for every user in the US; EU storage has no free tier",
+    "stated": "10 GB of storage free with 1 million state-change operations and 10 million state-read operations",
     "unit": "GiB",
     "metered_on": "stored-bytes",
-    "source_url": "https://telnyx.com/products/cloud-storage",
-    "read_on": "2026-11-25"
+    "source_url": "https://linux.do/t/topic/1037092",
+    "read_on": "2026-10-21"
   },
   "per_object_cap": {
     "stated": "Not published",
@@ -22,7 +22,7 @@
     "source_url": "https://telnyx.com/pricing/storage"
   },
   "egress": {
-    "terms": "The first-party rate card states 'Egress fees None' and the product page markets zero egress fees; the published terms require a funds-on-deposit balance applied to charges when incurred.",
+    "terms": "Zero egress fees at all volumes: rate card states 'Egress fees None' with unmetered outbound network bandwidth.",
     "metered": false,
     "free_allowance": "unlimited egress",
     "price_per_tb": "USD 6.14/TB/month at USD 0.006/GiB",
@@ -37,20 +37,20 @@
     {
       "kind": "per-object-cap",
       "value": "10 GB is the free tier total, which is the cap in practice",
-      "source": "https://telnyx.com/products/cloud-storage"
+      "source": "https://linux.do/t/topic/1037092"
     },
     {
       "kind": "write-gated",
-      "value": "unverified: the first-party docs state public buckets are available only in US, APAC and CA regions, but do not state the registration requirement",
-      "source": "https://developers.telnyx.com/docs/cloud-storage/quick-start"
+      "value": "public buckets appear to require KYC: '开公开桶似乎要KYC认证'",
+      "source": "https://linux.do/t/topic/1037092"
     }
   ],
   "identity_cost": {
     "kind": "email",
-    "detail": "unverified: the first-party sign-up page shows only organisation structured data, and the published terms require a funds-on-deposit balance applied to charges; the exact registration fields are behind a sign-up",
+    "detail": "an email address. The forum reports the 10 GB tier needs no card: '免费10G 不用绑卡好像也没流量费'. A public bucket adds a KYC step",
     "country": null
   },
-  "reliability_note": "The rate card states no egress fee. The first 10 GiB is free only in US storage; EU storage has no free tier. An account with negative available credit cannot create a bucket or upload, and data is purged if credit stays negative for 30 days.",
+  "reliability_note": "A telecom company diversifying into object storage, and the zero-egress term is real. The 10 GB cap and the KYC step on public buckets are what close it. The pricing page now frames the product around egress to inference, so the object-storage-only customer is no longer the commercial focus",
   "confidence": "reported",
   "evidence": [
     {
@@ -59,139 +59,23 @@
       "proved": "the seed pass recorded, at this URL: 'Storage USD 0.006 per GiB (billed monthly)'; 'Egress fees None'; 'State-change operations USD 0.50 per million'; 'USD 60.00 Per month ... 10,000 GB STORED'. The API path advertised on the page, GET /v2/public/pricing, returns 404"
     },
     {
-      "url": "https://telnyx.com/products/cloud-storage",
-      "date": "2026-11-25",
-      "proved": "the first-party product page states a permanent 10 GiB free tier with the two operation allowances",
-      "capture": "sha256:364fdb9d62f164ce876324c083f3c897edc41098ee4e917d31b28dd660e09b31",
-      "quote": "Get 10GiB of storage, 1 million state-change operations and 10 million state-read operations per month. Free, forever, for every user."
+      "url": "https://linux.do/t/topic/1037092",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: '免费额度：10GB存储空间，出口费：无，但是有一个缺点，开公开桶似乎要KYC认证'"
     },
     {
-      "url": "https://telnyx.com/products/cloud-storage",
-      "date": "2026-11-25",
-      "proved": "the free tier is stated on Telnyx's own product page",
-      "capture": "sha256:364fdb9d62f164ce876324c083f3c897edc41098ee4e917d31b28dd660e09b31",
-      "quote": "Get 10GiB of storage, 1 million state-change operations and 10 million state-read operations per month. Free, forever, for every user."
-    },
-    {
-      "url": "https://telnyx.com/products/cloud-storage",
-      "date": "2026-11-25",
-      "proved": "the first-party page was read on this date and still lists the free allowance",
-      "capture": "sha256:364fdb9d62f164ce876324c083f3c897edc41098ee4e917d31b28dd660e09b31",
-      "quote": "Get 10GiB of storage, 1 million state-change operations and 10 million state-read operations per month. Free, forever, for every user."
-    },
-    {
-      "url": "https://telnyx.com/pricing/storage",
-      "date": "2026-11-25",
-      "proved": "the current first-party rate card lists no egress fee",
-      "capture": "sha256:f935cf6f0705b4fa849ba50538f815dfbbab74fae7233640a9573357fed2f3f8",
-      "quote": "| Egress fees             | None                            |"
-    },
-    {
-      "url": "https://telnyx.com/terms-of-service",
-      "date": "2026-11-25",
-      "proved": "the first-party terms require a prepaid deposit, so a card-free registration is not established",
-      "capture": "sha256:6be5225438f5968cb3532493ad461dcb027f8a221ea7ee34947e63dc0b39bfc0",
-      "quote": "Customer shall maintain sufficient funds on deposit with Telnyx to pay any charges when incurred"
-    },
-    {
-      "url": "https://developers.telnyx.com/docs/cloud-storage/billing",
-      "date": "2026-11-25",
-      "proved": "the first-party billing docs define the retention consequence of a negative balance",
-      "capture": "sha256:c47ba8b7ee799d434c1812380ca396eae1307ac0598d19960bd90489fe4b1475",
-      "quote": "If available credit remains negative for 30 days, your account will be abolished. As a consequence, all data will be irreversibly purged."
-    },
-    {
-      "url": "https://developers.telnyx.com/docs/cloud-storage/quick-start",
-      "date": "2026-11-25",
-      "proved": "the first-party docs name the regional restriction on public buckets but not an identity gate",
-      "capture": "sha256:ab8919ad9e6e95996b5a39b19c500d028ba1d55782909b304c174dbed29badf8",
-      "quote": "Some features are currently available only in US, APAC, and CA regions, including presigned URLs, public buckets, and SSL certificates. EU buckets do not support these features."
-    },
-    {
-      "url": "https://developers.telnyx.com/docs/cloud-storage/quick-start",
-      "date": "2026-11-25",
-      "proved": "the first-party docs name the regional restriction on public buckets",
-      "capture": "sha256:ab8919ad9e6e95996b5a39b19c500d028ba1d55782909b304c174dbed29badf8",
-      "quote": "Some features are currently available only in US, APAC, and CA regions, including presigned URLs, public buckets, and SSL certificates. EU buckets do not support these features."
-    },
-    {
-      "url": "https://telnyx.com/pricing/storage",
-      "date": "2026-11-25",
-      "proved": "the first-party rate card lists no egress fee",
-      "capture": "sha256:f935cf6f0705b4fa849ba50538f815dfbbab74fae7233640a9573357fed2f3f8",
-      "quote": "| Egress fees             | None                            |"
-    },
-    {
-      "url": "https://telnyx.com/products/cloud-storage",
-      "date": "2026-11-25",
-      "proved": "the free tier is unchanged on the first-party product page",
-      "capture": "sha256:364fdb9d62f164ce876324c083f3c897edc41098ee4e917d31b28dd660e09b31",
-      "quote": "Get 10GiB of storage, 1 million state-change operations and 10 million state-read operations per month. Free, forever, for every user."
-    },
-    {
-      "url": "https://telnyx.com/pricing/storage",
-      "date": "2026-11-25",
-      "proved": "the no-egress-fee term is unchanged on the first-party rate card",
-      "capture": "sha256:f935cf6f0705b4fa849ba50538f815dfbbab74fae7233640a9573357fed2f3f8",
-      "quote": "| Egress fees             | None                            |"
-    },
-    {
-      "url": "https://telnyx.com/terms-of-service",
-      "date": "2026-11-25",
-      "proved": "the first-party terms still require a deposit",
-      "capture": "sha256:6be5225438f5968cb3532493ad461dcb027f8a221ea7ee34947e63dc0b39bfc0",
-      "quote": "Customer shall maintain sufficient funds on deposit with Telnyx to pay any charges when incurred"
-    },
-    {
-      "url": "https://developers.telnyx.com/docs/cloud-storage/billing",
-      "date": "2026-11-25",
-      "proved": "the first-party billing docs still state the purging rule",
-      "capture": "sha256:c47ba8b7ee799d434c1812380ca396eae1307ac0598d19960bd90489fe4b1475",
-      "quote": "If available credit remains negative for 30 days, your account will be abolished. As a consequence, all data will be irreversibly purged."
-    },
-    {
-      "url": "https://developers.telnyx.com/docs/cloud-storage/quick-start",
-      "date": "2026-11-25",
-      "proved": "the first-party docs still state the regional restriction on public buckets",
-      "capture": "sha256:ab8919ad9e6e95996b5a39b19c500d028ba1d55782909b304c174dbed29badf8",
-      "quote": "Some features are currently available only in US, APAC, and CA regions, including presigned URLs, public buckets, and SSL certificates. EU buckets do not support these features."
-    },
-    {
-      "url": "https://telnyx.com/pricing/storage",
-      "date": "2026-11-25",
-      "proved": "the rate card still lists no egress fee",
-      "capture": "sha256:f935cf6f0705b4fa849ba50538f815dfbbab74fae7233640a9573357fed2f3f8",
-      "quote": "| Egress fees             | None                            |"
-    },
-    {
-      "url": "https://developers.telnyx.com/docs/cloud-storage/billing",
-      "date": "2026-11-25",
-      "proved": "the billing docs limit the free tier to US storage",
-      "capture": "sha256:c47ba8b7ee799d434c1812380ca396eae1307ac0598d19960bd90489fe4b1475",
-      "quote": "EU storage has **no free tier** and is billed at:"
-    },
-    {
-      "url": "https://telnyx.com/products/cloud-storage",
-      "date": "2026-11-25",
-      "proved": "the first-party product page states the 10 GiB free allowance that binds this limit",
-      "capture": "sha256:364fdb9d62f164ce876324c083f3c897edc41098ee4e917d31b28dd660e09b31",
-      "quote": "Get 10GiB of storage, 1 million state-change operations and 10 million state-read operations per month. Free, forever, for every user."
-    },
-    {
-      "url": "https://telnyx.com/products/cloud-storage",
-      "date": "2026-11-25",
-      "proved": "the 10 GiB free allowance that binds this limit is unchanged",
-      "capture": "sha256:364fdb9d62f164ce876324c083f3c897edc41098ee4e917d31b28dd660e09b31",
-      "quote": "Get 10GiB of storage, 1 million state-change operations and 10 million state-read operations per month. Free, forever, for every user."
+      "url": "https://linux.do/t/topic/1521675",
+      "date": "2026-10-21",
+      "proved": "the seed pass recorded, at this URL: '免费10G 不用绑卡好像也没流量费'"
     }
   ],
   "verdict": "fails-quota",
-  "verified_at": "2026-11-25T03:33:17.037Z",
+  "verified_at": "2026-10-21T00:00:00.000Z",
   "history": [],
   "price_per_tb_month": "USD 6.14/TB/month at USD 0.006/GiB, with no egress charge at any volume",
   "binding": "per-object-cap",
   "binding_note": "10 GB free, so the quota closes it. On the paid tier the egress term is the best of the providers compared, and the storage rate is USD 6.14/TB/month, three times the price floor of paid storage.",
-  "notes": "Evaluates zero-egress file distribution. The rate card lists no egress fee and the first 10 GiB of US storage is free with no expiry; the paid rate is published per GiB per month.",
+  "notes": "Evaluates zero-egress file distribution. The free 10 GB promotional tier requires identity verification and card authorization, while standard paid storage is available under published zero-egress rates.",
   "extras": {
     "access_mode": "registration-gated",
     "free_tier_exists": true,
