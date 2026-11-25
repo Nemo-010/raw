@@ -5,12 +5,12 @@
   "url": "https://lim.run",
   "category": "macOS host",
   "free_tier": {
-    "stated": "no free tier published",
-    "unit": "none",
+    "stated": "Free trial with 120 one-time credits at USD 0.00 per month; overage USD 0.06 per credit; Xcode warm state 0.4 credits per minute.",
+    "unit": "credits",
     "metered_on": "wall-clock",
-    "source_url": "https://lim.run",
-    "read_on": "2026-10-02",
-    "notes": "Historical research record."
+    "source_url": "https://limrun.com/pricing.md",
+    "read_on": "2026-11-24",
+    "notes": "The Trial grant is one-time and does not renew; overage is optional and requires a payment method."
   },
   "per_object_cap": {
     "stated": "not stated",
@@ -19,45 +19,51 @@
     "notes": "a sandbox has a disk ceiling rather than an object cap; the card does not carry it"
   },
   "retention": {
-    "stated": "not stated",
+    "stated": "Disk snapshots restore build state across instances; no retention clock is published.",
     "days": null,
     "source_url": "https://lim.run",
     "notes": "Disk durability across instance stops and deletions is not documented."
   },
   "egress": {
-    "terms": "not published",
+    "terms": "No egress volume allowance, price or network policy is published on the pages read.",
     "metered": false,
     "free_allowance": null,
     "price_per_tb": null,
     "source_url": "https://lim.run"
   },
   "interface": [
-    "unknown"
+    "rest",
+    "cli"
   ],
-  "interface_detail": "Access interface not documented in published terms.",
-  "tooling": "not stated",
+  "interface_detail": "MCP server at https://mcp.limrun.com/mcp, REST API at https://api.limrun.com, and the lim CLI (npm install -g lim).",
+  "tooling": "MCP server at https://mcp.limrun.com/mcp, REST API at https://api.limrun.com, and the lim CLI (npm install -g lim).",
   "chaining": "not established",
   "limits": [
     {
-      "kind": "request-rate",
-      "value": "pricing is split between idle and active states; the page does not render the rates",
-      "source": "https://lim.run"
+      "kind": "volume-quota",
+      "value": "120 one-time Trial credits, then USD 0.06 per credit overage",
+      "source": "https://limrun.com/pricing.md"
     },
     {
-      "kind": "write-gated",
-      "value": "access is a console signup or a demo booking, with no free tier stated",
-      "source": "https://lim.run"
+      "kind": "request-rate",
+      "value": "Xcode active uses 2 credits per minute; Xcode warm uses 0.4 credits per minute",
+      "source": "https://limrun.com/pricing.md"
+    },
+    {
+      "kind": "volume-quota",
+      "value": "unlimited concurrency on every plan, subject to abuse-prevention quotas",
+      "source": "https://limrun.com/pricing.md"
     }
   ],
-  "limits_note": "Session cap, idle-reap and network policy are not documented. No rate published.",
+  "limits_note": "Xcode active uses 2 credits per minute and warm 0.4 credits per minute; concurrency is unlimited on every plan; session and egress clocks are not published.",
   "identity_cost": {
     "kind": "email",
-    "detail": "unverified: not stated in the source card. `email` is the assumed value because every priced host in the set requires an account, and no signup was performed, so the kind is not established for this provider",
+    "detail": "Registration asks for an email address and name and a third-party sign-in provider, enterprise single sign-on or a passwordless email code.",
     "country": null
   },
   "reliability_note": "no reliability event recorded in the source passes",
-  "confidence": "reported",
-  "confidence_note": "Documentation states pricing splits between idle and active; classification rests on the absence of a free tier.",
+  "confidence": "documented",
+  "confidence_note": "Plans, credits, rates, identity and the interface are on first-party pages read 2026-11-24; egress volume terms are not published.",
   "evidence": [
     {
       "url": "https://lim.run",
@@ -68,12 +74,68 @@
       "url": "https://lim.run",
       "date": "2026-10-22",
       "proved": "'keep warm builds with an S3-backed cache. Pricing is split between idle and' ... with an MCP server card and 'Sign up or log in' at console.limrun.com; the extracted body does not carry the price table"
+    },
+    {
+      "url": "https://limrun.com/pricing.md",
+      "date": "2026-11-24",
+      "proved": "the Trial plan gives 120 one-time credits at no monthly fee with a per-credit overage rate",
+      "capture": "sha256:b51cd7cde0be4ced4d67f1ed7c53c86424c2aeb047ef5d5e09eb074065d1d127",
+      "quote": "Trial | $0.00/month | $0.00/year ($0.00/month equivalent) | 120 one-time | $0.06 | Try Limrun with your first builds and tests. |"
+    },
+    {
+      "url": "https://limrun.com/pricing.md",
+      "date": "2026-11-24",
+      "proved": "the Xcode warm rate in credits and dollar equivalents per plan",
+      "capture": "sha256:b51cd7cde0be4ced4d67f1ed7c53c86424c2aeb047ef5d5e09eb074065d1d127",
+      "quote": "Xcode | warm | 0.4 | $0.024 | $0.016 | $0.0128 | $0.02 |"
+    },
+    {
+      "url": "https://limrun.com/pricing.md",
+      "date": "2026-11-24",
+      "proved": "the trial grant is one-time and overage does not renew it",
+      "capture": "sha256:b51cd7cde0be4ced4d67f1ed7c53c86424c2aeb047ef5d5e09eb074065d1d127",
+      "quote": "Enabling overage does not renew the one-time signup grant."
+    },
+    {
+      "url": "https://limrun.com/pricing.md",
+      "date": "2026-11-24",
+      "proved": "trial credits are free and the listed dollar rates apply only to overage",
+      "capture": "sha256:b51cd7cde0be4ced4d67f1ed7c53c86424c2aeb047ef5d5e09eb074065d1d127",
+      "quote": "Trial credits are free; Trial dollar prices below apply only to overage."
+    },
+    {
+      "url": "https://lim.run",
+      "date": "2026-11-24",
+      "proved": "the homepage says builds use an S3-backed cache and pricing separates idle and build time",
+      "capture": "sha256:3c9fe88f6af0ff4eddae819c0b8d2d748153633f9ce8527d892f80b0c41f4bc4",
+      "quote": "keep warm builds with an S3-backed cache. Pricing is split between idle and"
+    },
+    {
+      "url": "https://limrun.com/terms",
+      "date": "2026-11-24",
+      "proved": "registration asks for an email address and name and a supported sign-in method",
+      "capture": "sha256:86f4c6f60fb6d3c82f9ec8d9ecd2d16166d22484e0991882be628c174da8b825",
+      "quote": "As part of registration, you will be asked to provide certain information, such as your email address and name, and to authenticate through a supported third-party sign-in provider, enterprise single sign-on, or a passwordless email code."
+    },
+    {
+      "url": "https://limrun.com/llms.txt",
+      "date": "2026-11-24",
+      "proved": "the MCP server is a Streamable HTTP OAuth endpoint",
+      "capture": "sha256:e7bb337fbec26fd04e86bd97a3d38337c3f2fc6aca45f1eafde39e6214645c5a",
+      "quote": "MCP server (Streamable HTTP, OAuth): https://mcp.limrun.com/mcp"
+    },
+    {
+      "url": "https://limrun.com/pricing.md",
+      "date": "2026-11-24",
+      "proved": "disk snapshots are retained across instances",
+      "capture": "sha256:b51cd7cde0be4ced4d67f1ed7c53c86424c2aeb047ef5d5e09eb074065d1d127",
+      "quote": "Restore build state across instances to avoid starting from scratch."
     }
   ],
-  "verdict": "paid-only",
-  "verified_at": "2026-10-22T04:47:22.000Z",
+  "verdict": "trial-only",
+  "verified_at": "2026-11-24T13:20:55.904Z",
   "price_per_tb_month": null,
-  "notes": " Reclassified: no free tier on the catalogue card is a paid-only product, not a closed one. `dead` is reserved for a product that is withdrawn or unreachable.",
+  "notes": "A free trial with 120 one-time credits is the only grant; paid plans start at USD 20 per month.",
   "extras": {
     "seed_status": "no-rate",
     "talaria_m10h_usd": null,
@@ -108,5 +170,5 @@
   },
   "stale": true,
   "stale_checked_at": "2026-10-22T00:00:00.000Z",
-  "binding": "write-gated"
+  "binding": "volume-quota"
 }

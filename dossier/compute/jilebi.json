@@ -1,0 +1,129 @@
+{
+  "topic": "compute",
+  "slug": "jilebi",
+  "provider": "Jalebi",
+  "url": "https://jalebi.chat/pricing",
+  "category": "hosted AI agent runtime on Amazon Bedrock AgentCore",
+  "tier": "Free plan; paid Basic, Pro and Enterprise plans",
+  "free_tier": {
+    "stated": "Free plan: 500 credits a month, 1 auto-provisioned agent, starter tools, short-term memory, limited model choice, a shared workspace and console-only access; upgraded plans are Basic 5,000, Pro 50,000 and Enterprise custom credits a month",
+    "unit": "credits",
+    "metered_on": "request-count",
+    "source_url": "https://jalebi.chat/pricing",
+    "read_on": "2026-11-24"
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is an agent invocation, not a stored object; the request body and file caps are not published on the pricing page",
+    "source_url": "https://jalebi.chat/pricing"
+  },
+  "retention": {
+    "stated": "short-term memory within a session on Free and Basic; short plus long-term memory on Pro and Enterprise; conversations expire on their own with TTL-based cleanup and no published TTL value",
+    "days": null,
+    "source_url": "https://jalebi.chat/features"
+  },
+  "egress": {
+    "terms": "the invoke response is the payload; a code example calls https://api.jalebi.chat/agents/agt_xyz/invoke with an X-API-Key header; no separate egress allowance, price or outbound-host policy is published on the pricing page",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://jalebi.chat/"
+  },
+  "interface": [
+    "rest",
+    "chat"
+  ],
+  "interface_detail": "POST /agents/{id}/invoke over REST, AG-UI over WebSocket for conversations, and generated MCP or A2A servers; API keys are listed from the Basic plan upward and the Free plan is console only",
+  "endpoint": "https://api.jalebi.chat/agents/agt_xyz/invoke",
+  "tooling": "an HTTP client with an X-API-Key header, or a generated MCP server for Claude Desktop and Cursor, or an A2A peer",
+  "chaining": "agents run on Amazon Bedrock AgentCore with registered tools, connections and knowledge sources; a deployed agent can also be reached as an MCP server or an A2A peer",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "500 credits a month on Free, 5,000 on Basic, 50,000 on Pro, custom on Enterprise; premium models consume more credits per call",
+      "source": "https://jalebi.chat/pricing"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "1 agent on Free, 10 on Basic, 25 on Pro; one shared workspace on Free versus 3 dedicated on Basic and 10 on Pro",
+      "source": "https://jalebi.chat/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "the developer API advertises rate limiting, but no numeric rate is published on the pricing or features pages",
+      "source": "https://jalebi.chat/features"
+    }
+  ],
+  "limits_note": "the Free plan has console-only app integration; API keys start at Basic; the numeric cost of one credit and the monetary price of the paid plans are not published on the page read",
+  "binding": "volume-quota",
+  "binding_note": "the monthly credit allowance is published as a number while the rate-limit and credit-to-call conversion are not, so 500 credits on one agent binds first",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "unverified: the Free plan says 'Get started instantly' and plans list a 'Talk to Us' contact, but no sign-up page was reachable and no registration fields are published; email is the assumed kind because an agent console with workspaces needs an account, and a card is not stated for the Free plan",
+    "country": null
+  },
+  "reliability_note": "the jilebi.chat host has no DNS A or AAAA answer and the pricing page was reached only through a provider rewrite of jalebi.chat; the numeric rate limit and credit conversion are not published",
+  "confidence": "documented",
+  "confidence_note": "the plan table was read from the vendor's own pricing page on 2026-11-24 through a pinned provider; the interface example and feature statements come from the vendor's own pages the same day",
+  "evidence": [
+    {
+      "url": "https://jalebi.chat/pricing",
+      "date": "2026-11-24",
+      "proved": "the Free plan includes 500 credits a month, Basic 5,000, Pro 50,000 and Enterprise custom",
+      "capture": "sha256:3b7384c5ef09b3911b41e96c784f1be50ef12865b6475a313307b8436da60b0f",
+      "quote": "| Credits/mo | 500 | 5,000 | 50,000 | Custom |"
+    },
+    {
+      "url": "https://jalebi.chat/pricing",
+      "date": "2026-11-24",
+      "proved": "the Free plan gets one auto-provisioned agent, Basic 10 and Pro 25",
+      "capture": "sha256:3b7384c5ef09b3911b41e96c784f1be50ef12865b6475a313307b8436da60b0f",
+      "quote": "| Agents | 1 (auto-provisioned) | 10 | 25 | Unlimited |"
+    },
+    {
+      "url": "https://jalebi.chat/pricing",
+      "date": "2026-11-24",
+      "proved": "API keys start at Basic and the Free plan is console only",
+      "capture": "sha256:3b7384c5ef09b3911b41e96c784f1be50ef12865b6475a313307b8436da60b0f",
+      "quote": "| App Integration | Console only | API keys | API keys | API keys + SSO |"
+    },
+    {
+      "url": "https://jalebi.chat/pricing",
+      "date": "2026-11-24",
+      "proved": "premium models consume more credits per call",
+      "capture": "sha256:3b7384c5ef09b3911b41e96c784f1be50ef12865b6475a313307b8436da60b0f",
+      "quote": "*Standard includes popular models (Haiku, Nova). Broad adds premium models (Sonnet, Nova Pro). Premium models consume more credits per call."
+    },
+    {
+      "url": "https://jalebi.chat/",
+      "date": "2026-11-24",
+      "proved": "the developer API accepts an invoke POST with an X-API-Key header",
+      "capture": "sha256:b22a20d07da237bdbb4fd085c0f0919fb56625249f4ea988eff6ecc831a6a452",
+      "quote": "https://api.jalebi.chat/agents/agt_xyz/invoke \\"
+    },
+    {
+      "url": "https://jalebi.chat/",
+      "date": "2026-11-24",
+      "proved": "a deployed agent also serves as an MCP server or an A2A peer",
+      "capture": "sha256:b22a20d07da237bdbb4fd085c0f0919fb56625249f4ea988eff6ecc831a6a452",
+      "quote": "The same agent configuration also deploys as an MCP server for IDEs like Claude Desktop and Cursor, or as an A2A peer for other agents."
+    },
+    {
+      "url": "https://jalebi.chat/features",
+      "date": "2026-11-24",
+      "proved": "conversations expire on their own with TTL cleanup and no published TTL value",
+      "capture": "sha256:73058b8325495cde9b312ab3d673f39df12a26724a898c6b98e55f076d9647b0",
+      "quote": "Conversations you can resume by ID, that expire on their own. TTL-based cleanup, native WebSocket for live clients, and a configurable idle timeout on Enterprise to control warm-session cost."
+    },
+    {
+      "url": "probe:https://jilebi.chat/pricing",
+      "date": "2026-11-24",
+      "proved": "the spelled-as-seeded host has no DNS answer, so its own pricing page was unreachable from this vantage",
+      "capture": "sha256:dc122d462434251cd0ab75efe33c89db59629befc8a9d0b01cd5466c75db60fa",
+      "quote": "\"status\": null"
+    }
+  ],
+  "verdict": "qualifies-with-caveat",
+  "verified_at": "2026-11-24T10:11:14.843Z",
+  "price_per_tb_month": null,
+  "notes": "The seeded host jilebi.chat has no DNS answer; the vendor's own site is jalebi.chat, whose pricing page was read. The Free plan publishes a monthly credit figure, one agent and a shared workspace, but no monetary price, credit conversion, numeric rate limit or sign-up fields. This is a hosted agent platform; the BYOC option runs the same platform in the reader's own cloud account and is a later option than the hosted plans."
+}

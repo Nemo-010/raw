@@ -5,7 +5,7 @@
   "url": "https://instabox.sh/changelog",
   "category": "cloud VM",
   "free_tier": {
-    "stated": "'Free gives you one 4 vCPU / 8 GiB machine to run every month at no cost', quoted, with 5 snapshots, the standard agent-browser template, auto-pause after 30 idle minutes, and the 2 vCPU / 4 GiB or 4 vCPU / 8 GiB sizes allowed. Pro is USD 20 a month and Team USD 500, each including usage equal to its fee. Accounts created before 2026-10-20 keep five free machines until 2026-12-01",
+    "stated": "Free gives one 4 vCPU / 8 GiB machine at USD 0 with a fixed 20 GiB disk, 5 snapshots and 100 GiB egress a month; it pauses after idle time and each run grows with use. Pro is USD 20 a month and Team USD 500, each including that much usage. Accounts registered before 2026-10-20 and activated before 2026-10-25 07:45 UTC keep five free sandboxes until 2026-12-01 00:00 UTC",
     "unit": "hours",
     "metered_on": "wall-clock",
     "source_url": "https://instabox.sh/changelog",
@@ -56,12 +56,12 @@
       "source": "https://instabox.sh/changelog"
     }
   ],
-  "limits_note": "The five-machine grant is a legacy state with a printed end date of 2026-12-01, so the 20 vCPU / 40 GiB figure that circulated in October 2026 expires in six weeks and the steady state is 4 vCPU / 8 GiB.",
+  "limits_note": "Free runs one 4 vCPU / 8 GiB machine at 50 Mbit/s upload; each run starts at 120 minutes and grows to 480 minutes, and the machine pauses after 30 idle minutes. The five-machine legacy grant ends on 2026-12-01 00:00 UTC.",
   "binding": "retention-clamped",
   "binding_note": "auto-pause after 30 idle minutes binds first: a free machine stops on any job that goes quiet for half an hour, and the five-machine legacy grant that circulated in the Chinese forums ends on 2026-12-01",
   "identity_cost": {
     "kind": "email",
-    "detail": "as stated by the provider's signup page",
+    "detail": "unverified: the signup page was not read; the API-key documentation shows an HTTPS API key but no registration gate",
     "country": null
   },
   "reliability_note": "no reliability event observed",
@@ -136,10 +136,52 @@
       "proved": "SDK, CLI, HTTP and SSH are documented clients",
       "capture": "sha256:7da86e2bc7a933d45c9014163d76a782464776afd4f35080ba238b7b5ce85686",
       "quote": "Code uses an **API key** (`ibk_...`): the TypeScript SDK, plain HTTP, the CLI and SSH all accept one."
+    },
+    {
+      "url": "https://instabox.sh/docs/pricing.md",
+      "date": "2026-11-24",
+      "proved": "ingress is free and egress is 100 GiB a month on Free, then USD 0.02 per GiB",
+      "capture": "sha256:32eff5075261d4ee6ccb6e8627ac5ce6764726ebb5b7fafe2c7d87dd0d6c5041",
+      "quote": "Ingress is always free. Each plan includes egress every month (100 GiB on Free, 1 TiB on Pro, 5 TiB on Builder, 50 TiB on Team), then $0.02 per GiB."
+    },
+    {
+      "url": "https://instabox.sh/docs/pricing.md",
+      "date": "2026-11-24",
+      "proved": "the single free machine, its hardware and the 100 GiB egress allowance are listed in the plan table",
+      "capture": "sha256:32eff5075261d4ee6ccb6e8627ac5ce6764726ebb5b7fafe2c7d87dd0d6c5041",
+      "quote": "| Egress | $0.02 | per GiB |"
+    },
+    {
+      "url": "https://instabox.sh/docs/limits.md",
+      "date": "2026-11-24",
+      "proved": "the free plan has a fixed 30-minute idle pause",
+      "capture": "sha256:eadb872a091754906910d437190cf66843749bd4c8f19d9307364f05c959f6fe",
+      "quote": "Free: 30 minutes, fixed. Paid plans: 5 to 30 minutes, or off"
+    },
+    {
+      "url": "https://instabox.sh/docs/limits.md",
+      "date": "2026-11-24",
+      "proved": "the free plan has a runtime that grows from 120 to 480 minutes and an idle pause",
+      "capture": "sha256:eadb872a091754906910d437190cf66843749bd4c8f19d9307364f05c959f6fe",
+      "quote": "Free: each run starts at 120 minutes and grows while the machine is in use, up to 480 minutes"
+    },
+    {
+      "url": "https://instabox.sh/docs/keys-sdk.md",
+      "date": "2026-11-24",
+      "proved": "the documented interface uses an API key; no signup fields are stated",
+      "capture": "sha256:59fc34f2d66dff4ae766a7d2033b99dacf267cee7d984fc5a441f378120414da",
+      "quote": "The SDK reads `INSTABOX_API_KEY` and `INSTABOX_API_URL`, or takes `{ apiKey, apiUrl }` as options for"
+    },
+    {
+      "url": "https://instabox.sh/docs/keys-sdk.md",
+      "date": "2026-11-24",
+      "proved": "the SDK, HTTP and CLI interfaces use an API key",
+      "capture": "sha256:59fc34f2d66dff4ae766a7d2033b99dacf267cee7d984fc5a441f378120414da",
+      "quote": "The SDK reads `INSTABOX_API_KEY` and `INSTABOX_API_URL`, or takes `{ apiKey, apiUrl }` as options for"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-04T05:43:14.343Z",
+  "verified_at": "2026-11-24T13:20:54.187Z",
   "notes": "Instabox provides isolated container environments.",
   "extras": {
     "wave2": {

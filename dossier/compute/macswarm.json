@@ -1,0 +1,182 @@
+{
+  "topic": "compute",
+  "slug": "macswarm",
+  "provider": "Macswarm",
+  "url": "https://macswarm.com/pricing/",
+  "category": "hosted macOS Pod for coding agents",
+  "tier": "Free",
+  "free_tier": {
+    "stated": "3 Pod-hours free, once, with 1 Pod at a time and no extra hours after the allowance runs out",
+    "unit": "hours",
+    "metered_on": "wall-clock",
+    "source_url": "https://macswarm.com/pricing/",
+    "read_on": "2026-11-24",
+    "notes": "A Pod-hour is one Pod running for one hour, metered per second. The ten minutes after the final session ends count toward it."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the Pod is a macOS virtual machine with Xcode and Simulators, not an object store",
+    "source_url": "https://macswarm.com/docs/inside-a-pod/"
+  },
+  "retention": {
+    "stated": "Agent logs and screenshots are kept for 30 days, then deleted; Team and Enterprise can set a shorter period. Pod-local data is destroyed with the Pod.",
+    "days": 30,
+    "source_url": "https://macswarm.com/docs/security/",
+    "notes": "The Pod is destroyed ten minutes after the final session ends; uncommitted work goes to a rescue branch."
+  },
+  "egress": {
+    "terms": "Pods make outbound connections only to api.anthropic.com, api.openai.com, the git host and package registries; there are no inbound ports. No per-GB egress price or allowance is published.",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://macswarm.com/docs/security/"
+  },
+  "interface": [
+    "chat",
+    "browser"
+  ],
+  "interface_detail": "Sessions start from Claude Code, Codex, claude.ai, Claude Desktop or Slack; there is no SSH, VNC or screen sharing, and agents are followed through the conversation, git branches and dashboard logs and screenshots.",
+  "tooling": "a Claude Team or Enterprise self-hosted environment key, or an OpenAI Agents API webhook, plus a git host for the repository.",
+  "chaining": "Pods build and test iOS apps for coding agents, pushing commits and screenshots to the git host; a developer needing a persistent disk or SSH uses a rented dedicated Mac instead.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "3 Pod-hours once on Free; 1 Pod at a time; sessions stop when the hours run out",
+      "source": "https://macswarm.com/docs/limits-and-queues/"
+    },
+    {
+      "kind": "write-gated",
+      "value": "2 concurrent xcodebuild runs and 3 to 4 Simulators per Pod; sessions queue when all Pods are busy",
+      "source": "https://macswarm.com/docs/limits-and-queues/"
+    }
+  ],
+  "limits_note": "Pro is USD 99 a month for 300 Pod-hours with up to 4 Pods and USD 0.40 per extra Pod-hour; Team is USD 399 for 1,500 hours with up to 10 Pods and USD 0.30 per extra Pod-hour.",
+  "binding": "volume-quota",
+  "binding_note": "The one-time 3 Pod-hours on Free are used first, and the build slots queue before they fail, so the Pod-hour allowance is the constraint that ends a session.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The sign-in page creates an account with a work email address or through Google or GitHub and sends a sign-in link; the pricing page states no card is needed for Free.",
+    "country": null
+  },
+  "reliability_note": "No uptime commitment on Free, Pro or Team; Pods are destroyed ten minutes after the final session ends and local data is not kept.",
+  "confidence": "documented",
+  "confidence_note": "Prices, limits, free tier and egress rules are quoted from the vendor's own pricing, limits, security and sign-in pages.",
+  "evidence": [
+    {
+      "url": "https://macswarm.com/pricing/",
+      "date": "2026-11-24",
+      "proved": "the Free plan is USD 0 with 3 Pod-hours once and 1 Pod at a time",
+      "capture": "sha256:064e2ccdb604d204a2d863f15e30804535089bd7f2c5661d8d8cd47473e49708",
+      "quote": "| Free | $0, 3 Pod-hours, once | 3 | 1 | None |"
+    },
+    {
+      "url": "https://macswarm.com/pricing/",
+      "date": "2026-11-24",
+      "proved": "no card is needed on Free",
+      "capture": "sha256:064e2ccdb604d204a2d863f15e30804535089bd7f2c5661d8d8cd47473e49708",
+      "quote": "- No card needed"
+    },
+    {
+      "url": "https://macswarm.com/pricing/",
+      "date": "2026-11-24",
+      "proved": "Pro is USD 99 a month with 300 Pod-hours and USD 0.40 beyond them",
+      "capture": "sha256:064e2ccdb604d204a2d863f15e30804535089bd7f2c5661d8d8cd47473e49708",
+      "quote": "| Pro | $99 a month | 300 | 4 | $0.40 per Pod-hour |"
+    },
+    {
+      "url": "https://app.macswarm.com/sign-in",
+      "date": "2026-11-24",
+      "proved": "account creation uses a work email, Google or GitHub",
+      "capture": "sha256:32df7b7ff6b0f66c54326a9eeeff051d7a7bcc63022c503e700bac12a7305221",
+      "quote": "Continue with GoogleContinue with GitHub"
+    },
+    {
+      "url": "https://macswarm.com/",
+      "date": "2026-11-24",
+      "proved": "the extra Pod-hour on Pro is metered per second",
+      "capture": "sha256:9629ebc6ac7b455ae858cd62c146a7c338d8e8c09c6c074e49e196e1c7544681",
+      "quote": "$0.40 per extra Pod-hour on Pro, metered per second"
+    },
+    {
+      "url": "https://macswarm.com/",
+      "date": "2026-11-24",
+      "proved": "network egress is outbound only to the model, git host and simulators",
+      "capture": "sha256:9629ebc6ac7b455ae858cd62c146a7c338d8e8c09c6c074e49e196e1c7544681",
+      "quote": "Outbound only: api.anthropic.com, api.openai.com and your git host"
+    },
+    {
+      "url": "https://macswarm.com/",
+      "date": "2026-11-24",
+      "proved": "no inbound ports and no SSH into a Pod",
+      "capture": "sha256:9629ebc6ac7b455ae858cd62c146a7c338d8e8c09c6c074e49e196e1c7544681",
+      "quote": "No inbound ports, no SSH"
+    },
+    {
+      "url": "https://macswarm.com/",
+      "date": "2026-11-24",
+      "proved": "two to three agents share a Pod with no per-agent fee",
+      "capture": "sha256:9629ebc6ac7b455ae858cd62c146a7c338d8e8c09c6c074e49e196e1c7544681",
+      "quote": "2 to 3 active agents per Pod, no per-agent fees"
+    },
+    {
+      "url": "https://macswarm.com/",
+      "date": "2026-11-24",
+      "proved": "a Pod is billed for ten minutes after the last session",
+      "capture": "sha256:9629ebc6ac7b455ae858cd62c146a7c338d8e8c09c6c074e49e196e1c7544681",
+      "quote": "10 min after the last session, billed, then the Pod is gone"
+    },
+    {
+      "url": "https://macswarm.com/docs/limits-and-queues/",
+      "date": "2026-11-24",
+      "proved": "the Pod has two concurrent xcodebuild runs",
+      "capture": "sha256:4634bc5587b69801a23d899d1817158cd6c59c60be403bf2775aa5a0ef77cb27",
+      "quote": "Concurrent `xcodebuild` runs | 2"
+    },
+    {
+      "url": "https://macswarm.com/docs/limits-and-queues/",
+      "date": "2026-11-24",
+      "proved": "Free sessions stop when the 3 hours run out and no charge is made",
+      "capture": "sha256:4634bc5587b69801a23d899d1817158cd6c59c60be403bf2775aa5a0ef77cb27",
+      "quote": "When Free's 3 Pod-hours are used up, sessions stop and the dashboard asks you to pick a plan; nothing is charged until you do."
+    },
+    {
+      "url": "https://macswarm.com/docs/security/",
+      "date": "2026-11-24",
+      "proved": "logs and screenshots are kept for 30 days",
+      "capture": "sha256:7c34116a3482d4d9e1030b411fc22d4ac3419418b3576c5eb97273b8405baf58",
+      "quote": "Agent logs and screenshots | 30 days, then deleted; Team and Enterprise can set a shorter period"
+    },
+    {
+      "url": "https://macswarm.com/",
+      "date": "2026-11-24",
+      "proved": "the free grant is 3 Pod-hours once with no card",
+      "capture": "sha256:9629ebc6ac7b455ae858cd62c146a7c338d8e8c09c6c074e49e196e1c7544681",
+      "quote": "3 Pod-hours free, once, with no card."
+    }
+  ],
+  "verdict": "trial-only",
+  "verified_at": "2026-11-24T10:11:14.897Z",
+  "notes": "A one-time 3 Pod-hour allowance on hosted macOS VMs for Claude Code and Codex; Pods have no SSH or inbound ports and are destroyed ten minutes after the final session ends.",
+  "extras": {
+    "shape": {
+      "vcpu": null,
+      "ram_gib": null,
+      "disk_gib": null,
+      "gpu_class": "Apple silicon Mac mini",
+      "gpu_count": null
+    },
+    "billing_model": "per Pod-hour metered per second, with included monthly hours on paid plans",
+    "free_tier_kind": "one-time grant",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": false,
+      "ports": "outbound to the model API, git host and package registries only",
+      "static_ip": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": 480,
+      "idle_reap_s": 600,
+      "note": "the longest session is 8 hours and the Pod is destroyed ten minutes after the last session"
+    }
+  }
+}

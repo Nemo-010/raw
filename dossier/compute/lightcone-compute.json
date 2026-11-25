@@ -1,0 +1,197 @@
+{
+  "topic": "compute",
+  "slug": "lightcone-compute",
+  "provider": "Lightcone",
+  "url": "https://docs.lightcone.ai/guides/pricing/index.md",
+  "category": "computer-use cloud desktop and browser",
+  "tier": "Pay-as-you-go (no published free tier)",
+  "free_tier": {
+    "stated": "unverified: the pricing page states no free allowance, free credits or trial; it says 'No setup fees, no monthly minimums. Pay only for what you use.'",
+    "unit": "none",
+    "metered_on": "wall-clock",
+    "source_url": "https://docs.lightcone.ai/guides/pricing/index.md",
+    "read_on": "2026-11-24",
+    "notes": "No free tier is published on the pricing page; model and compute rates apply from first use. The dashboard and signup are behind an API key and were not read as an account."
+  },
+  "per_object_cap": {
+    "stated": "File uploads to a desktop are capped at 512 MB per file, transferred in 8 MB chunks; browser downloads are disabled.",
+    "source_url": "https://docs.lightcone.ai/guides/limits-and-behaviors/index.md",
+    "notes": "The unit is a cloud computer, not an object store; the 512 MB figure is the only published per-file ceiling."
+  },
+  "retention": {
+    "stated": "A computer is destroyed on termination or timeout with its filesystem, unless created with persistent: true; screenshot URLs are presigned and expire after roughly 7 days.",
+    "days": null,
+    "source_url": "https://docs.lightcone.ai/guides/security/index.md",
+    "notes": "Persistent session state is retained until deleted."
+  },
+  "egress": {
+    "terms": "not published: the pricing page lists token, CPU, memory and disk rates with no outbound transfer allowance or per-GB price; browser sessions support a residential proxy option, desktop sessions do not",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://docs.lightcone.ai/guides/pricing/index.md"
+  },
+  "interface": [
+    "rest",
+    "cli",
+    "chat",
+    "browser",
+    "ssh"
+  ],
+  "interface_detail": "Tasks, Responses API and Chat Completions over REST, a `lightcone` CLI and MCP server, a chat interface, cloud browsers driven through CDP/Playwright, and shell commands on a desktop session; the SDKs are Python (`tzafon`) and TypeScript (`@tzafon/lightcone`).",
+  "endpoint": "https://api.tzafon.ai",
+  "tooling": "pip install tzafon, npm install @tzafon/lightcone, the lightcone CLI and MCP server; Playwright or Puppeteer can attach to browser sessions over CDP.",
+  "chaining": "Runs Northstar computer-use tasks on a managed cloud desktop or browser and returns screenshots and HTML to the caller; hosted only, with an on-device Mac option named last in the platform docs and no own hardware required.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "CPU $0.38 per core-hour and memory $0.095 per GiB-hour, billed per second with a minimum of 0.125 cores per container",
+      "source": "https://docs.lightcone.ai/guides/pricing/index.md"
+    },
+    {
+      "kind": "retention-clamped",
+      "value": "sessions terminate after inactivity_timeout_seconds of no activity; max_lifetime_seconds always applies regardless of activity",
+      "source": "https://docs.lightcone.ai/guides/limits-and-behaviors/index.md"
+    },
+    {
+      "kind": "per-object-cap",
+      "value": "max 512 MB per file upload to a desktop session",
+      "source": "https://docs.lightcone.ai/guides/limits-and-behaviors/index.md"
+    },
+    {
+      "kind": "request-rate",
+      "value": "10 failed authentication attempts in 10 minutes block the source IP; concurrent computers are plan-dependent and a 429 is returned at the limit",
+      "source": "https://docs.lightcone.ai/guides/authentication/index.md"
+    }
+  ],
+  "limits_note": "Browser sessions allow at most 5 tabs, block downloads and Google domains, and cache html() for about 2 seconds; desktop session actions are serialized one at a time.",
+  "binding": "volume-quota",
+  "binding_note": "No free allowance is published, so the meter starts at first use: a typical browser workload is about $0.075 an hour and a 10-20-step task lands between a few cents and about $0.50.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "The signup page presents an email field ('Your email address') and Continue with Google, GitHub and Apple; the quickstart says to sign up at lightcone.ai and copy an API key from the dashboard. No card, phone or ID is shown on signup, and the dashboard is behind a login wall, so any card requirement after signup is unverified: behind a sign-up.",
+    "country": null
+  },
+  "reliability_note": "Idle sessions are reaped and a hard lifetime cap applies regardless of activity; exceeding the concurrent computer limit returns 429; 10 failed authentication attempts in 10 minutes block the source IP. The API and SDK are in beta and behavior can change.",
+  "confidence": "documented",
+  "confidence_note": "The rates, no-minimum statement, caps, timeouts and signup fields are quoted from first-party documentation read on 2026-11-24; the absence of a published free tier is on the pricing page, and the dashboard was a login wall.",
+  "evidence": [
+    {
+      "url": "https://docs.lightcone.ai/guides/pricing/index.md",
+      "date": "2026-11-24",
+      "proved": "compute is charged per second at $0.38 per core-hour and $0.095 per GiB-hour",
+      "capture": "sha256:66aadd7c3dae1e7eb2e420835a67755667dec4d2086cf99fe58bbe2e4846a679",
+      "quote": "| CPU      | $0.38 / core-hour |\n| Memory   | $0.095 / GiB-hour |"
+    },
+    {
+      "url": "https://docs.lightcone.ai/guides/pricing/index.md",
+      "date": "2026-11-24",
+      "proved": "billing granularity is per second with a minimum of 0.125 cores per container",
+      "capture": "sha256:66aadd7c3dae1e7eb2e420835a67755667dec4d2086cf99fe58bbe2e4846a679",
+      "quote": "- **Granularity.** Per-second billing, minimum 0.125 cores per container"
+    },
+    {
+      "url": "https://docs.lightcone.ai/guides/pricing/index.md",
+      "date": "2026-11-24",
+      "proved": "a normal browser workload costs roughly $0.075 an hour",
+      "capture": "sha256:66aadd7c3dae1e7eb2e420835a67755667dec4d2086cf99fe58bbe2e4846a679",
+      "quote": "A normal browser workload runs at roughly **$0.075 / hour**."
+    },
+    {
+      "url": "https://docs.lightcone.ai/guides/pricing/index.md",
+      "date": "2026-11-24",
+      "proved": "there are no setup fees or monthly minimums and use is pay-as-you-go",
+      "capture": "sha256:66aadd7c3dae1e7eb2e420835a67755667dec4d2086cf99fe58bbe2e4846a679",
+      "quote": "**Are there setup fees?** No setup fees, no monthly minimums. Pay only for what you use."
+    },
+    {
+      "url": "https://docs.lightcone.ai/guides/pricing/index.md",
+      "date": "2026-11-24",
+      "proved": "a typical 10-20-step task costs a few cents to about $0.50",
+      "capture": "sha256:66aadd7c3dae1e7eb2e420835a67755667dec4d2086cf99fe58bbe2e4846a679",
+      "quote": "In practice, a typical **10–20-step task lands between a few cents and \\~$0.50**, driven mostly by how much context accumulates over the run."
+    },
+    {
+      "url": "https://docs.lightcone.ai/guides/limits-and-behaviors/index.md",
+      "date": "2026-11-24",
+      "proved": "sessions are reaped after the inactivity timeout and the hard lifetime cap always applies",
+      "capture": "sha256:380423ae233c1d3ae15f12455e58fd000258338f48f9ed5eb3593eaa41a5ae28",
+      "quote": "| Idle reaping         | Sessions terminate after `inactivity_timeout_seconds` with no activity. Any executed action (screenshots included) or a `keepalive` call resets the clock, but if you pause between calls longer than the idle window, the session is reaped"
+    },
+    {
+      "url": "https://docs.lightcone.ai/guides/limits-and-behaviors/index.md",
+      "date": "2026-11-24",
+      "proved": "desktop uploads are capped at 512 MB per file",
+      "capture": "sha256:380423ae233c1d3ae15f12455e58fd000258338f48f9ed5eb3593eaa41a5ae28",
+      "quote": "| Uploads land in `/workspace/uploads` | File uploads go there; max 512 MB per file, transferred in 8 MB chunks"
+    },
+    {
+      "url": "https://docs.lightcone.ai/guides/limits-and-behaviors/index.md",
+      "date": "2026-11-24",
+      "proved": "exceeding the plan-dependent concurrent computer limit returns 429",
+      "capture": "sha256:380423ae233c1d3ae15f12455e58fd000258338f48f9ed5eb3593eaa41a5ae28",
+      "quote": "| Concurrent computer limit | The number of simultaneously running computers is plan-dependent; exceeding it returns a 429 with “Concurrent limit reached”"
+    },
+    {
+      "url": "https://docs.lightcone.ai/guides/authentication/index.md",
+      "date": "2026-11-24",
+      "proved": "10 failed authentication attempts in 10 minutes block the source IP",
+      "capture": "sha256:608dba03c25c233d62494e7753648e44e7fb89d35f0f14e4376497b7dc0cfec6",
+      "quote": "- 10 failed authentication attempts in 10 minutes will block your IP"
+    },
+    {
+      "url": "https://lightcone.ai/signup",
+      "date": "2026-11-24",
+      "proved": "the sign-up page asks for an email address and offers Google, GitHub and Apple sign-in",
+      "capture": "sha256:2d3357ea094f6794cfc166d9878afe09df34fe0fa84b37ce499fe042987d58b5",
+      "quote": "placeholder=\"Your email address\" required=\"\""
+    },
+    {
+      "url": "https://docs.lightcone.ai/guides/security/index.md",
+      "date": "2026-11-24",
+      "proved": "a computer is destroyed with its filesystem unless persistent: true, and screenshot URLs expire after roughly 7 days",
+      "capture": "sha256:6061b7ba40a33a120675832aec56d777c872a96ac04affdc2f4fce9a034a8c10",
+      "quote": "When a computer is deleted, explicitly or by timeout, the VM is destroyed along with its filesystem, unless the session was created with `persistent: true`"
+    },
+    {
+      "url": "https://docs.lightcone.ai/",
+      "date": "2026-11-24",
+      "proved": "the hosted offer operates a cloud browser or desktop, with a self-hosted option named separately",
+      "capture": "sha256:47a32e7fa260e4f1b9dbd6a79f9e8e9d5eff716823b195bafc5a4b6df380831a",
+      "quote": "Give it an instruction and it operates a cloud browser or desktop to carry it out:"
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-24T10:11:14.878Z",
+  "price_per_tb_month": null,
+  "notes": "No free tier or trial is published: billing starts at first use at $0.38 per core-hour and $0.095 per GiB-hour. Signup takes an email or a Google/GitHub/Apple account; the dashboard is behind a login wall, so any card requirement after signup is unverified. Egress carries no published allowance or rate.",
+  "extras": {
+    "shape": {
+      "vcpu": null,
+      "ram_gib": null,
+      "disk_gib": null,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "browser and desktop computers; machine size is not published on the pricing page"
+    },
+    "billing_model": "per-second usage at published core-hour, GiB-hour and token rates",
+    "free_tier_kind": "none-published",
+    "term": "no monthly minimum, no setup fee",
+    "price_arithmetic": "$0.38 per core-hour + $0.095 per GiB-hour; a normal browser workload is stated at about $0.075/hour",
+    "status": "API and SDK in beta",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": null,
+      "ports": "not stated",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "inactivity_timeout_seconds and max_lifetime_seconds are plan-dependent; both reap the session"
+    }
+  }
+}
