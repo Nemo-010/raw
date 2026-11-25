@@ -1,0 +1,175 @@
+{
+  "topic": "compute",
+  "slug": "orble",
+  "provider": "Orble",
+  "url": "https://orble.tech/pricing",
+  "category": "hosted agent sandbox",
+  "tier": "Usage (smallest S box)",
+  "free_tier": {
+    "stated": "No published recurring free tier: usage is paid from prepaid credit. Free credit, such as credit sent by email, has no cash value and is used before credit paid for; an account made after 2026-11-13 must verify a card to use free credit, and one card unlocks free credit for one account. An account with no added credit can have 3 boxes at once.",
+    "unit": "none",
+    "metered_on": "wall-clock",
+    "source_url": "https://orble.tech/terms",
+    "read_on": "2026-11-25",
+    "notes": "The card check for free credit is a Stripe verification that charges nothing. The amount of free credit sent by email is not published on the pages read. The S box is $0.015 per hour billed per second; a suspended box is $0 and storage is $0.05 per GiB-month."
+  },
+  "per_object_cap": {
+    "stated": "not applicable: the unit is a machine, not an object; the smallest S box has 64 GiB of disk",
+    "source_url": "https://orble.tech/pricing"
+  },
+  "retention": {
+    "stated": "A box that stays suspended at zero credit for 30 days may be deleted after an email warning; suspending a box keeps memory and running processes, and only storage is billed while suspended.",
+    "days": null,
+    "source_url": "https://orble.tech/terms"
+  },
+  "egress": {
+    "terms": "Egress rules control outbound network access on Pro; no egress price or allowance is stated on the pricing page read",
+    "metered": false,
+    "free_allowance": null,
+    "price_per_tb": null,
+    "source_url": "https://orble.tech/pricing"
+  },
+  "interface": [
+    "ssh",
+    "rest",
+    "cli"
+  ],
+  "interface_detail": "Each box is a Linux VM with root access and SSH; SDKs for TypeScript and Python, an MCP server at https://orble.tech/mcp, and E2B and Daytona API compatibility.",
+  "endpoint": "https://orble.tech/mcp",
+  "tooling": "The user installs the Orble CLI from https://orble.tech/install.sh to drive hosted boxes; TypeScript and Python SDKs, MCP clients and E2B/Daytona API endpoints are also documented. The capacity is hosted; the CLI is only a client.",
+  "chaining": "A hosted Linux box with root, SSH and a per-port HTTPS URL; suspend keeps memory and processes for later resume, so state that must outlive a 30-day zero-credit suspension needs a separate storage record.",
+  "limits": [
+    {
+      "kind": "volume-quota",
+      "value": "S box $0.015 per hour billed per second (2 vCPU, 4 GiB, 64 GiB disk); suspended box $0 compute; storage $0.05 per GiB-month; prepaid credit",
+      "source": "https://orble.tech/pricing"
+    },
+    {
+      "kind": "request-rate",
+      "value": "An account with no added credit can have 3 boxes at once",
+      "source": "https://orble.tech/terms"
+    }
+  ],
+  "limits_note": "Idle boxes suspend automatically and resume with state intact. Suspended boxes are billed only for storage. Boxes are suspended when credit runs out, not deleted, and may be deleted after 30 days at zero credit with an email warning.",
+  "binding": "volume-quota",
+  "binding_note": "Prepaid credit and the per-second meter are what run out first; the 3-box ceiling applies only to accounts that have never added credit.",
+  "identity_cost": {
+    "kind": "email",
+    "detail": "Sign-in uses a Google or GitHub account; signing in creates an Orble account and Google and GitHub sign-ins with the same verified email address reach the same account. The terms require the user to be at least 16. Using free credit on an account made after 2026-11-13 requires verifying a card with Stripe, charged nothing, one card per account; Pro is $20 per month or $200 per year charged to a card, and usage is always paid from prepaid credit.",
+    "country": null
+  },
+  "reliability_note": "When credit runs out boxes are suspended, not deleted; a box suspended at zero credit for 30 days may be deleted after an email warning. An account found to abuse free credit or payment rules is suspended after a review.",
+  "confidence": "documented",
+  "confidence_note": "Prices, instance sizes, suspension behaviour and interface come from the vendor's pricing and product pages read 2026-11-25; the Google/GitHub sign-in gate, the card check for free credit and the 3-box ceiling come from the vendor's sign-in and terms pages read the same day.",
+  "evidence": [
+    {
+      "url": "https://orble.tech/pricing",
+      "date": "2026-11-25",
+      "proved": "the S box is 2 vCPU, 4 GiB, 64 GiB disk at $0.015 per hour",
+      "capture": "sha256:9b83ed58651c3954aaa1d546daf698071ac3d2abe9f19a203e3db55b5e654e26",
+      "quote": "| S | 2 | 4 GiB | 64 GiB | $0.015 |"
+    },
+    {
+      "url": "https://orble.tech/pricing",
+      "date": "2026-11-25",
+      "proved": "compute is billed per second",
+      "capture": "sha256:9b83ed58651c3954aaa1d546daf698071ac3d2abe9f19a203e3db55b5e654e26",
+      "quote": "Compute is billed per second."
+    },
+    {
+      "url": "https://orble.tech/pricing",
+      "date": "2026-11-25",
+      "proved": "a suspended box costs $0 and storage is $0.05 per GiB-month",
+      "capture": "sha256:9b83ed58651c3954aaa1d546daf698071ac3d2abe9f19a203e3db55b5e654e26",
+      "quote": "| Suspended box | $0 |  |  |  |"
+    },
+    {
+      "url": "https://orble.tech/pricing",
+      "date": "2026-11-25",
+      "proved": "storage is $0.05 per GiB-month",
+      "capture": "sha256:9b83ed58651c3954aaa1d546daf698071ac3d2abe9f19a203e3db55b5e654e26",
+      "quote": "| Storage | $0.05 per GiB-month |  |  |  |"
+    },
+    {
+      "url": "https://orble.tech/pricing",
+      "date": "2026-11-25",
+      "proved": "Pro is $20 per month or $200 per year",
+      "capture": "sha256:9b83ed58651c3954aaa1d546daf698071ac3d2abe9f19a203e3db55b5e654e26",
+      "quote": "$20 per month, or $200 per year (save 17%)"
+    },
+    {
+      "url": "https://orble.tech/",
+      "date": "2026-11-25",
+      "proved": "idle boxes suspend automatically and only storage is billed while suspended",
+      "capture": "sha256:18c94ae4d09bc5983ed4c97908f3ffd9fc40d825689a6d046dddc282a5e6f834",
+      "quote": "Idle boxes suspend automatically and resume with state intact. While suspended, only storage is billed."
+    },
+    {
+      "url": "https://orble.tech/signin",
+      "date": "2026-11-25",
+      "proved": "sign-in uses Google or GitHub and creates an Orble account with a verified email address",
+      "capture": "sha256:69fa95083781ebb4ce10f9b4d2f446316fda7e3b840756a64ab1e78008762f96",
+      "quote": "Signing in creates an Orble account and means agreeing to the terms. Google and GitHub sign-ins with the same verified email address reach the same account."
+    },
+    {
+      "url": "https://orble.tech/terms",
+      "date": "2026-11-25",
+      "proved": "using free credit on a new account requires a Stripe card verification with no charge, one card per account",
+      "capture": "sha256:e1239d9df7f62abaa358ff8d15b0582423630993a64b03619eff4470eb778bde",
+      "quote": "To use free credit, an account made after November 13, 2026 needs to verify a card first; we check the card with Stripe and charge nothing."
+    },
+    {
+      "url": "https://orble.tech/terms",
+      "date": "2026-11-25",
+      "proved": "an account needs a Google or GitHub account and must be at least 16",
+      "capture": "sha256:e1239d9df7f62abaa358ff8d15b0582423630993a64b03619eff4470eb778bde",
+      "quote": "You need a Google or GitHub account to sign in, and you must be at least 16 and able to agree to these terms."
+    },
+    {
+      "url": "https://orble.tech/terms",
+      "date": "2026-11-25",
+      "proved": "an account with no added credit can have 3 boxes at once",
+      "capture": "sha256:e1239d9df7f62abaa358ff8d15b0582423630993a64b03619eff4470eb778bde",
+      "quote": "Until an account adds credit, it can have 3 boxes at once."
+    },
+    {
+      "url": "https://orble.tech/terms",
+      "date": "2026-11-25",
+      "proved": "boxes run out of credit are suspended and may be deleted after 30 days at zero credit",
+      "capture": "sha256:e1239d9df7f62abaa358ff8d15b0582423630993a64b03619eff4470eb778bde",
+      "quote": "When your credit runs out, your boxes are suspended, not deleted. A box that stays suspended at zero credit for 30 days may be deleted after an email warning."
+    }
+  ],
+  "verdict": "paid-only",
+  "verified_at": "2026-11-25T01:20:00.639Z",
+  "notes": "Paid-only: no published recurring free allowance; a Google or GitHub identity plus prepaid credit is required, with a Stripe card check for free credit. Hosted VM sandbox; the CLI the user installs only drives it.",
+  "extras": {
+    "shape": {
+      "vcpu": 2,
+      "ram_gib": 4,
+      "disk_gib": 64,
+      "gpu_class": null,
+      "gpu_count": null,
+      "note": "S box: 2 vCPU, 4 GiB memory, 64 GiB disk at $0.015 per hour"
+    },
+    "billing_model": "prepaid credit, billed per second; suspended boxes billed only for storage",
+    "free_tier_kind": "unpublished discretionary credit",
+    "term": "monthly Pro option; usage prepaid",
+    "price_arithmetic": "S box $0.015 per hour billed per second; suspended box $0 compute; storage $0.05 per GiB-month; Pro $20 per month or $200 per year",
+    "status": "live",
+    "network_out": {
+      "allow_outbound": true,
+      "allow_inbound_listen": true,
+      "ports": "each port exposed at a dedicated HTTPS URL, public or account-authenticated",
+      "static_ip": null,
+      "ipv6": null,
+      "per_session_bytes": null
+    },
+    "session_cap": {
+      "wall_clock_min": null,
+      "idle_reap_s": null,
+      "restart_required": false,
+      "note": "idle boxes suspend automatically and resume with memory and processes; suspended at zero credit for 30 days may be deleted after an email warning"
+    }
+  }
+}
