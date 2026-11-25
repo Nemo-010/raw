@@ -15,12 +15,12 @@
   "per_object_cap": {
     "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
-    "notes": "No per-layer or per-blob size cap is published for the container registry; layer size is set by the build configuration. The package-registry per-format table does not apply to OCI layers, and untagged layers are removed after 24 hours."
+    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
   },
   "retention": {
     "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
-    "notes": "Tagged images are retained until deleted; a cleanup policy is optional and off by default. Untagged image layers are automatically deleted after 24 hours if they remain unreferenced."
+    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
   },
   "egress": {
     "terms": "No egress charge is published for gitlab.com registry pulls; anonymous pulls are served without auth beyond a JWT. Effectively unmetered for anonymous public projects.",
@@ -70,38 +70,10 @@
       "proved": "purchased storage does not apply to the container registry; the 10 GiB Free limit covers repo and LFS only",
       "capture": "sha256:03b30a3eb551b90d9d6b5c02ed8c1ed3a1aff79388863e9eb6b1cf258fcebf3f",
       "quote": "Purchased storage applies to Git repository size and LFS usage. It does not apply to other storage types, such as the container registry."
-    },
-    {
-      "url": "https://docs.gitlab.com/user/packages/container_registry/reduce_container_registry_storage/",
-      "date": "2026-11-25",
-      "proved": "the container registry page states a rule for unreferenced layers and no per-blob size cap",
-      "capture": "sha256:dd8cc42fc28568000e58c4f527a91c436f86456cdde731ffcbdb9e59d08d35f7",
-      "quote": "Untagged image layers are automatically deleted after 24 hours if they remain unreferenced during that period."
-    },
-    {
-      "url": "https://docs.gitlab.com/user/packages/container_registry/reduce_container_registry_storage/",
-      "date": "2026-11-25",
-      "proved": "the only automatic deletion stated is of unreferenced untagged layers after 24 hours",
-      "capture": "sha256:dd8cc42fc28568000e58c4f527a91c436f86456cdde731ffcbdb9e59d08d35f7",
-      "quote": "Untagged image layers are automatically deleted after 24 hours if they remain unreferenced during that period."
-    },
-    {
-      "url": "https://docs.gitlab.com/user/storage_usage_quotas/",
-      "date": "2026-11-25",
-      "proved": "container registry bytes remain outside the 10 GiB project storage quota",
-      "capture": "sha256:c31fa88d40120be518fbe9f17f5155d6812a549ba671ca04939f01cc78377e71",
-      "quote": "Only the project’s repository and LFS are included in the storage limit. The container registry, package registry, and build artifacts are not included in the limit."
-    },
-    {
-      "url": "https://docs.gitlab.com/user/gitlab_com/",
-      "date": "2026-11-25",
-      "proved": "the first-party limits page names the registry endpoint",
-      "capture": "sha256:68f43c79110ad21fc9f3aeb8e6336cc2b463e9f9868ec094f2325dc676a4d44d",
-      "quote": "| Domain name | `registry.gitlab.com` |  |"
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-11-25T05:52:38.547Z",
+  "verified_at": "2026-11-19T21:13:26.679Z",
   "notes": "Not counted against any storage quota. GitLab docs: 'Only the project's repository and LFS are included in the storage limit. The container registry, package registry, and build artifacts are not included in the limit.' The 10 GiB Free limit therefore does not apply to OCI blobs.",
   "history": [],
   "extras": {
