@@ -14,14 +14,14 @@
   },
   "per_object_cap": {
     "stated": "per-object-cap: NOT published, and NOT 2 GiB",
-    "bytes": 2147483648,
+    "bytes": null,
     "source_url": "https://registry.ollama.com/pricing",
-    "notes": "extracted from the quota or limits prose"
+    "notes": "uploading a model, which is approximately 100GB in size."
   },
   "retention": {
     "stated": "Client-side chunking is 100 MB-1 GB parts (server/upload.go). Retention: none. Objects persist until deleted; no TTL anywhere in the docs.",
     "source_url": "https://registry.ollama.com/pricing",
-    "notes": "Extracted from published terms."
+    "notes": "description: Model successfully deleted"
   },
   "egress": {
     "terms": "Unmetered anonymous pull. No egress line exists anywhere in Ollama's pricing. There is no per-GB transfer meter to quote because pull is free and unauthenticated. Blob GET is 307 to an R2 bucket (dd20bb891979d25aebc8bec07b2b3bbc.r2.cloudflarestorage.com, X-Amz-Expires=86400), fronted by Cloudflare.",
@@ -125,10 +125,45 @@
       "proved": "the first-party Ollama repository documents a REST API for running and managing models alongside the OCI registry",
       "capture": "sha256:82001b377cbd536c1393d9d8e056eb82bf97d7fd88c01ab8d768e61932e08346",
       "quote": "Ollama has a REST API for running and managing models."
+    },
+    {
+      "url": "https://github.com/ollama/ollama/issues/13740",
+      "date": "2026-11-25",
+      "proved": "a push of approximately 100GB returned a 413 response in the first-party issue tracker",
+      "capture": "sha256:a6e4e3f8693fb935931d9fdf898eb062f978b978bbb5c4f2887c843cffcf1707",
+      "quote": "I encountered an error while uploading a model, which is approximately 100GB in size. During the upload process, I consistently received the following prompt: \"Error: max retries exceeded: http status 413 Request Entity Too Large\"."
+    },
+    {
+      "url": "https://github.com/ollama/ollama/issues/13740",
+      "date": "2026-11-25",
+      "proved": "a push of approximately 100GB reached a 413 response, so the stated 2 GiB hard cap is not a single hard number",
+      "capture": "sha256:a6e4e3f8693fb935931d9fdf898eb062f978b978bbb5c4f2887c843cffcf1707",
+      "quote": "I encountered an error while uploading a model, which is approximately 100GB in size. During the upload process, I consistently received the following prompt: \"Error: max retries exceeded: http status 413 Request Entity Too Large\"."
+    },
+    {
+      "url": "https://docs.ollama.com/api/delete",
+      "date": "2026-11-25",
+      "proved": "the first-party API documents deleting a model",
+      "capture": "sha256:47f4aafe0b6710493a136dbb00c7dd1a3abec86d38eed809d4d996ab92d9a128",
+      "quote": "description: Model successfully deleted"
+    },
+    {
+      "url": "https://github.com/ollama/ollama/issues/13740",
+      "date": "2026-11-25",
+      "proved": "a push of approximately 100GB returned a 413 response",
+      "capture": "sha256:a6e4e3f8693fb935931d9fdf898eb062f978b978bbb5c4f2887c843cffcf1707",
+      "quote": "I encountered an error while uploading a model, which is approximately 100GB in size. During the upload process, I consistently received the following prompt: \"Error: max retries exceeded: http status 413 Request Entity Too Large\"."
+    },
+    {
+      "url": "https://docs.ollama.com/api/delete",
+      "date": "2026-11-25",
+      "proved": "the API exposes deletion of a model",
+      "capture": "sha256:47f4aafe0b6710493a136dbb00c7dd1a3abec86d38eed809d4d996ab92d9a128",
+      "quote": "description: Model successfully deleted"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-19T21:38:40.946Z",
+  "verified_at": "2026-11-25T19:55:12.773Z",
   "notes": "No published byte quota, no published per-file cap, and no paid storage tier exists to upsell to — the only paid Ollama product is inference compute ('Pricing': Free $0 'Use any cloud model with pay-as-you-go usage credits', Pro $20/mo; nothing on that page meters model storage). Empirically established this session by summing manifests: ONE free namespace holds 3,270 GiB across 89 working repos. A single repo holds 455.5 GiB in one layer.",
   "history": [],
   "extras": {
