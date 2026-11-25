@@ -16,19 +16,19 @@
     "stated": "Per-file: 150 MB",
     "bytes": 150000000,
     "source_url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
-    "notes": "extracted from the quota or limits prose"
+    "notes": "The batch upload allows 500 MB per file; the file-extract upload allows 150 MB per file."
   },
   "retention": {
-    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
+    "stated": "Uploaded files are kept permanently in the Alibaba Cloud account unless deleted by the user.",
     "source_url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "The FAQ states permanent storage in the account until the user deletes a file; the 100 GB and 10,000-file workspaces also have no validity-period limit."
   },
   "egress": {
-    "terms": "No metered egress on file retrieval. The legacy get-file endpoint returns a pre-signed aliyuncs.com OSS URL, i.e. served from Alibaba OSS rather than a billed gateway.",
+    "terms": "File upload, storage and query operations are free; the file interface does not charge for retrieval.",
     "metered": true
   },
   "interface": [
-    "unknown"
+    "rest"
   ],
   "interface_detail": "OpenAI-compatible: base_url https://dashscope.aliyuncs.com/compatible-mode/v1 with the openai SDK; also https://dashscope-intl.aliyuncs.com for international, and https://maas.qwencloudapi.com/compatible-mode/v1 for the Singapore QwenCloud brand",
   "tooling": "openai-python with a swapped base_url; curl multipart; documented endpoints upload/retrieve/list/delete plus GET /files/{file_id}/content",
@@ -131,10 +131,87 @@
       "proved": "international registration needs an email address plus a non-mainland mobile number",
       "capture": "sha256:bded6d9f81950de6aa0675b87657f42e4431c58d01ae748489595414b170230e",
       "quote": "Requires an email address for registration, plus a mobile number from outside the Chinese mainland (including Hong Kong (China), Macao (China), and Taiwan (China)) for security verification."
+    },
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
+      "date": "2026-11-25",
+      "proved": "the file API is called over HTTP or the OpenAI SDK",
+      "capture": "sha256:a3ab34a1c79a5d1ab98308c8875a03bad4bed1838b27a2fe8edc1e91e3c5325d",
+      "quote": "支持通过OpenAI SDK（Python、Java）或HTTP API调用文件接口，包括上传、查询、删除等操作。"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
+      "date": "2026-11-25",
+      "proved": "files persist until the user deletes them",
+      "capture": "sha256:a3ab34a1c79a5d1ab98308c8875a03bad4bed1838b27a2fe8edc1e91e3c5325d",
+      "quote": "是的，上传的文件会被永久保存在您的阿里云账号下，除非主动删除。"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
+      "date": "2026-11-25",
+      "proved": "no validity-period limit applies to the file storage",
+      "capture": "sha256:a3ab34a1c79a5d1ab98308c8875a03bad4bed1838b27a2fe8edc1e91e3c5325d",
+      "quote": "百炼存储空间支持的最大文件数为10000个，总大小不超过100 GB，暂时没有有效期限制。"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
+      "date": "2026-11-25",
+      "proved": "the batch per-file cap is 500 MB",
+      "capture": "sha256:a3ab34a1c79a5d1ab98308c8875a03bad4bed1838b27a2fe8edc1e91e3c5325d",
+      "quote": "上传Batch任务的单个文件最大为500 MB。"
+    },
+    {
+      "url": "https://docs.qwencloud.com/api-reference/platform-api/file",
+      "date": "2026-11-25",
+      "proved": "file operations carry no charge",
+      "capture": "sha256:ff1c5d1d26d592aa287a9548b351e66d5ffbd77f36127e26a5ddd066f346b797",
+      "quote": "File operations (upload, storage, query, delete) are free. You are charged only for model inference tokens (input + output)."
+    },
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
+      "date": "2026-11-25",
+      "proved": "files are retained until deleted by the user",
+      "capture": "sha256:a3ab34a1c79a5d1ab98308c8875a03bad4bed1838b27a2fe8edc1e91e3c5325d",
+      "quote": "是的，上传的文件会被永久保存在您的阿里云账号下，除非主动删除。"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
+      "date": "2026-11-25",
+      "proved": "the file interface is an HTTP API",
+      "capture": "sha256:a3ab34a1c79a5d1ab98308c8875a03bad4bed1838b27a2fe8edc1e91e3c5325d",
+      "quote": "支持通过OpenAI SDK（Python、Java）或HTTP API调用文件接口，包括上传、查询、删除等操作。"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
+      "date": "2026-11-25",
+      "proved": "the batch per-file limit is stated",
+      "capture": "sha256:a3ab34a1c79a5d1ab98308c8875a03bad4bed1838b27a2fe8edc1e91e3c5325d",
+      "quote": "上传Batch任务的单个文件最大为500 MB。"
+    },
+    {
+      "url": "https://docs.qwencloud.com/api-reference/platform-api/file",
+      "date": "2026-11-25",
+      "proved": "file operations are not billed",
+      "capture": "sha256:ff1c5d1d26d592aa287a9548b351e66d5ffbd77f36127e26a5ddd066f346b797",
+      "quote": "File operations (upload, storage, query, delete) are free. You are charged only for model inference tokens (input + output)."
+    },
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
+      "date": "2026-11-25",
+      "proved": "the file API charges nothing for upload, storage or query",
+      "capture": "sha256:a3ab34a1c79a5d1ab98308c8875a03bad4bed1838b27a2fe8edc1e91e3c5325d",
+      "quote": "文件上传、存储和查询操作不产生费用。"
+    },
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/openai-file-interface",
+      "date": "2026-11-25",
+      "proved": "request-rate limits apply to the file API",
+      "capture": "sha256:a3ab34a1c79a5d1ab98308c8875a03bad4bed1838b27a2fe8edc1e91e3c5325d",
+      "quote": "上传文件接口的QPS（每秒请求数）限制为3。查询文件信息、查询文件列表、删除文件接口的QPS总和限制为10。"
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-19T21:12:57.317Z",
+  "verified_at": "2026-11-25T02:33:16.881Z",
   "notes": "100 GB total per workspace; 10,000 files; NO expiry ('暂时没有有效期限制'. No validity-period limit for now). Per-file: 150 MB for purpose=file-extract, 500 MB for purpose=batch, 300 MB for fine-tune, 50 MB for the newer Agent Studio endpoint.",
   "history": [],
   "extras": {
