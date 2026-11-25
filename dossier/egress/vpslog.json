@@ -58,9 +58,9 @@
     "detail": "A Telegram account is the only credential: log in through @vpslog_distribute_bot and receive a code.",
     "country": "None"
   },
-  "reliability_note": "Shared IPv4 with a restricted port list; nothing about durability is documented.",
+  "reliability_note": "The distribution host does not resolve, so no shared IPv4 is issued; nothing about durability is documented.",
   "confidence": "unverified",
-  "confidence_note": "The distribution host answers a DNS failure, so the offer is dead; the other sources are from 2023 and describe the offer while it was live.",
+  "confidence_note": "The distribution host answered DNS Status 3 (NXDOMAIN) at two public resolvers on 2026-11-25, so the offer is dead; the other sources are from 2023 and describe the offer while it was live.",
   "evidence": [
     {
       "url": "https://v2cross.com/4198.html",
@@ -85,10 +85,24 @@
       "proved": "the distribution host does not resolve",
       "capture": "sha256:fa819a7f5e09e92469c5ed6b7268a3348ac57fd29c66f07768a425db27f95452",
       "quote": "\"error\": \"dns\""
+    },
+    {
+      "url": "probe:https://8.8.8.8/resolve?name=distribute.vpslog.net&type=A",
+      "date": "2026-11-25",
+      "proved": "a public resolver answered NXDOMAIN for the distribution host on 2026-11-25",
+      "capture": "sha256:a10bfc6124d871400c9227e8f03c3fd33c522a3295b9eca13fa2b70e603bd8f8",
+      "quote": "\"Status\":3"
+    },
+    {
+      "url": "probe:https://1.1.1.1/dns-query?name=distribute.vpslog.net&type=A",
+      "date": "2026-11-25",
+      "proved": "a second public resolver answered NXDOMAIN for the distribution host on 2026-11-25",
+      "capture": "sha256:42c43799bbdef9ecc6d3d0f78330ee3f191eb0d3b037b417a78ddaeee9dfc5a5",
+      "quote": "\"Status\":3"
     }
   ],
   "verdict": "dead",
-  "verified_at": "2026-11-04T06:52:57.446Z",
+  "verified_at": "2026-11-25T11:04:39.640Z",
   "price_per_tb_month": "USD 0",
   "history": [],
   "notes": "Dead: the distribution host distribute.vpslog.net does not resolve (DNS failure), so the free NAT VPS is no longer issued. Kept as the archetype of the Telegram-only free NAT VPS, where only a listed subset of ports of a shared IPv4 is forwarded; the write-ups date from 2023.",
