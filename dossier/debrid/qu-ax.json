@@ -20,10 +20,10 @@
     "notes": "The page writes 256MB; the measured rejection point was not pushed to, so 256e6 is the page's decimal reading, not a measured byte boundary."
   },
   "retention": {
-    "stated": "1 day / 7 days / 30 days selected at upload. The default (no expiry field sent) produced expires=1795313693, which is 2026-11-22T02:14:53Z, exactly 30 days after the upload.",
-    "days": 30,
+    "stated": "By default, files stick around for 30 days. But you've got options! You can choose different storage times when uploading: 1 day, 7 days, 30 days, 365 days, or permanent.",
+    "days": 365,
     "source_url": "https://qu.ax/",
-    "notes": "Measured from the epoch the API returned, not from the page."
+    "notes": "The 30-day default was measured from the epoch the upload reply returned; the 1, 7, 30 and 365-day choices and permanent are stated on the page."
   },
   "egress": {
     "terms": "Downloads are served from qu.ax itself; no byte allowance, no account and no published download counter. Nothing on the page meters traffic out.",
@@ -48,13 +48,13 @@
     },
     {
       "kind": "retention-clamped",
-      "value": "30 days maximum; the expiry is fixed at upload and cannot be extended",
+      "value": "Expiry is selected at upload from 1, 7, 30 or 365 days, or permanent with no guarantee of indefinite storage",
       "source": "measured: expires=1795313693 in the upload reply"
     }
   ],
   "limits_note": "A file type allow-list runs before the size check: the same 1 MiB payload sent as payload-1mib.bin was refused with HTTP 400 {\"message\":\"file type is not allowed\",\"success\":false}, and accepted once renamed to .txt. The download side is referer-gated: GET /x/leM7o.txt without a Referer answers 200 with an 8 254-byte HTML page, and the same request with Referer: https://qu.ax/leM7o answers 200 with the 1 048 576 bytes.",
   "binding": "retention-clamped",
-  "binding_note": "At 1 TiB a month the 256 MB cap only means 4 000 uploads, which a loop handles; the hard stop is that nothing on the service extends a file past 30 days, so a re-fetch after a month needs the original bytes, which is no longer held if this was the only copy.",
+  "binding_note": "The hard stop is the expiry chosen at upload: the longest fixed term is 365 days and permanent is not guaranteed, so a re-fetch after expiry needs the original bytes, which is no longer held if this was the only copy.",
   "identity_cost": {
     "kind": "anonymous",
     "detail": "No account, no email, no cookie was sent; the upload was one POST from a bare HTTP client and a URL came back.",
@@ -104,10 +104,59 @@
       "proved": "an anonymous upload with expiry=365 returned an expiry one year out",
       "capture": "sha256:7e9653b00ca2602b1ec61603698fb4a5dee5fd2e4592aaeb4ab4f49a27e814be",
       "quote": "\"expiry_param\": \"365\""
+    },
+    {
+      "url": "probe:https://qu.ax/tos",
+      "date": "2026-11-25",
+      "proved": "the TOS states a 30-day default and 1, 7, 30 and 365-day choices plus permanent",
+      "capture": "sha256:0052b8d2dbedaed30c7808865bcff2b01dae73a754d664adf02c777e4e088839",
+      "quote": "By default, files stick around for 30 days. But you've got options! You can choose different storage times when uploading: ... 1 day (quick shares) ... 30 days (default) ... 365 days (year-long storage) ... \"Permanent\" (more on this below)"
+    },
+    {
+      "url": "probe:https://qu.ax/tos",
+      "date": "2026-11-25",
+      "proved": "a 365-day expiry is offered at upload",
+      "capture": "sha256:0052b8d2dbedaed30c7808865bcff2b01dae73a754d664adf02c777e4e088839",
+      "quote": "365 days (year-long storage)"
+    },
+    {
+      "url": "probe:https://qu.ax/tos",
+      "date": "2026-11-25",
+      "proved": "the page states the 30-day default and the 1, 7, 30 and 365-day choices plus permanent",
+      "capture": "sha256:0052b8d2dbedaed30c7808865bcff2b01dae73a754d664adf02c777e4e088839",
+      "quote": "By default, files stick around for 30 days. But you've got options! You can choose different storage times when uploading: ... 1 day (quick shares) ... 30 days (default) ... 365 days (year-long storage) ... \"Permanent\" (more on this below)"
+    },
+    {
+      "url": "probe:https://qu.ax/tos",
+      "date": "2026-11-25",
+      "proved": "the upload expiry parameter accepts 1, 7, 30, 365 or permanent, and permanent is not guaranteed",
+      "capture": "sha256:0052b8d2dbedaed30c7808865bcff2b01dae73a754d664adf02c777e4e088839",
+      "quote": "Want to set an expiry time? Add the expiry parameter (-1 for permanent, 1/7/30/365 for days): ... While we offer a \"permanent\" storage option, here's the deal: we can't guarantee forever-storage."
+    },
+    {
+      "url": "probe:https://qu.ax/tos",
+      "date": "2026-11-25",
+      "proved": "the longest fixed expiry is 365 days and permanent is not guaranteed",
+      "capture": "sha256:0052b8d2dbedaed30c7808865bcff2b01dae73a754d664adf02c777e4e088839",
+      "quote": "Want to set an expiry time? Add the expiry parameter (-1 for permanent, 1/7/30/365 for days): ... While we offer a \"permanent\" storage option, here's the deal: we can't guarantee forever-storage."
+    },
+    {
+      "url": "probe:https://qu.ax/tos",
+      "date": "2026-11-25",
+      "proved": "upload expiry reaches 365 days and the permanent option is not guaranteed",
+      "capture": "sha256:0052b8d2dbedaed30c7808865bcff2b01dae73a754d664adf02c777e4e088839",
+      "quote": "Want to set an expiry time? Add the expiry parameter (-1 for permanent, 1/7/30/365 for days): ... While we offer a \"permanent\" storage option, here's the deal: we can't guarantee forever-storage."
+    },
+    {
+      "url": "probe:https://qu.ax/tos",
+      "date": "2026-11-25",
+      "proved": "the retention default, the 365-day option and the unguaranteed permanent option still hold",
+      "capture": "sha256:0052b8d2dbedaed30c7808865bcff2b01dae73a754d664adf02c777e4e088839",
+      "quote": "By default, files stick around for 30 days. But you've got options! You can choose different storage times when uploading: ... 1 day (quick shares) ... 30 days (default) ... 365 days (year-long storage) ... \"Permanent\" (more on this below) ... Want to set an expiry time? Add the expiry parameter (-1 for permanent, 1/7/30/365 for days): ... While we offer a \"permanent\" storage option, here's the deal: we can't guarantee forever-storage."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-25T19:27:46.871Z",
+  "verified_at": "2026-11-25T19:32:33.719Z",
   "price_per_tb_month": "USD 0",
   "probe": {
     "record": "probes/raw/qu.ax-txt.json + probes/20261023T023-*-qu.ax-*.json + probes/raw/qu.ax.json",
@@ -120,7 +169,7 @@
     "download_requirements": "Referer header; the API URL itself is a landing page"
   },
   "history": [],
-  "notes": "The caveat is the extension allow-list, the 30-day ceiling and the referer-gated download. For an archive of 20 TiB this is a distribution mirror, not storage: 80 000 files at 256 MB.",
+  "notes": "The caveats are the extension allow-list, the 365-day fixed-expiry ceiling with an unguaranteed permanent option, and the referer-gated download; this is a distribution mirror, not an archive store.",
   "extras": {
     "api_reply_fields": "files[0].url, .file_name, .hash (sha1), .size, .expires",
     "largest_upload_tested_bytes": 1048576
