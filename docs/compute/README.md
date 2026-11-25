@@ -274,18 +274,5 @@ finds it and the gate's `links` check counts it as cited. A document that names 
 removes its row at the next render.
 
 <!-- generated:start topic=compute kind=uncited -->
-| record | provider | verdict | confidence |
-| --- | --- | --- | --- |
-| `bitrise-remote-dev-environments` | Bitrise Remote Dev Environments | trial-only | documented |
-| `boltzlabs-sandboxes` | BoltzLabs | qualifies-with-caveat | documented |
-| `corellium-solo` | Corellium | qualifies-with-caveat | documented |
-| `expo-simulators-eas` | Expo Simulators (EAS) | paid-only | documented |
-| `gmi-cloud-on-demand-gpu` | GMI Cloud | paid-only | documented |
-| `luxor-agent-cloud` | Luxor Agent Cloud | qualifies-with-caveat | documented |
-| `munito-sandboxes` | Munito AI Sandboxes | trial-only | documented |
-| `my-remote-mac` | My Remote Mac | paid-only | documented |
-| `quave-one-agent-sandboxes-direct` | Quave ONE | paid-only | documented |
-| `sauce-labs` | Sauce Labs | trial-only | documented |
-| `testmu-ai-real-device-automation` | TestMu AI (formerly LambdaTest) | trial-only | documented |
-| `ventaw` | Ventaw | qualifies-with-caveat | documented |
+Every `measured` or `documented` record of this topic is named by a document.
 <!-- generated:end -->
