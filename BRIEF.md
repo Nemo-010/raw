@@ -71,7 +71,7 @@ waiting to happen, and `render.py --check` refuses one.
 | [`crawler-scraper`](docs/crawler-scraper/README.md) | 61 | 40 | 10 | 3 | 8 | 61 | 15 |
 | [`data-apis`](docs/data-apis/README.md) | 155 | 127 | 8 | 12 | 8 | 153 | 1 |
 | [`databases-kv`](docs/databases-kv/README.md) | 42 | 27 | 11 | 1 | 3 | 42 | 10 |
-| [`debrid`](docs/debrid/README.md) | 526 | 316 | 108 | 50 | 52 | 467 | 19 |
+| [`debrid`](docs/debrid/README.md) | 526 | 310 | 108 | 47 | 61 | 467 | 19 |
 | [`dev-services`](docs/dev-services/README.md) | 98 | 84 | 10 | 2 | 2 | 98 | 1 |
 | [`domains-dns`](docs/domains-dns/README.md) | 43 | 27 | 14 | 1 | 1 | 43 | 6 |
 | [`egress`](docs/egress/README.md) | 458 | 62 | 168 | 204 | 24 | 379 | 20 |
@@ -80,7 +80,7 @@ waiting to happen, and `render.py --check` refuses one.
 | [`ip-proxy`](docs/ip-proxy/README.md) | 87 | 23 | 49 | 9 | 6 | 80 | 10 |
 | [`netdisk-pan`](docs/netdisk-pan/README.md) | 104 | 51 | 4 | 34 | 15 | 59 | 22 |
 | [`storage`](docs/storage/README.md) | 1720 | 381 | 135 | 1062 | 142 | 211 | 29 |
-| **all** | 5339 | 1875 | 1516 | 1580 | 368 | 3434 | 227 |
+| **all** | 5339 | 1869 | 1516 | 1577 | 377 | 3434 | 227 |
 <!-- generated:end -->
 
 ---
