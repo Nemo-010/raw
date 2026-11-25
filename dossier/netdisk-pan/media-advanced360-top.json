@@ -16,7 +16,7 @@
     "source_url": "https://media.advanced360.top/"
   },
   "retention": {
-    "stated": "the host is gone; 302 to a host whose TLS fails",
+    "stated": "the host is gone; 302 to a plain http host that answered 401",
     "days": 0,
     "source_url": "https://media.advanced360.top/"
   },
@@ -33,7 +33,7 @@
   "limits": [
     {
       "kind": "retention-clamped",
-      "value": "the host stopped serving: 302 to a host whose TLS fails",
+      "value": "the host stopped serving: 302 to a plain http host that answered 401",
       "source": "probe:https://media.advanced360.top/api/public/settings"
     }
   ],
@@ -42,7 +42,7 @@
     "detail": "no account would have helped",
     "country": null
   },
-  "reliability_note": "Death mode: 302 to a host whose TLS fails.",
+  "reliability_note": "Death mode: 302 to a plain http host that answered 401 with error http-401.",
   "confidence": "measured",
   "evidence": [
     {
@@ -56,19 +56,26 @@
       "proved": "the API endpoint still redirects to ww547.advanced360.top and answers HTTP 401, so no anonymous listing is served",
       "capture": "sha256:30e50b777fdeafe1e215b693967e5395953d348f8680dc30344de32263c1dc1e",
       "quote": "\"status\": 401"
+    },
+    {
+      "url": "probe:https://media.advanced360.top/api/public/settings",
+      "date": "2026-11-25",
+      "proved": "the 302 target is a plain http host that answered status 401 with error http-401",
+      "capture": "sha256:201962a6e9c989d57a5426c44d8df14ef2063bb95c5b235f98997374bf24fe86",
+      "quote": "\"status\": 401 ... \"error\": \"http-401\" ... \"final_url\": \"http://ww547.advanced360.top/?tkn=19vnMT3S\""
     }
   ],
   "verdict": "dead",
-  "verified_at": "2026-10-22T03:37:00.574Z",
+  "verified_at": "2026-11-25T13:26:31.830Z",
   "binding": "retention-clamped",
   "binding_note": "The host is not slow or capped, it is gone; the constraint is that it stopped.",
-  "notes": "A media mirror. 302 to a host whose TLS fails",
+  "notes": "A media mirror. 302 to a plain http host that answered 401",
   "history": [],
   "extras": {
     "access_mode": "public-instance",
     "read_capability": "none",
     "write_capability": "not-tested",
-    "death_mode": "302 to a host whose TLS fails",
+    "death_mode": "302 to a plain http host that answered 401",
     "last_verified_alive": null,
     "last_verified_dead": "2026-10-22T03:37:00.574Z",
     "consecutive_failures": 1,

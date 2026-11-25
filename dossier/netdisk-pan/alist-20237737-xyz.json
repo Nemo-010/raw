@@ -16,7 +16,7 @@
     "source_url": "https://alist.20237737.xyz/"
   },
   "retention": {
-    "stated": "the host is gone; 301 to nowhere that answers",
+    "stated": "the host is gone; 301 redirection to a sibling host",
     "days": 0,
     "source_url": "https://alist.20237737.xyz/"
   },
@@ -33,7 +33,7 @@
   "limits": [
     {
       "kind": "retention-clamped",
-      "value": "the host stopped serving: 301 to nowhere that answers",
+      "value": "the host stopped serving at its own hostname: 301 to a sibling host",
       "source": "probe:https://alist.20237737.xyz/api/public/settings"
     }
   ],
@@ -42,7 +42,7 @@
     "detail": "no account would have helped",
     "country": null
   },
-  "reliability_note": "Death mode: 301 to nowhere that answers.",
+  "reliability_note": "Death mode: the 301 target answers an AList settings JSON: status 200, application/json, 2572 bytes.",
   "confidence": "measured",
   "evidence": [
     {
@@ -63,10 +63,24 @@
       "proved": "the original hostname still serves only a 301 redirect to a sibling host, so it is not a usable instance",
       "capture": "sha256:a23fb3d4443e63e8f2c7083eec567f42fc8e70c21e92770cfe411e477bf8f9be",
       "quote": "\"status\": 301"
+    },
+    {
+      "url": "probe:https://alist.20237737.xyz/api/public/settings",
+      "date": "2026-11-25",
+      "proved": "the 301 target answers status 200 with application/json and 2572 bytes",
+      "capture": "sha256:b64d2562080d1c44bff7b0043c9cca6b93d5e6476df957a9c7d639fd8c47e891",
+      "quote": "\"status\": 200 ... \"content_type\": \"application/json\" ... \"final_url\": \"https://alist.qsesvick.top/api/public/settings\" ... \"bytes\": 2572"
+    },
+    {
+      "url": "probe:https://alist.20237737.xyz/api/public/settings",
+      "date": "2026-11-25",
+      "proved": "the original hostname answers with a 301 redirect to the sibling host",
+      "capture": "sha256:b64d2562080d1c44bff7b0043c9cca6b93d5e6476df957a9c7d639fd8c47e891",
+      "quote": "\"status\": 301, \"location\": \"https://alist.qsesvick.top/api/public/settings\""
     }
   ],
   "verdict": "dead",
-  "verified_at": "2026-11-19T21:12:45.102Z",
+  "verified_at": "2026-11-25T13:26:31.829Z",
   "binding": "retention-clamped",
   "binding_note": "The host is not slow or capped, it is gone; the constraint is that it stopped.",
   "notes": "七十二时, the original hostname of the 20237737 corpus. 301 to nowhere that answers",
