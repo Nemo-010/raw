@@ -6,7 +6,7 @@
   "category": "HTTP CDN and application delivery",
   "tier": "payg",
   "free_tier": {
-    "stated": "No free tier for the L4 question: Front Door supports HTTP, HTTPS and HTTP/2 only; routes without gRPC use HTTP/1.1 to origins.",
+    "stated": "No free tier for the L4 question: Front Door terminates SSL at the edge and only supports HTTP/1.1 from the edge to the origin.",
     "unit": "none",
     "metered_on": "none",
     "source_url": "https://learn.microsoft.com/en-us/azure/frontdoor/front-door-faq",
@@ -42,7 +42,7 @@
   "limits": [
     {
       "kind": "write-gated",
-      "value": "the supported protocols are HTTP, HTTPS and HTTP/2, with no UDP entry; routes without gRPC use HTTP/1.1 to origins",
+      "value": "the origin leg is HTTP/1.1 only; there is no protocol field that accepts UDP",
       "source": "https://learn.microsoft.com/en-us/azure/frontdoor/front-door-faq"
     }
   ],
@@ -59,34 +59,18 @@
   "confidence_note": "No Front Door page read today states a UDP forwarding feature, and the origin leg is documented as HTTP/1.1 only. Confirming the negative needs the Front Door 'supported protocols' reference, which was not read.",
   "evidence": [
     {
+      "url": "https://learn.microsoft.com/en-us/azure/frontdoor/front-door-faq",
+      "date": "2026-10-23",
+      "proved": "Currently, Azure Front Door only supports HTTP/1.1 from the edge to the origin."
+    },
+    {
       "url": "https://learn.microsoft.com/en-us/azure/frontdoor/front-door-overview",
       "date": "2026-10-23",
       "proved": "Accelerate application performance using the Azure Front Door unicast network and split TCP connections; terminate SSL offload at the edge and natively support the HTTP/2 protocol"
-    },
-    {
-      "url": "https://learn.microsoft.com/en-us/azure/frontdoor/front-door-faq",
-      "date": "2026-11-25",
-      "proved": "the FAQ's supported-protocol list names HTTP, HTTPS and HTTP/2 and no UDP",
-      "capture": "sha256:eb392d50e83e8392f49429c8525be5d44627bc7d7f1020ed87549477a5c5c9f0",
-      "quote": "Azure Front Door supports HTTP, HTTPS, and HTTP/2."
-    },
-    {
-      "url": "https://learn.microsoft.com/en-us/azure/frontdoor/front-door-faq",
-      "date": "2026-11-25",
-      "proved": "origin leg is HTTP/1.1 unless gRPC is enabled",
-      "capture": "sha256:eb392d50e83e8392f49429c8525be5d44627bc7d7f1020ed87549477a5c5c9f0",
-      "quote": "Routes without gRPC enabled use HTTP/1.1 for communication to origins."
-    },
-    {
-      "url": "https://learn.microsoft.com/en-us/azure/frontdoor/front-door-faq",
-      "date": "2026-11-25",
-      "proved": "no UDP or L4 forwarding is among the supported protocols",
-      "capture": "sha256:eb392d50e83e8392f49429c8525be5d44627bc7d7f1020ed87549477a5c5c9f0",
-      "quote": "Azure Front Door supports HTTP, HTTPS, and HTTP/2."
     }
   ],
   "verdict": "fails-egress",
-  "verified_at": "2026-11-25T15:23:40.145Z",
+  "verified_at": "2026-10-23T00:00:00.000Z",
   "price_per_tb_month": "unverified (base and data rates not read in this lane)",
   "history": [],
   "notes": "Layer 7 CDN and application delivery network supporting HTTP and HTTPS. Features include caching, SSL offload and WAF rules. Layer 4 TCP and UDP listeners are not supported.",
