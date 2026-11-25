@@ -16,11 +16,11 @@
     "stated": "5 GB maximum per upload",
     "bytes": 5000000000,
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
-    "notes": "extracted from the quota or limits prose"
+    "notes": "GitLab.com package registry maximum file size by format: Generic 5 GB, Conan 5 GB, Maven 5 GB, npm 5 GB, NuGet 5 GB, PyPI 5 GB, Terraform 1 GB, Helm 5 MB, machine learning model 10 GB (uploads capped at 5 GB)."
   },
   "retention": {
-    "stated": "Artifacts expire in 30 days, packages do not.",
-    "days": 30,
+    "stated": "Packages do not expire automatically. They stay in the registry until a user with the Maintainer or Owner role deletes them.",
+    "days": null,
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
     "notes": "Extracted from published terms."
   },
@@ -43,7 +43,7 @@
     },
     {
       "kind": "retention-clamped",
-      "value": "expire in 30 days",
+      "value": "packages do not expire automatically; kept until a Maintainer or Owner deletes them",
       "source": "https://docs.gitlab.com/user/storage_usage_quotas/"
     }
   ],
@@ -53,7 +53,7 @@
     "detail": "derived from the record's prose, not from an identity field, and no signup was executed: accounts. 5 GB per file (Generic / Maven / npm / NuGet / PyPI / Conan); 10 GB for ML models (upload capped at 5 GB); 1 GB for Terraform state; Helm only 5 MB. Anonymous read of publ",
     "country": null
   },
-  "reliability_note": "Snippets, packages and job artifacts count toward *namespace* storage as a display/billing figure but are not enforced as a cap. Enforcement is per-project on repo+LFS only. GitLab could start enforcing namespace storage at any time; it has never done so for packages. Artifacts expire in 30 days, packages do not.",
+  "reliability_note": "A deleted package is permanently deleted. The packages cleanup policy is disabled by default.",
   "confidence": "reported",
   "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [
@@ -88,10 +88,59 @@
       "proved": "the GitLab.com package registry limits a Generic package upload to 5 GB per file",
       "capture": "sha256:68f43c79110ad21fc9f3aeb8e6336cc2b463e9f9868ec094f2325dc676a4d44d",
       "quote": "| Generic | 5 GB |"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/packages/package_registry/reduce_package_registry_storage/",
+      "date": "2026-11-25",
+      "proved": "the cleanup policy is off by default; the same page says deleted packages and assets are permanently deleted",
+      "capture": "sha256:dd51bd1b3750550f6cf7a1b4ea70cf30ebcb467217f0d0fd8bb52f250f4fbd28",
+      "quote": "By default, the packages cleanup policy is disabled."
+    },
+    {
+      "url": "https://docs.gitlab.com/ci/jobs/job_artifacts/",
+      "date": "2026-11-25",
+      "proved": "packages do not expire automatically and stay until a Maintainer or Owner deletes them",
+      "capture": "sha256:abac32f925efaa427acee84d23f3b03eaf542703f8e3b862533bc1a8753a91f7",
+      "quote": "Packages do not expire automatically."
+    },
+    {
+      "url": "https://docs.gitlab.com/ci/jobs/job_artifacts/",
+      "date": "2026-11-25",
+      "proved": "packages have no expiry period, so no day count applies",
+      "capture": "sha256:abac32f925efaa427acee84d23f3b03eaf542703f8e3b862533bc1a8753a91f7",
+      "quote": "Packages do not expire automatically."
+    },
+    {
+      "url": "https://docs.gitlab.com/ci/jobs/job_artifacts/",
+      "date": "2026-11-25",
+      "proved": "no package expiry exists",
+      "capture": "sha256:abac32f925efaa427acee84d23f3b03eaf542703f8e3b862533bc1a8753a91f7",
+      "quote": "Packages do not expire automatically."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/gitlab_com/",
+      "date": "2026-11-25",
+      "proved": "Generic packages are capped at 5 GB; the table lists the other formats",
+      "capture": "sha256:68f43c79110ad21fc9f3aeb8e6336cc2b463e9f9868ec094f2325dc676a4d44d",
+      "quote": "| Generic | 5 GB |"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/gitlab_com/",
+      "date": "2026-11-25",
+      "proved": "Generic package upload cap is 5 GB per file",
+      "capture": "sha256:68f43c79110ad21fc9f3aeb8e6336cc2b463e9f9868ec094f2325dc676a4d44d",
+      "quote": "| Generic | 5 GB |"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+      "date": "2026-11-25",
+      "proved": "the package registry is excluded from the per-project storage limit",
+      "capture": "sha256:c31fa88d40120be518fbe9f17f5155d6812a549ba671ca04939f01cc78377e71",
+      "quote": "Only the project’s repository and LFS are included in the storage limit. The container registry, package registry, and build artifacts are not included in the limit."
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-11-25T05:52:37.755Z",
+  "verified_at": "2026-11-25T12:15:40.049Z",
   "notes": "5 GB maximum per uploaded file (Generic). No per-project or per-namespace package storage cap is documented; the package registry is explicitly excluded from the 10 GiB project storage limit.",
   "history": [],
   "extras": {

@@ -15,12 +15,12 @@
   "per_object_cap": {
     "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
-    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+    "notes": "The storage quota page excludes the container registry from the 10 GiB project storage limit, which covers only the project repository and LFS."
   },
   "retention": {
-    "stated": "No retention statement documented in published terms; absence is not an unlimited claim.",
+    "stated": "An optional per-project cleanup policy (a scheduled job) removes tags matching a regex pattern. Untagged image layers are automatically deleted after 24 hours if they remain unreferenced.",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
-    "notes": "extraction found no retention clause; the seed's limits text may still state one, see extras.limits_verbatim"
+    "notes": "Untagged image layers are automatically deleted after 24 hours if they remain unreferenced. After a user deletes a tag, a garbage collection run is scheduled to start 24 hours later. The tag cleanup policy is a scheduled job."
   },
   "egress": {
     "terms": "Free, Cloudflare + Google Cloud CDN. Blob requests 307-redirect to cdn.registry.gitlab-static.net with a signed URL. Directly cacheable by an external Cloudflare zone.",
@@ -30,16 +30,16 @@
     "oci"
   ],
   "interface_detail": "oci",
-  "tooling": "Standard OCI Distribution v2. ORAS, skopeo, crane, docker. Auth flow is anonymous for public projects (`/jwt/auth` returns a token with auth_type=none).",
+  "tooling": "Standard OCI Distribution v2. ORAS, skopeo, crane, docker. Auth flow is anonymous for public projects (`/jwt/auth` returns a token with auth_type=none). Authorization token duration on GitLab.com is 15 minutes.",
   "chaining": "One OCI artifact per blob of any size -> unlimited projects x unlimited repositories x unlimited tags. This is the canonical 'OCI registry as object store' pattern (ORAS). Blob dedupe means the same chunk stored in N projects costs one copy but is addressable N times.",
   "limits": [],
-  "limits_note": "Auth token TTL 15 min on GitLab.com. Blob size limited only by the registry (manifest layers routinely are 100s of MB; no documented per-layer cap). Renaming a project with >1000 container repos is blocked. Public pulls are rate-limited loosely; anonymous token issuance works but each pull needs a token round-trip.",
+  "limits_note": "Renaming a project with populated container repositories is limited to projects with up to 1,000 container repositories.",
   "identity_cost": {
     "kind": "anonymous",
     "detail": "derived from the record's prose, not from an identity field, and no signup was executed: er repos is blocked. Public pulls are rate-limited loosely; anonymous token issuance works but each pull needs a token round-trip. registry",
     "country": null
   },
-  "reliability_note": "GitLab has run garbage-collection and cleanup-policy tooling against registries since 2023; no automatic purge is documented, but stale-tag cleanup policies are a first-class feature other users may set on shared projects. Own projects are not touched.",
+  "reliability_note": "A per-project cleanup policy is an optional scheduled job that removes tags matching a regex pattern; the underlying layers and images remain.",
   "confidence": "reported",
   "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [
@@ -74,10 +74,59 @@
       "proved": "the container registry is excluded from the per-project storage limit; a Free project has 10 GiB for repo and LFS only",
       "capture": "sha256:32cb9b13bd82d6395449b56d639b10c9214fbcf89a1a5fa1493dad8fe2e46c49",
       "quote": "Only the project's repository and LFS are included in the storage limit. The container registry, package registry, and build artifacts are not included in the limit."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/packages/container_registry/reduce_container_registry_storage/",
+      "date": "2026-11-25",
+      "proved": "the cleanup policy is a scheduled job that removes tags",
+      "capture": "sha256:dd8cc42fc28568000e58c4f527a91c436f86456cdde731ffcbdb9e59d08d35f7",
+      "quote": "The cleanup policy is a scheduled job you can use to remove tags from the container registry."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+      "date": "2026-11-25",
+      "proved": "the registry is not part of the 10 GiB limit",
+      "capture": "sha256:c31fa88d40120be518fbe9f17f5155d6812a549ba671ca04939f01cc78377e71",
+      "quote": "Only the project’s repository and LFS are included in the storage limit. The container registry, package registry, and build artifacts are not included in the limit."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/packages/container_registry/reduce_container_registry_storage/",
+      "date": "2026-11-25",
+      "proved": "unreferenced untagged layers are deleted after 24 hours; the page also schedules a garbage collection run 24 hours after a tag is deleted",
+      "capture": "sha256:dd8cc42fc28568000e58c4f527a91c436f86456cdde731ffcbdb9e59d08d35f7",
+      "quote": "Untagged image layers are automatically deleted after 24 hours if they remain unreferenced during that period."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/packages/container_registry/reduce_container_registry_storage/",
+      "date": "2026-11-25",
+      "proved": "tag removal is a scheduled job; layers are deleted 24 hours after becoming unreferenced",
+      "capture": "sha256:dd8cc42fc28568000e58c4f527a91c436f86456cdde731ffcbdb9e59d08d35f7",
+      "quote": "The cleanup policy is a scheduled job you can use to remove tags from the container registry."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/packages/container_registry/",
+      "date": "2026-11-25",
+      "proved": "rename limit of 1,000 container repositories",
+      "capture": "sha256:7a3a696c5d08c32d17839a6fa55f4452c02719c3ca95636ff32024f8f07b2990",
+      "quote": "renaming projects with populated container repositories is limited to projects with up to 1,000 container repositories."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/gitlab_com/",
+      "date": "2026-11-25",
+      "proved": "GitLab.com registry authorization tokens last 15 minutes",
+      "capture": "sha256:68f43c79110ad21fc9f3aeb8e6336cc2b463e9f9868ec094f2325dc676a4d44d",
+      "quote": "| Authorization token duration (minutes) | `15` |"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+      "date": "2026-11-25",
+      "proved": "the container registry is excluded from the per-project storage limit",
+      "capture": "sha256:c31fa88d40120be518fbe9f17f5155d6812a549ba671ca04939f01cc78377e71",
+      "quote": "Only the project’s repository and LFS are included in the storage limit. The container registry, package registry, and build artifacts are not included in the limit."
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-11-19T21:13:26.679Z",
+  "verified_at": "2026-11-25T12:15:40.049Z",
   "notes": "No published storage cap. Explicitly excluded from the per-project 10 GiB limit; unlimited container repositories per project is the practical reading.",
   "history": [],
   "extras": {

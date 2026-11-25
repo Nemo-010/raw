@@ -13,12 +13,13 @@
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "No per-object cap documented in published terms; absence is not an unlimited claim.",
+    "stated": "Artifacts maximum size (compressed): 1 GB",
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
-    "notes": "extraction found no per-object clause; some of these providers meter on object count rather than bytes, and some state no cap"
+    "notes": "Cap applies to the compressed artifacts archive of one job on GitLab.com.",
+    "bytes": 1000000000
   },
   "retention": {
-    "stated": "Default expiry 30 days, but `expire_in: never` is a valid documented value and the latest-successful-job artifact on every ref is exempt from expiry entirely",
+    "stated": "Artifacts expire after the `expire_in` value, or the instance-wide default expiration when none is set. Setting `expire_in` to `never`, or selecting Keep, stops expiry. `expire_in` does not affect artifacts from the latest job, unless keeping the latest job artifacts is disabled for the project or instance-wide.",
     "days": 30,
     "source_url": "https://docs.gitlab.com/user/storage_usage_quotas/",
     "notes": "Extracted from published terms."
@@ -34,13 +35,13 @@
   "tooling": "GET /projects/:id/jobs/artifacts/:ref/download?job=NAME, and GET /projects/:id/jobs/:job_id/artifacts (zip). No auth needed against a public project. Upload is automatic from .gitlab-ci.yml `artifacts:`.",
   "chaining": "Unlimited jobs per project x 1 GB per artifact archive, uncounted against quota. Force permanence with `expire_in: never` or the 'Keep' button. Because 'artifacts from the latest pipeline for the ref' never expire regardless of expire_in, every branch/tag becomes a permanent shelf: unlimited branches x 1 GB.",
   "limits": [],
-  "limits_note": "1 GB compressed per archive. Default expiry 30 days, but `expire_in: never` is a valid documented value and the latest-successful-job artifact on every ref is exempt from expiry entirely. Free tier: 400 compute minutes/month, so bulk upload is compute-bound, not storage-bound.",
+  "limits_note": "Artifacts maximum size (compressed) is 1 GB on GitLab.com. Artifact expiry time is 30 days unless otherwise specified.",
   "identity_cost": {
     "kind": "email",
     "detail": "no identity_cost field and no identity statement in the source record; defaulted to email and flagged, not evidence",
     "country": null
   },
-  "reliability_note": "Expiry is enforced hourly and irreversible. Anything not pinned with `never`/Keep silently vanishes. Treat as durable only when pinned.",
+  "reliability_note": "After expiry, artifacts are deleted hourly by default (using a cron job) and are not accessible anymore. Artifacts kept by the Keep artifacts from most recent successful jobs setting ignore `expire_in`.",
   "confidence": "reported",
   "confidence_note": "mechanically converted from the seed corpus; no page was read for this record in the storage-dossier pass. One page read moves it to documented.",
   "evidence": [
@@ -65,11 +66,67 @@
       "proved": "build artifacts are still excluded from the per-project storage limit",
       "capture": "sha256:32cb9b13bd82d6395449b56d639b10c9214fbcf89a1a5fa1493dad8fe2e46c49",
       "quote": "Only the project’s repository and LFS are included in the storage limit. The container registry, package registry, and build artifacts are not included in the limit."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/gitlab_com/",
+      "date": "2026-11-25",
+      "proved": "GitLab.com caps a compressed artifacts archive at 1 GB; the next table row gives 30 days expiry unless otherwise specified",
+      "capture": "sha256:68f43c79110ad21fc9f3aeb8e6336cc2b463e9f9868ec094f2325dc676a4d44d",
+      "quote": "| Artifacts maximum size (compressed) | 1 GB |"
+    },
+    {
+      "url": "https://docs.gitlab.com/ci/pipelines/compute_minutes/",
+      "date": "2026-11-25",
+      "proved": "Free namespaces get 400 compute minutes per month",
+      "capture": "sha256:d9b0cc2cfe13609488898aa96c54a548728d2e9b998756fbc0e272d7be7b6202",
+      "quote": "Free tier namespaces receive 400 compute minutes per month."
+    },
+    {
+      "url": "https://docs.gitlab.com/ci/yaml/",
+      "date": "2026-11-25",
+      "proved": "the latest-job exemption is conditional on the keep-latest setting; the same section lists never and Keep as ways to prevent expiry",
+      "capture": "sha256:aecf5cde8e77499343f2bb7f0fcb2fc779a87a690b6330f450ad32be0d640101",
+      "quote": "Artifacts from the latest job, unless keeping the latest job artifacts is disabled"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/gitlab_com/",
+      "date": "2026-11-25",
+      "proved": "the GitLab.com default artifact expiry is 30 days unless otherwise specified",
+      "capture": "sha256:68f43c79110ad21fc9f3aeb8e6336cc2b463e9f9868ec094f2325dc676a4d44d",
+      "quote": "30 days unless otherwise specified"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/gitlab_com/",
+      "date": "2026-11-25",
+      "proved": "GitLab.com caps a compressed artifacts archive at 1 GB",
+      "capture": "sha256:68f43c79110ad21fc9f3aeb8e6336cc2b463e9f9868ec094f2325dc676a4d44d",
+      "quote": "| Artifacts maximum size (compressed) | 1 GB |"
+    },
+    {
+      "url": "https://docs.gitlab.com/user/gitlab_com/",
+      "date": "2026-11-25",
+      "proved": "the row is named Artifacts maximum size (compressed)",
+      "capture": "sha256:68f43c79110ad21fc9f3aeb8e6336cc2b463e9f9868ec094f2325dc676a4d44d",
+      "quote": "| Artifacts maximum size (compressed) | 1 GB |"
+    },
+    {
+      "url": "https://docs.gitlab.com/ci/yaml/",
+      "date": "2026-11-25",
+      "proved": "expired artifacts are deleted hourly and become inaccessible",
+      "capture": "sha256:aecf5cde8e77499343f2bb7f0fcb2fc779a87a690b6330f450ad32be0d640101",
+      "quote": "After their expiry, artifacts are deleted hourly by default (using a cron job), and are not accessible anymore."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/storage_usage_quotas/",
+      "date": "2026-11-25",
+      "proved": "build artifacts are excluded from the per-project storage limit",
+      "capture": "sha256:c31fa88d40120be518fbe9f17f5155d6812a549ba671ca04939f01cc78377e71",
+      "quote": "Only the project’s repository and LFS are included in the storage limit. The container registry, package registry, and build artifacts are not included in the limit."
     }
   ],
   "verdict": "qualifies-with-caveat",
-  "verified_at": "2026-11-19T21:13:28.596Z",
-  "notes": "Not counted against the 10 GiB project storage limit ('build artifacts are not included in the limit'). 1 GB compressed maximum per artifact archive on GitLab.com.",
+  "verified_at": "2026-11-25T12:15:40.048Z",
+  "notes": "Not counted against the 10 GiB project storage limit ('build artifacts are not included in the limit'). 1 GB compressed maximum per artifact archive on GitLab.com. Free tier namespaces receive 400 compute minutes per month.",
   "history": [],
   "extras": {
     "seed_source": "storage-research",
