@@ -13,7 +13,7 @@
     "notes": "Headline offer; binding constraint specified in limits."
   },
   "per_object_cap": {
-    "stated": "roughly 5.5 GB ... it seems to be related to a timeout in the object storage load balancers.",
+    "stated": "not documented; a roughly 5.5 GB upload fails with a 500 that Canonical attributes to a timeout in the object storage load balancers, while a 1.7 GB snap is published and served",
     "bytes": 1700000000,
     "source_url": "https://forum.snapcraft.io/t/snap-package-file-size-limit-on-the-store/37450",
     "notes": "roughly 5.5 GB ... it seems to be related to a timeout in the object storage load balancers."
@@ -35,11 +35,6 @@
   "tooling": "`snapcraft upload` / `snapcraft push` (the write path), Snap Store API v2 (`api.snapcraft.io/v2/snaps/info/<name>` with header `Snap-Device-Series: 16`) for metadata, and plain HTTPS GET of the channel-map `download.url` for bytes. No rclone backend; a wrapper would have to speak the snapcraft upload protocol to push.",
   "chaining": "unlimited snaps per publisher account x unlimited revisions per snap (revision history is retained server-side - the forum thread discusses 3 GB across 3 revisions of a 1 GB game). Multiply by unlimited free Ubuntu One accounts. Realistically ~1.6 GB x N revisions x N snaps, but upload reliability degrades well before 5 GB.",
   "limits": [
-    {
-      "kind": "write-gated",
-      "value": "application/octet-stream` verified)",
-      "source": "https://forum.snapcraft.io/t/snap-package-file-size-limit-on-the-store/37450"
-    },
     {
       "kind": "per-object-cap",
       "value": "per-object-cap: not documented, empirically ~1.7 GB",
