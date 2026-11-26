@@ -61,7 +61,7 @@ physical core is 2 vCPU, so the 2 vCPU / 4 GiB shape is one core plus four
 GiB: USD 0.2380 an hour. The USD 200 and USD 300 grants are one-time.
 
 <!-- generated:start topic=compute kind=totals fields=records,providers,recurring-credit,dead,qualifies labels=records,providers,recurring-credit,dead,qualifies -->
-records 1524; providers 1439; recurring-credit 11; dead 85; qualifies 543
+records 1524; providers 1439; recurring-credit 11; dead 85; qualifies 542
 <!-- generated:end -->
 
 **The binding constraint is time.** Across the sandbox class, what stops a

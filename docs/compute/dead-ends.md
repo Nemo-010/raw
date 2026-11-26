@@ -19,9 +19,9 @@ recorded dead for having no free tier is re-investigated for the wrong reason.
 | `fails-identity` | 153 |
 | `fails-quota` | 24 |
 | `paid-only` | 560 |
-| `qualifies` | 55 |
-| `qualifies-with-caveat` | 488 |
-| `trial-only` | 158 |
+| `qualifies` | 51 |
+| `qualifies-with-caveat` | 491 |
+| `trial-only` | 159 |
 | **all** | 1524 |
 <!-- generated:end -->
 
