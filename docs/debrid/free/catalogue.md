@@ -45,7 +45,7 @@ makes every record citable.
 | PubMed Central Open Acces... | 'PMC makes the datasets described below fre... | qualifies | measured | not applicable: one object per... | articles stay while t... | anonymous | `dossier/debrid/pmc-oa-opendata.json` |
 | PreDB.me | A public, unauthenticated feed of scene rel... | qualifies | documented | not applicable: names and times... | not stated; the front... | anonymous | `dossier/debrid/predb-me.json` |
 | PreFiles | Free: 50 GB storage, 512 Mb max upload, 10... | qualifies | documented | Free 512 Mb; Pro 10240 Mb (10 G... | 30 d | card | `dossier/debrid/prefiles.json` |
-| Scnlog.me | Free to read with no account: /feed/ served... | qualifies | documented | not applicable: an index of rel... | Posts remain until re... | anonymous | `dossier/debrid/scnlog.json` |
+| Scnlog.me | Latest releases from The Scene | qualifies | documented | not applicable: an index of rel... | Posts remain until re... | anonymous | `dossier/debrid/scnlog.json` |
 | SearchFiles | Free search across file hosts: 'SearchFiles... | qualifies | documented | not applicable: an index of lin... | not applicable: the i... | anonymous | `dossier/debrid/searchfiles-de.json` |
 | SpotNZB.com (public Spotweb) | No account and no key. /api?t=caps returned... | qualifies | measured | not applicable per object; at m... | not published. Spotne... | anonymous | `dossier/debrid/spotnzb-com.json` |
 | Storage Portal | No free tier. The smallest pack is 5 GB for... | qualifies | documented | not applicable: it forwards a l... | 1 d | email | `dossier/debrid/storage-portal-com.json` |
@@ -146,7 +146,7 @@ makes every record citable.
 | FileQ | "Deleted after 3 days. Sign up to store lon... | qualifies-with-caveat | documented | "Upload Large Files 110GB" - th... | 3 d | email | `dossier/debrid/fileq.json` |
 | Filer.net | 'Filer.net is a worldwide cloud service ava... | qualifies-with-caveat | documented | not stated on the page read | not stated on the pag... | email | `dossier/debrid/filer-net.json` |
 | Files.dp.ua | Free file sharing without registration; max... | qualifies-with-caveat | documented | The maximum allowable file size... | 25 d | anonymous | `dossier/debrid/files-dp-ua.json` |
-| FileSharingTalk NZBs | Reported allowance on a free account: 2 NZB... | qualifies-with-caveat | reported | not applicable: an NZB pointer... | not stated on the pag... | email | `dossier/debrid/filesharingtalk.json` |
+| FileSharingTalk NZBs | unverified: no free-tier allowance or unit... | qualifies-with-caveat | reported | not applicable: an NZB pointer... | not stated on the pag... | email | `dossier/debrid/filesharingtalk.json` |
 | FileShot | Free: max file size 10 GB, total storage 50... | qualifies-with-caveat | documented | / Max file size / 10 GB / 2 GB... | 90 d | anonymous | `dossier/debrid/fileshot.json` |
 | FileSpace | Regular account: 50 GB storage, 100 KB/s do... | qualifies-with-caveat | documented | not stated on the payments page... | 60 d | card | `dossier/debrid/filespace.json` |
 | Filester | Up to 10 GB per file; files that get no dow... | qualifies-with-caveat | documented | Up-to 10GB, subject to be chang... | 35 d | anonymous | `dossier/debrid/filester.json` |
@@ -202,7 +202,7 @@ makes every record citable.
 | NZBforyou | Reported as 2 NZB grabs per day and no API... | qualifies-with-caveat | reported | not applicable: an NZB pointer... | not stated by any sou... | email | `dossier/debrid/nzbforyou.json` |
 | NZBGrabit | Reported as 10 days retention and 5 NZBs pe... | qualifies-with-caveat | reported | not applicable: an NZB pointer... | 10 d | email | `dossier/debrid/nzbgrabit.json` |
 | NzbNoob | Free registration: 1 download and 100 API h... | qualifies-with-caveat | documented | not applicable: an NZB pointer... | not stated on the pag... | email | `dossier/debrid/nzbnoob.json` |
-| NZBScout | Reported as 'Completely free with no usage... | qualifies-with-caveat | reported | not applicable: an NZB pointer... | A third-party listing... | email | `dossier/debrid/nzbscout.json` |
+| NZBScout | This domain name may be for sale. | qualifies-with-caveat | reported | not applicable: an NZB pointer... | A third-party listing... | email | `dossier/debrid/nzbscout.json` |
 | NZBStars | Reported as 'Completely free', no registrat... | qualifies-with-caveat | reported | not applicable: an NZB pointer... | A third-party listing... | anonymous | `dossier/debrid/nzbstars.json` |
 | OkDebrid | Free premium link generator; the FAQ says '... | qualifies-with-caveat | documented | 'We don't bother you with annoy... | 'We will remove your... | anonymous | `dossier/debrid/okdebrid.json` |
 | Orion (orionoid.com) | A free account gets a few links, hashes and... | qualifies-with-caveat | reported | not applicable: Orion returns l... | Community-maintained... | anonymous | `dossier/debrid/orionoid.json` |
@@ -226,7 +226,7 @@ makes every record citable.
 | ProxyEmpire | 'Try residential and mobile proxies for $1.... | qualifies-with-caveat | documented | not applicable: a byte stream a... | not applicable: a liv... | card | `dossier/debrid/proxyempire.json` |
 | Public Mirror Leech (@pub... | Published limits post: "Mirror: upto 80 GB/... | qualifies-with-caveat | reported | 80 GB per link on every mode: m... | Not stated. A mirror... | any-phone | `dossier/debrid/publicmirrorbot.json` |
 | Puffbin | Upload files up to 10GB each. Password prot... | qualifies-with-caveat | documented | Upload files up to 10GB each | The uploader chooses... | anonymous | `dossier/debrid/puffbin-com.json` |
-| PullFiles | 'Grab any file from a link or URL instantly... | qualifies-with-caveat | documented | 1 GB per file ('Max. File size:... | not applicable in the... | anonymous | `dossier/debrid/pullfiles.json` |
+| PullFiles | 'Grab any file from a link or URL instantly... | qualifies-with-caveat | documented | You can download files up to 1G... | not applicable in the... | anonymous | `dossier/debrid/pullfiles.json` |
 | PureVPN | No free plan on the order page; a 31-day mo... | qualifies-with-caveat | reported | not applicable: a tunnel, not a... | not applicable: a liv... | card | `dossier/debrid/purevpn.json` |
 | 轻麦云直链 (urldwz.com) | '注册即送10G永久空间，不限流量，更不限速' - 10 GB permanent,... | qualifies-with-caveat | reported | Not published. | Permanent for the fre... | any-phone | `dossier/debrid/qingmai-cloud.json` |
 | qu.ax | Max upload size is 256MB. Expiry is chosen... | qualifies-with-caveat | measured | Max upload size is 256MB | 30 d | anonymous | `dossier/debrid/qu-ax.json` |
@@ -550,8 +550,8 @@ makes every record citable.
 | Offcloud lifetime via Sta... | One-off 'lifetime' purchase: US$39.99 and l... | dead | reported | not applicable to the resale: t... | not applicable to the... | email | `dossier/debrid/offcloud-lifetime-via-stacksocial.json` |
 | Premium-Link.net | None. The domain now serves a German local-... | dead | documented | not applicable: the service is... | not applicable: gone | email | `dossier/debrid/premium-link-net.json` |
 | QIWI Wallet | not applicable: a payment rail, not a retri... | dead | documented | not applicable | not applicable | card | `dossier/debrid/qiwi-wallet.json` |
-| ReleaseBB | none: the domain no longer serves an index.... | dead | documented | not applicable: no content served | not applicable: no posts | anonymous | `dossier/debrid/releasebb.json` |
-| SceneNZBs | None under this name: every request is redi... | dead | measured | not applicable | not applicable: the n... | email | `dossier/debrid/scenenzbs.json` |
+| ReleaseBB | Redirecting... | dead | documented | not applicable: no content served | not applicable: no posts | anonymous | `dossier/debrid/releasebb.json` |
+| SceneNZBs | We have moved! SceneNZBs is now called **Tr... | dead | measured | not applicable | not applicable: the n... | email | `dossier/debrid/scenenzbs.json` |
 | Seedbox.io | None. The seedbox.io domain no longer serve... | dead | documented | not applicable: no seedbox prod... | not applicable: no st... | card | `dossier/debrid/seedbox-io.json` |
 | seeding.io | none: the domain no longer serves a seedbox... | dead | measured | not applicable: no service | not applicable: no se... | anonymous | `dossier/debrid/seeding-io.json` |
 | SimplyNZBs | None: the domain no longer hosts the indexe... | dead | reported | not applicable: an NZB pointer... | last claimed 'up to 2... | email | `dossier/debrid/simply-nzbs.json` |
