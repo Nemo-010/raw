@@ -46,7 +46,7 @@
       "source": "probe:scnlog.me/feed"
     }
   ],
-  "limits_note": "Disallow: /wp-admin/",
+  "limits_note": "robots.txt disallows /wp-admin/, /forum/members/ and /forum/search/, allows /wp-admin/admin-ajax.php, and blocks BLEXBot, adsbot, dotbot and KeenableBot outright. The forum is a separate login.",
   "binding": "request-rate",
   "binding_note": "An index holds no bytes to meter, so the only constraint met here is the page rate while enumerating posts. None was observed at about 0.8 req/s; the per-host quotas behind the links belong to the storage topic.",
   "identity_cost": {
@@ -77,17 +77,10 @@
       "url": "https://scnlog.me/wp-json/wp/v2/posts?per_page=2",
       "date": "2026-10-23",
       "proved": "HTTP 401 Unauthorized, so the WordPress REST API is not an open route and RSS is the feed that works"
-    },
-    {
-      "url": "https://scnlog.me/robots.txt",
-      "date": "2026-11-26",
-      "proved": "the robots file disallows /wp-admin/",
-      "capture": "sha256:49f9f326cef0605bdad43dfae96aeca923e48092300aa1de88c84ebaa100537b",
-      "quote": "Disallow: /wp-admin/"
     }
   ],
   "verdict": "qualifies",
-  "verified_at": "2026-11-26T01:59:18.523Z",
+  "verified_at": "2026-10-23T01:52:28.000Z",
   "price_per_tb_month": "USD 0",
   "history": [],
   "notes": "The strongest DDL-side feed in this lane: machine-readable, no account, and the post page hands over host links without a login. Candidates considered and rejected as the primary path: rlsbb.cc (robots.txt forbids the crawl), ddlbase.com (two mirrors then a login), 0daydown.com (VIP gate). The site's own JSON API is 401, which is why RSS rather than JSON is the answer.",
